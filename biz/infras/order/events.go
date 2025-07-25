@@ -4,7 +4,7 @@ import "time"
 
 type Event interface {
 	GetEventId() string
-	SetId() int64
+	GetId() int64
 	GetCreatedAt() time.Time
-	SetEventType() string
+	GetEventType() string
 }

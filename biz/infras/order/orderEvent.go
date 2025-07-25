@@ -15,13 +15,13 @@ type OrderCreatedEvent struct {
 func (e *OrderCreatedEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderCreatedEvent) SetId() int64 {
+func (e *OrderCreatedEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderCreatedEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderCreatedEvent) SetEventType() string {
+func (e *OrderCreatedEvent) GetEventType() string {
 	return "OrderCreated"
 }
 
@@ -39,13 +39,13 @@ type OrderPaidEvent struct {
 func (e *OrderPaidEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderPaidEvent) SetId() int64 {
+func (e *OrderPaidEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderPaidEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderPaidEvent) SetEventType() string {
+func (e *OrderPaidEvent) GetEventType() string {
 	return "OrderPaid"
 }
 
@@ -61,7 +61,7 @@ type OrderShippedEvent struct {
 func (e *OrderShippedEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderShippedEvent) SetId() int64 {
+func (e *OrderShippedEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderShippedEvent) GetShippedAt() time.Time {
@@ -70,7 +70,7 @@ func (e *OrderShippedEvent) GetShippedAt() time.Time {
 func (e *OrderShippedEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderShippedEvent) SetEventType() string {
+func (e *OrderShippedEvent) GetEventType() string {
 	return "OrderShipped"
 }
 
@@ -86,7 +86,7 @@ type OrderCompletedEvent struct {
 func (e *OrderCompletedEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderCompletedEvent) SetId() int64 {
+func (e *OrderCompletedEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderCompletedEvent) GetCompletedAt() time.Time {
@@ -95,7 +95,7 @@ func (e *OrderCompletedEvent) GetCompletedAt() time.Time {
 func (e *OrderCompletedEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderCompletedEvent) SetEventType() string {
+func (e *OrderCompletedEvent) GetEventType() string {
 	return "OrderCompleted"
 }
 
@@ -111,7 +111,7 @@ type OrderCancelledEvent struct {
 func (e *OrderCancelledEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderCancelledEvent) SetId() int64 {
+func (e *OrderCancelledEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderCancelledEvent) GetCancelledAt() time.Time {
@@ -120,7 +120,7 @@ func (e *OrderCancelledEvent) GetCancelledAt() time.Time {
 func (e *OrderCancelledEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderCancelledEvent) SetEventType() string {
+func (e *OrderCancelledEvent) GetEventType() string {
 	return "OrderCancelled"
 }
 
@@ -138,7 +138,7 @@ type OrderRefundedEvent struct {
 func (e *OrderRefundedEvent) GetEventId() string {
 	return e.EventId
 }
-func (e *OrderRefundedEvent) SetId() int64 {
+func (e *OrderRefundedEvent) GetId() int64 {
 	return e.Id
 }
 func (e *OrderRefundedEvent) GetRefundedAt() time.Time {
@@ -147,6 +147,6 @@ func (e *OrderRefundedEvent) GetRefundedAt() time.Time {
 func (e *OrderRefundedEvent) GetCreatedAt() time.Time {
 	return e.CreatedAt
 }
-func (e *OrderRefundedEvent) SetEventType() string {
+func (e *OrderRefundedEvent) GetEventType() string {
 	return "OrderRefunded"
 }

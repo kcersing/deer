@@ -9,25 +9,40 @@ import (
 )
 
 type OrderRepository interface {
-	Save(ctx context.Context, order *Order) error
-	Update(ctx context.Context, order *Order) error
-	FindById(ctx context.Context, Id int64) (*Order, error)
+	Save(order *Order) error
+	Update(order *Order) error
+	FindById(Id int64) (*Order, error)
+	List() ([]*Order, int, error)
+
+	Completed(id int64) error
+	Refund(id int64) error
 }
 type OrderRepositoryImpl struct {
+	ctx          context.Context
 	db           *ent.Client
 	snapshotFreq int
 }
 
-func NewOrderRepository(db *ent.Client, snapshotFreq int) OrderRepository {
-	return &OrderRepositoryImpl{db: db, snapshotFreq: snapshotFreq}
+func (o OrderRepositoryImpl) Completed(id int64) error {
+	//TODO implement me
+	panic("implement me")
 }
 
-func (o OrderRepositoryImpl) Save(ctx context.Context, order *Order) error {
+func (o OrderRepositoryImpl) Refund(id int64) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func NewOrderRepository(ctx context.Context, db *ent.Client, snapshotFreq int) OrderRepository {
+	return &OrderRepositoryImpl{ctx: ctx, db: db, snapshotFreq: snapshotFreq}
+}
+
+func (o OrderRepositoryImpl) Save(order *Order) error {
 	events := order.GetUncommittedEvents()
 	if len(events) == 0 {
 		return nil
 	}
-	tx, err := o.db.Tx(ctx)
+	tx, err := o.db.Tx(o.ctx)
 
 	if err != nil {
 		return errors.Wrap(err, "starting a transaction:")
@@ -69,12 +84,20 @@ func (o OrderRepositoryImpl) Save(ctx context.Context, order *Order) error {
 	return nil
 }
 
-func (o OrderRepositoryImpl) Update(ctx context.Context, order *Order) error {
+func (o OrderRepositoryImpl) Update(order *Order) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (o OrderRepositoryImpl) FindById(ctx context.Context, Id int64) (*Order, error) {
+func (o OrderRepositoryImpl) FindById(Id int64) (*Order, error) {
 	//TODO implement me
+	panic("implement me")
+}
+func (o OrderRepositoryImpl) List() ([]*Order, int, error) {
+	//var predicates []predicate.Order
+	//
+	//lists, err := o.db.Order.Query().Where(predicates...).
+	//	Offset(int(req.Page-1) * int(req.PageSize)).
+	//	Limit(int(req.PageSize)).All(context.Background())
 	panic("implement me")
 }
