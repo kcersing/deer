@@ -1,150 +1,119 @@
 package order
 
 import (
+	"context"
 	"errors"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"sync"
+	"time"
 )
 
 // EventHandler 事件处理器接口
 type EventHandler interface {
-	Handle(event Event) error
+	Handle(ctx context.Context, event Event) error
 }
 
-// EventDispatcher
+// EventDispatcher 事件分发器
 type EventDispatcher struct {
 	handlers map[string][]EventHandler
 	mu       sync.RWMutex
 }
 
-// NewEventDispatcher
 func NewEventDispatcher() *EventDispatcher {
 	return &EventDispatcher{
 		handlers: make(map[string][]EventHandler),
 	}
 }
 
-// RegisterHandler 注册事件处理器
+// RegisterHandler 注册处理器
 func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	d.handlers[eventType] = append(d.handlers[eventType], handler)
 }
 
-// Dispatch 分发事件
-func (d *EventDispatcher) Dispatch(event Event) {
-	d.mu.RLock() // 读取锁
-	defer d.mu.RUnlock()
+// Dispatch 并发分发事件
+func (d *EventDispatcher) Dispatch(ctx context.Context, event Event) error {
+	d.mu.RLock()
+	handlers, ok := d.handlers[event.GetType()]
+	d.mu.RUnlock()
 
-	eventType := event.SetEventType()
-	if handlers, ok := d.handlers[eventType]; ok {
-		var wg sync.WaitGroup
-		for _, handler := range handlers {
-			wg.Add(1)
-			go func(h EventHandler) {
-				defer wg.Done()
+	if !ok || len(handlers) == 0 {
+		return nil
+	}
 
-				if err := h.Handle(event); err != nil {
-					// 处理错误
-					hlog.Errorf("事件处理失败：%v", err)
-				}
+	var wg sync.WaitGroup
+	errCh := make(chan error, len(handlers))
 
-			}(handler)
+	for _, handler := range handlers {
+		wg.Add(1)
+		go func(h EventHandler) {
+			defer wg.Done()
+			// 带超时和重试的事件处理
+			if err := withRetry(func() error {
+				ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+				defer cancel()
+				return h.Handle(ctx, event)
+			}, 3); err != nil {
+				errCh <- err
+			}
+		}(handler)
+	}
+
+	// 等待所有处理器完成
+	go func() {
+		wg.Wait()
+		close(errCh)
+	}()
+
+	// 收集错误
+	var errs []error
+	for err := range errCh {
+		errs = append(errs, err)
+	}
+
+	if len(errs) > 0 {
+		return errors.Errorf("共%d个事件处理器执行失败", len(errs))
+	}
+	return nil
+}
+
+// withRetry 重试机制
+func withRetry(fn func() error, maxRetries int) error {
+	var err error
+	for i := 0; i < maxRetries; i++ {
+		if err = fn(); err == nil {
+			return nil
 		}
-
+		hlog.Errorf("重试第%d次失败: %v", i+1, err)
+		time.Sleep(time.Millisecond * 100 * time.Duration(i+1)) // 指数退避
 	}
-
+	return err
 }
 
-// InventoryService 库存服务接口
-type InventoryService interface {
-	Reserve(sn int64, items []OrderItem) error //预留库存
-	Release(sn int64) error                    //扣除库存
-	RestoreForRefund(sn int64) error           //恢复库存
-}
-
-// InventoryHandler 库存处理器
+// 库存处理器示例
 type InventoryHandler struct {
-	InventoryService InventoryService
+	// 库存服务依赖
 }
 
-func (h *InventoryHandler) Handle(event Event) error {
-	if h.InventoryService == nil {
-		return errors.New("库存服务未初始化")
-	}
+func (h *InventoryHandler) Handle(ctx context.Context, event Event) error {
 	switch e := event.(type) {
 	case *OrderCreatedEvent:
-		// 处理订单创建事件
-		return h.InventoryService.Reserve(e.Id, e.Items)
+		// 处理库存预留
+		return h.reserveInventory(e.AggregateID, e.Items)
 	case *OrderCancelledEvent:
-		// 处理订单支付事件
-		return h.InventoryService.Release(e.Id)
-	case *OrderRefundedEvent:
-		// 处理订单退款事件
-		return h.InventoryService.RestoreForRefund(e.Id)
-	default:
-		return nil
+		// 处理库存释放
+		return h.releaseInventory(e.AggregateID)
 	}
+	return nil
 }
 
-// PayService 支付服务接口
-type PayService interface {
-	Refund(id int64, amount float64, reason string, createdId int64) error
-}
-type PayHandler struct {
-	PayService PayService
+func (h *InventoryHandler) reserveInventory(orderID int64, items []OrderItem) error {
+	// 实现库存预留逻辑
+	return nil
 }
 
-func (h *PayHandler) Handle(event Event) error {
-	if h.PayService == nil {
-		return errors.New("支付服务未初始化")
-	}
-	switch e := event.(type) {
-	case *OrderRefundedEvent:
-		return h.PayService.Refund(e.Id, e.RefundedAmount, e.Reason, e.CreatedId)
-	default:
-		return nil
-	}
-
-}
-
-// NotificationServer 通知服务接口
-type NotificationServer interface {
-	SendOrderCreatedNotification(id int64) error
-	SendOrderPaidNotification(id int64) error
-	SendOrderShippedNotification(id int64) error
-	SendOrderCompletedNotification(id int64) error
-	SendOrderCancelledNotification(id int64) error
-	SendOrderRefundNotification(id int64) error
-}
-type NotificationHandler struct {
-	NotificationServer NotificationServer
-}
-
-func (h *NotificationHandler) Handler(event Event) error {
-	if h.NotificationServer == nil {
-		return errors.New("通知服务未初始化")
-	}
-	switch e := event.(type) {
-	case *OrderCreatedEvent:
-		// 处理订单创建事件
-		return h.NotificationServer.SendOrderCreatedNotification(e.Id)
-	case *OrderPaidEvent:
-		// 处理订单支付事件
-		return h.NotificationServer.SendOrderPaidNotification(e.Id)
-	case *OrderShippedEvent:
-		// 处理订单发货事件
-		return h.NotificationServer.SendOrderShippedNotification(e.Id)
-	case *OrderCompletedEvent:
-		// 处理订单完成事件
-		return h.NotificationServer.SendOrderCompletedNotification(e.Id)
-	case *OrderCancelledEvent:
-		// 处理订单取消事件
-		return h.NotificationServer.SendOrderCancelledNotification(e.Id)
-	case *OrderRefundedEvent:
-		// 处理订单退款事件
-		return h.NotificationServer.SendOrderRefundNotification(e.Id)
-	default:
-		return nil
-	}
+func (h *InventoryHandler) releaseInventory(orderID int64) error {
+	// 实现库存释放逻辑
+	return nil
 }

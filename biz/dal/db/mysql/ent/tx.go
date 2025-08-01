@@ -12,8 +12,18 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// EventSubscriptions is the client for interacting with the EventSubscriptions builders.
+	EventSubscriptions *EventSubscriptionsClient
 	// Order is the client for interacting with the Order builders.
 	Order *OrderClient
+	// OrderEvents is the client for interacting with the OrderEvents builders.
+	OrderEvents *OrderEventsClient
+	// OrderItem is the client for interacting with the OrderItem builders.
+	OrderItem *OrderItemClient
+	// OrderSnapshots is the client for interacting with the OrderSnapshots builders.
+	OrderSnapshots *OrderSnapshotsClient
+	// OrderStatusHistory is the client for interacting with the OrderStatusHistory builders.
+	OrderStatusHistory *OrderStatusHistoryClient
 
 	// lazily loaded.
 	client     *Client
@@ -145,7 +155,12 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.EventSubscriptions = NewEventSubscriptionsClient(tx.config)
 	tx.Order = NewOrderClient(tx.config)
+	tx.OrderEvents = NewOrderEventsClient(tx.config)
+	tx.OrderItem = NewOrderItemClient(tx.config)
+	tx.OrderSnapshots = NewOrderSnapshotsClient(tx.config)
+	tx.OrderStatusHistory = NewOrderStatusHistoryClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.
@@ -155,7 +170,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: Order.QueryXXX(), the query will be executed
+// applies a query, for example: EventSubscriptions.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

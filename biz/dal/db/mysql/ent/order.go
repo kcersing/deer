@@ -28,12 +28,10 @@ type Order struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 订单编号
 	OrderSn string `json:"order_sn,omitempty"`
+	// 会员id
+	MemberID int64 `json:"member_id,omitempty"`
 	// Status holds the value of the "status" field.
 	Status int64 `json:"status,omitempty"`
-	// 订单来源
-	Source string `json:"source,omitempty"`
-	// 设备来源
-	Device string `json:"device,omitempty"`
 	// 业务类型
 	Nature int64 `json:"nature,omitempty"`
 	// 订单完成时间
@@ -41,8 +39,64 @@ type Order struct {
 	// 订单关闭时间
 	CloseAt time.Time `json:"close_at,omitempty"`
 	// 订单退费时间
-	RefundAt     time.Time `json:"refund_at,omitempty"`
+	RefundAt time.Time `json:"refund_at,omitempty"`
+	// 乐观锁版本号
+	Version int64 `json:"version ,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the OrderQuery when eager-loading is set.
+	Edges        OrderEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// OrderEdges holds the relations/edges for other nodes in the graph.
+type OrderEdges struct {
+	// Items holds the value of the items edge.
+	Items []*OrderItem `json:"items,omitempty"`
+	// Events holds the value of the events edge.
+	Events []*OrderEvents `json:"events,omitempty"`
+	// Snapshots holds the value of the snapshots edge.
+	Snapshots []*OrderSnapshots `json:"snapshots,omitempty"`
+	// StatusHistory holds the value of the status_history edge.
+	StatusHistory []*OrderStatusHistory `json:"status_history,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [4]bool
+}
+
+// ItemsOrErr returns the Items value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) ItemsOrErr() ([]*OrderItem, error) {
+	if e.loadedTypes[0] {
+		return e.Items, nil
+	}
+	return nil, &NotLoadedError{edge: "items"}
+}
+
+// EventsOrErr returns the Events value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) EventsOrErr() ([]*OrderEvents, error) {
+	if e.loadedTypes[1] {
+		return e.Events, nil
+	}
+	return nil, &NotLoadedError{edge: "events"}
+}
+
+// SnapshotsOrErr returns the Snapshots value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) SnapshotsOrErr() ([]*OrderSnapshots, error) {
+	if e.loadedTypes[2] {
+		return e.Snapshots, nil
+	}
+	return nil, &NotLoadedError{edge: "snapshots"}
+}
+
+// StatusHistoryOrErr returns the StatusHistory value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) StatusHistoryOrErr() ([]*OrderStatusHistory, error) {
+	if e.loadedTypes[3] {
+		return e.StatusHistory, nil
+	}
+	return nil, &NotLoadedError{edge: "status_history"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -50,9 +104,9 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldStatus, order.FieldNature:
+		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldStatus, order.FieldNature, order.FieldVersion:
 			values[i] = new(sql.NullInt64)
-		case order.FieldOrderSn, order.FieldSource, order.FieldDevice:
+		case order.FieldOrderSn:
 			values[i] = new(sql.NullString)
 		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt, order.FieldRefundAt:
 			values[i] = new(sql.NullTime)
@@ -107,23 +161,17 @@ func (o *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				o.OrderSn = value.String
 			}
+		case order.FieldMemberID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field member_id", values[i])
+			} else if value.Valid {
+				o.MemberID = value.Int64
+			}
 		case order.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				o.Status = value.Int64
-			}
-		case order.FieldSource:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field source", values[i])
-			} else if value.Valid {
-				o.Source = value.String
-			}
-		case order.FieldDevice:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field device", values[i])
-			} else if value.Valid {
-				o.Device = value.String
 			}
 		case order.FieldNature:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -149,6 +197,12 @@ func (o *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				o.RefundAt = value.Time
 			}
+		case order.FieldVersion:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field version ", values[i])
+			} else if value.Valid {
+				o.Version = value.Int64
+			}
 		default:
 			o.selectValues.Set(columns[i], values[i])
 		}
@@ -160,6 +214,26 @@ func (o *Order) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (o *Order) Value(name string) (ent.Value, error) {
 	return o.selectValues.Get(name)
+}
+
+// QueryItems queries the "items" edge of the Order entity.
+func (o *Order) QueryItems() *OrderItemQuery {
+	return NewOrderClient(o.config).QueryItems(o)
+}
+
+// QueryEvents queries the "events" edge of the Order entity.
+func (o *Order) QueryEvents() *OrderEventsQuery {
+	return NewOrderClient(o.config).QueryEvents(o)
+}
+
+// QuerySnapshots queries the "snapshots" edge of the Order entity.
+func (o *Order) QuerySnapshots() *OrderSnapshotsQuery {
+	return NewOrderClient(o.config).QuerySnapshots(o)
+}
+
+// QueryStatusHistory queries the "status_history" edge of the Order entity.
+func (o *Order) QueryStatusHistory() *OrderStatusHistoryQuery {
+	return NewOrderClient(o.config).QueryStatusHistory(o)
 }
 
 // Update returns a builder for updating this Order.
@@ -200,14 +274,11 @@ func (o *Order) String() string {
 	builder.WriteString("order_sn=")
 	builder.WriteString(o.OrderSn)
 	builder.WriteString(", ")
+	builder.WriteString("member_id=")
+	builder.WriteString(fmt.Sprintf("%v", o.MemberID))
+	builder.WriteString(", ")
 	builder.WriteString("status=")
 	builder.WriteString(fmt.Sprintf("%v", o.Status))
-	builder.WriteString(", ")
-	builder.WriteString("source=")
-	builder.WriteString(o.Source)
-	builder.WriteString(", ")
-	builder.WriteString("device=")
-	builder.WriteString(o.Device)
 	builder.WriteString(", ")
 	builder.WriteString("nature=")
 	builder.WriteString(fmt.Sprintf("%v", o.Nature))
@@ -220,6 +291,9 @@ func (o *Order) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("refund_at=")
 	builder.WriteString(o.RefundAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("version =")
+	builder.WriteString(fmt.Sprintf("%v", o.Version))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -1,38 +1,108 @@
 package order
 
 import (
-	"fmt"
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/google/uuid"
 	"sync"
+	"time"
 )
 
+// Order 订单聚合根
 type Order struct {
-	Id          int64
-	Items       []OrderItem
-	TotalAmount float64
-	Status      OrderStatus
-	Version     int          // 乐观锁版本号
-	Events      []Event      // 事件列表
-	mu          sync.RWMutex // 读写锁
+	Id           int64
+	OrderSn      string
+	Items        []OrderItem
+	TotalAmount  float64
+	Status       OrderStatus
+	Version      int          // 乐观锁版本号
+	Events       []Event      // 未提交事件
+	mu           sync.RWMutex // 并发控制锁
+	stateMachine *OrderStateMachine
 }
 
-// OrderItem 订单商品项
+// OrderItem 订单项值对象
 type OrderItem struct {
 	ProductId int64
 	Quantity  int
 	Price     float64
 }
 
-func CreateOrder(Id int64, items []OrderItem) (order *Order, err error) {
-	return
+// NewOrder 创建订单
+func NewOrder(orderID int64, sn string, items []OrderItem, amount float64) *Order {
+	order := &Order{
+		Id:          orderID,
+		OrderSn:     sn,
+		Items:       items,
+		TotalAmount: amount,
+		Status:      OrderCreated,
+	}
+	order.stateMachine = NewOrderStateMachine(order)
+	return order
 }
 
+// 领域行为：支付订单
+func (o *Order) Pay(amount float64, method string) error {
+	event := &OrderPaidEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: o.Id,
+			Timestamp:   time.Now(),
+		},
+		PayAmount: amount,
+		PayMethod: method,
+		PaidAt:    time.Now(),
+	}
+
+	return o.stateMachine.Transition(OrderPaid, event)
+}
+
+// 领域行为：取消订单
+func (o *Order) Cancel(reason string) error {
+	event := &OrderCancelledEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: o.Id,
+			Timestamp:   time.Now(),
+		},
+		Reason:      reason,
+		CancelledAt: time.Now(),
+	}
+
+	return o.stateMachine.Transition(OrderCancelled, event)
+}
+
+// 事件管理方法
+func (o *Order) AddEvent(event Event) {
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	o.Events = append(o.Events, event)
+}
+
+func (o *Order) GetUncommittedEvents() []Event {
+	o.mu.RLock()
+	defer o.mu.RUnlock()
+	events := make([]Event, len(o.Events))
+	copy(events, o.Events)
+	return events
+}
+
+func (o *Order) ClearUncommittedEvents() {
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	o.Events = []Event{}
+}
+
+// applyEvent 根据事件更新订单状态
 func (o *Order) applyEvent(event Event) {
+	o.mu.Lock() // 添加写锁保护状态变更
+	defer o.mu.Unlock()
 
 	o.Version++
 	o.Events = append(o.Events, event)
 	switch e := event.(type) {
 	case *OrderCreatedEvent:
-		o.Id = e.Id
+		o.Id = e.AggregateID  // 修正：使用事件中的AggregateID而非e.Id
+		o.OrderSn = e.OrderSn // 补充：设置订单编号
 		o.Items = e.Items
 		o.TotalAmount = e.TotalAmount
 		o.Status = OrderCreated
@@ -48,61 +118,35 @@ func (o *Order) applyEvent(event Event) {
 		o.Status = OrderRefunded
 		o.TotalAmount -= e.RefundedAmount
 	default:
-
+		// 添加未知事件日志
+		klog.Errorf("unsupported event type: %T", e)
 	}
 }
 
-// GetUncommittedEvents 获取未提交的事件
-func (o *Order) GetUncommittedEvents() []Event {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return append([]Event{}, o.Events...)
-}
-
-// ClearUncommittedEvents 清除未提交的事件
-func (o *Order) ClearUncommittedEvents() {
-	o.mu.Lock()
-	defer o.mu.Unlock()
-	o.Events = make([]Event, 0)
-}
-func (o *Order) GetId() int64 {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return o.Id
-}
-func (o *Order) GetStatus() OrderStatus {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return o.Status
-}
-
-func (o *Order) GetVersion() int {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return o.Version
-}
-func (o *Order) GetEvents() []Event {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return o.Events
-}
-func (o *Order) GetTotalAmount() float64 {
-	o.mu.RLock()
-	defer o.mu.RUnlock()
-	return o.TotalAmount
-}
-
-func (o *Order) Pay(payMethod string) (err error) {
-	o.mu.Lock()
-	defer o.mu.Unlock()
-	if o.Status != OrderCreated {
-		return fmt.Errorf("订单状态错误，当前状态：%s ", o.Id)
-	}
-
-	if !o.Status.CanTransitionTo(OrderCancelled) {
-		return fmt.Errorf("订单状态不允许从 %s 转换到 %s ", o.Status, OrderCancelled)
-	}
-	o.Status = OrderPaid
-
-	return
-}
+//// 初始化
+//client, _ := ent.Open("mysql", "dsn")
+//dispatcher := NewEventDispatcher()
+//inventoryHandler := &InventoryHandler{}
+//dispatcher.RegisterHandler("OrderCreated", inventoryHandler)
+//dispatcher.RegisterHandler("OrderCancelled", inventoryHandler)
+//
+//// 创建仓储
+//repo := NewOrderRepository(client, 10) // 每10个事件创建一次快照
+//
+//// 创建订单
+//items := []OrderItem{{ProductId: 1001, Quantity: 2, Price: 99.9}}
+//order := NewOrder(1, "SN20230001", items, 199.8)
+//
+//// 发布创建事件
+//event := NewOrderCreatedEvent(1, "SN20230001", items, 199.8, 10001)
+//order.AddEvent(event)
+//
+//// 保存订单
+//_ = repo.Save(context.Background(), order)
+//
+//// 分发事件
+//_ = dispatcher.Dispatch(context.Background(), event)
+//
+//// 支付订单
+//_ = order.Pay(199.8, "alipay")
+//_ = repo.Save(context.Background(), order)

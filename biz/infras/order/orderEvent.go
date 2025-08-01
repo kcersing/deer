@@ -1,152 +1,85 @@
 package order
 
-import "time"
+import (
+	"github.com/google/uuid"
+	"time"
+)
+
+// Event 领域事件接口
+type Event interface {
+	GetID() string
+	GetType() string
+	GetAggregateID() int64
+	GetTimestamp() time.Time
+	GetVersion() int
+}
+
+// BaseEvent 基础事件结构
+type BaseEvent struct {
+	EventID     string
+	AggregateID int64
+	Timestamp   time.Time
+	Version     int
+}
+
+func (e *BaseEvent) GetID() string           { return e.EventID }
+func (e *BaseEvent) GetAggregateID() int64   { return e.AggregateID }
+func (e *BaseEvent) GetTimestamp() time.Time { return e.Timestamp }
+func (e *BaseEvent) GetVersion() int         { return e.Version }
 
 // OrderCreatedEvent 订单创建事件
 type OrderCreatedEvent struct {
-	Id          int64
-	EventId     string
+	BaseEvent
+	OrderSn     string
 	Items       []OrderItem
 	TotalAmount float64
-	CreatedAt   time.Time
-	CreatedId   int64
+	CreatedBy   int64
 }
 
-func (e *OrderCreatedEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderCreatedEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderCreatedEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderCreatedEvent) GetEventType() string {
-	return "OrderCreated"
-}
+func (e *OrderCreatedEvent) GetType() string { return "OrderCreated" }
 
 // OrderPaidEvent 订单支付事件
 type OrderPaidEvent struct {
-	EventId   string
-	Id        int64
-	PaidAt    time.Time
-	PayMethod string
+	BaseEvent
 	PayAmount float64
-	CreatedAt time.Time
-	CreatedId int64
+	PayMethod string
+	PaidAt    time.Time
 }
 
-func (e *OrderPaidEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderPaidEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderPaidEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderPaidEvent) GetEventType() string {
-	return "OrderPaid"
-}
-
-// OrderShippedEvent 订单发货事件
-type OrderShippedEvent struct {
-	EventId   string
-	Id        int64
-	ShippedAt time.Time
-	CreatedAt time.Time
-	CreatedId int64
-}
-
-func (e *OrderShippedEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderShippedEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderShippedEvent) GetShippedAt() time.Time {
-	return e.ShippedAt
-}
-func (e *OrderShippedEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderShippedEvent) GetEventType() string {
-	return "OrderShipped"
-}
-
-// OrderCompletedEvent 订单完成事件
-type OrderCompletedEvent struct {
-	EventId     string
-	Id          int64
-	CompletedAt time.Time
-	CreatedAt   time.Time
-	CreatedId   int64
-}
-
-func (e *OrderCompletedEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderCompletedEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderCompletedEvent) GetCompletedAt() time.Time {
-	return e.CompletedAt
-}
-func (e *OrderCompletedEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderCompletedEvent) GetEventType() string {
-	return "OrderCompleted"
-}
+func (e *OrderPaidEvent) GetType() string { return "OrderPaid" }
 
 // OrderCancelledEvent 订单取消事件
 type OrderCancelledEvent struct {
-	EventId     string
-	Id          int64
+	BaseEvent
+	Reason      string
 	CancelledAt time.Time
-	CreatedAt   time.Time
-	CreatedId   int64
 }
 
-func (e *OrderCancelledEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderCancelledEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderCancelledEvent) GetCancelledAt() time.Time {
-	return e.CancelledAt
-}
-func (e *OrderCancelledEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderCancelledEvent) GetEventType() string {
-	return "OrderCancelled"
+func (e *OrderCancelledEvent) GetType() string { return "OrderCancelled" }
+
+// 创建事件工厂函数
+func NewOrderCreatedEvent(orderID int64, sn string, items []OrderItem, amount float64, userID int64) *OrderCreatedEvent {
+	return &OrderCreatedEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: orderID,
+			Timestamp:   time.Now(),
+		},
+		OrderSn:     sn,
+		Items:       items,
+		TotalAmount: amount,
+		CreatedBy:   userID,
+	}
 }
 
-// OrderRefundedEvent 订单退款事件
-type OrderRefundedEvent struct {
-	EventId        string
-	Id             int64
-	RefundedAt     time.Time
-	CreatedAt      time.Time
-	CreatedId      int64
-	RefundedAmount float64
-	Reason         string //退款原因
-}
+type OrderShippedEvent struct{}
 
-func (e *OrderRefundedEvent) GetEventId() string {
-	return e.EventId
-}
-func (e *OrderRefundedEvent) GetId() int64 {
-	return e.Id
-}
-func (e *OrderRefundedEvent) GetRefundedAt() time.Time {
-	return e.RefundedAt
-}
-func (e *OrderRefundedEvent) GetCreatedAt() time.Time {
-	return e.CreatedAt
-}
-func (e *OrderRefundedEvent) GetEventType() string {
-	return "OrderRefunded"
-}
+func (e *OrderShippedEvent) GetType() string { return "OrderShipped" }
+
+type OrderCompletedEvent struct{}
+
+func (e *OrderCompletedEvent) GetType() string { return "OrderCompleted" }
+
+type OrderRefundedEvent struct{}
+
+func (e *OrderRefundedEvent) GetType() string { return "OrderRefunded" }

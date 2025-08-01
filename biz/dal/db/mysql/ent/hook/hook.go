@@ -8,6 +8,18 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent"
 )
 
+// The EventSubscriptionsFunc type is an adapter to allow the use of ordinary
+// function as EventSubscriptions mutator.
+type EventSubscriptionsFunc func(context.Context, *ent.EventSubscriptionsMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f EventSubscriptionsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.EventSubscriptionsMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EventSubscriptionsMutation", m)
+}
+
 // The OrderFunc type is an adapter to allow the use of ordinary
 // function as Order mutator.
 type OrderFunc func(context.Context, *ent.OrderMutation) (ent.Value, error)
@@ -18,6 +30,54 @@ func (f OrderFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderMutation", m)
+}
+
+// The OrderEventsFunc type is an adapter to allow the use of ordinary
+// function as OrderEvents mutator.
+type OrderEventsFunc func(context.Context, *ent.OrderEventsMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderEventsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderEventsMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderEventsMutation", m)
+}
+
+// The OrderItemFunc type is an adapter to allow the use of ordinary
+// function as OrderItem mutator.
+type OrderItemFunc func(context.Context, *ent.OrderItemMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderItemMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderItemMutation", m)
+}
+
+// The OrderSnapshotsFunc type is an adapter to allow the use of ordinary
+// function as OrderSnapshots mutator.
+type OrderSnapshotsFunc func(context.Context, *ent.OrderSnapshotsMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderSnapshotsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderSnapshotsMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderSnapshotsMutation", m)
+}
+
+// The OrderStatusHistoryFunc type is an adapter to allow the use of ordinary
+// function as OrderStatusHistory mutator.
+type OrderStatusHistoryFunc func(context.Context, *ent.OrderStatusHistoryMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderStatusHistoryFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderStatusHistoryMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderStatusHistoryMutation", m)
 }
 
 // Condition is a hook condition function.

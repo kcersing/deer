@@ -1,4 +1,4 @@
-package new
+package schema
 
 import (
 	"entgo.io/ent/schema/index"
@@ -18,12 +18,10 @@ type OrderItem struct {
 func (OrderItem) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("order_id").Comment("订单id").Optional(),
-		field.Int64("number").Default(1).Comment("数量").Optional(),
-		field.String("name").Comment("名称").Optional(),
 		field.Int64("product_id").Comment("产品id").Optional(),
-		field.Int64("related_user_product_id").Default(0).Comment("关联会员产品id").Optional(),
+		field.String("name").Comment("名称").Optional(),
 		field.Float("unit_price").Comment("单价").Optional(),
-		field.String("sku").Comment("sku").Optional(),
+		field.Int64("quantity").Default(1).Comment("数量").Optional(),
 	}
 }
 
@@ -36,7 +34,7 @@ func (OrderItem) Mixin() []ent.Mixin {
 func (OrderItem) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("order", Order.Type).
-			Ref("item").
+			Ref("items").
 			Field("order_id").Unique(),
 	}
 }

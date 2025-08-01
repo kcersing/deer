@@ -27,4 +27,4 @@ cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers
 
 
 
-
+go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/modifier ./biz/dal/db/ent/schema

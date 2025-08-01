@@ -6,6 +6,10 @@ import (
 	"context"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
+	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/orderitem"
+	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
+	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -89,6 +93,20 @@ func (oc *OrderCreate) SetNillableOrderSn(s *string) *OrderCreate {
 	return oc
 }
 
+// SetMemberID sets the "member_id" field.
+func (oc *OrderCreate) SetMemberID(i int64) *OrderCreate {
+	oc.mutation.SetMemberID(i)
+	return oc
+}
+
+// SetNillableMemberID sets the "member_id" field if the given value is not nil.
+func (oc *OrderCreate) SetNillableMemberID(i *int64) *OrderCreate {
+	if i != nil {
+		oc.SetMemberID(*i)
+	}
+	return oc
+}
+
 // SetStatus sets the "status" field.
 func (oc *OrderCreate) SetStatus(i int64) *OrderCreate {
 	oc.mutation.SetStatus(i)
@@ -99,34 +117,6 @@ func (oc *OrderCreate) SetStatus(i int64) *OrderCreate {
 func (oc *OrderCreate) SetNillableStatus(i *int64) *OrderCreate {
 	if i != nil {
 		oc.SetStatus(*i)
-	}
-	return oc
-}
-
-// SetSource sets the "source" field.
-func (oc *OrderCreate) SetSource(s string) *OrderCreate {
-	oc.mutation.SetSource(s)
-	return oc
-}
-
-// SetNillableSource sets the "source" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableSource(s *string) *OrderCreate {
-	if s != nil {
-		oc.SetSource(*s)
-	}
-	return oc
-}
-
-// SetDevice sets the "device" field.
-func (oc *OrderCreate) SetDevice(s string) *OrderCreate {
-	oc.mutation.SetDevice(s)
-	return oc
-}
-
-// SetNillableDevice sets the "device" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableDevice(s *string) *OrderCreate {
-	if s != nil {
-		oc.SetDevice(*s)
 	}
 	return oc
 }
@@ -187,10 +177,84 @@ func (oc *OrderCreate) SetNillableRefundAt(t *time.Time) *OrderCreate {
 	return oc
 }
 
+// SetVersion sets the "version " field.
+func (oc *OrderCreate) SetVersion(i int64) *OrderCreate {
+	oc.mutation.SetVersion(i)
+	return oc
+}
+
+// SetNillableVersion sets the "version " field if the given value is not nil.
+func (oc *OrderCreate) SetNillableVersion(i *int64) *OrderCreate {
+	if i != nil {
+		oc.SetVersion(*i)
+	}
+	return oc
+}
+
 // SetID sets the "id" field.
 func (oc *OrderCreate) SetID(i int64) *OrderCreate {
 	oc.mutation.SetID(i)
 	return oc
+}
+
+// AddItemIDs adds the "items" edge to the OrderItem entity by IDs.
+func (oc *OrderCreate) AddItemIDs(ids ...int64) *OrderCreate {
+	oc.mutation.AddItemIDs(ids...)
+	return oc
+}
+
+// AddItems adds the "items" edges to the OrderItem entity.
+func (oc *OrderCreate) AddItems(o ...*OrderItem) *OrderCreate {
+	ids := make([]int64, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oc.AddItemIDs(ids...)
+}
+
+// AddEventIDs adds the "events" edge to the OrderEvents entity by IDs.
+func (oc *OrderCreate) AddEventIDs(ids ...int64) *OrderCreate {
+	oc.mutation.AddEventIDs(ids...)
+	return oc
+}
+
+// AddEvents adds the "events" edges to the OrderEvents entity.
+func (oc *OrderCreate) AddEvents(o ...*OrderEvents) *OrderCreate {
+	ids := make([]int64, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oc.AddEventIDs(ids...)
+}
+
+// AddSnapshotIDs adds the "snapshots" edge to the OrderSnapshots entity by IDs.
+func (oc *OrderCreate) AddSnapshotIDs(ids ...int64) *OrderCreate {
+	oc.mutation.AddSnapshotIDs(ids...)
+	return oc
+}
+
+// AddSnapshots adds the "snapshots" edges to the OrderSnapshots entity.
+func (oc *OrderCreate) AddSnapshots(o ...*OrderSnapshots) *OrderCreate {
+	ids := make([]int64, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oc.AddSnapshotIDs(ids...)
+}
+
+// AddStatusHistoryIDs adds the "status_history" edge to the OrderStatusHistory entity by IDs.
+func (oc *OrderCreate) AddStatusHistoryIDs(ids ...int64) *OrderCreate {
+	oc.mutation.AddStatusHistoryIDs(ids...)
+	return oc
+}
+
+// AddStatusHistory adds the "status_history" edges to the OrderStatusHistory entity.
+func (oc *OrderCreate) AddStatusHistory(o ...*OrderStatusHistory) *OrderCreate {
+	ids := make([]int64, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oc.AddStatusHistoryIDs(ids...)
 }
 
 // Mutation returns the OrderMutation object of the builder.
@@ -248,14 +312,6 @@ func (oc *OrderCreate) defaults() {
 		v := order.DefaultStatus
 		oc.mutation.SetStatus(v)
 	}
-	if _, ok := oc.mutation.Source(); !ok {
-		v := order.DefaultSource
-		oc.mutation.SetSource(v)
-	}
-	if _, ok := oc.mutation.Device(); !ok {
-		v := order.DefaultDevice
-		oc.mutation.SetDevice(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -312,17 +368,13 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
 		_node.OrderSn = value
 	}
+	if value, ok := oc.mutation.MemberID(); ok {
+		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
+		_node.MemberID = value
+	}
 	if value, ok := oc.mutation.Status(); ok {
 		_spec.SetField(order.FieldStatus, field.TypeInt64, value)
 		_node.Status = value
-	}
-	if value, ok := oc.mutation.Source(); ok {
-		_spec.SetField(order.FieldSource, field.TypeString, value)
-		_node.Source = value
-	}
-	if value, ok := oc.mutation.Device(); ok {
-		_spec.SetField(order.FieldDevice, field.TypeString, value)
-		_node.Device = value
 	}
 	if value, ok := oc.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
@@ -339,6 +391,74 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 	if value, ok := oc.mutation.RefundAt(); ok {
 		_spec.SetField(order.FieldRefundAt, field.TypeTime, value)
 		_node.RefundAt = value
+	}
+	if value, ok := oc.mutation.Version(); ok {
+		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
+		_node.Version = value
+	}
+	if nodes := oc.mutation.ItemsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.ItemsTable,
+			Columns: []string{order.ItemsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := oc.mutation.EventsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.EventsTable,
+			Columns: []string{order.EventsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := oc.mutation.SnapshotsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.SnapshotsTable,
+			Columns: []string{order.SnapshotsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := oc.mutation.StatusHistoryIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.StatusHistoryTable,
+			Columns: []string{order.StatusHistoryColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -79,19 +80,14 @@ func OrderSn(v string) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldOrderSn, v))
 }
 
+// MemberID applies equality check predicate on the "member_id" field. It's identical to MemberIDEQ.
+func MemberID(v int64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldMemberID, v))
+}
+
 // Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
 func Status(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldStatus, v))
-}
-
-// Source applies equality check predicate on the "source" field. It's identical to SourceEQ.
-func Source(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldSource, v))
-}
-
-// Device applies equality check predicate on the "device" field. It's identical to DeviceEQ.
-func Device(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldDevice, v))
 }
 
 // Nature applies equality check predicate on the "nature" field. It's identical to NatureEQ.
@@ -112,6 +108,11 @@ func CloseAt(v time.Time) predicate.Order {
 // RefundAt applies equality check predicate on the "refund_at" field. It's identical to RefundAtEQ.
 func RefundAt(v time.Time) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldRefundAt, v))
+}
+
+// Version applies equality check predicate on the "version " field. It's identical to VersionEQ.
+func Version(v int64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldVersion, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -389,6 +390,56 @@ func OrderSnContainsFold(v string) predicate.Order {
 	return predicate.Order(sql.FieldContainsFold(FieldOrderSn, v))
 }
 
+// MemberIDEQ applies the EQ predicate on the "member_id" field.
+func MemberIDEQ(v int64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldMemberID, v))
+}
+
+// MemberIDNEQ applies the NEQ predicate on the "member_id" field.
+func MemberIDNEQ(v int64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldMemberID, v))
+}
+
+// MemberIDIn applies the In predicate on the "member_id" field.
+func MemberIDIn(vs ...int64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldMemberID, vs...))
+}
+
+// MemberIDNotIn applies the NotIn predicate on the "member_id" field.
+func MemberIDNotIn(vs ...int64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldMemberID, vs...))
+}
+
+// MemberIDGT applies the GT predicate on the "member_id" field.
+func MemberIDGT(v int64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldMemberID, v))
+}
+
+// MemberIDGTE applies the GTE predicate on the "member_id" field.
+func MemberIDGTE(v int64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldMemberID, v))
+}
+
+// MemberIDLT applies the LT predicate on the "member_id" field.
+func MemberIDLT(v int64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldMemberID, v))
+}
+
+// MemberIDLTE applies the LTE predicate on the "member_id" field.
+func MemberIDLTE(v int64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldMemberID, v))
+}
+
+// MemberIDIsNil applies the IsNil predicate on the "member_id" field.
+func MemberIDIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldMemberID))
+}
+
+// MemberIDNotNil applies the NotNil predicate on the "member_id" field.
+func MemberIDNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldMemberID))
+}
+
 // StatusEQ applies the EQ predicate on the "status" field.
 func StatusEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldStatus, v))
@@ -437,156 +488,6 @@ func StatusIsNil() predicate.Order {
 // StatusNotNil applies the NotNil predicate on the "status" field.
 func StatusNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldStatus))
-}
-
-// SourceEQ applies the EQ predicate on the "source" field.
-func SourceEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldSource, v))
-}
-
-// SourceNEQ applies the NEQ predicate on the "source" field.
-func SourceNEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldNEQ(FieldSource, v))
-}
-
-// SourceIn applies the In predicate on the "source" field.
-func SourceIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldIn(FieldSource, vs...))
-}
-
-// SourceNotIn applies the NotIn predicate on the "source" field.
-func SourceNotIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldNotIn(FieldSource, vs...))
-}
-
-// SourceGT applies the GT predicate on the "source" field.
-func SourceGT(v string) predicate.Order {
-	return predicate.Order(sql.FieldGT(FieldSource, v))
-}
-
-// SourceGTE applies the GTE predicate on the "source" field.
-func SourceGTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldGTE(FieldSource, v))
-}
-
-// SourceLT applies the LT predicate on the "source" field.
-func SourceLT(v string) predicate.Order {
-	return predicate.Order(sql.FieldLT(FieldSource, v))
-}
-
-// SourceLTE applies the LTE predicate on the "source" field.
-func SourceLTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldLTE(FieldSource, v))
-}
-
-// SourceContains applies the Contains predicate on the "source" field.
-func SourceContains(v string) predicate.Order {
-	return predicate.Order(sql.FieldContains(FieldSource, v))
-}
-
-// SourceHasPrefix applies the HasPrefix predicate on the "source" field.
-func SourceHasPrefix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasPrefix(FieldSource, v))
-}
-
-// SourceHasSuffix applies the HasSuffix predicate on the "source" field.
-func SourceHasSuffix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasSuffix(FieldSource, v))
-}
-
-// SourceIsNil applies the IsNil predicate on the "source" field.
-func SourceIsNil() predicate.Order {
-	return predicate.Order(sql.FieldIsNull(FieldSource))
-}
-
-// SourceNotNil applies the NotNil predicate on the "source" field.
-func SourceNotNil() predicate.Order {
-	return predicate.Order(sql.FieldNotNull(FieldSource))
-}
-
-// SourceEqualFold applies the EqualFold predicate on the "source" field.
-func SourceEqualFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldEqualFold(FieldSource, v))
-}
-
-// SourceContainsFold applies the ContainsFold predicate on the "source" field.
-func SourceContainsFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldContainsFold(FieldSource, v))
-}
-
-// DeviceEQ applies the EQ predicate on the "device" field.
-func DeviceEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldDevice, v))
-}
-
-// DeviceNEQ applies the NEQ predicate on the "device" field.
-func DeviceNEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldNEQ(FieldDevice, v))
-}
-
-// DeviceIn applies the In predicate on the "device" field.
-func DeviceIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldIn(FieldDevice, vs...))
-}
-
-// DeviceNotIn applies the NotIn predicate on the "device" field.
-func DeviceNotIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldNotIn(FieldDevice, vs...))
-}
-
-// DeviceGT applies the GT predicate on the "device" field.
-func DeviceGT(v string) predicate.Order {
-	return predicate.Order(sql.FieldGT(FieldDevice, v))
-}
-
-// DeviceGTE applies the GTE predicate on the "device" field.
-func DeviceGTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldGTE(FieldDevice, v))
-}
-
-// DeviceLT applies the LT predicate on the "device" field.
-func DeviceLT(v string) predicate.Order {
-	return predicate.Order(sql.FieldLT(FieldDevice, v))
-}
-
-// DeviceLTE applies the LTE predicate on the "device" field.
-func DeviceLTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldLTE(FieldDevice, v))
-}
-
-// DeviceContains applies the Contains predicate on the "device" field.
-func DeviceContains(v string) predicate.Order {
-	return predicate.Order(sql.FieldContains(FieldDevice, v))
-}
-
-// DeviceHasPrefix applies the HasPrefix predicate on the "device" field.
-func DeviceHasPrefix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasPrefix(FieldDevice, v))
-}
-
-// DeviceHasSuffix applies the HasSuffix predicate on the "device" field.
-func DeviceHasSuffix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasSuffix(FieldDevice, v))
-}
-
-// DeviceIsNil applies the IsNil predicate on the "device" field.
-func DeviceIsNil() predicate.Order {
-	return predicate.Order(sql.FieldIsNull(FieldDevice))
-}
-
-// DeviceNotNil applies the NotNil predicate on the "device" field.
-func DeviceNotNil() predicate.Order {
-	return predicate.Order(sql.FieldNotNull(FieldDevice))
-}
-
-// DeviceEqualFold applies the EqualFold predicate on the "device" field.
-func DeviceEqualFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldEqualFold(FieldDevice, v))
-}
-
-// DeviceContainsFold applies the ContainsFold predicate on the "device" field.
-func DeviceContainsFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldContainsFold(FieldDevice, v))
 }
 
 // NatureEQ applies the EQ predicate on the "nature" field.
@@ -787,6 +688,148 @@ func RefundAtIsNil() predicate.Order {
 // RefundAtNotNil applies the NotNil predicate on the "refund_at" field.
 func RefundAtNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldRefundAt))
+}
+
+// VersionEQ applies the EQ predicate on the "version " field.
+func VersionEQ(v int64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldVersion, v))
+}
+
+// VersionNEQ applies the NEQ predicate on the "version " field.
+func VersionNEQ(v int64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldVersion, v))
+}
+
+// VersionIn applies the In predicate on the "version " field.
+func VersionIn(vs ...int64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldVersion, vs...))
+}
+
+// VersionNotIn applies the NotIn predicate on the "version " field.
+func VersionNotIn(vs ...int64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldVersion, vs...))
+}
+
+// VersionGT applies the GT predicate on the "version " field.
+func VersionGT(v int64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldVersion, v))
+}
+
+// VersionGTE applies the GTE predicate on the "version " field.
+func VersionGTE(v int64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldVersion, v))
+}
+
+// VersionLT applies the LT predicate on the "version " field.
+func VersionLT(v int64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldVersion, v))
+}
+
+// VersionLTE applies the LTE predicate on the "version " field.
+func VersionLTE(v int64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldVersion, v))
+}
+
+// VersionIsNil applies the IsNil predicate on the "version " field.
+func VersionIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldVersion))
+}
+
+// VersionNotNil applies the NotNil predicate on the "version " field.
+func VersionNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldVersion))
+}
+
+// HasItems applies the HasEdge predicate on the "items" edge.
+func HasItems() predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ItemsTable, ItemsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasItemsWith applies the HasEdge predicate on the "items" edge with a given conditions (other predicates).
+func HasItemsWith(preds ...predicate.OrderItem) predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := newItemsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasEvents applies the HasEdge predicate on the "events" edge.
+func HasEvents() predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, EventsTable, EventsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasEventsWith applies the HasEdge predicate on the "events" edge with a given conditions (other predicates).
+func HasEventsWith(preds ...predicate.OrderEvents) predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := newEventsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasSnapshots applies the HasEdge predicate on the "snapshots" edge.
+func HasSnapshots() predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SnapshotsTable, SnapshotsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasSnapshotsWith applies the HasEdge predicate on the "snapshots" edge with a given conditions (other predicates).
+func HasSnapshotsWith(preds ...predicate.OrderSnapshots) predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := newSnapshotsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasStatusHistory applies the HasEdge predicate on the "status_history" edge.
+func HasStatusHistory() predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StatusHistoryTable, StatusHistoryColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStatusHistoryWith applies the HasEdge predicate on the "status_history" edge with a given conditions (other predicates).
+func HasStatusHistoryWith(preds ...predicate.OrderStatusHistory) predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := newStatusHistoryStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

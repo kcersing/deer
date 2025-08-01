@@ -4,8 +4,13 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
+	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/orderitem"
+	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
+	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
 	"math"
 
@@ -18,11 +23,15 @@ import (
 // OrderQuery is the builder for querying Order entities.
 type OrderQuery struct {
 	config
-	ctx        *QueryContext
-	order      []order.OrderOption
-	inters     []Interceptor
-	predicates []predicate.Order
-	modifiers  []func(*sql.Selector)
+	ctx               *QueryContext
+	order             []order.OrderOption
+	inters            []Interceptor
+	predicates        []predicate.Order
+	withItems         *OrderItemQuery
+	withEvents        *OrderEventsQuery
+	withSnapshots     *OrderSnapshotsQuery
+	withStatusHistory *OrderStatusHistoryQuery
+	modifiers         []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -57,6 +66,94 @@ func (oq *OrderQuery) Unique(unique bool) *OrderQuery {
 func (oq *OrderQuery) Order(o ...order.OrderOption) *OrderQuery {
 	oq.order = append(oq.order, o...)
 	return oq
+}
+
+// QueryItems chains the current query on the "items" edge.
+func (oq *OrderQuery) QueryItems() *OrderItemQuery {
+	query := (&OrderItemClient{config: oq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := oq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := oq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(orderitem.Table, orderitem.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.ItemsTable, order.ItemsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(oq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryEvents chains the current query on the "events" edge.
+func (oq *OrderQuery) QueryEvents() *OrderEventsQuery {
+	query := (&OrderEventsClient{config: oq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := oq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := oq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(orderevents.Table, orderevents.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.EventsTable, order.EventsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(oq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QuerySnapshots chains the current query on the "snapshots" edge.
+func (oq *OrderQuery) QuerySnapshots() *OrderSnapshotsQuery {
+	query := (&OrderSnapshotsClient{config: oq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := oq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := oq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(ordersnapshots.Table, ordersnapshots.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.SnapshotsTable, order.SnapshotsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(oq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStatusHistory chains the current query on the "status_history" edge.
+func (oq *OrderQuery) QueryStatusHistory() *OrderStatusHistoryQuery {
+	query := (&OrderStatusHistoryClient{config: oq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := oq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := oq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(orderstatushistory.Table, orderstatushistory.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.StatusHistoryTable, order.StatusHistoryColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(oq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first Order entity from the query.
@@ -246,16 +343,64 @@ func (oq *OrderQuery) Clone() *OrderQuery {
 		return nil
 	}
 	return &OrderQuery{
-		config:     oq.config,
-		ctx:        oq.ctx.Clone(),
-		order:      append([]order.OrderOption{}, oq.order...),
-		inters:     append([]Interceptor{}, oq.inters...),
-		predicates: append([]predicate.Order{}, oq.predicates...),
+		config:            oq.config,
+		ctx:               oq.ctx.Clone(),
+		order:             append([]order.OrderOption{}, oq.order...),
+		inters:            append([]Interceptor{}, oq.inters...),
+		predicates:        append([]predicate.Order{}, oq.predicates...),
+		withItems:         oq.withItems.Clone(),
+		withEvents:        oq.withEvents.Clone(),
+		withSnapshots:     oq.withSnapshots.Clone(),
+		withStatusHistory: oq.withStatusHistory.Clone(),
 		// clone intermediate query.
 		sql:       oq.sql.Clone(),
 		path:      oq.path,
 		modifiers: append([]func(*sql.Selector){}, oq.modifiers...),
 	}
+}
+
+// WithItems tells the query-builder to eager-load the nodes that are connected to
+// the "items" edge. The optional arguments are used to configure the query builder of the edge.
+func (oq *OrderQuery) WithItems(opts ...func(*OrderItemQuery)) *OrderQuery {
+	query := (&OrderItemClient{config: oq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	oq.withItems = query
+	return oq
+}
+
+// WithEvents tells the query-builder to eager-load the nodes that are connected to
+// the "events" edge. The optional arguments are used to configure the query builder of the edge.
+func (oq *OrderQuery) WithEvents(opts ...func(*OrderEventsQuery)) *OrderQuery {
+	query := (&OrderEventsClient{config: oq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	oq.withEvents = query
+	return oq
+}
+
+// WithSnapshots tells the query-builder to eager-load the nodes that are connected to
+// the "snapshots" edge. The optional arguments are used to configure the query builder of the edge.
+func (oq *OrderQuery) WithSnapshots(opts ...func(*OrderSnapshotsQuery)) *OrderQuery {
+	query := (&OrderSnapshotsClient{config: oq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	oq.withSnapshots = query
+	return oq
+}
+
+// WithStatusHistory tells the query-builder to eager-load the nodes that are connected to
+// the "status_history" edge. The optional arguments are used to configure the query builder of the edge.
+func (oq *OrderQuery) WithStatusHistory(opts ...func(*OrderStatusHistoryQuery)) *OrderQuery {
+	query := (&OrderStatusHistoryClient{config: oq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	oq.withStatusHistory = query
+	return oq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -334,8 +479,14 @@ func (oq *OrderQuery) prepareQuery(ctx context.Context) error {
 
 func (oq *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order, error) {
 	var (
-		nodes = []*Order{}
-		_spec = oq.querySpec()
+		nodes       = []*Order{}
+		_spec       = oq.querySpec()
+		loadedTypes = [4]bool{
+			oq.withItems != nil,
+			oq.withEvents != nil,
+			oq.withSnapshots != nil,
+			oq.withStatusHistory != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Order).scanValues(nil, columns)
@@ -343,6 +494,7 @@ func (oq *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Order{config: oq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if len(oq.modifiers) > 0 {
@@ -357,7 +509,156 @@ func (oq *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := oq.withItems; query != nil {
+		if err := oq.loadItems(ctx, query, nodes,
+			func(n *Order) { n.Edges.Items = []*OrderItem{} },
+			func(n *Order, e *OrderItem) { n.Edges.Items = append(n.Edges.Items, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := oq.withEvents; query != nil {
+		if err := oq.loadEvents(ctx, query, nodes,
+			func(n *Order) { n.Edges.Events = []*OrderEvents{} },
+			func(n *Order, e *OrderEvents) { n.Edges.Events = append(n.Edges.Events, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := oq.withSnapshots; query != nil {
+		if err := oq.loadSnapshots(ctx, query, nodes,
+			func(n *Order) { n.Edges.Snapshots = []*OrderSnapshots{} },
+			func(n *Order, e *OrderSnapshots) { n.Edges.Snapshots = append(n.Edges.Snapshots, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := oq.withStatusHistory; query != nil {
+		if err := oq.loadStatusHistory(ctx, query, nodes,
+			func(n *Order) { n.Edges.StatusHistory = []*OrderStatusHistory{} },
+			func(n *Order, e *OrderStatusHistory) { n.Edges.StatusHistory = append(n.Edges.StatusHistory, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (oq *OrderQuery) loadItems(ctx context.Context, query *OrderItemQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderItem)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orderitem.FieldOrderID)
+	}
+	query.Where(predicate.OrderItem(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.ItemsColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.OrderID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "order_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (oq *OrderQuery) loadEvents(ctx context.Context, query *OrderEventsQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderEvents)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orderevents.FieldAggregateID)
+	}
+	query.Where(predicate.OrderEvents(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.EventsColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.AggregateID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "aggregate_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (oq *OrderQuery) loadSnapshots(ctx context.Context, query *OrderSnapshotsQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderSnapshots)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(ordersnapshots.FieldAggregateID)
+	}
+	query.Where(predicate.OrderSnapshots(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.SnapshotsColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.AggregateID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "aggregate_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (oq *OrderQuery) loadStatusHistory(ctx context.Context, query *OrderStatusHistoryQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderStatusHistory)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orderstatushistory.FieldOrderID)
+	}
+	query.Where(predicate.OrderStatusHistory(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.StatusHistoryColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.OrderID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "order_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (oq *OrderQuery) sqlCount(ctx context.Context) (int, error) {

@@ -1,14 +1,12 @@
-package new
+package schema
 
 import (
-	"kcers/biz/dal/db/mysql/ent/schema/mixins"
-
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
+	"kcers-order/biz/dal/db/mysql/ent/schema/mixins"
 )
 
 type EventSubscriptions struct {
@@ -36,23 +34,13 @@ func (EventSubscriptions) Mixin() []ent.Mixin {
 }
 
 func (EventSubscriptions) Edges() []ent.Edge {
-	return []ent.Edge{
-
-		edge.To("amount", OrderAmount.Type),
-		edge.To("item", OrderItem.Type),
-		edge.To("pay", OrderPay.Type),
-		edge.To("order_contents", MemberContract.Type),
-		edge.To("sales", OrderSales.Type),
-
-		edge.From("order_venues", Venue.Type).Ref("venue_orders").Field("venue_id").Unique(),
-		edge.From("order_members", Member.Type).Ref("member_orders").Field("member_id").Unique(),
-		edge.From("order_creates", User.Type).Ref("created_orders").Field("created_id").Unique(),
-	}
+	return []ent.Edge{}
 }
 
 func (EventSubscriptions) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
+		index.Fields("event_type", "is_active"),
 	}
 }
 

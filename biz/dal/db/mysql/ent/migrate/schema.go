@@ -9,6 +9,40 @@ import (
 )
 
 var (
+	// EventSubscriptionsColumns holds the columns for the "event_subscriptions" table.
+	EventSubscriptionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "名称"},
+		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "订阅的事件类型"},
+		{Name: "last_processed_id", Type: field.TypeString, Nullable: true, Comment: "最后处理的事件ID"},
+		{Name: "last_processed_version", Type: field.TypeString, Nullable: true, Comment: "最后处理的事件版本"},
+		{Name: "last_processed_at", Type: field.TypeString, Nullable: true, Comment: "最后处理时间"},
+		{Name: "is_active", Type: field.TypeInt64, Nullable: true, Comment: "是否活跃"},
+		{Name: "error_count", Type: field.TypeString, Nullable: true, Comment: "处理错误次数"},
+		{Name: "last_error", Type: field.TypeString, Nullable: true, Comment: "最后错误信息"},
+	}
+	// EventSubscriptionsTable holds the schema information for the "event_subscriptions" table.
+	EventSubscriptionsTable = &schema.Table{
+		Name:       "event_subscriptions",
+		Columns:    EventSubscriptionsColumns,
+		PrimaryKey: []*schema.Column{EventSubscriptionsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "eventsubscriptions_id",
+				Unique:  false,
+				Columns: []*schema.Column{EventSubscriptionsColumns[0]},
+			},
+			{
+				Name:    "eventsubscriptions_event_type_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{EventSubscriptionsColumns[6], EventSubscriptionsColumns[10]},
+			},
+		},
+	}
 	// OrderColumns holds the columns for the "order" table.
 	OrderColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -17,13 +51,13 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "order_sn", Type: field.TypeString, Nullable: true, Comment: "订单编号"},
+		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Default: 0},
-		{Name: "source", Type: field.TypeString, Nullable: true, Comment: "订单来源", Default: ""},
-		{Name: "device", Type: field.TypeString, Nullable: true, Comment: "设备来源", Default: ""},
 		{Name: "nature", Type: field.TypeInt64, Nullable: true, Comment: "业务类型"},
 		{Name: "completion_at", Type: field.TypeTime, Nullable: true, Comment: "订单完成时间"},
 		{Name: "close_at", Type: field.TypeTime, Nullable: true, Comment: "订单关闭时间"},
 		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
+		{Name: "version ", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号"},
 	}
 	// OrderTable holds the schema information for the "order" table.
 	OrderTable = &schema.Table{
@@ -42,20 +76,210 @@ var (
 				Columns: []*schema.Column{OrderColumns[5]},
 			},
 			{
+				Name:    "order_member_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderColumns[6]},
+			},
+			{
+				Name:    "order_status",
+				Unique:  false,
+				Columns: []*schema.Column{OrderColumns[7]},
+			},
+			{
 				Name:    "order_completion_at",
 				Unique:  false,
-				Columns: []*schema.Column{OrderColumns[10]},
+				Columns: []*schema.Column{OrderColumns[9]},
+			},
+		},
+	}
+	// OrderEventsColumns holds the columns for the "order_events" table.
+	OrderEventsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "event_id", Type: field.TypeInt64, Nullable: true, Comment: "事件id"},
+		{Name: "aggregate_type", Type: field.TypeString, Nullable: true, Comment: "聚合根类型"},
+		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "事件类型"},
+		{Name: "event_data", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "事件数据"},
+		{Name: "event_version", Type: field.TypeInt64, Nullable: true, Comment: "聚合根版本号"},
+		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
+	}
+	// OrderEventsTable holds the schema information for the "order_events" table.
+	OrderEventsTable = &schema.Table{
+		Name:       "order_events",
+		Columns:    OrderEventsColumns,
+		PrimaryKey: []*schema.Column{OrderEventsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "order_events_order_events",
+				Columns:    []*schema.Column{OrderEventsColumns[10]},
+				RefColumns: []*schema.Column{OrderColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orderevents_event_type",
+				Unique:  false,
+				Columns: []*schema.Column{OrderEventsColumns[7]},
+			},
+			{
+				Name:    "orderevents_aggregate_id_event_version",
+				Unique:  false,
+				Columns: []*schema.Column{OrderEventsColumns[10], OrderEventsColumns[9]},
+			},
+		},
+	}
+	// OrderItemColumns holds the columns for the "order_item" table.
+	OrderItemColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "product_id", Type: field.TypeInt64, Nullable: true, Comment: "产品id"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "名称"},
+		{Name: "unit_price", Type: field.TypeFloat64, Nullable: true, Comment: "单价"},
+		{Name: "quantity", Type: field.TypeInt64, Nullable: true, Comment: "数量", Default: 1},
+		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
+	}
+	// OrderItemTable holds the schema information for the "order_item" table.
+	OrderItemTable = &schema.Table{
+		Name:       "order_item",
+		Columns:    OrderItemColumns,
+		PrimaryKey: []*schema.Column{OrderItemColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "order_item_order_items",
+				Columns:    []*schema.Column{OrderItemColumns[9]},
+				RefColumns: []*schema.Column{OrderColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orderitem_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderItemColumns[0]},
+			},
+			{
+				Name:    "orderitem_order_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderItemColumns[9]},
+			},
+			{
+				Name:    "orderitem_product_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderItemColumns[5]},
+			},
+		},
+	}
+	// OrderSnapshotsColumns holds the columns for the "order_snapshots" table.
+	OrderSnapshotsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "aggregate_version", Type: field.TypeInt64, Nullable: true, Comment: "快照版本"},
+		{Name: "aggregate_data", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "快照数据"},
+		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
+	}
+	// OrderSnapshotsTable holds the schema information for the "order_snapshots" table.
+	OrderSnapshotsTable = &schema.Table{
+		Name:       "order_snapshots",
+		Columns:    OrderSnapshotsColumns,
+		PrimaryKey: []*schema.Column{OrderSnapshotsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "order_snapshots_order_snapshots",
+				Columns:    []*schema.Column{OrderSnapshotsColumns[7]},
+				RefColumns: []*schema.Column{OrderColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "ordersnapshots_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderSnapshotsColumns[0]},
+			},
+			{
+				Name:    "ordersnapshots_aggregate_id_aggregate_version",
+				Unique:  false,
+				Columns: []*schema.Column{OrderSnapshotsColumns[7], OrderSnapshotsColumns[5]},
+			},
+		},
+	}
+	// OrderStatusHistoryColumns holds the columns for the "order_status_history" table.
+	OrderStatusHistoryColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "old_status", Type: field.TypeInt64, Nullable: true, Comment: "旧状态"},
+		{Name: "new_status", Type: field.TypeInt64, Nullable: true, Comment: "新状态"},
+		{Name: "change_source", Type: field.TypeString, Nullable: true, Comment: "变更来源"},
+		{Name: "change_reason", Type: field.TypeString, Nullable: true, Comment: "变更原因"},
+		{Name: "change_at", Type: field.TypeTime, Nullable: true, Comment: "变更时间"},
+		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单ID"},
+	}
+	// OrderStatusHistoryTable holds the schema information for the "order_status_history" table.
+	OrderStatusHistoryTable = &schema.Table{
+		Name:       "order_status_history",
+		Columns:    OrderStatusHistoryColumns,
+		PrimaryKey: []*schema.Column{OrderStatusHistoryColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "order_status_history_order_status_history",
+				Columns:    []*schema.Column{OrderStatusHistoryColumns[10]},
+				RefColumns: []*schema.Column{OrderColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orderstatushistory_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderStatusHistoryColumns[0]},
 			},
 		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		EventSubscriptionsTable,
 		OrderTable,
+		OrderEventsTable,
+		OrderItemTable,
+		OrderSnapshotsTable,
+		OrderStatusHistoryTable,
 	}
 )
 
 func init() {
+	EventSubscriptionsTable.Annotation = &entsql.Annotation{
+		Table: "event_subscriptions",
+	}
 	OrderTable.Annotation = &entsql.Annotation{
 		Table: "order",
+	}
+	OrderEventsTable.ForeignKeys[0].RefTable = OrderTable
+	OrderEventsTable.Annotation = &entsql.Annotation{
+		Table: "order_events",
+	}
+	OrderItemTable.ForeignKeys[0].RefTable = OrderTable
+	OrderItemTable.Annotation = &entsql.Annotation{
+		Table: "order_item",
+	}
+	OrderSnapshotsTable.ForeignKeys[0].RefTable = OrderTable
+	OrderSnapshotsTable.Annotation = &entsql.Annotation{
+		Table: "order_snapshots",
+	}
+	OrderStatusHistoryTable.ForeignKeys[0].RefTable = OrderTable
+	OrderStatusHistoryTable.Annotation = &entsql.Annotation{
+		Table: "order_status_history",
 	}
 }

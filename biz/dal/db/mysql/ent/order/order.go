@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -23,12 +24,10 @@ const (
 	FieldCreatedID = "created_id"
 	// FieldOrderSn holds the string denoting the order_sn field in the database.
 	FieldOrderSn = "order_sn"
+	// FieldMemberID holds the string denoting the member_id field in the database.
+	FieldMemberID = "member_id"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
-	// FieldSource holds the string denoting the source field in the database.
-	FieldSource = "source"
-	// FieldDevice holds the string denoting the device field in the database.
-	FieldDevice = "device"
 	// FieldNature holds the string denoting the nature field in the database.
 	FieldNature = "nature"
 	// FieldCompletionAt holds the string denoting the completion_at field in the database.
@@ -37,8 +36,46 @@ const (
 	FieldCloseAt = "close_at"
 	// FieldRefundAt holds the string denoting the refund_at field in the database.
 	FieldRefundAt = "refund_at"
+	// FieldVersion holds the string denoting the version  field in the database.
+	FieldVersion = "version "
+	// EdgeItems holds the string denoting the items edge name in mutations.
+	EdgeItems = "items"
+	// EdgeEvents holds the string denoting the events edge name in mutations.
+	EdgeEvents = "events"
+	// EdgeSnapshots holds the string denoting the snapshots edge name in mutations.
+	EdgeSnapshots = "snapshots"
+	// EdgeStatusHistory holds the string denoting the status_history edge name in mutations.
+	EdgeStatusHistory = "status_history"
 	// Table holds the table name of the order in the database.
 	Table = "order"
+	// ItemsTable is the table that holds the items relation/edge.
+	ItemsTable = "order_item"
+	// ItemsInverseTable is the table name for the OrderItem entity.
+	// It exists in this package in order to avoid circular dependency with the "orderitem" package.
+	ItemsInverseTable = "order_item"
+	// ItemsColumn is the table column denoting the items relation/edge.
+	ItemsColumn = "order_id"
+	// EventsTable is the table that holds the events relation/edge.
+	EventsTable = "order_events"
+	// EventsInverseTable is the table name for the OrderEvents entity.
+	// It exists in this package in order to avoid circular dependency with the "orderevents" package.
+	EventsInverseTable = "order_events"
+	// EventsColumn is the table column denoting the events relation/edge.
+	EventsColumn = "aggregate_id"
+	// SnapshotsTable is the table that holds the snapshots relation/edge.
+	SnapshotsTable = "order_snapshots"
+	// SnapshotsInverseTable is the table name for the OrderSnapshots entity.
+	// It exists in this package in order to avoid circular dependency with the "ordersnapshots" package.
+	SnapshotsInverseTable = "order_snapshots"
+	// SnapshotsColumn is the table column denoting the snapshots relation/edge.
+	SnapshotsColumn = "aggregate_id"
+	// StatusHistoryTable is the table that holds the status_history relation/edge.
+	StatusHistoryTable = "order_status_history"
+	// StatusHistoryInverseTable is the table name for the OrderStatusHistory entity.
+	// It exists in this package in order to avoid circular dependency with the "orderstatushistory" package.
+	StatusHistoryInverseTable = "order_status_history"
+	// StatusHistoryColumn is the table column denoting the status_history relation/edge.
+	StatusHistoryColumn = "order_id"
 )
 
 // Columns holds all SQL columns for order fields.
@@ -49,13 +86,13 @@ var Columns = []string{
 	FieldDelete,
 	FieldCreatedID,
 	FieldOrderSn,
+	FieldMemberID,
 	FieldStatus,
-	FieldSource,
-	FieldDevice,
 	FieldNature,
 	FieldCompletionAt,
 	FieldCloseAt,
 	FieldRefundAt,
+	FieldVersion,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -81,10 +118,6 @@ var (
 	DefaultCreatedID int64
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int64
-	// DefaultSource holds the default value on creation for the "source" field.
-	DefaultSource string
-	// DefaultDevice holds the default value on creation for the "device" field.
-	DefaultDevice string
 )
 
 // OrderOption defines the ordering options for the Order queries.
@@ -120,19 +153,14 @@ func ByOrderSn(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrderSn, opts...).ToFunc()
 }
 
+// ByMemberID orders the results by the member_id field.
+func ByMemberID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMemberID, opts...).ToFunc()
+}
+
 // ByStatus orders the results by the status field.
 func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
-}
-
-// BySource orders the results by the source field.
-func BySource(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSource, opts...).ToFunc()
-}
-
-// ByDevice orders the results by the device field.
-func ByDevice(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDevice, opts...).ToFunc()
 }
 
 // ByNature orders the results by the nature field.
@@ -153,4 +181,93 @@ func ByCloseAt(opts ...sql.OrderTermOption) OrderOption {
 // ByRefundAt orders the results by the refund_at field.
 func ByRefundAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRefundAt, opts...).ToFunc()
+}
+
+// ByVersion orders the results by the version  field.
+func ByVersion(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldVersion, opts...).ToFunc()
+}
+
+// ByItemsCount orders the results by items count.
+func ByItemsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newItemsStep(), opts...)
+	}
+}
+
+// ByItems orders the results by items terms.
+func ByItems(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newItemsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// ByEventsCount orders the results by events count.
+func ByEventsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newEventsStep(), opts...)
+	}
+}
+
+// ByEvents orders the results by events terms.
+func ByEvents(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newEventsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// BySnapshotsCount orders the results by snapshots count.
+func BySnapshotsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newSnapshotsStep(), opts...)
+	}
+}
+
+// BySnapshots orders the results by snapshots terms.
+func BySnapshots(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newSnapshotsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// ByStatusHistoryCount orders the results by status_history count.
+func ByStatusHistoryCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newStatusHistoryStep(), opts...)
+	}
+}
+
+// ByStatusHistory orders the results by status_history terms.
+func ByStatusHistory(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newStatusHistoryStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newItemsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(ItemsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, ItemsTable, ItemsColumn),
+	)
+}
+func newEventsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(EventsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, EventsTable, EventsColumn),
+	)
+}
+func newSnapshotsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(SnapshotsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, SnapshotsTable, SnapshotsColumn),
+	)
+}
+func newStatusHistoryStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(StatusHistoryInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, StatusHistoryTable, StatusHistoryColumn),
+	)
 }
