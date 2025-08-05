@@ -72,14 +72,23 @@ func NewOrderCreatedEvent(orderID int64, sn string, items []OrderItem, amount fl
 	}
 }
 
-type OrderShippedEvent struct{}
+type OrderShippedEvent struct {
+	BaseEvent
+}
 
 func (e *OrderShippedEvent) GetType() string { return "OrderShipped" }
 
-type OrderCompletedEvent struct{}
+type OrderCompletedEvent struct {
+	BaseEvent
+	CompletionAt time.Time
+}
 
 func (e *OrderCompletedEvent) GetType() string { return "OrderCompleted" }
 
-type OrderRefundedEvent struct{}
+type OrderRefundedEvent struct {
+	BaseEvent
+	RefundAt       time.Time
+	RefundedAmount float64
+}
 
 func (e *OrderRefundedEvent) GetType() string { return "OrderRefunded" }

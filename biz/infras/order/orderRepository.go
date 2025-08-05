@@ -11,19 +11,25 @@ import (
 )
 
 type OrderRepository interface {
-	Save(ctx context.Context, order *Order) error
-	FindById(ctx context.Context, id int64) (*Order, error)
+	Save(order *Order) error
+	FindById(id int64) (*Order, error)
 }
 
+// OrderRepositoryImpl 订单仓储实现
 type OrderRepositoryImpl struct {
-	db           *ent.Client
-	snapshotFreq int // 快照频率
+	db              *ent.Client
+	ctx             context.Context
+	snapshotFreq    int                 // 快照频率
+	subscriptionSvc SubscriptionService // 新增：订阅服务
 }
 
-func NewOrderRepository(db *ent.Client, snapshotFreq int) OrderRepository {
+// NewOrderRepository 创建订单仓储（更新构造函数）
+func NewOrderRepository(client *ent.Client, ctx context.Context, snapshotFreq int) OrderRepository {
 	return &OrderRepositoryImpl{
-		db:           db,
-		snapshotFreq: snapshotFreq,
+		db:              client,
+		ctx:             ctx,
+		snapshotFreq:    snapshotFreq,
+		subscriptionSvc: NewSubscriptionService(client), // 初始化订阅服务
 	}
 }
 
@@ -37,7 +43,7 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 	// 开启事务
 	tx, err := o.db.Tx(o.ctx)
 	if err != nil {
-		return errors.Wrap(err, "failed to start transaction")
+		return errors.Wrap(err, "创建事务失败")
 	}
 	defer func() {
 		if r := recover(); r != nil {
@@ -104,8 +110,8 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 		}
 		_, err = tx.OrderSnapshots.Create().
 			SetAggregateID(order.Id).
-			SetVersion(order.Version).
-			SetData(string(snapshotData)).
+			SetAggregateVersion(order.Version).
+			SetAggregateData(string(snapshotData)).
 			SetCreatedAt(time.Now()).
 			Save(o.ctx)
 		if err != nil {
@@ -117,6 +123,17 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 	if err = tx.Commit(); err != nil {
 		return errors.Wrap(err, "failed to commit transaction")
 	}
+
+	// 新增：提交事务后通知订阅者（确保事件已持久化）
+	if err == nil { // 事务成功提交后处理订阅
+		for _, event := range events {
+			if err := o.subscriptionSvc.ProcessEvent(o.ctx, event); err != nil {
+				// 记录订阅通知失败日志，但不回滚订单事务（事件已持久化）
+				klog.Errorf("通知订阅者失败(event_id=%s): %v", event.GetID(), err)
+			}
+		}
+	}
+
 	order.ClearUncommittedEvents() // 事务成功后清除未提交事件
 	return nil
 }
@@ -190,8 +207,8 @@ func (o OrderRepositoryImpl) Update(order *Order) error {
 	// 使用乐观锁条件：仅当数据库版本与当前版本一致时更新
 	_, err := o.db.Order.
 		UpdateOneID(order.Id).
-		SetStatus(int64(order.Status)).
-		SetTotalAmount(order.TotalAmount).
+		SetStatus(order.Status).
+		//SetTotalAmount(order.TotalAmount).
 		SetVersion(order.Version).
 		Where(order.Version(order.Version - 1)). // 条件：当前版本=数据库版本
 		Save(o.ctx)
@@ -205,60 +222,4 @@ func (o OrderRepositoryImpl) Update(order *Order) error {
 		return errors.Wrap(err, "failed to update order")
 	}
 	return nil
-}
-
-// ... 现有代码 ...
-
-// OrderRepositoryImpl 订单仓储实现
-type OrderRepositoryImpl struct {
-	db              *ent.Client
-	snapshotFreq    int                 // 快照频率
-	subscriptionSvc SubscriptionService // 新增：订阅服务
-}
-
-// NewOrderRepository 创建订单仓储（更新构造函数）
-func NewOrderRepository(client *ent.Client, snapshotFreq int) OrderRepository {
-	return &OrderRepositoryImpl{
-		db:              client,
-		snapshotFreq:    snapshotFreq,
-		subscriptionSvc: NewSubscriptionService(client), // 初始化订阅服务
-	}
-}
-
-// Save 保存订单并提交事件（更新事件保存后逻辑）
-func (r *OrderRepositoryImpl) Save(ctx context.Context, order *Order) error {
-	events := order.GetUncommittedEvents()
-	if len(events) == 0 {
-		return nil
-	}
-
-	tx, err := r.db.Tx(ctx)
-	if err != nil {
-		return errors.Wrap(err, "创建事务失败")
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			_ = tx.Rollback()
-			panic(r)
-		} else if err != nil {
-			_ = tx.Rollback()
-		} else {
-			err = tx.Commit()
-		}
-	}()
-
-	// ... 保存事件和快照的现有代码 ...
-
-	// 新增：提交事务后通知订阅者（确保事件已持久化）
-	if err == nil { // 事务成功提交后处理订阅
-		for _, event := range events {
-			if err := r.subscriptionSvc.ProcessEvent(ctx, event); err != nil {
-				// 记录订阅通知失败日志，但不回滚订单事务（事件已持久化）
-				klog.Errorf("通知订阅者失败(event_id=%s): %v", event.GetID(), err)
-			}
-		}
-	}
-
-	order.ClearUncommittedEvents()
-	return err
 }

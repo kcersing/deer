@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/biz/dal/db/mysql/ent/event_subscriptions"
+	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
 	"time"
 )
 
@@ -34,8 +34,8 @@ func (s *subscriptionService) ProcessEvent(ctx context.Context, event Event) err
 	subscribers, err := s.client.EventSubscriptions.
 		Query().
 		Where(
-			event_subscriptions.EventType(event.GetType()),
-			event_subscriptions.IsActive(1), // 仅活跃订阅
+			eventsubscriptions.EventType(event.GetType()),
+			eventsubscriptions.IsActive(1), // 仅活跃订阅
 		).
 		All(ctx)
 	if err != nil {

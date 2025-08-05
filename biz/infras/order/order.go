@@ -9,12 +9,18 @@ import (
 
 // Order 订单聚合根
 type Order struct {
-	Id           int64
-	OrderSn      string
-	Items        []OrderItem
-	TotalAmount  float64
-	Status       OrderStatus
-	Version      int          // 乐观锁版本号
+	Id             int64
+	OrderSn        string
+	Nature         string
+	Items          []OrderItem
+	TotalAmount    float64
+	Status         OrderStatus
+	CompletionAt   time.Time
+	CloseAt        time.Time
+	RefundAt       time.Time
+	RefundedAmount float64
+
+	Version      int64        // 乐观锁版本号
 	Events       []Event      // 未提交事件
 	mu           sync.RWMutex // 并发控制锁
 	stateMachine *OrderStateMachine
@@ -23,7 +29,7 @@ type Order struct {
 // OrderItem 订单项值对象
 type OrderItem struct {
 	ProductId int64
-	Quantity  int
+	Quantity  int64
 	Price     float64
 }
 
@@ -110,13 +116,16 @@ func (o *Order) applyEvent(event Event) {
 		o.Status = OrderPaid
 	case *OrderCancelledEvent:
 		o.Status = OrderCancelled
+		o.CloseAt = e.CancelledAt
 	case *OrderShippedEvent:
 		o.Status = OrderShipped
 	case *OrderCompletedEvent:
 		o.Status = OrderCompleted
+		o.CompletionAt = e.CompletionAt
 	case *OrderRefundedEvent:
 		o.Status = OrderRefunded
-		o.TotalAmount -= e.RefundedAmount
+		o.RefundAt = e.RefundAt
+		o.RefundedAmount = e.RefundedAmount
 	default:
 		// 添加未知事件日志
 		klog.Errorf("unsupported event type: %T", e)
