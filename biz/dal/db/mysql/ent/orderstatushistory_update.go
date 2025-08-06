@@ -19,9 +19,8 @@ import (
 // OrderStatusHistoryUpdate is the builder for updating OrderStatusHistory entities.
 type OrderStatusHistoryUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *OrderStatusHistoryMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *OrderStatusHistoryMutation
 }
 
 // Where appends a list predicates to the OrderStatusHistoryUpdate builder.
@@ -282,12 +281,6 @@ func (oshu *OrderStatusHistoryUpdate) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (oshu *OrderStatusHistoryUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderStatusHistoryUpdate {
-	oshu.modifiers = append(oshu.modifiers, modifiers...)
-	return oshu
-}
-
 func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderstatushistory.Table, orderstatushistory.Columns, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
 	if ps := oshu.mutation.predicates; len(ps) > 0 {
@@ -389,7 +382,6 @@ func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(oshu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, oshu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderstatushistory.Label}
@@ -405,10 +397,9 @@ func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err e
 // OrderStatusHistoryUpdateOne is the builder for updating a single OrderStatusHistory entity.
 type OrderStatusHistoryUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *OrderStatusHistoryMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *OrderStatusHistoryMutation
 }
 
 // SetUpdatedAt sets the "updated_at" field.
@@ -676,12 +667,6 @@ func (oshuo *OrderStatusHistoryUpdateOne) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (oshuo *OrderStatusHistoryUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderStatusHistoryUpdateOne {
-	oshuo.modifiers = append(oshuo.modifiers, modifiers...)
-	return oshuo
-}
-
 func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *OrderStatusHistory, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderstatushistory.Table, orderstatushistory.Columns, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
 	id, ok := oshuo.mutation.ID()
@@ -800,7 +785,6 @@ func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *O
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(oshuo.modifiers...)
 	_node = &OrderStatusHistory{config: oshuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

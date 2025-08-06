@@ -22,7 +22,6 @@ type EventSubscriptionsQuery struct {
 	order      []eventsubscriptions.OrderOption
 	inters     []Interceptor
 	predicates []predicate.EventSubscriptions
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -252,9 +251,8 @@ func (esq *EventSubscriptionsQuery) Clone() *EventSubscriptionsQuery {
 		inters:     append([]Interceptor{}, esq.inters...),
 		predicates: append([]predicate.EventSubscriptions{}, esq.predicates...),
 		// clone intermediate query.
-		sql:       esq.sql.Clone(),
-		path:      esq.path,
-		modifiers: append([]func(*sql.Selector){}, esq.modifiers...),
+		sql:  esq.sql.Clone(),
+		path: esq.path,
 	}
 }
 
@@ -345,9 +343,6 @@ func (esq *EventSubscriptionsQuery) sqlAll(ctx context.Context, hooks ...queryHo
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	if len(esq.modifiers) > 0 {
-		_spec.Modifiers = esq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -362,9 +357,6 @@ func (esq *EventSubscriptionsQuery) sqlAll(ctx context.Context, hooks ...queryHo
 
 func (esq *EventSubscriptionsQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := esq.querySpec()
-	if len(esq.modifiers) > 0 {
-		_spec.Modifiers = esq.modifiers
-	}
 	_spec.Node.Columns = esq.ctx.Fields
 	if len(esq.ctx.Fields) > 0 {
 		_spec.Unique = esq.ctx.Unique != nil && *esq.ctx.Unique
@@ -427,9 +419,6 @@ func (esq *EventSubscriptionsQuery) sqlQuery(ctx context.Context) *sql.Selector 
 	if esq.ctx.Unique != nil && *esq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range esq.modifiers {
-		m(selector)
-	}
 	for _, p := range esq.predicates {
 		p(selector)
 	}
@@ -445,12 +434,6 @@ func (esq *EventSubscriptionsQuery) sqlQuery(ctx context.Context) *sql.Selector 
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (esq *EventSubscriptionsQuery) Modify(modifiers ...func(s *sql.Selector)) *EventSubscriptionsSelect {
-	esq.modifiers = append(esq.modifiers, modifiers...)
-	return esq.Select()
 }
 
 // EventSubscriptionsGroupBy is the group-by builder for EventSubscriptions entities.
@@ -541,10 +524,4 @@ func (ess *EventSubscriptionsSelect) sqlScan(ctx context.Context, root *EventSub
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (ess *EventSubscriptionsSelect) Modify(modifiers ...func(s *sql.Selector)) *EventSubscriptionsSelect {
-	ess.modifiers = append(ess.modifiers, modifiers...)
-	return ess
 }

@@ -90,30 +90,3 @@ func withRetry(fn func() error, maxRetries int) error {
 	}
 	return err
 }
-
-// 库存处理器示例
-type InventoryHandler struct {
-	// 库存服务依赖
-}
-
-func (h *InventoryHandler) Handle(ctx context.Context, event Event) error {
-	switch e := event.(type) {
-	case *OrderCreatedEvent:
-		// 处理库存预留
-		return h.reserveInventory(e.AggregateID, e.Items)
-	case *OrderCancelledEvent:
-		// 处理库存释放
-		return h.releaseInventory(e.AggregateID)
-	}
-	return nil
-}
-
-func (h *InventoryHandler) reserveInventory(orderID int64, items []OrderItem) error {
-	// 实现库存预留逻辑
-	return nil
-}
-
-func (h *InventoryHandler) releaseInventory(orderID int64) error {
-	// 实现库存释放逻辑
-	return nil
-}

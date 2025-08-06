@@ -24,7 +24,6 @@ type OrderSnapshotsQuery struct {
 	inters     []Interceptor
 	predicates []predicate.OrderSnapshots
 	withOrder  *OrderQuery
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -277,9 +276,8 @@ func (osq *OrderSnapshotsQuery) Clone() *OrderSnapshotsQuery {
 		predicates: append([]predicate.OrderSnapshots{}, osq.predicates...),
 		withOrder:  osq.withOrder.Clone(),
 		// clone intermediate query.
-		sql:       osq.sql.Clone(),
-		path:      osq.path,
-		modifiers: append([]func(*sql.Selector){}, osq.modifiers...),
+		sql:  osq.sql.Clone(),
+		path: osq.path,
 	}
 }
 
@@ -385,9 +383,6 @@ func (osq *OrderSnapshotsQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(osq.modifiers) > 0 {
-		_spec.Modifiers = osq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -438,9 +433,6 @@ func (osq *OrderSnapshotsQuery) loadOrder(ctx context.Context, query *OrderQuery
 
 func (osq *OrderSnapshotsQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := osq.querySpec()
-	if len(osq.modifiers) > 0 {
-		_spec.Modifiers = osq.modifiers
-	}
 	_spec.Node.Columns = osq.ctx.Fields
 	if len(osq.ctx.Fields) > 0 {
 		_spec.Unique = osq.ctx.Unique != nil && *osq.ctx.Unique
@@ -506,9 +498,6 @@ func (osq *OrderSnapshotsQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if osq.ctx.Unique != nil && *osq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range osq.modifiers {
-		m(selector)
-	}
 	for _, p := range osq.predicates {
 		p(selector)
 	}
@@ -524,12 +513,6 @@ func (osq *OrderSnapshotsQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (osq *OrderSnapshotsQuery) Modify(modifiers ...func(s *sql.Selector)) *OrderSnapshotsSelect {
-	osq.modifiers = append(osq.modifiers, modifiers...)
-	return osq.Select()
 }
 
 // OrderSnapshotsGroupBy is the group-by builder for OrderSnapshots entities.
@@ -620,10 +603,4 @@ func (oss *OrderSnapshotsSelect) sqlScan(ctx context.Context, root *OrderSnapsho
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oss *OrderSnapshotsSelect) Modify(modifiers ...func(s *sql.Selector)) *OrderSnapshotsSelect {
-	oss.modifiers = append(oss.modifiers, modifiers...)
-	return oss
 }

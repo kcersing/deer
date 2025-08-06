@@ -116,8 +116,6 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int64
 )
 
 // OrderOption defines the ordering options for the Order queries.

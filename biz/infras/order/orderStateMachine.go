@@ -4,16 +4,16 @@ import (
 	"fmt"
 )
 
-// OrderStatus 订单状态
-type OrderStatus string
+// Status OrderStatus 订单状态
+type Status string
 
 const (
-	OrderCreated   OrderStatus = "created"        //创建
-	OrderPaid      OrderStatus = "paid"           //支付
-	OrderShipped   OrderStatus = "shipped"        //发货
-	OrderCancelled OrderStatus = "cancelled"      //取消
-	OrderRefunded  OrderStatus = "refunded"       //退款
-	OrderCompleted OrderStatus = "OrderCompleted" //完成
+	Created   Status = "created"        //创建
+	Paid      Status = "paid"           //支付
+	Shipped   Status = "shipped"        //发货
+	Cancelled Status = "cancelled"      //取消
+	Refunded  Status = "refunded"       //退款
+	Completed Status = "OrderCompleted" //完成
 )
 
 // OrderStateMachine 订单状态机
@@ -26,14 +26,14 @@ func NewOrderStateMachine(order *Order) *OrderStateMachine {
 }
 
 // 定义状态转换规则
-var transitions = map[OrderStatus][]OrderStatus{
-	OrderCreated: {OrderPaid, OrderCancelled},
-	OrderPaid:    {OrderShipped, OrderRefunded, OrderCancelled},
-	OrderShipped: {OrderCompleted, OrderRefunded},
+var transitions = map[Status][]Status{
+	Created: {Paid, Cancelled},
+	Paid:    {Shipped, Refunded, Cancelled},
+	Shipped: {Completed, Refunded},
 }
 
 // Transition 执行状态转换
-func (m *OrderStateMachine) Transition(target OrderStatus, event Event) error {
+func (m *OrderStateMachine) Transition(target Status, event Event) error {
 	m.order.mu.Lock()
 	current := m.order.Status
 	m.order.mu.Unlock()

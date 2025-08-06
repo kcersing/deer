@@ -19,9 +19,8 @@ import (
 // OrderSnapshotsUpdate is the builder for updating OrderSnapshots entities.
 type OrderSnapshotsUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *OrderSnapshotsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *OrderSnapshotsMutation
 }
 
 // Where appends a list predicates to the OrderSnapshotsUpdate builder.
@@ -229,12 +228,6 @@ func (osu *OrderSnapshotsUpdate) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (osu *OrderSnapshotsUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderSnapshotsUpdate {
-	osu.modifiers = append(osu.modifiers, modifiers...)
-	return osu
-}
-
 func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordersnapshots.Table, ordersnapshots.Columns, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
 	if ps := osu.mutation.predicates; len(ps) > 0 {
@@ -315,7 +308,6 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(osu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, osu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{ordersnapshots.Label}
@@ -331,10 +323,9 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 // OrderSnapshotsUpdateOne is the builder for updating a single OrderSnapshots entity.
 type OrderSnapshotsUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *OrderSnapshotsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *OrderSnapshotsMutation
 }
 
 // SetUpdatedAt sets the "updated_at" field.
@@ -549,12 +540,6 @@ func (osuo *OrderSnapshotsUpdateOne) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (osuo *OrderSnapshotsUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderSnapshotsUpdateOne {
-	osuo.modifiers = append(osuo.modifiers, modifiers...)
-	return osuo
-}
-
 func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderSnapshots, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordersnapshots.Table, ordersnapshots.Columns, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
 	id, ok := osuo.mutation.ID()
@@ -652,7 +637,6 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(osuo.modifiers...)
 	_node = &OrderSnapshots{config: osuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

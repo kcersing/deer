@@ -86,7 +86,7 @@ func MemberID(v int64) predicate.Order {
 }
 
 // Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
-func Status(v int64) predicate.Order {
+func Status(v string) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldStatus, v))
 }
 
@@ -441,43 +441,58 @@ func MemberIDNotNil() predicate.Order {
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v int64) predicate.Order {
+func StatusEQ(v string) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldStatus, v))
 }
 
 // StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v int64) predicate.Order {
+func StatusNEQ(v string) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldStatus, v))
 }
 
 // StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...int64) predicate.Order {
+func StatusIn(vs ...string) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldStatus, vs...))
 }
 
 // StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...int64) predicate.Order {
+func StatusNotIn(vs ...string) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldStatus, vs...))
 }
 
 // StatusGT applies the GT predicate on the "status" field.
-func StatusGT(v int64) predicate.Order {
+func StatusGT(v string) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldStatus, v))
 }
 
 // StatusGTE applies the GTE predicate on the "status" field.
-func StatusGTE(v int64) predicate.Order {
+func StatusGTE(v string) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldStatus, v))
 }
 
 // StatusLT applies the LT predicate on the "status" field.
-func StatusLT(v int64) predicate.Order {
+func StatusLT(v string) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldStatus, v))
 }
 
 // StatusLTE applies the LTE predicate on the "status" field.
-func StatusLTE(v int64) predicate.Order {
+func StatusLTE(v string) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldStatus, v))
+}
+
+// StatusContains applies the Contains predicate on the "status" field.
+func StatusContains(v string) predicate.Order {
+	return predicate.Order(sql.FieldContains(FieldStatus, v))
+}
+
+// StatusHasPrefix applies the HasPrefix predicate on the "status" field.
+func StatusHasPrefix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasPrefix(FieldStatus, v))
+}
+
+// StatusHasSuffix applies the HasSuffix predicate on the "status" field.
+func StatusHasSuffix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasSuffix(FieldStatus, v))
 }
 
 // StatusIsNil applies the IsNil predicate on the "status" field.
@@ -488,6 +503,16 @@ func StatusIsNil() predicate.Order {
 // StatusNotNil applies the NotNil predicate on the "status" field.
 func StatusNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldStatus))
+}
+
+// StatusEqualFold applies the EqualFold predicate on the "status" field.
+func StatusEqualFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldEqualFold(FieldStatus, v))
+}
+
+// StatusContainsFold applies the ContainsFold predicate on the "status" field.
+func StatusContainsFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldContainsFold(FieldStatus, v))
 }
 
 // NatureEQ applies the EQ predicate on the "nature" field.

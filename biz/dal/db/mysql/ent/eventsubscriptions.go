@@ -33,13 +33,13 @@ type EventSubscriptions struct {
 	// 最后处理的事件ID
 	LastProcessedID string `json:"last_processed_id,omitempty"`
 	// 最后处理的事件版本
-	LastProcessedVersion string `json:"last_processed_version,omitempty"`
+	LastProcessedVersion int64 `json:"last_processed_version,omitempty"`
 	// 最后处理时间
-	LastProcessedAt string `json:"last_processed_at,omitempty"`
+	LastProcessedAt time.Time `json:"last_processed_at,omitempty"`
 	// 是否活跃
 	IsActive int64 `json:"is_active,omitempty"`
 	// 处理错误次数
-	ErrorCount string `json:"error_count,omitempty"`
+	ErrorCount int64 `json:"error_count,omitempty"`
 	// 最后错误信息
 	LastError    string `json:"last_error,omitempty"`
 	selectValues sql.SelectValues
@@ -50,11 +50,11 @@ func (*EventSubscriptions) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case eventsubscriptions.FieldID, eventsubscriptions.FieldDelete, eventsubscriptions.FieldCreatedID, eventsubscriptions.FieldIsActive:
+		case eventsubscriptions.FieldID, eventsubscriptions.FieldDelete, eventsubscriptions.FieldCreatedID, eventsubscriptions.FieldLastProcessedVersion, eventsubscriptions.FieldIsActive, eventsubscriptions.FieldErrorCount:
 			values[i] = new(sql.NullInt64)
-		case eventsubscriptions.FieldName, eventsubscriptions.FieldEventType, eventsubscriptions.FieldLastProcessedID, eventsubscriptions.FieldLastProcessedVersion, eventsubscriptions.FieldLastProcessedAt, eventsubscriptions.FieldErrorCount, eventsubscriptions.FieldLastError:
+		case eventsubscriptions.FieldName, eventsubscriptions.FieldEventType, eventsubscriptions.FieldLastProcessedID, eventsubscriptions.FieldLastError:
 			values[i] = new(sql.NullString)
-		case eventsubscriptions.FieldCreatedAt, eventsubscriptions.FieldUpdatedAt:
+		case eventsubscriptions.FieldCreatedAt, eventsubscriptions.FieldUpdatedAt, eventsubscriptions.FieldLastProcessedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -120,16 +120,16 @@ func (es *EventSubscriptions) assignValues(columns []string, values []any) error
 				es.LastProcessedID = value.String
 			}
 		case eventsubscriptions.FieldLastProcessedVersion:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_version", values[i])
 			} else if value.Valid {
-				es.LastProcessedVersion = value.String
+				es.LastProcessedVersion = value.Int64
 			}
 		case eventsubscriptions.FieldLastProcessedAt:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_at", values[i])
 			} else if value.Valid {
-				es.LastProcessedAt = value.String
+				es.LastProcessedAt = value.Time
 			}
 		case eventsubscriptions.FieldIsActive:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -138,10 +138,10 @@ func (es *EventSubscriptions) assignValues(columns []string, values []any) error
 				es.IsActive = value.Int64
 			}
 		case eventsubscriptions.FieldErrorCount:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field error_count", values[i])
 			} else if value.Valid {
-				es.ErrorCount = value.String
+				es.ErrorCount = value.Int64
 			}
 		case eventsubscriptions.FieldLastError:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -207,16 +207,16 @@ func (es *EventSubscriptions) String() string {
 	builder.WriteString(es.LastProcessedID)
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_version=")
-	builder.WriteString(es.LastProcessedVersion)
+	builder.WriteString(fmt.Sprintf("%v", es.LastProcessedVersion))
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_at=")
-	builder.WriteString(es.LastProcessedAt)
+	builder.WriteString(es.LastProcessedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
 	builder.WriteString(fmt.Sprintf("%v", es.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("error_count=")
-	builder.WriteString(es.ErrorCount)
+	builder.WriteString(fmt.Sprintf("%v", es.ErrorCount))
 	builder.WriteString(", ")
 	builder.WriteString("last_error=")
 	builder.WriteString(es.LastError)

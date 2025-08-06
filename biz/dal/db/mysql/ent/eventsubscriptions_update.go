@@ -18,9 +18,8 @@ import (
 // EventSubscriptionsUpdate is the builder for updating EventSubscriptions entities.
 type EventSubscriptionsUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *EventSubscriptionsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *EventSubscriptionsMutation
 }
 
 // Where appends a list predicates to the EventSubscriptionsUpdate builder.
@@ -156,16 +155,23 @@ func (esu *EventSubscriptionsUpdate) ClearLastProcessedID() *EventSubscriptionsU
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (esu *EventSubscriptionsUpdate) SetLastProcessedVersion(s string) *EventSubscriptionsUpdate {
-	esu.mutation.SetLastProcessedVersion(s)
+func (esu *EventSubscriptionsUpdate) SetLastProcessedVersion(i int64) *EventSubscriptionsUpdate {
+	esu.mutation.ResetLastProcessedVersion()
+	esu.mutation.SetLastProcessedVersion(i)
 	return esu
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (esu *EventSubscriptionsUpdate) SetNillableLastProcessedVersion(s *string) *EventSubscriptionsUpdate {
-	if s != nil {
-		esu.SetLastProcessedVersion(*s)
+func (esu *EventSubscriptionsUpdate) SetNillableLastProcessedVersion(i *int64) *EventSubscriptionsUpdate {
+	if i != nil {
+		esu.SetLastProcessedVersion(*i)
 	}
+	return esu
+}
+
+// AddLastProcessedVersion adds i to the "last_processed_version" field.
+func (esu *EventSubscriptionsUpdate) AddLastProcessedVersion(i int64) *EventSubscriptionsUpdate {
+	esu.mutation.AddLastProcessedVersion(i)
 	return esu
 }
 
@@ -176,15 +182,15 @@ func (esu *EventSubscriptionsUpdate) ClearLastProcessedVersion() *EventSubscript
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (esu *EventSubscriptionsUpdate) SetLastProcessedAt(s string) *EventSubscriptionsUpdate {
-	esu.mutation.SetLastProcessedAt(s)
+func (esu *EventSubscriptionsUpdate) SetLastProcessedAt(t time.Time) *EventSubscriptionsUpdate {
+	esu.mutation.SetLastProcessedAt(t)
 	return esu
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (esu *EventSubscriptionsUpdate) SetNillableLastProcessedAt(s *string) *EventSubscriptionsUpdate {
-	if s != nil {
-		esu.SetLastProcessedAt(*s)
+func (esu *EventSubscriptionsUpdate) SetNillableLastProcessedAt(t *time.Time) *EventSubscriptionsUpdate {
+	if t != nil {
+		esu.SetLastProcessedAt(*t)
 	}
 	return esu
 }
@@ -223,16 +229,23 @@ func (esu *EventSubscriptionsUpdate) ClearIsActive() *EventSubscriptionsUpdate {
 }
 
 // SetErrorCount sets the "error_count" field.
-func (esu *EventSubscriptionsUpdate) SetErrorCount(s string) *EventSubscriptionsUpdate {
-	esu.mutation.SetErrorCount(s)
+func (esu *EventSubscriptionsUpdate) SetErrorCount(i int64) *EventSubscriptionsUpdate {
+	esu.mutation.ResetErrorCount()
+	esu.mutation.SetErrorCount(i)
 	return esu
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (esu *EventSubscriptionsUpdate) SetNillableErrorCount(s *string) *EventSubscriptionsUpdate {
-	if s != nil {
-		esu.SetErrorCount(*s)
+func (esu *EventSubscriptionsUpdate) SetNillableErrorCount(i *int64) *EventSubscriptionsUpdate {
+	if i != nil {
+		esu.SetErrorCount(*i)
 	}
+	return esu
+}
+
+// AddErrorCount adds i to the "error_count" field.
+func (esu *EventSubscriptionsUpdate) AddErrorCount(i int64) *EventSubscriptionsUpdate {
+	esu.mutation.AddErrorCount(i)
 	return esu
 }
 
@@ -303,12 +316,6 @@ func (esu *EventSubscriptionsUpdate) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (esu *EventSubscriptionsUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *EventSubscriptionsUpdate {
-	esu.modifiers = append(esu.modifiers, modifiers...)
-	return esu
-}
-
 func (esu *EventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(eventsubscriptions.Table, eventsubscriptions.Columns, sqlgraph.NewFieldSpec(eventsubscriptions.FieldID, field.TypeInt64))
 	if ps := esu.mutation.predicates; len(ps) > 0 {
@@ -364,16 +371,19 @@ func (esu *EventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err er
 		_spec.ClearField(eventsubscriptions.FieldLastProcessedID, field.TypeString)
 	}
 	if value, ok := esu.mutation.LastProcessedVersion(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
+	}
+	if value, ok := esu.mutation.AddedLastProcessedVersion(); ok {
+		_spec.AddField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
 	if esu.mutation.LastProcessedVersionCleared() {
-		_spec.ClearField(eventsubscriptions.FieldLastProcessedVersion, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64)
 	}
 	if value, ok := esu.mutation.LastProcessedAt(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 	}
 	if esu.mutation.LastProcessedAtCleared() {
-		_spec.ClearField(eventsubscriptions.FieldLastProcessedAt, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldLastProcessedAt, field.TypeTime)
 	}
 	if value, ok := esu.mutation.IsActive(); ok {
 		_spec.SetField(eventsubscriptions.FieldIsActive, field.TypeInt64, value)
@@ -385,10 +395,13 @@ func (esu *EventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err er
 		_spec.ClearField(eventsubscriptions.FieldIsActive, field.TypeInt64)
 	}
 	if value, ok := esu.mutation.ErrorCount(); ok {
-		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeInt64, value)
+	}
+	if value, ok := esu.mutation.AddedErrorCount(); ok {
+		_spec.AddField(eventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
 	if esu.mutation.ErrorCountCleared() {
-		_spec.ClearField(eventsubscriptions.FieldErrorCount, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldErrorCount, field.TypeInt64)
 	}
 	if value, ok := esu.mutation.LastError(); ok {
 		_spec.SetField(eventsubscriptions.FieldLastError, field.TypeString, value)
@@ -396,7 +409,6 @@ func (esu *EventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err er
 	if esu.mutation.LastErrorCleared() {
 		_spec.ClearField(eventsubscriptions.FieldLastError, field.TypeString)
 	}
-	_spec.AddModifiers(esu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, esu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{eventsubscriptions.Label}
@@ -412,10 +424,9 @@ func (esu *EventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err er
 // EventSubscriptionsUpdateOne is the builder for updating a single EventSubscriptions entity.
 type EventSubscriptionsUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *EventSubscriptionsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *EventSubscriptionsMutation
 }
 
 // SetUpdatedAt sets the "updated_at" field.
@@ -545,16 +556,23 @@ func (esuo *EventSubscriptionsUpdateOne) ClearLastProcessedID() *EventSubscripti
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (esuo *EventSubscriptionsUpdateOne) SetLastProcessedVersion(s string) *EventSubscriptionsUpdateOne {
-	esuo.mutation.SetLastProcessedVersion(s)
+func (esuo *EventSubscriptionsUpdateOne) SetLastProcessedVersion(i int64) *EventSubscriptionsUpdateOne {
+	esuo.mutation.ResetLastProcessedVersion()
+	esuo.mutation.SetLastProcessedVersion(i)
 	return esuo
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (esuo *EventSubscriptionsUpdateOne) SetNillableLastProcessedVersion(s *string) *EventSubscriptionsUpdateOne {
-	if s != nil {
-		esuo.SetLastProcessedVersion(*s)
+func (esuo *EventSubscriptionsUpdateOne) SetNillableLastProcessedVersion(i *int64) *EventSubscriptionsUpdateOne {
+	if i != nil {
+		esuo.SetLastProcessedVersion(*i)
 	}
+	return esuo
+}
+
+// AddLastProcessedVersion adds i to the "last_processed_version" field.
+func (esuo *EventSubscriptionsUpdateOne) AddLastProcessedVersion(i int64) *EventSubscriptionsUpdateOne {
+	esuo.mutation.AddLastProcessedVersion(i)
 	return esuo
 }
 
@@ -565,15 +583,15 @@ func (esuo *EventSubscriptionsUpdateOne) ClearLastProcessedVersion() *EventSubsc
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (esuo *EventSubscriptionsUpdateOne) SetLastProcessedAt(s string) *EventSubscriptionsUpdateOne {
-	esuo.mutation.SetLastProcessedAt(s)
+func (esuo *EventSubscriptionsUpdateOne) SetLastProcessedAt(t time.Time) *EventSubscriptionsUpdateOne {
+	esuo.mutation.SetLastProcessedAt(t)
 	return esuo
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (esuo *EventSubscriptionsUpdateOne) SetNillableLastProcessedAt(s *string) *EventSubscriptionsUpdateOne {
-	if s != nil {
-		esuo.SetLastProcessedAt(*s)
+func (esuo *EventSubscriptionsUpdateOne) SetNillableLastProcessedAt(t *time.Time) *EventSubscriptionsUpdateOne {
+	if t != nil {
+		esuo.SetLastProcessedAt(*t)
 	}
 	return esuo
 }
@@ -612,16 +630,23 @@ func (esuo *EventSubscriptionsUpdateOne) ClearIsActive() *EventSubscriptionsUpda
 }
 
 // SetErrorCount sets the "error_count" field.
-func (esuo *EventSubscriptionsUpdateOne) SetErrorCount(s string) *EventSubscriptionsUpdateOne {
-	esuo.mutation.SetErrorCount(s)
+func (esuo *EventSubscriptionsUpdateOne) SetErrorCount(i int64) *EventSubscriptionsUpdateOne {
+	esuo.mutation.ResetErrorCount()
+	esuo.mutation.SetErrorCount(i)
 	return esuo
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (esuo *EventSubscriptionsUpdateOne) SetNillableErrorCount(s *string) *EventSubscriptionsUpdateOne {
-	if s != nil {
-		esuo.SetErrorCount(*s)
+func (esuo *EventSubscriptionsUpdateOne) SetNillableErrorCount(i *int64) *EventSubscriptionsUpdateOne {
+	if i != nil {
+		esuo.SetErrorCount(*i)
 	}
+	return esuo
+}
+
+// AddErrorCount adds i to the "error_count" field.
+func (esuo *EventSubscriptionsUpdateOne) AddErrorCount(i int64) *EventSubscriptionsUpdateOne {
+	esuo.mutation.AddErrorCount(i)
 	return esuo
 }
 
@@ -705,12 +730,6 @@ func (esuo *EventSubscriptionsUpdateOne) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (esuo *EventSubscriptionsUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *EventSubscriptionsUpdateOne {
-	esuo.modifiers = append(esuo.modifiers, modifiers...)
-	return esuo
-}
-
 func (esuo *EventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *EventSubscriptions, err error) {
 	_spec := sqlgraph.NewUpdateSpec(eventsubscriptions.Table, eventsubscriptions.Columns, sqlgraph.NewFieldSpec(eventsubscriptions.FieldID, field.TypeInt64))
 	id, ok := esuo.mutation.ID()
@@ -783,16 +802,19 @@ func (esuo *EventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *Ev
 		_spec.ClearField(eventsubscriptions.FieldLastProcessedID, field.TypeString)
 	}
 	if value, ok := esuo.mutation.LastProcessedVersion(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
+	}
+	if value, ok := esuo.mutation.AddedLastProcessedVersion(); ok {
+		_spec.AddField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
 	if esuo.mutation.LastProcessedVersionCleared() {
-		_spec.ClearField(eventsubscriptions.FieldLastProcessedVersion, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64)
 	}
 	if value, ok := esuo.mutation.LastProcessedAt(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 	}
 	if esuo.mutation.LastProcessedAtCleared() {
-		_spec.ClearField(eventsubscriptions.FieldLastProcessedAt, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldLastProcessedAt, field.TypeTime)
 	}
 	if value, ok := esuo.mutation.IsActive(); ok {
 		_spec.SetField(eventsubscriptions.FieldIsActive, field.TypeInt64, value)
@@ -804,10 +826,13 @@ func (esuo *EventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *Ev
 		_spec.ClearField(eventsubscriptions.FieldIsActive, field.TypeInt64)
 	}
 	if value, ok := esuo.mutation.ErrorCount(); ok {
-		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeInt64, value)
+	}
+	if value, ok := esuo.mutation.AddedErrorCount(); ok {
+		_spec.AddField(eventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
 	if esuo.mutation.ErrorCountCleared() {
-		_spec.ClearField(eventsubscriptions.FieldErrorCount, field.TypeString)
+		_spec.ClearField(eventsubscriptions.FieldErrorCount, field.TypeInt64)
 	}
 	if value, ok := esuo.mutation.LastError(); ok {
 		_spec.SetField(eventsubscriptions.FieldLastError, field.TypeString, value)
@@ -815,7 +840,6 @@ func (esuo *EventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *Ev
 	if esuo.mutation.LastErrorCleared() {
 		_spec.ClearField(eventsubscriptions.FieldLastError, field.TypeString)
 	}
-	_spec.AddModifiers(esuo.modifiers...)
 	_node = &EventSubscriptions{config: esuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

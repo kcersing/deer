@@ -4,11 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
@@ -18,6 +20,7 @@ type OrderEventsCreate struct {
 	config
 	mutation *OrderEventsMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -77,15 +80,15 @@ func (oec *OrderEventsCreate) SetNillableCreatedID(i *int64) *OrderEventsCreate 
 }
 
 // SetEventID sets the "event_id" field.
-func (oec *OrderEventsCreate) SetEventID(i int64) *OrderEventsCreate {
-	oec.mutation.SetEventID(i)
+func (oec *OrderEventsCreate) SetEventID(s string) *OrderEventsCreate {
+	oec.mutation.SetEventID(s)
 	return oec
 }
 
 // SetNillableEventID sets the "event_id" field if the given value is not nil.
-func (oec *OrderEventsCreate) SetNillableEventID(i *int64) *OrderEventsCreate {
-	if i != nil {
-		oec.SetEventID(*i)
+func (oec *OrderEventsCreate) SetNillableEventID(s *string) *OrderEventsCreate {
+	if s != nil {
+		oec.SetEventID(*s)
 	}
 	return oec
 }
@@ -268,6 +271,7 @@ func (oec *OrderEventsCreate) createSpec() (*OrderEvents, *sqlgraph.CreateSpec) 
 		_node = &OrderEvents{config: oec.config}
 		_spec = sqlgraph.NewCreateSpec(orderevents.Table, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
 	)
+	_spec.OnConflict = oec.conflict
 	if id, ok := oec.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -289,7 +293,7 @@ func (oec *OrderEventsCreate) createSpec() (*OrderEvents, *sqlgraph.CreateSpec) 
 		_node.CreatedID = value
 	}
 	if value, ok := oec.mutation.EventID(); ok {
-		_spec.SetField(orderevents.FieldEventID, field.TypeInt64, value)
+		_spec.SetField(orderevents.FieldEventID, field.TypeString, value)
 		_node.EventID = value
 	}
 	if value, ok := oec.mutation.AggregateType(); ok {
@@ -328,11 +332,535 @@ func (oec *OrderEventsCreate) createSpec() (*OrderEvents, *sqlgraph.CreateSpec) 
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderEvents.Create().
+//		SetCreatedAt(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderEventsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (oec *OrderEventsCreate) OnConflict(opts ...sql.ConflictOption) *OrderEventsUpsertOne {
+	oec.conflict = opts
+	return &OrderEventsUpsertOne{
+		create: oec,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (oec *OrderEventsCreate) OnConflictColumns(columns ...string) *OrderEventsUpsertOne {
+	oec.conflict = append(oec.conflict, sql.ConflictColumns(columns...))
+	return &OrderEventsUpsertOne{
+		create: oec,
+	}
+}
+
+type (
+	// OrderEventsUpsertOne is the builder for "upsert"-ing
+	//  one OrderEvents node.
+	OrderEventsUpsertOne struct {
+		create *OrderEventsCreate
+	}
+
+	// OrderEventsUpsert is the "OnConflict" setter.
+	OrderEventsUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderEventsUpsert) SetUpdatedAt(v time.Time) *OrderEventsUpsert {
+	u.Set(orderevents.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateUpdatedAt() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderEventsUpsert) ClearUpdatedAt() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldUpdatedAt)
+	return u
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderEventsUpsert) SetDelete(v int64) *OrderEventsUpsert {
+	u.Set(orderevents.FieldDelete, v)
+	return u
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateDelete() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldDelete)
+	return u
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderEventsUpsert) AddDelete(v int64) *OrderEventsUpsert {
+	u.Add(orderevents.FieldDelete, v)
+	return u
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderEventsUpsert) ClearDelete() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldDelete)
+	return u
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderEventsUpsert) SetCreatedID(v int64) *OrderEventsUpsert {
+	u.Set(orderevents.FieldCreatedID, v)
+	return u
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateCreatedID() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldCreatedID)
+	return u
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderEventsUpsert) AddCreatedID(v int64) *OrderEventsUpsert {
+	u.Add(orderevents.FieldCreatedID, v)
+	return u
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderEventsUpsert) ClearCreatedID() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldCreatedID)
+	return u
+}
+
+// SetEventID sets the "event_id" field.
+func (u *OrderEventsUpsert) SetEventID(v string) *OrderEventsUpsert {
+	u.Set(orderevents.FieldEventID, v)
+	return u
+}
+
+// UpdateEventID sets the "event_id" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateEventID() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldEventID)
+	return u
+}
+
+// ClearEventID clears the value of the "event_id" field.
+func (u *OrderEventsUpsert) ClearEventID() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldEventID)
+	return u
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderEventsUpsert) SetAggregateID(v int64) *OrderEventsUpsert {
+	u.Set(orderevents.FieldAggregateID, v)
+	return u
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateAggregateID() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldAggregateID)
+	return u
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderEventsUpsert) ClearAggregateID() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldAggregateID)
+	return u
+}
+
+// SetAggregateType sets the "aggregate_type" field.
+func (u *OrderEventsUpsert) SetAggregateType(v string) *OrderEventsUpsert {
+	u.Set(orderevents.FieldAggregateType, v)
+	return u
+}
+
+// UpdateAggregateType sets the "aggregate_type" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateAggregateType() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldAggregateType)
+	return u
+}
+
+// ClearAggregateType clears the value of the "aggregate_type" field.
+func (u *OrderEventsUpsert) ClearAggregateType() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldAggregateType)
+	return u
+}
+
+// SetEventType sets the "event_type" field.
+func (u *OrderEventsUpsert) SetEventType(v string) *OrderEventsUpsert {
+	u.Set(orderevents.FieldEventType, v)
+	return u
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateEventType() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldEventType)
+	return u
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldEventType)
+	return u
+}
+
+// SetEventData sets the "event_data" field.
+func (u *OrderEventsUpsert) SetEventData(v string) *OrderEventsUpsert {
+	u.Set(orderevents.FieldEventData, v)
+	return u
+}
+
+// UpdateEventData sets the "event_data" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateEventData() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldEventData)
+	return u
+}
+
+// ClearEventData clears the value of the "event_data" field.
+func (u *OrderEventsUpsert) ClearEventData() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldEventData)
+	return u
+}
+
+// SetEventVersion sets the "event_version" field.
+func (u *OrderEventsUpsert) SetEventVersion(v int64) *OrderEventsUpsert {
+	u.Set(orderevents.FieldEventVersion, v)
+	return u
+}
+
+// UpdateEventVersion sets the "event_version" field to the value that was provided on create.
+func (u *OrderEventsUpsert) UpdateEventVersion() *OrderEventsUpsert {
+	u.SetExcluded(orderevents.FieldEventVersion)
+	return u
+}
+
+// AddEventVersion adds v to the "event_version" field.
+func (u *OrderEventsUpsert) AddEventVersion(v int64) *OrderEventsUpsert {
+	u.Add(orderevents.FieldEventVersion, v)
+	return u
+}
+
+// ClearEventVersion clears the value of the "event_version" field.
+func (u *OrderEventsUpsert) ClearEventVersion() *OrderEventsUpsert {
+	u.SetNull(orderevents.FieldEventVersion)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(orderevents.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderEventsUpsertOne) UpdateNewValues() *OrderEventsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(orderevents.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(orderevents.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *OrderEventsUpsertOne) Ignore() *OrderEventsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderEventsUpsertOne) DoNothing() *OrderEventsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderEventsCreate.OnConflict
+// documentation for more info.
+func (u *OrderEventsUpsertOne) Update(set func(*OrderEventsUpsert)) *OrderEventsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderEventsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderEventsUpsertOne) SetUpdatedAt(v time.Time) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateUpdatedAt() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderEventsUpsertOne) ClearUpdatedAt() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderEventsUpsertOne) SetDelete(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderEventsUpsertOne) AddDelete(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateDelete() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderEventsUpsertOne) ClearDelete() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderEventsUpsertOne) SetCreatedID(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderEventsUpsertOne) AddCreatedID(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateCreatedID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderEventsUpsertOne) ClearCreatedID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetEventID sets the "event_id" field.
+func (u *OrderEventsUpsertOne) SetEventID(v string) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventID(v)
+	})
+}
+
+// UpdateEventID sets the "event_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateEventID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventID()
+	})
+}
+
+// ClearEventID clears the value of the "event_id" field.
+func (u *OrderEventsUpsertOne) ClearEventID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventID()
+	})
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderEventsUpsertOne) SetAggregateID(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetAggregateID(v)
+	})
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateAggregateID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateAggregateID()
+	})
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderEventsUpsertOne) ClearAggregateID() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearAggregateID()
+	})
+}
+
+// SetAggregateType sets the "aggregate_type" field.
+func (u *OrderEventsUpsertOne) SetAggregateType(v string) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetAggregateType(v)
+	})
+}
+
+// UpdateAggregateType sets the "aggregate_type" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateAggregateType() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateAggregateType()
+	})
+}
+
+// ClearAggregateType clears the value of the "aggregate_type" field.
+func (u *OrderEventsUpsertOne) ClearAggregateType() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearAggregateType()
+	})
+}
+
+// SetEventType sets the "event_type" field.
+func (u *OrderEventsUpsertOne) SetEventType(v string) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventType(v)
+	})
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateEventType() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventType()
+	})
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventType()
+	})
+}
+
+// SetEventData sets the "event_data" field.
+func (u *OrderEventsUpsertOne) SetEventData(v string) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventData(v)
+	})
+}
+
+// UpdateEventData sets the "event_data" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateEventData() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventData()
+	})
+}
+
+// ClearEventData clears the value of the "event_data" field.
+func (u *OrderEventsUpsertOne) ClearEventData() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventData()
+	})
+}
+
+// SetEventVersion sets the "event_version" field.
+func (u *OrderEventsUpsertOne) SetEventVersion(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventVersion(v)
+	})
+}
+
+// AddEventVersion adds v to the "event_version" field.
+func (u *OrderEventsUpsertOne) AddEventVersion(v int64) *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddEventVersion(v)
+	})
+}
+
+// UpdateEventVersion sets the "event_version" field to the value that was provided on create.
+func (u *OrderEventsUpsertOne) UpdateEventVersion() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventVersion()
+	})
+}
+
+// ClearEventVersion clears the value of the "event_version" field.
+func (u *OrderEventsUpsertOne) ClearEventVersion() *OrderEventsUpsertOne {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventVersion()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderEventsUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderEventsCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderEventsUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *OrderEventsUpsertOne) ID(ctx context.Context) (id int64, err error) {
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *OrderEventsUpsertOne) IDX(ctx context.Context) int64 {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // OrderEventsCreateBulk is the builder for creating many OrderEvents entities in bulk.
 type OrderEventsCreateBulk struct {
 	config
 	err      error
 	builders []*OrderEventsCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the OrderEvents entities in the database.
@@ -362,6 +890,7 @@ func (oecb *OrderEventsCreateBulk) Save(ctx context.Context) ([]*OrderEvents, er
 					_, err = mutators[i+1].Mutate(root, oecb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = oecb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, oecb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -412,6 +941,333 @@ func (oecb *OrderEventsCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (oecb *OrderEventsCreateBulk) ExecX(ctx context.Context) {
 	if err := oecb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderEvents.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderEventsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (oecb *OrderEventsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderEventsUpsertBulk {
+	oecb.conflict = opts
+	return &OrderEventsUpsertBulk{
+		create: oecb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (oecb *OrderEventsCreateBulk) OnConflictColumns(columns ...string) *OrderEventsUpsertBulk {
+	oecb.conflict = append(oecb.conflict, sql.ConflictColumns(columns...))
+	return &OrderEventsUpsertBulk{
+		create: oecb,
+	}
+}
+
+// OrderEventsUpsertBulk is the builder for "upsert"-ing
+// a bulk of OrderEvents nodes.
+type OrderEventsUpsertBulk struct {
+	create *OrderEventsCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(orderevents.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderEventsUpsertBulk) UpdateNewValues() *OrderEventsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(orderevents.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(orderevents.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderEvents.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *OrderEventsUpsertBulk) Ignore() *OrderEventsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderEventsUpsertBulk) DoNothing() *OrderEventsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderEventsCreateBulk.OnConflict
+// documentation for more info.
+func (u *OrderEventsUpsertBulk) Update(set func(*OrderEventsUpsert)) *OrderEventsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderEventsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderEventsUpsertBulk) SetUpdatedAt(v time.Time) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateUpdatedAt() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderEventsUpsertBulk) ClearUpdatedAt() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderEventsUpsertBulk) SetDelete(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderEventsUpsertBulk) AddDelete(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateDelete() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderEventsUpsertBulk) ClearDelete() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderEventsUpsertBulk) SetCreatedID(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderEventsUpsertBulk) AddCreatedID(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateCreatedID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderEventsUpsertBulk) ClearCreatedID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetEventID sets the "event_id" field.
+func (u *OrderEventsUpsertBulk) SetEventID(v string) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventID(v)
+	})
+}
+
+// UpdateEventID sets the "event_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateEventID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventID()
+	})
+}
+
+// ClearEventID clears the value of the "event_id" field.
+func (u *OrderEventsUpsertBulk) ClearEventID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventID()
+	})
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderEventsUpsertBulk) SetAggregateID(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetAggregateID(v)
+	})
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateAggregateID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateAggregateID()
+	})
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderEventsUpsertBulk) ClearAggregateID() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearAggregateID()
+	})
+}
+
+// SetAggregateType sets the "aggregate_type" field.
+func (u *OrderEventsUpsertBulk) SetAggregateType(v string) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetAggregateType(v)
+	})
+}
+
+// UpdateAggregateType sets the "aggregate_type" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateAggregateType() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateAggregateType()
+	})
+}
+
+// ClearAggregateType clears the value of the "aggregate_type" field.
+func (u *OrderEventsUpsertBulk) ClearAggregateType() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearAggregateType()
+	})
+}
+
+// SetEventType sets the "event_type" field.
+func (u *OrderEventsUpsertBulk) SetEventType(v string) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventType(v)
+	})
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateEventType() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventType()
+	})
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventType()
+	})
+}
+
+// SetEventData sets the "event_data" field.
+func (u *OrderEventsUpsertBulk) SetEventData(v string) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventData(v)
+	})
+}
+
+// UpdateEventData sets the "event_data" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateEventData() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventData()
+	})
+}
+
+// ClearEventData clears the value of the "event_data" field.
+func (u *OrderEventsUpsertBulk) ClearEventData() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventData()
+	})
+}
+
+// SetEventVersion sets the "event_version" field.
+func (u *OrderEventsUpsertBulk) SetEventVersion(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.SetEventVersion(v)
+	})
+}
+
+// AddEventVersion adds v to the "event_version" field.
+func (u *OrderEventsUpsertBulk) AddEventVersion(v int64) *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.AddEventVersion(v)
+	})
+}
+
+// UpdateEventVersion sets the "event_version" field to the value that was provided on create.
+func (u *OrderEventsUpsertBulk) UpdateEventVersion() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.UpdateEventVersion()
+	})
+}
+
+// ClearEventVersion clears the value of the "event_version" field.
+func (u *OrderEventsUpsertBulk) ClearEventVersion() *OrderEventsUpsertBulk {
+	return u.Update(func(s *OrderEventsUpsert) {
+		s.ClearEventVersion()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderEventsUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the OrderEventsCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderEventsCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderEventsUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

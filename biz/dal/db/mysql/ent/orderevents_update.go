@@ -19,9 +19,8 @@ import (
 // OrderEventsUpdate is the builder for updating OrderEvents entities.
 type OrderEventsUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *OrderEventsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *OrderEventsMutation
 }
 
 // Where appends a list predicates to the OrderEventsUpdate builder.
@@ -97,23 +96,16 @@ func (oeu *OrderEventsUpdate) ClearCreatedID() *OrderEventsUpdate {
 }
 
 // SetEventID sets the "event_id" field.
-func (oeu *OrderEventsUpdate) SetEventID(i int64) *OrderEventsUpdate {
-	oeu.mutation.ResetEventID()
-	oeu.mutation.SetEventID(i)
+func (oeu *OrderEventsUpdate) SetEventID(s string) *OrderEventsUpdate {
+	oeu.mutation.SetEventID(s)
 	return oeu
 }
 
 // SetNillableEventID sets the "event_id" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventID(i *int64) *OrderEventsUpdate {
-	if i != nil {
-		oeu.SetEventID(*i)
+func (oeu *OrderEventsUpdate) SetNillableEventID(s *string) *OrderEventsUpdate {
+	if s != nil {
+		oeu.SetEventID(*s)
 	}
-	return oeu
-}
-
-// AddEventID adds i to the "event_id" field.
-func (oeu *OrderEventsUpdate) AddEventID(i int64) *OrderEventsUpdate {
-	oeu.mutation.AddEventID(i)
 	return oeu
 }
 
@@ -296,12 +288,6 @@ func (oeu *OrderEventsUpdate) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (oeu *OrderEventsUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderEventsUpdate {
-	oeu.modifiers = append(oeu.modifiers, modifiers...)
-	return oeu
-}
-
 func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderevents.Table, orderevents.Columns, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
 	if ps := oeu.mutation.predicates; len(ps) > 0 {
@@ -339,13 +325,10 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(orderevents.FieldCreatedID, field.TypeInt64)
 	}
 	if value, ok := oeu.mutation.EventID(); ok {
-		_spec.SetField(orderevents.FieldEventID, field.TypeInt64, value)
-	}
-	if value, ok := oeu.mutation.AddedEventID(); ok {
-		_spec.AddField(orderevents.FieldEventID, field.TypeInt64, value)
+		_spec.SetField(orderevents.FieldEventID, field.TypeString, value)
 	}
 	if oeu.mutation.EventIDCleared() {
-		_spec.ClearField(orderevents.FieldEventID, field.TypeInt64)
+		_spec.ClearField(orderevents.FieldEventID, field.TypeString)
 	}
 	if value, ok := oeu.mutation.AggregateType(); ok {
 		_spec.SetField(orderevents.FieldAggregateType, field.TypeString, value)
@@ -403,7 +386,6 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(oeu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, oeu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderevents.Label}
@@ -419,10 +401,9 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // OrderEventsUpdateOne is the builder for updating a single OrderEvents entity.
 type OrderEventsUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *OrderEventsMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *OrderEventsMutation
 }
 
 // SetUpdatedAt sets the "updated_at" field.
@@ -492,23 +473,16 @@ func (oeuo *OrderEventsUpdateOne) ClearCreatedID() *OrderEventsUpdateOne {
 }
 
 // SetEventID sets the "event_id" field.
-func (oeuo *OrderEventsUpdateOne) SetEventID(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.ResetEventID()
-	oeuo.mutation.SetEventID(i)
+func (oeuo *OrderEventsUpdateOne) SetEventID(s string) *OrderEventsUpdateOne {
+	oeuo.mutation.SetEventID(s)
 	return oeuo
 }
 
 // SetNillableEventID sets the "event_id" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventID(i *int64) *OrderEventsUpdateOne {
-	if i != nil {
-		oeuo.SetEventID(*i)
+func (oeuo *OrderEventsUpdateOne) SetNillableEventID(s *string) *OrderEventsUpdateOne {
+	if s != nil {
+		oeuo.SetEventID(*s)
 	}
-	return oeuo
-}
-
-// AddEventID adds i to the "event_id" field.
-func (oeuo *OrderEventsUpdateOne) AddEventID(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.AddEventID(i)
 	return oeuo
 }
 
@@ -704,12 +678,6 @@ func (oeuo *OrderEventsUpdateOne) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (oeuo *OrderEventsUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderEventsUpdateOne {
-	oeuo.modifiers = append(oeuo.modifiers, modifiers...)
-	return oeuo
-}
-
 func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEvents, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderevents.Table, orderevents.Columns, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
 	id, ok := oeuo.mutation.ID()
@@ -764,13 +732,10 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		_spec.ClearField(orderevents.FieldCreatedID, field.TypeInt64)
 	}
 	if value, ok := oeuo.mutation.EventID(); ok {
-		_spec.SetField(orderevents.FieldEventID, field.TypeInt64, value)
-	}
-	if value, ok := oeuo.mutation.AddedEventID(); ok {
-		_spec.AddField(orderevents.FieldEventID, field.TypeInt64, value)
+		_spec.SetField(orderevents.FieldEventID, field.TypeString, value)
 	}
 	if oeuo.mutation.EventIDCleared() {
-		_spec.ClearField(orderevents.FieldEventID, field.TypeInt64)
+		_spec.ClearField(orderevents.FieldEventID, field.TypeString)
 	}
 	if value, ok := oeuo.mutation.AggregateType(); ok {
 		_spec.SetField(orderevents.FieldAggregateType, field.TypeString, value)
@@ -828,7 +793,6 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(oeuo.modifiers...)
 	_node = &OrderEvents{config: oeuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

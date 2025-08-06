@@ -24,7 +24,6 @@ type OrderEventsQuery struct {
 	inters     []Interceptor
 	predicates []predicate.OrderEvents
 	withOrder  *OrderQuery
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -277,9 +276,8 @@ func (oeq *OrderEventsQuery) Clone() *OrderEventsQuery {
 		predicates: append([]predicate.OrderEvents{}, oeq.predicates...),
 		withOrder:  oeq.withOrder.Clone(),
 		// clone intermediate query.
-		sql:       oeq.sql.Clone(),
-		path:      oeq.path,
-		modifiers: append([]func(*sql.Selector){}, oeq.modifiers...),
+		sql:  oeq.sql.Clone(),
+		path: oeq.path,
 	}
 }
 
@@ -385,9 +383,6 @@ func (oeq *OrderEventsQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(oeq.modifiers) > 0 {
-		_spec.Modifiers = oeq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -438,9 +433,6 @@ func (oeq *OrderEventsQuery) loadOrder(ctx context.Context, query *OrderQuery, n
 
 func (oeq *OrderEventsQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := oeq.querySpec()
-	if len(oeq.modifiers) > 0 {
-		_spec.Modifiers = oeq.modifiers
-	}
 	_spec.Node.Columns = oeq.ctx.Fields
 	if len(oeq.ctx.Fields) > 0 {
 		_spec.Unique = oeq.ctx.Unique != nil && *oeq.ctx.Unique
@@ -506,9 +498,6 @@ func (oeq *OrderEventsQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if oeq.ctx.Unique != nil && *oeq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range oeq.modifiers {
-		m(selector)
-	}
 	for _, p := range oeq.predicates {
 		p(selector)
 	}
@@ -524,12 +513,6 @@ func (oeq *OrderEventsQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oeq *OrderEventsQuery) Modify(modifiers ...func(s *sql.Selector)) *OrderEventsSelect {
-	oeq.modifiers = append(oeq.modifiers, modifiers...)
-	return oeq.Select()
 }
 
 // OrderEventsGroupBy is the group-by builder for OrderEvents entities.
@@ -620,10 +603,4 @@ func (oes *OrderEventsSelect) sqlScan(ctx context.Context, root *OrderEventsQuer
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oes *OrderEventsSelect) Modify(modifiers ...func(s *sql.Selector)) *OrderEventsSelect {
-	oes.modifiers = append(oes.modifiers, modifiers...)
-	return oes
 }

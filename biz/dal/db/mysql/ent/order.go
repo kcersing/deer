@@ -31,7 +31,7 @@ type Order struct {
 	// 会员id
 	MemberID int64 `json:"member_id,omitempty"`
 	// Status holds the value of the "status" field.
-	Status int64 `json:"status,omitempty"`
+	Status string `json:"status,omitempty"`
 	// 业务类型
 	Nature int64 `json:"nature,omitempty"`
 	// 订单完成时间
@@ -104,9 +104,9 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldStatus, order.FieldNature, order.FieldVersion:
+		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion:
 			values[i] = new(sql.NullInt64)
-		case order.FieldOrderSn:
+		case order.FieldOrderSn, order.FieldStatus:
 			values[i] = new(sql.NullString)
 		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt, order.FieldRefundAt:
 			values[i] = new(sql.NullTime)
@@ -168,10 +168,10 @@ func (o *Order) assignValues(columns []string, values []any) error {
 				o.MemberID = value.Int64
 			}
 		case order.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				o.Status = value.Int64
+				o.Status = value.String
 			}
 		case order.FieldNature:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -278,7 +278,7 @@ func (o *Order) String() string {
 	builder.WriteString(fmt.Sprintf("%v", o.MemberID))
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", o.Status))
+	builder.WriteString(o.Status)
 	builder.WriteString(", ")
 	builder.WriteString("nature=")
 	builder.WriteString(fmt.Sprintf("%v", o.Nature))

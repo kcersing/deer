@@ -24,7 +24,6 @@ type OrderStatusHistoryQuery struct {
 	inters     []Interceptor
 	predicates []predicate.OrderStatusHistory
 	withOrder  *OrderQuery
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -277,9 +276,8 @@ func (oshq *OrderStatusHistoryQuery) Clone() *OrderStatusHistoryQuery {
 		predicates: append([]predicate.OrderStatusHistory{}, oshq.predicates...),
 		withOrder:  oshq.withOrder.Clone(),
 		// clone intermediate query.
-		sql:       oshq.sql.Clone(),
-		path:      oshq.path,
-		modifiers: append([]func(*sql.Selector){}, oshq.modifiers...),
+		sql:  oshq.sql.Clone(),
+		path: oshq.path,
 	}
 }
 
@@ -385,9 +383,6 @@ func (oshq *OrderStatusHistoryQuery) sqlAll(ctx context.Context, hooks ...queryH
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(oshq.modifiers) > 0 {
-		_spec.Modifiers = oshq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -438,9 +433,6 @@ func (oshq *OrderStatusHistoryQuery) loadOrder(ctx context.Context, query *Order
 
 func (oshq *OrderStatusHistoryQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := oshq.querySpec()
-	if len(oshq.modifiers) > 0 {
-		_spec.Modifiers = oshq.modifiers
-	}
 	_spec.Node.Columns = oshq.ctx.Fields
 	if len(oshq.ctx.Fields) > 0 {
 		_spec.Unique = oshq.ctx.Unique != nil && *oshq.ctx.Unique
@@ -506,9 +498,6 @@ func (oshq *OrderStatusHistoryQuery) sqlQuery(ctx context.Context) *sql.Selector
 	if oshq.ctx.Unique != nil && *oshq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range oshq.modifiers {
-		m(selector)
-	}
 	for _, p := range oshq.predicates {
 		p(selector)
 	}
@@ -524,12 +513,6 @@ func (oshq *OrderStatusHistoryQuery) sqlQuery(ctx context.Context) *sql.Selector
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oshq *OrderStatusHistoryQuery) Modify(modifiers ...func(s *sql.Selector)) *OrderStatusHistorySelect {
-	oshq.modifiers = append(oshq.modifiers, modifiers...)
-	return oshq.Select()
 }
 
 // OrderStatusHistoryGroupBy is the group-by builder for OrderStatusHistory entities.
@@ -620,10 +603,4 @@ func (oshs *OrderStatusHistorySelect) sqlScan(ctx context.Context, root *OrderSt
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oshs *OrderStatusHistorySelect) Modify(modifiers ...func(s *sql.Selector)) *OrderStatusHistorySelect {
-	oshs.modifiers = append(oshs.modifiers, modifiers...)
-	return oshs
 }

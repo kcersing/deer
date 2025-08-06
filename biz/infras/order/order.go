@@ -10,11 +10,12 @@ import (
 // Order 订单聚合根
 type Order struct {
 	Id             int64
+	MemberId       int64
 	OrderSn        string
 	Nature         string
 	Items          []OrderItem
 	TotalAmount    float64
-	Status         OrderStatus
+	Status         Status
 	CompletionAt   time.Time
 	CloseAt        time.Time
 	RefundAt       time.Time
@@ -34,13 +35,13 @@ type OrderItem struct {
 }
 
 // NewOrder 创建订单
-func NewOrder(orderID int64, sn string, items []OrderItem, amount float64) *Order {
+func NewOrder(sn string, memberId int64, items []OrderItem, amount float64) *Order {
 	order := &Order{
-		Id:          orderID,
 		OrderSn:     sn,
+		MemberId:    memberId,
 		Items:       items,
 		TotalAmount: amount,
-		Status:      OrderCreated,
+		Status:      Created,
 	}
 	order.stateMachine = NewOrderStateMachine(order)
 	return order
@@ -48,7 +49,7 @@ func NewOrder(orderID int64, sn string, items []OrderItem, amount float64) *Orde
 
 // 领域行为：支付订单
 func (o *Order) Pay(amount float64, method string) error {
-	event := &OrderPaidEvent{
+	event := &PaidEvent{
 		BaseEvent: BaseEvent{
 			EventID:     uuid.New().String(),
 			AggregateID: o.Id,
@@ -56,25 +57,35 @@ func (o *Order) Pay(amount float64, method string) error {
 		},
 		PayAmount: amount,
 		PayMethod: method,
-		PaidAt:    time.Now(),
 	}
 
-	return o.stateMachine.Transition(OrderPaid, event)
+	return o.stateMachine.Transition(Paid, event)
 }
 
 // 领域行为：取消订单
 func (o *Order) Cancel(reason string) error {
-	event := &OrderCancelledEvent{
+	event := &CancelledEvent{
 		BaseEvent: BaseEvent{
 			EventID:     uuid.New().String(),
 			AggregateID: o.Id,
 			Timestamp:   time.Now(),
 		},
-		Reason:      reason,
-		CancelledAt: time.Now(),
+		Reason: reason,
 	}
 
-	return o.stateMachine.Transition(OrderCancelled, event)
+	return o.stateMachine.Transition(Cancelled, event)
+}
+
+func (o *Order) Shipped() {
+
+}
+
+func (o *Order) Completed() {
+
+}
+
+func (o *Order) Refunded(amount float64) {
+
 }
 
 // 事件管理方法
@@ -106,56 +117,25 @@ func (o *Order) applyEvent(event Event) {
 	o.Version++
 	o.Events = append(o.Events, event)
 	switch e := event.(type) {
-	case *OrderCreatedEvent:
+	case *CreatedEvent:
 		o.Id = e.AggregateID  // 修正：使用事件中的AggregateID而非e.Id
 		o.OrderSn = e.OrderSn // 补充：设置订单编号
 		o.Items = e.Items
 		o.TotalAmount = e.TotalAmount
-		o.Status = OrderCreated
-	case *OrderPaidEvent:
-		o.Status = OrderPaid
-	case *OrderCancelledEvent:
-		o.Status = OrderCancelled
-		o.CloseAt = e.CancelledAt
-	case *OrderShippedEvent:
-		o.Status = OrderShipped
-	case *OrderCompletedEvent:
-		o.Status = OrderCompleted
-		o.CompletionAt = e.CompletionAt
-	case *OrderRefundedEvent:
-		o.Status = OrderRefunded
-		o.RefundAt = e.RefundAt
+		o.Status = Created
+	case *PaidEvent:
+		o.Status = Paid
+	case *CancelledEvent:
+		o.Status = Cancelled
+	case *ShippedEvent:
+		o.Status = Shipped
+	case *CompletedEvent:
+		o.Status = Completed
+	case *RefundedEvent:
+		o.Status = Refunded
 		o.RefundedAmount = e.RefundedAmount
 	default:
 		// 添加未知事件日志
 		klog.Errorf("unsupported event type: %T", e)
 	}
 }
-
-//// 初始化
-//client, _ := ent.Open("mysql", "dsn")
-//dispatcher := NewEventDispatcher()
-//inventoryHandler := &InventoryHandler{}
-//dispatcher.RegisterHandler("OrderCreated", inventoryHandler)
-//dispatcher.RegisterHandler("OrderCancelled", inventoryHandler)
-//
-//// 创建仓储
-//repo := NewOrderRepository(client, 10) // 每10个事件创建一次快照
-//
-//// 创建订单
-//items := []OrderItem{{ProductId: 1001, Quantity: 2, Price: 99.9}}
-//order := NewOrder(1, "SN20230001", items, 199.8)
-//
-//// 发布创建事件
-//event := NewOrderCreatedEvent(1, "SN20230001", items, 199.8, 10001)
-//order.AddEvent(event)
-//
-//// 保存订单
-//_ = repo.Save(context.Background(), order)
-//
-//// 分发事件
-//_ = dispatcher.Dispatch(context.Background(), event)
-//
-//// 支付订单
-//_ = order.Pay(199.8, "alipay")
-//_ = repo.Save(context.Background(), order)

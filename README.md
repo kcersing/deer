@@ -19,7 +19,30 @@
 （客户端）得到调用的结果
 
 
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│    领域模型层    │     │    基础设施层    │     │    事件处理层    │
+│  order.go       │────▶│  orderRepository.go │────▶│  observers.go   │
+│  orderStateMachine.go │  subscription_service.go │  orderEvent.go  │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
 
+1. 创建订单 → NewOrder()
+   ├─ 初始化状态机
+   └─ 生成OrderCreatedEvent
+
+2. 支付订单 → order.Pay()
+   ├─ 生成OrderPaidEvent
+   ├─ 状态机验证状态转换
+   └─ 更新订单状态为"paid"
+
+3. 保存订单 → repository.Save()
+   ├─ 事务保存订单数据
+   ├─ 事务保存事件记录
+   └─ 提交后通知订阅者
+
+4. 事件处理 → subscriptionService.ProcessEvent()
+   ├─ 查询订阅者
+   ├─ 通知外部系统
+   └─ 更新订阅状态
 
 
 cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers-order --hex 
@@ -27,4 +50,4 @@ cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers
 
 
 
-go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/modifier ./biz/dal/db/ent/schema
+go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/modifier ./biz/dal/db/mysql/ent/schema

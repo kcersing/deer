@@ -4,11 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
@@ -18,6 +20,7 @@ type OrderSnapshotsCreate struct {
 	config
 	mutation *OrderSnapshotsMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -226,6 +229,7 @@ func (osc *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.Create
 		_node = &OrderSnapshots{config: osc.config}
 		_spec = sqlgraph.NewCreateSpec(ordersnapshots.Table, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
 	)
+	_spec.OnConflict = osc.conflict
 	if id, ok := osc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -274,11 +278,418 @@ func (osc *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.Create
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderSnapshots.Create().
+//		SetCreatedAt(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderSnapshotsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (osc *OrderSnapshotsCreate) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertOne {
+	osc.conflict = opts
+	return &OrderSnapshotsUpsertOne{
+		create: osc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (osc *OrderSnapshotsCreate) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertOne {
+	osc.conflict = append(osc.conflict, sql.ConflictColumns(columns...))
+	return &OrderSnapshotsUpsertOne{
+		create: osc,
+	}
+}
+
+type (
+	// OrderSnapshotsUpsertOne is the builder for "upsert"-ing
+	//  one OrderSnapshots node.
+	OrderSnapshotsUpsertOne struct {
+		create *OrderSnapshotsCreate
+	}
+
+	// OrderSnapshotsUpsert is the "OnConflict" setter.
+	OrderSnapshotsUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderSnapshotsUpsert) SetUpdatedAt(v time.Time) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateUpdatedAt() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderSnapshotsUpsert) ClearUpdatedAt() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldUpdatedAt)
+	return u
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderSnapshotsUpsert) SetDelete(v int64) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldDelete, v)
+	return u
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateDelete() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldDelete)
+	return u
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderSnapshotsUpsert) AddDelete(v int64) *OrderSnapshotsUpsert {
+	u.Add(ordersnapshots.FieldDelete, v)
+	return u
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderSnapshotsUpsert) ClearDelete() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldDelete)
+	return u
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderSnapshotsUpsert) SetCreatedID(v int64) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldCreatedID, v)
+	return u
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateCreatedID() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldCreatedID)
+	return u
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderSnapshotsUpsert) AddCreatedID(v int64) *OrderSnapshotsUpsert {
+	u.Add(ordersnapshots.FieldCreatedID, v)
+	return u
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderSnapshotsUpsert) ClearCreatedID() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldCreatedID)
+	return u
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderSnapshotsUpsert) SetAggregateID(v int64) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldAggregateID, v)
+	return u
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateAggregateID() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldAggregateID)
+	return u
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderSnapshotsUpsert) ClearAggregateID() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldAggregateID)
+	return u
+}
+
+// SetAggregateVersion sets the "aggregate_version" field.
+func (u *OrderSnapshotsUpsert) SetAggregateVersion(v int64) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldAggregateVersion, v)
+	return u
+}
+
+// UpdateAggregateVersion sets the "aggregate_version" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateAggregateVersion() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldAggregateVersion)
+	return u
+}
+
+// AddAggregateVersion adds v to the "aggregate_version" field.
+func (u *OrderSnapshotsUpsert) AddAggregateVersion(v int64) *OrderSnapshotsUpsert {
+	u.Add(ordersnapshots.FieldAggregateVersion, v)
+	return u
+}
+
+// ClearAggregateVersion clears the value of the "aggregate_version" field.
+func (u *OrderSnapshotsUpsert) ClearAggregateVersion() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldAggregateVersion)
+	return u
+}
+
+// SetAggregateData sets the "aggregate_data" field.
+func (u *OrderSnapshotsUpsert) SetAggregateData(v string) *OrderSnapshotsUpsert {
+	u.Set(ordersnapshots.FieldAggregateData, v)
+	return u
+}
+
+// UpdateAggregateData sets the "aggregate_data" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsert) UpdateAggregateData() *OrderSnapshotsUpsert {
+	u.SetExcluded(ordersnapshots.FieldAggregateData)
+	return u
+}
+
+// ClearAggregateData clears the value of the "aggregate_data" field.
+func (u *OrderSnapshotsUpsert) ClearAggregateData() *OrderSnapshotsUpsert {
+	u.SetNull(ordersnapshots.FieldAggregateData)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(ordersnapshots.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderSnapshotsUpsertOne) UpdateNewValues() *OrderSnapshotsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(ordersnapshots.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(ordersnapshots.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *OrderSnapshotsUpsertOne) Ignore() *OrderSnapshotsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderSnapshotsUpsertOne) DoNothing() *OrderSnapshotsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderSnapshotsCreate.OnConflict
+// documentation for more info.
+func (u *OrderSnapshotsUpsertOne) Update(set func(*OrderSnapshotsUpsert)) *OrderSnapshotsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderSnapshotsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderSnapshotsUpsertOne) SetUpdatedAt(v time.Time) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateUpdatedAt() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderSnapshotsUpsertOne) ClearUpdatedAt() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderSnapshotsUpsertOne) SetDelete(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderSnapshotsUpsertOne) AddDelete(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateDelete() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderSnapshotsUpsertOne) ClearDelete() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderSnapshotsUpsertOne) SetCreatedID(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderSnapshotsUpsertOne) AddCreatedID(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateCreatedID() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderSnapshotsUpsertOne) ClearCreatedID() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderSnapshotsUpsertOne) SetAggregateID(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateID(v)
+	})
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateAggregateID() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateID()
+	})
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderSnapshotsUpsertOne) ClearAggregateID() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateID()
+	})
+}
+
+// SetAggregateVersion sets the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertOne) SetAggregateVersion(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateVersion(v)
+	})
+}
+
+// AddAggregateVersion adds v to the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertOne) AddAggregateVersion(v int64) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddAggregateVersion(v)
+	})
+}
+
+// UpdateAggregateVersion sets the "aggregate_version" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateAggregateVersion() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateVersion()
+	})
+}
+
+// ClearAggregateVersion clears the value of the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertOne) ClearAggregateVersion() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateVersion()
+	})
+}
+
+// SetAggregateData sets the "aggregate_data" field.
+func (u *OrderSnapshotsUpsertOne) SetAggregateData(v string) *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateData(v)
+	})
+}
+
+// UpdateAggregateData sets the "aggregate_data" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertOne) UpdateAggregateData() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateData()
+	})
+}
+
+// ClearAggregateData clears the value of the "aggregate_data" field.
+func (u *OrderSnapshotsUpsertOne) ClearAggregateData() *OrderSnapshotsUpsertOne {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateData()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderSnapshotsUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderSnapshotsCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderSnapshotsUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *OrderSnapshotsUpsertOne) ID(ctx context.Context) (id int64, err error) {
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *OrderSnapshotsUpsertOne) IDX(ctx context.Context) int64 {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // OrderSnapshotsCreateBulk is the builder for creating many OrderSnapshots entities in bulk.
 type OrderSnapshotsCreateBulk struct {
 	config
 	err      error
 	builders []*OrderSnapshotsCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the OrderSnapshots entities in the database.
@@ -308,6 +719,7 @@ func (oscb *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapsho
 					_, err = mutators[i+1].Mutate(root, oscb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = oscb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, oscb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -358,6 +770,270 @@ func (oscb *OrderSnapshotsCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (oscb *OrderSnapshotsCreateBulk) ExecX(ctx context.Context) {
 	if err := oscb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderSnapshots.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderSnapshotsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (oscb *OrderSnapshotsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertBulk {
+	oscb.conflict = opts
+	return &OrderSnapshotsUpsertBulk{
+		create: oscb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (oscb *OrderSnapshotsCreateBulk) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertBulk {
+	oscb.conflict = append(oscb.conflict, sql.ConflictColumns(columns...))
+	return &OrderSnapshotsUpsertBulk{
+		create: oscb,
+	}
+}
+
+// OrderSnapshotsUpsertBulk is the builder for "upsert"-ing
+// a bulk of OrderSnapshots nodes.
+type OrderSnapshotsUpsertBulk struct {
+	create *OrderSnapshotsCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(ordersnapshots.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderSnapshotsUpsertBulk) UpdateNewValues() *OrderSnapshotsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(ordersnapshots.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(ordersnapshots.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderSnapshots.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *OrderSnapshotsUpsertBulk) Ignore() *OrderSnapshotsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderSnapshotsUpsertBulk) DoNothing() *OrderSnapshotsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderSnapshotsCreateBulk.OnConflict
+// documentation for more info.
+func (u *OrderSnapshotsUpsertBulk) Update(set func(*OrderSnapshotsUpsert)) *OrderSnapshotsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderSnapshotsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderSnapshotsUpsertBulk) SetUpdatedAt(v time.Time) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateUpdatedAt() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderSnapshotsUpsertBulk) ClearUpdatedAt() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderSnapshotsUpsertBulk) SetDelete(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderSnapshotsUpsertBulk) AddDelete(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateDelete() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderSnapshotsUpsertBulk) ClearDelete() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderSnapshotsUpsertBulk) SetCreatedID(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderSnapshotsUpsertBulk) AddCreatedID(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateCreatedID() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderSnapshotsUpsertBulk) ClearCreatedID() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetAggregateID sets the "aggregate_id" field.
+func (u *OrderSnapshotsUpsertBulk) SetAggregateID(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateID(v)
+	})
+}
+
+// UpdateAggregateID sets the "aggregate_id" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateAggregateID() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateID()
+	})
+}
+
+// ClearAggregateID clears the value of the "aggregate_id" field.
+func (u *OrderSnapshotsUpsertBulk) ClearAggregateID() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateID()
+	})
+}
+
+// SetAggregateVersion sets the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertBulk) SetAggregateVersion(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateVersion(v)
+	})
+}
+
+// AddAggregateVersion adds v to the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertBulk) AddAggregateVersion(v int64) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.AddAggregateVersion(v)
+	})
+}
+
+// UpdateAggregateVersion sets the "aggregate_version" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateAggregateVersion() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateVersion()
+	})
+}
+
+// ClearAggregateVersion clears the value of the "aggregate_version" field.
+func (u *OrderSnapshotsUpsertBulk) ClearAggregateVersion() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateVersion()
+	})
+}
+
+// SetAggregateData sets the "aggregate_data" field.
+func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v string) *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.SetAggregateData(v)
+	})
+}
+
+// UpdateAggregateData sets the "aggregate_data" field to the value that was provided on create.
+func (u *OrderSnapshotsUpsertBulk) UpdateAggregateData() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.UpdateAggregateData()
+	})
+}
+
+// ClearAggregateData clears the value of the "aggregate_data" field.
+func (u *OrderSnapshotsUpsertBulk) ClearAggregateData() *OrderSnapshotsUpsertBulk {
+	return u.Update(func(s *OrderSnapshotsUpsert) {
+		s.ClearAggregateData()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderSnapshotsUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the OrderSnapshotsCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderSnapshotsCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderSnapshotsUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

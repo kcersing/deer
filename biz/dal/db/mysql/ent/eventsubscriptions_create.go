@@ -4,10 +4,12 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
@@ -17,6 +19,7 @@ type EventSubscriptionsCreate struct {
 	config
 	mutation *EventSubscriptionsMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -118,29 +121,29 @@ func (esc *EventSubscriptionsCreate) SetNillableLastProcessedID(s *string) *Even
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (esc *EventSubscriptionsCreate) SetLastProcessedVersion(s string) *EventSubscriptionsCreate {
-	esc.mutation.SetLastProcessedVersion(s)
+func (esc *EventSubscriptionsCreate) SetLastProcessedVersion(i int64) *EventSubscriptionsCreate {
+	esc.mutation.SetLastProcessedVersion(i)
 	return esc
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (esc *EventSubscriptionsCreate) SetNillableLastProcessedVersion(s *string) *EventSubscriptionsCreate {
-	if s != nil {
-		esc.SetLastProcessedVersion(*s)
+func (esc *EventSubscriptionsCreate) SetNillableLastProcessedVersion(i *int64) *EventSubscriptionsCreate {
+	if i != nil {
+		esc.SetLastProcessedVersion(*i)
 	}
 	return esc
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (esc *EventSubscriptionsCreate) SetLastProcessedAt(s string) *EventSubscriptionsCreate {
-	esc.mutation.SetLastProcessedAt(s)
+func (esc *EventSubscriptionsCreate) SetLastProcessedAt(t time.Time) *EventSubscriptionsCreate {
+	esc.mutation.SetLastProcessedAt(t)
 	return esc
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (esc *EventSubscriptionsCreate) SetNillableLastProcessedAt(s *string) *EventSubscriptionsCreate {
-	if s != nil {
-		esc.SetLastProcessedAt(*s)
+func (esc *EventSubscriptionsCreate) SetNillableLastProcessedAt(t *time.Time) *EventSubscriptionsCreate {
+	if t != nil {
+		esc.SetLastProcessedAt(*t)
 	}
 	return esc
 }
@@ -160,15 +163,15 @@ func (esc *EventSubscriptionsCreate) SetNillableIsActive(i *int64) *EventSubscri
 }
 
 // SetErrorCount sets the "error_count" field.
-func (esc *EventSubscriptionsCreate) SetErrorCount(s string) *EventSubscriptionsCreate {
-	esc.mutation.SetErrorCount(s)
+func (esc *EventSubscriptionsCreate) SetErrorCount(i int64) *EventSubscriptionsCreate {
+	esc.mutation.SetErrorCount(i)
 	return esc
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (esc *EventSubscriptionsCreate) SetNillableErrorCount(s *string) *EventSubscriptionsCreate {
-	if s != nil {
-		esc.SetErrorCount(*s)
+func (esc *EventSubscriptionsCreate) SetNillableErrorCount(i *int64) *EventSubscriptionsCreate {
+	if i != nil {
+		esc.SetErrorCount(*i)
 	}
 	return esc
 }
@@ -276,6 +279,7 @@ func (esc *EventSubscriptionsCreate) createSpec() (*EventSubscriptions, *sqlgrap
 		_node = &EventSubscriptions{config: esc.config}
 		_spec = sqlgraph.NewCreateSpec(eventsubscriptions.Table, sqlgraph.NewFieldSpec(eventsubscriptions.FieldID, field.TypeInt64))
 	)
+	_spec.OnConflict = esc.conflict
 	if id, ok := esc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -309,11 +313,11 @@ func (esc *EventSubscriptionsCreate) createSpec() (*EventSubscriptions, *sqlgrap
 		_node.LastProcessedID = value
 	}
 	if value, ok := esc.mutation.LastProcessedVersion(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 		_node.LastProcessedVersion = value
 	}
 	if value, ok := esc.mutation.LastProcessedAt(); ok {
-		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 		_node.LastProcessedAt = value
 	}
 	if value, ok := esc.mutation.IsActive(); ok {
@@ -321,7 +325,7 @@ func (esc *EventSubscriptionsCreate) createSpec() (*EventSubscriptions, *sqlgrap
 		_node.IsActive = value
 	}
 	if value, ok := esc.mutation.ErrorCount(); ok {
-		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeString, value)
+		_spec.SetField(eventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 		_node.ErrorCount = value
 	}
 	if value, ok := esc.mutation.LastError(); ok {
@@ -331,11 +335,639 @@ func (esc *EventSubscriptionsCreate) createSpec() (*EventSubscriptions, *sqlgrap
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.EventSubscriptions.Create().
+//		SetCreatedAt(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.EventSubscriptionsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (esc *EventSubscriptionsCreate) OnConflict(opts ...sql.ConflictOption) *EventSubscriptionsUpsertOne {
+	esc.conflict = opts
+	return &EventSubscriptionsUpsertOne{
+		create: esc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (esc *EventSubscriptionsCreate) OnConflictColumns(columns ...string) *EventSubscriptionsUpsertOne {
+	esc.conflict = append(esc.conflict, sql.ConflictColumns(columns...))
+	return &EventSubscriptionsUpsertOne{
+		create: esc,
+	}
+}
+
+type (
+	// EventSubscriptionsUpsertOne is the builder for "upsert"-ing
+	//  one EventSubscriptions node.
+	EventSubscriptionsUpsertOne struct {
+		create *EventSubscriptionsCreate
+	}
+
+	// EventSubscriptionsUpsert is the "OnConflict" setter.
+	EventSubscriptionsUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *EventSubscriptionsUpsert) SetUpdatedAt(v time.Time) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateUpdatedAt() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *EventSubscriptionsUpsert) ClearUpdatedAt() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldUpdatedAt)
+	return u
+}
+
+// SetDelete sets the "delete" field.
+func (u *EventSubscriptionsUpsert) SetDelete(v int64) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldDelete, v)
+	return u
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateDelete() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldDelete)
+	return u
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *EventSubscriptionsUpsert) AddDelete(v int64) *EventSubscriptionsUpsert {
+	u.Add(eventsubscriptions.FieldDelete, v)
+	return u
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *EventSubscriptionsUpsert) ClearDelete() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldDelete)
+	return u
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *EventSubscriptionsUpsert) SetCreatedID(v int64) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldCreatedID, v)
+	return u
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateCreatedID() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldCreatedID)
+	return u
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *EventSubscriptionsUpsert) AddCreatedID(v int64) *EventSubscriptionsUpsert {
+	u.Add(eventsubscriptions.FieldCreatedID, v)
+	return u
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *EventSubscriptionsUpsert) ClearCreatedID() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldCreatedID)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *EventSubscriptionsUpsert) SetName(v string) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateName() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldName)
+	return u
+}
+
+// ClearName clears the value of the "name" field.
+func (u *EventSubscriptionsUpsert) ClearName() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldName)
+	return u
+}
+
+// SetEventType sets the "event_type" field.
+func (u *EventSubscriptionsUpsert) SetEventType(v string) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldEventType, v)
+	return u
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateEventType() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldEventType)
+	return u
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *EventSubscriptionsUpsert) ClearEventType() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldEventType)
+	return u
+}
+
+// SetLastProcessedID sets the "last_processed_id" field.
+func (u *EventSubscriptionsUpsert) SetLastProcessedID(v string) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldLastProcessedID, v)
+	return u
+}
+
+// UpdateLastProcessedID sets the "last_processed_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateLastProcessedID() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldLastProcessedID)
+	return u
+}
+
+// ClearLastProcessedID clears the value of the "last_processed_id" field.
+func (u *EventSubscriptionsUpsert) ClearLastProcessedID() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldLastProcessedID)
+	return u
+}
+
+// SetLastProcessedVersion sets the "last_processed_version" field.
+func (u *EventSubscriptionsUpsert) SetLastProcessedVersion(v int64) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldLastProcessedVersion, v)
+	return u
+}
+
+// UpdateLastProcessedVersion sets the "last_processed_version" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateLastProcessedVersion() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldLastProcessedVersion)
+	return u
+}
+
+// AddLastProcessedVersion adds v to the "last_processed_version" field.
+func (u *EventSubscriptionsUpsert) AddLastProcessedVersion(v int64) *EventSubscriptionsUpsert {
+	u.Add(eventsubscriptions.FieldLastProcessedVersion, v)
+	return u
+}
+
+// ClearLastProcessedVersion clears the value of the "last_processed_version" field.
+func (u *EventSubscriptionsUpsert) ClearLastProcessedVersion() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldLastProcessedVersion)
+	return u
+}
+
+// SetLastProcessedAt sets the "last_processed_at" field.
+func (u *EventSubscriptionsUpsert) SetLastProcessedAt(v time.Time) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldLastProcessedAt, v)
+	return u
+}
+
+// UpdateLastProcessedAt sets the "last_processed_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateLastProcessedAt() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldLastProcessedAt)
+	return u
+}
+
+// ClearLastProcessedAt clears the value of the "last_processed_at" field.
+func (u *EventSubscriptionsUpsert) ClearLastProcessedAt() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldLastProcessedAt)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *EventSubscriptionsUpsert) SetIsActive(v int64) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateIsActive() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldIsActive)
+	return u
+}
+
+// AddIsActive adds v to the "is_active" field.
+func (u *EventSubscriptionsUpsert) AddIsActive(v int64) *EventSubscriptionsUpsert {
+	u.Add(eventsubscriptions.FieldIsActive, v)
+	return u
+}
+
+// ClearIsActive clears the value of the "is_active" field.
+func (u *EventSubscriptionsUpsert) ClearIsActive() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldIsActive)
+	return u
+}
+
+// SetErrorCount sets the "error_count" field.
+func (u *EventSubscriptionsUpsert) SetErrorCount(v int64) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldErrorCount, v)
+	return u
+}
+
+// UpdateErrorCount sets the "error_count" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateErrorCount() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldErrorCount)
+	return u
+}
+
+// AddErrorCount adds v to the "error_count" field.
+func (u *EventSubscriptionsUpsert) AddErrorCount(v int64) *EventSubscriptionsUpsert {
+	u.Add(eventsubscriptions.FieldErrorCount, v)
+	return u
+}
+
+// ClearErrorCount clears the value of the "error_count" field.
+func (u *EventSubscriptionsUpsert) ClearErrorCount() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldErrorCount)
+	return u
+}
+
+// SetLastError sets the "last_error" field.
+func (u *EventSubscriptionsUpsert) SetLastError(v string) *EventSubscriptionsUpsert {
+	u.Set(eventsubscriptions.FieldLastError, v)
+	return u
+}
+
+// UpdateLastError sets the "last_error" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsert) UpdateLastError() *EventSubscriptionsUpsert {
+	u.SetExcluded(eventsubscriptions.FieldLastError)
+	return u
+}
+
+// ClearLastError clears the value of the "last_error" field.
+func (u *EventSubscriptionsUpsert) ClearLastError() *EventSubscriptionsUpsert {
+	u.SetNull(eventsubscriptions.FieldLastError)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(eventsubscriptions.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *EventSubscriptionsUpsertOne) UpdateNewValues() *EventSubscriptionsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(eventsubscriptions.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(eventsubscriptions.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *EventSubscriptionsUpsertOne) Ignore() *EventSubscriptionsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *EventSubscriptionsUpsertOne) DoNothing() *EventSubscriptionsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the EventSubscriptionsCreate.OnConflict
+// documentation for more info.
+func (u *EventSubscriptionsUpsertOne) Update(set func(*EventSubscriptionsUpsert)) *EventSubscriptionsUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&EventSubscriptionsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *EventSubscriptionsUpsertOne) SetUpdatedAt(v time.Time) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateUpdatedAt() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *EventSubscriptionsUpsertOne) ClearUpdatedAt() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *EventSubscriptionsUpsertOne) SetDelete(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *EventSubscriptionsUpsertOne) AddDelete(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateDelete() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *EventSubscriptionsUpsertOne) ClearDelete() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *EventSubscriptionsUpsertOne) SetCreatedID(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *EventSubscriptionsUpsertOne) AddCreatedID(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateCreatedID() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *EventSubscriptionsUpsertOne) ClearCreatedID() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *EventSubscriptionsUpsertOne) SetName(v string) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateName() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *EventSubscriptionsUpsertOne) ClearName() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearName()
+	})
+}
+
+// SetEventType sets the "event_type" field.
+func (u *EventSubscriptionsUpsertOne) SetEventType(v string) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetEventType(v)
+	})
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateEventType() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateEventType()
+	})
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *EventSubscriptionsUpsertOne) ClearEventType() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearEventType()
+	})
+}
+
+// SetLastProcessedID sets the "last_processed_id" field.
+func (u *EventSubscriptionsUpsertOne) SetLastProcessedID(v string) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedID(v)
+	})
+}
+
+// UpdateLastProcessedID sets the "last_processed_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateLastProcessedID() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedID()
+	})
+}
+
+// ClearLastProcessedID clears the value of the "last_processed_id" field.
+func (u *EventSubscriptionsUpsertOne) ClearLastProcessedID() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedID()
+	})
+}
+
+// SetLastProcessedVersion sets the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertOne) SetLastProcessedVersion(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedVersion(v)
+	})
+}
+
+// AddLastProcessedVersion adds v to the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertOne) AddLastProcessedVersion(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddLastProcessedVersion(v)
+	})
+}
+
+// UpdateLastProcessedVersion sets the "last_processed_version" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateLastProcessedVersion() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedVersion()
+	})
+}
+
+// ClearLastProcessedVersion clears the value of the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertOne) ClearLastProcessedVersion() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedVersion()
+	})
+}
+
+// SetLastProcessedAt sets the "last_processed_at" field.
+func (u *EventSubscriptionsUpsertOne) SetLastProcessedAt(v time.Time) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedAt(v)
+	})
+}
+
+// UpdateLastProcessedAt sets the "last_processed_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateLastProcessedAt() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedAt()
+	})
+}
+
+// ClearLastProcessedAt clears the value of the "last_processed_at" field.
+func (u *EventSubscriptionsUpsertOne) ClearLastProcessedAt() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *EventSubscriptionsUpsertOne) SetIsActive(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// AddIsActive adds v to the "is_active" field.
+func (u *EventSubscriptionsUpsertOne) AddIsActive(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateIsActive() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// ClearIsActive clears the value of the "is_active" field.
+func (u *EventSubscriptionsUpsertOne) ClearIsActive() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearIsActive()
+	})
+}
+
+// SetErrorCount sets the "error_count" field.
+func (u *EventSubscriptionsUpsertOne) SetErrorCount(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetErrorCount(v)
+	})
+}
+
+// AddErrorCount adds v to the "error_count" field.
+func (u *EventSubscriptionsUpsertOne) AddErrorCount(v int64) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddErrorCount(v)
+	})
+}
+
+// UpdateErrorCount sets the "error_count" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateErrorCount() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateErrorCount()
+	})
+}
+
+// ClearErrorCount clears the value of the "error_count" field.
+func (u *EventSubscriptionsUpsertOne) ClearErrorCount() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearErrorCount()
+	})
+}
+
+// SetLastError sets the "last_error" field.
+func (u *EventSubscriptionsUpsertOne) SetLastError(v string) *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastError(v)
+	})
+}
+
+// UpdateLastError sets the "last_error" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertOne) UpdateLastError() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastError()
+	})
+}
+
+// ClearLastError clears the value of the "last_error" field.
+func (u *EventSubscriptionsUpsertOne) ClearLastError() *EventSubscriptionsUpsertOne {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastError()
+	})
+}
+
+// Exec executes the query.
+func (u *EventSubscriptionsUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for EventSubscriptionsCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *EventSubscriptionsUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *EventSubscriptionsUpsertOne) ID(ctx context.Context) (id int64, err error) {
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *EventSubscriptionsUpsertOne) IDX(ctx context.Context) int64 {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // EventSubscriptionsCreateBulk is the builder for creating many EventSubscriptions entities in bulk.
 type EventSubscriptionsCreateBulk struct {
 	config
 	err      error
 	builders []*EventSubscriptionsCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the EventSubscriptions entities in the database.
@@ -365,6 +997,7 @@ func (escb *EventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*EventSub
 					_, err = mutators[i+1].Mutate(root, escb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = escb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, escb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -415,6 +1048,389 @@ func (escb *EventSubscriptionsCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (escb *EventSubscriptionsCreateBulk) ExecX(ctx context.Context) {
 	if err := escb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.EventSubscriptions.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.EventSubscriptionsUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (escb *EventSubscriptionsCreateBulk) OnConflict(opts ...sql.ConflictOption) *EventSubscriptionsUpsertBulk {
+	escb.conflict = opts
+	return &EventSubscriptionsUpsertBulk{
+		create: escb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (escb *EventSubscriptionsCreateBulk) OnConflictColumns(columns ...string) *EventSubscriptionsUpsertBulk {
+	escb.conflict = append(escb.conflict, sql.ConflictColumns(columns...))
+	return &EventSubscriptionsUpsertBulk{
+		create: escb,
+	}
+}
+
+// EventSubscriptionsUpsertBulk is the builder for "upsert"-ing
+// a bulk of EventSubscriptions nodes.
+type EventSubscriptionsUpsertBulk struct {
+	create *EventSubscriptionsCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(eventsubscriptions.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *EventSubscriptionsUpsertBulk) UpdateNewValues() *EventSubscriptionsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(eventsubscriptions.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(eventsubscriptions.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.EventSubscriptions.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *EventSubscriptionsUpsertBulk) Ignore() *EventSubscriptionsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *EventSubscriptionsUpsertBulk) DoNothing() *EventSubscriptionsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the EventSubscriptionsCreateBulk.OnConflict
+// documentation for more info.
+func (u *EventSubscriptionsUpsertBulk) Update(set func(*EventSubscriptionsUpsert)) *EventSubscriptionsUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&EventSubscriptionsUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *EventSubscriptionsUpsertBulk) SetUpdatedAt(v time.Time) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateUpdatedAt() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *EventSubscriptionsUpsertBulk) ClearUpdatedAt() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *EventSubscriptionsUpsertBulk) SetDelete(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *EventSubscriptionsUpsertBulk) AddDelete(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateDelete() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *EventSubscriptionsUpsertBulk) ClearDelete() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *EventSubscriptionsUpsertBulk) SetCreatedID(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *EventSubscriptionsUpsertBulk) AddCreatedID(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateCreatedID() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *EventSubscriptionsUpsertBulk) ClearCreatedID() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *EventSubscriptionsUpsertBulk) SetName(v string) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateName() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *EventSubscriptionsUpsertBulk) ClearName() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearName()
+	})
+}
+
+// SetEventType sets the "event_type" field.
+func (u *EventSubscriptionsUpsertBulk) SetEventType(v string) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetEventType(v)
+	})
+}
+
+// UpdateEventType sets the "event_type" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateEventType() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateEventType()
+	})
+}
+
+// ClearEventType clears the value of the "event_type" field.
+func (u *EventSubscriptionsUpsertBulk) ClearEventType() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearEventType()
+	})
+}
+
+// SetLastProcessedID sets the "last_processed_id" field.
+func (u *EventSubscriptionsUpsertBulk) SetLastProcessedID(v string) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedID(v)
+	})
+}
+
+// UpdateLastProcessedID sets the "last_processed_id" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateLastProcessedID() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedID()
+	})
+}
+
+// ClearLastProcessedID clears the value of the "last_processed_id" field.
+func (u *EventSubscriptionsUpsertBulk) ClearLastProcessedID() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedID()
+	})
+}
+
+// SetLastProcessedVersion sets the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertBulk) SetLastProcessedVersion(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedVersion(v)
+	})
+}
+
+// AddLastProcessedVersion adds v to the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertBulk) AddLastProcessedVersion(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddLastProcessedVersion(v)
+	})
+}
+
+// UpdateLastProcessedVersion sets the "last_processed_version" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateLastProcessedVersion() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedVersion()
+	})
+}
+
+// ClearLastProcessedVersion clears the value of the "last_processed_version" field.
+func (u *EventSubscriptionsUpsertBulk) ClearLastProcessedVersion() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedVersion()
+	})
+}
+
+// SetLastProcessedAt sets the "last_processed_at" field.
+func (u *EventSubscriptionsUpsertBulk) SetLastProcessedAt(v time.Time) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastProcessedAt(v)
+	})
+}
+
+// UpdateLastProcessedAt sets the "last_processed_at" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateLastProcessedAt() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastProcessedAt()
+	})
+}
+
+// ClearLastProcessedAt clears the value of the "last_processed_at" field.
+func (u *EventSubscriptionsUpsertBulk) ClearLastProcessedAt() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastProcessedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *EventSubscriptionsUpsertBulk) SetIsActive(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// AddIsActive adds v to the "is_active" field.
+func (u *EventSubscriptionsUpsertBulk) AddIsActive(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateIsActive() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// ClearIsActive clears the value of the "is_active" field.
+func (u *EventSubscriptionsUpsertBulk) ClearIsActive() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearIsActive()
+	})
+}
+
+// SetErrorCount sets the "error_count" field.
+func (u *EventSubscriptionsUpsertBulk) SetErrorCount(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetErrorCount(v)
+	})
+}
+
+// AddErrorCount adds v to the "error_count" field.
+func (u *EventSubscriptionsUpsertBulk) AddErrorCount(v int64) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.AddErrorCount(v)
+	})
+}
+
+// UpdateErrorCount sets the "error_count" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateErrorCount() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateErrorCount()
+	})
+}
+
+// ClearErrorCount clears the value of the "error_count" field.
+func (u *EventSubscriptionsUpsertBulk) ClearErrorCount() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearErrorCount()
+	})
+}
+
+// SetLastError sets the "last_error" field.
+func (u *EventSubscriptionsUpsertBulk) SetLastError(v string) *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.SetLastError(v)
+	})
+}
+
+// UpdateLastError sets the "last_error" field to the value that was provided on create.
+func (u *EventSubscriptionsUpsertBulk) UpdateLastError() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.UpdateLastError()
+	})
+}
+
+// ClearLastError clears the value of the "last_error" field.
+func (u *EventSubscriptionsUpsertBulk) ClearLastError() *EventSubscriptionsUpsertBulk {
+	return u.Update(func(s *EventSubscriptionsUpsert) {
+		s.ClearLastError()
+	})
+}
+
+// Exec executes the query.
+func (u *EventSubscriptionsUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the EventSubscriptionsCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for EventSubscriptionsCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *EventSubscriptionsUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

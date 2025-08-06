@@ -22,9 +22,8 @@ import (
 // OrderUpdate is the builder for updating Order entities.
 type OrderUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *OrderMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *OrderMutation
 }
 
 // Where appends a list predicates to the OrderUpdate builder.
@@ -147,23 +146,16 @@ func (ou *OrderUpdate) ClearMemberID() *OrderUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (ou *OrderUpdate) SetStatus(i int64) *OrderUpdate {
-	ou.mutation.ResetStatus()
-	ou.mutation.SetStatus(i)
+func (ou *OrderUpdate) SetStatus(s string) *OrderUpdate {
+	ou.mutation.SetStatus(s)
 	return ou
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (ou *OrderUpdate) SetNillableStatus(i *int64) *OrderUpdate {
-	if i != nil {
-		ou.SetStatus(*i)
+func (ou *OrderUpdate) SetNillableStatus(s *string) *OrderUpdate {
+	if s != nil {
+		ou.SetStatus(*s)
 	}
-	return ou
-}
-
-// AddStatus adds i to the "status" field.
-func (ou *OrderUpdate) AddStatus(i int64) *OrderUpdate {
-	ou.mutation.AddStatus(i)
 	return ou
 }
 
@@ -472,12 +464,6 @@ func (ou *OrderUpdate) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (ou *OrderUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderUpdate {
-	ou.modifiers = append(ou.modifiers, modifiers...)
-	return ou
-}
-
 func (ou *OrderUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(order.Table, order.Columns, sqlgraph.NewFieldSpec(order.FieldID, field.TypeInt64))
 	if ps := ou.mutation.predicates; len(ps) > 0 {
@@ -530,13 +516,10 @@ func (ou *OrderUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(order.FieldMemberID, field.TypeInt64)
 	}
 	if value, ok := ou.mutation.Status(); ok {
-		_spec.SetField(order.FieldStatus, field.TypeInt64, value)
-	}
-	if value, ok := ou.mutation.AddedStatus(); ok {
-		_spec.AddField(order.FieldStatus, field.TypeInt64, value)
+		_spec.SetField(order.FieldStatus, field.TypeString, value)
 	}
 	if ou.mutation.StatusCleared() {
-		_spec.ClearField(order.FieldStatus, field.TypeInt64)
+		_spec.ClearField(order.FieldStatus, field.TypeString)
 	}
 	if value, ok := ou.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
@@ -754,7 +737,6 @@ func (ou *OrderUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(ou.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, ou.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{order.Label}
@@ -770,10 +752,9 @@ func (ou *OrderUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // OrderUpdateOne is the builder for updating a single Order entity.
 type OrderUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *OrderMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *OrderMutation
 }
 
 // SetUpdatedAt sets the "updated_at" field.
@@ -890,23 +871,16 @@ func (ouo *OrderUpdateOne) ClearMemberID() *OrderUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (ouo *OrderUpdateOne) SetStatus(i int64) *OrderUpdateOne {
-	ouo.mutation.ResetStatus()
-	ouo.mutation.SetStatus(i)
+func (ouo *OrderUpdateOne) SetStatus(s string) *OrderUpdateOne {
+	ouo.mutation.SetStatus(s)
 	return ouo
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (ouo *OrderUpdateOne) SetNillableStatus(i *int64) *OrderUpdateOne {
-	if i != nil {
-		ouo.SetStatus(*i)
+func (ouo *OrderUpdateOne) SetNillableStatus(s *string) *OrderUpdateOne {
+	if s != nil {
+		ouo.SetStatus(*s)
 	}
-	return ouo
-}
-
-// AddStatus adds i to the "status" field.
-func (ouo *OrderUpdateOne) AddStatus(i int64) *OrderUpdateOne {
-	ouo.mutation.AddStatus(i)
 	return ouo
 }
 
@@ -1228,12 +1202,6 @@ func (ouo *OrderUpdateOne) defaults() {
 	}
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (ouo *OrderUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrderUpdateOne {
-	ouo.modifiers = append(ouo.modifiers, modifiers...)
-	return ouo
-}
-
 func (ouo *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error) {
 	_spec := sqlgraph.NewUpdateSpec(order.Table, order.Columns, sqlgraph.NewFieldSpec(order.FieldID, field.TypeInt64))
 	id, ok := ouo.mutation.ID()
@@ -1303,13 +1271,10 @@ func (ouo *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error
 		_spec.ClearField(order.FieldMemberID, field.TypeInt64)
 	}
 	if value, ok := ouo.mutation.Status(); ok {
-		_spec.SetField(order.FieldStatus, field.TypeInt64, value)
-	}
-	if value, ok := ouo.mutation.AddedStatus(); ok {
-		_spec.AddField(order.FieldStatus, field.TypeInt64, value)
+		_spec.SetField(order.FieldStatus, field.TypeString, value)
 	}
 	if ouo.mutation.StatusCleared() {
-		_spec.ClearField(order.FieldStatus, field.TypeInt64)
+		_spec.ClearField(order.FieldStatus, field.TypeString)
 	}
 	if value, ok := ouo.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
@@ -1527,7 +1492,6 @@ func (ouo *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(ouo.modifiers...)
 	_node = &Order{config: ouo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

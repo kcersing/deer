@@ -28,7 +28,7 @@ type OrderEvents struct {
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 事件id
-	EventID int64 `json:"event_id,omitempty"`
+	EventID string `json:"event_id,omitempty"`
 	// 聚合根ID
 	AggregateID int64 `json:"aggregate_id,omitempty"`
 	// 聚合根类型
@@ -70,9 +70,9 @@ func (*OrderEvents) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orderevents.FieldID, orderevents.FieldDelete, orderevents.FieldCreatedID, orderevents.FieldEventID, orderevents.FieldAggregateID, orderevents.FieldEventVersion:
+		case orderevents.FieldID, orderevents.FieldDelete, orderevents.FieldCreatedID, orderevents.FieldAggregateID, orderevents.FieldEventVersion:
 			values[i] = new(sql.NullInt64)
-		case orderevents.FieldAggregateType, orderevents.FieldEventType, orderevents.FieldEventData:
+		case orderevents.FieldEventID, orderevents.FieldAggregateType, orderevents.FieldEventType, orderevents.FieldEventData:
 			values[i] = new(sql.NullString)
 		case orderevents.FieldCreatedAt, orderevents.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -122,10 +122,10 @@ func (oe *OrderEvents) assignValues(columns []string, values []any) error {
 				oe.CreatedID = value.Int64
 			}
 		case orderevents.FieldEventID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field event_id", values[i])
 			} else if value.Valid {
-				oe.EventID = value.Int64
+				oe.EventID = value.String
 			}
 		case orderevents.FieldAggregateID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -211,7 +211,7 @@ func (oe *OrderEvents) String() string {
 	builder.WriteString(fmt.Sprintf("%v", oe.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("event_id=")
-	builder.WriteString(fmt.Sprintf("%v", oe.EventID))
+	builder.WriteString(oe.EventID)
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_id=")
 	builder.WriteString(fmt.Sprintf("%v", oe.AggregateID))

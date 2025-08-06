@@ -63,10 +63,6 @@ func init() {
 	orderDescCreatedID := orderMixinFields0[4].Descriptor()
 	// order.DefaultCreatedID holds the default value on creation for the created_id field.
 	order.DefaultCreatedID = orderDescCreatedID.Default.(int64)
-	// orderDescStatus is the schema descriptor for status field.
-	orderDescStatus := orderFields[2].Descriptor()
-	// order.DefaultStatus holds the default value on creation for the status field.
-	order.DefaultStatus = orderDescStatus.Default.(int64)
 	ordereventsMixin := schema.OrderEvents{}.Mixin()
 	ordereventsMixinFields0 := ordereventsMixin[0].Fields()
 	_ = ordereventsMixinFields0

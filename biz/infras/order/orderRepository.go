@@ -6,6 +6,9 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/dal/db/mysql/ent"
+	order2 "kcers-order/biz/dal/db/mysql/ent/order"
+	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"sync"
 	"time"
 )
@@ -59,15 +62,16 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 
 	// 1. 保存订单主体
 	orderEnt := tx.Order.Create().
-		SetID(order.Id).
 		SetOrderSn(order.OrderSn).
-		SetStatus(int64(order.Status)).
-		SetTotalAmount(order.TotalAmount).
+		SetStatus(string(order.Status)).
+		//SetTotalAmount(order.TotalAmount).
 		SetVersion(order.Version).
-		SetCreatedID(events[0].(*OrderCreatedEvent).CreatedBy). // 从创建事件获取创建人
-		OnConflict(sql.Field("id")).                            // 支持幂等性创建
+		SetCreatedID(events[0].(*CreatedEvent).CreatedId). // 从创建事件获取创建人
+		// 支持幂等性创建
+		OnConflict().
 		UpdateNewValues()
-	if _, err = orderEnt.Save(o.ctx); err != nil {
+
+	if err = orderEnt.Exec(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save order")
 	}
 
@@ -78,7 +82,7 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 			SetOrderID(order.Id).
 			SetProductID(item.ProductId).
 			SetQuantity(item.Quantity).
-			SetPrice(item.Price)
+			SetUnitPrice(item.Price)
 	}
 	if _, err = tx.OrderItem.CreateBulk(items...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save order items")
@@ -94,9 +98,8 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 		eventEntities[i] = tx.OrderEvents.Create().
 			SetEventID(event.GetID()).
 			SetAggregateID(event.GetAggregateID()).
-			SetEventType(event.GetEventType()).
-			SetData(string(eventData)).
-			SetTimestamp(event.GetTimestamp())
+			SetEventType(event.GetType()).
+			SetEventData(string(eventData))
 	}
 	if _, err = tx.OrderEvents.CreateBulk(eventEntities...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save events")
@@ -143,21 +146,22 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
-		Where(order_snapshots.AggregateID(id)).
-		Order(ent.Desc(order_snapshots.FieldVersion)).
+		Where(ordersnapshots.AggregateID(id)).
+		Order(ent.Desc(ordersnapshots.FieldAggregateVersion)).
 		First(o.ctx)
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, errors.Wrap(err, "failed to query snapshot")
 	}
 
 	var order *Order
-	var lastVersion int
+	var lastVersion int64
+
 	if snapshot != nil {
 		// 从快照恢复
-		if err := json.Unmarshal([]byte(snapshot.Data), &order); err != nil {
+		if err := json.Unmarshal([]byte(snapshot.AggregateData), &order); err != nil {
 			return nil, errors.Wrap(err, "failed to unmarshal snapshot")
 		}
-		lastVersion = snapshot.Version
+		lastVersion = snapshot.AggregateVersion
 	} else {
 		// 无快照时从初始事件重建
 		order = &Order{mu: sync.RWMutex{}}
@@ -168,10 +172,10 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 	events, err := o.db.OrderEvents.
 		Query().
 		Where(
-			order_events.AggregateID(id),
-			order_events.VersionGT(lastVersion), // 假设事件表有version字段
+			orderevents.AggregateID(id),
+			orderevents.EventVersionGT(lastVersion), // 假设事件表有version字段
 		).
-		Order(ent.Asc(order_events.FieldTimestamp)).
+		Order(ent.Asc(orderevents.FieldCreatedAt)).
 		All(o.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to query events")
@@ -182,17 +186,17 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 		var event Event
 		switch eventEnt.EventType {
 		case "OrderCreated":
-			event = &OrderCreatedEvent{}
+			event = &CreatedEvent{}
 		case "OrderPaid":
-			event = &OrderPaidEvent{}
+			event = &PaidEvent{}
 		case "OrderCancelled":
-			event = &OrderCancelledEvent{}
+			event = &CancelledEvent{}
 		// 其他事件类型...
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		if err := json.Unmarshal([]byte(eventEnt.Data), event); err != nil {
+		if err := json.Unmarshal([]byte(eventEnt.EventData), event); err != nil {
 			klog.Errorf("failed to unmarshal event %s: %v", eventEnt.EventID, err)
 			continue
 		}
@@ -207,19 +211,19 @@ func (o OrderRepositoryImpl) Update(order *Order) error {
 	// 使用乐观锁条件：仅当数据库版本与当前版本一致时更新
 	_, err := o.db.Order.
 		UpdateOneID(order.Id).
-		SetStatus(order.Status).
+		SetStatus(string(order.Status)).
 		//SetTotalAmount(order.TotalAmount).
 		SetVersion(order.Version).
-		Where(order.Version(order.Version - 1)). // 条件：当前版本=数据库版本
+		Where(order2.Version(order.Version - 1)). // 条件：当前版本=数据库版本
 		Save(o.ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
-			return errors.New("order not found")
+			return errors.New("订单未找到")
 		}
 		if ent.IsConstraintError(err) {
-			return errors.New("order was updated by another transaction, please retry")
+			return errors.New("订单被另一笔交易更新，请重试")
 		}
-		return errors.Wrap(err, "failed to update order")
+		return errors.Wrap(err, "无法更新订单")
 	}
 	return nil
 }

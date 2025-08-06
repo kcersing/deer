@@ -24,7 +24,6 @@ type OrderItemQuery struct {
 	inters     []Interceptor
 	predicates []predicate.OrderItem
 	withOrder  *OrderQuery
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -277,9 +276,8 @@ func (oiq *OrderItemQuery) Clone() *OrderItemQuery {
 		predicates: append([]predicate.OrderItem{}, oiq.predicates...),
 		withOrder:  oiq.withOrder.Clone(),
 		// clone intermediate query.
-		sql:       oiq.sql.Clone(),
-		path:      oiq.path,
-		modifiers: append([]func(*sql.Selector){}, oiq.modifiers...),
+		sql:  oiq.sql.Clone(),
+		path: oiq.path,
 	}
 }
 
@@ -385,9 +383,6 @@ func (oiq *OrderItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*O
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(oiq.modifiers) > 0 {
-		_spec.Modifiers = oiq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -438,9 +433,6 @@ func (oiq *OrderItemQuery) loadOrder(ctx context.Context, query *OrderQuery, nod
 
 func (oiq *OrderItemQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := oiq.querySpec()
-	if len(oiq.modifiers) > 0 {
-		_spec.Modifiers = oiq.modifiers
-	}
 	_spec.Node.Columns = oiq.ctx.Fields
 	if len(oiq.ctx.Fields) > 0 {
 		_spec.Unique = oiq.ctx.Unique != nil && *oiq.ctx.Unique
@@ -506,9 +498,6 @@ func (oiq *OrderItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if oiq.ctx.Unique != nil && *oiq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range oiq.modifiers {
-		m(selector)
-	}
 	for _, p := range oiq.predicates {
 		p(selector)
 	}
@@ -524,12 +513,6 @@ func (oiq *OrderItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oiq *OrderItemQuery) Modify(modifiers ...func(s *sql.Selector)) *OrderItemSelect {
-	oiq.modifiers = append(oiq.modifiers, modifiers...)
-	return oiq.Select()
 }
 
 // OrderItemGroupBy is the group-by builder for OrderItem entities.
@@ -620,10 +603,4 @@ func (ois *OrderItemSelect) sqlScan(ctx context.Context, root *OrderItemQuery, v
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (ois *OrderItemSelect) Modify(modifiers ...func(s *sql.Selector)) *OrderItemSelect {
-	ois.modifiers = append(ois.modifiers, modifiers...)
-	return ois
 }

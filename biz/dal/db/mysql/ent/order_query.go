@@ -31,7 +31,6 @@ type OrderQuery struct {
 	withEvents        *OrderEventsQuery
 	withSnapshots     *OrderSnapshotsQuery
 	withStatusHistory *OrderStatusHistoryQuery
-	modifiers         []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -353,9 +352,8 @@ func (oq *OrderQuery) Clone() *OrderQuery {
 		withSnapshots:     oq.withSnapshots.Clone(),
 		withStatusHistory: oq.withStatusHistory.Clone(),
 		// clone intermediate query.
-		sql:       oq.sql.Clone(),
-		path:      oq.path,
-		modifiers: append([]func(*sql.Selector){}, oq.modifiers...),
+		sql:  oq.sql.Clone(),
+		path: oq.path,
 	}
 }
 
@@ -496,9 +494,6 @@ func (oq *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
-	}
-	if len(oq.modifiers) > 0 {
-		_spec.Modifiers = oq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
@@ -663,9 +658,6 @@ func (oq *OrderQuery) loadStatusHistory(ctx context.Context, query *OrderStatusH
 
 func (oq *OrderQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := oq.querySpec()
-	if len(oq.modifiers) > 0 {
-		_spec.Modifiers = oq.modifiers
-	}
 	_spec.Node.Columns = oq.ctx.Fields
 	if len(oq.ctx.Fields) > 0 {
 		_spec.Unique = oq.ctx.Unique != nil && *oq.ctx.Unique
@@ -728,9 +720,6 @@ func (oq *OrderQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if oq.ctx.Unique != nil && *oq.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range oq.modifiers {
-		m(selector)
-	}
 	for _, p := range oq.predicates {
 		p(selector)
 	}
@@ -746,12 +735,6 @@ func (oq *OrderQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (oq *OrderQuery) Modify(modifiers ...func(s *sql.Selector)) *OrderSelect {
-	oq.modifiers = append(oq.modifiers, modifiers...)
-	return oq.Select()
 }
 
 // OrderGroupBy is the group-by builder for Order entities.
@@ -842,10 +825,4 @@ func (os *OrderSelect) sqlScan(ctx context.Context, root *OrderQuery, v any) err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (os *OrderSelect) Modify(modifiers ...func(s *sql.Selector)) *OrderSelect {
-	os.modifiers = append(os.modifiers, modifiers...)
-	return os
 }

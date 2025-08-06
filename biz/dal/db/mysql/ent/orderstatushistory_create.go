@@ -4,11 +4,13 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
 	"time"
 
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
@@ -18,6 +20,7 @@ type OrderStatusHistoryCreate struct {
 	config
 	mutation *OrderStatusHistoryMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -254,6 +257,7 @@ func (oshc *OrderStatusHistoryCreate) createSpec() (*OrderStatusHistory, *sqlgra
 		_node = &OrderStatusHistory{config: oshc.config}
 		_spec = sqlgraph.NewCreateSpec(orderstatushistory.Table, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
 	)
+	_spec.OnConflict = oshc.conflict
 	if id, ok := oshc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -314,11 +318,548 @@ func (oshc *OrderStatusHistoryCreate) createSpec() (*OrderStatusHistory, *sqlgra
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderStatusHistory.Create().
+//		SetCreatedAt(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderStatusHistoryUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (oshc *OrderStatusHistoryCreate) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertOne {
+	oshc.conflict = opts
+	return &OrderStatusHistoryUpsertOne{
+		create: oshc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (oshc *OrderStatusHistoryCreate) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertOne {
+	oshc.conflict = append(oshc.conflict, sql.ConflictColumns(columns...))
+	return &OrderStatusHistoryUpsertOne{
+		create: oshc,
+	}
+}
+
+type (
+	// OrderStatusHistoryUpsertOne is the builder for "upsert"-ing
+	//  one OrderStatusHistory node.
+	OrderStatusHistoryUpsertOne struct {
+		create *OrderStatusHistoryCreate
+	}
+
+	// OrderStatusHistoryUpsert is the "OnConflict" setter.
+	OrderStatusHistoryUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderStatusHistoryUpsert) SetUpdatedAt(v time.Time) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateUpdatedAt() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderStatusHistoryUpsert) ClearUpdatedAt() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldUpdatedAt)
+	return u
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderStatusHistoryUpsert) SetDelete(v int64) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldDelete, v)
+	return u
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateDelete() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldDelete)
+	return u
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderStatusHistoryUpsert) AddDelete(v int64) *OrderStatusHistoryUpsert {
+	u.Add(orderstatushistory.FieldDelete, v)
+	return u
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderStatusHistoryUpsert) ClearDelete() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldDelete)
+	return u
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderStatusHistoryUpsert) SetCreatedID(v int64) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldCreatedID, v)
+	return u
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateCreatedID() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldCreatedID)
+	return u
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderStatusHistoryUpsert) AddCreatedID(v int64) *OrderStatusHistoryUpsert {
+	u.Add(orderstatushistory.FieldCreatedID, v)
+	return u
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderStatusHistoryUpsert) ClearCreatedID() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldCreatedID)
+	return u
+}
+
+// SetOrderID sets the "order_id" field.
+func (u *OrderStatusHistoryUpsert) SetOrderID(v int64) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldOrderID, v)
+	return u
+}
+
+// UpdateOrderID sets the "order_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateOrderID() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldOrderID)
+	return u
+}
+
+// ClearOrderID clears the value of the "order_id" field.
+func (u *OrderStatusHistoryUpsert) ClearOrderID() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldOrderID)
+	return u
+}
+
+// SetOldStatus sets the "old_status" field.
+func (u *OrderStatusHistoryUpsert) SetOldStatus(v int64) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldOldStatus, v)
+	return u
+}
+
+// UpdateOldStatus sets the "old_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateOldStatus() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldOldStatus)
+	return u
+}
+
+// AddOldStatus adds v to the "old_status" field.
+func (u *OrderStatusHistoryUpsert) AddOldStatus(v int64) *OrderStatusHistoryUpsert {
+	u.Add(orderstatushistory.FieldOldStatus, v)
+	return u
+}
+
+// ClearOldStatus clears the value of the "old_status" field.
+func (u *OrderStatusHistoryUpsert) ClearOldStatus() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldOldStatus)
+	return u
+}
+
+// SetNewStatus sets the "new_status" field.
+func (u *OrderStatusHistoryUpsert) SetNewStatus(v int64) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldNewStatus, v)
+	return u
+}
+
+// UpdateNewStatus sets the "new_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateNewStatus() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldNewStatus)
+	return u
+}
+
+// AddNewStatus adds v to the "new_status" field.
+func (u *OrderStatusHistoryUpsert) AddNewStatus(v int64) *OrderStatusHistoryUpsert {
+	u.Add(orderstatushistory.FieldNewStatus, v)
+	return u
+}
+
+// ClearNewStatus clears the value of the "new_status" field.
+func (u *OrderStatusHistoryUpsert) ClearNewStatus() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldNewStatus)
+	return u
+}
+
+// SetChangeSource sets the "change_source" field.
+func (u *OrderStatusHistoryUpsert) SetChangeSource(v string) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldChangeSource, v)
+	return u
+}
+
+// UpdateChangeSource sets the "change_source" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateChangeSource() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldChangeSource)
+	return u
+}
+
+// ClearChangeSource clears the value of the "change_source" field.
+func (u *OrderStatusHistoryUpsert) ClearChangeSource() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldChangeSource)
+	return u
+}
+
+// SetChangeReason sets the "change_reason" field.
+func (u *OrderStatusHistoryUpsert) SetChangeReason(v string) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldChangeReason, v)
+	return u
+}
+
+// UpdateChangeReason sets the "change_reason" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateChangeReason() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldChangeReason)
+	return u
+}
+
+// ClearChangeReason clears the value of the "change_reason" field.
+func (u *OrderStatusHistoryUpsert) ClearChangeReason() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldChangeReason)
+	return u
+}
+
+// SetChangeAt sets the "change_at" field.
+func (u *OrderStatusHistoryUpsert) SetChangeAt(v time.Time) *OrderStatusHistoryUpsert {
+	u.Set(orderstatushistory.FieldChangeAt, v)
+	return u
+}
+
+// UpdateChangeAt sets the "change_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsert) UpdateChangeAt() *OrderStatusHistoryUpsert {
+	u.SetExcluded(orderstatushistory.FieldChangeAt)
+	return u
+}
+
+// ClearChangeAt clears the value of the "change_at" field.
+func (u *OrderStatusHistoryUpsert) ClearChangeAt() *OrderStatusHistoryUpsert {
+	u.SetNull(orderstatushistory.FieldChangeAt)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(orderstatushistory.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderStatusHistoryUpsertOne) UpdateNewValues() *OrderStatusHistoryUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(orderstatushistory.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(orderstatushistory.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *OrderStatusHistoryUpsertOne) Ignore() *OrderStatusHistoryUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderStatusHistoryUpsertOne) DoNothing() *OrderStatusHistoryUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderStatusHistoryCreate.OnConflict
+// documentation for more info.
+func (u *OrderStatusHistoryUpsertOne) Update(set func(*OrderStatusHistoryUpsert)) *OrderStatusHistoryUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderStatusHistoryUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderStatusHistoryUpsertOne) SetUpdatedAt(v time.Time) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateUpdatedAt() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderStatusHistoryUpsertOne) ClearUpdatedAt() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderStatusHistoryUpsertOne) SetDelete(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderStatusHistoryUpsertOne) AddDelete(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateDelete() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderStatusHistoryUpsertOne) ClearDelete() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderStatusHistoryUpsertOne) SetCreatedID(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderStatusHistoryUpsertOne) AddCreatedID(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateCreatedID() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderStatusHistoryUpsertOne) ClearCreatedID() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetOrderID sets the "order_id" field.
+func (u *OrderStatusHistoryUpsertOne) SetOrderID(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetOrderID(v)
+	})
+}
+
+// UpdateOrderID sets the "order_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateOrderID() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateOrderID()
+	})
+}
+
+// ClearOrderID clears the value of the "order_id" field.
+func (u *OrderStatusHistoryUpsertOne) ClearOrderID() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearOrderID()
+	})
+}
+
+// SetOldStatus sets the "old_status" field.
+func (u *OrderStatusHistoryUpsertOne) SetOldStatus(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetOldStatus(v)
+	})
+}
+
+// AddOldStatus adds v to the "old_status" field.
+func (u *OrderStatusHistoryUpsertOne) AddOldStatus(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddOldStatus(v)
+	})
+}
+
+// UpdateOldStatus sets the "old_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateOldStatus() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateOldStatus()
+	})
+}
+
+// ClearOldStatus clears the value of the "old_status" field.
+func (u *OrderStatusHistoryUpsertOne) ClearOldStatus() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearOldStatus()
+	})
+}
+
+// SetNewStatus sets the "new_status" field.
+func (u *OrderStatusHistoryUpsertOne) SetNewStatus(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetNewStatus(v)
+	})
+}
+
+// AddNewStatus adds v to the "new_status" field.
+func (u *OrderStatusHistoryUpsertOne) AddNewStatus(v int64) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddNewStatus(v)
+	})
+}
+
+// UpdateNewStatus sets the "new_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateNewStatus() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateNewStatus()
+	})
+}
+
+// ClearNewStatus clears the value of the "new_status" field.
+func (u *OrderStatusHistoryUpsertOne) ClearNewStatus() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearNewStatus()
+	})
+}
+
+// SetChangeSource sets the "change_source" field.
+func (u *OrderStatusHistoryUpsertOne) SetChangeSource(v string) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeSource(v)
+	})
+}
+
+// UpdateChangeSource sets the "change_source" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateChangeSource() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeSource()
+	})
+}
+
+// ClearChangeSource clears the value of the "change_source" field.
+func (u *OrderStatusHistoryUpsertOne) ClearChangeSource() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeSource()
+	})
+}
+
+// SetChangeReason sets the "change_reason" field.
+func (u *OrderStatusHistoryUpsertOne) SetChangeReason(v string) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeReason(v)
+	})
+}
+
+// UpdateChangeReason sets the "change_reason" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateChangeReason() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeReason()
+	})
+}
+
+// ClearChangeReason clears the value of the "change_reason" field.
+func (u *OrderStatusHistoryUpsertOne) ClearChangeReason() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeReason()
+	})
+}
+
+// SetChangeAt sets the "change_at" field.
+func (u *OrderStatusHistoryUpsertOne) SetChangeAt(v time.Time) *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeAt(v)
+	})
+}
+
+// UpdateChangeAt sets the "change_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertOne) UpdateChangeAt() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeAt()
+	})
+}
+
+// ClearChangeAt clears the value of the "change_at" field.
+func (u *OrderStatusHistoryUpsertOne) ClearChangeAt() *OrderStatusHistoryUpsertOne {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeAt()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderStatusHistoryUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderStatusHistoryCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderStatusHistoryUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *OrderStatusHistoryUpsertOne) ID(ctx context.Context) (id int64, err error) {
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *OrderStatusHistoryUpsertOne) IDX(ctx context.Context) int64 {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // OrderStatusHistoryCreateBulk is the builder for creating many OrderStatusHistory entities in bulk.
 type OrderStatusHistoryCreateBulk struct {
 	config
 	err      error
 	builders []*OrderStatusHistoryCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the OrderStatusHistory entities in the database.
@@ -348,6 +889,7 @@ func (oshcb *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderSt
 					_, err = mutators[i+1].Mutate(root, oshcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = oshcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, oshcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -398,6 +940,340 @@ func (oshcb *OrderStatusHistoryCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (oshcb *OrderStatusHistoryCreateBulk) ExecX(ctx context.Context) {
 	if err := oshcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.OrderStatusHistory.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.OrderStatusHistoryUpsert) {
+//			SetCreatedAt(v+v).
+//		}).
+//		Exec(ctx)
+func (oshcb *OrderStatusHistoryCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertBulk {
+	oshcb.conflict = opts
+	return &OrderStatusHistoryUpsertBulk{
+		create: oshcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (oshcb *OrderStatusHistoryCreateBulk) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertBulk {
+	oshcb.conflict = append(oshcb.conflict, sql.ConflictColumns(columns...))
+	return &OrderStatusHistoryUpsertBulk{
+		create: oshcb,
+	}
+}
+
+// OrderStatusHistoryUpsertBulk is the builder for "upsert"-ing
+// a bulk of OrderStatusHistory nodes.
+type OrderStatusHistoryUpsertBulk struct {
+	create *OrderStatusHistoryCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(orderstatushistory.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *OrderStatusHistoryUpsertBulk) UpdateNewValues() *OrderStatusHistoryUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(orderstatushistory.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(orderstatushistory.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.OrderStatusHistory.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *OrderStatusHistoryUpsertBulk) Ignore() *OrderStatusHistoryUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *OrderStatusHistoryUpsertBulk) DoNothing() *OrderStatusHistoryUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the OrderStatusHistoryCreateBulk.OnConflict
+// documentation for more info.
+func (u *OrderStatusHistoryUpsertBulk) Update(set func(*OrderStatusHistoryUpsert)) *OrderStatusHistoryUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&OrderStatusHistoryUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *OrderStatusHistoryUpsertBulk) SetUpdatedAt(v time.Time) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateUpdatedAt() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearUpdatedAt() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearUpdatedAt()
+	})
+}
+
+// SetDelete sets the "delete" field.
+func (u *OrderStatusHistoryUpsertBulk) SetDelete(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetDelete(v)
+	})
+}
+
+// AddDelete adds v to the "delete" field.
+func (u *OrderStatusHistoryUpsertBulk) AddDelete(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddDelete(v)
+	})
+}
+
+// UpdateDelete sets the "delete" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateDelete() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateDelete()
+	})
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearDelete() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearDelete()
+	})
+}
+
+// SetCreatedID sets the "created_id" field.
+func (u *OrderStatusHistoryUpsertBulk) SetCreatedID(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetCreatedID(v)
+	})
+}
+
+// AddCreatedID adds v to the "created_id" field.
+func (u *OrderStatusHistoryUpsertBulk) AddCreatedID(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddCreatedID(v)
+	})
+}
+
+// UpdateCreatedID sets the "created_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateCreatedID() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateCreatedID()
+	})
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearCreatedID() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearCreatedID()
+	})
+}
+
+// SetOrderID sets the "order_id" field.
+func (u *OrderStatusHistoryUpsertBulk) SetOrderID(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetOrderID(v)
+	})
+}
+
+// UpdateOrderID sets the "order_id" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateOrderID() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateOrderID()
+	})
+}
+
+// ClearOrderID clears the value of the "order_id" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearOrderID() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearOrderID()
+	})
+}
+
+// SetOldStatus sets the "old_status" field.
+func (u *OrderStatusHistoryUpsertBulk) SetOldStatus(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetOldStatus(v)
+	})
+}
+
+// AddOldStatus adds v to the "old_status" field.
+func (u *OrderStatusHistoryUpsertBulk) AddOldStatus(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddOldStatus(v)
+	})
+}
+
+// UpdateOldStatus sets the "old_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateOldStatus() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateOldStatus()
+	})
+}
+
+// ClearOldStatus clears the value of the "old_status" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearOldStatus() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearOldStatus()
+	})
+}
+
+// SetNewStatus sets the "new_status" field.
+func (u *OrderStatusHistoryUpsertBulk) SetNewStatus(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetNewStatus(v)
+	})
+}
+
+// AddNewStatus adds v to the "new_status" field.
+func (u *OrderStatusHistoryUpsertBulk) AddNewStatus(v int64) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.AddNewStatus(v)
+	})
+}
+
+// UpdateNewStatus sets the "new_status" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateNewStatus() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateNewStatus()
+	})
+}
+
+// ClearNewStatus clears the value of the "new_status" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearNewStatus() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearNewStatus()
+	})
+}
+
+// SetChangeSource sets the "change_source" field.
+func (u *OrderStatusHistoryUpsertBulk) SetChangeSource(v string) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeSource(v)
+	})
+}
+
+// UpdateChangeSource sets the "change_source" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateChangeSource() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeSource()
+	})
+}
+
+// ClearChangeSource clears the value of the "change_source" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearChangeSource() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeSource()
+	})
+}
+
+// SetChangeReason sets the "change_reason" field.
+func (u *OrderStatusHistoryUpsertBulk) SetChangeReason(v string) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeReason(v)
+	})
+}
+
+// UpdateChangeReason sets the "change_reason" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateChangeReason() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeReason()
+	})
+}
+
+// ClearChangeReason clears the value of the "change_reason" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearChangeReason() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeReason()
+	})
+}
+
+// SetChangeAt sets the "change_at" field.
+func (u *OrderStatusHistoryUpsertBulk) SetChangeAt(v time.Time) *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.SetChangeAt(v)
+	})
+}
+
+// UpdateChangeAt sets the "change_at" field to the value that was provided on create.
+func (u *OrderStatusHistoryUpsertBulk) UpdateChangeAt() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.UpdateChangeAt()
+	})
+}
+
+// ClearChangeAt clears the value of the "change_at" field.
+func (u *OrderStatusHistoryUpsertBulk) ClearChangeAt() *OrderStatusHistoryUpsertBulk {
+	return u.Update(func(s *OrderStatusHistoryUpsert) {
+		s.ClearChangeAt()
+	})
+}
+
+// Exec executes the query.
+func (u *OrderStatusHistoryUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the OrderStatusHistoryCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for OrderStatusHistoryCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *OrderStatusHistoryUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

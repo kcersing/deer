@@ -90,12 +90,12 @@ func LastProcessedID(v string) predicate.EventSubscriptions {
 }
 
 // LastProcessedVersion applies equality check predicate on the "last_processed_version" field. It's identical to LastProcessedVersionEQ.
-func LastProcessedVersion(v string) predicate.EventSubscriptions {
+func LastProcessedVersion(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedAt applies equality check predicate on the "last_processed_at" field. It's identical to LastProcessedAtEQ.
-func LastProcessedAt(v string) predicate.EventSubscriptions {
+func LastProcessedAt(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldLastProcessedAt, v))
 }
 
@@ -105,7 +105,7 @@ func IsActive(v int64) predicate.EventSubscriptions {
 }
 
 // ErrorCount applies equality check predicate on the "error_count" field. It's identical to ErrorCountEQ.
-func ErrorCount(v string) predicate.EventSubscriptions {
+func ErrorCount(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldErrorCount, v))
 }
 
@@ -540,58 +540,43 @@ func LastProcessedIDContainsFold(v string) predicate.EventSubscriptions {
 }
 
 // LastProcessedVersionEQ applies the EQ predicate on the "last_processed_version" field.
-func LastProcessedVersionEQ(v string) predicate.EventSubscriptions {
+func LastProcessedVersionEQ(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionNEQ applies the NEQ predicate on the "last_processed_version" field.
-func LastProcessedVersionNEQ(v string) predicate.EventSubscriptions {
+func LastProcessedVersionNEQ(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNEQ(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionIn applies the In predicate on the "last_processed_version" field.
-func LastProcessedVersionIn(vs ...string) predicate.EventSubscriptions {
+func LastProcessedVersionIn(vs ...int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldIn(FieldLastProcessedVersion, vs...))
 }
 
 // LastProcessedVersionNotIn applies the NotIn predicate on the "last_processed_version" field.
-func LastProcessedVersionNotIn(vs ...string) predicate.EventSubscriptions {
+func LastProcessedVersionNotIn(vs ...int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotIn(FieldLastProcessedVersion, vs...))
 }
 
 // LastProcessedVersionGT applies the GT predicate on the "last_processed_version" field.
-func LastProcessedVersionGT(v string) predicate.EventSubscriptions {
+func LastProcessedVersionGT(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGT(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionGTE applies the GTE predicate on the "last_processed_version" field.
-func LastProcessedVersionGTE(v string) predicate.EventSubscriptions {
+func LastProcessedVersionGTE(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGTE(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionLT applies the LT predicate on the "last_processed_version" field.
-func LastProcessedVersionLT(v string) predicate.EventSubscriptions {
+func LastProcessedVersionLT(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLT(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionLTE applies the LTE predicate on the "last_processed_version" field.
-func LastProcessedVersionLTE(v string) predicate.EventSubscriptions {
+func LastProcessedVersionLTE(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLTE(FieldLastProcessedVersion, v))
-}
-
-// LastProcessedVersionContains applies the Contains predicate on the "last_processed_version" field.
-func LastProcessedVersionContains(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContains(FieldLastProcessedVersion, v))
-}
-
-// LastProcessedVersionHasPrefix applies the HasPrefix predicate on the "last_processed_version" field.
-func LastProcessedVersionHasPrefix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasPrefix(FieldLastProcessedVersion, v))
-}
-
-// LastProcessedVersionHasSuffix applies the HasSuffix predicate on the "last_processed_version" field.
-func LastProcessedVersionHasSuffix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasSuffix(FieldLastProcessedVersion, v))
 }
 
 // LastProcessedVersionIsNil applies the IsNil predicate on the "last_processed_version" field.
@@ -604,69 +589,44 @@ func LastProcessedVersionNotNil() predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotNull(FieldLastProcessedVersion))
 }
 
-// LastProcessedVersionEqualFold applies the EqualFold predicate on the "last_processed_version" field.
-func LastProcessedVersionEqualFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldEqualFold(FieldLastProcessedVersion, v))
-}
-
-// LastProcessedVersionContainsFold applies the ContainsFold predicate on the "last_processed_version" field.
-func LastProcessedVersionContainsFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContainsFold(FieldLastProcessedVersion, v))
-}
-
 // LastProcessedAtEQ applies the EQ predicate on the "last_processed_at" field.
-func LastProcessedAtEQ(v string) predicate.EventSubscriptions {
+func LastProcessedAtEQ(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtNEQ applies the NEQ predicate on the "last_processed_at" field.
-func LastProcessedAtNEQ(v string) predicate.EventSubscriptions {
+func LastProcessedAtNEQ(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNEQ(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtIn applies the In predicate on the "last_processed_at" field.
-func LastProcessedAtIn(vs ...string) predicate.EventSubscriptions {
+func LastProcessedAtIn(vs ...time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldIn(FieldLastProcessedAt, vs...))
 }
 
 // LastProcessedAtNotIn applies the NotIn predicate on the "last_processed_at" field.
-func LastProcessedAtNotIn(vs ...string) predicate.EventSubscriptions {
+func LastProcessedAtNotIn(vs ...time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotIn(FieldLastProcessedAt, vs...))
 }
 
 // LastProcessedAtGT applies the GT predicate on the "last_processed_at" field.
-func LastProcessedAtGT(v string) predicate.EventSubscriptions {
+func LastProcessedAtGT(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGT(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtGTE applies the GTE predicate on the "last_processed_at" field.
-func LastProcessedAtGTE(v string) predicate.EventSubscriptions {
+func LastProcessedAtGTE(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGTE(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtLT applies the LT predicate on the "last_processed_at" field.
-func LastProcessedAtLT(v string) predicate.EventSubscriptions {
+func LastProcessedAtLT(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLT(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtLTE applies the LTE predicate on the "last_processed_at" field.
-func LastProcessedAtLTE(v string) predicate.EventSubscriptions {
+func LastProcessedAtLTE(v time.Time) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLTE(FieldLastProcessedAt, v))
-}
-
-// LastProcessedAtContains applies the Contains predicate on the "last_processed_at" field.
-func LastProcessedAtContains(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContains(FieldLastProcessedAt, v))
-}
-
-// LastProcessedAtHasPrefix applies the HasPrefix predicate on the "last_processed_at" field.
-func LastProcessedAtHasPrefix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasPrefix(FieldLastProcessedAt, v))
-}
-
-// LastProcessedAtHasSuffix applies the HasSuffix predicate on the "last_processed_at" field.
-func LastProcessedAtHasSuffix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasSuffix(FieldLastProcessedAt, v))
 }
 
 // LastProcessedAtIsNil applies the IsNil predicate on the "last_processed_at" field.
@@ -677,16 +637,6 @@ func LastProcessedAtIsNil() predicate.EventSubscriptions {
 // LastProcessedAtNotNil applies the NotNil predicate on the "last_processed_at" field.
 func LastProcessedAtNotNil() predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotNull(FieldLastProcessedAt))
-}
-
-// LastProcessedAtEqualFold applies the EqualFold predicate on the "last_processed_at" field.
-func LastProcessedAtEqualFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldEqualFold(FieldLastProcessedAt, v))
-}
-
-// LastProcessedAtContainsFold applies the ContainsFold predicate on the "last_processed_at" field.
-func LastProcessedAtContainsFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContainsFold(FieldLastProcessedAt, v))
 }
 
 // IsActiveEQ applies the EQ predicate on the "is_active" field.
@@ -740,58 +690,43 @@ func IsActiveNotNil() predicate.EventSubscriptions {
 }
 
 // ErrorCountEQ applies the EQ predicate on the "error_count" field.
-func ErrorCountEQ(v string) predicate.EventSubscriptions {
+func ErrorCountEQ(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldEQ(FieldErrorCount, v))
 }
 
 // ErrorCountNEQ applies the NEQ predicate on the "error_count" field.
-func ErrorCountNEQ(v string) predicate.EventSubscriptions {
+func ErrorCountNEQ(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNEQ(FieldErrorCount, v))
 }
 
 // ErrorCountIn applies the In predicate on the "error_count" field.
-func ErrorCountIn(vs ...string) predicate.EventSubscriptions {
+func ErrorCountIn(vs ...int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldIn(FieldErrorCount, vs...))
 }
 
 // ErrorCountNotIn applies the NotIn predicate on the "error_count" field.
-func ErrorCountNotIn(vs ...string) predicate.EventSubscriptions {
+func ErrorCountNotIn(vs ...int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotIn(FieldErrorCount, vs...))
 }
 
 // ErrorCountGT applies the GT predicate on the "error_count" field.
-func ErrorCountGT(v string) predicate.EventSubscriptions {
+func ErrorCountGT(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGT(FieldErrorCount, v))
 }
 
 // ErrorCountGTE applies the GTE predicate on the "error_count" field.
-func ErrorCountGTE(v string) predicate.EventSubscriptions {
+func ErrorCountGTE(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldGTE(FieldErrorCount, v))
 }
 
 // ErrorCountLT applies the LT predicate on the "error_count" field.
-func ErrorCountLT(v string) predicate.EventSubscriptions {
+func ErrorCountLT(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLT(FieldErrorCount, v))
 }
 
 // ErrorCountLTE applies the LTE predicate on the "error_count" field.
-func ErrorCountLTE(v string) predicate.EventSubscriptions {
+func ErrorCountLTE(v int64) predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldLTE(FieldErrorCount, v))
-}
-
-// ErrorCountContains applies the Contains predicate on the "error_count" field.
-func ErrorCountContains(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContains(FieldErrorCount, v))
-}
-
-// ErrorCountHasPrefix applies the HasPrefix predicate on the "error_count" field.
-func ErrorCountHasPrefix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasPrefix(FieldErrorCount, v))
-}
-
-// ErrorCountHasSuffix applies the HasSuffix predicate on the "error_count" field.
-func ErrorCountHasSuffix(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldHasSuffix(FieldErrorCount, v))
 }
 
 // ErrorCountIsNil applies the IsNil predicate on the "error_count" field.
@@ -802,16 +737,6 @@ func ErrorCountIsNil() predicate.EventSubscriptions {
 // ErrorCountNotNil applies the NotNil predicate on the "error_count" field.
 func ErrorCountNotNil() predicate.EventSubscriptions {
 	return predicate.EventSubscriptions(sql.FieldNotNull(FieldErrorCount))
-}
-
-// ErrorCountEqualFold applies the EqualFold predicate on the "error_count" field.
-func ErrorCountEqualFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldEqualFold(FieldErrorCount, v))
-}
-
-// ErrorCountContainsFold applies the ContainsFold predicate on the "error_count" field.
-func ErrorCountContainsFold(v string) predicate.EventSubscriptions {
-	return predicate.EventSubscriptions(sql.FieldContainsFold(FieldErrorCount, v))
 }
 
 // LastErrorEQ applies the EQ predicate on the "last_error" field.
