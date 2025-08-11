@@ -1,7 +1,11 @@
 package main
 
 import (
+	"kcers-order/biz/dal"
+	"log"
 	"net"
+	"os"
+	"path"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -16,6 +20,8 @@ import (
 )
 
 func main() {
+	dal.Init()
+
 	opts := kitexInit()
 
 	svr := order.NewServer(new(OrderImpl), opts...)
@@ -42,19 +48,34 @@ func kitexInit() (opts []server.Option) {
 	opts = append(opts, server.WithMetaHandler(transmeta.ServerTTHeaderHandler))
 
 	// klog
+
+	logFilePath := conf.GetConf().Kitex.LogFile
+	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
+		panic(err)
+	}
+
+	// Set filename to date
+	logFileName := time.Now().Format(time.DateOnly) + ".log"
+	fileName := path.Join(logFilePath, logFileName)
+	if _, err := os.Stat(fileName); err != nil {
+		if _, err := os.Create(fileName); err != nil {
+			log.Println(err.Error())
+			return
+		}
+	}
+
 	logger := kitexlogrus.NewLogger()
 	klog.SetLogger(logger)
 	klog.SetLevel(conf.LogLevel())
 	asyncWriter := &zapcore.BufferedWriteSyncer{
 		WS: zapcore.AddSync(&lumberjack.Logger{
-			Filename:   conf.GetConf().Kitex.LogFileName,
+			Filename:   fileName,
 			MaxSize:    conf.GetConf().Kitex.LogMaxSize,
 			MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 			MaxAge:     conf.GetConf().Kitex.LogMaxAge,
 		}),
 		FlushInterval: time.Minute,
 	}
-	klog.SetOutput(asyncWriter)
 	server.RegisterShutdownHook(func() {
 		asyncWriter.Sync()
 	})

@@ -10,8 +10,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/lib/pq"
-	"kcers/biz/dal/db/mysql/ent"
-	"kcers/biz/dal/db/mysql/ent/migrate"
+	"kcers-order/biz/dal/db/mysql/ent"
+	"kcers-order/biz/dal/db/mysql/ent/migrate"
 	"log"
 	"time"
 )

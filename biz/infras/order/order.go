@@ -24,7 +24,7 @@ type Order struct {
 	Version      int64        // 乐观锁版本号
 	Events       []Event      // 未提交事件
 	mu           sync.RWMutex // 并发控制锁
-	stateMachine *OrderStateMachine
+	stateMachine *StateMachine
 }
 
 // OrderItem 订单项值对象
@@ -43,7 +43,7 @@ func NewOrder(sn string, memberId int64, items []OrderItem, amount float64) *Ord
 		TotalAmount: amount,
 		Status:      Created,
 	}
-	order.stateMachine = NewOrderStateMachine(order)
+	order.stateMachine = NewStateMachine(order)
 	return order
 }
 
@@ -88,7 +88,7 @@ func (o *Order) Refunded(amount float64) {
 
 }
 
-// 事件管理方法
+// AddEvent 事件管理方法
 func (o *Order) AddEvent(event Event) {
 	o.mu.Lock()
 	defer o.mu.Unlock()

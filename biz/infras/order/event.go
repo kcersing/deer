@@ -28,7 +28,7 @@ func (e *BaseEvent) GetAggregateID() int64   { return e.AggregateID }
 func (e *BaseEvent) GetVersion() int64       { return e.Version }
 func (e *BaseEvent) GetTimestamp() time.Time { return e.Timestamp }
 
-// OrderCreatedEvent 订单创建事件
+// CreatedEvent 订单创建事件
 type CreatedEvent struct {
 	BaseEvent
 	OrderSn     string
@@ -39,7 +39,7 @@ type CreatedEvent struct {
 
 func (e *CreatedEvent) GetType() string { return "created" }
 
-// OrderPaidEvent 订单支付事件
+// PaidEvent 订单支付事件
 type PaidEvent struct {
 	BaseEvent
 	PayAmount float64
@@ -48,7 +48,7 @@ type PaidEvent struct {
 
 func (e *PaidEvent) GetType() string { return "paid" }
 
-// OrderCancelledEvent 订单取消事件
+// CancelledEvent 订单取消事件
 type CancelledEvent struct {
 	BaseEvent
 	Reason string

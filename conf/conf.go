@@ -26,7 +26,8 @@ type Config struct {
 }
 
 type MySQL struct {
-	DSN string `yaml:"dsn"`
+	DSN  string `yaml:"dsn"`
+	Prod bool   `yaml:"prod"`
 }
 
 type Redis struct {
@@ -40,7 +41,7 @@ type Kitex struct {
 	Service       string `yaml:"service"`
 	Address       string `yaml:"address"`
 	LogLevel      string `yaml:"log_level"`
-	LogFileName   string `yaml:"log_file_name"`
+	LogFile       string `yaml:"log_file"`
 	LogMaxSize    int    `yaml:"log_max_size"`
 	LogMaxBackups int    `yaml:"log_max_backups"`
 	LogMaxAge     int    `yaml:"log_max_age"`

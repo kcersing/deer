@@ -16,13 +16,13 @@ const (
 	Completed Status = "OrderCompleted" //完成
 )
 
-// OrderStateMachine 订单状态机
-type OrderStateMachine struct {
+// StateMachine 订单状态机
+type StateMachine struct {
 	order *Order
 }
 
-func NewOrderStateMachine(order *Order) *OrderStateMachine {
-	return &OrderStateMachine{order: order}
+func NewStateMachine(order *Order) *StateMachine {
+	return &StateMachine{order: order}
 }
 
 // 定义状态转换规则
@@ -33,7 +33,7 @@ var transitions = map[Status][]Status{
 }
 
 // Transition 执行状态转换
-func (m *OrderStateMachine) Transition(target Status, event Event) error {
+func (m *StateMachine) Transition(target Status, event Event) error {
 	m.order.mu.Lock()
 	current := m.order.Status
 	m.order.mu.Unlock()

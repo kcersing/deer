@@ -1,8 +1,8 @@
 package db
 
 import (
-	"kcers/biz/dal/config"
-	"kcers/biz/dal/db/mysql/ent"
+	"kcers-order/biz/dal/db/mysql/ent"
+	"kcers-order/conf"
 	"sync"
 )
 
@@ -12,6 +12,6 @@ var DB *ent.Client
 
 func InitDB() {
 	onceClient.Do(func() {
-		DB = InItDB(config.GlobalServerConfig.MySQLInfo.Host, config.GlobalServerConfig.IsProd)
+		DB = InItDB(conf.GetConf().MySQL.DSN, true)
 	})
 }
