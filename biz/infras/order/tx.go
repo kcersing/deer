@@ -1,0 +1,17 @@
+package order
+
+import (
+	"fmt"
+	"github.com/cloudwego/kitex/pkg/klog"
+	"kcers-order/biz/dal/db/mysql/ent"
+)
+
+// rollback calls to tx.Rollback and wraps the given error
+// with the rollback error if occurred.
+func rollback(tx *ent.Tx, err error) error {
+	if rerr := tx.Rollback(); rerr != nil {
+		//err = fmt.Errorf("%w: %v", err, rerr)
+		klog.Error("警告！回滚失败:", fmt.Errorf("%w: %v", err, rerr))
+	}
+	return err
+}

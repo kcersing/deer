@@ -15,6 +15,7 @@ import (
 
 type OrderRepository interface {
 	Save(order *Order) error
+	Update(order *Order) error
 	FindById(id int64) (*Order, error)
 }
 
@@ -63,15 +64,15 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 	// 1. 保存订单主体
 	orderEnt := tx.Order.Create().
 		SetOrderSn(order.OrderSn).
+		SetMemberID(order.MemberId).
 		SetStatus(string(order.Status)).
 		//SetTotalAmount(order.TotalAmount).
 		SetVersion(order.Version).
-		SetCreatedID(events[0].(*CreatedEvent).CreatedId). // 从创建事件获取创建人
-		// 支持幂等性创建
+		//SetCreatedID(events[0].(*CreatedEvent).CreatedId). // 从创建事件获取创建人
 		OnConflict().
 		UpdateNewValues()
 
-	if err = orderEnt.Exec(o.ctx); err != nil {
+	if order.Id, err = orderEnt.ID(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save order")
 	}
 
@@ -82,7 +83,9 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 			SetOrderID(order.Id).
 			SetProductID(item.ProductId).
 			SetQuantity(item.Quantity).
-			SetUnitPrice(item.Price)
+			SetUnitPrice(item.Price).
+			SetName(item.Name)
+		//SetCreatedID(events[0].(*CreatedEvent).CreatedId)
 	}
 	if _, err = tx.OrderItem.CreateBulk(items...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save order items")
@@ -95,11 +98,15 @@ func (o OrderRepositoryImpl) Save(order *Order) error {
 		if err != nil {
 			return errors.Wrapf(err, "failed to marshal event %s", event.GetID())
 		}
+
 		eventEntities[i] = tx.OrderEvents.Create().
 			SetEventID(event.GetID()).
 			SetAggregateID(event.GetAggregateID()).
 			SetEventType(event.GetType()).
 			SetEventData(string(eventData))
+		//SetEventType("").
+		//SetEventVersion("").
+
 	}
 	if _, err = tx.OrderEvents.CreateBulk(eventEntities...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "failed to save events")
@@ -158,6 +165,9 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 
 	if snapshot != nil {
 		// 从快照恢复
+
+		klog.Info(snapshot.AggregateData)
+
 		if err := json.Unmarshal([]byte(snapshot.AggregateData), &order); err != nil {
 			return nil, errors.Wrap(err, "failed to unmarshal snapshot")
 		}
@@ -185,17 +195,22 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 	for _, eventEnt := range events {
 		var event Event
 		switch eventEnt.EventType {
-		case "OrderCreated":
+		case "created":
 			event = &CreatedEvent{}
-		case "OrderPaid":
+		case "paid":
 			event = &PaidEvent{}
-		case "OrderCancelled":
+		case "cancelled":
 			event = &CancelledEvent{}
-		// 其他事件类型...
+		case "refunded":
+			event = &RefundedEvent{}
+		case "shipped":
+			event = &ShippedEvent{}
+
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
+		klog.Info(eventEnt.EventData)
 		if err := json.Unmarshal([]byte(eventEnt.EventData), event); err != nil {
 			klog.Errorf("failed to unmarshal event %s: %v", eventEnt.EventID, err)
 			continue
@@ -209,7 +224,7 @@ func (o OrderRepositoryImpl) FindById(id int64) (*Order, error) {
 // Update 更新订单（乐观锁实现）
 func (o OrderRepositoryImpl) Update(order *Order) error {
 	// 使用乐观锁条件：仅当数据库版本与当前版本一致时更新
-	_, err := o.db.Order.
+	_, err := o.db.Debug().Order.
 		UpdateOneID(order.Id).
 		SetStatus(string(order.Status)).
 		//SetTotalAmount(order.TotalAmount).

@@ -32,9 +32,24 @@ func (e *BaseEvent) GetTimestamp() time.Time { return e.Timestamp }
 type CreatedEvent struct {
 	BaseEvent
 	OrderSn     string
-	Items       []OrderItem
+	Items       []Item
 	TotalAmount float64
 	CreatedId   int64
+}
+
+// 创建事件工厂函数
+func NewOrderCreatedEvent(orderID int64, sn string, items []Item, amount float64, userID int64) *CreatedEvent {
+
+	return &CreatedEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: orderID,
+		},
+		OrderSn:     sn,
+		Items:       items,
+		TotalAmount: amount,
+		CreatedId:   userID,
+	}
 }
 
 func (e *CreatedEvent) GetType() string { return "created" }
@@ -55,21 +70,6 @@ type CancelledEvent struct {
 }
 
 func (e *CancelledEvent) GetType() string { return "cancelled" }
-
-// 创建事件工厂函数
-func NewOrderCreatedEvent(orderID int64, sn string, items []OrderItem, amount float64, userID int64) *CreatedEvent {
-
-	return &CreatedEvent{
-		BaseEvent: BaseEvent{
-			EventID:     uuid.New().String(),
-			AggregateID: orderID,
-		},
-		OrderSn:     sn,
-		Items:       items,
-		TotalAmount: amount,
-		CreatedId:   userID,
-	}
-}
 
 type ShippedEvent struct {
 	BaseEvent

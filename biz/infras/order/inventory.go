@@ -2,7 +2,6 @@ package order
 
 import (
 	"context"
-	"github.com/pkg/errors"
 )
 
 // InventoryHandler 库存处理器
@@ -24,17 +23,18 @@ func (h *InventoryHandler) Handle(ctx context.Context, event Event) error {
 	return nil
 }
 
-func (h *InventoryHandler) Reserve(orderID int64, items []OrderItem) error {
+func (h *InventoryHandler) Reserve(orderID int64, items []Item) error {
 	// 实现库存预留逻辑
 	// 1. 校验库存是否充足
 	// 2. 预留库存
 	// 3. 记录预留信息
-	err := h.repo.Reserve(h.ctx, items)
-	if err != nil {
-		return errors.New("库存不足")
-	}
-	return h.repo.Reserve(h.ctx, items)
+	//err := h.repo.Reserve(h.ctx, items)
+	//if err != nil {
+	//	return errors.New("库存不足")
+	//}
+	//return h.repo.Reserve(h.ctx, items)
 
+	return nil
 }
 
 func (h *InventoryHandler) Release(orderID int64) error {

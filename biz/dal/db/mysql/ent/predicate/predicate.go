@@ -6,11 +6,11 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// EventSubscriptions is the predicate function for eventsubscriptions builders.
-type EventSubscriptions func(*sql.Selector)
-
 // Order is the predicate function for order builders.
 type Order func(*sql.Selector)
+
+// OrderEventSubscriptions is the predicate function for ordereventsubscriptions builders.
+type OrderEventSubscriptions func(*sql.Selector)
 
 // OrderEvents is the predicate function for orderevents builders.
 type OrderEvents func(*sql.Selector)

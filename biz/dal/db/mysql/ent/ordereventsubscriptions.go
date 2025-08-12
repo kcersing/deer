@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
+	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"strings"
 	"time"
 
@@ -12,8 +12,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// EventSubscriptions is the model entity for the EventSubscriptions schema.
-type EventSubscriptions struct {
+// OrderEventSubscriptions is the model entity for the OrderEventSubscriptions schema.
+type OrderEventSubscriptions struct {
 	config `json:"-"`
 	// ID of the ent.
 	// primary key
@@ -46,15 +46,15 @@ type EventSubscriptions struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*EventSubscriptions) scanValues(columns []string) ([]any, error) {
+func (*OrderEventSubscriptions) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case eventsubscriptions.FieldID, eventsubscriptions.FieldDelete, eventsubscriptions.FieldCreatedID, eventsubscriptions.FieldLastProcessedVersion, eventsubscriptions.FieldIsActive, eventsubscriptions.FieldErrorCount:
+		case ordereventsubscriptions.FieldID, ordereventsubscriptions.FieldDelete, ordereventsubscriptions.FieldCreatedID, ordereventsubscriptions.FieldLastProcessedVersion, ordereventsubscriptions.FieldIsActive, ordereventsubscriptions.FieldErrorCount:
 			values[i] = new(sql.NullInt64)
-		case eventsubscriptions.FieldName, eventsubscriptions.FieldEventType, eventsubscriptions.FieldLastProcessedID, eventsubscriptions.FieldLastError:
+		case ordereventsubscriptions.FieldName, ordereventsubscriptions.FieldEventType, ordereventsubscriptions.FieldLastProcessedID, ordereventsubscriptions.FieldLastError:
 			values[i] = new(sql.NullString)
-		case eventsubscriptions.FieldCreatedAt, eventsubscriptions.FieldUpdatedAt, eventsubscriptions.FieldLastProcessedAt:
+		case ordereventsubscriptions.FieldCreatedAt, ordereventsubscriptions.FieldUpdatedAt, ordereventsubscriptions.FieldLastProcessedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -64,165 +64,165 @@ func (*EventSubscriptions) scanValues(columns []string) ([]any, error) {
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the EventSubscriptions fields.
-func (es *EventSubscriptions) assignValues(columns []string, values []any) error {
+// to the OrderEventSubscriptions fields.
+func (oes *OrderEventSubscriptions) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case eventsubscriptions.FieldID:
+		case ordereventsubscriptions.FieldID:
 			value, ok := values[i].(*sql.NullInt64)
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			es.ID = int64(value.Int64)
-		case eventsubscriptions.FieldCreatedAt:
+			oes.ID = int64(value.Int64)
+		case ordereventsubscriptions.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				es.CreatedAt = value.Time
+				oes.CreatedAt = value.Time
 			}
-		case eventsubscriptions.FieldUpdatedAt:
+		case ordereventsubscriptions.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				es.UpdatedAt = value.Time
+				oes.UpdatedAt = value.Time
 			}
-		case eventsubscriptions.FieldDelete:
+		case ordereventsubscriptions.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				es.Delete = value.Int64
+				oes.Delete = value.Int64
 			}
-		case eventsubscriptions.FieldCreatedID:
+		case ordereventsubscriptions.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				es.CreatedID = value.Int64
+				oes.CreatedID = value.Int64
 			}
-		case eventsubscriptions.FieldName:
+		case ordereventsubscriptions.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				es.Name = value.String
+				oes.Name = value.String
 			}
-		case eventsubscriptions.FieldEventType:
+		case ordereventsubscriptions.FieldEventType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field event_type", values[i])
 			} else if value.Valid {
-				es.EventType = value.String
+				oes.EventType = value.String
 			}
-		case eventsubscriptions.FieldLastProcessedID:
+		case ordereventsubscriptions.FieldLastProcessedID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_id", values[i])
 			} else if value.Valid {
-				es.LastProcessedID = value.String
+				oes.LastProcessedID = value.String
 			}
-		case eventsubscriptions.FieldLastProcessedVersion:
+		case ordereventsubscriptions.FieldLastProcessedVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_version", values[i])
 			} else if value.Valid {
-				es.LastProcessedVersion = value.Int64
+				oes.LastProcessedVersion = value.Int64
 			}
-		case eventsubscriptions.FieldLastProcessedAt:
+		case ordereventsubscriptions.FieldLastProcessedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_at", values[i])
 			} else if value.Valid {
-				es.LastProcessedAt = value.Time
+				oes.LastProcessedAt = value.Time
 			}
-		case eventsubscriptions.FieldIsActive:
+		case ordereventsubscriptions.FieldIsActive:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				es.IsActive = value.Int64
+				oes.IsActive = value.Int64
 			}
-		case eventsubscriptions.FieldErrorCount:
+		case ordereventsubscriptions.FieldErrorCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field error_count", values[i])
 			} else if value.Valid {
-				es.ErrorCount = value.Int64
+				oes.ErrorCount = value.Int64
 			}
-		case eventsubscriptions.FieldLastError:
+		case ordereventsubscriptions.FieldLastError:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_error", values[i])
 			} else if value.Valid {
-				es.LastError = value.String
+				oes.LastError = value.String
 			}
 		default:
-			es.selectValues.Set(columns[i], values[i])
+			oes.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
 }
 
-// Value returns the ent.Value that was dynamically selected and assigned to the EventSubscriptions.
+// Value returns the ent.Value that was dynamically selected and assigned to the OrderEventSubscriptions.
 // This includes values selected through modifiers, order, etc.
-func (es *EventSubscriptions) Value(name string) (ent.Value, error) {
-	return es.selectValues.Get(name)
+func (oes *OrderEventSubscriptions) Value(name string) (ent.Value, error) {
+	return oes.selectValues.Get(name)
 }
 
-// Update returns a builder for updating this EventSubscriptions.
-// Note that you need to call EventSubscriptions.Unwrap() before calling this method if this EventSubscriptions
+// Update returns a builder for updating this OrderEventSubscriptions.
+// Note that you need to call OrderEventSubscriptions.Unwrap() before calling this method if this OrderEventSubscriptions
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (es *EventSubscriptions) Update() *EventSubscriptionsUpdateOne {
-	return NewEventSubscriptionsClient(es.config).UpdateOne(es)
+func (oes *OrderEventSubscriptions) Update() *OrderEventSubscriptionsUpdateOne {
+	return NewOrderEventSubscriptionsClient(oes.config).UpdateOne(oes)
 }
 
-// Unwrap unwraps the EventSubscriptions entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the OrderEventSubscriptions entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (es *EventSubscriptions) Unwrap() *EventSubscriptions {
-	_tx, ok := es.config.driver.(*txDriver)
+func (oes *OrderEventSubscriptions) Unwrap() *OrderEventSubscriptions {
+	_tx, ok := oes.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: EventSubscriptions is not a transactional entity")
+		panic("ent: OrderEventSubscriptions is not a transactional entity")
 	}
-	es.config.driver = _tx.drv
-	return es
+	oes.config.driver = _tx.drv
+	return oes
 }
 
 // String implements the fmt.Stringer.
-func (es *EventSubscriptions) String() string {
+func (oes *OrderEventSubscriptions) String() string {
 	var builder strings.Builder
-	builder.WriteString("EventSubscriptions(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", es.ID))
+	builder.WriteString("OrderEventSubscriptions(")
+	builder.WriteString(fmt.Sprintf("id=%v, ", oes.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(es.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(oes.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(es.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(oes.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", es.Delete))
+	builder.WriteString(fmt.Sprintf("%v", oes.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", es.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", oes.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(es.Name)
+	builder.WriteString(oes.Name)
 	builder.WriteString(", ")
 	builder.WriteString("event_type=")
-	builder.WriteString(es.EventType)
+	builder.WriteString(oes.EventType)
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_id=")
-	builder.WriteString(es.LastProcessedID)
+	builder.WriteString(oes.LastProcessedID)
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_version=")
-	builder.WriteString(fmt.Sprintf("%v", es.LastProcessedVersion))
+	builder.WriteString(fmt.Sprintf("%v", oes.LastProcessedVersion))
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_at=")
-	builder.WriteString(es.LastProcessedAt.Format(time.ANSIC))
+	builder.WriteString(oes.LastProcessedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", es.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", oes.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("error_count=")
-	builder.WriteString(fmt.Sprintf("%v", es.ErrorCount))
+	builder.WriteString(fmt.Sprintf("%v", oes.ErrorCount))
 	builder.WriteString(", ")
 	builder.WriteString("last_error=")
-	builder.WriteString(es.LastError)
+	builder.WriteString(oes.LastError)
 	builder.WriteByte(')')
 	return builder.String()
 }
 
-// EventSubscriptionsSlice is a parsable slice of EventSubscriptions.
-type EventSubscriptionsSlice []*EventSubscriptions
+// OrderEventSubscriptionsSlice is a parsable slice of OrderEventSubscriptions.
+type OrderEventSubscriptionsSlice []*OrderEventSubscriptions

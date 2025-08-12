@@ -9,13 +9,12 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/schema/mixins"
 )
 
-type EventSubscriptions struct {
+type OrderEventSubscriptions struct {
 	ent.Schema
 }
 
-func (EventSubscriptions) Fields() []ent.Field {
+func (OrderEventSubscriptions) Fields() []ent.Field {
 	return []ent.Field{
-
 		field.String("name").Comment("名称").Optional(),
 		field.String("event_type").Comment("订阅的事件类型").Optional(),
 		field.String("last_processed_id").Comment("最后处理的事件ID").Optional(),
@@ -27,26 +26,26 @@ func (EventSubscriptions) Fields() []ent.Field {
 	}
 }
 
-func (EventSubscriptions) Mixin() []ent.Mixin {
+func (OrderEventSubscriptions) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
 	}
 }
 
-func (EventSubscriptions) Edges() []ent.Edge {
+func (OrderEventSubscriptions) Edges() []ent.Edge {
 	return []ent.Edge{}
 }
 
-func (EventSubscriptions) Indexes() []ent.Index {
+func (OrderEventSubscriptions) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
 		index.Fields("event_type", "is_active"),
 	}
 }
 
-func (EventSubscriptions) Annotations() []schema.Annotation {
+func (OrderEventSubscriptions) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "event_subscriptions"},
+		entsql.Annotation{Table: "order_event_subscriptions"},
 		entsql.WithComments(true),
 	}
 }

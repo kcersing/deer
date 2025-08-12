@@ -9,40 +9,6 @@ import (
 )
 
 var (
-	// EventSubscriptionsColumns holds the columns for the "event_subscriptions" table.
-	EventSubscriptionsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
-		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
-		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "名称"},
-		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "订阅的事件类型"},
-		{Name: "last_processed_id", Type: field.TypeString, Nullable: true, Comment: "最后处理的事件ID"},
-		{Name: "last_processed_version", Type: field.TypeInt64, Nullable: true, Comment: "最后处理的事件版本"},
-		{Name: "last_processed_at", Type: field.TypeTime, Nullable: true, Comment: "最后处理时间"},
-		{Name: "is_active", Type: field.TypeInt64, Nullable: true, Comment: "是否活跃"},
-		{Name: "error_count", Type: field.TypeInt64, Nullable: true, Comment: "处理错误次数"},
-		{Name: "last_error", Type: field.TypeString, Nullable: true, Comment: "最后错误信息"},
-	}
-	// EventSubscriptionsTable holds the schema information for the "event_subscriptions" table.
-	EventSubscriptionsTable = &schema.Table{
-		Name:       "event_subscriptions",
-		Columns:    EventSubscriptionsColumns,
-		PrimaryKey: []*schema.Column{EventSubscriptionsColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "eventsubscriptions_id",
-				Unique:  false,
-				Columns: []*schema.Column{EventSubscriptionsColumns[0]},
-			},
-			{
-				Name:    "eventsubscriptions_event_type_is_active",
-				Unique:  false,
-				Columns: []*schema.Column{EventSubscriptionsColumns[6], EventSubscriptionsColumns[10]},
-			},
-		},
-	}
 	// OrderColumns holds the columns for the "order" table.
 	OrderColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -50,14 +16,14 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "order_sn", Type: field.TypeString, Nullable: true, Comment: "订单编号"},
+		{Name: "order_sn", Type: field.TypeString, Unique: true, Comment: "订单编号"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
 		{Name: "status", Type: field.TypeString, Nullable: true},
 		{Name: "nature", Type: field.TypeInt64, Nullable: true, Comment: "业务类型"},
 		{Name: "completion_at", Type: field.TypeTime, Nullable: true, Comment: "订单完成时间"},
 		{Name: "close_at", Type: field.TypeTime, Nullable: true, Comment: "订单关闭时间"},
 		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
-		{Name: "version ", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号"},
+		{Name: "version", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号"},
 	}
 	// OrderTable holds the schema information for the "order" table.
 	OrderTable = &schema.Table{
@@ -89,6 +55,40 @@ var (
 				Name:    "order_completion_at",
 				Unique:  false,
 				Columns: []*schema.Column{OrderColumns[9]},
+			},
+		},
+	}
+	// OrderEventSubscriptionsColumns holds the columns for the "order_event_subscriptions" table.
+	OrderEventSubscriptionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "名称"},
+		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "订阅的事件类型"},
+		{Name: "last_processed_id", Type: field.TypeString, Nullable: true, Comment: "最后处理的事件ID"},
+		{Name: "last_processed_version", Type: field.TypeInt64, Nullable: true, Comment: "最后处理的事件版本"},
+		{Name: "last_processed_at", Type: field.TypeTime, Nullable: true, Comment: "最后处理时间"},
+		{Name: "is_active", Type: field.TypeInt64, Nullable: true, Comment: "是否活跃"},
+		{Name: "error_count", Type: field.TypeInt64, Nullable: true, Comment: "处理错误次数"},
+		{Name: "last_error", Type: field.TypeString, Nullable: true, Comment: "最后错误信息"},
+	}
+	// OrderEventSubscriptionsTable holds the schema information for the "order_event_subscriptions" table.
+	OrderEventSubscriptionsTable = &schema.Table{
+		Name:       "order_event_subscriptions",
+		Columns:    OrderEventSubscriptionsColumns,
+		PrimaryKey: []*schema.Column{OrderEventSubscriptionsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "ordereventsubscriptions_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderEventSubscriptionsColumns[0]},
+			},
+			{
+				Name:    "ordereventsubscriptions_event_type_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{OrderEventSubscriptionsColumns[6], OrderEventSubscriptionsColumns[10]},
 			},
 		},
 	}
@@ -250,8 +250,8 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		EventSubscriptionsTable,
 		OrderTable,
+		OrderEventSubscriptionsTable,
 		OrderEventsTable,
 		OrderItemTable,
 		OrderSnapshotsTable,
@@ -260,11 +260,11 @@ var (
 )
 
 func init() {
-	EventSubscriptionsTable.Annotation = &entsql.Annotation{
-		Table: "event_subscriptions",
-	}
 	OrderTable.Annotation = &entsql.Annotation{
 		Table: "order",
+	}
+	OrderEventSubscriptionsTable.Annotation = &entsql.Annotation{
+		Table: "order_event_subscriptions",
 	}
 	OrderEventsTable.ForeignKeys[0].RefTable = OrderTable
 	OrderEventsTable.Annotation = &entsql.Annotation{

@@ -13,7 +13,7 @@ type Order struct {
 	MemberId       int64
 	OrderSn        string
 	Nature         string
-	Items          []OrderItem
+	Items          []Item
 	TotalAmount    float64
 	Status         Status
 	CompletionAt   time.Time
@@ -25,67 +25,6 @@ type Order struct {
 	Events       []Event      // 未提交事件
 	mu           sync.RWMutex // 并发控制锁
 	stateMachine *StateMachine
-}
-
-// OrderItem 订单项值对象
-type OrderItem struct {
-	ProductId int64
-	Quantity  int64
-	Price     float64
-}
-
-// NewOrder 创建订单
-func NewOrder(sn string, memberId int64, items []OrderItem, amount float64) *Order {
-	order := &Order{
-		OrderSn:     sn,
-		MemberId:    memberId,
-		Items:       items,
-		TotalAmount: amount,
-		Status:      Created,
-	}
-	order.stateMachine = NewStateMachine(order)
-	return order
-}
-
-// 领域行为：支付订单
-func (o *Order) Pay(amount float64, method string) error {
-	event := &PaidEvent{
-		BaseEvent: BaseEvent{
-			EventID:     uuid.New().String(),
-			AggregateID: o.Id,
-			Timestamp:   time.Now(),
-		},
-		PayAmount: amount,
-		PayMethod: method,
-	}
-
-	return o.stateMachine.Transition(Paid, event)
-}
-
-// 领域行为：取消订单
-func (o *Order) Cancel(reason string) error {
-	event := &CancelledEvent{
-		BaseEvent: BaseEvent{
-			EventID:     uuid.New().String(),
-			AggregateID: o.Id,
-			Timestamp:   time.Now(),
-		},
-		Reason: reason,
-	}
-
-	return o.stateMachine.Transition(Cancelled, event)
-}
-
-func (o *Order) Shipped() {
-
-}
-
-func (o *Order) Completed() {
-
-}
-
-func (o *Order) Refunded(amount float64) {
-
 }
 
 // AddEvent 事件管理方法
@@ -138,4 +77,66 @@ func (o *Order) applyEvent(event Event) {
 		// 添加未知事件日志
 		klog.Errorf("unsupported event type: %T", e)
 	}
+}
+
+// NewOrder 创建订单
+func NewOrder(sn string, memberId int64, items []Item, amount float64) *Order {
+	order := &Order{
+		OrderSn:     sn,
+		MemberId:    memberId,
+		Items:       items,
+		TotalAmount: amount,
+		Status:      Created,
+	}
+	order.stateMachine = NewStateMachine(order)
+	return order
+}
+
+// Item 订单项值对象
+type Item struct {
+	ProductId int64
+	Quantity  int64
+	Price     float64
+	Name      string
+}
+
+// 领域行为：支付订单
+func (o *Order) Pay(amount float64, method string) error {
+	event := &PaidEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: o.Id,
+			Timestamp:   time.Now(),
+		},
+		PayAmount: amount,
+		PayMethod: method,
+	}
+
+	return o.stateMachine.Transition(Paid, event)
+}
+
+// 领域行为：取消订单
+func (o *Order) Cancel(reason string) error {
+	event := &CancelledEvent{
+		BaseEvent: BaseEvent{
+			EventID:     uuid.New().String(),
+			AggregateID: o.Id,
+			Timestamp:   time.Now(),
+		},
+		Reason: reason,
+	}
+
+	return o.stateMachine.Transition(Cancelled, event)
+}
+
+func (o *Order) Shipped() {
+
+}
+
+func (o *Order) Completed() {
+
+}
+
+func (o *Order) Refunded(amount float64) {
+
 }

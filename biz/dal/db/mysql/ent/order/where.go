@@ -110,7 +110,7 @@ func RefundAt(v time.Time) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldRefundAt, v))
 }
 
-// Version applies equality check predicate on the "version " field. It's identical to VersionEQ.
+// Version applies equality check predicate on the "version" field. It's identical to VersionEQ.
 func Version(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldVersion, v))
 }
@@ -368,16 +368,6 @@ func OrderSnHasPrefix(v string) predicate.Order {
 // OrderSnHasSuffix applies the HasSuffix predicate on the "order_sn" field.
 func OrderSnHasSuffix(v string) predicate.Order {
 	return predicate.Order(sql.FieldHasSuffix(FieldOrderSn, v))
-}
-
-// OrderSnIsNil applies the IsNil predicate on the "order_sn" field.
-func OrderSnIsNil() predicate.Order {
-	return predicate.Order(sql.FieldIsNull(FieldOrderSn))
-}
-
-// OrderSnNotNil applies the NotNil predicate on the "order_sn" field.
-func OrderSnNotNil() predicate.Order {
-	return predicate.Order(sql.FieldNotNull(FieldOrderSn))
 }
 
 // OrderSnEqualFold applies the EqualFold predicate on the "order_sn" field.
@@ -715,52 +705,52 @@ func RefundAtNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldRefundAt))
 }
 
-// VersionEQ applies the EQ predicate on the "version " field.
+// VersionEQ applies the EQ predicate on the "version" field.
 func VersionEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldVersion, v))
 }
 
-// VersionNEQ applies the NEQ predicate on the "version " field.
+// VersionNEQ applies the NEQ predicate on the "version" field.
 func VersionNEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldVersion, v))
 }
 
-// VersionIn applies the In predicate on the "version " field.
+// VersionIn applies the In predicate on the "version" field.
 func VersionIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldVersion, vs...))
 }
 
-// VersionNotIn applies the NotIn predicate on the "version " field.
+// VersionNotIn applies the NotIn predicate on the "version" field.
 func VersionNotIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldVersion, vs...))
 }
 
-// VersionGT applies the GT predicate on the "version " field.
+// VersionGT applies the GT predicate on the "version" field.
 func VersionGT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldVersion, v))
 }
 
-// VersionGTE applies the GTE predicate on the "version " field.
+// VersionGTE applies the GTE predicate on the "version" field.
 func VersionGTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldVersion, v))
 }
 
-// VersionLT applies the LT predicate on the "version " field.
+// VersionLT applies the LT predicate on the "version" field.
 func VersionLT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldVersion, v))
 }
 
-// VersionLTE applies the LTE predicate on the "version " field.
+// VersionLTE applies the LTE predicate on the "version" field.
 func VersionLTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldVersion, v))
 }
 
-// VersionIsNil applies the IsNil predicate on the "version " field.
+// VersionIsNil applies the IsNil predicate on the "version" field.
 func VersionIsNil() predicate.Order {
 	return predicate.Order(sql.FieldIsNull(FieldVersion))
 }
 
-// VersionNotNil applies the NotNil predicate on the "version " field.
+// VersionNotNil applies the NotNil predicate on the "version" field.
 func VersionNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldVersion))
 }

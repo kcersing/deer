@@ -8,12 +8,12 @@ import (
 type Status string
 
 const (
-	Created   Status = "created"        //创建
-	Paid      Status = "paid"           //支付
-	Shipped   Status = "shipped"        //发货
-	Cancelled Status = "cancelled"      //取消
-	Refunded  Status = "refunded"       //退款
-	Completed Status = "OrderCompleted" //完成
+	Created   Status = "created"   //创建
+	Paid      Status = "paid"      //支付
+	Shipped   Status = "shipped"   //发货
+	Cancelled Status = "cancelled" //取消
+	Refunded  Status = "refunded"  //退款
+	Completed Status = "completed" //完成
 )
 
 // StateMachine 订单状态机

@@ -7,11 +7,11 @@ import (
 
 type InventoryRepository interface {
 	// 预留库存（返回错误表示库存不足）
-	Reserve(ctx context.Context, items []OrderItem) error
+	Reserve(ctx context.Context, items []Item) error
 	// 释放库存
 	Release(ctx context.Context, orderID int64) error
 	// 检查库存是否充足
-	CheckAvailability(ctx context.Context, items []OrderItem) (bool, error)
+	CheckAvailability(ctx context.Context, items []Item) (bool, error)
 }
 
 // InventoryRepositoryImpl 订单仓储实现
@@ -22,13 +22,13 @@ type InventoryRepositoryImpl struct {
 	subscriptionSvc SubscriptionService // 新增：订阅服务
 }
 
-func (o InventoryRepositoryImpl) Reserve(ctx context.Context, items []OrderItem) error {
+func (o InventoryRepositoryImpl) Reserve(ctx context.Context, items []Item) error {
 
 	return nil
 }
 func (o InventoryRepositoryImpl) Release(ctx context.Context, orderID int64) error {
 	return nil
 }
-func (o InventoryRepositoryImpl) CheckAvailability(ctx context.Context, items []OrderItem) (bool, error) {
+func (o InventoryRepositoryImpl) CheckAvailability(ctx context.Context, items []Item) (bool, error) {
 	return true, nil
 }

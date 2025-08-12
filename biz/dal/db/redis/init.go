@@ -12,6 +12,7 @@ var (
 )
 
 func Init() {
+	return
 	RedisClient = redis.NewClient(&redis.Options{
 		Addr:     conf.GetConf().Redis.Address,
 		Username: conf.GetConf().Redis.Username,

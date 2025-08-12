@@ -11,9 +11,9 @@ import (
 
 	"kcers-order/biz/dal/db/mysql/ent/migrate"
 
-	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/orderitem"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
@@ -29,10 +29,10 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// EventSubscriptions is the client for interacting with the EventSubscriptions builders.
-	EventSubscriptions *EventSubscriptionsClient
 	// Order is the client for interacting with the Order builders.
 	Order *OrderClient
+	// OrderEventSubscriptions is the client for interacting with the OrderEventSubscriptions builders.
+	OrderEventSubscriptions *OrderEventSubscriptionsClient
 	// OrderEvents is the client for interacting with the OrderEvents builders.
 	OrderEvents *OrderEventsClient
 	// OrderItem is the client for interacting with the OrderItem builders.
@@ -52,8 +52,8 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.EventSubscriptions = NewEventSubscriptionsClient(c.config)
 	c.Order = NewOrderClient(c.config)
+	c.OrderEventSubscriptions = NewOrderEventSubscriptionsClient(c.config)
 	c.OrderEvents = NewOrderEventsClient(c.config)
 	c.OrderItem = NewOrderItemClient(c.config)
 	c.OrderSnapshots = NewOrderSnapshotsClient(c.config)
@@ -148,14 +148,14 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:                ctx,
-		config:             cfg,
-		EventSubscriptions: NewEventSubscriptionsClient(cfg),
-		Order:              NewOrderClient(cfg),
-		OrderEvents:        NewOrderEventsClient(cfg),
-		OrderItem:          NewOrderItemClient(cfg),
-		OrderSnapshots:     NewOrderSnapshotsClient(cfg),
-		OrderStatusHistory: NewOrderStatusHistoryClient(cfg),
+		ctx:                     ctx,
+		config:                  cfg,
+		Order:                   NewOrderClient(cfg),
+		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
+		OrderEvents:             NewOrderEventsClient(cfg),
+		OrderItem:               NewOrderItemClient(cfg),
+		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
+		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
 }
 
@@ -173,21 +173,21 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:                ctx,
-		config:             cfg,
-		EventSubscriptions: NewEventSubscriptionsClient(cfg),
-		Order:              NewOrderClient(cfg),
-		OrderEvents:        NewOrderEventsClient(cfg),
-		OrderItem:          NewOrderItemClient(cfg),
-		OrderSnapshots:     NewOrderSnapshotsClient(cfg),
-		OrderStatusHistory: NewOrderStatusHistoryClient(cfg),
+		ctx:                     ctx,
+		config:                  cfg,
+		Order:                   NewOrderClient(cfg),
+		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
+		OrderEvents:             NewOrderEventsClient(cfg),
+		OrderItem:               NewOrderItemClient(cfg),
+		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
+		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		EventSubscriptions.
+//		Order.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -210,8 +210,8 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.EventSubscriptions, c.Order, c.OrderEvents, c.OrderItem, c.OrderSnapshots,
-		c.OrderStatusHistory,
+		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Use(hooks...)
 	}
@@ -221,8 +221,8 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.EventSubscriptions, c.Order, c.OrderEvents, c.OrderItem, c.OrderSnapshots,
-		c.OrderStatusHistory,
+		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -231,10 +231,10 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *EventSubscriptionsMutation:
-		return c.EventSubscriptions.mutate(ctx, m)
 	case *OrderMutation:
 		return c.Order.mutate(ctx, m)
+	case *OrderEventSubscriptionsMutation:
+		return c.OrderEventSubscriptions.mutate(ctx, m)
 	case *OrderEventsMutation:
 		return c.OrderEvents.mutate(ctx, m)
 	case *OrderItemMutation:
@@ -245,139 +245,6 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.OrderStatusHistory.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
-	}
-}
-
-// EventSubscriptionsClient is a client for the EventSubscriptions schema.
-type EventSubscriptionsClient struct {
-	config
-}
-
-// NewEventSubscriptionsClient returns a client for the EventSubscriptions from the given config.
-func NewEventSubscriptionsClient(c config) *EventSubscriptionsClient {
-	return &EventSubscriptionsClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `eventsubscriptions.Hooks(f(g(h())))`.
-func (c *EventSubscriptionsClient) Use(hooks ...Hook) {
-	c.hooks.EventSubscriptions = append(c.hooks.EventSubscriptions, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `eventsubscriptions.Intercept(f(g(h())))`.
-func (c *EventSubscriptionsClient) Intercept(interceptors ...Interceptor) {
-	c.inters.EventSubscriptions = append(c.inters.EventSubscriptions, interceptors...)
-}
-
-// Create returns a builder for creating a EventSubscriptions entity.
-func (c *EventSubscriptionsClient) Create() *EventSubscriptionsCreate {
-	mutation := newEventSubscriptionsMutation(c.config, OpCreate)
-	return &EventSubscriptionsCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of EventSubscriptions entities.
-func (c *EventSubscriptionsClient) CreateBulk(builders ...*EventSubscriptionsCreate) *EventSubscriptionsCreateBulk {
-	return &EventSubscriptionsCreateBulk{config: c.config, builders: builders}
-}
-
-// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
-// a builder and applies setFunc on it.
-func (c *EventSubscriptionsClient) MapCreateBulk(slice any, setFunc func(*EventSubscriptionsCreate, int)) *EventSubscriptionsCreateBulk {
-	rv := reflect.ValueOf(slice)
-	if rv.Kind() != reflect.Slice {
-		return &EventSubscriptionsCreateBulk{err: fmt.Errorf("calling to EventSubscriptionsClient.MapCreateBulk with wrong type %T, need slice", slice)}
-	}
-	builders := make([]*EventSubscriptionsCreate, rv.Len())
-	for i := 0; i < rv.Len(); i++ {
-		builders[i] = c.Create()
-		setFunc(builders[i], i)
-	}
-	return &EventSubscriptionsCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for EventSubscriptions.
-func (c *EventSubscriptionsClient) Update() *EventSubscriptionsUpdate {
-	mutation := newEventSubscriptionsMutation(c.config, OpUpdate)
-	return &EventSubscriptionsUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *EventSubscriptionsClient) UpdateOne(es *EventSubscriptions) *EventSubscriptionsUpdateOne {
-	mutation := newEventSubscriptionsMutation(c.config, OpUpdateOne, withEventSubscriptions(es))
-	return &EventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *EventSubscriptionsClient) UpdateOneID(id int64) *EventSubscriptionsUpdateOne {
-	mutation := newEventSubscriptionsMutation(c.config, OpUpdateOne, withEventSubscriptionsID(id))
-	return &EventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for EventSubscriptions.
-func (c *EventSubscriptionsClient) Delete() *EventSubscriptionsDelete {
-	mutation := newEventSubscriptionsMutation(c.config, OpDelete)
-	return &EventSubscriptionsDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *EventSubscriptionsClient) DeleteOne(es *EventSubscriptions) *EventSubscriptionsDeleteOne {
-	return c.DeleteOneID(es.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *EventSubscriptionsClient) DeleteOneID(id int64) *EventSubscriptionsDeleteOne {
-	builder := c.Delete().Where(eventsubscriptions.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &EventSubscriptionsDeleteOne{builder}
-}
-
-// Query returns a query builder for EventSubscriptions.
-func (c *EventSubscriptionsClient) Query() *EventSubscriptionsQuery {
-	return &EventSubscriptionsQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeEventSubscriptions},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a EventSubscriptions entity by its id.
-func (c *EventSubscriptionsClient) Get(ctx context.Context, id int64) (*EventSubscriptions, error) {
-	return c.Query().Where(eventsubscriptions.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *EventSubscriptionsClient) GetX(ctx context.Context, id int64) *EventSubscriptions {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// Hooks returns the client hooks.
-func (c *EventSubscriptionsClient) Hooks() []Hook {
-	return c.hooks.EventSubscriptions
-}
-
-// Interceptors returns the client interceptors.
-func (c *EventSubscriptionsClient) Interceptors() []Interceptor {
-	return c.inters.EventSubscriptions
-}
-
-func (c *EventSubscriptionsClient) mutate(ctx context.Context, m *EventSubscriptionsMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&EventSubscriptionsCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&EventSubscriptionsUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&EventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&EventSubscriptionsDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("ent: unknown EventSubscriptions mutation op: %q", m.Op())
 	}
 }
 
@@ -575,6 +442,139 @@ func (c *OrderClient) mutate(ctx context.Context, m *OrderMutation) (Value, erro
 		return (&OrderDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown Order mutation op: %q", m.Op())
+	}
+}
+
+// OrderEventSubscriptionsClient is a client for the OrderEventSubscriptions schema.
+type OrderEventSubscriptionsClient struct {
+	config
+}
+
+// NewOrderEventSubscriptionsClient returns a client for the OrderEventSubscriptions from the given config.
+func NewOrderEventSubscriptionsClient(c config) *OrderEventSubscriptionsClient {
+	return &OrderEventSubscriptionsClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `ordereventsubscriptions.Hooks(f(g(h())))`.
+func (c *OrderEventSubscriptionsClient) Use(hooks ...Hook) {
+	c.hooks.OrderEventSubscriptions = append(c.hooks.OrderEventSubscriptions, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `ordereventsubscriptions.Intercept(f(g(h())))`.
+func (c *OrderEventSubscriptionsClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrderEventSubscriptions = append(c.inters.OrderEventSubscriptions, interceptors...)
+}
+
+// Create returns a builder for creating a OrderEventSubscriptions entity.
+func (c *OrderEventSubscriptionsClient) Create() *OrderEventSubscriptionsCreate {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpCreate)
+	return &OrderEventSubscriptionsCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of OrderEventSubscriptions entities.
+func (c *OrderEventSubscriptionsClient) CreateBulk(builders ...*OrderEventSubscriptionsCreate) *OrderEventSubscriptionsCreateBulk {
+	return &OrderEventSubscriptionsCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *OrderEventSubscriptionsClient) MapCreateBulk(slice any, setFunc func(*OrderEventSubscriptionsCreate, int)) *OrderEventSubscriptionsCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &OrderEventSubscriptionsCreateBulk{err: fmt.Errorf("calling to OrderEventSubscriptionsClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*OrderEventSubscriptionsCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &OrderEventSubscriptionsCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for OrderEventSubscriptions.
+func (c *OrderEventSubscriptionsClient) Update() *OrderEventSubscriptionsUpdate {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpUpdate)
+	return &OrderEventSubscriptionsUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *OrderEventSubscriptionsClient) UpdateOne(oes *OrderEventSubscriptions) *OrderEventSubscriptionsUpdateOne {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpUpdateOne, withOrderEventSubscriptions(oes))
+	return &OrderEventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *OrderEventSubscriptionsClient) UpdateOneID(id int64) *OrderEventSubscriptionsUpdateOne {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpUpdateOne, withOrderEventSubscriptionsID(id))
+	return &OrderEventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for OrderEventSubscriptions.
+func (c *OrderEventSubscriptionsClient) Delete() *OrderEventSubscriptionsDelete {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpDelete)
+	return &OrderEventSubscriptionsDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *OrderEventSubscriptionsClient) DeleteOne(oes *OrderEventSubscriptions) *OrderEventSubscriptionsDeleteOne {
+	return c.DeleteOneID(oes.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *OrderEventSubscriptionsClient) DeleteOneID(id int64) *OrderEventSubscriptionsDeleteOne {
+	builder := c.Delete().Where(ordereventsubscriptions.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &OrderEventSubscriptionsDeleteOne{builder}
+}
+
+// Query returns a query builder for OrderEventSubscriptions.
+func (c *OrderEventSubscriptionsClient) Query() *OrderEventSubscriptionsQuery {
+	return &OrderEventSubscriptionsQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeOrderEventSubscriptions},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a OrderEventSubscriptions entity by its id.
+func (c *OrderEventSubscriptionsClient) Get(ctx context.Context, id int64) (*OrderEventSubscriptions, error) {
+	return c.Query().Where(ordereventsubscriptions.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *OrderEventSubscriptionsClient) GetX(ctx context.Context, id int64) *OrderEventSubscriptions {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *OrderEventSubscriptionsClient) Hooks() []Hook {
+	return c.hooks.OrderEventSubscriptions
+}
+
+// Interceptors returns the client interceptors.
+func (c *OrderEventSubscriptionsClient) Interceptors() []Interceptor {
+	return c.inters.OrderEventSubscriptions
+}
+
+func (c *OrderEventSubscriptionsClient) mutate(ctx context.Context, m *OrderEventSubscriptionsMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&OrderEventSubscriptionsCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&OrderEventSubscriptionsUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&OrderEventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&OrderEventSubscriptionsDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown OrderEventSubscriptions mutation op: %q", m.Op())
 	}
 }
 
@@ -1177,11 +1177,11 @@ func (c *OrderStatusHistoryClient) mutate(ctx context.Context, m *OrderStatusHis
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		EventSubscriptions, Order, OrderEvents, OrderItem, OrderSnapshots,
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderSnapshots,
 		OrderStatusHistory []ent.Hook
 	}
 	inters struct {
-		EventSubscriptions, Order, OrderEvents, OrderItem, OrderSnapshots,
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderSnapshots,
 		OrderStatusHistory []ent.Interceptor
 	}
 )

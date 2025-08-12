@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/orderitem"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
@@ -78,12 +78,12 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			eventsubscriptions.Table: eventsubscriptions.ValidColumn,
-			order.Table:              order.ValidColumn,
-			orderevents.Table:        orderevents.ValidColumn,
-			orderitem.Table:          orderitem.ValidColumn,
-			ordersnapshots.Table:     ordersnapshots.ValidColumn,
-			orderstatushistory.Table: orderstatushistory.ValidColumn,
+			order.Table:                   order.ValidColumn,
+			ordereventsubscriptions.Table: ordereventsubscriptions.ValidColumn,
+			orderevents.Table:             orderevents.ValidColumn,
+			orderitem.Table:               orderitem.ValidColumn,
+			ordersnapshots.Table:          ordersnapshots.ValidColumn,
+			orderstatushistory.Table:      orderstatushistory.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

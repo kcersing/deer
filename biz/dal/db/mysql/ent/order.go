@@ -41,7 +41,7 @@ type Order struct {
 	// 订单退费时间
 	RefundAt time.Time `json:"refund_at,omitempty"`
 	// 乐观锁版本号
-	Version int64 `json:"version ,omitempty"`
+	Version int64 `json:"version,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderQuery when eager-loading is set.
 	Edges        OrderEdges `json:"edges"`
@@ -199,7 +199,7 @@ func (o *Order) assignValues(columns []string, values []any) error {
 			}
 		case order.FieldVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field version ", values[i])
+				return fmt.Errorf("unexpected type %T for field version", values[i])
 			} else if value.Valid {
 				o.Version = value.Int64
 			}
@@ -292,7 +292,7 @@ func (o *Order) String() string {
 	builder.WriteString("refund_at=")
 	builder.WriteString(o.RefundAt.Format(time.ANSIC))
 	builder.WriteString(", ")
-	builder.WriteString("version =")
+	builder.WriteString("version=")
 	builder.WriteString(fmt.Sprintf("%v", o.Version))
 	builder.WriteByte(')')
 	return builder.String()

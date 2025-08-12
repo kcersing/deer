@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
+	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"time"
 )
 
@@ -31,11 +31,11 @@ func NewSubscriptionService(client *ent.Client) SubscriptionService {
 // ProcessEvent 处理事件并更新订阅状态
 func (s *subscriptionService) ProcessEvent(ctx context.Context, event Event) error {
 	// 1. 查询事件类型的活跃订阅者
-	subscribers, err := s.client.EventSubscriptions.
+	subscribers, err := s.client.OrderEventSubscriptions.
 		Query().
 		Where(
-			eventsubscriptions.EventType(event.GetType()),
-			eventsubscriptions.IsActive(1), // 仅活跃订阅
+			ordereventsubscriptions.EventType(event.GetType()),
+			ordereventsubscriptions.IsActive(1), // 仅活跃订阅
 		).
 		All(ctx)
 	if err != nil {
@@ -48,7 +48,7 @@ func (s *subscriptionService) ProcessEvent(ctx context.Context, event Event) err
 		err := s.handleSubscriberEvent(ctx, sub, event)
 
 		// 3. 更新订阅状态（无论成功/失败）
-		update := s.client.EventSubscriptions.
+		update := s.client.OrderEventSubscriptions.
 			UpdateOneID(sub.ID).
 			SetLastProcessedAt(time.Now())
 
@@ -80,7 +80,7 @@ func (s *subscriptionService) ProcessEvent(ctx context.Context, event Event) err
 }
 
 // 模拟处理订阅者事件（实际应替换为HTTP调用/消息队列发送等）
-func (s *subscriptionService) handleSubscriberEvent(ctx context.Context, sub *ent.EventSubscriptions, event Event) error {
+func (s *subscriptionService) handleSubscriberEvent(ctx context.Context, sub *ent.OrderEventSubscriptions, event Event) error {
 	// 示例：打印事件处理日志（实际项目中替换为业务逻辑）
 	// 如：调用库存服务的HTTP接口处理OrderCreated事件
 	// 或：发送消息到Kafka队列供订阅者消费

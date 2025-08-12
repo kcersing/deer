@@ -8,18 +8,6 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent"
 )
 
-// The EventSubscriptionsFunc type is an adapter to allow the use of ordinary
-// function as EventSubscriptions mutator.
-type EventSubscriptionsFunc func(context.Context, *ent.EventSubscriptionsMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f EventSubscriptionsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.EventSubscriptionsMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EventSubscriptionsMutation", m)
-}
-
 // The OrderFunc type is an adapter to allow the use of ordinary
 // function as Order mutator.
 type OrderFunc func(context.Context, *ent.OrderMutation) (ent.Value, error)
@@ -30,6 +18,18 @@ func (f OrderFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderMutation", m)
+}
+
+// The OrderEventSubscriptionsFunc type is an adapter to allow the use of ordinary
+// function as OrderEventSubscriptions mutator.
+type OrderEventSubscriptionsFunc func(context.Context, *ent.OrderEventSubscriptionsMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderEventSubscriptionsFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderEventSubscriptionsMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderEventSubscriptionsMutation", m)
 }
 
 // The OrderEventsFunc type is an adapter to allow the use of ordinary

@@ -16,7 +16,7 @@ type Order struct {
 
 func (Order) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("order_sn").Comment("订单编号").Optional(),
+		field.String("order_sn").Comment("订单编号").Unique(),
 		//field.Int64("venue_id").Comment("场馆id").Optional(),
 		field.Int64("member_id").Comment("会员id").Optional(),
 		//field.Int64("member_product_id").Comment("会员产品id").Optional(),
@@ -25,7 +25,7 @@ func (Order) Fields() []ent.Field {
 		field.Time("completion_at").Comment("订单完成时间").Optional(),
 		field.Time("close_at").Comment("订单关闭时间").Optional(),
 		field.Time("refund_at").Comment("订单退费时间").Optional(),
-		field.Int64("version ").Comment("乐观锁版本号").Optional(),
+		field.Int64("version").Comment("乐观锁版本号").Optional(),
 	}
 }
 

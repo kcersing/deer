@@ -88,14 +88,6 @@ func (oc *OrderCreate) SetOrderSn(s string) *OrderCreate {
 	return oc
 }
 
-// SetNillableOrderSn sets the "order_sn" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableOrderSn(s *string) *OrderCreate {
-	if s != nil {
-		oc.SetOrderSn(*s)
-	}
-	return oc
-}
-
 // SetMemberID sets the "member_id" field.
 func (oc *OrderCreate) SetMemberID(i int64) *OrderCreate {
 	oc.mutation.SetMemberID(i)
@@ -180,13 +172,13 @@ func (oc *OrderCreate) SetNillableRefundAt(t *time.Time) *OrderCreate {
 	return oc
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (oc *OrderCreate) SetVersion(i int64) *OrderCreate {
 	oc.mutation.SetVersion(i)
 	return oc
 }
 
-// SetNillableVersion sets the "version " field if the given value is not nil.
+// SetNillableVersion sets the "version" field if the given value is not nil.
 func (oc *OrderCreate) SetNillableVersion(i *int64) *OrderCreate {
 	if i != nil {
 		oc.SetVersion(*i)
@@ -315,6 +307,9 @@ func (oc *OrderCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (oc *OrderCreate) check() error {
+	if _, ok := oc.mutation.OrderSn(); !ok {
+		return &ValidationError{Name: "order_sn", err: errors.New(`ent: missing required field "Order.order_sn"`)}
+	}
 	return nil
 }
 
@@ -590,12 +585,6 @@ func (u *OrderUpsert) UpdateOrderSn() *OrderUpsert {
 	return u
 }
 
-// ClearOrderSn clears the value of the "order_sn" field.
-func (u *OrderUpsert) ClearOrderSn() *OrderUpsert {
-	u.SetNull(order.FieldOrderSn)
-	return u
-}
-
 // SetMemberID sets the "member_id" field.
 func (u *OrderUpsert) SetMemberID(v int64) *OrderUpsert {
 	u.Set(order.FieldMemberID, v)
@@ -716,25 +705,25 @@ func (u *OrderUpsert) ClearRefundAt() *OrderUpsert {
 	return u
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (u *OrderUpsert) SetVersion(v int64) *OrderUpsert {
 	u.Set(order.FieldVersion, v)
 	return u
 }
 
-// UpdateVersion sets the "version " field to the value that was provided on create.
+// UpdateVersion sets the "version" field to the value that was provided on create.
 func (u *OrderUpsert) UpdateVersion() *OrderUpsert {
 	u.SetExcluded(order.FieldVersion)
 	return u
 }
 
-// AddVersion adds v to the "version " field.
+// AddVersion adds v to the "version" field.
 func (u *OrderUpsert) AddVersion(v int64) *OrderUpsert {
 	u.Add(order.FieldVersion, v)
 	return u
 }
 
-// ClearVersion clears the value of the "version " field.
+// ClearVersion clears the value of the "version" field.
 func (u *OrderUpsert) ClearVersion() *OrderUpsert {
 	u.SetNull(order.FieldVersion)
 	return u
@@ -882,13 +871,6 @@ func (u *OrderUpsertOne) UpdateOrderSn() *OrderUpsertOne {
 	})
 }
 
-// ClearOrderSn clears the value of the "order_sn" field.
-func (u *OrderUpsertOne) ClearOrderSn() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearOrderSn()
-	})
-}
-
 // SetMemberID sets the "member_id" field.
 func (u *OrderUpsertOne) SetMemberID(v int64) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
@@ -1029,28 +1011,28 @@ func (u *OrderUpsertOne) ClearRefundAt() *OrderUpsertOne {
 	})
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (u *OrderUpsertOne) SetVersion(v int64) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.SetVersion(v)
 	})
 }
 
-// AddVersion adds v to the "version " field.
+// AddVersion adds v to the "version" field.
 func (u *OrderUpsertOne) AddVersion(v int64) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.AddVersion(v)
 	})
 }
 
-// UpdateVersion sets the "version " field to the value that was provided on create.
+// UpdateVersion sets the "version" field to the value that was provided on create.
 func (u *OrderUpsertOne) UpdateVersion() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.UpdateVersion()
 	})
 }
 
-// ClearVersion clears the value of the "version " field.
+// ClearVersion clears the value of the "version" field.
 func (u *OrderUpsertOne) ClearVersion() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearVersion()
@@ -1365,13 +1347,6 @@ func (u *OrderUpsertBulk) UpdateOrderSn() *OrderUpsertBulk {
 	})
 }
 
-// ClearOrderSn clears the value of the "order_sn" field.
-func (u *OrderUpsertBulk) ClearOrderSn() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearOrderSn()
-	})
-}
-
 // SetMemberID sets the "member_id" field.
 func (u *OrderUpsertBulk) SetMemberID(v int64) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
@@ -1512,28 +1487,28 @@ func (u *OrderUpsertBulk) ClearRefundAt() *OrderUpsertBulk {
 	})
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (u *OrderUpsertBulk) SetVersion(v int64) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.SetVersion(v)
 	})
 }
 
-// AddVersion adds v to the "version " field.
+// AddVersion adds v to the "version" field.
 func (u *OrderUpsertBulk) AddVersion(v int64) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.AddVersion(v)
 	})
 }
 
-// UpdateVersion sets the "version " field to the value that was provided on create.
+// UpdateVersion sets the "version" field to the value that was provided on create.
 func (u *OrderUpsertBulk) UpdateVersion() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.UpdateVersion()
 	})
 }
 
-// ClearVersion clears the value of the "version " field.
+// ClearVersion clears the value of the "version" field.
 func (u *OrderUpsertBulk) ClearVersion() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearVersion()

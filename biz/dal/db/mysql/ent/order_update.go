@@ -112,12 +112,6 @@ func (ou *OrderUpdate) SetNillableOrderSn(s *string) *OrderUpdate {
 	return ou
 }
 
-// ClearOrderSn clears the value of the "order_sn" field.
-func (ou *OrderUpdate) ClearOrderSn() *OrderUpdate {
-	ou.mutation.ClearOrderSn()
-	return ou
-}
-
 // SetMemberID sets the "member_id" field.
 func (ou *OrderUpdate) SetMemberID(i int64) *OrderUpdate {
 	ou.mutation.ResetMemberID()
@@ -252,14 +246,14 @@ func (ou *OrderUpdate) ClearRefundAt() *OrderUpdate {
 	return ou
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (ou *OrderUpdate) SetVersion(i int64) *OrderUpdate {
 	ou.mutation.ResetVersion()
 	ou.mutation.SetVersion(i)
 	return ou
 }
 
-// SetNillableVersion sets the "version " field if the given value is not nil.
+// SetNillableVersion sets the "version" field if the given value is not nil.
 func (ou *OrderUpdate) SetNillableVersion(i *int64) *OrderUpdate {
 	if i != nil {
 		ou.SetVersion(*i)
@@ -267,13 +261,13 @@ func (ou *OrderUpdate) SetNillableVersion(i *int64) *OrderUpdate {
 	return ou
 }
 
-// AddVersion adds i to the "version " field.
+// AddVersion adds i to the "version" field.
 func (ou *OrderUpdate) AddVersion(i int64) *OrderUpdate {
 	ou.mutation.AddVersion(i)
 	return ou
 }
 
-// ClearVersion clears the value of the "version " field.
+// ClearVersion clears the value of the "version" field.
 func (ou *OrderUpdate) ClearVersion() *OrderUpdate {
 	ou.mutation.ClearVersion()
 	return ou
@@ -502,9 +496,6 @@ func (ou *OrderUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := ou.mutation.OrderSn(); ok {
 		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
-	}
-	if ou.mutation.OrderSnCleared() {
-		_spec.ClearField(order.FieldOrderSn, field.TypeString)
 	}
 	if value, ok := ou.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
@@ -837,12 +828,6 @@ func (ouo *OrderUpdateOne) SetNillableOrderSn(s *string) *OrderUpdateOne {
 	return ouo
 }
 
-// ClearOrderSn clears the value of the "order_sn" field.
-func (ouo *OrderUpdateOne) ClearOrderSn() *OrderUpdateOne {
-	ouo.mutation.ClearOrderSn()
-	return ouo
-}
-
 // SetMemberID sets the "member_id" field.
 func (ouo *OrderUpdateOne) SetMemberID(i int64) *OrderUpdateOne {
 	ouo.mutation.ResetMemberID()
@@ -977,14 +962,14 @@ func (ouo *OrderUpdateOne) ClearRefundAt() *OrderUpdateOne {
 	return ouo
 }
 
-// SetVersion sets the "version " field.
+// SetVersion sets the "version" field.
 func (ouo *OrderUpdateOne) SetVersion(i int64) *OrderUpdateOne {
 	ouo.mutation.ResetVersion()
 	ouo.mutation.SetVersion(i)
 	return ouo
 }
 
-// SetNillableVersion sets the "version " field if the given value is not nil.
+// SetNillableVersion sets the "version" field if the given value is not nil.
 func (ouo *OrderUpdateOne) SetNillableVersion(i *int64) *OrderUpdateOne {
 	if i != nil {
 		ouo.SetVersion(*i)
@@ -992,13 +977,13 @@ func (ouo *OrderUpdateOne) SetNillableVersion(i *int64) *OrderUpdateOne {
 	return ouo
 }
 
-// AddVersion adds i to the "version " field.
+// AddVersion adds i to the "version" field.
 func (ouo *OrderUpdateOne) AddVersion(i int64) *OrderUpdateOne {
 	ouo.mutation.AddVersion(i)
 	return ouo
 }
 
-// ClearVersion clears the value of the "version " field.
+// ClearVersion clears the value of the "version" field.
 func (ouo *OrderUpdateOne) ClearVersion() *OrderUpdateOne {
 	ouo.mutation.ClearVersion()
 	return ouo
@@ -1257,9 +1242,6 @@ func (ouo *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error
 	}
 	if value, ok := ouo.mutation.OrderSn(); ok {
 		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
-	}
-	if ouo.mutation.OrderSnCleared() {
-		_spec.ClearField(order.FieldOrderSn, field.TypeString)
 	}
 	if value, ok := ouo.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)

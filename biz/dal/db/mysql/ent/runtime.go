@@ -3,9 +3,9 @@
 package ent
 
 import (
-	"kcers-order/biz/dal/db/mysql/ent/eventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"kcers-order/biz/dal/db/mysql/ent/orderitem"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
@@ -17,29 +17,6 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	eventsubscriptionsMixin := schema.EventSubscriptions{}.Mixin()
-	eventsubscriptionsMixinFields0 := eventsubscriptionsMixin[0].Fields()
-	_ = eventsubscriptionsMixinFields0
-	eventsubscriptionsFields := schema.EventSubscriptions{}.Fields()
-	_ = eventsubscriptionsFields
-	// eventsubscriptionsDescCreatedAt is the schema descriptor for created_at field.
-	eventsubscriptionsDescCreatedAt := eventsubscriptionsMixinFields0[1].Descriptor()
-	// eventsubscriptions.DefaultCreatedAt holds the default value on creation for the created_at field.
-	eventsubscriptions.DefaultCreatedAt = eventsubscriptionsDescCreatedAt.Default.(func() time.Time)
-	// eventsubscriptionsDescUpdatedAt is the schema descriptor for updated_at field.
-	eventsubscriptionsDescUpdatedAt := eventsubscriptionsMixinFields0[2].Descriptor()
-	// eventsubscriptions.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	eventsubscriptions.DefaultUpdatedAt = eventsubscriptionsDescUpdatedAt.Default.(func() time.Time)
-	// eventsubscriptions.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	eventsubscriptions.UpdateDefaultUpdatedAt = eventsubscriptionsDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// eventsubscriptionsDescDelete is the schema descriptor for delete field.
-	eventsubscriptionsDescDelete := eventsubscriptionsMixinFields0[3].Descriptor()
-	// eventsubscriptions.DefaultDelete holds the default value on creation for the delete field.
-	eventsubscriptions.DefaultDelete = eventsubscriptionsDescDelete.Default.(int64)
-	// eventsubscriptionsDescCreatedID is the schema descriptor for created_id field.
-	eventsubscriptionsDescCreatedID := eventsubscriptionsMixinFields0[4].Descriptor()
-	// eventsubscriptions.DefaultCreatedID holds the default value on creation for the created_id field.
-	eventsubscriptions.DefaultCreatedID = eventsubscriptionsDescCreatedID.Default.(int64)
 	orderMixin := schema.Order{}.Mixin()
 	orderMixinFields0 := orderMixin[0].Fields()
 	_ = orderMixinFields0
@@ -63,6 +40,29 @@ func init() {
 	orderDescCreatedID := orderMixinFields0[4].Descriptor()
 	// order.DefaultCreatedID holds the default value on creation for the created_id field.
 	order.DefaultCreatedID = orderDescCreatedID.Default.(int64)
+	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()
+	ordereventsubscriptionsMixinFields0 := ordereventsubscriptionsMixin[0].Fields()
+	_ = ordereventsubscriptionsMixinFields0
+	ordereventsubscriptionsFields := schema.OrderEventSubscriptions{}.Fields()
+	_ = ordereventsubscriptionsFields
+	// ordereventsubscriptionsDescCreatedAt is the schema descriptor for created_at field.
+	ordereventsubscriptionsDescCreatedAt := ordereventsubscriptionsMixinFields0[1].Descriptor()
+	// ordereventsubscriptions.DefaultCreatedAt holds the default value on creation for the created_at field.
+	ordereventsubscriptions.DefaultCreatedAt = ordereventsubscriptionsDescCreatedAt.Default.(func() time.Time)
+	// ordereventsubscriptionsDescUpdatedAt is the schema descriptor for updated_at field.
+	ordereventsubscriptionsDescUpdatedAt := ordereventsubscriptionsMixinFields0[2].Descriptor()
+	// ordereventsubscriptions.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	ordereventsubscriptions.DefaultUpdatedAt = ordereventsubscriptionsDescUpdatedAt.Default.(func() time.Time)
+	// ordereventsubscriptions.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	ordereventsubscriptions.UpdateDefaultUpdatedAt = ordereventsubscriptionsDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// ordereventsubscriptionsDescDelete is the schema descriptor for delete field.
+	ordereventsubscriptionsDescDelete := ordereventsubscriptionsMixinFields0[3].Descriptor()
+	// ordereventsubscriptions.DefaultDelete holds the default value on creation for the delete field.
+	ordereventsubscriptions.DefaultDelete = ordereventsubscriptionsDescDelete.Default.(int64)
+	// ordereventsubscriptionsDescCreatedID is the schema descriptor for created_id field.
+	ordereventsubscriptionsDescCreatedID := ordereventsubscriptionsMixinFields0[4].Descriptor()
+	// ordereventsubscriptions.DefaultCreatedID holds the default value on creation for the created_id field.
+	ordereventsubscriptions.DefaultCreatedID = ordereventsubscriptionsDescCreatedID.Default.(int64)
 	ordereventsMixin := schema.OrderEvents{}.Mixin()
 	ordereventsMixinFields0 := ordereventsMixin[0].Fields()
 	_ = ordereventsMixinFields0

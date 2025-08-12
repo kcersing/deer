@@ -36,8 +36,8 @@ const (
 	FieldCloseAt = "close_at"
 	// FieldRefundAt holds the string denoting the refund_at field in the database.
 	FieldRefundAt = "refund_at"
-	// FieldVersion holds the string denoting the version  field in the database.
-	FieldVersion = "version "
+	// FieldVersion holds the string denoting the version field in the database.
+	FieldVersion = "version"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
 	// EdgeEvents holds the string denoting the events edge name in mutations.
@@ -181,7 +181,7 @@ func ByRefundAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRefundAt, opts...).ToFunc()
 }
 
-// ByVersion orders the results by the version  field.
+// ByVersion orders the results by the version field.
 func ByVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldVersion, opts...).ToFunc()
 }
