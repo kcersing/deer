@@ -102,7 +102,7 @@ var (
 		{Name: "event_id", Type: field.TypeString, Nullable: true, Comment: "事件id"},
 		{Name: "aggregate_type", Type: field.TypeString, Nullable: true, Comment: "聚合根类型"},
 		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "事件类型"},
-		{Name: "event_data", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "事件数据"},
+		{Name: "event_data", Type: field.TypeJSON, Nullable: true, Comment: "事件数据"},
 		{Name: "event_version", Type: field.TypeInt64, Nullable: true, Comment: "聚合根版本号"},
 		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
 	}
@@ -184,7 +184,7 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "aggregate_version", Type: field.TypeInt64, Nullable: true, Comment: "快照版本"},
-		{Name: "aggregate_data", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "快照数据"},
+		{Name: "aggregate_data", Type: field.TypeJSON, Nullable: true, Comment: "快照数据"},
 		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
 	}
 	// OrderSnapshotsTable holds the schema information for the "order_snapshots" table.

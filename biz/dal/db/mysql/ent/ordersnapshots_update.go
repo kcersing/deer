@@ -9,6 +9,7 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"kcers-order/biz/infras/aggregate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -143,15 +144,15 @@ func (osu *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osu *OrderSnapshotsUpdate) SetAggregateData(s string) *OrderSnapshotsUpdate {
-	osu.mutation.SetAggregateData(s)
+func (osu *OrderSnapshotsUpdate) SetAggregateData(a aggregate.Order) *OrderSnapshotsUpdate {
+	osu.mutation.SetAggregateData(a)
 	return osu
 }
 
 // SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableAggregateData(s *string) *OrderSnapshotsUpdate {
-	if s != nil {
-		osu.SetAggregateData(*s)
+func (osu *OrderSnapshotsUpdate) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsUpdate {
+	if a != nil {
+		osu.SetAggregateData(*a)
 	}
 	return osu
 }
@@ -274,10 +275,10 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
 	if value, ok := osu.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeString, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 	}
 	if osu.mutation.AggregateDataCleared() {
-		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeString)
+		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
 	}
 	if osu.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -442,15 +443,15 @@ func (osuo *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpda
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osuo *OrderSnapshotsUpdateOne) SetAggregateData(s string) *OrderSnapshotsUpdateOne {
-	osuo.mutation.SetAggregateData(s)
+func (osuo *OrderSnapshotsUpdateOne) SetAggregateData(a aggregate.Order) *OrderSnapshotsUpdateOne {
+	osuo.mutation.SetAggregateData(a)
 	return osuo
 }
 
 // SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableAggregateData(s *string) *OrderSnapshotsUpdateOne {
-	if s != nil {
-		osuo.SetAggregateData(*s)
+func (osuo *OrderSnapshotsUpdateOne) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsUpdateOne {
+	if a != nil {
+		osuo.SetAggregateData(*a)
 	}
 	return osuo
 }
@@ -603,10 +604,10 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
 	if value, ok := osuo.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeString, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 	}
 	if osuo.mutation.AggregateDataCleared() {
-		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeString)
+		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
 	}
 	if osuo.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{

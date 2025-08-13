@@ -95,11 +95,6 @@ func EventType(v string) predicate.OrderEvents {
 	return predicate.OrderEvents(sql.FieldEQ(FieldEventType, v))
 }
 
-// EventData applies equality check predicate on the "event_data" field. It's identical to EventDataEQ.
-func EventData(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldEQ(FieldEventData, v))
-}
-
 // EventVersion applies equality check predicate on the "event_version" field. It's identical to EventVersionEQ.
 func EventVersion(v int64) predicate.OrderEvents {
 	return predicate.OrderEvents(sql.FieldEQ(FieldEventVersion, v))
@@ -560,61 +555,6 @@ func EventTypeContainsFold(v string) predicate.OrderEvents {
 	return predicate.OrderEvents(sql.FieldContainsFold(FieldEventType, v))
 }
 
-// EventDataEQ applies the EQ predicate on the "event_data" field.
-func EventDataEQ(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldEQ(FieldEventData, v))
-}
-
-// EventDataNEQ applies the NEQ predicate on the "event_data" field.
-func EventDataNEQ(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldNEQ(FieldEventData, v))
-}
-
-// EventDataIn applies the In predicate on the "event_data" field.
-func EventDataIn(vs ...string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldIn(FieldEventData, vs...))
-}
-
-// EventDataNotIn applies the NotIn predicate on the "event_data" field.
-func EventDataNotIn(vs ...string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldNotIn(FieldEventData, vs...))
-}
-
-// EventDataGT applies the GT predicate on the "event_data" field.
-func EventDataGT(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldGT(FieldEventData, v))
-}
-
-// EventDataGTE applies the GTE predicate on the "event_data" field.
-func EventDataGTE(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldGTE(FieldEventData, v))
-}
-
-// EventDataLT applies the LT predicate on the "event_data" field.
-func EventDataLT(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldLT(FieldEventData, v))
-}
-
-// EventDataLTE applies the LTE predicate on the "event_data" field.
-func EventDataLTE(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldLTE(FieldEventData, v))
-}
-
-// EventDataContains applies the Contains predicate on the "event_data" field.
-func EventDataContains(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldContains(FieldEventData, v))
-}
-
-// EventDataHasPrefix applies the HasPrefix predicate on the "event_data" field.
-func EventDataHasPrefix(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldHasPrefix(FieldEventData, v))
-}
-
-// EventDataHasSuffix applies the HasSuffix predicate on the "event_data" field.
-func EventDataHasSuffix(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldHasSuffix(FieldEventData, v))
-}
-
 // EventDataIsNil applies the IsNil predicate on the "event_data" field.
 func EventDataIsNil() predicate.OrderEvents {
 	return predicate.OrderEvents(sql.FieldIsNull(FieldEventData))
@@ -623,16 +563,6 @@ func EventDataIsNil() predicate.OrderEvents {
 // EventDataNotNil applies the NotNil predicate on the "event_data" field.
 func EventDataNotNil() predicate.OrderEvents {
 	return predicate.OrderEvents(sql.FieldNotNull(FieldEventData))
-}
-
-// EventDataEqualFold applies the EqualFold predicate on the "event_data" field.
-func EventDataEqualFold(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldEqualFold(FieldEventData, v))
-}
-
-// EventDataContainsFold applies the ContainsFold predicate on the "event_data" field.
-func EventDataContainsFold(v string) predicate.OrderEvents {
-	return predicate.OrderEvents(sql.FieldContainsFold(FieldEventData, v))
 }
 
 // EventVersionEQ applies the EQ predicate on the "event_version" field.

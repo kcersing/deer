@@ -85,11 +85,6 @@ func AggregateVersion(v int64) predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateVersion, v))
 }
 
-// AggregateData applies equality check predicate on the "aggregate_data" field. It's identical to AggregateDataEQ.
-func AggregateData(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateData, v))
-}
-
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldEQ(FieldCreatedAt, v))
@@ -370,61 +365,6 @@ func AggregateVersionNotNil() predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldNotNull(FieldAggregateVersion))
 }
 
-// AggregateDataEQ applies the EQ predicate on the "aggregate_data" field.
-func AggregateDataEQ(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateData, v))
-}
-
-// AggregateDataNEQ applies the NEQ predicate on the "aggregate_data" field.
-func AggregateDataNEQ(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldNEQ(FieldAggregateData, v))
-}
-
-// AggregateDataIn applies the In predicate on the "aggregate_data" field.
-func AggregateDataIn(vs ...string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldIn(FieldAggregateData, vs...))
-}
-
-// AggregateDataNotIn applies the NotIn predicate on the "aggregate_data" field.
-func AggregateDataNotIn(vs ...string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldNotIn(FieldAggregateData, vs...))
-}
-
-// AggregateDataGT applies the GT predicate on the "aggregate_data" field.
-func AggregateDataGT(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldGT(FieldAggregateData, v))
-}
-
-// AggregateDataGTE applies the GTE predicate on the "aggregate_data" field.
-func AggregateDataGTE(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldGTE(FieldAggregateData, v))
-}
-
-// AggregateDataLT applies the LT predicate on the "aggregate_data" field.
-func AggregateDataLT(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldLT(FieldAggregateData, v))
-}
-
-// AggregateDataLTE applies the LTE predicate on the "aggregate_data" field.
-func AggregateDataLTE(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldLTE(FieldAggregateData, v))
-}
-
-// AggregateDataContains applies the Contains predicate on the "aggregate_data" field.
-func AggregateDataContains(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldContains(FieldAggregateData, v))
-}
-
-// AggregateDataHasPrefix applies the HasPrefix predicate on the "aggregate_data" field.
-func AggregateDataHasPrefix(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldHasPrefix(FieldAggregateData, v))
-}
-
-// AggregateDataHasSuffix applies the HasSuffix predicate on the "aggregate_data" field.
-func AggregateDataHasSuffix(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldHasSuffix(FieldAggregateData, v))
-}
-
 // AggregateDataIsNil applies the IsNil predicate on the "aggregate_data" field.
 func AggregateDataIsNil() predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldIsNull(FieldAggregateData))
@@ -433,16 +373,6 @@ func AggregateDataIsNil() predicate.OrderSnapshots {
 // AggregateDataNotNil applies the NotNil predicate on the "aggregate_data" field.
 func AggregateDataNotNil() predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldNotNull(FieldAggregateData))
-}
-
-// AggregateDataEqualFold applies the EqualFold predicate on the "aggregate_data" field.
-func AggregateDataEqualFold(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldEqualFold(FieldAggregateData, v))
-}
-
-// AggregateDataContainsFold applies the ContainsFold predicate on the "aggregate_data" field.
-func AggregateDataContainsFold(v string) predicate.OrderSnapshots {
-	return predicate.OrderSnapshots(sql.FieldContainsFold(FieldAggregateData, v))
 }
 
 // HasOrder applies the HasEdge predicate on the "order" edge.

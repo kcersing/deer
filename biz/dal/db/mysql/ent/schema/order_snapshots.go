@@ -3,6 +3,7 @@ package schema
 import (
 	"entgo.io/ent/schema/edge"
 	"kcers-order/biz/dal/db/mysql/ent/schema/mixins"
+	"kcers-order/biz/infras/aggregate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
@@ -19,7 +20,7 @@ func (OrderSnapshots) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("aggregate_id").Comment("聚合根ID").Optional(),
 		field.Int64("aggregate_version").Comment("快照版本").Optional(),
-		field.Text("aggregate_data").Comment("快照数据").Optional(),
+		field.JSON("aggregate_data", aggregate.Order{}).Comment("快照数据").Optional(),
 	}
 }
 

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/infras/events"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -136,15 +137,15 @@ func (oec *OrderEventsCreate) SetNillableEventType(s *string) *OrderEventsCreate
 }
 
 // SetEventData sets the "event_data" field.
-func (oec *OrderEventsCreate) SetEventData(s string) *OrderEventsCreate {
-	oec.mutation.SetEventData(s)
+func (oec *OrderEventsCreate) SetEventData(ed events.EventData) *OrderEventsCreate {
+	oec.mutation.SetEventData(ed)
 	return oec
 }
 
 // SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oec *OrderEventsCreate) SetNillableEventData(s *string) *OrderEventsCreate {
-	if s != nil {
-		oec.SetEventData(*s)
+func (oec *OrderEventsCreate) SetNillableEventData(ed *events.EventData) *OrderEventsCreate {
+	if ed != nil {
+		oec.SetEventData(*ed)
 	}
 	return oec
 }
@@ -305,7 +306,7 @@ func (oec *OrderEventsCreate) createSpec() (*OrderEvents, *sqlgraph.CreateSpec) 
 		_node.EventType = value
 	}
 	if value, ok := oec.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeString, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
 		_node.EventData = value
 	}
 	if value, ok := oec.mutation.EventVersion(); ok {
@@ -520,7 +521,7 @@ func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsert) SetEventData(v string) *OrderEventsUpsert {
+func (u *OrderEventsUpsert) SetEventData(v events.EventData) *OrderEventsUpsert {
 	u.Set(orderevents.FieldEventData, v)
 	return u
 }
@@ -774,7 +775,7 @@ func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertOne) SetEventData(v string) *OrderEventsUpsertOne {
+func (u *OrderEventsUpsertOne) SetEventData(v events.EventData) *OrderEventsUpsertOne {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})
@@ -1201,7 +1202,7 @@ func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertBulk) SetEventData(v string) *OrderEventsUpsertBulk {
+func (u *OrderEventsUpsertBulk) SetEventData(v events.EventData) *OrderEventsUpsertBulk {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})

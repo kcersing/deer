@@ -133,11 +133,6 @@ func ByEventType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEventType, opts...).ToFunc()
 }
 
-// ByEventData orders the results by the event_data field.
-func ByEventData(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldEventData, opts...).ToFunc()
-}
-
 // ByEventVersion orders the results by the event_version field.
 func ByEventVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEventVersion, opts...).ToFunc()

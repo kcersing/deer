@@ -9,6 +9,7 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"kcers-order/biz/infras/events"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -176,15 +177,15 @@ func (oeu *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeu *OrderEventsUpdate) SetEventData(s string) *OrderEventsUpdate {
-	oeu.mutation.SetEventData(s)
+func (oeu *OrderEventsUpdate) SetEventData(ed events.EventData) *OrderEventsUpdate {
+	oeu.mutation.SetEventData(ed)
 	return oeu
 }
 
 // SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventData(s *string) *OrderEventsUpdate {
-	if s != nil {
-		oeu.SetEventData(*s)
+func (oeu *OrderEventsUpdate) SetNillableEventData(ed *events.EventData) *OrderEventsUpdate {
+	if ed != nil {
+		oeu.SetEventData(*ed)
 	}
 	return oeu
 }
@@ -343,10 +344,10 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
 	if value, ok := oeu.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeString, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
 	}
 	if oeu.mutation.EventDataCleared() {
-		_spec.ClearField(orderevents.FieldEventData, field.TypeString)
+		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
 	}
 	if value, ok := oeu.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)
@@ -553,15 +554,15 @@ func (oeuo *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeuo *OrderEventsUpdateOne) SetEventData(s string) *OrderEventsUpdateOne {
-	oeuo.mutation.SetEventData(s)
+func (oeuo *OrderEventsUpdateOne) SetEventData(ed events.EventData) *OrderEventsUpdateOne {
+	oeuo.mutation.SetEventData(ed)
 	return oeuo
 }
 
 // SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventData(s *string) *OrderEventsUpdateOne {
-	if s != nil {
-		oeuo.SetEventData(*s)
+func (oeuo *OrderEventsUpdateOne) SetNillableEventData(ed *events.EventData) *OrderEventsUpdateOne {
+	if ed != nil {
+		oeuo.SetEventData(*ed)
 	}
 	return oeuo
 }
@@ -750,10 +751,10 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
 	if value, ok := oeuo.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeString, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
 	}
 	if oeuo.mutation.EventDataCleared() {
-		_spec.ClearField(orderevents.FieldEventData, field.TypeString)
+		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
 	}
 	if value, ok := oeuo.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)

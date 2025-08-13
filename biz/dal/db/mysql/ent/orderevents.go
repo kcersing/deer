@@ -3,9 +3,11 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
+	"kcers-order/biz/infras/events"
 	"strings"
 	"time"
 
@@ -36,7 +38,7 @@ type OrderEvents struct {
 	// 事件类型
 	EventType string `json:"event_type,omitempty"`
 	// 事件数据
-	EventData string `json:"event_data,omitempty"`
+	EventData events.EventData `json:"event_data,omitempty"`
 	// 聚合根版本号
 	EventVersion int64 `json:"event_version,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -70,9 +72,11 @@ func (*OrderEvents) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case orderevents.FieldEventData:
+			values[i] = new([]byte)
 		case orderevents.FieldID, orderevents.FieldDelete, orderevents.FieldCreatedID, orderevents.FieldAggregateID, orderevents.FieldEventVersion:
 			values[i] = new(sql.NullInt64)
-		case orderevents.FieldEventID, orderevents.FieldAggregateType, orderevents.FieldEventType, orderevents.FieldEventData:
+		case orderevents.FieldEventID, orderevents.FieldAggregateType, orderevents.FieldEventType:
 			values[i] = new(sql.NullString)
 		case orderevents.FieldCreatedAt, orderevents.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -146,10 +150,12 @@ func (oe *OrderEvents) assignValues(columns []string, values []any) error {
 				oe.EventType = value.String
 			}
 		case orderevents.FieldEventData:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field event_data", values[i])
-			} else if value.Valid {
-				oe.EventData = value.String
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &oe.EventData); err != nil {
+					return fmt.Errorf("unmarshal field event_data: %w", err)
+				}
 			}
 		case orderevents.FieldEventVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -223,7 +229,7 @@ func (oe *OrderEvents) String() string {
 	builder.WriteString(oe.EventType)
 	builder.WriteString(", ")
 	builder.WriteString("event_data=")
-	builder.WriteString(oe.EventData)
+	builder.WriteString(fmt.Sprintf("%v", oe.EventData))
 	builder.WriteString(", ")
 	builder.WriteString("event_version=")
 	builder.WriteString(fmt.Sprintf("%v", oe.EventVersion))

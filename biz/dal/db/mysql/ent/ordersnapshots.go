@@ -3,9 +3,11 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
+	"kcers-order/biz/infras/aggregate"
 	"strings"
 	"time"
 
@@ -32,7 +34,7 @@ type OrderSnapshots struct {
 	// 快照版本
 	AggregateVersion int64 `json:"aggregate_version,omitempty"`
 	// 快照数据
-	AggregateData string `json:"aggregate_data,omitempty"`
+	AggregateData aggregate.Order `json:"aggregate_data,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderSnapshotsQuery when eager-loading is set.
 	Edges        OrderSnapshotsEdges `json:"edges"`
@@ -64,10 +66,10 @@ func (*OrderSnapshots) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case ordersnapshots.FieldAggregateData:
+			values[i] = new([]byte)
 		case ordersnapshots.FieldID, ordersnapshots.FieldDelete, ordersnapshots.FieldCreatedID, ordersnapshots.FieldAggregateID, ordersnapshots.FieldAggregateVersion:
 			values[i] = new(sql.NullInt64)
-		case ordersnapshots.FieldAggregateData:
-			values[i] = new(sql.NullString)
 		case ordersnapshots.FieldCreatedAt, ordersnapshots.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
@@ -128,10 +130,12 @@ func (os *OrderSnapshots) assignValues(columns []string, values []any) error {
 				os.AggregateVersion = value.Int64
 			}
 		case ordersnapshots.FieldAggregateData:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_data", values[i])
-			} else if value.Valid {
-				os.AggregateData = value.String
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &os.AggregateData); err != nil {
+					return fmt.Errorf("unmarshal field aggregate_data: %w", err)
+				}
 			}
 		default:
 			os.selectValues.Set(columns[i], values[i])
@@ -193,7 +197,7 @@ func (os *OrderSnapshots) String() string {
 	builder.WriteString(fmt.Sprintf("%v", os.AggregateVersion))
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_data=")
-	builder.WriteString(os.AggregateData)
+	builder.WriteString(fmt.Sprintf("%v", os.AggregateData))
 	builder.WriteByte(')')
 	return builder.String()
 }

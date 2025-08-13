@@ -114,11 +114,6 @@ func ByAggregateVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAggregateVersion, opts...).ToFunc()
 }
 
-// ByAggregateData orders the results by the aggregate_data field.
-func ByAggregateData(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAggregateData, opts...).ToFunc()
-}
-
 // ByOrderField orders the results by order field.
 func ByOrderField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {

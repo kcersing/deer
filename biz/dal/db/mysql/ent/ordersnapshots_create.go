@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
+	"kcers-order/biz/infras/aggregate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -108,15 +109,15 @@ func (osc *OrderSnapshotsCreate) SetNillableAggregateVersion(i *int64) *OrderSna
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osc *OrderSnapshotsCreate) SetAggregateData(s string) *OrderSnapshotsCreate {
-	osc.mutation.SetAggregateData(s)
+func (osc *OrderSnapshotsCreate) SetAggregateData(a aggregate.Order) *OrderSnapshotsCreate {
+	osc.mutation.SetAggregateData(a)
 	return osc
 }
 
 // SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableAggregateData(s *string) *OrderSnapshotsCreate {
-	if s != nil {
-		osc.SetAggregateData(*s)
+func (osc *OrderSnapshotsCreate) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsCreate {
+	if a != nil {
+		osc.SetAggregateData(*a)
 	}
 	return osc
 }
@@ -255,7 +256,7 @@ func (osc *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.Create
 		_node.AggregateVersion = value
 	}
 	if value, ok := osc.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeString, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 		_node.AggregateData = value
 	}
 	if nodes := osc.mutation.OrderIDs(); len(nodes) > 0 {
@@ -436,7 +437,7 @@ func (u *OrderSnapshotsUpsert) ClearAggregateVersion() *OrderSnapshotsUpsert {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsert) SetAggregateData(v string) *OrderSnapshotsUpsert {
+func (u *OrderSnapshotsUpsert) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsert {
 	u.Set(ordersnapshots.FieldAggregateData, v)
 	return u
 }
@@ -631,7 +632,7 @@ func (u *OrderSnapshotsUpsertOne) ClearAggregateVersion() *OrderSnapshotsUpsertO
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertOne) SetAggregateData(v string) *OrderSnapshotsUpsertOne {
+func (u *OrderSnapshotsUpsertOne) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsertOne {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})
@@ -995,7 +996,7 @@ func (u *OrderSnapshotsUpsertBulk) ClearAggregateVersion() *OrderSnapshotsUpsert
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v string) *OrderSnapshotsUpsertBulk {
+func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsertBulk {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})

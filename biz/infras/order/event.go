@@ -44,6 +44,7 @@ func NewOrderCreatedEvent(orderID int64, sn string, items []Item, amount float64
 		BaseEvent: BaseEvent{
 			EventID:     uuid.New().String(),
 			AggregateID: orderID,
+			Timestamp:   time.Now(),
 		},
 		OrderSn:     sn,
 		Items:       items,

@@ -101,7 +101,8 @@ type Item struct {
 }
 
 // 领域行为：支付订单
-func (o *Order) Pay(amount float64, method string) error {
+func (o *Order) Paid(amount float64, method string) error {
+
 	event := &PaidEvent{
 		BaseEvent: BaseEvent{
 			EventID:     uuid.New().String(),
