@@ -38,7 +38,7 @@ type OrderEvents struct {
 	// 事件类型
 	EventType string `json:"event_type,omitempty"`
 	// 事件数据
-	EventData events.EventData `json:"event_data,omitempty"`
+	EventData *events.EventData `json:"event_data,omitempty"`
 	// 聚合根版本号
 	EventVersion int64 `json:"event_version,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.

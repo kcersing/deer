@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"kcers-order/biz/dal/db/mysql/ent"
 	"kcers-order/biz/infras/aggregate"
+	"kcers-order/biz/infras/events"
 )
 
 type OrderRepository interface {
@@ -75,9 +76,13 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 		if err != nil {
 			return errors.Wrap(err, "marshal event data failed")
 		}
+
 		ets[i] = tx.OrderEvents.Create().
 			SetEventID("").
-			SetEventData(e)
+			SetEventData(&events.EventData{
+				Type:  e.GetType(),
+				Event: e,
+			})
 	}
 	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
@@ -94,6 +99,16 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 		return errors.Wrap(err, "保存订单快照失败")
 	}
 
+	if err := tx.Commit(); err != nil {
+		return errors.Wrap(err, "提交事务失败")
+	}
+	if err == nil {
+		for _, e := range es {
+			//if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
+			//	klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetID(), err)
+			//}
+		}
+	}
 	return nil
 }
 

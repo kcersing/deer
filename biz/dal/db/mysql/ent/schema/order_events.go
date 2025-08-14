@@ -22,7 +22,7 @@ func (OrderEvents) Fields() []ent.Field {
 		field.Int64("aggregate_id").Comment("聚合根ID").Optional(),
 		field.String("aggregate_type").Comment("聚合根类型").Optional(),
 		field.String("event_type").Comment("事件类型").Optional(),
-		field.JSON("event_data", events.EventData{}).Comment("事件数据").Optional(),
+		field.JSON("event_data", &events.EventData{}).Comment("事件数据").Optional(),
 		field.Int64("event_version").Comment("聚合根版本号").Optional(),
 	}
 }

@@ -36,8 +36,8 @@ func TestOrder(t *testing.T) {
 	//	return
 	//}
 	//// 3. 发布订单创建事件（触发库存扣减等后续操作）
-	//dispatcher := initEventHandlers()
-	//err = dispatcher.Dispatch(ctx, event)
+	dispatcher := initEventHandlers()
+	err = dispatcher.Dispatch(ctx, event)
 	//if err != nil {
 	//	return
 	//}

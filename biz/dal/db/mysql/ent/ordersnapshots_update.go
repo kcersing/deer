@@ -144,16 +144,8 @@ func (osu *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osu *OrderSnapshotsUpdate) SetAggregateData(a aggregate.Order) *OrderSnapshotsUpdate {
+func (osu *OrderSnapshotsUpdate) SetAggregateData(a *aggregate.Order) *OrderSnapshotsUpdate {
 	osu.mutation.SetAggregateData(a)
-	return osu
-}
-
-// SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsUpdate {
-	if a != nil {
-		osu.SetAggregateData(*a)
-	}
 	return osu
 }
 
@@ -443,16 +435,8 @@ func (osuo *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpda
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osuo *OrderSnapshotsUpdateOne) SetAggregateData(a aggregate.Order) *OrderSnapshotsUpdateOne {
+func (osuo *OrderSnapshotsUpdateOne) SetAggregateData(a *aggregate.Order) *OrderSnapshotsUpdateOne {
 	osuo.mutation.SetAggregateData(a)
-	return osuo
-}
-
-// SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsUpdateOne {
-	if a != nil {
-		osuo.SetAggregateData(*a)
-	}
 	return osuo
 }
 

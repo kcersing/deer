@@ -177,16 +177,8 @@ func (oeu *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeu *OrderEventsUpdate) SetEventData(ed events.EventData) *OrderEventsUpdate {
+func (oeu *OrderEventsUpdate) SetEventData(ed *events.EventData) *OrderEventsUpdate {
 	oeu.mutation.SetEventData(ed)
-	return oeu
-}
-
-// SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventData(ed *events.EventData) *OrderEventsUpdate {
-	if ed != nil {
-		oeu.SetEventData(*ed)
-	}
 	return oeu
 }
 
@@ -554,16 +546,8 @@ func (oeuo *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeuo *OrderEventsUpdateOne) SetEventData(ed events.EventData) *OrderEventsUpdateOne {
+func (oeuo *OrderEventsUpdateOne) SetEventData(ed *events.EventData) *OrderEventsUpdateOne {
 	oeuo.mutation.SetEventData(ed)
-	return oeuo
-}
-
-// SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventData(ed *events.EventData) *OrderEventsUpdateOne {
-	if ed != nil {
-		oeuo.SetEventData(*ed)
-	}
 	return oeuo
 }
 

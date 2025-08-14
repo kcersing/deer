@@ -137,16 +137,8 @@ func (oec *OrderEventsCreate) SetNillableEventType(s *string) *OrderEventsCreate
 }
 
 // SetEventData sets the "event_data" field.
-func (oec *OrderEventsCreate) SetEventData(ed events.EventData) *OrderEventsCreate {
+func (oec *OrderEventsCreate) SetEventData(ed *events.EventData) *OrderEventsCreate {
 	oec.mutation.SetEventData(ed)
-	return oec
-}
-
-// SetNillableEventData sets the "event_data" field if the given value is not nil.
-func (oec *OrderEventsCreate) SetNillableEventData(ed *events.EventData) *OrderEventsCreate {
-	if ed != nil {
-		oec.SetEventData(*ed)
-	}
 	return oec
 }
 
@@ -521,7 +513,7 @@ func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsert) SetEventData(v events.EventData) *OrderEventsUpsert {
+func (u *OrderEventsUpsert) SetEventData(v *events.EventData) *OrderEventsUpsert {
 	u.Set(orderevents.FieldEventData, v)
 	return u
 }
@@ -775,7 +767,7 @@ func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertOne) SetEventData(v events.EventData) *OrderEventsUpsertOne {
+func (u *OrderEventsUpsertOne) SetEventData(v *events.EventData) *OrderEventsUpsertOne {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})
@@ -1202,7 +1194,7 @@ func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertBulk) SetEventData(v events.EventData) *OrderEventsUpsertBulk {
+func (u *OrderEventsUpsertBulk) SetEventData(v *events.EventData) *OrderEventsUpsertBulk {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})

@@ -109,16 +109,8 @@ func (osc *OrderSnapshotsCreate) SetNillableAggregateVersion(i *int64) *OrderSna
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osc *OrderSnapshotsCreate) SetAggregateData(a aggregate.Order) *OrderSnapshotsCreate {
+func (osc *OrderSnapshotsCreate) SetAggregateData(a *aggregate.Order) *OrderSnapshotsCreate {
 	osc.mutation.SetAggregateData(a)
-	return osc
-}
-
-// SetNillableAggregateData sets the "aggregate_data" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableAggregateData(a *aggregate.Order) *OrderSnapshotsCreate {
-	if a != nil {
-		osc.SetAggregateData(*a)
-	}
 	return osc
 }
 
@@ -437,7 +429,7 @@ func (u *OrderSnapshotsUpsert) ClearAggregateVersion() *OrderSnapshotsUpsert {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsert) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsert {
+func (u *OrderSnapshotsUpsert) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsert {
 	u.Set(ordersnapshots.FieldAggregateData, v)
 	return u
 }
@@ -632,7 +624,7 @@ func (u *OrderSnapshotsUpsertOne) ClearAggregateVersion() *OrderSnapshotsUpsertO
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertOne) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsertOne {
+func (u *OrderSnapshotsUpsertOne) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsertOne {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})
@@ -996,7 +988,7 @@ func (u *OrderSnapshotsUpsertBulk) ClearAggregateVersion() *OrderSnapshotsUpsert
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v aggregate.Order) *OrderSnapshotsUpsertBulk {
+func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsertBulk {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})
