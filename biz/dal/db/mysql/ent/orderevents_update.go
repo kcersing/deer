@@ -9,7 +9,7 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
-	"kcers-order/biz/infras/events"
+	"kcers-order/biz/infras/common"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -177,8 +177,8 @@ func (oeu *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeu *OrderEventsUpdate) SetEventData(ed *events.EventData) *OrderEventsUpdate {
-	oeu.mutation.SetEventData(ed)
+func (oeu *OrderEventsUpdate) SetEventData(cd *common.EventData) *OrderEventsUpdate {
+	oeu.mutation.SetEventData(cd)
 	return oeu
 }
 
@@ -546,8 +546,8 @@ func (oeuo *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (oeuo *OrderEventsUpdateOne) SetEventData(ed *events.EventData) *OrderEventsUpdateOne {
-	oeuo.mutation.SetEventData(ed)
+func (oeuo *OrderEventsUpdateOne) SetEventData(cd *common.EventData) *OrderEventsUpdateOne {
+	oeuo.mutation.SetEventData(cd)
 	return oeuo
 }
 

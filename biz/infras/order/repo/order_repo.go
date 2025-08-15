@@ -5,8 +5,8 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/biz/infras/aggregate"
-	"kcers-order/biz/infras/events"
+	"kcers-order/biz/infras/common"
+	"kcers-order/biz/infras/order/aggregate"
 )
 
 type OrderRepository interface {
@@ -79,7 +79,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 
 		ets[i] = tx.OrderEvents.Create().
 			SetEventID("").
-			SetEventData(&events.EventData{
+			SetEventData(&common.EventData{
 				Type:  e.GetType(),
 				Event: e,
 			})
@@ -102,13 +102,13 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 	if err := tx.Commit(); err != nil {
 		return errors.Wrap(err, "提交事务失败")
 	}
-	if err == nil {
-		for _, e := range es {
-			//if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
-			//	klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetID(), err)
-			//}
-		}
-	}
+	//if err == nil {
+	//	for _, e := range es {
+	//		if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
+	//			klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetID(), err)
+	//		}
+	//	}
+	//}
 	return nil
 }
 

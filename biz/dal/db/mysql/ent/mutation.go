@@ -13,8 +13,8 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
-	"kcers-order/biz/infras/aggregate"
-	"kcers-order/biz/infras/events"
+	"kcers-order/biz/infras/common"
+	"kcers-order/biz/infras/order/aggregate"
 	"sync"
 	"time"
 
@@ -3037,7 +3037,7 @@ type OrderEventsMutation struct {
 	event_id         *string
 	aggregate_type   *string
 	event_type       *string
-	event_data       **events.EventData
+	event_data       **common.EventData
 	event_version    *int64
 	addevent_version *int64
 	clearedFields    map[string]struct{}
@@ -3587,12 +3587,12 @@ func (m *OrderEventsMutation) ResetEventType() {
 }
 
 // SetEventData sets the "event_data" field.
-func (m *OrderEventsMutation) SetEventData(ed *events.EventData) {
-	m.event_data = &ed
+func (m *OrderEventsMutation) SetEventData(cd *common.EventData) {
+	m.event_data = &cd
 }
 
 // EventData returns the value of the "event_data" field in the mutation.
-func (m *OrderEventsMutation) EventData() (r *events.EventData, exists bool) {
+func (m *OrderEventsMutation) EventData() (r *common.EventData, exists bool) {
 	v := m.event_data
 	if v == nil {
 		return
@@ -3603,7 +3603,7 @@ func (m *OrderEventsMutation) EventData() (r *events.EventData, exists bool) {
 // OldEventData returns the old "event_data" field's value of the OrderEvents entity.
 // If the OrderEvents object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderEventsMutation) OldEventData(ctx context.Context) (v *events.EventData, err error) {
+func (m *OrderEventsMutation) OldEventData(ctx context.Context) (v *common.EventData, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldEventData is only allowed on UpdateOne operations")
 	}
@@ -3933,7 +3933,7 @@ func (m *OrderEventsMutation) SetField(name string, value ent.Value) error {
 		m.SetEventType(v)
 		return nil
 	case orderevents.FieldEventData:
-		v, ok := value.(*events.EventData)
+		v, ok := value.(*common.EventData)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

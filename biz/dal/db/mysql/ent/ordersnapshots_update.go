@@ -9,7 +9,7 @@ import (
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/dal/db/mysql/ent/predicate"
-	"kcers-order/biz/infras/aggregate"
+	"kcers-order/biz/infras/order/aggregate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

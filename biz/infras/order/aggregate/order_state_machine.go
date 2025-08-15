@@ -1,30 +1,29 @@
-package service
+package aggregate
 
 import (
 	"fmt"
-	"kcers-order/biz/infras/aggregate"
-	"kcers-order/biz/infras/events"
-	"kcers-order/biz/infras/states"
+	"kcers-order/biz/infras/common"
+	"kcers-order/biz/infras/status"
 )
 
 // StateMachine 订单状态机
 type StateMachine struct {
-	order *aggregate.Order
+	order *Order
 }
 
-func NewStateMachine(order *aggregate.Order) *StateMachine {
+func NewStateMachine(order *Order) *StateMachine {
 	return &StateMachine{order: order}
 }
 
 // 定义状态转换规则
-var transitions = map[states.OrderStatus][]states.OrderStatus{
-	states.Created: {states.Paid, states.Cancelled},
-	states.Paid:    {states.Shipped, states.Refunded, states.Cancelled},
-	states.Shipped: {states.Completed, states.Refunded},
+var transitions = map[status.OrderStatus][]status.OrderStatus{
+	status.Created: {status.Paid, status.Cancelled},
+	status.Paid:    {status.Shipped, status.Refunded, status.Cancelled},
+	status.Shipped: {status.Completed, status.Refunded},
 }
 
 // Transition 执行状态转换
-func (m *StateMachine) Transition(target states.OrderStatus, event events.Event) error {
+func (m *StateMachine) Transition(target status.OrderStatus, event common.Event) error {
 	m.order.Mu.Lock()
 	current := m.order.Status
 	m.order.Mu.Unlock()
@@ -49,7 +48,7 @@ func (m *StateMachine) Transition(target states.OrderStatus, event events.Event)
 	m.order.Mu.Lock()
 	m.order.Status = target
 	m.order.Version++
-	m.order.Events = append(m.order.Events, event)
+	m.order.UncommittedEvents = append(m.order.UncommittedEvents, event)
 	m.order.Mu.Unlock()
 
 	return nil

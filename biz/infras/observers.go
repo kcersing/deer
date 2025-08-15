@@ -1,16 +1,17 @@
-package order
+package infras
 
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/pkg/errors"
+	"kcers-order/biz/infras/common"
 	"sync"
 	"time"
 )
 
 // EventHandler 事件处理器接口
 type EventHandler interface {
-	Handle(ctx context.Context, event Event) error
+	Handle(ctx context.Context, event common.Event) error
 }
 
 // EventDispatcher 事件分发器
@@ -33,7 +34,7 @@ func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler
 }
 
 // Dispatch 并发分发事件
-func (d *EventDispatcher) Dispatch(ctx context.Context, event Event) error {
+func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) error {
 	d.mu.RLock()
 	handlers, ok := d.handlers[event.GetType()]
 	d.mu.RUnlock()

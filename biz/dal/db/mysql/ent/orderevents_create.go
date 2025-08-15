@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"kcers-order/biz/dal/db/mysql/ent/order"
 	"kcers-order/biz/dal/db/mysql/ent/orderevents"
-	"kcers-order/biz/infras/events"
+	"kcers-order/biz/infras/common"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -137,8 +137,8 @@ func (oec *OrderEventsCreate) SetNillableEventType(s *string) *OrderEventsCreate
 }
 
 // SetEventData sets the "event_data" field.
-func (oec *OrderEventsCreate) SetEventData(ed *events.EventData) *OrderEventsCreate {
-	oec.mutation.SetEventData(ed)
+func (oec *OrderEventsCreate) SetEventData(cd *common.EventData) *OrderEventsCreate {
+	oec.mutation.SetEventData(cd)
 	return oec
 }
 
@@ -513,7 +513,7 @@ func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsert) SetEventData(v *events.EventData) *OrderEventsUpsert {
+func (u *OrderEventsUpsert) SetEventData(v *common.EventData) *OrderEventsUpsert {
 	u.Set(orderevents.FieldEventData, v)
 	return u
 }
@@ -767,7 +767,7 @@ func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertOne) SetEventData(v *events.EventData) *OrderEventsUpsertOne {
+func (u *OrderEventsUpsertOne) SetEventData(v *common.EventData) *OrderEventsUpsertOne {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})
@@ -1194,7 +1194,7 @@ func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertBulk) SetEventData(v *events.EventData) *OrderEventsUpsertBulk {
+func (u *OrderEventsUpsertBulk) SetEventData(v *common.EventData) *OrderEventsUpsertBulk {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})

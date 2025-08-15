@@ -1,6 +1,5 @@
-package states
+package status
 
-// OrderStatus OrderStatus 订单状态
 type OrderStatus string
 
 const (
