@@ -54,10 +54,15 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 		SetStatus(string(order.Status)).
 		OnConflict().
 		UpdateNewValues()
+	klog.Info(orderEnt)
+	err = orderEnt.Exec(o.ctx)
 
-	if order.Id, err = orderEnt.ID(o.ctx); err != nil {
+	klog.Errorf("save order failed: %v", err)
+	if err != nil {
+
 		return errors.Wrap(err, "保存订单失败")
 	}
+	klog.Info(order)
 	items := make([]*ent.OrderItemCreate, 0, len(order.Items))
 	for i, item := range order.Items {
 		items[i] = tx.OrderItem.

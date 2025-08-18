@@ -22,10 +22,10 @@ type Aggregate interface {
 }
 
 type AggregateBase struct {
-	ID          string
-	Type        string
-	AggregateID int64
-	Version     int64
+	ID            string
+	AggregateID   int64
+	AggregateType string
+	Version       int64
 
 	AppliedEvents     []Event //已经应用的事件列表
 	UncommittedEvents []Event //尚未提交的事件列表
@@ -45,10 +45,10 @@ func NewAggregateBase(when when) AggregateBase {
 	}
 }
 
-func (a *AggregateBase) GetID() string         { return a.ID }
-func (a *AggregateBase) GetType() string       { return a.Type }
-func (a *AggregateBase) GetAggregateID() int64 { return a.AggregateID }
-func (a *AggregateBase) GetVersion() int64     { return a.Version }
+func (a *AggregateBase) GetID() string            { return a.ID }
+func (a *AggregateBase) GetAggregateType() string { return a.AggregateType }
+func (a *AggregateBase) GetAggregateID() int64    { return a.AggregateID }
+func (a *AggregateBase) GetVersion() int64        { return a.Version }
 
 func (a *AggregateBase) GetUncommittedEvents() []Event { return a.UncommittedEvents }
 func (a *AggregateBase) ClearUncommittedEvents() {
@@ -58,4 +58,11 @@ func (a *AggregateBase) ClearUncommittedEvents() {
 func (a *AggregateBase) GetAppliedEvents() []Event { return a.AppliedEvents }
 func (a *AggregateBase) SetAppliedEvents(events []Event) {
 	a.AppliedEvents = events
+}
+
+type Item struct {
+	ProductId int64
+	Quantity  int64
+	Price     float64
+	Name      string
 }
