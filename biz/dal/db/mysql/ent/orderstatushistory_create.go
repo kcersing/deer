@@ -24,170 +24,170 @@ type OrderStatusHistoryCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (oshc *OrderStatusHistoryCreate) SetCreatedAt(t time.Time) *OrderStatusHistoryCreate {
-	oshc.mutation.SetCreatedAt(t)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetCreatedAt(v time.Time) *OrderStatusHistoryCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableCreatedAt(t *time.Time) *OrderStatusHistoryCreate {
-	if t != nil {
-		oshc.SetCreatedAt(*t)
+func (_c *OrderStatusHistoryCreate) SetNillableCreatedAt(v *time.Time) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oshc *OrderStatusHistoryCreate) SetUpdatedAt(t time.Time) *OrderStatusHistoryCreate {
-	oshc.mutation.SetUpdatedAt(t)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetUpdatedAt(v time.Time) *OrderStatusHistoryCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableUpdatedAt(t *time.Time) *OrderStatusHistoryCreate {
-	if t != nil {
-		oshc.SetUpdatedAt(*t)
+func (_c *OrderStatusHistoryCreate) SetNillableUpdatedAt(v *time.Time) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetDelete sets the "delete" field.
-func (oshc *OrderStatusHistoryCreate) SetDelete(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetDelete(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetDelete(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetDelete(v)
+	return _c
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableDelete(i *int64) *OrderStatusHistoryCreate {
-	if i != nil {
-		oshc.SetDelete(*i)
+func (_c *OrderStatusHistoryCreate) SetNillableDelete(v *int64) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetDelete(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oshc *OrderStatusHistoryCreate) SetCreatedID(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetCreatedID(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetCreatedID(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetCreatedID(v)
+	return _c
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableCreatedID(i *int64) *OrderStatusHistoryCreate {
-	if i != nil {
-		oshc.SetCreatedID(*i)
+func (_c *OrderStatusHistoryCreate) SetNillableCreatedID(v *int64) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetCreatedID(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetOrderID sets the "order_id" field.
-func (oshc *OrderStatusHistoryCreate) SetOrderID(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetOrderID(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetOrderID(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetOrderID(v)
+	return _c
 }
 
 // SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableOrderID(i *int64) *OrderStatusHistoryCreate {
-	if i != nil {
-		oshc.SetOrderID(*i)
+func (_c *OrderStatusHistoryCreate) SetNillableOrderID(v *int64) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetOrderID(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetOldStatus sets the "old_status" field.
-func (oshc *OrderStatusHistoryCreate) SetOldStatus(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetOldStatus(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetOldStatus(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetOldStatus(v)
+	return _c
 }
 
 // SetNillableOldStatus sets the "old_status" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableOldStatus(i *int64) *OrderStatusHistoryCreate {
-	if i != nil {
-		oshc.SetOldStatus(*i)
+func (_c *OrderStatusHistoryCreate) SetNillableOldStatus(v *int64) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetOldStatus(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetNewStatus sets the "new_status" field.
-func (oshc *OrderStatusHistoryCreate) SetNewStatus(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetNewStatus(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetNewStatus(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetNewStatus(v)
+	return _c
 }
 
 // SetNillableNewStatus sets the "new_status" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableNewStatus(i *int64) *OrderStatusHistoryCreate {
-	if i != nil {
-		oshc.SetNewStatus(*i)
+func (_c *OrderStatusHistoryCreate) SetNillableNewStatus(v *int64) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetNewStatus(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetChangeSource sets the "change_source" field.
-func (oshc *OrderStatusHistoryCreate) SetChangeSource(s string) *OrderStatusHistoryCreate {
-	oshc.mutation.SetChangeSource(s)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetChangeSource(v string) *OrderStatusHistoryCreate {
+	_c.mutation.SetChangeSource(v)
+	return _c
 }
 
 // SetNillableChangeSource sets the "change_source" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableChangeSource(s *string) *OrderStatusHistoryCreate {
-	if s != nil {
-		oshc.SetChangeSource(*s)
+func (_c *OrderStatusHistoryCreate) SetNillableChangeSource(v *string) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetChangeSource(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetChangeReason sets the "change_reason" field.
-func (oshc *OrderStatusHistoryCreate) SetChangeReason(s string) *OrderStatusHistoryCreate {
-	oshc.mutation.SetChangeReason(s)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetChangeReason(v string) *OrderStatusHistoryCreate {
+	_c.mutation.SetChangeReason(v)
+	return _c
 }
 
 // SetNillableChangeReason sets the "change_reason" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableChangeReason(s *string) *OrderStatusHistoryCreate {
-	if s != nil {
-		oshc.SetChangeReason(*s)
+func (_c *OrderStatusHistoryCreate) SetNillableChangeReason(v *string) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetChangeReason(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetChangeAt sets the "change_at" field.
-func (oshc *OrderStatusHistoryCreate) SetChangeAt(t time.Time) *OrderStatusHistoryCreate {
-	oshc.mutation.SetChangeAt(t)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetChangeAt(v time.Time) *OrderStatusHistoryCreate {
+	_c.mutation.SetChangeAt(v)
+	return _c
 }
 
 // SetNillableChangeAt sets the "change_at" field if the given value is not nil.
-func (oshc *OrderStatusHistoryCreate) SetNillableChangeAt(t *time.Time) *OrderStatusHistoryCreate {
-	if t != nil {
-		oshc.SetChangeAt(*t)
+func (_c *OrderStatusHistoryCreate) SetNillableChangeAt(v *time.Time) *OrderStatusHistoryCreate {
+	if v != nil {
+		_c.SetChangeAt(*v)
 	}
-	return oshc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (oshc *OrderStatusHistoryCreate) SetID(i int64) *OrderStatusHistoryCreate {
-	oshc.mutation.SetID(i)
-	return oshc
+func (_c *OrderStatusHistoryCreate) SetID(v int64) *OrderStatusHistoryCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oshc *OrderStatusHistoryCreate) SetOrder(o *Order) *OrderStatusHistoryCreate {
-	return oshc.SetOrderID(o.ID)
+func (_c *OrderStatusHistoryCreate) SetOrder(v *Order) *OrderStatusHistoryCreate {
+	return _c.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderStatusHistoryMutation object of the builder.
-func (oshc *OrderStatusHistoryCreate) Mutation() *OrderStatusHistoryMutation {
-	return oshc.mutation
+func (_c *OrderStatusHistoryCreate) Mutation() *OrderStatusHistoryMutation {
+	return _c.mutation
 }
 
 // Save creates the OrderStatusHistory in the database.
-func (oshc *OrderStatusHistoryCreate) Save(ctx context.Context) (*OrderStatusHistory, error) {
-	oshc.defaults()
-	return withHooks(ctx, oshc.sqlSave, oshc.mutation, oshc.hooks)
+func (_c *OrderStatusHistoryCreate) Save(ctx context.Context) (*OrderStatusHistory, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (oshc *OrderStatusHistoryCreate) SaveX(ctx context.Context) *OrderStatusHistory {
-	v, err := oshc.Save(ctx)
+func (_c *OrderStatusHistoryCreate) SaveX(ctx context.Context) *OrderStatusHistory {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -195,49 +195,49 @@ func (oshc *OrderStatusHistoryCreate) SaveX(ctx context.Context) *OrderStatusHis
 }
 
 // Exec executes the query.
-func (oshc *OrderStatusHistoryCreate) Exec(ctx context.Context) error {
-	_, err := oshc.Save(ctx)
+func (_c *OrderStatusHistoryCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oshc *OrderStatusHistoryCreate) ExecX(ctx context.Context) {
-	if err := oshc.Exec(ctx); err != nil {
+func (_c *OrderStatusHistoryCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oshc *OrderStatusHistoryCreate) defaults() {
-	if _, ok := oshc.mutation.CreatedAt(); !ok {
+func (_c *OrderStatusHistoryCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := orderstatushistory.DefaultCreatedAt()
-		oshc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := oshc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := orderstatushistory.DefaultUpdatedAt()
-		oshc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := oshc.mutation.Delete(); !ok {
+	if _, ok := _c.mutation.Delete(); !ok {
 		v := orderstatushistory.DefaultDelete
-		oshc.mutation.SetDelete(v)
+		_c.mutation.SetDelete(v)
 	}
-	if _, ok := oshc.mutation.CreatedID(); !ok {
+	if _, ok := _c.mutation.CreatedID(); !ok {
 		v := orderstatushistory.DefaultCreatedID
-		oshc.mutation.SetCreatedID(v)
+		_c.mutation.SetCreatedID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (oshc *OrderStatusHistoryCreate) check() error {
+func (_c *OrderStatusHistoryCreate) check() error {
 	return nil
 }
 
-func (oshc *OrderStatusHistoryCreate) sqlSave(ctx context.Context) (*OrderStatusHistory, error) {
-	if err := oshc.check(); err != nil {
+func (_c *OrderStatusHistoryCreate) sqlSave(ctx context.Context) (*OrderStatusHistory, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := oshc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, oshc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -247,58 +247,58 @@ func (oshc *OrderStatusHistoryCreate) sqlSave(ctx context.Context) (*OrderStatus
 		id := _spec.ID.Value.(int64)
 		_node.ID = int64(id)
 	}
-	oshc.mutation.id = &_node.ID
-	oshc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (oshc *OrderStatusHistoryCreate) createSpec() (*OrderStatusHistory, *sqlgraph.CreateSpec) {
+func (_c *OrderStatusHistoryCreate) createSpec() (*OrderStatusHistory, *sqlgraph.CreateSpec) {
 	var (
-		_node = &OrderStatusHistory{config: oshc.config}
+		_node = &OrderStatusHistory{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(orderstatushistory.Table, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = oshc.conflict
-	if id, ok := oshc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := oshc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(orderstatushistory.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := oshc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderstatushistory.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := oshc.mutation.Delete(); ok {
+	if value, ok := _c.mutation.Delete(); ok {
 		_spec.SetField(orderstatushistory.FieldDelete, field.TypeInt64, value)
 		_node.Delete = value
 	}
-	if value, ok := oshc.mutation.CreatedID(); ok {
+	if value, ok := _c.mutation.CreatedID(); ok {
 		_spec.SetField(orderstatushistory.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := oshc.mutation.OldStatus(); ok {
+	if value, ok := _c.mutation.OldStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldOldStatus, field.TypeInt64, value)
 		_node.OldStatus = value
 	}
-	if value, ok := oshc.mutation.NewStatus(); ok {
+	if value, ok := _c.mutation.NewStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldNewStatus, field.TypeInt64, value)
 		_node.NewStatus = value
 	}
-	if value, ok := oshc.mutation.ChangeSource(); ok {
+	if value, ok := _c.mutation.ChangeSource(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeSource, field.TypeString, value)
 		_node.ChangeSource = value
 	}
-	if value, ok := oshc.mutation.ChangeReason(); ok {
+	if value, ok := _c.mutation.ChangeReason(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeReason, field.TypeString, value)
 		_node.ChangeReason = value
 	}
-	if value, ok := oshc.mutation.ChangeAt(); ok {
+	if value, ok := _c.mutation.ChangeAt(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeAt, field.TypeTime, value)
 		_node.ChangeAt = value
 	}
-	if nodes := oshc.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -334,10 +334,10 @@ func (oshc *OrderStatusHistoryCreate) createSpec() (*OrderStatusHistory, *sqlgra
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oshc *OrderStatusHistoryCreate) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertOne {
-	oshc.conflict = opts
+func (_c *OrderStatusHistoryCreate) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertOne {
+	_c.conflict = opts
 	return &OrderStatusHistoryUpsertOne{
-		create: oshc,
+		create: _c,
 	}
 }
 
@@ -347,10 +347,10 @@ func (oshc *OrderStatusHistoryCreate) OnConflict(opts ...sql.ConflictOption) *Or
 //	client.OrderStatusHistory.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oshc *OrderStatusHistoryCreate) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertOne {
-	oshc.conflict = append(oshc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderStatusHistoryCreate) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderStatusHistoryUpsertOne{
-		create: oshc,
+		create: _c,
 	}
 }
 
@@ -863,16 +863,16 @@ type OrderStatusHistoryCreateBulk struct {
 }
 
 // Save creates the OrderStatusHistory entities in the database.
-func (oshcb *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderStatusHistory, error) {
-	if oshcb.err != nil {
-		return nil, oshcb.err
+func (_c *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderStatusHistory, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(oshcb.builders))
-	nodes := make([]*OrderStatusHistory, len(oshcb.builders))
-	mutators := make([]Mutator, len(oshcb.builders))
-	for i := range oshcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*OrderStatusHistory, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := oshcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrderStatusHistoryMutation)
@@ -886,12 +886,12 @@ func (oshcb *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderSt
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, oshcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = oshcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, oshcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -915,7 +915,7 @@ func (oshcb *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderSt
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, oshcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -923,8 +923,8 @@ func (oshcb *OrderStatusHistoryCreateBulk) Save(ctx context.Context) ([]*OrderSt
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oshcb *OrderStatusHistoryCreateBulk) SaveX(ctx context.Context) []*OrderStatusHistory {
-	v, err := oshcb.Save(ctx)
+func (_c *OrderStatusHistoryCreateBulk) SaveX(ctx context.Context) []*OrderStatusHistory {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -932,14 +932,14 @@ func (oshcb *OrderStatusHistoryCreateBulk) SaveX(ctx context.Context) []*OrderSt
 }
 
 // Exec executes the query.
-func (oshcb *OrderStatusHistoryCreateBulk) Exec(ctx context.Context) error {
-	_, err := oshcb.Save(ctx)
+func (_c *OrderStatusHistoryCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oshcb *OrderStatusHistoryCreateBulk) ExecX(ctx context.Context) {
-	if err := oshcb.Exec(ctx); err != nil {
+func (_c *OrderStatusHistoryCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -959,10 +959,10 @@ func (oshcb *OrderStatusHistoryCreateBulk) ExecX(ctx context.Context) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oshcb *OrderStatusHistoryCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertBulk {
-	oshcb.conflict = opts
+func (_c *OrderStatusHistoryCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderStatusHistoryUpsertBulk {
+	_c.conflict = opts
 	return &OrderStatusHistoryUpsertBulk{
-		create: oshcb,
+		create: _c,
 	}
 }
 
@@ -972,10 +972,10 @@ func (oshcb *OrderStatusHistoryCreateBulk) OnConflict(opts ...sql.ConflictOption
 //	client.OrderStatusHistory.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oshcb *OrderStatusHistoryCreateBulk) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertBulk {
-	oshcb.conflict = append(oshcb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderStatusHistoryCreateBulk) OnConflictColumns(columns ...string) *OrderStatusHistoryUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderStatusHistoryUpsertBulk{
-		create: oshcb,
+		create: _c,
 	}
 }
 

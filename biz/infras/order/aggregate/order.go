@@ -2,11 +2,10 @@ package aggregate
 
 import (
 	"fmt"
-	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/infras/common"
-	"kcers-order/biz/infras/order/events"
 	"kcers-order/biz/infras/status"
+	"sync"
 )
 
 const (
@@ -14,7 +13,6 @@ const (
 )
 
 type Order struct {
-	Id int64
 	Sn string
 
 	MemberId  int64
@@ -25,6 +23,8 @@ type Order struct {
 
 	Status       status.OrderStatus
 	stateMachine *StateMachine
+
+	mu sync.RWMutex
 
 	common.AggregateBase
 }
@@ -44,31 +44,29 @@ func NewOrder(sn string, items []common.Item, amount float64, memberId int64, us
 	return order
 }
 
-func (o *Order) When(evt common.Event) error {
+//func (o *Order) when(evt common.Event) error {
+//
+//	switch evt.GetType() {
+//	case string(status.Created):
+//		return o.onCreated(evt)
+//	case string(status.Cancelled):
+//		return o.onCancelled(evt)
+//	case string(status.Completed):
+//		return o.onCompleted(evt)
+//	case string(status.Paid):
+//		return o.onPaid(evt)
+//	case string(status.Refunded):
+//		return o.onRefunded(evt)
+//	case string(status.Shipped):
+//		return o.onShipped(evt)
+//	default:
+//		return common.ErrInvalidType
+//	}
+//}
 
-	klog.Infof("When: %v", evt)
-
-	switch evt.GetType() {
-	case string(status.Created):
-		return o.onCreated(evt)
-	case string(status.Cancelled):
-		return o.onCancelled(evt)
-	case string(status.Completed):
-		return o.onCompleted(evt)
-	case string(status.Paid):
-		return o.onPaid(evt)
-	case string(status.Refunded):
-		return o.onRefunded(evt)
-	case string(status.Shipped):
-		return o.onShipped(evt)
-	default:
-		return common.ErrInvalidType
-	}
-}
-
-func (o *Order) AddEvent(event common.Event) error {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
+func (o *Order) AddUncommittedEvent(event common.Event) error {
+	o.mu.Lock()
+	defer o.mu.Unlock()
 	if event.GetAggregateID() != o.AggregateID {
 		return errors.New("aggregate id not match")
 	}
@@ -82,17 +80,16 @@ func (o *Order) AddEvent(event common.Event) error {
 	o.UncommittedEvents = append(o.UncommittedEvents, event)
 	return nil
 }
-func (o *Order) GetEvents() []common.Event {
-	o.Mu.RLock()
-	defer o.Mu.RUnlock()
+func (o *Order) GetUncommittedEvents() []common.Event {
+	o.mu.RLock()
+	defer o.mu.RUnlock()
 	es := make([]common.Event, len(o.UncommittedEvents))
-	klog.Infof("GetEvents: %v", o.UncommittedEvents)
 	copy(es, o.UncommittedEvents)
 	return es
 }
-func (o *Order) ClearEvents() {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
+func (o *Order) ClearUncommittedEvents() {
+	o.mu.Lock()
+	defer o.mu.Unlock()
 	o.UncommittedEvents = []common.Event{}
 }
 
@@ -114,9 +111,9 @@ var transitions = map[status.OrderStatus][]status.OrderStatus{
 
 // Transition 执行状态转换
 func (m *StateMachine) Transition(target status.OrderStatus, event common.Event) error {
-	m.order.Mu.Lock()
+	m.order.mu.Lock()
 	current := m.order.Status
-	m.order.Mu.Unlock()
+	m.order.mu.Unlock()
 
 	if current == target {
 		return nil // 状态未变更
@@ -135,76 +132,76 @@ func (m *StateMachine) Transition(target status.OrderStatus, event common.Event)
 	}
 
 	// 执行转换
-	m.order.Mu.Lock()
+	m.order.mu.Lock()
 	m.order.Status = target
 	m.order.Version++
 	m.order.UncommittedEvents = append(m.order.UncommittedEvents, event)
-	m.order.Mu.Unlock()
+	m.order.mu.Unlock()
 
 	return nil
 }
 
 func (o *Order) onCreated(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
+	o.mu.Lock()
+	defer o.mu.Unlock()
 
-	if eventData, ok := evt.GetData().Event.(*events.CreatedOrderEvent); ok {
-		o.Id = evt.GetAggregateID()
-		o.Items = eventData.Items
-		o.TotalAmount = eventData.TotalAmount
-		o.MemberId = eventData.MemberId
-		o.CreatedId = eventData.CreatedId
-	}
+	//if eventData, ok := evt.GetData().Event.(*events.CreatedOrderEvent); ok {
+	//	o.Id = evt.GetAggregateID()
+	//	o.Items = eventData.Items
+	//	o.TotalAmount = eventData.TotalAmount
+	//	o.MemberId = eventData.MemberId
+	//	o.CreatedId = eventData.CreatedId
+	//}
 
 	return nil
 }
 func (o *Order) onCancelled(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
-	if eventData, ok := evt.GetData().Event.(*events.CancelledOrderEvent); ok {
-
-		klog.Infof("onCancelled: %v", eventData)
-
-	}
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	//if eventData, ok := evt.GetData().Event.(*events.CancelledOrderEvent); ok {
+	//
+	//	klog.Infof("onCancelled: %v", eventData)
+	//
+	//}
 	return nil
 }
 func (o *Order) onCompleted(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
-	if eventData, ok := evt.GetData().Event.(*events.CompletedOrderEvent); ok {
-
-		klog.Infof("onCompleted: %v", eventData)
-
-	}
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	//if eventData, ok := evt.GetData().Event.(*events.CompletedOrderEvent); ok {
+	//
+	//	klog.Infof("onCompleted: %v", eventData)
+	//
+	//}
 	return nil
 }
 func (o *Order) onPaid(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
-	if eventData, ok := evt.GetData().Event.(*events.PaidOrderEvent); ok {
-
-		klog.Infof("onPaid: %v", eventData)
-
-	}
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	//if eventData, ok := evt.GetData().Event.(*events.PaidOrderEvent); ok {
+	//
+	//	klog.Infof("onPaid: %v", eventData)
+	//
+	//}
 	return nil
 }
 func (o *Order) onRefunded(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
-	if eventData, ok := evt.GetData().Event.(*events.RefundedOrderEvent); ok {
-
-		klog.Infof("onRefunded: %v", eventData)
-
-	}
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	//if eventData, ok := evt.GetData().Event.(*events.RefundedOrderEvent); ok {
+	//
+	//	klog.Infof("onRefunded: %v", eventData)
+	//
+	//}
 	return nil
 }
 func (o *Order) onShipped(evt common.Event) (err error) {
-	o.Mu.Lock()
-	defer o.Mu.Unlock()
-	if eventData, ok := evt.GetData().Event.(*events.ShippedOrderEvent); ok {
-
-		klog.Infof("onShipped: %v", eventData)
-
-	}
+	o.mu.Lock()
+	defer o.mu.Unlock()
+	//if eventData, ok := evt.GetData().Event.(*events.ShippedOrderEvent); ok {
+	//
+	//	klog.Infof("onShipped: %v", eventData)
+	//
+	//}
 	return nil
 }

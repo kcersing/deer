@@ -25,134 +25,134 @@ type OrderSnapshotsCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (osc *OrderSnapshotsCreate) SetCreatedAt(t time.Time) *OrderSnapshotsCreate {
-	osc.mutation.SetCreatedAt(t)
-	return osc
+func (_c *OrderSnapshotsCreate) SetCreatedAt(v time.Time) *OrderSnapshotsCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableCreatedAt(t *time.Time) *OrderSnapshotsCreate {
-	if t != nil {
-		osc.SetCreatedAt(*t)
+func (_c *OrderSnapshotsCreate) SetNillableCreatedAt(v *time.Time) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osc *OrderSnapshotsCreate) SetUpdatedAt(t time.Time) *OrderSnapshotsCreate {
-	osc.mutation.SetUpdatedAt(t)
-	return osc
+func (_c *OrderSnapshotsCreate) SetUpdatedAt(v time.Time) *OrderSnapshotsCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableUpdatedAt(t *time.Time) *OrderSnapshotsCreate {
-	if t != nil {
-		osc.SetUpdatedAt(*t)
+func (_c *OrderSnapshotsCreate) SetNillableUpdatedAt(v *time.Time) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetDelete sets the "delete" field.
-func (osc *OrderSnapshotsCreate) SetDelete(i int64) *OrderSnapshotsCreate {
-	osc.mutation.SetDelete(i)
-	return osc
+func (_c *OrderSnapshotsCreate) SetDelete(v int64) *OrderSnapshotsCreate {
+	_c.mutation.SetDelete(v)
+	return _c
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableDelete(i *int64) *OrderSnapshotsCreate {
-	if i != nil {
-		osc.SetDelete(*i)
+func (_c *OrderSnapshotsCreate) SetNillableDelete(v *int64) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetDelete(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetCreatedID sets the "created_id" field.
-func (osc *OrderSnapshotsCreate) SetCreatedID(i int64) *OrderSnapshotsCreate {
-	osc.mutation.SetCreatedID(i)
-	return osc
+func (_c *OrderSnapshotsCreate) SetCreatedID(v int64) *OrderSnapshotsCreate {
+	_c.mutation.SetCreatedID(v)
+	return _c
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableCreatedID(i *int64) *OrderSnapshotsCreate {
-	if i != nil {
-		osc.SetCreatedID(*i)
+func (_c *OrderSnapshotsCreate) SetNillableCreatedID(v *int64) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetCreatedID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetAggregateID sets the "aggregate_id" field.
-func (osc *OrderSnapshotsCreate) SetAggregateID(i int64) *OrderSnapshotsCreate {
-	osc.mutation.SetAggregateID(i)
-	return osc
+func (_c *OrderSnapshotsCreate) SetAggregateID(v int64) *OrderSnapshotsCreate {
+	_c.mutation.SetAggregateID(v)
+	return _c
 }
 
 // SetNillableAggregateID sets the "aggregate_id" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableAggregateID(i *int64) *OrderSnapshotsCreate {
-	if i != nil {
-		osc.SetAggregateID(*i)
+func (_c *OrderSnapshotsCreate) SetNillableAggregateID(v *int64) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetAggregateID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetAggregateVersion sets the "aggregate_version" field.
-func (osc *OrderSnapshotsCreate) SetAggregateVersion(i int64) *OrderSnapshotsCreate {
-	osc.mutation.SetAggregateVersion(i)
-	return osc
+func (_c *OrderSnapshotsCreate) SetAggregateVersion(v int64) *OrderSnapshotsCreate {
+	_c.mutation.SetAggregateVersion(v)
+	return _c
 }
 
 // SetNillableAggregateVersion sets the "aggregate_version" field if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableAggregateVersion(i *int64) *OrderSnapshotsCreate {
-	if i != nil {
-		osc.SetAggregateVersion(*i)
+func (_c *OrderSnapshotsCreate) SetNillableAggregateVersion(v *int64) *OrderSnapshotsCreate {
+	if v != nil {
+		_c.SetAggregateVersion(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osc *OrderSnapshotsCreate) SetAggregateData(a *aggregate.Order) *OrderSnapshotsCreate {
-	osc.mutation.SetAggregateData(a)
-	return osc
+func (_c *OrderSnapshotsCreate) SetAggregateData(v *aggregate.Order) *OrderSnapshotsCreate {
+	_c.mutation.SetAggregateData(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (osc *OrderSnapshotsCreate) SetID(i int64) *OrderSnapshotsCreate {
-	osc.mutation.SetID(i)
-	return osc
+func (_c *OrderSnapshotsCreate) SetID(v int64) *OrderSnapshotsCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetOrderID sets the "order" edge to the Order entity by ID.
-func (osc *OrderSnapshotsCreate) SetOrderID(id int64) *OrderSnapshotsCreate {
-	osc.mutation.SetOrderID(id)
-	return osc
+func (_c *OrderSnapshotsCreate) SetOrderID(id int64) *OrderSnapshotsCreate {
+	_c.mutation.SetOrderID(id)
+	return _c
 }
 
 // SetNillableOrderID sets the "order" edge to the Order entity by ID if the given value is not nil.
-func (osc *OrderSnapshotsCreate) SetNillableOrderID(id *int64) *OrderSnapshotsCreate {
+func (_c *OrderSnapshotsCreate) SetNillableOrderID(id *int64) *OrderSnapshotsCreate {
 	if id != nil {
-		osc = osc.SetOrderID(*id)
+		_c = _c.SetOrderID(*id)
 	}
-	return osc
+	return _c
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (osc *OrderSnapshotsCreate) SetOrder(o *Order) *OrderSnapshotsCreate {
-	return osc.SetOrderID(o.ID)
+func (_c *OrderSnapshotsCreate) SetOrder(v *Order) *OrderSnapshotsCreate {
+	return _c.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderSnapshotsMutation object of the builder.
-func (osc *OrderSnapshotsCreate) Mutation() *OrderSnapshotsMutation {
-	return osc.mutation
+func (_c *OrderSnapshotsCreate) Mutation() *OrderSnapshotsMutation {
+	return _c.mutation
 }
 
 // Save creates the OrderSnapshots in the database.
-func (osc *OrderSnapshotsCreate) Save(ctx context.Context) (*OrderSnapshots, error) {
-	osc.defaults()
-	return withHooks(ctx, osc.sqlSave, osc.mutation, osc.hooks)
+func (_c *OrderSnapshotsCreate) Save(ctx context.Context) (*OrderSnapshots, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (osc *OrderSnapshotsCreate) SaveX(ctx context.Context) *OrderSnapshots {
-	v, err := osc.Save(ctx)
+func (_c *OrderSnapshotsCreate) SaveX(ctx context.Context) *OrderSnapshots {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -160,49 +160,49 @@ func (osc *OrderSnapshotsCreate) SaveX(ctx context.Context) *OrderSnapshots {
 }
 
 // Exec executes the query.
-func (osc *OrderSnapshotsCreate) Exec(ctx context.Context) error {
-	_, err := osc.Save(ctx)
+func (_c *OrderSnapshotsCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osc *OrderSnapshotsCreate) ExecX(ctx context.Context) {
-	if err := osc.Exec(ctx); err != nil {
+func (_c *OrderSnapshotsCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osc *OrderSnapshotsCreate) defaults() {
-	if _, ok := osc.mutation.CreatedAt(); !ok {
+func (_c *OrderSnapshotsCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := ordersnapshots.DefaultCreatedAt()
-		osc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := osc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := ordersnapshots.DefaultUpdatedAt()
-		osc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := osc.mutation.Delete(); !ok {
+	if _, ok := _c.mutation.Delete(); !ok {
 		v := ordersnapshots.DefaultDelete
-		osc.mutation.SetDelete(v)
+		_c.mutation.SetDelete(v)
 	}
-	if _, ok := osc.mutation.CreatedID(); !ok {
+	if _, ok := _c.mutation.CreatedID(); !ok {
 		v := ordersnapshots.DefaultCreatedID
-		osc.mutation.SetCreatedID(v)
+		_c.mutation.SetCreatedID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (osc *OrderSnapshotsCreate) check() error {
+func (_c *OrderSnapshotsCreate) check() error {
 	return nil
 }
 
-func (osc *OrderSnapshotsCreate) sqlSave(ctx context.Context) (*OrderSnapshots, error) {
-	if err := osc.check(); err != nil {
+func (_c *OrderSnapshotsCreate) sqlSave(ctx context.Context) (*OrderSnapshots, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := osc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, osc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -212,46 +212,46 @@ func (osc *OrderSnapshotsCreate) sqlSave(ctx context.Context) (*OrderSnapshots, 
 		id := _spec.ID.Value.(int64)
 		_node.ID = int64(id)
 	}
-	osc.mutation.id = &_node.ID
-	osc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (osc *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.CreateSpec) {
+func (_c *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.CreateSpec) {
 	var (
-		_node = &OrderSnapshots{config: osc.config}
+		_node = &OrderSnapshots{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(ordersnapshots.Table, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = osc.conflict
-	if id, ok := osc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := osc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(ordersnapshots.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := osc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordersnapshots.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := osc.mutation.Delete(); ok {
+	if value, ok := _c.mutation.Delete(); ok {
 		_spec.SetField(ordersnapshots.FieldDelete, field.TypeInt64, value)
 		_node.Delete = value
 	}
-	if value, ok := osc.mutation.CreatedID(); ok {
+	if value, ok := _c.mutation.CreatedID(); ok {
 		_spec.SetField(ordersnapshots.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := osc.mutation.AggregateVersion(); ok {
+	if value, ok := _c.mutation.AggregateVersion(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateVersion, field.TypeInt64, value)
 		_node.AggregateVersion = value
 	}
-	if value, ok := osc.mutation.AggregateData(); ok {
+	if value, ok := _c.mutation.AggregateData(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 		_node.AggregateData = value
 	}
-	if nodes := osc.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -287,10 +287,10 @@ func (osc *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.Create
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (osc *OrderSnapshotsCreate) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertOne {
-	osc.conflict = opts
+func (_c *OrderSnapshotsCreate) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertOne {
+	_c.conflict = opts
 	return &OrderSnapshotsUpsertOne{
-		create: osc,
+		create: _c,
 	}
 }
 
@@ -300,10 +300,10 @@ func (osc *OrderSnapshotsCreate) OnConflict(opts ...sql.ConflictOption) *OrderSn
 //	client.OrderSnapshots.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (osc *OrderSnapshotsCreate) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertOne {
-	osc.conflict = append(osc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderSnapshotsCreate) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderSnapshotsUpsertOne{
-		create: osc,
+		create: _c,
 	}
 }
 
@@ -686,16 +686,16 @@ type OrderSnapshotsCreateBulk struct {
 }
 
 // Save creates the OrderSnapshots entities in the database.
-func (oscb *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapshots, error) {
-	if oscb.err != nil {
-		return nil, oscb.err
+func (_c *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapshots, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(oscb.builders))
-	nodes := make([]*OrderSnapshots, len(oscb.builders))
-	mutators := make([]Mutator, len(oscb.builders))
-	for i := range oscb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*OrderSnapshots, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := oscb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrderSnapshotsMutation)
@@ -709,12 +709,12 @@ func (oscb *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapsho
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, oscb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = oscb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, oscb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -738,7 +738,7 @@ func (oscb *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapsho
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, oscb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -746,8 +746,8 @@ func (oscb *OrderSnapshotsCreateBulk) Save(ctx context.Context) ([]*OrderSnapsho
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oscb *OrderSnapshotsCreateBulk) SaveX(ctx context.Context) []*OrderSnapshots {
-	v, err := oscb.Save(ctx)
+func (_c *OrderSnapshotsCreateBulk) SaveX(ctx context.Context) []*OrderSnapshots {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -755,14 +755,14 @@ func (oscb *OrderSnapshotsCreateBulk) SaveX(ctx context.Context) []*OrderSnapsho
 }
 
 // Exec executes the query.
-func (oscb *OrderSnapshotsCreateBulk) Exec(ctx context.Context) error {
-	_, err := oscb.Save(ctx)
+func (_c *OrderSnapshotsCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oscb *OrderSnapshotsCreateBulk) ExecX(ctx context.Context) {
-	if err := oscb.Exec(ctx); err != nil {
+func (_c *OrderSnapshotsCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -782,10 +782,10 @@ func (oscb *OrderSnapshotsCreateBulk) ExecX(ctx context.Context) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oscb *OrderSnapshotsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertBulk {
-	oscb.conflict = opts
+func (_c *OrderSnapshotsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderSnapshotsUpsertBulk {
+	_c.conflict = opts
 	return &OrderSnapshotsUpsertBulk{
-		create: oscb,
+		create: _c,
 	}
 }
 
@@ -795,10 +795,10 @@ func (oscb *OrderSnapshotsCreateBulk) OnConflict(opts ...sql.ConflictOption) *Or
 //	client.OrderSnapshots.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oscb *OrderSnapshotsCreateBulk) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertBulk {
-	oscb.conflict = append(oscb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderSnapshotsCreateBulk) OnConflictColumns(columns ...string) *OrderSnapshotsUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderSnapshotsUpsertBulk{
-		create: oscb,
+		create: _c,
 	}
 }
 

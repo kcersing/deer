@@ -24,223 +24,223 @@ type OrderItemUpdate struct {
 }
 
 // Where appends a list predicates to the OrderItemUpdate builder.
-func (oiu *OrderItemUpdate) Where(ps ...predicate.OrderItem) *OrderItemUpdate {
-	oiu.mutation.Where(ps...)
-	return oiu
+func (_u *OrderItemUpdate) Where(ps ...predicate.OrderItem) *OrderItemUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oiu *OrderItemUpdate) SetUpdatedAt(t time.Time) *OrderItemUpdate {
-	oiu.mutation.SetUpdatedAt(t)
-	return oiu
+func (_u *OrderItemUpdate) SetUpdatedAt(v time.Time) *OrderItemUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oiu *OrderItemUpdate) ClearUpdatedAt() *OrderItemUpdate {
-	oiu.mutation.ClearUpdatedAt()
-	return oiu
+func (_u *OrderItemUpdate) ClearUpdatedAt() *OrderItemUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oiu *OrderItemUpdate) SetDelete(i int64) *OrderItemUpdate {
-	oiu.mutation.ResetDelete()
-	oiu.mutation.SetDelete(i)
-	return oiu
+func (_u *OrderItemUpdate) SetDelete(v int64) *OrderItemUpdate {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableDelete(i *int64) *OrderItemUpdate {
-	if i != nil {
-		oiu.SetDelete(*i)
+func (_u *OrderItemUpdate) SetNillableDelete(v *int64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oiu
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oiu *OrderItemUpdate) AddDelete(i int64) *OrderItemUpdate {
-	oiu.mutation.AddDelete(i)
-	return oiu
+// AddDelete adds value to the "delete" field.
+func (_u *OrderItemUpdate) AddDelete(v int64) *OrderItemUpdate {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oiu *OrderItemUpdate) ClearDelete() *OrderItemUpdate {
-	oiu.mutation.ClearDelete()
-	return oiu
+func (_u *OrderItemUpdate) ClearDelete() *OrderItemUpdate {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oiu *OrderItemUpdate) SetCreatedID(i int64) *OrderItemUpdate {
-	oiu.mutation.ResetCreatedID()
-	oiu.mutation.SetCreatedID(i)
-	return oiu
+func (_u *OrderItemUpdate) SetCreatedID(v int64) *OrderItemUpdate {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableCreatedID(i *int64) *OrderItemUpdate {
-	if i != nil {
-		oiu.SetCreatedID(*i)
+func (_u *OrderItemUpdate) SetNillableCreatedID(v *int64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oiu
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oiu *OrderItemUpdate) AddCreatedID(i int64) *OrderItemUpdate {
-	oiu.mutation.AddCreatedID(i)
-	return oiu
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderItemUpdate) AddCreatedID(v int64) *OrderItemUpdate {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oiu *OrderItemUpdate) ClearCreatedID() *OrderItemUpdate {
-	oiu.mutation.ClearCreatedID()
-	return oiu
+func (_u *OrderItemUpdate) ClearCreatedID() *OrderItemUpdate {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetOrderID sets the "order_id" field.
-func (oiu *OrderItemUpdate) SetOrderID(i int64) *OrderItemUpdate {
-	oiu.mutation.SetOrderID(i)
-	return oiu
+func (_u *OrderItemUpdate) SetOrderID(v int64) *OrderItemUpdate {
+	_u.mutation.SetOrderID(v)
+	return _u
 }
 
 // SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableOrderID(i *int64) *OrderItemUpdate {
-	if i != nil {
-		oiu.SetOrderID(*i)
+func (_u *OrderItemUpdate) SetNillableOrderID(v *int64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetOrderID(*v)
 	}
-	return oiu
+	return _u
 }
 
 // ClearOrderID clears the value of the "order_id" field.
-func (oiu *OrderItemUpdate) ClearOrderID() *OrderItemUpdate {
-	oiu.mutation.ClearOrderID()
-	return oiu
+func (_u *OrderItemUpdate) ClearOrderID() *OrderItemUpdate {
+	_u.mutation.ClearOrderID()
+	return _u
 }
 
 // SetProductID sets the "product_id" field.
-func (oiu *OrderItemUpdate) SetProductID(i int64) *OrderItemUpdate {
-	oiu.mutation.ResetProductID()
-	oiu.mutation.SetProductID(i)
-	return oiu
+func (_u *OrderItemUpdate) SetProductID(v int64) *OrderItemUpdate {
+	_u.mutation.ResetProductID()
+	_u.mutation.SetProductID(v)
+	return _u
 }
 
 // SetNillableProductID sets the "product_id" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableProductID(i *int64) *OrderItemUpdate {
-	if i != nil {
-		oiu.SetProductID(*i)
+func (_u *OrderItemUpdate) SetNillableProductID(v *int64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetProductID(*v)
 	}
-	return oiu
+	return _u
 }
 
-// AddProductID adds i to the "product_id" field.
-func (oiu *OrderItemUpdate) AddProductID(i int64) *OrderItemUpdate {
-	oiu.mutation.AddProductID(i)
-	return oiu
+// AddProductID adds value to the "product_id" field.
+func (_u *OrderItemUpdate) AddProductID(v int64) *OrderItemUpdate {
+	_u.mutation.AddProductID(v)
+	return _u
 }
 
 // ClearProductID clears the value of the "product_id" field.
-func (oiu *OrderItemUpdate) ClearProductID() *OrderItemUpdate {
-	oiu.mutation.ClearProductID()
-	return oiu
+func (_u *OrderItemUpdate) ClearProductID() *OrderItemUpdate {
+	_u.mutation.ClearProductID()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (oiu *OrderItemUpdate) SetName(s string) *OrderItemUpdate {
-	oiu.mutation.SetName(s)
-	return oiu
+func (_u *OrderItemUpdate) SetName(v string) *OrderItemUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableName(s *string) *OrderItemUpdate {
-	if s != nil {
-		oiu.SetName(*s)
+func (_u *OrderItemUpdate) SetNillableName(v *string) *OrderItemUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return oiu
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (oiu *OrderItemUpdate) ClearName() *OrderItemUpdate {
-	oiu.mutation.ClearName()
-	return oiu
+func (_u *OrderItemUpdate) ClearName() *OrderItemUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetUnitPrice sets the "unit_price" field.
-func (oiu *OrderItemUpdate) SetUnitPrice(f float64) *OrderItemUpdate {
-	oiu.mutation.ResetUnitPrice()
-	oiu.mutation.SetUnitPrice(f)
-	return oiu
+func (_u *OrderItemUpdate) SetUnitPrice(v float64) *OrderItemUpdate {
+	_u.mutation.ResetUnitPrice()
+	_u.mutation.SetUnitPrice(v)
+	return _u
 }
 
 // SetNillableUnitPrice sets the "unit_price" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableUnitPrice(f *float64) *OrderItemUpdate {
-	if f != nil {
-		oiu.SetUnitPrice(*f)
+func (_u *OrderItemUpdate) SetNillableUnitPrice(v *float64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetUnitPrice(*v)
 	}
-	return oiu
+	return _u
 }
 
-// AddUnitPrice adds f to the "unit_price" field.
-func (oiu *OrderItemUpdate) AddUnitPrice(f float64) *OrderItemUpdate {
-	oiu.mutation.AddUnitPrice(f)
-	return oiu
+// AddUnitPrice adds value to the "unit_price" field.
+func (_u *OrderItemUpdate) AddUnitPrice(v float64) *OrderItemUpdate {
+	_u.mutation.AddUnitPrice(v)
+	return _u
 }
 
 // ClearUnitPrice clears the value of the "unit_price" field.
-func (oiu *OrderItemUpdate) ClearUnitPrice() *OrderItemUpdate {
-	oiu.mutation.ClearUnitPrice()
-	return oiu
+func (_u *OrderItemUpdate) ClearUnitPrice() *OrderItemUpdate {
+	_u.mutation.ClearUnitPrice()
+	return _u
 }
 
 // SetQuantity sets the "quantity" field.
-func (oiu *OrderItemUpdate) SetQuantity(i int64) *OrderItemUpdate {
-	oiu.mutation.ResetQuantity()
-	oiu.mutation.SetQuantity(i)
-	return oiu
+func (_u *OrderItemUpdate) SetQuantity(v int64) *OrderItemUpdate {
+	_u.mutation.ResetQuantity()
+	_u.mutation.SetQuantity(v)
+	return _u
 }
 
 // SetNillableQuantity sets the "quantity" field if the given value is not nil.
-func (oiu *OrderItemUpdate) SetNillableQuantity(i *int64) *OrderItemUpdate {
-	if i != nil {
-		oiu.SetQuantity(*i)
+func (_u *OrderItemUpdate) SetNillableQuantity(v *int64) *OrderItemUpdate {
+	if v != nil {
+		_u.SetQuantity(*v)
 	}
-	return oiu
+	return _u
 }
 
-// AddQuantity adds i to the "quantity" field.
-func (oiu *OrderItemUpdate) AddQuantity(i int64) *OrderItemUpdate {
-	oiu.mutation.AddQuantity(i)
-	return oiu
+// AddQuantity adds value to the "quantity" field.
+func (_u *OrderItemUpdate) AddQuantity(v int64) *OrderItemUpdate {
+	_u.mutation.AddQuantity(v)
+	return _u
 }
 
 // ClearQuantity clears the value of the "quantity" field.
-func (oiu *OrderItemUpdate) ClearQuantity() *OrderItemUpdate {
-	oiu.mutation.ClearQuantity()
-	return oiu
+func (_u *OrderItemUpdate) ClearQuantity() *OrderItemUpdate {
+	_u.mutation.ClearQuantity()
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oiu *OrderItemUpdate) SetOrder(o *Order) *OrderItemUpdate {
-	return oiu.SetOrderID(o.ID)
+func (_u *OrderItemUpdate) SetOrder(v *Order) *OrderItemUpdate {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderItemMutation object of the builder.
-func (oiu *OrderItemUpdate) Mutation() *OrderItemMutation {
-	return oiu.mutation
+func (_u *OrderItemUpdate) Mutation() *OrderItemMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oiu *OrderItemUpdate) ClearOrder() *OrderItemUpdate {
-	oiu.mutation.ClearOrder()
-	return oiu
+func (_u *OrderItemUpdate) ClearOrder() *OrderItemUpdate {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (oiu *OrderItemUpdate) Save(ctx context.Context) (int, error) {
-	oiu.defaults()
-	return withHooks(ctx, oiu.sqlSave, oiu.mutation, oiu.hooks)
+func (_u *OrderItemUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oiu *OrderItemUpdate) SaveX(ctx context.Context) int {
-	affected, err := oiu.Save(ctx)
+func (_u *OrderItemUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -248,96 +248,96 @@ func (oiu *OrderItemUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (oiu *OrderItemUpdate) Exec(ctx context.Context) error {
-	_, err := oiu.Save(ctx)
+func (_u *OrderItemUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oiu *OrderItemUpdate) ExecX(ctx context.Context) {
-	if err := oiu.Exec(ctx); err != nil {
+func (_u *OrderItemUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oiu *OrderItemUpdate) defaults() {
-	if _, ok := oiu.mutation.UpdatedAt(); !ok && !oiu.mutation.UpdatedAtCleared() {
+func (_u *OrderItemUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderitem.UpdateDefaultUpdatedAt()
-		oiu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oiu *OrderItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (_u *OrderItemUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderitem.Table, orderitem.Columns, sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64))
-	if ps := oiu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oiu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderitem.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oiu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderitem.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oiu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderitem.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oiu.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderitem.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oiu.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderitem.FieldDelete, field.TypeInt64, value)
 	}
-	if oiu.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderitem.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oiu.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderitem.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oiu.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderitem.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oiu.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderitem.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oiu.mutation.ProductID(); ok {
+	if value, ok := _u.mutation.ProductID(); ok {
 		_spec.SetField(orderitem.FieldProductID, field.TypeInt64, value)
 	}
-	if value, ok := oiu.mutation.AddedProductID(); ok {
+	if value, ok := _u.mutation.AddedProductID(); ok {
 		_spec.AddField(orderitem.FieldProductID, field.TypeInt64, value)
 	}
-	if oiu.mutation.ProductIDCleared() {
+	if _u.mutation.ProductIDCleared() {
 		_spec.ClearField(orderitem.FieldProductID, field.TypeInt64)
 	}
-	if value, ok := oiu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(orderitem.FieldName, field.TypeString, value)
 	}
-	if oiu.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(orderitem.FieldName, field.TypeString)
 	}
-	if value, ok := oiu.mutation.UnitPrice(); ok {
+	if value, ok := _u.mutation.UnitPrice(); ok {
 		_spec.SetField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
 	}
-	if value, ok := oiu.mutation.AddedUnitPrice(); ok {
+	if value, ok := _u.mutation.AddedUnitPrice(); ok {
 		_spec.AddField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
 	}
-	if oiu.mutation.UnitPriceCleared() {
+	if _u.mutation.UnitPriceCleared() {
 		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeFloat64)
 	}
-	if value, ok := oiu.mutation.Quantity(); ok {
+	if value, ok := _u.mutation.Quantity(); ok {
 		_spec.SetField(orderitem.FieldQuantity, field.TypeInt64, value)
 	}
-	if value, ok := oiu.mutation.AddedQuantity(); ok {
+	if value, ok := _u.mutation.AddedQuantity(); ok {
 		_spec.AddField(orderitem.FieldQuantity, field.TypeInt64, value)
 	}
-	if oiu.mutation.QuantityCleared() {
+	if _u.mutation.QuantityCleared() {
 		_spec.ClearField(orderitem.FieldQuantity, field.TypeInt64)
 	}
-	if oiu.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -350,7 +350,7 @@ func (oiu *OrderItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oiu.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -366,7 +366,7 @@ func (oiu *OrderItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, oiu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderitem.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -374,8 +374,8 @@ func (oiu *OrderItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	oiu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrderItemUpdateOne is the builder for updating a single OrderItem entity.
@@ -387,230 +387,230 @@ type OrderItemUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oiuo *OrderItemUpdateOne) SetUpdatedAt(t time.Time) *OrderItemUpdateOne {
-	oiuo.mutation.SetUpdatedAt(t)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetUpdatedAt(v time.Time) *OrderItemUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oiuo *OrderItemUpdateOne) ClearUpdatedAt() *OrderItemUpdateOne {
-	oiuo.mutation.ClearUpdatedAt()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearUpdatedAt() *OrderItemUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oiuo *OrderItemUpdateOne) SetDelete(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.ResetDelete()
-	oiuo.mutation.SetDelete(i)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetDelete(v int64) *OrderItemUpdateOne {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableDelete(i *int64) *OrderItemUpdateOne {
-	if i != nil {
-		oiuo.SetDelete(*i)
+func (_u *OrderItemUpdateOne) SetNillableDelete(v *int64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oiuo
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oiuo *OrderItemUpdateOne) AddDelete(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.AddDelete(i)
-	return oiuo
+// AddDelete adds value to the "delete" field.
+func (_u *OrderItemUpdateOne) AddDelete(v int64) *OrderItemUpdateOne {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oiuo *OrderItemUpdateOne) ClearDelete() *OrderItemUpdateOne {
-	oiuo.mutation.ClearDelete()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearDelete() *OrderItemUpdateOne {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oiuo *OrderItemUpdateOne) SetCreatedID(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.ResetCreatedID()
-	oiuo.mutation.SetCreatedID(i)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetCreatedID(v int64) *OrderItemUpdateOne {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableCreatedID(i *int64) *OrderItemUpdateOne {
-	if i != nil {
-		oiuo.SetCreatedID(*i)
+func (_u *OrderItemUpdateOne) SetNillableCreatedID(v *int64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oiuo
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oiuo *OrderItemUpdateOne) AddCreatedID(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.AddCreatedID(i)
-	return oiuo
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderItemUpdateOne) AddCreatedID(v int64) *OrderItemUpdateOne {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oiuo *OrderItemUpdateOne) ClearCreatedID() *OrderItemUpdateOne {
-	oiuo.mutation.ClearCreatedID()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearCreatedID() *OrderItemUpdateOne {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetOrderID sets the "order_id" field.
-func (oiuo *OrderItemUpdateOne) SetOrderID(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.SetOrderID(i)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetOrderID(v int64) *OrderItemUpdateOne {
+	_u.mutation.SetOrderID(v)
+	return _u
 }
 
 // SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableOrderID(i *int64) *OrderItemUpdateOne {
-	if i != nil {
-		oiuo.SetOrderID(*i)
+func (_u *OrderItemUpdateOne) SetNillableOrderID(v *int64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetOrderID(*v)
 	}
-	return oiuo
+	return _u
 }
 
 // ClearOrderID clears the value of the "order_id" field.
-func (oiuo *OrderItemUpdateOne) ClearOrderID() *OrderItemUpdateOne {
-	oiuo.mutation.ClearOrderID()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearOrderID() *OrderItemUpdateOne {
+	_u.mutation.ClearOrderID()
+	return _u
 }
 
 // SetProductID sets the "product_id" field.
-func (oiuo *OrderItemUpdateOne) SetProductID(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.ResetProductID()
-	oiuo.mutation.SetProductID(i)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetProductID(v int64) *OrderItemUpdateOne {
+	_u.mutation.ResetProductID()
+	_u.mutation.SetProductID(v)
+	return _u
 }
 
 // SetNillableProductID sets the "product_id" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableProductID(i *int64) *OrderItemUpdateOne {
-	if i != nil {
-		oiuo.SetProductID(*i)
+func (_u *OrderItemUpdateOne) SetNillableProductID(v *int64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetProductID(*v)
 	}
-	return oiuo
+	return _u
 }
 
-// AddProductID adds i to the "product_id" field.
-func (oiuo *OrderItemUpdateOne) AddProductID(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.AddProductID(i)
-	return oiuo
+// AddProductID adds value to the "product_id" field.
+func (_u *OrderItemUpdateOne) AddProductID(v int64) *OrderItemUpdateOne {
+	_u.mutation.AddProductID(v)
+	return _u
 }
 
 // ClearProductID clears the value of the "product_id" field.
-func (oiuo *OrderItemUpdateOne) ClearProductID() *OrderItemUpdateOne {
-	oiuo.mutation.ClearProductID()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearProductID() *OrderItemUpdateOne {
+	_u.mutation.ClearProductID()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (oiuo *OrderItemUpdateOne) SetName(s string) *OrderItemUpdateOne {
-	oiuo.mutation.SetName(s)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetName(v string) *OrderItemUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableName(s *string) *OrderItemUpdateOne {
-	if s != nil {
-		oiuo.SetName(*s)
+func (_u *OrderItemUpdateOne) SetNillableName(v *string) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return oiuo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (oiuo *OrderItemUpdateOne) ClearName() *OrderItemUpdateOne {
-	oiuo.mutation.ClearName()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearName() *OrderItemUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetUnitPrice sets the "unit_price" field.
-func (oiuo *OrderItemUpdateOne) SetUnitPrice(f float64) *OrderItemUpdateOne {
-	oiuo.mutation.ResetUnitPrice()
-	oiuo.mutation.SetUnitPrice(f)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetUnitPrice(v float64) *OrderItemUpdateOne {
+	_u.mutation.ResetUnitPrice()
+	_u.mutation.SetUnitPrice(v)
+	return _u
 }
 
 // SetNillableUnitPrice sets the "unit_price" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableUnitPrice(f *float64) *OrderItemUpdateOne {
-	if f != nil {
-		oiuo.SetUnitPrice(*f)
+func (_u *OrderItemUpdateOne) SetNillableUnitPrice(v *float64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetUnitPrice(*v)
 	}
-	return oiuo
+	return _u
 }
 
-// AddUnitPrice adds f to the "unit_price" field.
-func (oiuo *OrderItemUpdateOne) AddUnitPrice(f float64) *OrderItemUpdateOne {
-	oiuo.mutation.AddUnitPrice(f)
-	return oiuo
+// AddUnitPrice adds value to the "unit_price" field.
+func (_u *OrderItemUpdateOne) AddUnitPrice(v float64) *OrderItemUpdateOne {
+	_u.mutation.AddUnitPrice(v)
+	return _u
 }
 
 // ClearUnitPrice clears the value of the "unit_price" field.
-func (oiuo *OrderItemUpdateOne) ClearUnitPrice() *OrderItemUpdateOne {
-	oiuo.mutation.ClearUnitPrice()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearUnitPrice() *OrderItemUpdateOne {
+	_u.mutation.ClearUnitPrice()
+	return _u
 }
 
 // SetQuantity sets the "quantity" field.
-func (oiuo *OrderItemUpdateOne) SetQuantity(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.ResetQuantity()
-	oiuo.mutation.SetQuantity(i)
-	return oiuo
+func (_u *OrderItemUpdateOne) SetQuantity(v int64) *OrderItemUpdateOne {
+	_u.mutation.ResetQuantity()
+	_u.mutation.SetQuantity(v)
+	return _u
 }
 
 // SetNillableQuantity sets the "quantity" field if the given value is not nil.
-func (oiuo *OrderItemUpdateOne) SetNillableQuantity(i *int64) *OrderItemUpdateOne {
-	if i != nil {
-		oiuo.SetQuantity(*i)
+func (_u *OrderItemUpdateOne) SetNillableQuantity(v *int64) *OrderItemUpdateOne {
+	if v != nil {
+		_u.SetQuantity(*v)
 	}
-	return oiuo
+	return _u
 }
 
-// AddQuantity adds i to the "quantity" field.
-func (oiuo *OrderItemUpdateOne) AddQuantity(i int64) *OrderItemUpdateOne {
-	oiuo.mutation.AddQuantity(i)
-	return oiuo
+// AddQuantity adds value to the "quantity" field.
+func (_u *OrderItemUpdateOne) AddQuantity(v int64) *OrderItemUpdateOne {
+	_u.mutation.AddQuantity(v)
+	return _u
 }
 
 // ClearQuantity clears the value of the "quantity" field.
-func (oiuo *OrderItemUpdateOne) ClearQuantity() *OrderItemUpdateOne {
-	oiuo.mutation.ClearQuantity()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearQuantity() *OrderItemUpdateOne {
+	_u.mutation.ClearQuantity()
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oiuo *OrderItemUpdateOne) SetOrder(o *Order) *OrderItemUpdateOne {
-	return oiuo.SetOrderID(o.ID)
+func (_u *OrderItemUpdateOne) SetOrder(v *Order) *OrderItemUpdateOne {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderItemMutation object of the builder.
-func (oiuo *OrderItemUpdateOne) Mutation() *OrderItemMutation {
-	return oiuo.mutation
+func (_u *OrderItemUpdateOne) Mutation() *OrderItemMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oiuo *OrderItemUpdateOne) ClearOrder() *OrderItemUpdateOne {
-	oiuo.mutation.ClearOrder()
-	return oiuo
+func (_u *OrderItemUpdateOne) ClearOrder() *OrderItemUpdateOne {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Where appends a list predicates to the OrderItemUpdate builder.
-func (oiuo *OrderItemUpdateOne) Where(ps ...predicate.OrderItem) *OrderItemUpdateOne {
-	oiuo.mutation.Where(ps...)
-	return oiuo
+func (_u *OrderItemUpdateOne) Where(ps ...predicate.OrderItem) *OrderItemUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (oiuo *OrderItemUpdateOne) Select(field string, fields ...string) *OrderItemUpdateOne {
-	oiuo.fields = append([]string{field}, fields...)
-	return oiuo
+func (_u *OrderItemUpdateOne) Select(field string, fields ...string) *OrderItemUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrderItem entity.
-func (oiuo *OrderItemUpdateOne) Save(ctx context.Context) (*OrderItem, error) {
-	oiuo.defaults()
-	return withHooks(ctx, oiuo.sqlSave, oiuo.mutation, oiuo.hooks)
+func (_u *OrderItemUpdateOne) Save(ctx context.Context) (*OrderItem, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oiuo *OrderItemUpdateOne) SaveX(ctx context.Context) *OrderItem {
-	node, err := oiuo.Save(ctx)
+func (_u *OrderItemUpdateOne) SaveX(ctx context.Context) *OrderItem {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -618,34 +618,34 @@ func (oiuo *OrderItemUpdateOne) SaveX(ctx context.Context) *OrderItem {
 }
 
 // Exec executes the query on the entity.
-func (oiuo *OrderItemUpdateOne) Exec(ctx context.Context) error {
-	_, err := oiuo.Save(ctx)
+func (_u *OrderItemUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oiuo *OrderItemUpdateOne) ExecX(ctx context.Context) {
-	if err := oiuo.Exec(ctx); err != nil {
+func (_u *OrderItemUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oiuo *OrderItemUpdateOne) defaults() {
-	if _, ok := oiuo.mutation.UpdatedAt(); !ok && !oiuo.mutation.UpdatedAtCleared() {
+func (_u *OrderItemUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderitem.UpdateDefaultUpdatedAt()
-		oiuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oiuo *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, err error) {
+func (_u *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderitem.Table, orderitem.Columns, sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64))
-	id, ok := oiuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "OrderItem.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := oiuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orderitem.FieldID)
 		for _, f := range fields {
@@ -657,74 +657,74 @@ func (oiuo *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, 
 			}
 		}
 	}
-	if ps := oiuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oiuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderitem.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oiuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderitem.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oiuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderitem.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oiuo.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderitem.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oiuo.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderitem.FieldDelete, field.TypeInt64, value)
 	}
-	if oiuo.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderitem.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oiuo.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderitem.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oiuo.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderitem.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oiuo.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderitem.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oiuo.mutation.ProductID(); ok {
+	if value, ok := _u.mutation.ProductID(); ok {
 		_spec.SetField(orderitem.FieldProductID, field.TypeInt64, value)
 	}
-	if value, ok := oiuo.mutation.AddedProductID(); ok {
+	if value, ok := _u.mutation.AddedProductID(); ok {
 		_spec.AddField(orderitem.FieldProductID, field.TypeInt64, value)
 	}
-	if oiuo.mutation.ProductIDCleared() {
+	if _u.mutation.ProductIDCleared() {
 		_spec.ClearField(orderitem.FieldProductID, field.TypeInt64)
 	}
-	if value, ok := oiuo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(orderitem.FieldName, field.TypeString, value)
 	}
-	if oiuo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(orderitem.FieldName, field.TypeString)
 	}
-	if value, ok := oiuo.mutation.UnitPrice(); ok {
+	if value, ok := _u.mutation.UnitPrice(); ok {
 		_spec.SetField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
 	}
-	if value, ok := oiuo.mutation.AddedUnitPrice(); ok {
+	if value, ok := _u.mutation.AddedUnitPrice(); ok {
 		_spec.AddField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
 	}
-	if oiuo.mutation.UnitPriceCleared() {
+	if _u.mutation.UnitPriceCleared() {
 		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeFloat64)
 	}
-	if value, ok := oiuo.mutation.Quantity(); ok {
+	if value, ok := _u.mutation.Quantity(); ok {
 		_spec.SetField(orderitem.FieldQuantity, field.TypeInt64, value)
 	}
-	if value, ok := oiuo.mutation.AddedQuantity(); ok {
+	if value, ok := _u.mutation.AddedQuantity(); ok {
 		_spec.AddField(orderitem.FieldQuantity, field.TypeInt64, value)
 	}
-	if oiuo.mutation.QuantityCleared() {
+	if _u.mutation.QuantityCleared() {
 		_spec.ClearField(orderitem.FieldQuantity, field.TypeInt64)
 	}
-	if oiuo.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -737,7 +737,7 @@ func (oiuo *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oiuo.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -753,10 +753,10 @@ func (oiuo *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &OrderItem{config: oiuo.config}
+	_node = &OrderItem{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, oiuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderitem.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -764,6 +764,6 @@ func (oiuo *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, 
 		}
 		return nil, err
 	}
-	oiuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

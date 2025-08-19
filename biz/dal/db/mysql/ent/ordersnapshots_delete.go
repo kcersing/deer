@@ -20,56 +20,56 @@ type OrderSnapshotsDelete struct {
 }
 
 // Where appends a list predicates to the OrderSnapshotsDelete builder.
-func (osd *OrderSnapshotsDelete) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsDelete {
-	osd.mutation.Where(ps...)
-	return osd
+func (_d *OrderSnapshotsDelete) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (osd *OrderSnapshotsDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, osd.sqlExec, osd.mutation, osd.hooks)
+func (_d *OrderSnapshotsDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osd *OrderSnapshotsDelete) ExecX(ctx context.Context) int {
-	n, err := osd.Exec(ctx)
+func (_d *OrderSnapshotsDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (osd *OrderSnapshotsDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *OrderSnapshotsDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(ordersnapshots.Table, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
-	if ps := osd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, osd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	osd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // OrderSnapshotsDeleteOne is the builder for deleting a single OrderSnapshots entity.
 type OrderSnapshotsDeleteOne struct {
-	osd *OrderSnapshotsDelete
+	_d *OrderSnapshotsDelete
 }
 
 // Where appends a list predicates to the OrderSnapshotsDelete builder.
-func (osdo *OrderSnapshotsDeleteOne) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsDeleteOne {
-	osdo.osd.mutation.Where(ps...)
-	return osdo
+func (_d *OrderSnapshotsDeleteOne) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (osdo *OrderSnapshotsDeleteOne) Exec(ctx context.Context) error {
-	n, err := osdo.osd.Exec(ctx)
+func (_d *OrderSnapshotsDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (osdo *OrderSnapshotsDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osdo *OrderSnapshotsDeleteOne) ExecX(ctx context.Context) {
-	if err := osdo.Exec(ctx); err != nil {
+func (_d *OrderSnapshotsDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

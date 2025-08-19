@@ -25,235 +25,235 @@ type OrderEventsUpdate struct {
 }
 
 // Where appends a list predicates to the OrderEventsUpdate builder.
-func (oeu *OrderEventsUpdate) Where(ps ...predicate.OrderEvents) *OrderEventsUpdate {
-	oeu.mutation.Where(ps...)
-	return oeu
+func (_u *OrderEventsUpdate) Where(ps ...predicate.OrderEvents) *OrderEventsUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oeu *OrderEventsUpdate) SetUpdatedAt(t time.Time) *OrderEventsUpdate {
-	oeu.mutation.SetUpdatedAt(t)
-	return oeu
+func (_u *OrderEventsUpdate) SetUpdatedAt(v time.Time) *OrderEventsUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oeu *OrderEventsUpdate) ClearUpdatedAt() *OrderEventsUpdate {
-	oeu.mutation.ClearUpdatedAt()
-	return oeu
+func (_u *OrderEventsUpdate) ClearUpdatedAt() *OrderEventsUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oeu *OrderEventsUpdate) SetDelete(i int64) *OrderEventsUpdate {
-	oeu.mutation.ResetDelete()
-	oeu.mutation.SetDelete(i)
-	return oeu
+func (_u *OrderEventsUpdate) SetDelete(v int64) *OrderEventsUpdate {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableDelete(i *int64) *OrderEventsUpdate {
-	if i != nil {
-		oeu.SetDelete(*i)
+func (_u *OrderEventsUpdate) SetNillableDelete(v *int64) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oeu
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oeu *OrderEventsUpdate) AddDelete(i int64) *OrderEventsUpdate {
-	oeu.mutation.AddDelete(i)
-	return oeu
+// AddDelete adds value to the "delete" field.
+func (_u *OrderEventsUpdate) AddDelete(v int64) *OrderEventsUpdate {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oeu *OrderEventsUpdate) ClearDelete() *OrderEventsUpdate {
-	oeu.mutation.ClearDelete()
-	return oeu
+func (_u *OrderEventsUpdate) ClearDelete() *OrderEventsUpdate {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oeu *OrderEventsUpdate) SetCreatedID(i int64) *OrderEventsUpdate {
-	oeu.mutation.ResetCreatedID()
-	oeu.mutation.SetCreatedID(i)
-	return oeu
+func (_u *OrderEventsUpdate) SetCreatedID(v int64) *OrderEventsUpdate {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableCreatedID(i *int64) *OrderEventsUpdate {
-	if i != nil {
-		oeu.SetCreatedID(*i)
+func (_u *OrderEventsUpdate) SetNillableCreatedID(v *int64) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oeu
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oeu *OrderEventsUpdate) AddCreatedID(i int64) *OrderEventsUpdate {
-	oeu.mutation.AddCreatedID(i)
-	return oeu
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderEventsUpdate) AddCreatedID(v int64) *OrderEventsUpdate {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oeu *OrderEventsUpdate) ClearCreatedID() *OrderEventsUpdate {
-	oeu.mutation.ClearCreatedID()
-	return oeu
+func (_u *OrderEventsUpdate) ClearCreatedID() *OrderEventsUpdate {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetEventID sets the "event_id" field.
-func (oeu *OrderEventsUpdate) SetEventID(s string) *OrderEventsUpdate {
-	oeu.mutation.SetEventID(s)
-	return oeu
+func (_u *OrderEventsUpdate) SetEventID(v string) *OrderEventsUpdate {
+	_u.mutation.SetEventID(v)
+	return _u
 }
 
 // SetNillableEventID sets the "event_id" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventID(s *string) *OrderEventsUpdate {
-	if s != nil {
-		oeu.SetEventID(*s)
+func (_u *OrderEventsUpdate) SetNillableEventID(v *string) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetEventID(*v)
 	}
-	return oeu
+	return _u
 }
 
 // ClearEventID clears the value of the "event_id" field.
-func (oeu *OrderEventsUpdate) ClearEventID() *OrderEventsUpdate {
-	oeu.mutation.ClearEventID()
-	return oeu
+func (_u *OrderEventsUpdate) ClearEventID() *OrderEventsUpdate {
+	_u.mutation.ClearEventID()
+	return _u
 }
 
 // SetAggregateID sets the "aggregate_id" field.
-func (oeu *OrderEventsUpdate) SetAggregateID(i int64) *OrderEventsUpdate {
-	oeu.mutation.SetAggregateID(i)
-	return oeu
+func (_u *OrderEventsUpdate) SetAggregateID(v int64) *OrderEventsUpdate {
+	_u.mutation.SetAggregateID(v)
+	return _u
 }
 
 // SetNillableAggregateID sets the "aggregate_id" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableAggregateID(i *int64) *OrderEventsUpdate {
-	if i != nil {
-		oeu.SetAggregateID(*i)
+func (_u *OrderEventsUpdate) SetNillableAggregateID(v *int64) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetAggregateID(*v)
 	}
-	return oeu
+	return _u
 }
 
 // ClearAggregateID clears the value of the "aggregate_id" field.
-func (oeu *OrderEventsUpdate) ClearAggregateID() *OrderEventsUpdate {
-	oeu.mutation.ClearAggregateID()
-	return oeu
+func (_u *OrderEventsUpdate) ClearAggregateID() *OrderEventsUpdate {
+	_u.mutation.ClearAggregateID()
+	return _u
 }
 
 // SetAggregateType sets the "aggregate_type" field.
-func (oeu *OrderEventsUpdate) SetAggregateType(s string) *OrderEventsUpdate {
-	oeu.mutation.SetAggregateType(s)
-	return oeu
+func (_u *OrderEventsUpdate) SetAggregateType(v string) *OrderEventsUpdate {
+	_u.mutation.SetAggregateType(v)
+	return _u
 }
 
 // SetNillableAggregateType sets the "aggregate_type" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableAggregateType(s *string) *OrderEventsUpdate {
-	if s != nil {
-		oeu.SetAggregateType(*s)
+func (_u *OrderEventsUpdate) SetNillableAggregateType(v *string) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetAggregateType(*v)
 	}
-	return oeu
+	return _u
 }
 
 // ClearAggregateType clears the value of the "aggregate_type" field.
-func (oeu *OrderEventsUpdate) ClearAggregateType() *OrderEventsUpdate {
-	oeu.mutation.ClearAggregateType()
-	return oeu
+func (_u *OrderEventsUpdate) ClearAggregateType() *OrderEventsUpdate {
+	_u.mutation.ClearAggregateType()
+	return _u
 }
 
 // SetEventType sets the "event_type" field.
-func (oeu *OrderEventsUpdate) SetEventType(s string) *OrderEventsUpdate {
-	oeu.mutation.SetEventType(s)
-	return oeu
+func (_u *OrderEventsUpdate) SetEventType(v string) *OrderEventsUpdate {
+	_u.mutation.SetEventType(v)
+	return _u
 }
 
 // SetNillableEventType sets the "event_type" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventType(s *string) *OrderEventsUpdate {
-	if s != nil {
-		oeu.SetEventType(*s)
+func (_u *OrderEventsUpdate) SetNillableEventType(v *string) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetEventType(*v)
 	}
-	return oeu
+	return _u
 }
 
 // ClearEventType clears the value of the "event_type" field.
-func (oeu *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
-	oeu.mutation.ClearEventType()
-	return oeu
+func (_u *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
+	_u.mutation.ClearEventType()
+	return _u
 }
 
 // SetEventData sets the "event_data" field.
-func (oeu *OrderEventsUpdate) SetEventData(cd *common.EventData) *OrderEventsUpdate {
-	oeu.mutation.SetEventData(cd)
-	return oeu
+func (_u *OrderEventsUpdate) SetEventData(v *common.EventData) *OrderEventsUpdate {
+	_u.mutation.SetEventData(v)
+	return _u
 }
 
 // ClearEventData clears the value of the "event_data" field.
-func (oeu *OrderEventsUpdate) ClearEventData() *OrderEventsUpdate {
-	oeu.mutation.ClearEventData()
-	return oeu
+func (_u *OrderEventsUpdate) ClearEventData() *OrderEventsUpdate {
+	_u.mutation.ClearEventData()
+	return _u
 }
 
 // SetEventVersion sets the "event_version" field.
-func (oeu *OrderEventsUpdate) SetEventVersion(i int64) *OrderEventsUpdate {
-	oeu.mutation.ResetEventVersion()
-	oeu.mutation.SetEventVersion(i)
-	return oeu
+func (_u *OrderEventsUpdate) SetEventVersion(v int64) *OrderEventsUpdate {
+	_u.mutation.ResetEventVersion()
+	_u.mutation.SetEventVersion(v)
+	return _u
 }
 
 // SetNillableEventVersion sets the "event_version" field if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableEventVersion(i *int64) *OrderEventsUpdate {
-	if i != nil {
-		oeu.SetEventVersion(*i)
+func (_u *OrderEventsUpdate) SetNillableEventVersion(v *int64) *OrderEventsUpdate {
+	if v != nil {
+		_u.SetEventVersion(*v)
 	}
-	return oeu
+	return _u
 }
 
-// AddEventVersion adds i to the "event_version" field.
-func (oeu *OrderEventsUpdate) AddEventVersion(i int64) *OrderEventsUpdate {
-	oeu.mutation.AddEventVersion(i)
-	return oeu
+// AddEventVersion adds value to the "event_version" field.
+func (_u *OrderEventsUpdate) AddEventVersion(v int64) *OrderEventsUpdate {
+	_u.mutation.AddEventVersion(v)
+	return _u
 }
 
 // ClearEventVersion clears the value of the "event_version" field.
-func (oeu *OrderEventsUpdate) ClearEventVersion() *OrderEventsUpdate {
-	oeu.mutation.ClearEventVersion()
-	return oeu
+func (_u *OrderEventsUpdate) ClearEventVersion() *OrderEventsUpdate {
+	_u.mutation.ClearEventVersion()
+	return _u
 }
 
 // SetOrderID sets the "order" edge to the Order entity by ID.
-func (oeu *OrderEventsUpdate) SetOrderID(id int64) *OrderEventsUpdate {
-	oeu.mutation.SetOrderID(id)
-	return oeu
+func (_u *OrderEventsUpdate) SetOrderID(id int64) *OrderEventsUpdate {
+	_u.mutation.SetOrderID(id)
+	return _u
 }
 
 // SetNillableOrderID sets the "order" edge to the Order entity by ID if the given value is not nil.
-func (oeu *OrderEventsUpdate) SetNillableOrderID(id *int64) *OrderEventsUpdate {
+func (_u *OrderEventsUpdate) SetNillableOrderID(id *int64) *OrderEventsUpdate {
 	if id != nil {
-		oeu = oeu.SetOrderID(*id)
+		_u = _u.SetOrderID(*id)
 	}
-	return oeu
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oeu *OrderEventsUpdate) SetOrder(o *Order) *OrderEventsUpdate {
-	return oeu.SetOrderID(o.ID)
+func (_u *OrderEventsUpdate) SetOrder(v *Order) *OrderEventsUpdate {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderEventsMutation object of the builder.
-func (oeu *OrderEventsUpdate) Mutation() *OrderEventsMutation {
-	return oeu.mutation
+func (_u *OrderEventsUpdate) Mutation() *OrderEventsMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oeu *OrderEventsUpdate) ClearOrder() *OrderEventsUpdate {
-	oeu.mutation.ClearOrder()
-	return oeu
+func (_u *OrderEventsUpdate) ClearOrder() *OrderEventsUpdate {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (oeu *OrderEventsUpdate) Save(ctx context.Context) (int, error) {
-	oeu.defaults()
-	return withHooks(ctx, oeu.sqlSave, oeu.mutation, oeu.hooks)
+func (_u *OrderEventsUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oeu *OrderEventsUpdate) SaveX(ctx context.Context) int {
-	affected, err := oeu.Save(ctx)
+func (_u *OrderEventsUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -261,96 +261,96 @@ func (oeu *OrderEventsUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (oeu *OrderEventsUpdate) Exec(ctx context.Context) error {
-	_, err := oeu.Save(ctx)
+func (_u *OrderEventsUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oeu *OrderEventsUpdate) ExecX(ctx context.Context) {
-	if err := oeu.Exec(ctx); err != nil {
+func (_u *OrderEventsUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oeu *OrderEventsUpdate) defaults() {
-	if _, ok := oeu.mutation.UpdatedAt(); !ok && !oeu.mutation.UpdatedAtCleared() {
+func (_u *OrderEventsUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderevents.UpdateDefaultUpdatedAt()
-		oeu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (_u *OrderEventsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderevents.Table, orderevents.Columns, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
-	if ps := oeu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oeu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderevents.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oeu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderevents.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oeu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderevents.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oeu.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderevents.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oeu.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderevents.FieldDelete, field.TypeInt64, value)
 	}
-	if oeu.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderevents.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oeu.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderevents.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oeu.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderevents.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oeu.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderevents.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oeu.mutation.EventID(); ok {
+	if value, ok := _u.mutation.EventID(); ok {
 		_spec.SetField(orderevents.FieldEventID, field.TypeString, value)
 	}
-	if oeu.mutation.EventIDCleared() {
+	if _u.mutation.EventIDCleared() {
 		_spec.ClearField(orderevents.FieldEventID, field.TypeString)
 	}
-	if value, ok := oeu.mutation.AggregateType(); ok {
+	if value, ok := _u.mutation.AggregateType(); ok {
 		_spec.SetField(orderevents.FieldAggregateType, field.TypeString, value)
 	}
-	if oeu.mutation.AggregateTypeCleared() {
+	if _u.mutation.AggregateTypeCleared() {
 		_spec.ClearField(orderevents.FieldAggregateType, field.TypeString)
 	}
-	if value, ok := oeu.mutation.EventType(); ok {
+	if value, ok := _u.mutation.EventType(); ok {
 		_spec.SetField(orderevents.FieldEventType, field.TypeString, value)
 	}
-	if oeu.mutation.EventTypeCleared() {
+	if _u.mutation.EventTypeCleared() {
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
-	if value, ok := oeu.mutation.EventData(); ok {
+	if value, ok := _u.mutation.EventData(); ok {
 		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
 	}
-	if oeu.mutation.EventDataCleared() {
+	if _u.mutation.EventDataCleared() {
 		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
 	}
-	if value, ok := oeu.mutation.EventVersion(); ok {
+	if value, ok := _u.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)
 	}
-	if value, ok := oeu.mutation.AddedEventVersion(); ok {
+	if value, ok := _u.mutation.AddedEventVersion(); ok {
 		_spec.AddField(orderevents.FieldEventVersion, field.TypeInt64, value)
 	}
-	if oeu.mutation.EventVersionCleared() {
+	if _u.mutation.EventVersionCleared() {
 		_spec.ClearField(orderevents.FieldEventVersion, field.TypeInt64)
 	}
-	if oeu.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -363,7 +363,7 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oeu.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -379,7 +379,7 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, oeu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderevents.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -387,8 +387,8 @@ func (oeu *OrderEventsUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	oeu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrderEventsUpdateOne is the builder for updating a single OrderEvents entity.
@@ -400,242 +400,242 @@ type OrderEventsUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oeuo *OrderEventsUpdateOne) SetUpdatedAt(t time.Time) *OrderEventsUpdateOne {
-	oeuo.mutation.SetUpdatedAt(t)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetUpdatedAt(v time.Time) *OrderEventsUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oeuo *OrderEventsUpdateOne) ClearUpdatedAt() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearUpdatedAt()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearUpdatedAt() *OrderEventsUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oeuo *OrderEventsUpdateOne) SetDelete(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.ResetDelete()
-	oeuo.mutation.SetDelete(i)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetDelete(v int64) *OrderEventsUpdateOne {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableDelete(i *int64) *OrderEventsUpdateOne {
-	if i != nil {
-		oeuo.SetDelete(*i)
+func (_u *OrderEventsUpdateOne) SetNillableDelete(v *int64) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oeuo
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oeuo *OrderEventsUpdateOne) AddDelete(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.AddDelete(i)
-	return oeuo
+// AddDelete adds value to the "delete" field.
+func (_u *OrderEventsUpdateOne) AddDelete(v int64) *OrderEventsUpdateOne {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oeuo *OrderEventsUpdateOne) ClearDelete() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearDelete()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearDelete() *OrderEventsUpdateOne {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oeuo *OrderEventsUpdateOne) SetCreatedID(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.ResetCreatedID()
-	oeuo.mutation.SetCreatedID(i)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetCreatedID(v int64) *OrderEventsUpdateOne {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableCreatedID(i *int64) *OrderEventsUpdateOne {
-	if i != nil {
-		oeuo.SetCreatedID(*i)
+func (_u *OrderEventsUpdateOne) SetNillableCreatedID(v *int64) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oeuo
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oeuo *OrderEventsUpdateOne) AddCreatedID(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.AddCreatedID(i)
-	return oeuo
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderEventsUpdateOne) AddCreatedID(v int64) *OrderEventsUpdateOne {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oeuo *OrderEventsUpdateOne) ClearCreatedID() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearCreatedID()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearCreatedID() *OrderEventsUpdateOne {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetEventID sets the "event_id" field.
-func (oeuo *OrderEventsUpdateOne) SetEventID(s string) *OrderEventsUpdateOne {
-	oeuo.mutation.SetEventID(s)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetEventID(v string) *OrderEventsUpdateOne {
+	_u.mutation.SetEventID(v)
+	return _u
 }
 
 // SetNillableEventID sets the "event_id" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventID(s *string) *OrderEventsUpdateOne {
-	if s != nil {
-		oeuo.SetEventID(*s)
+func (_u *OrderEventsUpdateOne) SetNillableEventID(v *string) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetEventID(*v)
 	}
-	return oeuo
+	return _u
 }
 
 // ClearEventID clears the value of the "event_id" field.
-func (oeuo *OrderEventsUpdateOne) ClearEventID() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearEventID()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearEventID() *OrderEventsUpdateOne {
+	_u.mutation.ClearEventID()
+	return _u
 }
 
 // SetAggregateID sets the "aggregate_id" field.
-func (oeuo *OrderEventsUpdateOne) SetAggregateID(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.SetAggregateID(i)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetAggregateID(v int64) *OrderEventsUpdateOne {
+	_u.mutation.SetAggregateID(v)
+	return _u
 }
 
 // SetNillableAggregateID sets the "aggregate_id" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableAggregateID(i *int64) *OrderEventsUpdateOne {
-	if i != nil {
-		oeuo.SetAggregateID(*i)
+func (_u *OrderEventsUpdateOne) SetNillableAggregateID(v *int64) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetAggregateID(*v)
 	}
-	return oeuo
+	return _u
 }
 
 // ClearAggregateID clears the value of the "aggregate_id" field.
-func (oeuo *OrderEventsUpdateOne) ClearAggregateID() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearAggregateID()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearAggregateID() *OrderEventsUpdateOne {
+	_u.mutation.ClearAggregateID()
+	return _u
 }
 
 // SetAggregateType sets the "aggregate_type" field.
-func (oeuo *OrderEventsUpdateOne) SetAggregateType(s string) *OrderEventsUpdateOne {
-	oeuo.mutation.SetAggregateType(s)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetAggregateType(v string) *OrderEventsUpdateOne {
+	_u.mutation.SetAggregateType(v)
+	return _u
 }
 
 // SetNillableAggregateType sets the "aggregate_type" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableAggregateType(s *string) *OrderEventsUpdateOne {
-	if s != nil {
-		oeuo.SetAggregateType(*s)
+func (_u *OrderEventsUpdateOne) SetNillableAggregateType(v *string) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetAggregateType(*v)
 	}
-	return oeuo
+	return _u
 }
 
 // ClearAggregateType clears the value of the "aggregate_type" field.
-func (oeuo *OrderEventsUpdateOne) ClearAggregateType() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearAggregateType()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearAggregateType() *OrderEventsUpdateOne {
+	_u.mutation.ClearAggregateType()
+	return _u
 }
 
 // SetEventType sets the "event_type" field.
-func (oeuo *OrderEventsUpdateOne) SetEventType(s string) *OrderEventsUpdateOne {
-	oeuo.mutation.SetEventType(s)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetEventType(v string) *OrderEventsUpdateOne {
+	_u.mutation.SetEventType(v)
+	return _u
 }
 
 // SetNillableEventType sets the "event_type" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventType(s *string) *OrderEventsUpdateOne {
-	if s != nil {
-		oeuo.SetEventType(*s)
+func (_u *OrderEventsUpdateOne) SetNillableEventType(v *string) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetEventType(*v)
 	}
-	return oeuo
+	return _u
 }
 
 // ClearEventType clears the value of the "event_type" field.
-func (oeuo *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearEventType()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
+	_u.mutation.ClearEventType()
+	return _u
 }
 
 // SetEventData sets the "event_data" field.
-func (oeuo *OrderEventsUpdateOne) SetEventData(cd *common.EventData) *OrderEventsUpdateOne {
-	oeuo.mutation.SetEventData(cd)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetEventData(v *common.EventData) *OrderEventsUpdateOne {
+	_u.mutation.SetEventData(v)
+	return _u
 }
 
 // ClearEventData clears the value of the "event_data" field.
-func (oeuo *OrderEventsUpdateOne) ClearEventData() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearEventData()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearEventData() *OrderEventsUpdateOne {
+	_u.mutation.ClearEventData()
+	return _u
 }
 
 // SetEventVersion sets the "event_version" field.
-func (oeuo *OrderEventsUpdateOne) SetEventVersion(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.ResetEventVersion()
-	oeuo.mutation.SetEventVersion(i)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetEventVersion(v int64) *OrderEventsUpdateOne {
+	_u.mutation.ResetEventVersion()
+	_u.mutation.SetEventVersion(v)
+	return _u
 }
 
 // SetNillableEventVersion sets the "event_version" field if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableEventVersion(i *int64) *OrderEventsUpdateOne {
-	if i != nil {
-		oeuo.SetEventVersion(*i)
+func (_u *OrderEventsUpdateOne) SetNillableEventVersion(v *int64) *OrderEventsUpdateOne {
+	if v != nil {
+		_u.SetEventVersion(*v)
 	}
-	return oeuo
+	return _u
 }
 
-// AddEventVersion adds i to the "event_version" field.
-func (oeuo *OrderEventsUpdateOne) AddEventVersion(i int64) *OrderEventsUpdateOne {
-	oeuo.mutation.AddEventVersion(i)
-	return oeuo
+// AddEventVersion adds value to the "event_version" field.
+func (_u *OrderEventsUpdateOne) AddEventVersion(v int64) *OrderEventsUpdateOne {
+	_u.mutation.AddEventVersion(v)
+	return _u
 }
 
 // ClearEventVersion clears the value of the "event_version" field.
-func (oeuo *OrderEventsUpdateOne) ClearEventVersion() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearEventVersion()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearEventVersion() *OrderEventsUpdateOne {
+	_u.mutation.ClearEventVersion()
+	return _u
 }
 
 // SetOrderID sets the "order" edge to the Order entity by ID.
-func (oeuo *OrderEventsUpdateOne) SetOrderID(id int64) *OrderEventsUpdateOne {
-	oeuo.mutation.SetOrderID(id)
-	return oeuo
+func (_u *OrderEventsUpdateOne) SetOrderID(id int64) *OrderEventsUpdateOne {
+	_u.mutation.SetOrderID(id)
+	return _u
 }
 
 // SetNillableOrderID sets the "order" edge to the Order entity by ID if the given value is not nil.
-func (oeuo *OrderEventsUpdateOne) SetNillableOrderID(id *int64) *OrderEventsUpdateOne {
+func (_u *OrderEventsUpdateOne) SetNillableOrderID(id *int64) *OrderEventsUpdateOne {
 	if id != nil {
-		oeuo = oeuo.SetOrderID(*id)
+		_u = _u.SetOrderID(*id)
 	}
-	return oeuo
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oeuo *OrderEventsUpdateOne) SetOrder(o *Order) *OrderEventsUpdateOne {
-	return oeuo.SetOrderID(o.ID)
+func (_u *OrderEventsUpdateOne) SetOrder(v *Order) *OrderEventsUpdateOne {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderEventsMutation object of the builder.
-func (oeuo *OrderEventsUpdateOne) Mutation() *OrderEventsMutation {
-	return oeuo.mutation
+func (_u *OrderEventsUpdateOne) Mutation() *OrderEventsMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oeuo *OrderEventsUpdateOne) ClearOrder() *OrderEventsUpdateOne {
-	oeuo.mutation.ClearOrder()
-	return oeuo
+func (_u *OrderEventsUpdateOne) ClearOrder() *OrderEventsUpdateOne {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Where appends a list predicates to the OrderEventsUpdate builder.
-func (oeuo *OrderEventsUpdateOne) Where(ps ...predicate.OrderEvents) *OrderEventsUpdateOne {
-	oeuo.mutation.Where(ps...)
-	return oeuo
+func (_u *OrderEventsUpdateOne) Where(ps ...predicate.OrderEvents) *OrderEventsUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (oeuo *OrderEventsUpdateOne) Select(field string, fields ...string) *OrderEventsUpdateOne {
-	oeuo.fields = append([]string{field}, fields...)
-	return oeuo
+func (_u *OrderEventsUpdateOne) Select(field string, fields ...string) *OrderEventsUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrderEvents entity.
-func (oeuo *OrderEventsUpdateOne) Save(ctx context.Context) (*OrderEvents, error) {
-	oeuo.defaults()
-	return withHooks(ctx, oeuo.sqlSave, oeuo.mutation, oeuo.hooks)
+func (_u *OrderEventsUpdateOne) Save(ctx context.Context) (*OrderEvents, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oeuo *OrderEventsUpdateOne) SaveX(ctx context.Context) *OrderEvents {
-	node, err := oeuo.Save(ctx)
+func (_u *OrderEventsUpdateOne) SaveX(ctx context.Context) *OrderEvents {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -643,34 +643,34 @@ func (oeuo *OrderEventsUpdateOne) SaveX(ctx context.Context) *OrderEvents {
 }
 
 // Exec executes the query on the entity.
-func (oeuo *OrderEventsUpdateOne) Exec(ctx context.Context) error {
-	_, err := oeuo.Save(ctx)
+func (_u *OrderEventsUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oeuo *OrderEventsUpdateOne) ExecX(ctx context.Context) {
-	if err := oeuo.Exec(ctx); err != nil {
+func (_u *OrderEventsUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oeuo *OrderEventsUpdateOne) defaults() {
-	if _, ok := oeuo.mutation.UpdatedAt(); !ok && !oeuo.mutation.UpdatedAtCleared() {
+func (_u *OrderEventsUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderevents.UpdateDefaultUpdatedAt()
-		oeuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEvents, err error) {
+func (_u *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEvents, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderevents.Table, orderevents.Columns, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
-	id, ok := oeuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "OrderEvents.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := oeuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orderevents.FieldID)
 		for _, f := range fields {
@@ -682,74 +682,74 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 			}
 		}
 	}
-	if ps := oeuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oeuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderevents.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oeuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderevents.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oeuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderevents.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oeuo.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderevents.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oeuo.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderevents.FieldDelete, field.TypeInt64, value)
 	}
-	if oeuo.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderevents.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oeuo.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderevents.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oeuo.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderevents.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oeuo.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderevents.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oeuo.mutation.EventID(); ok {
+	if value, ok := _u.mutation.EventID(); ok {
 		_spec.SetField(orderevents.FieldEventID, field.TypeString, value)
 	}
-	if oeuo.mutation.EventIDCleared() {
+	if _u.mutation.EventIDCleared() {
 		_spec.ClearField(orderevents.FieldEventID, field.TypeString)
 	}
-	if value, ok := oeuo.mutation.AggregateType(); ok {
+	if value, ok := _u.mutation.AggregateType(); ok {
 		_spec.SetField(orderevents.FieldAggregateType, field.TypeString, value)
 	}
-	if oeuo.mutation.AggregateTypeCleared() {
+	if _u.mutation.AggregateTypeCleared() {
 		_spec.ClearField(orderevents.FieldAggregateType, field.TypeString)
 	}
-	if value, ok := oeuo.mutation.EventType(); ok {
+	if value, ok := _u.mutation.EventType(); ok {
 		_spec.SetField(orderevents.FieldEventType, field.TypeString, value)
 	}
-	if oeuo.mutation.EventTypeCleared() {
+	if _u.mutation.EventTypeCleared() {
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
-	if value, ok := oeuo.mutation.EventData(); ok {
+	if value, ok := _u.mutation.EventData(); ok {
 		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
 	}
-	if oeuo.mutation.EventDataCleared() {
+	if _u.mutation.EventDataCleared() {
 		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
 	}
-	if value, ok := oeuo.mutation.EventVersion(); ok {
+	if value, ok := _u.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)
 	}
-	if value, ok := oeuo.mutation.AddedEventVersion(); ok {
+	if value, ok := _u.mutation.AddedEventVersion(); ok {
 		_spec.AddField(orderevents.FieldEventVersion, field.TypeInt64, value)
 	}
-	if oeuo.mutation.EventVersionCleared() {
+	if _u.mutation.EventVersionCleared() {
 		_spec.ClearField(orderevents.FieldEventVersion, field.TypeInt64)
 	}
-	if oeuo.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -762,7 +762,7 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oeuo.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -778,10 +778,10 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &OrderEvents{config: oeuo.config}
+	_node = &OrderEvents{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, oeuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderevents.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -789,6 +789,6 @@ func (oeuo *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEven
 		}
 		return nil, err
 	}
-	oeuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

@@ -29,7 +29,7 @@ func NewOrderRepository(db *ent.Client, ctx context.Context) OrderRepository {
 var _ OrderRepository = &OrderRepo{}
 
 func (o *OrderRepo) Save(order *aggregate.Order) error {
-	es := order.GetEvents()
+	es := order.GetUncommittedEvents()
 	if len(es) == 0 {
 		return nil
 	}
@@ -52,18 +52,20 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 	orderEnt := tx.Order.Create().
 		SetOrderSn(order.Sn).
 		SetStatus(string(order.Status)).
+		SetCreatedID(order.CreatedId).
+		SetMemberID(order.MemberId).
+		SetVersion(order.Version).
 		OnConflict().
 		UpdateNewValues()
-	klog.Info(orderEnt)
-	err = orderEnt.Exec(o.ctx)
 
-	klog.Errorf("save order failed: %v", err)
+	order.AggregateID, err = orderEnt.ID(o.ctx)
+
 	if err != nil {
-
+		klog.Errorf("save order failed: %v", err)
 		return errors.Wrap(err, "保存订单失败")
 	}
-	klog.Info(order)
-	items := make([]*ent.OrderItemCreate, 0, len(order.Items))
+
+	items := make([]*ent.OrderItemCreate, len(order.Items))
 	for i, item := range order.Items {
 		items[i] = tx.OrderItem.
 			Create().
@@ -71,19 +73,24 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 			SetProductID(item.ProductId).
 			SetQuantity(item.Quantity).
 			SetUnitPrice(item.Price).
-			SetOrderID(order.Id)
+			SetOrderID(order.AggregateID).
+			SetCreatedID(order.CreatedId)
 	}
 	if _, err = tx.OrderItem.CreateBulk(items...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单项失败")
 	}
-	ets := make([]*ent.OrderEventsCreate, 0, len(es))
+	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
-		if err != nil {
-			return errors.Wrap(err, "marshal event data failed")
-		}
-
+		//if err != nil {
+		//	return errors.Wrap(err, "marshal event data failed")
+		//}
+		e.SetAggregateID(order.AggregateID)
 		ets[i] = tx.OrderEvents.Create().
-			SetEventID("").
+			SetEventID(e.GetId()).
+			SetAggregateID(order.AggregateID).
+			SetEventType(e.GetType()).
+			SetAggregateType("order").
+			SetEventVersion(order.Version).
 			SetEventData(&common.EventData{
 				Type:  e.GetType(),
 				Event: e,
@@ -93,11 +100,9 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 		return errors.Wrap(err, "保存订单事件失败")
 	}
 
-	if err != nil {
-		return errors.Wrap(err, "marshal snapshot data failed")
-	}
 	_, err = tx.OrderSnapshots.Create().
-		SetOrderID(order.Id).
+		SetAggregateVersion(order.Version).
+		SetAggregateID(order.AggregateID).
 		SetAggregateData(order).
 		Save(o.ctx)
 	if err != nil {
@@ -114,6 +119,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 	//		}
 	//	}
 	//}
+	order.ClearUncommittedEvents() // 事务成功后清除未提交事件
 	return nil
 }
 

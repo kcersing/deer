@@ -25,175 +25,175 @@ type OrderSnapshotsUpdate struct {
 }
 
 // Where appends a list predicates to the OrderSnapshotsUpdate builder.
-func (osu *OrderSnapshotsUpdate) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsUpdate {
-	osu.mutation.Where(ps...)
-	return osu
+func (_u *OrderSnapshotsUpdate) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osu *OrderSnapshotsUpdate) SetUpdatedAt(t time.Time) *OrderSnapshotsUpdate {
-	osu.mutation.SetUpdatedAt(t)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetUpdatedAt(v time.Time) *OrderSnapshotsUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (osu *OrderSnapshotsUpdate) ClearUpdatedAt() *OrderSnapshotsUpdate {
-	osu.mutation.ClearUpdatedAt()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearUpdatedAt() *OrderSnapshotsUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (osu *OrderSnapshotsUpdate) SetDelete(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.ResetDelete()
-	osu.mutation.SetDelete(i)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetDelete(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableDelete(i *int64) *OrderSnapshotsUpdate {
-	if i != nil {
-		osu.SetDelete(*i)
+func (_u *OrderSnapshotsUpdate) SetNillableDelete(v *int64) *OrderSnapshotsUpdate {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (osu *OrderSnapshotsUpdate) AddDelete(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.AddDelete(i)
-	return osu
+// AddDelete adds value to the "delete" field.
+func (_u *OrderSnapshotsUpdate) AddDelete(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (osu *OrderSnapshotsUpdate) ClearDelete() *OrderSnapshotsUpdate {
-	osu.mutation.ClearDelete()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearDelete() *OrderSnapshotsUpdate {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (osu *OrderSnapshotsUpdate) SetCreatedID(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.ResetCreatedID()
-	osu.mutation.SetCreatedID(i)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetCreatedID(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableCreatedID(i *int64) *OrderSnapshotsUpdate {
-	if i != nil {
-		osu.SetCreatedID(*i)
+func (_u *OrderSnapshotsUpdate) SetNillableCreatedID(v *int64) *OrderSnapshotsUpdate {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (osu *OrderSnapshotsUpdate) AddCreatedID(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.AddCreatedID(i)
-	return osu
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderSnapshotsUpdate) AddCreatedID(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (osu *OrderSnapshotsUpdate) ClearCreatedID() *OrderSnapshotsUpdate {
-	osu.mutation.ClearCreatedID()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearCreatedID() *OrderSnapshotsUpdate {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetAggregateID sets the "aggregate_id" field.
-func (osu *OrderSnapshotsUpdate) SetAggregateID(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.SetAggregateID(i)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetAggregateID(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.SetAggregateID(v)
+	return _u
 }
 
 // SetNillableAggregateID sets the "aggregate_id" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableAggregateID(i *int64) *OrderSnapshotsUpdate {
-	if i != nil {
-		osu.SetAggregateID(*i)
+func (_u *OrderSnapshotsUpdate) SetNillableAggregateID(v *int64) *OrderSnapshotsUpdate {
+	if v != nil {
+		_u.SetAggregateID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearAggregateID clears the value of the "aggregate_id" field.
-func (osu *OrderSnapshotsUpdate) ClearAggregateID() *OrderSnapshotsUpdate {
-	osu.mutation.ClearAggregateID()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearAggregateID() *OrderSnapshotsUpdate {
+	_u.mutation.ClearAggregateID()
+	return _u
 }
 
 // SetAggregateVersion sets the "aggregate_version" field.
-func (osu *OrderSnapshotsUpdate) SetAggregateVersion(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.ResetAggregateVersion()
-	osu.mutation.SetAggregateVersion(i)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetAggregateVersion(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.ResetAggregateVersion()
+	_u.mutation.SetAggregateVersion(v)
+	return _u
 }
 
 // SetNillableAggregateVersion sets the "aggregate_version" field if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableAggregateVersion(i *int64) *OrderSnapshotsUpdate {
-	if i != nil {
-		osu.SetAggregateVersion(*i)
+func (_u *OrderSnapshotsUpdate) SetNillableAggregateVersion(v *int64) *OrderSnapshotsUpdate {
+	if v != nil {
+		_u.SetAggregateVersion(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddAggregateVersion adds i to the "aggregate_version" field.
-func (osu *OrderSnapshotsUpdate) AddAggregateVersion(i int64) *OrderSnapshotsUpdate {
-	osu.mutation.AddAggregateVersion(i)
-	return osu
+// AddAggregateVersion adds value to the "aggregate_version" field.
+func (_u *OrderSnapshotsUpdate) AddAggregateVersion(v int64) *OrderSnapshotsUpdate {
+	_u.mutation.AddAggregateVersion(v)
+	return _u
 }
 
 // ClearAggregateVersion clears the value of the "aggregate_version" field.
-func (osu *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
-	osu.mutation.ClearAggregateVersion()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
+	_u.mutation.ClearAggregateVersion()
+	return _u
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osu *OrderSnapshotsUpdate) SetAggregateData(a *aggregate.Order) *OrderSnapshotsUpdate {
-	osu.mutation.SetAggregateData(a)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpdate {
+	_u.mutation.SetAggregateData(v)
+	return _u
 }
 
 // ClearAggregateData clears the value of the "aggregate_data" field.
-func (osu *OrderSnapshotsUpdate) ClearAggregateData() *OrderSnapshotsUpdate {
-	osu.mutation.ClearAggregateData()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearAggregateData() *OrderSnapshotsUpdate {
+	_u.mutation.ClearAggregateData()
+	return _u
 }
 
 // SetOrderID sets the "order" edge to the Order entity by ID.
-func (osu *OrderSnapshotsUpdate) SetOrderID(id int64) *OrderSnapshotsUpdate {
-	osu.mutation.SetOrderID(id)
-	return osu
+func (_u *OrderSnapshotsUpdate) SetOrderID(id int64) *OrderSnapshotsUpdate {
+	_u.mutation.SetOrderID(id)
+	return _u
 }
 
 // SetNillableOrderID sets the "order" edge to the Order entity by ID if the given value is not nil.
-func (osu *OrderSnapshotsUpdate) SetNillableOrderID(id *int64) *OrderSnapshotsUpdate {
+func (_u *OrderSnapshotsUpdate) SetNillableOrderID(id *int64) *OrderSnapshotsUpdate {
 	if id != nil {
-		osu = osu.SetOrderID(*id)
+		_u = _u.SetOrderID(*id)
 	}
-	return osu
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (osu *OrderSnapshotsUpdate) SetOrder(o *Order) *OrderSnapshotsUpdate {
-	return osu.SetOrderID(o.ID)
+func (_u *OrderSnapshotsUpdate) SetOrder(v *Order) *OrderSnapshotsUpdate {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderSnapshotsMutation object of the builder.
-func (osu *OrderSnapshotsUpdate) Mutation() *OrderSnapshotsMutation {
-	return osu.mutation
+func (_u *OrderSnapshotsUpdate) Mutation() *OrderSnapshotsMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (osu *OrderSnapshotsUpdate) ClearOrder() *OrderSnapshotsUpdate {
-	osu.mutation.ClearOrder()
-	return osu
+func (_u *OrderSnapshotsUpdate) ClearOrder() *OrderSnapshotsUpdate {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (osu *OrderSnapshotsUpdate) Save(ctx context.Context) (int, error) {
-	osu.defaults()
-	return withHooks(ctx, osu.sqlSave, osu.mutation, osu.hooks)
+func (_u *OrderSnapshotsUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (osu *OrderSnapshotsUpdate) SaveX(ctx context.Context) int {
-	affected, err := osu.Save(ctx)
+func (_u *OrderSnapshotsUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -201,78 +201,78 @@ func (osu *OrderSnapshotsUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (osu *OrderSnapshotsUpdate) Exec(ctx context.Context) error {
-	_, err := osu.Save(ctx)
+func (_u *OrderSnapshotsUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osu *OrderSnapshotsUpdate) ExecX(ctx context.Context) {
-	if err := osu.Exec(ctx); err != nil {
+func (_u *OrderSnapshotsUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osu *OrderSnapshotsUpdate) defaults() {
-	if _, ok := osu.mutation.UpdatedAt(); !ok && !osu.mutation.UpdatedAtCleared() {
+func (_u *OrderSnapshotsUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := ordersnapshots.UpdateDefaultUpdatedAt()
-		osu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (_u *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordersnapshots.Table, ordersnapshots.Columns, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
-	if ps := osu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if osu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(ordersnapshots.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := osu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordersnapshots.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if osu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(ordersnapshots.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := osu.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(ordersnapshots.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := osu.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(ordersnapshots.FieldDelete, field.TypeInt64, value)
 	}
-	if osu.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(ordersnapshots.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := osu.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(ordersnapshots.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := osu.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(ordersnapshots.FieldCreatedID, field.TypeInt64, value)
 	}
-	if osu.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(ordersnapshots.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := osu.mutation.AggregateVersion(); ok {
+	if value, ok := _u.mutation.AggregateVersion(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateVersion, field.TypeInt64, value)
 	}
-	if value, ok := osu.mutation.AddedAggregateVersion(); ok {
+	if value, ok := _u.mutation.AddedAggregateVersion(); ok {
 		_spec.AddField(ordersnapshots.FieldAggregateVersion, field.TypeInt64, value)
 	}
-	if osu.mutation.AggregateVersionCleared() {
+	if _u.mutation.AggregateVersionCleared() {
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
-	if value, ok := osu.mutation.AggregateData(); ok {
+	if value, ok := _u.mutation.AggregateData(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 	}
-	if osu.mutation.AggregateDataCleared() {
+	if _u.mutation.AggregateDataCleared() {
 		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
 	}
-	if osu.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -285,7 +285,7 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -301,7 +301,7 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, osu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{ordersnapshots.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -309,8 +309,8 @@ func (osu *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		return 0, err
 	}
-	osu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrderSnapshotsUpdateOne is the builder for updating a single OrderSnapshots entity.
@@ -322,182 +322,182 @@ type OrderSnapshotsUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osuo *OrderSnapshotsUpdateOne) SetUpdatedAt(t time.Time) *OrderSnapshotsUpdateOne {
-	osuo.mutation.SetUpdatedAt(t)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetUpdatedAt(v time.Time) *OrderSnapshotsUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearUpdatedAt() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearUpdatedAt()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearUpdatedAt() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (osuo *OrderSnapshotsUpdateOne) SetDelete(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.ResetDelete()
-	osuo.mutation.SetDelete(i)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetDelete(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableDelete(i *int64) *OrderSnapshotsUpdateOne {
-	if i != nil {
-		osuo.SetDelete(*i)
+func (_u *OrderSnapshotsUpdateOne) SetNillableDelete(v *int64) *OrderSnapshotsUpdateOne {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (osuo *OrderSnapshotsUpdateOne) AddDelete(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.AddDelete(i)
-	return osuo
+// AddDelete adds value to the "delete" field.
+func (_u *OrderSnapshotsUpdateOne) AddDelete(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearDelete() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearDelete()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearDelete() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (osuo *OrderSnapshotsUpdateOne) SetCreatedID(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.ResetCreatedID()
-	osuo.mutation.SetCreatedID(i)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetCreatedID(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableCreatedID(i *int64) *OrderSnapshotsUpdateOne {
-	if i != nil {
-		osuo.SetCreatedID(*i)
+func (_u *OrderSnapshotsUpdateOne) SetNillableCreatedID(v *int64) *OrderSnapshotsUpdateOne {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (osuo *OrderSnapshotsUpdateOne) AddCreatedID(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.AddCreatedID(i)
-	return osuo
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderSnapshotsUpdateOne) AddCreatedID(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearCreatedID() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearCreatedID()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearCreatedID() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetAggregateID sets the "aggregate_id" field.
-func (osuo *OrderSnapshotsUpdateOne) SetAggregateID(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.SetAggregateID(i)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetAggregateID(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.SetAggregateID(v)
+	return _u
 }
 
 // SetNillableAggregateID sets the "aggregate_id" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableAggregateID(i *int64) *OrderSnapshotsUpdateOne {
-	if i != nil {
-		osuo.SetAggregateID(*i)
+func (_u *OrderSnapshotsUpdateOne) SetNillableAggregateID(v *int64) *OrderSnapshotsUpdateOne {
+	if v != nil {
+		_u.SetAggregateID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearAggregateID clears the value of the "aggregate_id" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearAggregateID() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearAggregateID()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearAggregateID() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearAggregateID()
+	return _u
 }
 
 // SetAggregateVersion sets the "aggregate_version" field.
-func (osuo *OrderSnapshotsUpdateOne) SetAggregateVersion(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.ResetAggregateVersion()
-	osuo.mutation.SetAggregateVersion(i)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetAggregateVersion(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.ResetAggregateVersion()
+	_u.mutation.SetAggregateVersion(v)
+	return _u
 }
 
 // SetNillableAggregateVersion sets the "aggregate_version" field if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableAggregateVersion(i *int64) *OrderSnapshotsUpdateOne {
-	if i != nil {
-		osuo.SetAggregateVersion(*i)
+func (_u *OrderSnapshotsUpdateOne) SetNillableAggregateVersion(v *int64) *OrderSnapshotsUpdateOne {
+	if v != nil {
+		_u.SetAggregateVersion(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddAggregateVersion adds i to the "aggregate_version" field.
-func (osuo *OrderSnapshotsUpdateOne) AddAggregateVersion(i int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.AddAggregateVersion(i)
-	return osuo
+// AddAggregateVersion adds value to the "aggregate_version" field.
+func (_u *OrderSnapshotsUpdateOne) AddAggregateVersion(v int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.AddAggregateVersion(v)
+	return _u
 }
 
 // ClearAggregateVersion clears the value of the "aggregate_version" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearAggregateVersion()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearAggregateVersion()
+	return _u
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (osuo *OrderSnapshotsUpdateOne) SetAggregateData(a *aggregate.Order) *OrderSnapshotsUpdateOne {
-	osuo.mutation.SetAggregateData(a)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpdateOne {
+	_u.mutation.SetAggregateData(v)
+	return _u
 }
 
 // ClearAggregateData clears the value of the "aggregate_data" field.
-func (osuo *OrderSnapshotsUpdateOne) ClearAggregateData() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearAggregateData()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearAggregateData() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearAggregateData()
+	return _u
 }
 
 // SetOrderID sets the "order" edge to the Order entity by ID.
-func (osuo *OrderSnapshotsUpdateOne) SetOrderID(id int64) *OrderSnapshotsUpdateOne {
-	osuo.mutation.SetOrderID(id)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) SetOrderID(id int64) *OrderSnapshotsUpdateOne {
+	_u.mutation.SetOrderID(id)
+	return _u
 }
 
 // SetNillableOrderID sets the "order" edge to the Order entity by ID if the given value is not nil.
-func (osuo *OrderSnapshotsUpdateOne) SetNillableOrderID(id *int64) *OrderSnapshotsUpdateOne {
+func (_u *OrderSnapshotsUpdateOne) SetNillableOrderID(id *int64) *OrderSnapshotsUpdateOne {
 	if id != nil {
-		osuo = osuo.SetOrderID(*id)
+		_u = _u.SetOrderID(*id)
 	}
-	return osuo
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (osuo *OrderSnapshotsUpdateOne) SetOrder(o *Order) *OrderSnapshotsUpdateOne {
-	return osuo.SetOrderID(o.ID)
+func (_u *OrderSnapshotsUpdateOne) SetOrder(v *Order) *OrderSnapshotsUpdateOne {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderSnapshotsMutation object of the builder.
-func (osuo *OrderSnapshotsUpdateOne) Mutation() *OrderSnapshotsMutation {
-	return osuo.mutation
+func (_u *OrderSnapshotsUpdateOne) Mutation() *OrderSnapshotsMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (osuo *OrderSnapshotsUpdateOne) ClearOrder() *OrderSnapshotsUpdateOne {
-	osuo.mutation.ClearOrder()
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) ClearOrder() *OrderSnapshotsUpdateOne {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Where appends a list predicates to the OrderSnapshotsUpdate builder.
-func (osuo *OrderSnapshotsUpdateOne) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsUpdateOne {
-	osuo.mutation.Where(ps...)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) Where(ps ...predicate.OrderSnapshots) *OrderSnapshotsUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (osuo *OrderSnapshotsUpdateOne) Select(field string, fields ...string) *OrderSnapshotsUpdateOne {
-	osuo.fields = append([]string{field}, fields...)
-	return osuo
+func (_u *OrderSnapshotsUpdateOne) Select(field string, fields ...string) *OrderSnapshotsUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrderSnapshots entity.
-func (osuo *OrderSnapshotsUpdateOne) Save(ctx context.Context) (*OrderSnapshots, error) {
-	osuo.defaults()
-	return withHooks(ctx, osuo.sqlSave, osuo.mutation, osuo.hooks)
+func (_u *OrderSnapshotsUpdateOne) Save(ctx context.Context) (*OrderSnapshots, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (osuo *OrderSnapshotsUpdateOne) SaveX(ctx context.Context) *OrderSnapshots {
-	node, err := osuo.Save(ctx)
+func (_u *OrderSnapshotsUpdateOne) SaveX(ctx context.Context) *OrderSnapshots {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -505,34 +505,34 @@ func (osuo *OrderSnapshotsUpdateOne) SaveX(ctx context.Context) *OrderSnapshots 
 }
 
 // Exec executes the query on the entity.
-func (osuo *OrderSnapshotsUpdateOne) Exec(ctx context.Context) error {
-	_, err := osuo.Save(ctx)
+func (_u *OrderSnapshotsUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osuo *OrderSnapshotsUpdateOne) ExecX(ctx context.Context) {
-	if err := osuo.Exec(ctx); err != nil {
+func (_u *OrderSnapshotsUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osuo *OrderSnapshotsUpdateOne) defaults() {
-	if _, ok := osuo.mutation.UpdatedAt(); !ok && !osuo.mutation.UpdatedAtCleared() {
+func (_u *OrderSnapshotsUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := ordersnapshots.UpdateDefaultUpdatedAt()
-		osuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderSnapshots, err error) {
+func (_u *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderSnapshots, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordersnapshots.Table, ordersnapshots.Columns, sqlgraph.NewFieldSpec(ordersnapshots.FieldID, field.TypeInt64))
-	id, ok := osuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "OrderSnapshots.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := osuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, ordersnapshots.FieldID)
 		for _, f := range fields {
@@ -544,56 +544,56 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 			}
 		}
 	}
-	if ps := osuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if osuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(ordersnapshots.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordersnapshots.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if osuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(ordersnapshots.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(ordersnapshots.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := osuo.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(ordersnapshots.FieldDelete, field.TypeInt64, value)
 	}
-	if osuo.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(ordersnapshots.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := osuo.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(ordersnapshots.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := osuo.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(ordersnapshots.FieldCreatedID, field.TypeInt64, value)
 	}
-	if osuo.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(ordersnapshots.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := osuo.mutation.AggregateVersion(); ok {
+	if value, ok := _u.mutation.AggregateVersion(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateVersion, field.TypeInt64, value)
 	}
-	if value, ok := osuo.mutation.AddedAggregateVersion(); ok {
+	if value, ok := _u.mutation.AddedAggregateVersion(); ok {
 		_spec.AddField(ordersnapshots.FieldAggregateVersion, field.TypeInt64, value)
 	}
-	if osuo.mutation.AggregateVersionCleared() {
+	if _u.mutation.AggregateVersionCleared() {
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
-	if value, ok := osuo.mutation.AggregateData(); ok {
+	if value, ok := _u.mutation.AggregateData(); ok {
 		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
 	}
-	if osuo.mutation.AggregateDataCleared() {
+	if _u.mutation.AggregateDataCleared() {
 		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
 	}
-	if osuo.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -606,7 +606,7 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -622,10 +622,10 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &OrderSnapshots{config: osuo.config}
+	_node = &OrderSnapshots{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, osuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{ordersnapshots.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -633,6 +633,6 @@ func (osuo *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderS
 		}
 		return nil, err
 	}
-	osuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

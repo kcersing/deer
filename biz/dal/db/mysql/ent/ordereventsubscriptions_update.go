@@ -23,272 +23,272 @@ type OrderEventSubscriptionsUpdate struct {
 }
 
 // Where appends a list predicates to the OrderEventSubscriptionsUpdate builder.
-func (oesu *OrderEventSubscriptionsUpdate) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.Where(ps...)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetUpdatedAt(t time.Time) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetUpdatedAt(t)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetUpdatedAt(v time.Time) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearUpdatedAt() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearUpdatedAt()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearUpdatedAt() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetDelete(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ResetDelete()
-	oesu.mutation.SetDelete(i)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetDelete(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableDelete(i *int64) *OrderEventSubscriptionsUpdate {
-	if i != nil {
-		oesu.SetDelete(*i)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableDelete(v *int64) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oesu
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oesu *OrderEventSubscriptionsUpdate) AddDelete(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.AddDelete(i)
-	return oesu
+// AddDelete adds value to the "delete" field.
+func (_u *OrderEventSubscriptionsUpdate) AddDelete(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearDelete() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearDelete()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearDelete() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetCreatedID(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ResetCreatedID()
-	oesu.mutation.SetCreatedID(i)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetCreatedID(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableCreatedID(i *int64) *OrderEventSubscriptionsUpdate {
-	if i != nil {
-		oesu.SetCreatedID(*i)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableCreatedID(v *int64) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oesu
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oesu *OrderEventSubscriptionsUpdate) AddCreatedID(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.AddCreatedID(i)
-	return oesu
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderEventSubscriptionsUpdate) AddCreatedID(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearCreatedID() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearCreatedID()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearCreatedID() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetName(s string) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetName(s)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetName(v string) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableName(s *string) *OrderEventSubscriptionsUpdate {
-	if s != nil {
-		oesu.SetName(*s)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableName(v *string) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return oesu
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearName() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearName()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearName() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetEventType sets the "event_type" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetEventType(s string) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetEventType(s)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetEventType(v string) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetEventType(v)
+	return _u
 }
 
 // SetNillableEventType sets the "event_type" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableEventType(s *string) *OrderEventSubscriptionsUpdate {
-	if s != nil {
-		oesu.SetEventType(*s)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableEventType(v *string) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetEventType(*v)
 	}
-	return oesu
+	return _u
 }
 
 // ClearEventType clears the value of the "event_type" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearEventType() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearEventType()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearEventType() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearEventType()
+	return _u
 }
 
 // SetLastProcessedID sets the "last_processed_id" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetLastProcessedID(s string) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetLastProcessedID(s)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetLastProcessedID(v string) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetLastProcessedID(v)
+	return _u
 }
 
 // SetNillableLastProcessedID sets the "last_processed_id" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableLastProcessedID(s *string) *OrderEventSubscriptionsUpdate {
-	if s != nil {
-		oesu.SetLastProcessedID(*s)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableLastProcessedID(v *string) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetLastProcessedID(*v)
 	}
-	return oesu
+	return _u
 }
 
 // ClearLastProcessedID clears the value of the "last_processed_id" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearLastProcessedID() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearLastProcessedID()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearLastProcessedID() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearLastProcessedID()
+	return _u
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetLastProcessedVersion(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ResetLastProcessedVersion()
-	oesu.mutation.SetLastProcessedVersion(i)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetLastProcessedVersion(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.ResetLastProcessedVersion()
+	_u.mutation.SetLastProcessedVersion(v)
+	return _u
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableLastProcessedVersion(i *int64) *OrderEventSubscriptionsUpdate {
-	if i != nil {
-		oesu.SetLastProcessedVersion(*i)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableLastProcessedVersion(v *int64) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetLastProcessedVersion(*v)
 	}
-	return oesu
+	return _u
 }
 
-// AddLastProcessedVersion adds i to the "last_processed_version" field.
-func (oesu *OrderEventSubscriptionsUpdate) AddLastProcessedVersion(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.AddLastProcessedVersion(i)
-	return oesu
+// AddLastProcessedVersion adds value to the "last_processed_version" field.
+func (_u *OrderEventSubscriptionsUpdate) AddLastProcessedVersion(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.AddLastProcessedVersion(v)
+	return _u
 }
 
 // ClearLastProcessedVersion clears the value of the "last_processed_version" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearLastProcessedVersion() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearLastProcessedVersion()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearLastProcessedVersion() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearLastProcessedVersion()
+	return _u
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetLastProcessedAt(t time.Time) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetLastProcessedAt(t)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetLastProcessedAt(v time.Time) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetLastProcessedAt(v)
+	return _u
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableLastProcessedAt(t *time.Time) *OrderEventSubscriptionsUpdate {
-	if t != nil {
-		oesu.SetLastProcessedAt(*t)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableLastProcessedAt(v *time.Time) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetLastProcessedAt(*v)
 	}
-	return oesu
+	return _u
 }
 
 // ClearLastProcessedAt clears the value of the "last_processed_at" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearLastProcessedAt() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearLastProcessedAt()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearLastProcessedAt() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearLastProcessedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetIsActive(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ResetIsActive()
-	oesu.mutation.SetIsActive(i)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetIsActive(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.ResetIsActive()
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableIsActive(i *int64) *OrderEventSubscriptionsUpdate {
-	if i != nil {
-		oesu.SetIsActive(*i)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableIsActive(v *int64) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return oesu
+	return _u
 }
 
-// AddIsActive adds i to the "is_active" field.
-func (oesu *OrderEventSubscriptionsUpdate) AddIsActive(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.AddIsActive(i)
-	return oesu
+// AddIsActive adds value to the "is_active" field.
+func (_u *OrderEventSubscriptionsUpdate) AddIsActive(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.AddIsActive(v)
+	return _u
 }
 
 // ClearIsActive clears the value of the "is_active" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearIsActive() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearIsActive()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearIsActive() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearIsActive()
+	return _u
 }
 
 // SetErrorCount sets the "error_count" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetErrorCount(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ResetErrorCount()
-	oesu.mutation.SetErrorCount(i)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetErrorCount(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.ResetErrorCount()
+	_u.mutation.SetErrorCount(v)
+	return _u
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableErrorCount(i *int64) *OrderEventSubscriptionsUpdate {
-	if i != nil {
-		oesu.SetErrorCount(*i)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableErrorCount(v *int64) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetErrorCount(*v)
 	}
-	return oesu
+	return _u
 }
 
-// AddErrorCount adds i to the "error_count" field.
-func (oesu *OrderEventSubscriptionsUpdate) AddErrorCount(i int64) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.AddErrorCount(i)
-	return oesu
+// AddErrorCount adds value to the "error_count" field.
+func (_u *OrderEventSubscriptionsUpdate) AddErrorCount(v int64) *OrderEventSubscriptionsUpdate {
+	_u.mutation.AddErrorCount(v)
+	return _u
 }
 
 // ClearErrorCount clears the value of the "error_count" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearErrorCount() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearErrorCount()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearErrorCount() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearErrorCount()
+	return _u
 }
 
 // SetLastError sets the "last_error" field.
-func (oesu *OrderEventSubscriptionsUpdate) SetLastError(s string) *OrderEventSubscriptionsUpdate {
-	oesu.mutation.SetLastError(s)
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) SetLastError(v string) *OrderEventSubscriptionsUpdate {
+	_u.mutation.SetLastError(v)
+	return _u
 }
 
 // SetNillableLastError sets the "last_error" field if the given value is not nil.
-func (oesu *OrderEventSubscriptionsUpdate) SetNillableLastError(s *string) *OrderEventSubscriptionsUpdate {
-	if s != nil {
-		oesu.SetLastError(*s)
+func (_u *OrderEventSubscriptionsUpdate) SetNillableLastError(v *string) *OrderEventSubscriptionsUpdate {
+	if v != nil {
+		_u.SetLastError(*v)
 	}
-	return oesu
+	return _u
 }
 
 // ClearLastError clears the value of the "last_error" field.
-func (oesu *OrderEventSubscriptionsUpdate) ClearLastError() *OrderEventSubscriptionsUpdate {
-	oesu.mutation.ClearLastError()
-	return oesu
+func (_u *OrderEventSubscriptionsUpdate) ClearLastError() *OrderEventSubscriptionsUpdate {
+	_u.mutation.ClearLastError()
+	return _u
 }
 
 // Mutation returns the OrderEventSubscriptionsMutation object of the builder.
-func (oesu *OrderEventSubscriptionsUpdate) Mutation() *OrderEventSubscriptionsMutation {
-	return oesu.mutation
+func (_u *OrderEventSubscriptionsUpdate) Mutation() *OrderEventSubscriptionsMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (oesu *OrderEventSubscriptionsUpdate) Save(ctx context.Context) (int, error) {
-	oesu.defaults()
-	return withHooks(ctx, oesu.sqlSave, oesu.mutation, oesu.hooks)
+func (_u *OrderEventSubscriptionsUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oesu *OrderEventSubscriptionsUpdate) SaveX(ctx context.Context) int {
-	affected, err := oesu.Save(ctx)
+func (_u *OrderEventSubscriptionsUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -296,120 +296,120 @@ func (oesu *OrderEventSubscriptionsUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (oesu *OrderEventSubscriptionsUpdate) Exec(ctx context.Context) error {
-	_, err := oesu.Save(ctx)
+func (_u *OrderEventSubscriptionsUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oesu *OrderEventSubscriptionsUpdate) ExecX(ctx context.Context) {
-	if err := oesu.Exec(ctx); err != nil {
+func (_u *OrderEventSubscriptionsUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oesu *OrderEventSubscriptionsUpdate) defaults() {
-	if _, ok := oesu.mutation.UpdatedAt(); !ok && !oesu.mutation.UpdatedAtCleared() {
+func (_u *OrderEventSubscriptionsUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := ordereventsubscriptions.UpdateDefaultUpdatedAt()
-		oesu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oesu *OrderEventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (_u *OrderEventSubscriptionsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordereventsubscriptions.Table, ordereventsubscriptions.Columns, sqlgraph.NewFieldSpec(ordereventsubscriptions.FieldID, field.TypeInt64))
-	if ps := oesu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oesu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oesu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oesu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oesu.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oesu.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldDelete, field.TypeInt64, value)
 	}
-	if oesu.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oesu.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oesu.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oesu.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oesu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldName, field.TypeString, value)
 	}
-	if oesu.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldName, field.TypeString)
 	}
-	if value, ok := oesu.mutation.EventType(); ok {
+	if value, ok := _u.mutation.EventType(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldEventType, field.TypeString, value)
 	}
-	if oesu.mutation.EventTypeCleared() {
+	if _u.mutation.EventTypeCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldEventType, field.TypeString)
 	}
-	if value, ok := oesu.mutation.LastProcessedID(); ok {
+	if value, ok := _u.mutation.LastProcessedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedID, field.TypeString, value)
 	}
-	if oesu.mutation.LastProcessedIDCleared() {
+	if _u.mutation.LastProcessedIDCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedID, field.TypeString)
 	}
-	if value, ok := oesu.mutation.LastProcessedVersion(); ok {
+	if value, ok := _u.mutation.LastProcessedVersion(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
-	if value, ok := oesu.mutation.AddedLastProcessedVersion(); ok {
+	if value, ok := _u.mutation.AddedLastProcessedVersion(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
-	if oesu.mutation.LastProcessedVersionCleared() {
+	if _u.mutation.LastProcessedVersionCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64)
 	}
-	if value, ok := oesu.mutation.LastProcessedAt(); ok {
+	if value, ok := _u.mutation.LastProcessedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 	}
-	if oesu.mutation.LastProcessedAtCleared() {
+	if _u.mutation.LastProcessedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedAt, field.TypeTime)
 	}
-	if value, ok := oesu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldIsActive, field.TypeInt64, value)
 	}
-	if value, ok := oesu.mutation.AddedIsActive(); ok {
+	if value, ok := _u.mutation.AddedIsActive(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldIsActive, field.TypeInt64, value)
 	}
-	if oesu.mutation.IsActiveCleared() {
+	if _u.mutation.IsActiveCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldIsActive, field.TypeInt64)
 	}
-	if value, ok := oesu.mutation.ErrorCount(); ok {
+	if value, ok := _u.mutation.ErrorCount(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
-	if value, ok := oesu.mutation.AddedErrorCount(); ok {
+	if value, ok := _u.mutation.AddedErrorCount(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
-	if oesu.mutation.ErrorCountCleared() {
+	if _u.mutation.ErrorCountCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64)
 	}
-	if value, ok := oesu.mutation.LastError(); ok {
+	if value, ok := _u.mutation.LastError(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastError, field.TypeString, value)
 	}
-	if oesu.mutation.LastErrorCleared() {
+	if _u.mutation.LastErrorCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastError, field.TypeString)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, oesu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{ordereventsubscriptions.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -417,8 +417,8 @@ func (oesu *OrderEventSubscriptionsUpdate) sqlSave(ctx context.Context) (n int, 
 		}
 		return 0, err
 	}
-	oesu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrderEventSubscriptionsUpdateOne is the builder for updating a single OrderEventSubscriptions entity.
@@ -430,279 +430,279 @@ type OrderEventSubscriptionsUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetUpdatedAt(t time.Time) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetUpdatedAt(t)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetUpdatedAt(v time.Time) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearUpdatedAt() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearUpdatedAt()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearUpdatedAt() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetDelete(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ResetDelete()
-	oesuo.mutation.SetDelete(i)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetDelete(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableDelete(i *int64) *OrderEventSubscriptionsUpdateOne {
-	if i != nil {
-		oesuo.SetDelete(*i)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableDelete(v *int64) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oesuo
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) AddDelete(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.AddDelete(i)
-	return oesuo
+// AddDelete adds value to the "delete" field.
+func (_u *OrderEventSubscriptionsUpdateOne) AddDelete(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearDelete() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearDelete()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearDelete() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetCreatedID(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ResetCreatedID()
-	oesuo.mutation.SetCreatedID(i)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetCreatedID(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableCreatedID(i *int64) *OrderEventSubscriptionsUpdateOne {
-	if i != nil {
-		oesuo.SetCreatedID(*i)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableCreatedID(v *int64) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oesuo
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) AddCreatedID(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.AddCreatedID(i)
-	return oesuo
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderEventSubscriptionsUpdateOne) AddCreatedID(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearCreatedID() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearCreatedID()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearCreatedID() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetName(s string) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetName(s)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetName(v string) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableName(s *string) *OrderEventSubscriptionsUpdateOne {
-	if s != nil {
-		oesuo.SetName(*s)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableName(v *string) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return oesuo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearName() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearName()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearName() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetEventType sets the "event_type" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetEventType(s string) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetEventType(s)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetEventType(v string) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetEventType(v)
+	return _u
 }
 
 // SetNillableEventType sets the "event_type" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableEventType(s *string) *OrderEventSubscriptionsUpdateOne {
-	if s != nil {
-		oesuo.SetEventType(*s)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableEventType(v *string) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetEventType(*v)
 	}
-	return oesuo
+	return _u
 }
 
 // ClearEventType clears the value of the "event_type" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearEventType() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearEventType()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearEventType() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearEventType()
+	return _u
 }
 
 // SetLastProcessedID sets the "last_processed_id" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetLastProcessedID(s string) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetLastProcessedID(s)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetLastProcessedID(v string) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetLastProcessedID(v)
+	return _u
 }
 
 // SetNillableLastProcessedID sets the "last_processed_id" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedID(s *string) *OrderEventSubscriptionsUpdateOne {
-	if s != nil {
-		oesuo.SetLastProcessedID(*s)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedID(v *string) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetLastProcessedID(*v)
 	}
-	return oesuo
+	return _u
 }
 
 // ClearLastProcessedID clears the value of the "last_processed_id" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearLastProcessedID() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearLastProcessedID()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearLastProcessedID() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearLastProcessedID()
+	return _u
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetLastProcessedVersion(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ResetLastProcessedVersion()
-	oesuo.mutation.SetLastProcessedVersion(i)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetLastProcessedVersion(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ResetLastProcessedVersion()
+	_u.mutation.SetLastProcessedVersion(v)
+	return _u
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedVersion(i *int64) *OrderEventSubscriptionsUpdateOne {
-	if i != nil {
-		oesuo.SetLastProcessedVersion(*i)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedVersion(v *int64) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetLastProcessedVersion(*v)
 	}
-	return oesuo
+	return _u
 }
 
-// AddLastProcessedVersion adds i to the "last_processed_version" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) AddLastProcessedVersion(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.AddLastProcessedVersion(i)
-	return oesuo
+// AddLastProcessedVersion adds value to the "last_processed_version" field.
+func (_u *OrderEventSubscriptionsUpdateOne) AddLastProcessedVersion(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.AddLastProcessedVersion(v)
+	return _u
 }
 
 // ClearLastProcessedVersion clears the value of the "last_processed_version" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearLastProcessedVersion() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearLastProcessedVersion()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearLastProcessedVersion() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearLastProcessedVersion()
+	return _u
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetLastProcessedAt(t time.Time) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetLastProcessedAt(t)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetLastProcessedAt(v time.Time) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetLastProcessedAt(v)
+	return _u
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedAt(t *time.Time) *OrderEventSubscriptionsUpdateOne {
-	if t != nil {
-		oesuo.SetLastProcessedAt(*t)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableLastProcessedAt(v *time.Time) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetLastProcessedAt(*v)
 	}
-	return oesuo
+	return _u
 }
 
 // ClearLastProcessedAt clears the value of the "last_processed_at" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearLastProcessedAt() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearLastProcessedAt()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearLastProcessedAt() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearLastProcessedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetIsActive(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ResetIsActive()
-	oesuo.mutation.SetIsActive(i)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetIsActive(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ResetIsActive()
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableIsActive(i *int64) *OrderEventSubscriptionsUpdateOne {
-	if i != nil {
-		oesuo.SetIsActive(*i)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableIsActive(v *int64) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return oesuo
+	return _u
 }
 
-// AddIsActive adds i to the "is_active" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) AddIsActive(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.AddIsActive(i)
-	return oesuo
+// AddIsActive adds value to the "is_active" field.
+func (_u *OrderEventSubscriptionsUpdateOne) AddIsActive(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.AddIsActive(v)
+	return _u
 }
 
 // ClearIsActive clears the value of the "is_active" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearIsActive() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearIsActive()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearIsActive() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearIsActive()
+	return _u
 }
 
 // SetErrorCount sets the "error_count" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetErrorCount(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ResetErrorCount()
-	oesuo.mutation.SetErrorCount(i)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetErrorCount(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ResetErrorCount()
+	_u.mutation.SetErrorCount(v)
+	return _u
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableErrorCount(i *int64) *OrderEventSubscriptionsUpdateOne {
-	if i != nil {
-		oesuo.SetErrorCount(*i)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableErrorCount(v *int64) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetErrorCount(*v)
 	}
-	return oesuo
+	return _u
 }
 
-// AddErrorCount adds i to the "error_count" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) AddErrorCount(i int64) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.AddErrorCount(i)
-	return oesuo
+// AddErrorCount adds value to the "error_count" field.
+func (_u *OrderEventSubscriptionsUpdateOne) AddErrorCount(v int64) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.AddErrorCount(v)
+	return _u
 }
 
 // ClearErrorCount clears the value of the "error_count" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearErrorCount() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearErrorCount()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearErrorCount() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearErrorCount()
+	return _u
 }
 
 // SetLastError sets the "last_error" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetLastError(s string) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.SetLastError(s)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) SetLastError(v string) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.SetLastError(v)
+	return _u
 }
 
 // SetNillableLastError sets the "last_error" field if the given value is not nil.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SetNillableLastError(s *string) *OrderEventSubscriptionsUpdateOne {
-	if s != nil {
-		oesuo.SetLastError(*s)
+func (_u *OrderEventSubscriptionsUpdateOne) SetNillableLastError(v *string) *OrderEventSubscriptionsUpdateOne {
+	if v != nil {
+		_u.SetLastError(*v)
 	}
-	return oesuo
+	return _u
 }
 
 // ClearLastError clears the value of the "last_error" field.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ClearLastError() *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.ClearLastError()
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) ClearLastError() *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.ClearLastError()
+	return _u
 }
 
 // Mutation returns the OrderEventSubscriptionsMutation object of the builder.
-func (oesuo *OrderEventSubscriptionsUpdateOne) Mutation() *OrderEventSubscriptionsMutation {
-	return oesuo.mutation
+func (_u *OrderEventSubscriptionsUpdateOne) Mutation() *OrderEventSubscriptionsMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the OrderEventSubscriptionsUpdate builder.
-func (oesuo *OrderEventSubscriptionsUpdateOne) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsUpdateOne {
-	oesuo.mutation.Where(ps...)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (oesuo *OrderEventSubscriptionsUpdateOne) Select(field string, fields ...string) *OrderEventSubscriptionsUpdateOne {
-	oesuo.fields = append([]string{field}, fields...)
-	return oesuo
+func (_u *OrderEventSubscriptionsUpdateOne) Select(field string, fields ...string) *OrderEventSubscriptionsUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrderEventSubscriptions entity.
-func (oesuo *OrderEventSubscriptionsUpdateOne) Save(ctx context.Context) (*OrderEventSubscriptions, error) {
-	oesuo.defaults()
-	return withHooks(ctx, oesuo.sqlSave, oesuo.mutation, oesuo.hooks)
+func (_u *OrderEventSubscriptionsUpdateOne) Save(ctx context.Context) (*OrderEventSubscriptions, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oesuo *OrderEventSubscriptionsUpdateOne) SaveX(ctx context.Context) *OrderEventSubscriptions {
-	node, err := oesuo.Save(ctx)
+func (_u *OrderEventSubscriptionsUpdateOne) SaveX(ctx context.Context) *OrderEventSubscriptions {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -710,34 +710,34 @@ func (oesuo *OrderEventSubscriptionsUpdateOne) SaveX(ctx context.Context) *Order
 }
 
 // Exec executes the query on the entity.
-func (oesuo *OrderEventSubscriptionsUpdateOne) Exec(ctx context.Context) error {
-	_, err := oesuo.Save(ctx)
+func (_u *OrderEventSubscriptionsUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oesuo *OrderEventSubscriptionsUpdateOne) ExecX(ctx context.Context) {
-	if err := oesuo.Exec(ctx); err != nil {
+func (_u *OrderEventSubscriptionsUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oesuo *OrderEventSubscriptionsUpdateOne) defaults() {
-	if _, ok := oesuo.mutation.UpdatedAt(); !ok && !oesuo.mutation.UpdatedAtCleared() {
+func (_u *OrderEventSubscriptionsUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := ordereventsubscriptions.UpdateDefaultUpdatedAt()
-		oesuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oesuo *OrderEventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEventSubscriptions, err error) {
+func (_u *OrderEventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEventSubscriptions, err error) {
 	_spec := sqlgraph.NewUpdateSpec(ordereventsubscriptions.Table, ordereventsubscriptions.Columns, sqlgraph.NewFieldSpec(ordereventsubscriptions.FieldID, field.TypeInt64))
-	id, ok := oesuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "OrderEventSubscriptions.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := oesuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, ordereventsubscriptions.FieldID)
 		for _, f := range fields {
@@ -749,101 +749,101 @@ func (oesuo *OrderEventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_no
 			}
 		}
 	}
-	if ps := oesuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oesuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oesuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oesuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oesuo.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oesuo.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldDelete, field.TypeInt64, value)
 	}
-	if oesuo.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oesuo.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oesuo.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oesuo.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oesuo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldName, field.TypeString, value)
 	}
-	if oesuo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldName, field.TypeString)
 	}
-	if value, ok := oesuo.mutation.EventType(); ok {
+	if value, ok := _u.mutation.EventType(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldEventType, field.TypeString, value)
 	}
-	if oesuo.mutation.EventTypeCleared() {
+	if _u.mutation.EventTypeCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldEventType, field.TypeString)
 	}
-	if value, ok := oesuo.mutation.LastProcessedID(); ok {
+	if value, ok := _u.mutation.LastProcessedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedID, field.TypeString, value)
 	}
-	if oesuo.mutation.LastProcessedIDCleared() {
+	if _u.mutation.LastProcessedIDCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedID, field.TypeString)
 	}
-	if value, ok := oesuo.mutation.LastProcessedVersion(); ok {
+	if value, ok := _u.mutation.LastProcessedVersion(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
-	if value, ok := oesuo.mutation.AddedLastProcessedVersion(); ok {
+	if value, ok := _u.mutation.AddedLastProcessedVersion(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 	}
-	if oesuo.mutation.LastProcessedVersionCleared() {
+	if _u.mutation.LastProcessedVersionCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64)
 	}
-	if value, ok := oesuo.mutation.LastProcessedAt(); ok {
+	if value, ok := _u.mutation.LastProcessedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 	}
-	if oesuo.mutation.LastProcessedAtCleared() {
+	if _u.mutation.LastProcessedAtCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastProcessedAt, field.TypeTime)
 	}
-	if value, ok := oesuo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldIsActive, field.TypeInt64, value)
 	}
-	if value, ok := oesuo.mutation.AddedIsActive(); ok {
+	if value, ok := _u.mutation.AddedIsActive(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldIsActive, field.TypeInt64, value)
 	}
-	if oesuo.mutation.IsActiveCleared() {
+	if _u.mutation.IsActiveCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldIsActive, field.TypeInt64)
 	}
-	if value, ok := oesuo.mutation.ErrorCount(); ok {
+	if value, ok := _u.mutation.ErrorCount(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
-	if value, ok := oesuo.mutation.AddedErrorCount(); ok {
+	if value, ok := _u.mutation.AddedErrorCount(); ok {
 		_spec.AddField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 	}
-	if oesuo.mutation.ErrorCountCleared() {
+	if _u.mutation.ErrorCountCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64)
 	}
-	if value, ok := oesuo.mutation.LastError(); ok {
+	if value, ok := _u.mutation.LastError(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastError, field.TypeString, value)
 	}
-	if oesuo.mutation.LastErrorCleared() {
+	if _u.mutation.LastErrorCleared() {
 		_spec.ClearField(ordereventsubscriptions.FieldLastError, field.TypeString)
 	}
-	_node = &OrderEventSubscriptions{config: oesuo.config}
+	_node = &OrderEventSubscriptions{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, oesuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{ordereventsubscriptions.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -851,6 +851,6 @@ func (oesuo *OrderEventSubscriptionsUpdateOne) sqlSave(ctx context.Context) (_no
 		}
 		return nil, err
 	}
-	oesuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

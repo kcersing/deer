@@ -20,56 +20,56 @@ type OrderEventsDelete struct {
 }
 
 // Where appends a list predicates to the OrderEventsDelete builder.
-func (oed *OrderEventsDelete) Where(ps ...predicate.OrderEvents) *OrderEventsDelete {
-	oed.mutation.Where(ps...)
-	return oed
+func (_d *OrderEventsDelete) Where(ps ...predicate.OrderEvents) *OrderEventsDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (oed *OrderEventsDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, oed.sqlExec, oed.mutation, oed.hooks)
+func (_d *OrderEventsDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oed *OrderEventsDelete) ExecX(ctx context.Context) int {
-	n, err := oed.Exec(ctx)
+func (_d *OrderEventsDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (oed *OrderEventsDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *OrderEventsDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(orderevents.Table, sqlgraph.NewFieldSpec(orderevents.FieldID, field.TypeInt64))
-	if ps := oed.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, oed.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	oed.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // OrderEventsDeleteOne is the builder for deleting a single OrderEvents entity.
 type OrderEventsDeleteOne struct {
-	oed *OrderEventsDelete
+	_d *OrderEventsDelete
 }
 
 // Where appends a list predicates to the OrderEventsDelete builder.
-func (oedo *OrderEventsDeleteOne) Where(ps ...predicate.OrderEvents) *OrderEventsDeleteOne {
-	oedo.oed.mutation.Where(ps...)
-	return oedo
+func (_d *OrderEventsDeleteOne) Where(ps ...predicate.OrderEvents) *OrderEventsDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (oedo *OrderEventsDeleteOne) Exec(ctx context.Context) error {
-	n, err := oedo.oed.Exec(ctx)
+func (_d *OrderEventsDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (oedo *OrderEventsDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oedo *OrderEventsDeleteOne) ExecX(ctx context.Context) {
-	if err := oedo.Exec(ctx); err != nil {
+func (_d *OrderEventsDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

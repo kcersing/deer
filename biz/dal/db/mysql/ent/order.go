@@ -22,7 +22,7 @@ type Order struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// last delete  1:已删除
+	// last delete  1:已删除 0:未删除
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
@@ -30,7 +30,7 @@ type Order struct {
 	OrderSn string `json:"order_sn,omitempty"`
 	// 会员id
 	MemberID int64 `json:"member_id,omitempty"`
-	// Status holds the value of the "status" field.
+	// 状态
 	Status string `json:"status,omitempty"`
 	// 业务类型
 	Nature int64 `json:"nature,omitempty"`
@@ -119,7 +119,7 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Order fields.
-func (o *Order) assignValues(columns []string, values []any) error {
+func (_m *Order) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -130,81 +130,81 @@ func (o *Order) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			o.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case order.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				o.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case order.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				o.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case order.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				o.Delete = value.Int64
+				_m.Delete = value.Int64
 			}
 		case order.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				o.CreatedID = value.Int64
+				_m.CreatedID = value.Int64
 			}
 		case order.FieldOrderSn:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field order_sn", values[i])
 			} else if value.Valid {
-				o.OrderSn = value.String
+				_m.OrderSn = value.String
 			}
 		case order.FieldMemberID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field member_id", values[i])
 			} else if value.Valid {
-				o.MemberID = value.Int64
+				_m.MemberID = value.Int64
 			}
 		case order.FieldStatus:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				o.Status = value.String
+				_m.Status = value.String
 			}
 		case order.FieldNature:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field nature", values[i])
 			} else if value.Valid {
-				o.Nature = value.Int64
+				_m.Nature = value.Int64
 			}
 		case order.FieldCompletionAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field completion_at", values[i])
 			} else if value.Valid {
-				o.CompletionAt = value.Time
+				_m.CompletionAt = value.Time
 			}
 		case order.FieldCloseAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field close_at", values[i])
 			} else if value.Valid {
-				o.CloseAt = value.Time
+				_m.CloseAt = value.Time
 			}
 		case order.FieldRefundAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field refund_at", values[i])
 			} else if value.Valid {
-				o.RefundAt = value.Time
+				_m.RefundAt = value.Time
 			}
 		case order.FieldVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field version", values[i])
 			} else if value.Valid {
-				o.Version = value.Int64
+				_m.Version = value.Int64
 			}
 		default:
-			o.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -212,88 +212,88 @@ func (o *Order) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Order.
 // This includes values selected through modifiers, order, etc.
-func (o *Order) Value(name string) (ent.Value, error) {
-	return o.selectValues.Get(name)
+func (_m *Order) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryItems queries the "items" edge of the Order entity.
-func (o *Order) QueryItems() *OrderItemQuery {
-	return NewOrderClient(o.config).QueryItems(o)
+func (_m *Order) QueryItems() *OrderItemQuery {
+	return NewOrderClient(_m.config).QueryItems(_m)
 }
 
 // QueryEvents queries the "events" edge of the Order entity.
-func (o *Order) QueryEvents() *OrderEventsQuery {
-	return NewOrderClient(o.config).QueryEvents(o)
+func (_m *Order) QueryEvents() *OrderEventsQuery {
+	return NewOrderClient(_m.config).QueryEvents(_m)
 }
 
 // QuerySnapshots queries the "snapshots" edge of the Order entity.
-func (o *Order) QuerySnapshots() *OrderSnapshotsQuery {
-	return NewOrderClient(o.config).QuerySnapshots(o)
+func (_m *Order) QuerySnapshots() *OrderSnapshotsQuery {
+	return NewOrderClient(_m.config).QuerySnapshots(_m)
 }
 
 // QueryStatusHistory queries the "status_history" edge of the Order entity.
-func (o *Order) QueryStatusHistory() *OrderStatusHistoryQuery {
-	return NewOrderClient(o.config).QueryStatusHistory(o)
+func (_m *Order) QueryStatusHistory() *OrderStatusHistoryQuery {
+	return NewOrderClient(_m.config).QueryStatusHistory(_m)
 }
 
 // Update returns a builder for updating this Order.
 // Note that you need to call Order.Unwrap() before calling this method if this Order
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (o *Order) Update() *OrderUpdateOne {
-	return NewOrderClient(o.config).UpdateOne(o)
+func (_m *Order) Update() *OrderUpdateOne {
+	return NewOrderClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the Order entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (o *Order) Unwrap() *Order {
-	_tx, ok := o.config.driver.(*txDriver)
+func (_m *Order) Unwrap() *Order {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Order is not a transactional entity")
 	}
-	o.config.driver = _tx.drv
-	return o
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (o *Order) String() string {
+func (_m *Order) String() string {
 	var builder strings.Builder
 	builder.WriteString("Order(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", o.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(o.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(o.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", o.Delete))
+	builder.WriteString(fmt.Sprintf("%v", _m.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", o.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("order_sn=")
-	builder.WriteString(o.OrderSn)
+	builder.WriteString(_m.OrderSn)
 	builder.WriteString(", ")
 	builder.WriteString("member_id=")
-	builder.WriteString(fmt.Sprintf("%v", o.MemberID))
+	builder.WriteString(fmt.Sprintf("%v", _m.MemberID))
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(o.Status)
+	builder.WriteString(_m.Status)
 	builder.WriteString(", ")
 	builder.WriteString("nature=")
-	builder.WriteString(fmt.Sprintf("%v", o.Nature))
+	builder.WriteString(fmt.Sprintf("%v", _m.Nature))
 	builder.WriteString(", ")
 	builder.WriteString("completion_at=")
-	builder.WriteString(o.CompletionAt.Format(time.ANSIC))
+	builder.WriteString(_m.CompletionAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("close_at=")
-	builder.WriteString(o.CloseAt.Format(time.ANSIC))
+	builder.WriteString(_m.CloseAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("refund_at=")
-	builder.WriteString(o.RefundAt.Format(time.ANSIC))
+	builder.WriteString(_m.RefundAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("version=")
-	builder.WriteString(fmt.Sprintf("%v", o.Version))
+	builder.WriteString(fmt.Sprintf("%v", _m.Version))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -303,8 +303,8 @@ func (c *OrderClient) Update() *OrderUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderClient) UpdateOne(o *Order) *OrderUpdateOne {
-	mutation := newOrderMutation(c.config, OpUpdateOne, withOrder(o))
+func (c *OrderClient) UpdateOne(_m *Order) *OrderUpdateOne {
+	mutation := newOrderMutation(c.config, OpUpdateOne, withOrder(_m))
 	return &OrderUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -321,8 +321,8 @@ func (c *OrderClient) Delete() *OrderDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderClient) DeleteOne(o *Order) *OrderDeleteOne {
-	return c.DeleteOneID(o.ID)
+func (c *OrderClient) DeleteOne(_m *Order) *OrderDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -357,64 +357,64 @@ func (c *OrderClient) GetX(ctx context.Context, id int64) *Order {
 }
 
 // QueryItems queries the items edge of a Order.
-func (c *OrderClient) QueryItems(o *Order) *OrderItemQuery {
+func (c *OrderClient) QueryItems(_m *Order) *OrderItemQuery {
 	query := (&OrderItemClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := o.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(orderitem.Table, orderitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.ItemsTable, order.ItemsColumn),
 		)
-		fromV = sqlgraph.Neighbors(o.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryEvents queries the events edge of a Order.
-func (c *OrderClient) QueryEvents(o *Order) *OrderEventsQuery {
+func (c *OrderClient) QueryEvents(_m *Order) *OrderEventsQuery {
 	query := (&OrderEventsClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := o.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(orderevents.Table, orderevents.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.EventsTable, order.EventsColumn),
 		)
-		fromV = sqlgraph.Neighbors(o.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QuerySnapshots queries the snapshots edge of a Order.
-func (c *OrderClient) QuerySnapshots(o *Order) *OrderSnapshotsQuery {
+func (c *OrderClient) QuerySnapshots(_m *Order) *OrderSnapshotsQuery {
 	query := (&OrderSnapshotsClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := o.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(ordersnapshots.Table, ordersnapshots.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.SnapshotsTable, order.SnapshotsColumn),
 		)
-		fromV = sqlgraph.Neighbors(o.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStatusHistory queries the status_history edge of a Order.
-func (c *OrderClient) QueryStatusHistory(o *Order) *OrderStatusHistoryQuery {
+func (c *OrderClient) QueryStatusHistory(_m *Order) *OrderStatusHistoryQuery {
 	query := (&OrderStatusHistoryClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := o.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(orderstatushistory.Table, orderstatushistory.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.StatusHistoryTable, order.StatusHistoryColumn),
 		)
-		fromV = sqlgraph.Neighbors(o.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -500,8 +500,8 @@ func (c *OrderEventSubscriptionsClient) Update() *OrderEventSubscriptionsUpdate 
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderEventSubscriptionsClient) UpdateOne(oes *OrderEventSubscriptions) *OrderEventSubscriptionsUpdateOne {
-	mutation := newOrderEventSubscriptionsMutation(c.config, OpUpdateOne, withOrderEventSubscriptions(oes))
+func (c *OrderEventSubscriptionsClient) UpdateOne(_m *OrderEventSubscriptions) *OrderEventSubscriptionsUpdateOne {
+	mutation := newOrderEventSubscriptionsMutation(c.config, OpUpdateOne, withOrderEventSubscriptions(_m))
 	return &OrderEventSubscriptionsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -518,8 +518,8 @@ func (c *OrderEventSubscriptionsClient) Delete() *OrderEventSubscriptionsDelete 
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderEventSubscriptionsClient) DeleteOne(oes *OrderEventSubscriptions) *OrderEventSubscriptionsDeleteOne {
-	return c.DeleteOneID(oes.ID)
+func (c *OrderEventSubscriptionsClient) DeleteOne(_m *OrderEventSubscriptions) *OrderEventSubscriptionsDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -633,8 +633,8 @@ func (c *OrderEventsClient) Update() *OrderEventsUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderEventsClient) UpdateOne(oe *OrderEvents) *OrderEventsUpdateOne {
-	mutation := newOrderEventsMutation(c.config, OpUpdateOne, withOrderEvents(oe))
+func (c *OrderEventsClient) UpdateOne(_m *OrderEvents) *OrderEventsUpdateOne {
+	mutation := newOrderEventsMutation(c.config, OpUpdateOne, withOrderEvents(_m))
 	return &OrderEventsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -651,8 +651,8 @@ func (c *OrderEventsClient) Delete() *OrderEventsDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderEventsClient) DeleteOne(oe *OrderEvents) *OrderEventsDeleteOne {
-	return c.DeleteOneID(oe.ID)
+func (c *OrderEventsClient) DeleteOne(_m *OrderEvents) *OrderEventsDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -687,16 +687,16 @@ func (c *OrderEventsClient) GetX(ctx context.Context, id int64) *OrderEvents {
 }
 
 // QueryOrder queries the order edge of a OrderEvents.
-func (c *OrderEventsClient) QueryOrder(oe *OrderEvents) *OrderQuery {
+func (c *OrderEventsClient) QueryOrder(_m *OrderEvents) *OrderQuery {
 	query := (&OrderClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oe.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orderevents.Table, orderevents.FieldID, id),
 			sqlgraph.To(order.Table, order.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orderevents.OrderTable, orderevents.OrderColumn),
 		)
-		fromV = sqlgraph.Neighbors(oe.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -782,8 +782,8 @@ func (c *OrderItemClient) Update() *OrderItemUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderItemClient) UpdateOne(oi *OrderItem) *OrderItemUpdateOne {
-	mutation := newOrderItemMutation(c.config, OpUpdateOne, withOrderItem(oi))
+func (c *OrderItemClient) UpdateOne(_m *OrderItem) *OrderItemUpdateOne {
+	mutation := newOrderItemMutation(c.config, OpUpdateOne, withOrderItem(_m))
 	return &OrderItemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -800,8 +800,8 @@ func (c *OrderItemClient) Delete() *OrderItemDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderItemClient) DeleteOne(oi *OrderItem) *OrderItemDeleteOne {
-	return c.DeleteOneID(oi.ID)
+func (c *OrderItemClient) DeleteOne(_m *OrderItem) *OrderItemDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -836,16 +836,16 @@ func (c *OrderItemClient) GetX(ctx context.Context, id int64) *OrderItem {
 }
 
 // QueryOrder queries the order edge of a OrderItem.
-func (c *OrderItemClient) QueryOrder(oi *OrderItem) *OrderQuery {
+func (c *OrderItemClient) QueryOrder(_m *OrderItem) *OrderQuery {
 	query := (&OrderClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oi.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orderitem.Table, orderitem.FieldID, id),
 			sqlgraph.To(order.Table, order.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orderitem.OrderTable, orderitem.OrderColumn),
 		)
-		fromV = sqlgraph.Neighbors(oi.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -931,8 +931,8 @@ func (c *OrderSnapshotsClient) Update() *OrderSnapshotsUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderSnapshotsClient) UpdateOne(os *OrderSnapshots) *OrderSnapshotsUpdateOne {
-	mutation := newOrderSnapshotsMutation(c.config, OpUpdateOne, withOrderSnapshots(os))
+func (c *OrderSnapshotsClient) UpdateOne(_m *OrderSnapshots) *OrderSnapshotsUpdateOne {
+	mutation := newOrderSnapshotsMutation(c.config, OpUpdateOne, withOrderSnapshots(_m))
 	return &OrderSnapshotsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -949,8 +949,8 @@ func (c *OrderSnapshotsClient) Delete() *OrderSnapshotsDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderSnapshotsClient) DeleteOne(os *OrderSnapshots) *OrderSnapshotsDeleteOne {
-	return c.DeleteOneID(os.ID)
+func (c *OrderSnapshotsClient) DeleteOne(_m *OrderSnapshots) *OrderSnapshotsDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -985,16 +985,16 @@ func (c *OrderSnapshotsClient) GetX(ctx context.Context, id int64) *OrderSnapsho
 }
 
 // QueryOrder queries the order edge of a OrderSnapshots.
-func (c *OrderSnapshotsClient) QueryOrder(os *OrderSnapshots) *OrderQuery {
+func (c *OrderSnapshotsClient) QueryOrder(_m *OrderSnapshots) *OrderQuery {
 	query := (&OrderClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(ordersnapshots.Table, ordersnapshots.FieldID, id),
 			sqlgraph.To(order.Table, order.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, ordersnapshots.OrderTable, ordersnapshots.OrderColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1080,8 +1080,8 @@ func (c *OrderStatusHistoryClient) Update() *OrderStatusHistoryUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrderStatusHistoryClient) UpdateOne(osh *OrderStatusHistory) *OrderStatusHistoryUpdateOne {
-	mutation := newOrderStatusHistoryMutation(c.config, OpUpdateOne, withOrderStatusHistory(osh))
+func (c *OrderStatusHistoryClient) UpdateOne(_m *OrderStatusHistory) *OrderStatusHistoryUpdateOne {
+	mutation := newOrderStatusHistoryMutation(c.config, OpUpdateOne, withOrderStatusHistory(_m))
 	return &OrderStatusHistoryUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1098,8 +1098,8 @@ func (c *OrderStatusHistoryClient) Delete() *OrderStatusHistoryDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrderStatusHistoryClient) DeleteOne(osh *OrderStatusHistory) *OrderStatusHistoryDeleteOne {
-	return c.DeleteOneID(osh.ID)
+func (c *OrderStatusHistoryClient) DeleteOne(_m *OrderStatusHistory) *OrderStatusHistoryDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1134,16 +1134,16 @@ func (c *OrderStatusHistoryClient) GetX(ctx context.Context, id int64) *OrderSta
 }
 
 // QueryOrder queries the order edge of a OrderStatusHistory.
-func (c *OrderStatusHistoryClient) QueryOrder(osh *OrderStatusHistory) *OrderQuery {
+func (c *OrderStatusHistoryClient) QueryOrder(_m *OrderStatusHistory) *OrderQuery {
 	query := (&OrderClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := osh.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orderstatushistory.Table, orderstatushistory.FieldID, id),
 			sqlgraph.To(order.Table, order.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orderstatushistory.OrderTable, orderstatushistory.OrderColumn),
 		)
-		fromV = sqlgraph.Neighbors(osh.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query

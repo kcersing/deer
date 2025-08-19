@@ -24,236 +24,236 @@ type OrderStatusHistoryUpdate struct {
 }
 
 // Where appends a list predicates to the OrderStatusHistoryUpdate builder.
-func (oshu *OrderStatusHistoryUpdate) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryUpdate {
-	oshu.mutation.Where(ps...)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oshu *OrderStatusHistoryUpdate) SetUpdatedAt(t time.Time) *OrderStatusHistoryUpdate {
-	oshu.mutation.SetUpdatedAt(t)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetUpdatedAt(v time.Time) *OrderStatusHistoryUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oshu *OrderStatusHistoryUpdate) ClearUpdatedAt() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearUpdatedAt()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearUpdatedAt() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oshu *OrderStatusHistoryUpdate) SetDelete(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.ResetDelete()
-	oshu.mutation.SetDelete(i)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetDelete(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableDelete(i *int64) *OrderStatusHistoryUpdate {
-	if i != nil {
-		oshu.SetDelete(*i)
+func (_u *OrderStatusHistoryUpdate) SetNillableDelete(v *int64) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oshu
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oshu *OrderStatusHistoryUpdate) AddDelete(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.AddDelete(i)
-	return oshu
+// AddDelete adds value to the "delete" field.
+func (_u *OrderStatusHistoryUpdate) AddDelete(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oshu *OrderStatusHistoryUpdate) ClearDelete() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearDelete()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearDelete() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oshu *OrderStatusHistoryUpdate) SetCreatedID(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.ResetCreatedID()
-	oshu.mutation.SetCreatedID(i)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetCreatedID(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableCreatedID(i *int64) *OrderStatusHistoryUpdate {
-	if i != nil {
-		oshu.SetCreatedID(*i)
+func (_u *OrderStatusHistoryUpdate) SetNillableCreatedID(v *int64) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oshu
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oshu *OrderStatusHistoryUpdate) AddCreatedID(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.AddCreatedID(i)
-	return oshu
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderStatusHistoryUpdate) AddCreatedID(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oshu *OrderStatusHistoryUpdate) ClearCreatedID() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearCreatedID()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearCreatedID() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetOrderID sets the "order_id" field.
-func (oshu *OrderStatusHistoryUpdate) SetOrderID(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.SetOrderID(i)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetOrderID(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.SetOrderID(v)
+	return _u
 }
 
 // SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableOrderID(i *int64) *OrderStatusHistoryUpdate {
-	if i != nil {
-		oshu.SetOrderID(*i)
+func (_u *OrderStatusHistoryUpdate) SetNillableOrderID(v *int64) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetOrderID(*v)
 	}
-	return oshu
+	return _u
 }
 
 // ClearOrderID clears the value of the "order_id" field.
-func (oshu *OrderStatusHistoryUpdate) ClearOrderID() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearOrderID()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearOrderID() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearOrderID()
+	return _u
 }
 
 // SetOldStatus sets the "old_status" field.
-func (oshu *OrderStatusHistoryUpdate) SetOldStatus(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.ResetOldStatus()
-	oshu.mutation.SetOldStatus(i)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetOldStatus(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.ResetOldStatus()
+	_u.mutation.SetOldStatus(v)
+	return _u
 }
 
 // SetNillableOldStatus sets the "old_status" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableOldStatus(i *int64) *OrderStatusHistoryUpdate {
-	if i != nil {
-		oshu.SetOldStatus(*i)
+func (_u *OrderStatusHistoryUpdate) SetNillableOldStatus(v *int64) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetOldStatus(*v)
 	}
-	return oshu
+	return _u
 }
 
-// AddOldStatus adds i to the "old_status" field.
-func (oshu *OrderStatusHistoryUpdate) AddOldStatus(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.AddOldStatus(i)
-	return oshu
+// AddOldStatus adds value to the "old_status" field.
+func (_u *OrderStatusHistoryUpdate) AddOldStatus(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.AddOldStatus(v)
+	return _u
 }
 
 // ClearOldStatus clears the value of the "old_status" field.
-func (oshu *OrderStatusHistoryUpdate) ClearOldStatus() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearOldStatus()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearOldStatus() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearOldStatus()
+	return _u
 }
 
 // SetNewStatus sets the "new_status" field.
-func (oshu *OrderStatusHistoryUpdate) SetNewStatus(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.ResetNewStatus()
-	oshu.mutation.SetNewStatus(i)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetNewStatus(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.ResetNewStatus()
+	_u.mutation.SetNewStatus(v)
+	return _u
 }
 
 // SetNillableNewStatus sets the "new_status" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableNewStatus(i *int64) *OrderStatusHistoryUpdate {
-	if i != nil {
-		oshu.SetNewStatus(*i)
+func (_u *OrderStatusHistoryUpdate) SetNillableNewStatus(v *int64) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetNewStatus(*v)
 	}
-	return oshu
+	return _u
 }
 
-// AddNewStatus adds i to the "new_status" field.
-func (oshu *OrderStatusHistoryUpdate) AddNewStatus(i int64) *OrderStatusHistoryUpdate {
-	oshu.mutation.AddNewStatus(i)
-	return oshu
+// AddNewStatus adds value to the "new_status" field.
+func (_u *OrderStatusHistoryUpdate) AddNewStatus(v int64) *OrderStatusHistoryUpdate {
+	_u.mutation.AddNewStatus(v)
+	return _u
 }
 
 // ClearNewStatus clears the value of the "new_status" field.
-func (oshu *OrderStatusHistoryUpdate) ClearNewStatus() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearNewStatus()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearNewStatus() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearNewStatus()
+	return _u
 }
 
 // SetChangeSource sets the "change_source" field.
-func (oshu *OrderStatusHistoryUpdate) SetChangeSource(s string) *OrderStatusHistoryUpdate {
-	oshu.mutation.SetChangeSource(s)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetChangeSource(v string) *OrderStatusHistoryUpdate {
+	_u.mutation.SetChangeSource(v)
+	return _u
 }
 
 // SetNillableChangeSource sets the "change_source" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableChangeSource(s *string) *OrderStatusHistoryUpdate {
-	if s != nil {
-		oshu.SetChangeSource(*s)
+func (_u *OrderStatusHistoryUpdate) SetNillableChangeSource(v *string) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetChangeSource(*v)
 	}
-	return oshu
+	return _u
 }
 
 // ClearChangeSource clears the value of the "change_source" field.
-func (oshu *OrderStatusHistoryUpdate) ClearChangeSource() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearChangeSource()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearChangeSource() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearChangeSource()
+	return _u
 }
 
 // SetChangeReason sets the "change_reason" field.
-func (oshu *OrderStatusHistoryUpdate) SetChangeReason(s string) *OrderStatusHistoryUpdate {
-	oshu.mutation.SetChangeReason(s)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetChangeReason(v string) *OrderStatusHistoryUpdate {
+	_u.mutation.SetChangeReason(v)
+	return _u
 }
 
 // SetNillableChangeReason sets the "change_reason" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableChangeReason(s *string) *OrderStatusHistoryUpdate {
-	if s != nil {
-		oshu.SetChangeReason(*s)
+func (_u *OrderStatusHistoryUpdate) SetNillableChangeReason(v *string) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetChangeReason(*v)
 	}
-	return oshu
+	return _u
 }
 
 // ClearChangeReason clears the value of the "change_reason" field.
-func (oshu *OrderStatusHistoryUpdate) ClearChangeReason() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearChangeReason()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearChangeReason() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearChangeReason()
+	return _u
 }
 
 // SetChangeAt sets the "change_at" field.
-func (oshu *OrderStatusHistoryUpdate) SetChangeAt(t time.Time) *OrderStatusHistoryUpdate {
-	oshu.mutation.SetChangeAt(t)
-	return oshu
+func (_u *OrderStatusHistoryUpdate) SetChangeAt(v time.Time) *OrderStatusHistoryUpdate {
+	_u.mutation.SetChangeAt(v)
+	return _u
 }
 
 // SetNillableChangeAt sets the "change_at" field if the given value is not nil.
-func (oshu *OrderStatusHistoryUpdate) SetNillableChangeAt(t *time.Time) *OrderStatusHistoryUpdate {
-	if t != nil {
-		oshu.SetChangeAt(*t)
+func (_u *OrderStatusHistoryUpdate) SetNillableChangeAt(v *time.Time) *OrderStatusHistoryUpdate {
+	if v != nil {
+		_u.SetChangeAt(*v)
 	}
-	return oshu
+	return _u
 }
 
 // ClearChangeAt clears the value of the "change_at" field.
-func (oshu *OrderStatusHistoryUpdate) ClearChangeAt() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearChangeAt()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearChangeAt() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearChangeAt()
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oshu *OrderStatusHistoryUpdate) SetOrder(o *Order) *OrderStatusHistoryUpdate {
-	return oshu.SetOrderID(o.ID)
+func (_u *OrderStatusHistoryUpdate) SetOrder(v *Order) *OrderStatusHistoryUpdate {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderStatusHistoryMutation object of the builder.
-func (oshu *OrderStatusHistoryUpdate) Mutation() *OrderStatusHistoryMutation {
-	return oshu.mutation
+func (_u *OrderStatusHistoryUpdate) Mutation() *OrderStatusHistoryMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oshu *OrderStatusHistoryUpdate) ClearOrder() *OrderStatusHistoryUpdate {
-	oshu.mutation.ClearOrder()
-	return oshu
+func (_u *OrderStatusHistoryUpdate) ClearOrder() *OrderStatusHistoryUpdate {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (oshu *OrderStatusHistoryUpdate) Save(ctx context.Context) (int, error) {
-	oshu.defaults()
-	return withHooks(ctx, oshu.sqlSave, oshu.mutation, oshu.hooks)
+func (_u *OrderStatusHistoryUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oshu *OrderStatusHistoryUpdate) SaveX(ctx context.Context) int {
-	affected, err := oshu.Save(ctx)
+func (_u *OrderStatusHistoryUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -261,99 +261,99 @@ func (oshu *OrderStatusHistoryUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (oshu *OrderStatusHistoryUpdate) Exec(ctx context.Context) error {
-	_, err := oshu.Save(ctx)
+func (_u *OrderStatusHistoryUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oshu *OrderStatusHistoryUpdate) ExecX(ctx context.Context) {
-	if err := oshu.Exec(ctx); err != nil {
+func (_u *OrderStatusHistoryUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oshu *OrderStatusHistoryUpdate) defaults() {
-	if _, ok := oshu.mutation.UpdatedAt(); !ok && !oshu.mutation.UpdatedAtCleared() {
+func (_u *OrderStatusHistoryUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderstatushistory.UpdateDefaultUpdatedAt()
-		oshu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
+func (_u *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderstatushistory.Table, orderstatushistory.Columns, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
-	if ps := oshu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oshu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oshu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderstatushistory.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oshu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oshu.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderstatushistory.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oshu.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderstatushistory.FieldDelete, field.TypeInt64, value)
 	}
-	if oshu.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderstatushistory.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oshu.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderstatushistory.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oshu.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderstatushistory.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oshu.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderstatushistory.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oshu.mutation.OldStatus(); ok {
+	if value, ok := _u.mutation.OldStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldOldStatus, field.TypeInt64, value)
 	}
-	if value, ok := oshu.mutation.AddedOldStatus(); ok {
+	if value, ok := _u.mutation.AddedOldStatus(); ok {
 		_spec.AddField(orderstatushistory.FieldOldStatus, field.TypeInt64, value)
 	}
-	if oshu.mutation.OldStatusCleared() {
+	if _u.mutation.OldStatusCleared() {
 		_spec.ClearField(orderstatushistory.FieldOldStatus, field.TypeInt64)
 	}
-	if value, ok := oshu.mutation.NewStatus(); ok {
+	if value, ok := _u.mutation.NewStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldNewStatus, field.TypeInt64, value)
 	}
-	if value, ok := oshu.mutation.AddedNewStatus(); ok {
+	if value, ok := _u.mutation.AddedNewStatus(); ok {
 		_spec.AddField(orderstatushistory.FieldNewStatus, field.TypeInt64, value)
 	}
-	if oshu.mutation.NewStatusCleared() {
+	if _u.mutation.NewStatusCleared() {
 		_spec.ClearField(orderstatushistory.FieldNewStatus, field.TypeInt64)
 	}
-	if value, ok := oshu.mutation.ChangeSource(); ok {
+	if value, ok := _u.mutation.ChangeSource(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeSource, field.TypeString, value)
 	}
-	if oshu.mutation.ChangeSourceCleared() {
+	if _u.mutation.ChangeSourceCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeSource, field.TypeString)
 	}
-	if value, ok := oshu.mutation.ChangeReason(); ok {
+	if value, ok := _u.mutation.ChangeReason(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeReason, field.TypeString, value)
 	}
-	if oshu.mutation.ChangeReasonCleared() {
+	if _u.mutation.ChangeReasonCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeReason, field.TypeString)
 	}
-	if value, ok := oshu.mutation.ChangeAt(); ok {
+	if value, ok := _u.mutation.ChangeAt(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeAt, field.TypeTime, value)
 	}
-	if oshu.mutation.ChangeAtCleared() {
+	if _u.mutation.ChangeAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeAt, field.TypeTime)
 	}
-	if oshu.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -366,7 +366,7 @@ func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err e
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oshu.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -382,7 +382,7 @@ func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err e
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, oshu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderstatushistory.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -390,8 +390,8 @@ func (oshu *OrderStatusHistoryUpdate) sqlSave(ctx context.Context) (n int, err e
 		}
 		return 0, err
 	}
-	oshu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrderStatusHistoryUpdateOne is the builder for updating a single OrderStatusHistory entity.
@@ -403,243 +403,243 @@ type OrderStatusHistoryUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetUpdatedAt(t time.Time) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.SetUpdatedAt(t)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetUpdatedAt(v time.Time) *OrderStatusHistoryUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearUpdatedAt() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearUpdatedAt()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearUpdatedAt() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDelete sets the "delete" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetDelete(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ResetDelete()
-	oshuo.mutation.SetDelete(i)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetDelete(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.ResetDelete()
+	_u.mutation.SetDelete(v)
+	return _u
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableDelete(i *int64) *OrderStatusHistoryUpdateOne {
-	if i != nil {
-		oshuo.SetDelete(*i)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableDelete(v *int64) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetDelete(*v)
 	}
-	return oshuo
+	return _u
 }
 
-// AddDelete adds i to the "delete" field.
-func (oshuo *OrderStatusHistoryUpdateOne) AddDelete(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.AddDelete(i)
-	return oshuo
+// AddDelete adds value to the "delete" field.
+func (_u *OrderStatusHistoryUpdateOne) AddDelete(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.AddDelete(v)
+	return _u
 }
 
 // ClearDelete clears the value of the "delete" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearDelete() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearDelete()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearDelete() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearDelete()
+	return _u
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetCreatedID(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ResetCreatedID()
-	oshuo.mutation.SetCreatedID(i)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetCreatedID(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.ResetCreatedID()
+	_u.mutation.SetCreatedID(v)
+	return _u
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableCreatedID(i *int64) *OrderStatusHistoryUpdateOne {
-	if i != nil {
-		oshuo.SetCreatedID(*i)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableCreatedID(v *int64) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetCreatedID(*v)
 	}
-	return oshuo
+	return _u
 }
 
-// AddCreatedID adds i to the "created_id" field.
-func (oshuo *OrderStatusHistoryUpdateOne) AddCreatedID(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.AddCreatedID(i)
-	return oshuo
+// AddCreatedID adds value to the "created_id" field.
+func (_u *OrderStatusHistoryUpdateOne) AddCreatedID(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.AddCreatedID(v)
+	return _u
 }
 
 // ClearCreatedID clears the value of the "created_id" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearCreatedID() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearCreatedID()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearCreatedID() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearCreatedID()
+	return _u
 }
 
 // SetOrderID sets the "order_id" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetOrderID(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.SetOrderID(i)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetOrderID(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.SetOrderID(v)
+	return _u
 }
 
 // SetNillableOrderID sets the "order_id" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableOrderID(i *int64) *OrderStatusHistoryUpdateOne {
-	if i != nil {
-		oshuo.SetOrderID(*i)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableOrderID(v *int64) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetOrderID(*v)
 	}
-	return oshuo
+	return _u
 }
 
 // ClearOrderID clears the value of the "order_id" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearOrderID() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearOrderID()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearOrderID() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearOrderID()
+	return _u
 }
 
 // SetOldStatus sets the "old_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetOldStatus(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ResetOldStatus()
-	oshuo.mutation.SetOldStatus(i)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetOldStatus(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.ResetOldStatus()
+	_u.mutation.SetOldStatus(v)
+	return _u
 }
 
 // SetNillableOldStatus sets the "old_status" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableOldStatus(i *int64) *OrderStatusHistoryUpdateOne {
-	if i != nil {
-		oshuo.SetOldStatus(*i)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableOldStatus(v *int64) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetOldStatus(*v)
 	}
-	return oshuo
+	return _u
 }
 
-// AddOldStatus adds i to the "old_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) AddOldStatus(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.AddOldStatus(i)
-	return oshuo
+// AddOldStatus adds value to the "old_status" field.
+func (_u *OrderStatusHistoryUpdateOne) AddOldStatus(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.AddOldStatus(v)
+	return _u
 }
 
 // ClearOldStatus clears the value of the "old_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearOldStatus() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearOldStatus()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearOldStatus() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearOldStatus()
+	return _u
 }
 
 // SetNewStatus sets the "new_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNewStatus(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ResetNewStatus()
-	oshuo.mutation.SetNewStatus(i)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetNewStatus(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.ResetNewStatus()
+	_u.mutation.SetNewStatus(v)
+	return _u
 }
 
 // SetNillableNewStatus sets the "new_status" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableNewStatus(i *int64) *OrderStatusHistoryUpdateOne {
-	if i != nil {
-		oshuo.SetNewStatus(*i)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableNewStatus(v *int64) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetNewStatus(*v)
 	}
-	return oshuo
+	return _u
 }
 
-// AddNewStatus adds i to the "new_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) AddNewStatus(i int64) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.AddNewStatus(i)
-	return oshuo
+// AddNewStatus adds value to the "new_status" field.
+func (_u *OrderStatusHistoryUpdateOne) AddNewStatus(v int64) *OrderStatusHistoryUpdateOne {
+	_u.mutation.AddNewStatus(v)
+	return _u
 }
 
 // ClearNewStatus clears the value of the "new_status" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearNewStatus() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearNewStatus()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearNewStatus() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearNewStatus()
+	return _u
 }
 
 // SetChangeSource sets the "change_source" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetChangeSource(s string) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.SetChangeSource(s)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetChangeSource(v string) *OrderStatusHistoryUpdateOne {
+	_u.mutation.SetChangeSource(v)
+	return _u
 }
 
 // SetNillableChangeSource sets the "change_source" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableChangeSource(s *string) *OrderStatusHistoryUpdateOne {
-	if s != nil {
-		oshuo.SetChangeSource(*s)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableChangeSource(v *string) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetChangeSource(*v)
 	}
-	return oshuo
+	return _u
 }
 
 // ClearChangeSource clears the value of the "change_source" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearChangeSource() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearChangeSource()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearChangeSource() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearChangeSource()
+	return _u
 }
 
 // SetChangeReason sets the "change_reason" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetChangeReason(s string) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.SetChangeReason(s)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetChangeReason(v string) *OrderStatusHistoryUpdateOne {
+	_u.mutation.SetChangeReason(v)
+	return _u
 }
 
 // SetNillableChangeReason sets the "change_reason" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableChangeReason(s *string) *OrderStatusHistoryUpdateOne {
-	if s != nil {
-		oshuo.SetChangeReason(*s)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableChangeReason(v *string) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetChangeReason(*v)
 	}
-	return oshuo
+	return _u
 }
 
 // ClearChangeReason clears the value of the "change_reason" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearChangeReason() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearChangeReason()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearChangeReason() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearChangeReason()
+	return _u
 }
 
 // SetChangeAt sets the "change_at" field.
-func (oshuo *OrderStatusHistoryUpdateOne) SetChangeAt(t time.Time) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.SetChangeAt(t)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) SetChangeAt(v time.Time) *OrderStatusHistoryUpdateOne {
+	_u.mutation.SetChangeAt(v)
+	return _u
 }
 
 // SetNillableChangeAt sets the "change_at" field if the given value is not nil.
-func (oshuo *OrderStatusHistoryUpdateOne) SetNillableChangeAt(t *time.Time) *OrderStatusHistoryUpdateOne {
-	if t != nil {
-		oshuo.SetChangeAt(*t)
+func (_u *OrderStatusHistoryUpdateOne) SetNillableChangeAt(v *time.Time) *OrderStatusHistoryUpdateOne {
+	if v != nil {
+		_u.SetChangeAt(*v)
 	}
-	return oshuo
+	return _u
 }
 
 // ClearChangeAt clears the value of the "change_at" field.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearChangeAt() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearChangeAt()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearChangeAt() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearChangeAt()
+	return _u
 }
 
 // SetOrder sets the "order" edge to the Order entity.
-func (oshuo *OrderStatusHistoryUpdateOne) SetOrder(o *Order) *OrderStatusHistoryUpdateOne {
-	return oshuo.SetOrderID(o.ID)
+func (_u *OrderStatusHistoryUpdateOne) SetOrder(v *Order) *OrderStatusHistoryUpdateOne {
+	return _u.SetOrderID(v.ID)
 }
 
 // Mutation returns the OrderStatusHistoryMutation object of the builder.
-func (oshuo *OrderStatusHistoryUpdateOne) Mutation() *OrderStatusHistoryMutation {
-	return oshuo.mutation
+func (_u *OrderStatusHistoryUpdateOne) Mutation() *OrderStatusHistoryMutation {
+	return _u.mutation
 }
 
 // ClearOrder clears the "order" edge to the Order entity.
-func (oshuo *OrderStatusHistoryUpdateOne) ClearOrder() *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.ClearOrder()
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) ClearOrder() *OrderStatusHistoryUpdateOne {
+	_u.mutation.ClearOrder()
+	return _u
 }
 
 // Where appends a list predicates to the OrderStatusHistoryUpdate builder.
-func (oshuo *OrderStatusHistoryUpdateOne) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryUpdateOne {
-	oshuo.mutation.Where(ps...)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (oshuo *OrderStatusHistoryUpdateOne) Select(field string, fields ...string) *OrderStatusHistoryUpdateOne {
-	oshuo.fields = append([]string{field}, fields...)
-	return oshuo
+func (_u *OrderStatusHistoryUpdateOne) Select(field string, fields ...string) *OrderStatusHistoryUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrderStatusHistory entity.
-func (oshuo *OrderStatusHistoryUpdateOne) Save(ctx context.Context) (*OrderStatusHistory, error) {
-	oshuo.defaults()
-	return withHooks(ctx, oshuo.sqlSave, oshuo.mutation, oshuo.hooks)
+func (_u *OrderStatusHistoryUpdateOne) Save(ctx context.Context) (*OrderStatusHistory, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oshuo *OrderStatusHistoryUpdateOne) SaveX(ctx context.Context) *OrderStatusHistory {
-	node, err := oshuo.Save(ctx)
+func (_u *OrderStatusHistoryUpdateOne) SaveX(ctx context.Context) *OrderStatusHistory {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -647,34 +647,34 @@ func (oshuo *OrderStatusHistoryUpdateOne) SaveX(ctx context.Context) *OrderStatu
 }
 
 // Exec executes the query on the entity.
-func (oshuo *OrderStatusHistoryUpdateOne) Exec(ctx context.Context) error {
-	_, err := oshuo.Save(ctx)
+func (_u *OrderStatusHistoryUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oshuo *OrderStatusHistoryUpdateOne) ExecX(ctx context.Context) {
-	if err := oshuo.Exec(ctx); err != nil {
+func (_u *OrderStatusHistoryUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oshuo *OrderStatusHistoryUpdateOne) defaults() {
-	if _, ok := oshuo.mutation.UpdatedAt(); !ok && !oshuo.mutation.UpdatedAtCleared() {
+func (_u *OrderStatusHistoryUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orderstatushistory.UpdateDefaultUpdatedAt()
-		oshuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
-func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *OrderStatusHistory, err error) {
+func (_u *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *OrderStatusHistory, err error) {
 	_spec := sqlgraph.NewUpdateSpec(orderstatushistory.Table, orderstatushistory.Columns, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
-	id, ok := oshuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "OrderStatusHistory.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := oshuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orderstatushistory.FieldID)
 		for _, f := range fields {
@@ -686,77 +686,77 @@ func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *O
 			}
 		}
 	}
-	if ps := oshuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if oshuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oshuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orderstatushistory.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oshuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oshuo.mutation.Delete(); ok {
+	if value, ok := _u.mutation.Delete(); ok {
 		_spec.SetField(orderstatushistory.FieldDelete, field.TypeInt64, value)
 	}
-	if value, ok := oshuo.mutation.AddedDelete(); ok {
+	if value, ok := _u.mutation.AddedDelete(); ok {
 		_spec.AddField(orderstatushistory.FieldDelete, field.TypeInt64, value)
 	}
-	if oshuo.mutation.DeleteCleared() {
+	if _u.mutation.DeleteCleared() {
 		_spec.ClearField(orderstatushistory.FieldDelete, field.TypeInt64)
 	}
-	if value, ok := oshuo.mutation.CreatedID(); ok {
+	if value, ok := _u.mutation.CreatedID(); ok {
 		_spec.SetField(orderstatushistory.FieldCreatedID, field.TypeInt64, value)
 	}
-	if value, ok := oshuo.mutation.AddedCreatedID(); ok {
+	if value, ok := _u.mutation.AddedCreatedID(); ok {
 		_spec.AddField(orderstatushistory.FieldCreatedID, field.TypeInt64, value)
 	}
-	if oshuo.mutation.CreatedIDCleared() {
+	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(orderstatushistory.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := oshuo.mutation.OldStatus(); ok {
+	if value, ok := _u.mutation.OldStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldOldStatus, field.TypeInt64, value)
 	}
-	if value, ok := oshuo.mutation.AddedOldStatus(); ok {
+	if value, ok := _u.mutation.AddedOldStatus(); ok {
 		_spec.AddField(orderstatushistory.FieldOldStatus, field.TypeInt64, value)
 	}
-	if oshuo.mutation.OldStatusCleared() {
+	if _u.mutation.OldStatusCleared() {
 		_spec.ClearField(orderstatushistory.FieldOldStatus, field.TypeInt64)
 	}
-	if value, ok := oshuo.mutation.NewStatus(); ok {
+	if value, ok := _u.mutation.NewStatus(); ok {
 		_spec.SetField(orderstatushistory.FieldNewStatus, field.TypeInt64, value)
 	}
-	if value, ok := oshuo.mutation.AddedNewStatus(); ok {
+	if value, ok := _u.mutation.AddedNewStatus(); ok {
 		_spec.AddField(orderstatushistory.FieldNewStatus, field.TypeInt64, value)
 	}
-	if oshuo.mutation.NewStatusCleared() {
+	if _u.mutation.NewStatusCleared() {
 		_spec.ClearField(orderstatushistory.FieldNewStatus, field.TypeInt64)
 	}
-	if value, ok := oshuo.mutation.ChangeSource(); ok {
+	if value, ok := _u.mutation.ChangeSource(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeSource, field.TypeString, value)
 	}
-	if oshuo.mutation.ChangeSourceCleared() {
+	if _u.mutation.ChangeSourceCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeSource, field.TypeString)
 	}
-	if value, ok := oshuo.mutation.ChangeReason(); ok {
+	if value, ok := _u.mutation.ChangeReason(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeReason, field.TypeString, value)
 	}
-	if oshuo.mutation.ChangeReasonCleared() {
+	if _u.mutation.ChangeReasonCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeReason, field.TypeString)
 	}
-	if value, ok := oshuo.mutation.ChangeAt(); ok {
+	if value, ok := _u.mutation.ChangeAt(); ok {
 		_spec.SetField(orderstatushistory.FieldChangeAt, field.TypeTime, value)
 	}
-	if oshuo.mutation.ChangeAtCleared() {
+	if _u.mutation.ChangeAtCleared() {
 		_spec.ClearField(orderstatushistory.FieldChangeAt, field.TypeTime)
 	}
-	if oshuo.mutation.OrderCleared() {
+	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -769,7 +769,7 @@ func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *O
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oshuo.mutation.OrderIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -785,10 +785,10 @@ func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *O
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_node = &OrderStatusHistory{config: oshuo.config}
+	_node = &OrderStatusHistory{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, oshuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orderstatushistory.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -796,6 +796,6 @@ func (oshuo *OrderStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_node *O
 		}
 		return nil, err
 	}
-	oshuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

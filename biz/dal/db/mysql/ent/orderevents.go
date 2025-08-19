@@ -25,7 +25,7 @@ type OrderEvents struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// last delete  1:已删除
+	// last delete  1:已删除 0:未删除
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
@@ -89,7 +89,7 @@ func (*OrderEvents) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrderEvents fields.
-func (oe *OrderEvents) assignValues(columns []string, values []any) error {
+func (_m *OrderEvents) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -100,60 +100,60 @@ func (oe *OrderEvents) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			oe.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case orderevents.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				oe.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case orderevents.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				oe.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case orderevents.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				oe.Delete = value.Int64
+				_m.Delete = value.Int64
 			}
 		case orderevents.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				oe.CreatedID = value.Int64
+				_m.CreatedID = value.Int64
 			}
 		case orderevents.FieldEventID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field event_id", values[i])
 			} else if value.Valid {
-				oe.EventID = value.String
+				_m.EventID = value.String
 			}
 		case orderevents.FieldAggregateID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_id", values[i])
 			} else if value.Valid {
-				oe.AggregateID = value.Int64
+				_m.AggregateID = value.Int64
 			}
 		case orderevents.FieldAggregateType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_type", values[i])
 			} else if value.Valid {
-				oe.AggregateType = value.String
+				_m.AggregateType = value.String
 			}
 		case orderevents.FieldEventType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field event_type", values[i])
 			} else if value.Valid {
-				oe.EventType = value.String
+				_m.EventType = value.String
 			}
 		case orderevents.FieldEventData:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field event_data", values[i])
 			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &oe.EventData); err != nil {
+				if err := json.Unmarshal(*value, &_m.EventData); err != nil {
 					return fmt.Errorf("unmarshal field event_data: %w", err)
 				}
 			}
@@ -161,10 +161,10 @@ func (oe *OrderEvents) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field event_version", values[i])
 			} else if value.Valid {
-				oe.EventVersion = value.Int64
+				_m.EventVersion = value.Int64
 			}
 		default:
-			oe.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -172,67 +172,67 @@ func (oe *OrderEvents) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrderEvents.
 // This includes values selected through modifiers, order, etc.
-func (oe *OrderEvents) Value(name string) (ent.Value, error) {
-	return oe.selectValues.Get(name)
+func (_m *OrderEvents) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryOrder queries the "order" edge of the OrderEvents entity.
-func (oe *OrderEvents) QueryOrder() *OrderQuery {
-	return NewOrderEventsClient(oe.config).QueryOrder(oe)
+func (_m *OrderEvents) QueryOrder() *OrderQuery {
+	return NewOrderEventsClient(_m.config).QueryOrder(_m)
 }
 
 // Update returns a builder for updating this OrderEvents.
 // Note that you need to call OrderEvents.Unwrap() before calling this method if this OrderEvents
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (oe *OrderEvents) Update() *OrderEventsUpdateOne {
-	return NewOrderEventsClient(oe.config).UpdateOne(oe)
+func (_m *OrderEvents) Update() *OrderEventsUpdateOne {
+	return NewOrderEventsClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrderEvents entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (oe *OrderEvents) Unwrap() *OrderEvents {
-	_tx, ok := oe.config.driver.(*txDriver)
+func (_m *OrderEvents) Unwrap() *OrderEvents {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: OrderEvents is not a transactional entity")
 	}
-	oe.config.driver = _tx.drv
-	return oe
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (oe *OrderEvents) String() string {
+func (_m *OrderEvents) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrderEvents(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", oe.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(oe.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(oe.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", oe.Delete))
+	builder.WriteString(fmt.Sprintf("%v", _m.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", oe.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("event_id=")
-	builder.WriteString(oe.EventID)
+	builder.WriteString(_m.EventID)
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_id=")
-	builder.WriteString(fmt.Sprintf("%v", oe.AggregateID))
+	builder.WriteString(fmt.Sprintf("%v", _m.AggregateID))
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_type=")
-	builder.WriteString(oe.AggregateType)
+	builder.WriteString(_m.AggregateType)
 	builder.WriteString(", ")
 	builder.WriteString("event_type=")
-	builder.WriteString(oe.EventType)
+	builder.WriteString(_m.EventType)
 	builder.WriteString(", ")
 	builder.WriteString("event_data=")
-	builder.WriteString(fmt.Sprintf("%v", oe.EventData))
+	builder.WriteString(fmt.Sprintf("%v", _m.EventData))
 	builder.WriteString(", ")
 	builder.WriteString("event_version=")
-	builder.WriteString(fmt.Sprintf("%v", oe.EventVersion))
+	builder.WriteString(fmt.Sprintf("%v", _m.EventVersion))
 	builder.WriteByte(')')
 	return builder.String()
 }

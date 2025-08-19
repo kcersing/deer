@@ -27,245 +27,245 @@ type OrderCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (oc *OrderCreate) SetCreatedAt(t time.Time) *OrderCreate {
-	oc.mutation.SetCreatedAt(t)
-	return oc
+func (_c *OrderCreate) SetCreatedAt(v time.Time) *OrderCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableCreatedAt(t *time.Time) *OrderCreate {
-	if t != nil {
-		oc.SetCreatedAt(*t)
+func (_c *OrderCreate) SetNillableCreatedAt(v *time.Time) *OrderCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oc *OrderCreate) SetUpdatedAt(t time.Time) *OrderCreate {
-	oc.mutation.SetUpdatedAt(t)
-	return oc
+func (_c *OrderCreate) SetUpdatedAt(v time.Time) *OrderCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableUpdatedAt(t *time.Time) *OrderCreate {
-	if t != nil {
-		oc.SetUpdatedAt(*t)
+func (_c *OrderCreate) SetNillableUpdatedAt(v *time.Time) *OrderCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetDelete sets the "delete" field.
-func (oc *OrderCreate) SetDelete(i int64) *OrderCreate {
-	oc.mutation.SetDelete(i)
-	return oc
+func (_c *OrderCreate) SetDelete(v int64) *OrderCreate {
+	_c.mutation.SetDelete(v)
+	return _c
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableDelete(i *int64) *OrderCreate {
-	if i != nil {
-		oc.SetDelete(*i)
+func (_c *OrderCreate) SetNillableDelete(v *int64) *OrderCreate {
+	if v != nil {
+		_c.SetDelete(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oc *OrderCreate) SetCreatedID(i int64) *OrderCreate {
-	oc.mutation.SetCreatedID(i)
-	return oc
+func (_c *OrderCreate) SetCreatedID(v int64) *OrderCreate {
+	_c.mutation.SetCreatedID(v)
+	return _c
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableCreatedID(i *int64) *OrderCreate {
-	if i != nil {
-		oc.SetCreatedID(*i)
+func (_c *OrderCreate) SetNillableCreatedID(v *int64) *OrderCreate {
+	if v != nil {
+		_c.SetCreatedID(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetOrderSn sets the "order_sn" field.
-func (oc *OrderCreate) SetOrderSn(s string) *OrderCreate {
-	oc.mutation.SetOrderSn(s)
-	return oc
+func (_c *OrderCreate) SetOrderSn(v string) *OrderCreate {
+	_c.mutation.SetOrderSn(v)
+	return _c
 }
 
 // SetMemberID sets the "member_id" field.
-func (oc *OrderCreate) SetMemberID(i int64) *OrderCreate {
-	oc.mutation.SetMemberID(i)
-	return oc
+func (_c *OrderCreate) SetMemberID(v int64) *OrderCreate {
+	_c.mutation.SetMemberID(v)
+	return _c
 }
 
 // SetNillableMemberID sets the "member_id" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableMemberID(i *int64) *OrderCreate {
-	if i != nil {
-		oc.SetMemberID(*i)
+func (_c *OrderCreate) SetNillableMemberID(v *int64) *OrderCreate {
+	if v != nil {
+		_c.SetMemberID(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetStatus sets the "status" field.
-func (oc *OrderCreate) SetStatus(s string) *OrderCreate {
-	oc.mutation.SetStatus(s)
-	return oc
+func (_c *OrderCreate) SetStatus(v string) *OrderCreate {
+	_c.mutation.SetStatus(v)
+	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableStatus(s *string) *OrderCreate {
-	if s != nil {
-		oc.SetStatus(*s)
+func (_c *OrderCreate) SetNillableStatus(v *string) *OrderCreate {
+	if v != nil {
+		_c.SetStatus(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetNature sets the "nature" field.
-func (oc *OrderCreate) SetNature(i int64) *OrderCreate {
-	oc.mutation.SetNature(i)
-	return oc
+func (_c *OrderCreate) SetNature(v int64) *OrderCreate {
+	_c.mutation.SetNature(v)
+	return _c
 }
 
 // SetNillableNature sets the "nature" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableNature(i *int64) *OrderCreate {
-	if i != nil {
-		oc.SetNature(*i)
+func (_c *OrderCreate) SetNillableNature(v *int64) *OrderCreate {
+	if v != nil {
+		_c.SetNature(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetCompletionAt sets the "completion_at" field.
-func (oc *OrderCreate) SetCompletionAt(t time.Time) *OrderCreate {
-	oc.mutation.SetCompletionAt(t)
-	return oc
+func (_c *OrderCreate) SetCompletionAt(v time.Time) *OrderCreate {
+	_c.mutation.SetCompletionAt(v)
+	return _c
 }
 
 // SetNillableCompletionAt sets the "completion_at" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableCompletionAt(t *time.Time) *OrderCreate {
-	if t != nil {
-		oc.SetCompletionAt(*t)
+func (_c *OrderCreate) SetNillableCompletionAt(v *time.Time) *OrderCreate {
+	if v != nil {
+		_c.SetCompletionAt(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetCloseAt sets the "close_at" field.
-func (oc *OrderCreate) SetCloseAt(t time.Time) *OrderCreate {
-	oc.mutation.SetCloseAt(t)
-	return oc
+func (_c *OrderCreate) SetCloseAt(v time.Time) *OrderCreate {
+	_c.mutation.SetCloseAt(v)
+	return _c
 }
 
 // SetNillableCloseAt sets the "close_at" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableCloseAt(t *time.Time) *OrderCreate {
-	if t != nil {
-		oc.SetCloseAt(*t)
+func (_c *OrderCreate) SetNillableCloseAt(v *time.Time) *OrderCreate {
+	if v != nil {
+		_c.SetCloseAt(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetRefundAt sets the "refund_at" field.
-func (oc *OrderCreate) SetRefundAt(t time.Time) *OrderCreate {
-	oc.mutation.SetRefundAt(t)
-	return oc
+func (_c *OrderCreate) SetRefundAt(v time.Time) *OrderCreate {
+	_c.mutation.SetRefundAt(v)
+	return _c
 }
 
 // SetNillableRefundAt sets the "refund_at" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableRefundAt(t *time.Time) *OrderCreate {
-	if t != nil {
-		oc.SetRefundAt(*t)
+func (_c *OrderCreate) SetNillableRefundAt(v *time.Time) *OrderCreate {
+	if v != nil {
+		_c.SetRefundAt(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetVersion sets the "version" field.
-func (oc *OrderCreate) SetVersion(i int64) *OrderCreate {
-	oc.mutation.SetVersion(i)
-	return oc
+func (_c *OrderCreate) SetVersion(v int64) *OrderCreate {
+	_c.mutation.SetVersion(v)
+	return _c
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (oc *OrderCreate) SetNillableVersion(i *int64) *OrderCreate {
-	if i != nil {
-		oc.SetVersion(*i)
+func (_c *OrderCreate) SetNillableVersion(v *int64) *OrderCreate {
+	if v != nil {
+		_c.SetVersion(*v)
 	}
-	return oc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (oc *OrderCreate) SetID(i int64) *OrderCreate {
-	oc.mutation.SetID(i)
-	return oc
+func (_c *OrderCreate) SetID(v int64) *OrderCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // AddItemIDs adds the "items" edge to the OrderItem entity by IDs.
-func (oc *OrderCreate) AddItemIDs(ids ...int64) *OrderCreate {
-	oc.mutation.AddItemIDs(ids...)
-	return oc
+func (_c *OrderCreate) AddItemIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddItemIDs(ids...)
+	return _c
 }
 
 // AddItems adds the "items" edges to the OrderItem entity.
-func (oc *OrderCreate) AddItems(o ...*OrderItem) *OrderCreate {
-	ids := make([]int64, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrderCreate) AddItems(v ...*OrderItem) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oc.AddItemIDs(ids...)
+	return _c.AddItemIDs(ids...)
 }
 
 // AddEventIDs adds the "events" edge to the OrderEvents entity by IDs.
-func (oc *OrderCreate) AddEventIDs(ids ...int64) *OrderCreate {
-	oc.mutation.AddEventIDs(ids...)
-	return oc
+func (_c *OrderCreate) AddEventIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddEventIDs(ids...)
+	return _c
 }
 
 // AddEvents adds the "events" edges to the OrderEvents entity.
-func (oc *OrderCreate) AddEvents(o ...*OrderEvents) *OrderCreate {
-	ids := make([]int64, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrderCreate) AddEvents(v ...*OrderEvents) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oc.AddEventIDs(ids...)
+	return _c.AddEventIDs(ids...)
 }
 
 // AddSnapshotIDs adds the "snapshots" edge to the OrderSnapshots entity by IDs.
-func (oc *OrderCreate) AddSnapshotIDs(ids ...int64) *OrderCreate {
-	oc.mutation.AddSnapshotIDs(ids...)
-	return oc
+func (_c *OrderCreate) AddSnapshotIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddSnapshotIDs(ids...)
+	return _c
 }
 
 // AddSnapshots adds the "snapshots" edges to the OrderSnapshots entity.
-func (oc *OrderCreate) AddSnapshots(o ...*OrderSnapshots) *OrderCreate {
-	ids := make([]int64, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrderCreate) AddSnapshots(v ...*OrderSnapshots) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oc.AddSnapshotIDs(ids...)
+	return _c.AddSnapshotIDs(ids...)
 }
 
 // AddStatusHistoryIDs adds the "status_history" edge to the OrderStatusHistory entity by IDs.
-func (oc *OrderCreate) AddStatusHistoryIDs(ids ...int64) *OrderCreate {
-	oc.mutation.AddStatusHistoryIDs(ids...)
-	return oc
+func (_c *OrderCreate) AddStatusHistoryIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddStatusHistoryIDs(ids...)
+	return _c
 }
 
 // AddStatusHistory adds the "status_history" edges to the OrderStatusHistory entity.
-func (oc *OrderCreate) AddStatusHistory(o ...*OrderStatusHistory) *OrderCreate {
-	ids := make([]int64, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrderCreate) AddStatusHistory(v ...*OrderStatusHistory) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oc.AddStatusHistoryIDs(ids...)
+	return _c.AddStatusHistoryIDs(ids...)
 }
 
 // Mutation returns the OrderMutation object of the builder.
-func (oc *OrderCreate) Mutation() *OrderMutation {
-	return oc.mutation
+func (_c *OrderCreate) Mutation() *OrderMutation {
+	return _c.mutation
 }
 
 // Save creates the Order in the database.
-func (oc *OrderCreate) Save(ctx context.Context) (*Order, error) {
-	oc.defaults()
-	return withHooks(ctx, oc.sqlSave, oc.mutation, oc.hooks)
+func (_c *OrderCreate) Save(ctx context.Context) (*Order, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (oc *OrderCreate) SaveX(ctx context.Context) *Order {
-	v, err := oc.Save(ctx)
+func (_c *OrderCreate) SaveX(ctx context.Context) *Order {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -273,52 +273,52 @@ func (oc *OrderCreate) SaveX(ctx context.Context) *Order {
 }
 
 // Exec executes the query.
-func (oc *OrderCreate) Exec(ctx context.Context) error {
-	_, err := oc.Save(ctx)
+func (_c *OrderCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oc *OrderCreate) ExecX(ctx context.Context) {
-	if err := oc.Exec(ctx); err != nil {
+func (_c *OrderCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oc *OrderCreate) defaults() {
-	if _, ok := oc.mutation.CreatedAt(); !ok {
+func (_c *OrderCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := order.DefaultCreatedAt()
-		oc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := oc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := order.DefaultUpdatedAt()
-		oc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := oc.mutation.Delete(); !ok {
+	if _, ok := _c.mutation.Delete(); !ok {
 		v := order.DefaultDelete
-		oc.mutation.SetDelete(v)
+		_c.mutation.SetDelete(v)
 	}
-	if _, ok := oc.mutation.CreatedID(); !ok {
+	if _, ok := _c.mutation.CreatedID(); !ok {
 		v := order.DefaultCreatedID
-		oc.mutation.SetCreatedID(v)
+		_c.mutation.SetCreatedID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (oc *OrderCreate) check() error {
-	if _, ok := oc.mutation.OrderSn(); !ok {
+func (_c *OrderCreate) check() error {
+	if _, ok := _c.mutation.OrderSn(); !ok {
 		return &ValidationError{Name: "order_sn", err: errors.New(`ent: missing required field "Order.order_sn"`)}
 	}
 	return nil
 }
 
-func (oc *OrderCreate) sqlSave(ctx context.Context) (*Order, error) {
-	if err := oc.check(); err != nil {
+func (_c *OrderCreate) sqlSave(ctx context.Context) (*Order, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := oc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, oc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -328,70 +328,70 @@ func (oc *OrderCreate) sqlSave(ctx context.Context) (*Order, error) {
 		id := _spec.ID.Value.(int64)
 		_node.ID = int64(id)
 	}
-	oc.mutation.id = &_node.ID
-	oc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
+func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Order{config: oc.config}
+		_node = &Order{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(order.Table, sqlgraph.NewFieldSpec(order.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = oc.conflict
-	if id, ok := oc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := oc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(order.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := oc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(order.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := oc.mutation.Delete(); ok {
+	if value, ok := _c.mutation.Delete(); ok {
 		_spec.SetField(order.FieldDelete, field.TypeInt64, value)
 		_node.Delete = value
 	}
-	if value, ok := oc.mutation.CreatedID(); ok {
+	if value, ok := _c.mutation.CreatedID(); ok {
 		_spec.SetField(order.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := oc.mutation.OrderSn(); ok {
+	if value, ok := _c.mutation.OrderSn(); ok {
 		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
 		_node.OrderSn = value
 	}
-	if value, ok := oc.mutation.MemberID(); ok {
+	if value, ok := _c.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
 		_node.MemberID = value
 	}
-	if value, ok := oc.mutation.Status(); ok {
+	if value, ok := _c.mutation.Status(); ok {
 		_spec.SetField(order.FieldStatus, field.TypeString, value)
 		_node.Status = value
 	}
-	if value, ok := oc.mutation.Nature(); ok {
+	if value, ok := _c.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
 		_node.Nature = value
 	}
-	if value, ok := oc.mutation.CompletionAt(); ok {
+	if value, ok := _c.mutation.CompletionAt(); ok {
 		_spec.SetField(order.FieldCompletionAt, field.TypeTime, value)
 		_node.CompletionAt = value
 	}
-	if value, ok := oc.mutation.CloseAt(); ok {
+	if value, ok := _c.mutation.CloseAt(); ok {
 		_spec.SetField(order.FieldCloseAt, field.TypeTime, value)
 		_node.CloseAt = value
 	}
-	if value, ok := oc.mutation.RefundAt(); ok {
+	if value, ok := _c.mutation.RefundAt(); ok {
 		_spec.SetField(order.FieldRefundAt, field.TypeTime, value)
 		_node.RefundAt = value
 	}
-	if value, ok := oc.mutation.Version(); ok {
+	if value, ok := _c.mutation.Version(); ok {
 		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
 		_node.Version = value
 	}
-	if nodes := oc.mutation.ItemsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -407,7 +407,7 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := oc.mutation.EventsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.EventsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -423,7 +423,7 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := oc.mutation.SnapshotsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.SnapshotsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -439,7 +439,7 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := oc.mutation.StatusHistoryIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.StatusHistoryIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -474,10 +474,10 @@ func (oc *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oc *OrderCreate) OnConflict(opts ...sql.ConflictOption) *OrderUpsertOne {
-	oc.conflict = opts
+func (_c *OrderCreate) OnConflict(opts ...sql.ConflictOption) *OrderUpsertOne {
+	_c.conflict = opts
 	return &OrderUpsertOne{
-		create: oc,
+		create: _c,
 	}
 }
 
@@ -487,10 +487,10 @@ func (oc *OrderCreate) OnConflict(opts ...sql.ConflictOption) *OrderUpsertOne {
 //	client.Order.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oc *OrderCreate) OnConflictColumns(columns ...string) *OrderUpsertOne {
-	oc.conflict = append(oc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderCreate) OnConflictColumns(columns ...string) *OrderUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderUpsertOne{
-		create: oc,
+		create: _c,
 	}
 }
 
@@ -1081,16 +1081,16 @@ type OrderCreateBulk struct {
 }
 
 // Save creates the Order entities in the database.
-func (ocb *OrderCreateBulk) Save(ctx context.Context) ([]*Order, error) {
-	if ocb.err != nil {
-		return nil, ocb.err
+func (_c *OrderCreateBulk) Save(ctx context.Context) ([]*Order, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(ocb.builders))
-	nodes := make([]*Order, len(ocb.builders))
-	mutators := make([]Mutator, len(ocb.builders))
-	for i := range ocb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*Order, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := ocb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrderMutation)
@@ -1104,12 +1104,12 @@ func (ocb *OrderCreateBulk) Save(ctx context.Context) ([]*Order, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, ocb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = ocb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, ocb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1133,7 +1133,7 @@ func (ocb *OrderCreateBulk) Save(ctx context.Context) ([]*Order, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, ocb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1141,8 +1141,8 @@ func (ocb *OrderCreateBulk) Save(ctx context.Context) ([]*Order, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (ocb *OrderCreateBulk) SaveX(ctx context.Context) []*Order {
-	v, err := ocb.Save(ctx)
+func (_c *OrderCreateBulk) SaveX(ctx context.Context) []*Order {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1150,14 +1150,14 @@ func (ocb *OrderCreateBulk) SaveX(ctx context.Context) []*Order {
 }
 
 // Exec executes the query.
-func (ocb *OrderCreateBulk) Exec(ctx context.Context) error {
-	_, err := ocb.Save(ctx)
+func (_c *OrderCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ocb *OrderCreateBulk) ExecX(ctx context.Context) {
-	if err := ocb.Exec(ctx); err != nil {
+func (_c *OrderCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1177,10 +1177,10 @@ func (ocb *OrderCreateBulk) ExecX(ctx context.Context) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (ocb *OrderCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderUpsertBulk {
-	ocb.conflict = opts
+func (_c *OrderCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderUpsertBulk {
+	_c.conflict = opts
 	return &OrderUpsertBulk{
-		create: ocb,
+		create: _c,
 	}
 }
 
@@ -1190,10 +1190,10 @@ func (ocb *OrderCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderUpsertB
 //	client.Order.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (ocb *OrderCreateBulk) OnConflictColumns(columns ...string) *OrderUpsertBulk {
-	ocb.conflict = append(ocb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderCreateBulk) OnConflictColumns(columns ...string) *OrderUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderUpsertBulk{
-		create: ocb,
+		create: _c,
 	}
 }
 

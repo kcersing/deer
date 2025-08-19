@@ -25,7 +25,7 @@ type OrderSnapshots struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// last delete  1:已删除
+	// last delete  1:已删除 0:未删除
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
@@ -81,7 +81,7 @@ func (*OrderSnapshots) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrderSnapshots fields.
-func (os *OrderSnapshots) assignValues(columns []string, values []any) error {
+func (_m *OrderSnapshots) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -92,53 +92,53 @@ func (os *OrderSnapshots) assignValues(columns []string, values []any) error {
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			os.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case ordersnapshots.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				os.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case ordersnapshots.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				os.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case ordersnapshots.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				os.Delete = value.Int64
+				_m.Delete = value.Int64
 			}
 		case ordersnapshots.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				os.CreatedID = value.Int64
+				_m.CreatedID = value.Int64
 			}
 		case ordersnapshots.FieldAggregateID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_id", values[i])
 			} else if value.Valid {
-				os.AggregateID = value.Int64
+				_m.AggregateID = value.Int64
 			}
 		case ordersnapshots.FieldAggregateVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_version", values[i])
 			} else if value.Valid {
-				os.AggregateVersion = value.Int64
+				_m.AggregateVersion = value.Int64
 			}
 		case ordersnapshots.FieldAggregateData:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_data", values[i])
 			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &os.AggregateData); err != nil {
+				if err := json.Unmarshal(*value, &_m.AggregateData); err != nil {
 					return fmt.Errorf("unmarshal field aggregate_data: %w", err)
 				}
 			}
 		default:
-			os.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -146,58 +146,58 @@ func (os *OrderSnapshots) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrderSnapshots.
 // This includes values selected through modifiers, order, etc.
-func (os *OrderSnapshots) Value(name string) (ent.Value, error) {
-	return os.selectValues.Get(name)
+func (_m *OrderSnapshots) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryOrder queries the "order" edge of the OrderSnapshots entity.
-func (os *OrderSnapshots) QueryOrder() *OrderQuery {
-	return NewOrderSnapshotsClient(os.config).QueryOrder(os)
+func (_m *OrderSnapshots) QueryOrder() *OrderQuery {
+	return NewOrderSnapshotsClient(_m.config).QueryOrder(_m)
 }
 
 // Update returns a builder for updating this OrderSnapshots.
 // Note that you need to call OrderSnapshots.Unwrap() before calling this method if this OrderSnapshots
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (os *OrderSnapshots) Update() *OrderSnapshotsUpdateOne {
-	return NewOrderSnapshotsClient(os.config).UpdateOne(os)
+func (_m *OrderSnapshots) Update() *OrderSnapshotsUpdateOne {
+	return NewOrderSnapshotsClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrderSnapshots entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (os *OrderSnapshots) Unwrap() *OrderSnapshots {
-	_tx, ok := os.config.driver.(*txDriver)
+func (_m *OrderSnapshots) Unwrap() *OrderSnapshots {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: OrderSnapshots is not a transactional entity")
 	}
-	os.config.driver = _tx.drv
-	return os
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (os *OrderSnapshots) String() string {
+func (_m *OrderSnapshots) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrderSnapshots(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", os.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(os.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(os.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", os.Delete))
+	builder.WriteString(fmt.Sprintf("%v", _m.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", os.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_id=")
-	builder.WriteString(fmt.Sprintf("%v", os.AggregateID))
+	builder.WriteString(fmt.Sprintf("%v", _m.AggregateID))
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_version=")
-	builder.WriteString(fmt.Sprintf("%v", os.AggregateVersion))
+	builder.WriteString(fmt.Sprintf("%v", _m.AggregateVersion))
 	builder.WriteString(", ")
 	builder.WriteString("aggregate_data=")
-	builder.WriteString(fmt.Sprintf("%v", os.AggregateData))
+	builder.WriteString(fmt.Sprintf("%v", _m.AggregateData))
 	builder.WriteByte(')')
 	return builder.String()
 }

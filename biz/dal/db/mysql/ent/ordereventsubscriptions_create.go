@@ -23,193 +23,193 @@ type OrderEventSubscriptionsCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (oesc *OrderEventSubscriptionsCreate) SetCreatedAt(t time.Time) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetCreatedAt(t)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetCreatedAt(v time.Time) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableCreatedAt(t *time.Time) *OrderEventSubscriptionsCreate {
-	if t != nil {
-		oesc.SetCreatedAt(*t)
+func (_c *OrderEventSubscriptionsCreate) SetNillableCreatedAt(v *time.Time) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oesc *OrderEventSubscriptionsCreate) SetUpdatedAt(t time.Time) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetUpdatedAt(t)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetUpdatedAt(v time.Time) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableUpdatedAt(t *time.Time) *OrderEventSubscriptionsCreate {
-	if t != nil {
-		oesc.SetUpdatedAt(*t)
+func (_c *OrderEventSubscriptionsCreate) SetNillableUpdatedAt(v *time.Time) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetDelete sets the "delete" field.
-func (oesc *OrderEventSubscriptionsCreate) SetDelete(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetDelete(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetDelete(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetDelete(v)
+	return _c
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableDelete(i *int64) *OrderEventSubscriptionsCreate {
-	if i != nil {
-		oesc.SetDelete(*i)
+func (_c *OrderEventSubscriptionsCreate) SetNillableDelete(v *int64) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetDelete(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetCreatedID sets the "created_id" field.
-func (oesc *OrderEventSubscriptionsCreate) SetCreatedID(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetCreatedID(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetCreatedID(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetCreatedID(v)
+	return _c
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableCreatedID(i *int64) *OrderEventSubscriptionsCreate {
-	if i != nil {
-		oesc.SetCreatedID(*i)
+func (_c *OrderEventSubscriptionsCreate) SetNillableCreatedID(v *int64) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetCreatedID(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetName sets the "name" field.
-func (oesc *OrderEventSubscriptionsCreate) SetName(s string) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetName(s)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetName(v string) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableName(s *string) *OrderEventSubscriptionsCreate {
-	if s != nil {
-		oesc.SetName(*s)
+func (_c *OrderEventSubscriptionsCreate) SetNillableName(v *string) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetName(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetEventType sets the "event_type" field.
-func (oesc *OrderEventSubscriptionsCreate) SetEventType(s string) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetEventType(s)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetEventType(v string) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetEventType(v)
+	return _c
 }
 
 // SetNillableEventType sets the "event_type" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableEventType(s *string) *OrderEventSubscriptionsCreate {
-	if s != nil {
-		oesc.SetEventType(*s)
+func (_c *OrderEventSubscriptionsCreate) SetNillableEventType(v *string) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetEventType(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetLastProcessedID sets the "last_processed_id" field.
-func (oesc *OrderEventSubscriptionsCreate) SetLastProcessedID(s string) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetLastProcessedID(s)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetLastProcessedID(v string) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetLastProcessedID(v)
+	return _c
 }
 
 // SetNillableLastProcessedID sets the "last_processed_id" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableLastProcessedID(s *string) *OrderEventSubscriptionsCreate {
-	if s != nil {
-		oesc.SetLastProcessedID(*s)
+func (_c *OrderEventSubscriptionsCreate) SetNillableLastProcessedID(v *string) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetLastProcessedID(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetLastProcessedVersion sets the "last_processed_version" field.
-func (oesc *OrderEventSubscriptionsCreate) SetLastProcessedVersion(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetLastProcessedVersion(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetLastProcessedVersion(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetLastProcessedVersion(v)
+	return _c
 }
 
 // SetNillableLastProcessedVersion sets the "last_processed_version" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableLastProcessedVersion(i *int64) *OrderEventSubscriptionsCreate {
-	if i != nil {
-		oesc.SetLastProcessedVersion(*i)
+func (_c *OrderEventSubscriptionsCreate) SetNillableLastProcessedVersion(v *int64) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetLastProcessedVersion(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetLastProcessedAt sets the "last_processed_at" field.
-func (oesc *OrderEventSubscriptionsCreate) SetLastProcessedAt(t time.Time) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetLastProcessedAt(t)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetLastProcessedAt(v time.Time) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetLastProcessedAt(v)
+	return _c
 }
 
 // SetNillableLastProcessedAt sets the "last_processed_at" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableLastProcessedAt(t *time.Time) *OrderEventSubscriptionsCreate {
-	if t != nil {
-		oesc.SetLastProcessedAt(*t)
+func (_c *OrderEventSubscriptionsCreate) SetNillableLastProcessedAt(v *time.Time) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetLastProcessedAt(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (oesc *OrderEventSubscriptionsCreate) SetIsActive(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetIsActive(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetIsActive(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableIsActive(i *int64) *OrderEventSubscriptionsCreate {
-	if i != nil {
-		oesc.SetIsActive(*i)
+func (_c *OrderEventSubscriptionsCreate) SetNillableIsActive(v *int64) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetErrorCount sets the "error_count" field.
-func (oesc *OrderEventSubscriptionsCreate) SetErrorCount(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetErrorCount(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetErrorCount(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetErrorCount(v)
+	return _c
 }
 
 // SetNillableErrorCount sets the "error_count" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableErrorCount(i *int64) *OrderEventSubscriptionsCreate {
-	if i != nil {
-		oesc.SetErrorCount(*i)
+func (_c *OrderEventSubscriptionsCreate) SetNillableErrorCount(v *int64) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetErrorCount(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetLastError sets the "last_error" field.
-func (oesc *OrderEventSubscriptionsCreate) SetLastError(s string) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetLastError(s)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetLastError(v string) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetLastError(v)
+	return _c
 }
 
 // SetNillableLastError sets the "last_error" field if the given value is not nil.
-func (oesc *OrderEventSubscriptionsCreate) SetNillableLastError(s *string) *OrderEventSubscriptionsCreate {
-	if s != nil {
-		oesc.SetLastError(*s)
+func (_c *OrderEventSubscriptionsCreate) SetNillableLastError(v *string) *OrderEventSubscriptionsCreate {
+	if v != nil {
+		_c.SetLastError(*v)
 	}
-	return oesc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (oesc *OrderEventSubscriptionsCreate) SetID(i int64) *OrderEventSubscriptionsCreate {
-	oesc.mutation.SetID(i)
-	return oesc
+func (_c *OrderEventSubscriptionsCreate) SetID(v int64) *OrderEventSubscriptionsCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // Mutation returns the OrderEventSubscriptionsMutation object of the builder.
-func (oesc *OrderEventSubscriptionsCreate) Mutation() *OrderEventSubscriptionsMutation {
-	return oesc.mutation
+func (_c *OrderEventSubscriptionsCreate) Mutation() *OrderEventSubscriptionsMutation {
+	return _c.mutation
 }
 
 // Save creates the OrderEventSubscriptions in the database.
-func (oesc *OrderEventSubscriptionsCreate) Save(ctx context.Context) (*OrderEventSubscriptions, error) {
-	oesc.defaults()
-	return withHooks(ctx, oesc.sqlSave, oesc.mutation, oesc.hooks)
+func (_c *OrderEventSubscriptionsCreate) Save(ctx context.Context) (*OrderEventSubscriptions, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (oesc *OrderEventSubscriptionsCreate) SaveX(ctx context.Context) *OrderEventSubscriptions {
-	v, err := oesc.Save(ctx)
+func (_c *OrderEventSubscriptionsCreate) SaveX(ctx context.Context) *OrderEventSubscriptions {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -217,49 +217,49 @@ func (oesc *OrderEventSubscriptionsCreate) SaveX(ctx context.Context) *OrderEven
 }
 
 // Exec executes the query.
-func (oesc *OrderEventSubscriptionsCreate) Exec(ctx context.Context) error {
-	_, err := oesc.Save(ctx)
+func (_c *OrderEventSubscriptionsCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oesc *OrderEventSubscriptionsCreate) ExecX(ctx context.Context) {
-	if err := oesc.Exec(ctx); err != nil {
+func (_c *OrderEventSubscriptionsCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oesc *OrderEventSubscriptionsCreate) defaults() {
-	if _, ok := oesc.mutation.CreatedAt(); !ok {
+func (_c *OrderEventSubscriptionsCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := ordereventsubscriptions.DefaultCreatedAt()
-		oesc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := oesc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := ordereventsubscriptions.DefaultUpdatedAt()
-		oesc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := oesc.mutation.Delete(); !ok {
+	if _, ok := _c.mutation.Delete(); !ok {
 		v := ordereventsubscriptions.DefaultDelete
-		oesc.mutation.SetDelete(v)
+		_c.mutation.SetDelete(v)
 	}
-	if _, ok := oesc.mutation.CreatedID(); !ok {
+	if _, ok := _c.mutation.CreatedID(); !ok {
 		v := ordereventsubscriptions.DefaultCreatedID
-		oesc.mutation.SetCreatedID(v)
+		_c.mutation.SetCreatedID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (oesc *OrderEventSubscriptionsCreate) check() error {
+func (_c *OrderEventSubscriptionsCreate) check() error {
 	return nil
 }
 
-func (oesc *OrderEventSubscriptionsCreate) sqlSave(ctx context.Context) (*OrderEventSubscriptions, error) {
-	if err := oesc.check(); err != nil {
+func (_c *OrderEventSubscriptionsCreate) sqlSave(ctx context.Context) (*OrderEventSubscriptions, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := oesc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, oesc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -269,66 +269,66 @@ func (oesc *OrderEventSubscriptionsCreate) sqlSave(ctx context.Context) (*OrderE
 		id := _spec.ID.Value.(int64)
 		_node.ID = int64(id)
 	}
-	oesc.mutation.id = &_node.ID
-	oesc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (oesc *OrderEventSubscriptionsCreate) createSpec() (*OrderEventSubscriptions, *sqlgraph.CreateSpec) {
+func (_c *OrderEventSubscriptionsCreate) createSpec() (*OrderEventSubscriptions, *sqlgraph.CreateSpec) {
 	var (
-		_node = &OrderEventSubscriptions{config: oesc.config}
+		_node = &OrderEventSubscriptions{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(ordereventsubscriptions.Table, sqlgraph.NewFieldSpec(ordereventsubscriptions.FieldID, field.TypeInt64))
 	)
-	_spec.OnConflict = oesc.conflict
-	if id, ok := oesc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := oesc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := oesc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := oesc.mutation.Delete(); ok {
+	if value, ok := _c.mutation.Delete(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldDelete, field.TypeInt64, value)
 		_node.Delete = value
 	}
-	if value, ok := oesc.mutation.CreatedID(); ok {
+	if value, ok := _c.mutation.CreatedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := oesc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := oesc.mutation.EventType(); ok {
+	if value, ok := _c.mutation.EventType(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldEventType, field.TypeString, value)
 		_node.EventType = value
 	}
-	if value, ok := oesc.mutation.LastProcessedID(); ok {
+	if value, ok := _c.mutation.LastProcessedID(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedID, field.TypeString, value)
 		_node.LastProcessedID = value
 	}
-	if value, ok := oesc.mutation.LastProcessedVersion(); ok {
+	if value, ok := _c.mutation.LastProcessedVersion(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedVersion, field.TypeInt64, value)
 		_node.LastProcessedVersion = value
 	}
-	if value, ok := oesc.mutation.LastProcessedAt(); ok {
+	if value, ok := _c.mutation.LastProcessedAt(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastProcessedAt, field.TypeTime, value)
 		_node.LastProcessedAt = value
 	}
-	if value, ok := oesc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldIsActive, field.TypeInt64, value)
 		_node.IsActive = value
 	}
-	if value, ok := oesc.mutation.ErrorCount(); ok {
+	if value, ok := _c.mutation.ErrorCount(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldErrorCount, field.TypeInt64, value)
 		_node.ErrorCount = value
 	}
-	if value, ok := oesc.mutation.LastError(); ok {
+	if value, ok := _c.mutation.LastError(); ok {
 		_spec.SetField(ordereventsubscriptions.FieldLastError, field.TypeString, value)
 		_node.LastError = value
 	}
@@ -351,10 +351,10 @@ func (oesc *OrderEventSubscriptionsCreate) createSpec() (*OrderEventSubscription
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oesc *OrderEventSubscriptionsCreate) OnConflict(opts ...sql.ConflictOption) *OrderEventSubscriptionsUpsertOne {
-	oesc.conflict = opts
+func (_c *OrderEventSubscriptionsCreate) OnConflict(opts ...sql.ConflictOption) *OrderEventSubscriptionsUpsertOne {
+	_c.conflict = opts
 	return &OrderEventSubscriptionsUpsertOne{
-		create: oesc,
+		create: _c,
 	}
 }
 
@@ -364,10 +364,10 @@ func (oesc *OrderEventSubscriptionsCreate) OnConflict(opts ...sql.ConflictOption
 //	client.OrderEventSubscriptions.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oesc *OrderEventSubscriptionsCreate) OnConflictColumns(columns ...string) *OrderEventSubscriptionsUpsertOne {
-	oesc.conflict = append(oesc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderEventSubscriptionsCreate) OnConflictColumns(columns ...string) *OrderEventSubscriptionsUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderEventSubscriptionsUpsertOne{
-		create: oesc,
+		create: _c,
 	}
 }
 
@@ -971,16 +971,16 @@ type OrderEventSubscriptionsCreateBulk struct {
 }
 
 // Save creates the OrderEventSubscriptions entities in the database.
-func (oescb *OrderEventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*OrderEventSubscriptions, error) {
-	if oescb.err != nil {
-		return nil, oescb.err
+func (_c *OrderEventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*OrderEventSubscriptions, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(oescb.builders))
-	nodes := make([]*OrderEventSubscriptions, len(oescb.builders))
-	mutators := make([]Mutator, len(oescb.builders))
-	for i := range oescb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*OrderEventSubscriptions, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := oescb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrderEventSubscriptionsMutation)
@@ -994,12 +994,12 @@ func (oescb *OrderEventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*Or
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, oescb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = oescb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, oescb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1023,7 +1023,7 @@ func (oescb *OrderEventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*Or
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, oescb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1031,8 +1031,8 @@ func (oescb *OrderEventSubscriptionsCreateBulk) Save(ctx context.Context) ([]*Or
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oescb *OrderEventSubscriptionsCreateBulk) SaveX(ctx context.Context) []*OrderEventSubscriptions {
-	v, err := oescb.Save(ctx)
+func (_c *OrderEventSubscriptionsCreateBulk) SaveX(ctx context.Context) []*OrderEventSubscriptions {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1040,14 +1040,14 @@ func (oescb *OrderEventSubscriptionsCreateBulk) SaveX(ctx context.Context) []*Or
 }
 
 // Exec executes the query.
-func (oescb *OrderEventSubscriptionsCreateBulk) Exec(ctx context.Context) error {
-	_, err := oescb.Save(ctx)
+func (_c *OrderEventSubscriptionsCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oescb *OrderEventSubscriptionsCreateBulk) ExecX(ctx context.Context) {
-	if err := oescb.Exec(ctx); err != nil {
+func (_c *OrderEventSubscriptionsCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1067,10 +1067,10 @@ func (oescb *OrderEventSubscriptionsCreateBulk) ExecX(ctx context.Context) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (oescb *OrderEventSubscriptionsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderEventSubscriptionsUpsertBulk {
-	oescb.conflict = opts
+func (_c *OrderEventSubscriptionsCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrderEventSubscriptionsUpsertBulk {
+	_c.conflict = opts
 	return &OrderEventSubscriptionsUpsertBulk{
-		create: oescb,
+		create: _c,
 	}
 }
 
@@ -1080,10 +1080,10 @@ func (oescb *OrderEventSubscriptionsCreateBulk) OnConflict(opts ...sql.ConflictO
 //	client.OrderEventSubscriptions.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oescb *OrderEventSubscriptionsCreateBulk) OnConflictColumns(columns ...string) *OrderEventSubscriptionsUpsertBulk {
-	oescb.conflict = append(oescb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrderEventSubscriptionsCreateBulk) OnConflictColumns(columns ...string) *OrderEventSubscriptionsUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrderEventSubscriptionsUpsertBulk{
-		create: oescb,
+		create: _c,
 	}
 }
 

@@ -28,40 +28,40 @@ type OrderEventSubscriptionsQuery struct {
 }
 
 // Where adds a new predicate for the OrderEventSubscriptionsQuery builder.
-func (oesq *OrderEventSubscriptionsQuery) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsQuery {
-	oesq.predicates = append(oesq.predicates, ps...)
-	return oesq
+func (_q *OrderEventSubscriptionsQuery) Where(ps ...predicate.OrderEventSubscriptions) *OrderEventSubscriptionsQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (oesq *OrderEventSubscriptionsQuery) Limit(limit int) *OrderEventSubscriptionsQuery {
-	oesq.ctx.Limit = &limit
-	return oesq
+func (_q *OrderEventSubscriptionsQuery) Limit(limit int) *OrderEventSubscriptionsQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (oesq *OrderEventSubscriptionsQuery) Offset(offset int) *OrderEventSubscriptionsQuery {
-	oesq.ctx.Offset = &offset
-	return oesq
+func (_q *OrderEventSubscriptionsQuery) Offset(offset int) *OrderEventSubscriptionsQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (oesq *OrderEventSubscriptionsQuery) Unique(unique bool) *OrderEventSubscriptionsQuery {
-	oesq.ctx.Unique = &unique
-	return oesq
+func (_q *OrderEventSubscriptionsQuery) Unique(unique bool) *OrderEventSubscriptionsQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (oesq *OrderEventSubscriptionsQuery) Order(o ...ordereventsubscriptions.OrderOption) *OrderEventSubscriptionsQuery {
-	oesq.order = append(oesq.order, o...)
-	return oesq
+func (_q *OrderEventSubscriptionsQuery) Order(o ...ordereventsubscriptions.OrderOption) *OrderEventSubscriptionsQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // First returns the first OrderEventSubscriptions entity from the query.
 // Returns a *NotFoundError when no OrderEventSubscriptions was found.
-func (oesq *OrderEventSubscriptionsQuery) First(ctx context.Context) (*OrderEventSubscriptions, error) {
-	nodes, err := oesq.Limit(1).All(setContextOp(ctx, oesq.ctx, ent.OpQueryFirst))
+func (_q *OrderEventSubscriptionsQuery) First(ctx context.Context) (*OrderEventSubscriptions, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -72,8 +72,8 @@ func (oesq *OrderEventSubscriptionsQuery) First(ctx context.Context) (*OrderEven
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) FirstX(ctx context.Context) *OrderEventSubscriptions {
-	node, err := oesq.First(ctx)
+func (_q *OrderEventSubscriptionsQuery) FirstX(ctx context.Context) *OrderEventSubscriptions {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -82,9 +82,9 @@ func (oesq *OrderEventSubscriptionsQuery) FirstX(ctx context.Context) *OrderEven
 
 // FirstID returns the first OrderEventSubscriptions ID from the query.
 // Returns a *NotFoundError when no OrderEventSubscriptions ID was found.
-func (oesq *OrderEventSubscriptionsQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *OrderEventSubscriptionsQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = oesq.Limit(1).IDs(setContextOp(ctx, oesq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -95,8 +95,8 @@ func (oesq *OrderEventSubscriptionsQuery) FirstID(ctx context.Context) (id int64
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := oesq.FirstID(ctx)
+func (_q *OrderEventSubscriptionsQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -106,8 +106,8 @@ func (oesq *OrderEventSubscriptionsQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single OrderEventSubscriptions entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one OrderEventSubscriptions entity is found.
 // Returns a *NotFoundError when no OrderEventSubscriptions entities are found.
-func (oesq *OrderEventSubscriptionsQuery) Only(ctx context.Context) (*OrderEventSubscriptions, error) {
-	nodes, err := oesq.Limit(2).All(setContextOp(ctx, oesq.ctx, ent.OpQueryOnly))
+func (_q *OrderEventSubscriptionsQuery) Only(ctx context.Context) (*OrderEventSubscriptions, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -122,8 +122,8 @@ func (oesq *OrderEventSubscriptionsQuery) Only(ctx context.Context) (*OrderEvent
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) OnlyX(ctx context.Context) *OrderEventSubscriptions {
-	node, err := oesq.Only(ctx)
+func (_q *OrderEventSubscriptionsQuery) OnlyX(ctx context.Context) *OrderEventSubscriptions {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -133,9 +133,9 @@ func (oesq *OrderEventSubscriptionsQuery) OnlyX(ctx context.Context) *OrderEvent
 // OnlyID is like Only, but returns the only OrderEventSubscriptions ID in the query.
 // Returns a *NotSingularError when more than one OrderEventSubscriptions ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (oesq *OrderEventSubscriptionsQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *OrderEventSubscriptionsQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = oesq.Limit(2).IDs(setContextOp(ctx, oesq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -150,8 +150,8 @@ func (oesq *OrderEventSubscriptionsQuery) OnlyID(ctx context.Context) (id int64,
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := oesq.OnlyID(ctx)
+func (_q *OrderEventSubscriptionsQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -159,18 +159,18 @@ func (oesq *OrderEventSubscriptionsQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of OrderEventSubscriptionsSlice.
-func (oesq *OrderEventSubscriptionsQuery) All(ctx context.Context) ([]*OrderEventSubscriptions, error) {
-	ctx = setContextOp(ctx, oesq.ctx, ent.OpQueryAll)
-	if err := oesq.prepareQuery(ctx); err != nil {
+func (_q *OrderEventSubscriptionsQuery) All(ctx context.Context) ([]*OrderEventSubscriptions, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*OrderEventSubscriptions, *OrderEventSubscriptionsQuery]()
-	return withInterceptors[[]*OrderEventSubscriptions](ctx, oesq, qr, oesq.inters)
+	return withInterceptors[[]*OrderEventSubscriptions](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) AllX(ctx context.Context) []*OrderEventSubscriptions {
-	nodes, err := oesq.All(ctx)
+func (_q *OrderEventSubscriptionsQuery) AllX(ctx context.Context) []*OrderEventSubscriptions {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -178,20 +178,20 @@ func (oesq *OrderEventSubscriptionsQuery) AllX(ctx context.Context) []*OrderEven
 }
 
 // IDs executes the query and returns a list of OrderEventSubscriptions IDs.
-func (oesq *OrderEventSubscriptionsQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if oesq.ctx.Unique == nil && oesq.path != nil {
-		oesq.Unique(true)
+func (_q *OrderEventSubscriptionsQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, oesq.ctx, ent.OpQueryIDs)
-	if err = oesq.Select(ordereventsubscriptions.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(ordereventsubscriptions.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := oesq.IDs(ctx)
+func (_q *OrderEventSubscriptionsQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -199,17 +199,17 @@ func (oesq *OrderEventSubscriptionsQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (oesq *OrderEventSubscriptionsQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, oesq.ctx, ent.OpQueryCount)
-	if err := oesq.prepareQuery(ctx); err != nil {
+func (_q *OrderEventSubscriptionsQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, oesq, querierCount[*OrderEventSubscriptionsQuery](), oesq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*OrderEventSubscriptionsQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) CountX(ctx context.Context) int {
-	count, err := oesq.Count(ctx)
+func (_q *OrderEventSubscriptionsQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -217,9 +217,9 @@ func (oesq *OrderEventSubscriptionsQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (oesq *OrderEventSubscriptionsQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, oesq.ctx, ent.OpQueryExist)
-	switch _, err := oesq.FirstID(ctx); {
+func (_q *OrderEventSubscriptionsQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -230,8 +230,8 @@ func (oesq *OrderEventSubscriptionsQuery) Exist(ctx context.Context) (bool, erro
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (oesq *OrderEventSubscriptionsQuery) ExistX(ctx context.Context) bool {
-	exist, err := oesq.Exist(ctx)
+func (_q *OrderEventSubscriptionsQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -240,19 +240,19 @@ func (oesq *OrderEventSubscriptionsQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the OrderEventSubscriptionsQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (oesq *OrderEventSubscriptionsQuery) Clone() *OrderEventSubscriptionsQuery {
-	if oesq == nil {
+func (_q *OrderEventSubscriptionsQuery) Clone() *OrderEventSubscriptionsQuery {
+	if _q == nil {
 		return nil
 	}
 	return &OrderEventSubscriptionsQuery{
-		config:     oesq.config,
-		ctx:        oesq.ctx.Clone(),
-		order:      append([]ordereventsubscriptions.OrderOption{}, oesq.order...),
-		inters:     append([]Interceptor{}, oesq.inters...),
-		predicates: append([]predicate.OrderEventSubscriptions{}, oesq.predicates...),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]ordereventsubscriptions.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.OrderEventSubscriptions{}, _q.predicates...),
 		// clone intermediate query.
-		sql:  oesq.sql.Clone(),
-		path: oesq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
@@ -270,10 +270,10 @@ func (oesq *OrderEventSubscriptionsQuery) Clone() *OrderEventSubscriptionsQuery 
 //		GroupBy(ordereventsubscriptions.FieldCreatedAt).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (oesq *OrderEventSubscriptionsQuery) GroupBy(field string, fields ...string) *OrderEventSubscriptionsGroupBy {
-	oesq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &OrderEventSubscriptionsGroupBy{build: oesq}
-	grbuild.flds = &oesq.ctx.Fields
+func (_q *OrderEventSubscriptionsQuery) GroupBy(field string, fields ...string) *OrderEventSubscriptionsGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &OrderEventSubscriptionsGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = ordereventsubscriptions.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -291,62 +291,62 @@ func (oesq *OrderEventSubscriptionsQuery) GroupBy(field string, fields ...string
 //	client.OrderEventSubscriptions.Query().
 //		Select(ordereventsubscriptions.FieldCreatedAt).
 //		Scan(ctx, &v)
-func (oesq *OrderEventSubscriptionsQuery) Select(fields ...string) *OrderEventSubscriptionsSelect {
-	oesq.ctx.Fields = append(oesq.ctx.Fields, fields...)
-	sbuild := &OrderEventSubscriptionsSelect{OrderEventSubscriptionsQuery: oesq}
+func (_q *OrderEventSubscriptionsQuery) Select(fields ...string) *OrderEventSubscriptionsSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &OrderEventSubscriptionsSelect{OrderEventSubscriptionsQuery: _q}
 	sbuild.label = ordereventsubscriptions.Label
-	sbuild.flds, sbuild.scan = &oesq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a OrderEventSubscriptionsSelect configured with the given aggregations.
-func (oesq *OrderEventSubscriptionsQuery) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsSelect {
-	return oesq.Select().Aggregate(fns...)
+func (_q *OrderEventSubscriptionsQuery) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (oesq *OrderEventSubscriptionsQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range oesq.inters {
+func (_q *OrderEventSubscriptionsQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, oesq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range oesq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !ordereventsubscriptions.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if oesq.path != nil {
-		prev, err := oesq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		oesq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (oesq *OrderEventSubscriptionsQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrderEventSubscriptions, error) {
+func (_q *OrderEventSubscriptionsQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrderEventSubscriptions, error) {
 	var (
 		nodes = []*OrderEventSubscriptions{}
-		_spec = oesq.querySpec()
+		_spec = _q.querySpec()
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrderEventSubscriptions).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &OrderEventSubscriptions{config: oesq.config}
+		node := &OrderEventSubscriptions{config: _q.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, oesq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
@@ -355,24 +355,24 @@ func (oesq *OrderEventSubscriptionsQuery) sqlAll(ctx context.Context, hooks ...q
 	return nodes, nil
 }
 
-func (oesq *OrderEventSubscriptionsQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := oesq.querySpec()
-	_spec.Node.Columns = oesq.ctx.Fields
-	if len(oesq.ctx.Fields) > 0 {
-		_spec.Unique = oesq.ctx.Unique != nil && *oesq.ctx.Unique
+func (_q *OrderEventSubscriptionsQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, oesq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (oesq *OrderEventSubscriptionsQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *OrderEventSubscriptionsQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(ordereventsubscriptions.Table, ordereventsubscriptions.Columns, sqlgraph.NewFieldSpec(ordereventsubscriptions.FieldID, field.TypeInt64))
-	_spec.From = oesq.sql
-	if unique := oesq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if oesq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := oesq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, ordereventsubscriptions.FieldID)
 		for i := range fields {
@@ -381,20 +381,20 @@ func (oesq *OrderEventSubscriptionsQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if ps := oesq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := oesq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := oesq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := oesq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -404,33 +404,33 @@ func (oesq *OrderEventSubscriptionsQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (oesq *OrderEventSubscriptionsQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(oesq.driver.Dialect())
+func (_q *OrderEventSubscriptionsQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(ordereventsubscriptions.Table)
-	columns := oesq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = ordereventsubscriptions.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if oesq.sql != nil {
-		selector = oesq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if oesq.ctx.Unique != nil && *oesq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, p := range oesq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range oesq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := oesq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := oesq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -443,41 +443,41 @@ type OrderEventSubscriptionsGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (oesgb *OrderEventSubscriptionsGroupBy) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsGroupBy {
-	oesgb.fns = append(oesgb.fns, fns...)
-	return oesgb
+func (_g *OrderEventSubscriptionsGroupBy) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (oesgb *OrderEventSubscriptionsGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oesgb.build.ctx, ent.OpQueryGroupBy)
-	if err := oesgb.build.prepareQuery(ctx); err != nil {
+func (_g *OrderEventSubscriptionsGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrderEventSubscriptionsQuery, *OrderEventSubscriptionsGroupBy](ctx, oesgb.build, oesgb, oesgb.build.inters, v)
+	return scanWithInterceptors[*OrderEventSubscriptionsQuery, *OrderEventSubscriptionsGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (oesgb *OrderEventSubscriptionsGroupBy) sqlScan(ctx context.Context, root *OrderEventSubscriptionsQuery, v any) error {
+func (_g *OrderEventSubscriptionsGroupBy) sqlScan(ctx context.Context, root *OrderEventSubscriptionsQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(oesgb.fns))
-	for _, fn := range oesgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*oesgb.flds)+len(oesgb.fns))
-		for _, f := range *oesgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*oesgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := oesgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -491,27 +491,27 @@ type OrderEventSubscriptionsSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (oess *OrderEventSubscriptionsSelect) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsSelect {
-	oess.fns = append(oess.fns, fns...)
-	return oess
+func (_s *OrderEventSubscriptionsSelect) Aggregate(fns ...AggregateFunc) *OrderEventSubscriptionsSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (oess *OrderEventSubscriptionsSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oess.ctx, ent.OpQuerySelect)
-	if err := oess.prepareQuery(ctx); err != nil {
+func (_s *OrderEventSubscriptionsSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrderEventSubscriptionsQuery, *OrderEventSubscriptionsSelect](ctx, oess.OrderEventSubscriptionsQuery, oess, oess.inters, v)
+	return scanWithInterceptors[*OrderEventSubscriptionsQuery, *OrderEventSubscriptionsSelect](ctx, _s.OrderEventSubscriptionsQuery, _s, _s.inters, v)
 }
 
-func (oess *OrderEventSubscriptionsSelect) sqlScan(ctx context.Context, root *OrderEventSubscriptionsQuery, v any) error {
+func (_s *OrderEventSubscriptionsSelect) sqlScan(ctx context.Context, root *OrderEventSubscriptionsQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(oess.fns))
-	for _, fn := range oess.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*oess.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -519,7 +519,7 @@ func (oess *OrderEventSubscriptionsSelect) sqlScan(ctx context.Context, root *Or
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := oess.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()

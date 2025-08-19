@@ -20,7 +20,7 @@ func (Order) Fields() []ent.Field {
 		//field.Int64("venue_id").Comment("场馆id").Optional(),
 		field.Int64("member_id").Comment("会员id").Optional(),
 		//field.Int64("member_product_id").Comment("会员产品id").Optional(),
-		field.String("status").Optional(),
+		field.String("status").Comment("状态").Optional(),
 		field.Int64("nature").Comment("业务类型").Optional(),
 		field.Time("completion_at").Comment("订单完成时间").Optional(),
 		field.Time("close_at").Comment("订单关闭时间").Optional(),

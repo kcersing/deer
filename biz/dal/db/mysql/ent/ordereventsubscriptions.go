@@ -22,7 +22,7 @@ type OrderEventSubscriptions struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// last delete  1:已删除
+	// last delete  1:已删除 0:未删除
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
@@ -65,7 +65,7 @@ func (*OrderEventSubscriptions) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrderEventSubscriptions fields.
-func (oes *OrderEventSubscriptions) assignValues(columns []string, values []any) error {
+func (_m *OrderEventSubscriptions) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -76,81 +76,81 @@ func (oes *OrderEventSubscriptions) assignValues(columns []string, values []any)
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			oes.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case ordereventsubscriptions.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				oes.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case ordereventsubscriptions.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				oes.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case ordereventsubscriptions.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				oes.Delete = value.Int64
+				_m.Delete = value.Int64
 			}
 		case ordereventsubscriptions.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				oes.CreatedID = value.Int64
+				_m.CreatedID = value.Int64
 			}
 		case ordereventsubscriptions.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				oes.Name = value.String
+				_m.Name = value.String
 			}
 		case ordereventsubscriptions.FieldEventType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field event_type", values[i])
 			} else if value.Valid {
-				oes.EventType = value.String
+				_m.EventType = value.String
 			}
 		case ordereventsubscriptions.FieldLastProcessedID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_id", values[i])
 			} else if value.Valid {
-				oes.LastProcessedID = value.String
+				_m.LastProcessedID = value.String
 			}
 		case ordereventsubscriptions.FieldLastProcessedVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_version", values[i])
 			} else if value.Valid {
-				oes.LastProcessedVersion = value.Int64
+				_m.LastProcessedVersion = value.Int64
 			}
 		case ordereventsubscriptions.FieldLastProcessedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_processed_at", values[i])
 			} else if value.Valid {
-				oes.LastProcessedAt = value.Time
+				_m.LastProcessedAt = value.Time
 			}
 		case ordereventsubscriptions.FieldIsActive:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				oes.IsActive = value.Int64
+				_m.IsActive = value.Int64
 			}
 		case ordereventsubscriptions.FieldErrorCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field error_count", values[i])
 			} else if value.Valid {
-				oes.ErrorCount = value.Int64
+				_m.ErrorCount = value.Int64
 			}
 		case ordereventsubscriptions.FieldLastError:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_error", values[i])
 			} else if value.Valid {
-				oes.LastError = value.String
+				_m.LastError = value.String
 			}
 		default:
-			oes.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -158,68 +158,68 @@ func (oes *OrderEventSubscriptions) assignValues(columns []string, values []any)
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrderEventSubscriptions.
 // This includes values selected through modifiers, order, etc.
-func (oes *OrderEventSubscriptions) Value(name string) (ent.Value, error) {
-	return oes.selectValues.Get(name)
+func (_m *OrderEventSubscriptions) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this OrderEventSubscriptions.
 // Note that you need to call OrderEventSubscriptions.Unwrap() before calling this method if this OrderEventSubscriptions
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (oes *OrderEventSubscriptions) Update() *OrderEventSubscriptionsUpdateOne {
-	return NewOrderEventSubscriptionsClient(oes.config).UpdateOne(oes)
+func (_m *OrderEventSubscriptions) Update() *OrderEventSubscriptionsUpdateOne {
+	return NewOrderEventSubscriptionsClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrderEventSubscriptions entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (oes *OrderEventSubscriptions) Unwrap() *OrderEventSubscriptions {
-	_tx, ok := oes.config.driver.(*txDriver)
+func (_m *OrderEventSubscriptions) Unwrap() *OrderEventSubscriptions {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: OrderEventSubscriptions is not a transactional entity")
 	}
-	oes.config.driver = _tx.drv
-	return oes
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (oes *OrderEventSubscriptions) String() string {
+func (_m *OrderEventSubscriptions) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrderEventSubscriptions(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", oes.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(oes.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(oes.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", oes.Delete))
+	builder.WriteString(fmt.Sprintf("%v", _m.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", oes.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(oes.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
 	builder.WriteString("event_type=")
-	builder.WriteString(oes.EventType)
+	builder.WriteString(_m.EventType)
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_id=")
-	builder.WriteString(oes.LastProcessedID)
+	builder.WriteString(_m.LastProcessedID)
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_version=")
-	builder.WriteString(fmt.Sprintf("%v", oes.LastProcessedVersion))
+	builder.WriteString(fmt.Sprintf("%v", _m.LastProcessedVersion))
 	builder.WriteString(", ")
 	builder.WriteString("last_processed_at=")
-	builder.WriteString(oes.LastProcessedAt.Format(time.ANSIC))
+	builder.WriteString(_m.LastProcessedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", oes.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("error_count=")
-	builder.WriteString(fmt.Sprintf("%v", oes.ErrorCount))
+	builder.WriteString(fmt.Sprintf("%v", _m.ErrorCount))
 	builder.WriteString(", ")
 	builder.WriteString("last_error=")
-	builder.WriteString(oes.LastError)
+	builder.WriteString(_m.LastError)
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -1,9 +1,5 @@
 package common
 
-import (
-	"sync"
-)
-
 type Aggregate interface {
 	GetID() int64
 	SetID(id string) *AggregateBase
@@ -17,12 +13,9 @@ type Aggregate interface {
 
 	GetAppliedEvents() []Event
 	SetAppliedEvents(events []Event) error
-
-	When(event []Event) error
 }
 
 type AggregateBase struct {
-	ID            string
 	AggregateID   int64
 	AggregateType string
 	Version       int64
@@ -30,22 +23,11 @@ type AggregateBase struct {
 	AppliedEvents     []Event //已经应用的事件列表
 	UncommittedEvents []Event //尚未提交的事件列表
 
-	When when
-
-	Mu sync.RWMutex
+	when when
 }
+
 type when func(event Event) error
 
-func NewAggregateBase(when when) AggregateBase {
-	return AggregateBase{
-		AppliedEvents:     make([]Event, 0, 10),
-		UncommittedEvents: make([]Event, 0, 10),
-		Version:           0,
-		When:              when,
-	}
-}
-
-func (a *AggregateBase) GetID() string            { return a.ID }
 func (a *AggregateBase) GetAggregateType() string { return a.AggregateType }
 func (a *AggregateBase) GetAggregateID() int64    { return a.AggregateID }
 func (a *AggregateBase) GetVersion() int64        { return a.Version }
@@ -59,6 +41,18 @@ func (a *AggregateBase) GetAppliedEvents() []Event { return a.AppliedEvents }
 func (a *AggregateBase) SetAppliedEvents(events []Event) {
 	a.AppliedEvents = events
 }
+
+//func (a *AggregateBase) When(events []Event) {
+//	for _, event := range events {
+//		err := a.when(event)
+//		if err != nil {
+//			return
+//		}
+//	}
+//
+//	a.AppliedEvents = events
+//	a.Version++
+//}
 
 type Item struct {
 	ProductId int64

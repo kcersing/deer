@@ -23,7 +23,7 @@ type OrderStatusHistory struct {
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// last delete  1:已删除
+	// last delete  1:已删除 0:未删除
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
@@ -85,7 +85,7 @@ func (*OrderStatusHistory) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrderStatusHistory fields.
-func (osh *OrderStatusHistory) assignValues(columns []string, values []any) error {
+func (_m *OrderStatusHistory) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -96,69 +96,69 @@ func (osh *OrderStatusHistory) assignValues(columns []string, values []any) erro
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			osh.ID = int64(value.Int64)
+			_m.ID = int64(value.Int64)
 		case orderstatushistory.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				osh.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case orderstatushistory.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				osh.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case orderstatushistory.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
-				osh.Delete = value.Int64
+				_m.Delete = value.Int64
 			}
 		case orderstatushistory.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
-				osh.CreatedID = value.Int64
+				_m.CreatedID = value.Int64
 			}
 		case orderstatushistory.FieldOrderID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field order_id", values[i])
 			} else if value.Valid {
-				osh.OrderID = value.Int64
+				_m.OrderID = value.Int64
 			}
 		case orderstatushistory.FieldOldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field old_status", values[i])
 			} else if value.Valid {
-				osh.OldStatus = value.Int64
+				_m.OldStatus = value.Int64
 			}
 		case orderstatushistory.FieldNewStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field new_status", values[i])
 			} else if value.Valid {
-				osh.NewStatus = value.Int64
+				_m.NewStatus = value.Int64
 			}
 		case orderstatushistory.FieldChangeSource:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field change_source", values[i])
 			} else if value.Valid {
-				osh.ChangeSource = value.String
+				_m.ChangeSource = value.String
 			}
 		case orderstatushistory.FieldChangeReason:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field change_reason", values[i])
 			} else if value.Valid {
-				osh.ChangeReason = value.String
+				_m.ChangeReason = value.String
 			}
 		case orderstatushistory.FieldChangeAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field change_at", values[i])
 			} else if value.Valid {
-				osh.ChangeAt = value.Time
+				_m.ChangeAt = value.Time
 			}
 		default:
-			osh.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -166,67 +166,67 @@ func (osh *OrderStatusHistory) assignValues(columns []string, values []any) erro
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrderStatusHistory.
 // This includes values selected through modifiers, order, etc.
-func (osh *OrderStatusHistory) Value(name string) (ent.Value, error) {
-	return osh.selectValues.Get(name)
+func (_m *OrderStatusHistory) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryOrder queries the "order" edge of the OrderStatusHistory entity.
-func (osh *OrderStatusHistory) QueryOrder() *OrderQuery {
-	return NewOrderStatusHistoryClient(osh.config).QueryOrder(osh)
+func (_m *OrderStatusHistory) QueryOrder() *OrderQuery {
+	return NewOrderStatusHistoryClient(_m.config).QueryOrder(_m)
 }
 
 // Update returns a builder for updating this OrderStatusHistory.
 // Note that you need to call OrderStatusHistory.Unwrap() before calling this method if this OrderStatusHistory
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (osh *OrderStatusHistory) Update() *OrderStatusHistoryUpdateOne {
-	return NewOrderStatusHistoryClient(osh.config).UpdateOne(osh)
+func (_m *OrderStatusHistory) Update() *OrderStatusHistoryUpdateOne {
+	return NewOrderStatusHistoryClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrderStatusHistory entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (osh *OrderStatusHistory) Unwrap() *OrderStatusHistory {
-	_tx, ok := osh.config.driver.(*txDriver)
+func (_m *OrderStatusHistory) Unwrap() *OrderStatusHistory {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: OrderStatusHistory is not a transactional entity")
 	}
-	osh.config.driver = _tx.drv
-	return osh
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (osh *OrderStatusHistory) String() string {
+func (_m *OrderStatusHistory) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrderStatusHistory(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", osh.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
-	builder.WriteString(osh.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(osh.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("delete=")
-	builder.WriteString(fmt.Sprintf("%v", osh.Delete))
+	builder.WriteString(fmt.Sprintf("%v", _m.Delete))
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
-	builder.WriteString(fmt.Sprintf("%v", osh.CreatedID))
+	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
 	builder.WriteString("order_id=")
-	builder.WriteString(fmt.Sprintf("%v", osh.OrderID))
+	builder.WriteString(fmt.Sprintf("%v", _m.OrderID))
 	builder.WriteString(", ")
 	builder.WriteString("old_status=")
-	builder.WriteString(fmt.Sprintf("%v", osh.OldStatus))
+	builder.WriteString(fmt.Sprintf("%v", _m.OldStatus))
 	builder.WriteString(", ")
 	builder.WriteString("new_status=")
-	builder.WriteString(fmt.Sprintf("%v", osh.NewStatus))
+	builder.WriteString(fmt.Sprintf("%v", _m.NewStatus))
 	builder.WriteString(", ")
 	builder.WriteString("change_source=")
-	builder.WriteString(osh.ChangeSource)
+	builder.WriteString(_m.ChangeSource)
 	builder.WriteString(", ")
 	builder.WriteString("change_reason=")
-	builder.WriteString(osh.ChangeReason)
+	builder.WriteString(_m.ChangeReason)
 	builder.WriteString(", ")
 	builder.WriteString("change_at=")
-	builder.WriteString(osh.ChangeAt.Format(time.ANSIC))
+	builder.WriteString(_m.ChangeAt.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

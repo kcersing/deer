@@ -30,44 +30,44 @@ type OrderStatusHistoryQuery struct {
 }
 
 // Where adds a new predicate for the OrderStatusHistoryQuery builder.
-func (oshq *OrderStatusHistoryQuery) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryQuery {
-	oshq.predicates = append(oshq.predicates, ps...)
-	return oshq
+func (_q *OrderStatusHistoryQuery) Where(ps ...predicate.OrderStatusHistory) *OrderStatusHistoryQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (oshq *OrderStatusHistoryQuery) Limit(limit int) *OrderStatusHistoryQuery {
-	oshq.ctx.Limit = &limit
-	return oshq
+func (_q *OrderStatusHistoryQuery) Limit(limit int) *OrderStatusHistoryQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (oshq *OrderStatusHistoryQuery) Offset(offset int) *OrderStatusHistoryQuery {
-	oshq.ctx.Offset = &offset
-	return oshq
+func (_q *OrderStatusHistoryQuery) Offset(offset int) *OrderStatusHistoryQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (oshq *OrderStatusHistoryQuery) Unique(unique bool) *OrderStatusHistoryQuery {
-	oshq.ctx.Unique = &unique
-	return oshq
+func (_q *OrderStatusHistoryQuery) Unique(unique bool) *OrderStatusHistoryQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (oshq *OrderStatusHistoryQuery) Order(o ...orderstatushistory.OrderOption) *OrderStatusHistoryQuery {
-	oshq.order = append(oshq.order, o...)
-	return oshq
+func (_q *OrderStatusHistoryQuery) Order(o ...orderstatushistory.OrderOption) *OrderStatusHistoryQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryOrder chains the current query on the "order" edge.
-func (oshq *OrderStatusHistoryQuery) QueryOrder() *OrderQuery {
-	query := (&OrderClient{config: oshq.config}).Query()
+func (_q *OrderStatusHistoryQuery) QueryOrder() *OrderQuery {
+	query := (&OrderClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := oshq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := oshq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -76,7 +76,7 @@ func (oshq *OrderStatusHistoryQuery) QueryOrder() *OrderQuery {
 			sqlgraph.To(order.Table, order.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orderstatushistory.OrderTable, orderstatushistory.OrderColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(oshq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -84,8 +84,8 @@ func (oshq *OrderStatusHistoryQuery) QueryOrder() *OrderQuery {
 
 // First returns the first OrderStatusHistory entity from the query.
 // Returns a *NotFoundError when no OrderStatusHistory was found.
-func (oshq *OrderStatusHistoryQuery) First(ctx context.Context) (*OrderStatusHistory, error) {
-	nodes, err := oshq.Limit(1).All(setContextOp(ctx, oshq.ctx, ent.OpQueryFirst))
+func (_q *OrderStatusHistoryQuery) First(ctx context.Context) (*OrderStatusHistory, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -96,8 +96,8 @@ func (oshq *OrderStatusHistoryQuery) First(ctx context.Context) (*OrderStatusHis
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) FirstX(ctx context.Context) *OrderStatusHistory {
-	node, err := oshq.First(ctx)
+func (_q *OrderStatusHistoryQuery) FirstX(ctx context.Context) *OrderStatusHistory {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -106,9 +106,9 @@ func (oshq *OrderStatusHistoryQuery) FirstX(ctx context.Context) *OrderStatusHis
 
 // FirstID returns the first OrderStatusHistory ID from the query.
 // Returns a *NotFoundError when no OrderStatusHistory ID was found.
-func (oshq *OrderStatusHistoryQuery) FirstID(ctx context.Context) (id int64, err error) {
+func (_q *OrderStatusHistoryQuery) FirstID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = oshq.Limit(1).IDs(setContextOp(ctx, oshq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -119,8 +119,8 @@ func (oshq *OrderStatusHistoryQuery) FirstID(ctx context.Context) (id int64, err
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) FirstIDX(ctx context.Context) int64 {
-	id, err := oshq.FirstID(ctx)
+func (_q *OrderStatusHistoryQuery) FirstIDX(ctx context.Context) int64 {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -130,8 +130,8 @@ func (oshq *OrderStatusHistoryQuery) FirstIDX(ctx context.Context) int64 {
 // Only returns a single OrderStatusHistory entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one OrderStatusHistory entity is found.
 // Returns a *NotFoundError when no OrderStatusHistory entities are found.
-func (oshq *OrderStatusHistoryQuery) Only(ctx context.Context) (*OrderStatusHistory, error) {
-	nodes, err := oshq.Limit(2).All(setContextOp(ctx, oshq.ctx, ent.OpQueryOnly))
+func (_q *OrderStatusHistoryQuery) Only(ctx context.Context) (*OrderStatusHistory, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -146,8 +146,8 @@ func (oshq *OrderStatusHistoryQuery) Only(ctx context.Context) (*OrderStatusHist
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) OnlyX(ctx context.Context) *OrderStatusHistory {
-	node, err := oshq.Only(ctx)
+func (_q *OrderStatusHistoryQuery) OnlyX(ctx context.Context) *OrderStatusHistory {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -157,9 +157,9 @@ func (oshq *OrderStatusHistoryQuery) OnlyX(ctx context.Context) *OrderStatusHist
 // OnlyID is like Only, but returns the only OrderStatusHistory ID in the query.
 // Returns a *NotSingularError when more than one OrderStatusHistory ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (oshq *OrderStatusHistoryQuery) OnlyID(ctx context.Context) (id int64, err error) {
+func (_q *OrderStatusHistoryQuery) OnlyID(ctx context.Context) (id int64, err error) {
 	var ids []int64
-	if ids, err = oshq.Limit(2).IDs(setContextOp(ctx, oshq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -174,8 +174,8 @@ func (oshq *OrderStatusHistoryQuery) OnlyID(ctx context.Context) (id int64, err 
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) OnlyIDX(ctx context.Context) int64 {
-	id, err := oshq.OnlyID(ctx)
+func (_q *OrderStatusHistoryQuery) OnlyIDX(ctx context.Context) int64 {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -183,18 +183,18 @@ func (oshq *OrderStatusHistoryQuery) OnlyIDX(ctx context.Context) int64 {
 }
 
 // All executes the query and returns a list of OrderStatusHistories.
-func (oshq *OrderStatusHistoryQuery) All(ctx context.Context) ([]*OrderStatusHistory, error) {
-	ctx = setContextOp(ctx, oshq.ctx, ent.OpQueryAll)
-	if err := oshq.prepareQuery(ctx); err != nil {
+func (_q *OrderStatusHistoryQuery) All(ctx context.Context) ([]*OrderStatusHistory, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*OrderStatusHistory, *OrderStatusHistoryQuery]()
-	return withInterceptors[[]*OrderStatusHistory](ctx, oshq, qr, oshq.inters)
+	return withInterceptors[[]*OrderStatusHistory](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) AllX(ctx context.Context) []*OrderStatusHistory {
-	nodes, err := oshq.All(ctx)
+func (_q *OrderStatusHistoryQuery) AllX(ctx context.Context) []*OrderStatusHistory {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -202,20 +202,20 @@ func (oshq *OrderStatusHistoryQuery) AllX(ctx context.Context) []*OrderStatusHis
 }
 
 // IDs executes the query and returns a list of OrderStatusHistory IDs.
-func (oshq *OrderStatusHistoryQuery) IDs(ctx context.Context) (ids []int64, err error) {
-	if oshq.ctx.Unique == nil && oshq.path != nil {
-		oshq.Unique(true)
+func (_q *OrderStatusHistoryQuery) IDs(ctx context.Context) (ids []int64, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, oshq.ctx, ent.OpQueryIDs)
-	if err = oshq.Select(orderstatushistory.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(orderstatushistory.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) IDsX(ctx context.Context) []int64 {
-	ids, err := oshq.IDs(ctx)
+func (_q *OrderStatusHistoryQuery) IDsX(ctx context.Context) []int64 {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -223,17 +223,17 @@ func (oshq *OrderStatusHistoryQuery) IDsX(ctx context.Context) []int64 {
 }
 
 // Count returns the count of the given query.
-func (oshq *OrderStatusHistoryQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, oshq.ctx, ent.OpQueryCount)
-	if err := oshq.prepareQuery(ctx); err != nil {
+func (_q *OrderStatusHistoryQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, oshq, querierCount[*OrderStatusHistoryQuery](), oshq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*OrderStatusHistoryQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) CountX(ctx context.Context) int {
-	count, err := oshq.Count(ctx)
+func (_q *OrderStatusHistoryQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -241,9 +241,9 @@ func (oshq *OrderStatusHistoryQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (oshq *OrderStatusHistoryQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, oshq.ctx, ent.OpQueryExist)
-	switch _, err := oshq.FirstID(ctx); {
+func (_q *OrderStatusHistoryQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -254,8 +254,8 @@ func (oshq *OrderStatusHistoryQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (oshq *OrderStatusHistoryQuery) ExistX(ctx context.Context) bool {
-	exist, err := oshq.Exist(ctx)
+func (_q *OrderStatusHistoryQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -264,32 +264,32 @@ func (oshq *OrderStatusHistoryQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the OrderStatusHistoryQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (oshq *OrderStatusHistoryQuery) Clone() *OrderStatusHistoryQuery {
-	if oshq == nil {
+func (_q *OrderStatusHistoryQuery) Clone() *OrderStatusHistoryQuery {
+	if _q == nil {
 		return nil
 	}
 	return &OrderStatusHistoryQuery{
-		config:     oshq.config,
-		ctx:        oshq.ctx.Clone(),
-		order:      append([]orderstatushistory.OrderOption{}, oshq.order...),
-		inters:     append([]Interceptor{}, oshq.inters...),
-		predicates: append([]predicate.OrderStatusHistory{}, oshq.predicates...),
-		withOrder:  oshq.withOrder.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]orderstatushistory.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.OrderStatusHistory{}, _q.predicates...),
+		withOrder:  _q.withOrder.Clone(),
 		// clone intermediate query.
-		sql:  oshq.sql.Clone(),
-		path: oshq.path,
+		sql:  _q.sql.Clone(),
+		path: _q.path,
 	}
 }
 
 // WithOrder tells the query-builder to eager-load the nodes that are connected to
 // the "order" edge. The optional arguments are used to configure the query builder of the edge.
-func (oshq *OrderStatusHistoryQuery) WithOrder(opts ...func(*OrderQuery)) *OrderStatusHistoryQuery {
-	query := (&OrderClient{config: oshq.config}).Query()
+func (_q *OrderStatusHistoryQuery) WithOrder(opts ...func(*OrderQuery)) *OrderStatusHistoryQuery {
+	query := (&OrderClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	oshq.withOrder = query
-	return oshq
+	_q.withOrder = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -306,10 +306,10 @@ func (oshq *OrderStatusHistoryQuery) WithOrder(opts ...func(*OrderQuery)) *Order
 //		GroupBy(orderstatushistory.FieldCreatedAt).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-func (oshq *OrderStatusHistoryQuery) GroupBy(field string, fields ...string) *OrderStatusHistoryGroupBy {
-	oshq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &OrderStatusHistoryGroupBy{build: oshq}
-	grbuild.flds = &oshq.ctx.Fields
+func (_q *OrderStatusHistoryQuery) GroupBy(field string, fields ...string) *OrderStatusHistoryGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &OrderStatusHistoryGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = orderstatushistory.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -327,58 +327,58 @@ func (oshq *OrderStatusHistoryQuery) GroupBy(field string, fields ...string) *Or
 //	client.OrderStatusHistory.Query().
 //		Select(orderstatushistory.FieldCreatedAt).
 //		Scan(ctx, &v)
-func (oshq *OrderStatusHistoryQuery) Select(fields ...string) *OrderStatusHistorySelect {
-	oshq.ctx.Fields = append(oshq.ctx.Fields, fields...)
-	sbuild := &OrderStatusHistorySelect{OrderStatusHistoryQuery: oshq}
+func (_q *OrderStatusHistoryQuery) Select(fields ...string) *OrderStatusHistorySelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &OrderStatusHistorySelect{OrderStatusHistoryQuery: _q}
 	sbuild.label = orderstatushistory.Label
-	sbuild.flds, sbuild.scan = &oshq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a OrderStatusHistorySelect configured with the given aggregations.
-func (oshq *OrderStatusHistoryQuery) Aggregate(fns ...AggregateFunc) *OrderStatusHistorySelect {
-	return oshq.Select().Aggregate(fns...)
+func (_q *OrderStatusHistoryQuery) Aggregate(fns ...AggregateFunc) *OrderStatusHistorySelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (oshq *OrderStatusHistoryQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range oshq.inters {
+func (_q *OrderStatusHistoryQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, oshq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range oshq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !orderstatushistory.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
 	}
-	if oshq.path != nil {
-		prev, err := oshq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		oshq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (oshq *OrderStatusHistoryQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrderStatusHistory, error) {
+func (_q *OrderStatusHistoryQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrderStatusHistory, error) {
 	var (
 		nodes       = []*OrderStatusHistory{}
-		_spec       = oshq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [1]bool{
-			oshq.withOrder != nil,
+			_q.withOrder != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrderStatusHistory).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &OrderStatusHistory{config: oshq.config}
+		node := &OrderStatusHistory{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
@@ -386,14 +386,14 @@ func (oshq *OrderStatusHistoryQuery) sqlAll(ctx context.Context, hooks ...queryH
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, oshq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := oshq.withOrder; query != nil {
-		if err := oshq.loadOrder(ctx, query, nodes, nil,
+	if query := _q.withOrder; query != nil {
+		if err := _q.loadOrder(ctx, query, nodes, nil,
 			func(n *OrderStatusHistory, e *Order) { n.Edges.Order = e }); err != nil {
 			return nil, err
 		}
@@ -401,7 +401,7 @@ func (oshq *OrderStatusHistoryQuery) sqlAll(ctx context.Context, hooks ...queryH
 	return nodes, nil
 }
 
-func (oshq *OrderStatusHistoryQuery) loadOrder(ctx context.Context, query *OrderQuery, nodes []*OrderStatusHistory, init func(*OrderStatusHistory), assign func(*OrderStatusHistory, *Order)) error {
+func (_q *OrderStatusHistoryQuery) loadOrder(ctx context.Context, query *OrderQuery, nodes []*OrderStatusHistory, init func(*OrderStatusHistory), assign func(*OrderStatusHistory, *Order)) error {
 	ids := make([]int64, 0, len(nodes))
 	nodeids := make(map[int64][]*OrderStatusHistory)
 	for i := range nodes {
@@ -431,24 +431,24 @@ func (oshq *OrderStatusHistoryQuery) loadOrder(ctx context.Context, query *Order
 	return nil
 }
 
-func (oshq *OrderStatusHistoryQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := oshq.querySpec()
-	_spec.Node.Columns = oshq.ctx.Fields
-	if len(oshq.ctx.Fields) > 0 {
-		_spec.Unique = oshq.ctx.Unique != nil && *oshq.ctx.Unique
+func (_q *OrderStatusHistoryQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, oshq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (oshq *OrderStatusHistoryQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *OrderStatusHistoryQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(orderstatushistory.Table, orderstatushistory.Columns, sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64))
-	_spec.From = oshq.sql
-	if unique := oshq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if oshq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := oshq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orderstatushistory.FieldID)
 		for i := range fields {
@@ -456,24 +456,24 @@ func (oshq *OrderStatusHistoryQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if oshq.withOrder != nil {
+		if _q.withOrder != nil {
 			_spec.Node.AddColumnOnce(orderstatushistory.FieldOrderID)
 		}
 	}
-	if ps := oshq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := oshq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := oshq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := oshq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -483,33 +483,33 @@ func (oshq *OrderStatusHistoryQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (oshq *OrderStatusHistoryQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(oshq.driver.Dialect())
+func (_q *OrderStatusHistoryQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(orderstatushistory.Table)
-	columns := oshq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = orderstatushistory.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if oshq.sql != nil {
-		selector = oshq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if oshq.ctx.Unique != nil && *oshq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, p := range oshq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range oshq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := oshq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := oshq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -522,41 +522,41 @@ type OrderStatusHistoryGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (oshgb *OrderStatusHistoryGroupBy) Aggregate(fns ...AggregateFunc) *OrderStatusHistoryGroupBy {
-	oshgb.fns = append(oshgb.fns, fns...)
-	return oshgb
+func (_g *OrderStatusHistoryGroupBy) Aggregate(fns ...AggregateFunc) *OrderStatusHistoryGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (oshgb *OrderStatusHistoryGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oshgb.build.ctx, ent.OpQueryGroupBy)
-	if err := oshgb.build.prepareQuery(ctx); err != nil {
+func (_g *OrderStatusHistoryGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrderStatusHistoryQuery, *OrderStatusHistoryGroupBy](ctx, oshgb.build, oshgb, oshgb.build.inters, v)
+	return scanWithInterceptors[*OrderStatusHistoryQuery, *OrderStatusHistoryGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (oshgb *OrderStatusHistoryGroupBy) sqlScan(ctx context.Context, root *OrderStatusHistoryQuery, v any) error {
+func (_g *OrderStatusHistoryGroupBy) sqlScan(ctx context.Context, root *OrderStatusHistoryQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(oshgb.fns))
-	for _, fn := range oshgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*oshgb.flds)+len(oshgb.fns))
-		for _, f := range *oshgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*oshgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := oshgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -570,27 +570,27 @@ type OrderStatusHistorySelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (oshs *OrderStatusHistorySelect) Aggregate(fns ...AggregateFunc) *OrderStatusHistorySelect {
-	oshs.fns = append(oshs.fns, fns...)
-	return oshs
+func (_s *OrderStatusHistorySelect) Aggregate(fns ...AggregateFunc) *OrderStatusHistorySelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (oshs *OrderStatusHistorySelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oshs.ctx, ent.OpQuerySelect)
-	if err := oshs.prepareQuery(ctx); err != nil {
+func (_s *OrderStatusHistorySelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrderStatusHistoryQuery, *OrderStatusHistorySelect](ctx, oshs.OrderStatusHistoryQuery, oshs, oshs.inters, v)
+	return scanWithInterceptors[*OrderStatusHistoryQuery, *OrderStatusHistorySelect](ctx, _s.OrderStatusHistoryQuery, _s, _s.inters, v)
 }
 
-func (oshs *OrderStatusHistorySelect) sqlScan(ctx context.Context, root *OrderStatusHistoryQuery, v any) error {
+func (_s *OrderStatusHistorySelect) sqlScan(ctx context.Context, root *OrderStatusHistoryQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(oshs.fns))
-	for _, fn := range oshs.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*oshs.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -598,7 +598,7 @@ func (oshs *OrderStatusHistorySelect) sqlScan(ctx context.Context, root *OrderSt
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := oshs.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
