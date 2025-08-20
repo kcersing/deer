@@ -22,7 +22,7 @@ func TestOrder(t *testing.T) {
 	//})(t)
 	order := aggregate.NewOrder("SN20230001", item, 99.9, 1, 2)
 
-	evt := events.NewCreatedOrderEvent(order.Id, order.Items, order.TotalAmount, order.MemberId, order.CreatedId)
+	evt := events.NewCreatedOrderEvent(order.AggregateID, order.Items, order.TotalAmount, order.MemberId, order.CreatedId)
 
 	dbs := db.InItDB("root:root@tcp(127.0.0.1:3306)/orders?charset=utf8mb4&parseTime=True&loc=Local", true)
 
@@ -30,16 +30,12 @@ func TestOrder(t *testing.T) {
 
 	err := order.AddUncommittedEvent(evt)
 
-	//dispatcher := initEventHandlers()
-	//err = dispatcher.Dispatch(context.Background(), evt)
+	dispatcher := initEventHandlers()
+	err = dispatcher.Dispatch(context.Background(), evt)
 	klog.Info(err)
 	err = orderRepo.Save(order)
 	klog.Info(err)
 
-}
-func initEventHandlers() *EventDispatcher {
-	dispatcher := NewEventDispatcher()
-	return dispatcher
 }
 
 //func CreateTest(order *aggregate.Order) func(t *testing.T) {

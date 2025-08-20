@@ -45,6 +45,19 @@
    └─ 更新订阅状态
 
 
+biz/infras/
+├── common/           # 通用组件：聚合根、事件、错误定义
+├── order/            # 订单领域相关实现
+│   ├── aggregate/    # 订单聚合根
+│   ├── events/       # 订单事件定义
+│   └── repo/         # 订单仓储
+├── status/           # 状态定义
+├── observers.go      # 事件分发器
+├── subscription_service.go # 订阅服务
+└── order_test.go     # 测试代码
+
+
+
 cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers-order --hex 
 
 

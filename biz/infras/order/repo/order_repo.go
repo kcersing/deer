@@ -5,13 +5,14 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/dal/db/mysql/ent"
+	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/infras/common"
 	"kcers-order/biz/infras/order/aggregate"
 )
 
 type OrderRepository interface {
-	Save(order *aggregate.Order) error
-	FindById(id int64) (*aggregate.Order, error)
+	Save(order *aggregate.Order) (err error)
+	FindById(id int64) (order *aggregate.Order, err error)
 }
 
 type OrderRepo struct {
@@ -28,7 +29,7 @@ func NewOrderRepository(db *ent.Client, ctx context.Context) OrderRepository {
 
 var _ OrderRepository = &OrderRepo{}
 
-func (o *OrderRepo) Save(order *aggregate.Order) error {
+func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	es := order.GetUncommittedEvents()
 	if len(es) == 0 {
 		return nil
@@ -81,18 +82,16 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 	}
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
-		//if err != nil {
-		//	return errors.Wrap(err, "marshal event data failed")
-		//}
+
 		e.SetAggregateID(order.AggregateID)
-		ets[i] = tx.OrderEvents.Create().
+		ets[i] = tx.OrderEvents.
+			Create().
 			SetEventID(e.GetId()).
 			SetAggregateID(order.AggregateID).
 			SetEventType(e.GetType()).
-			SetAggregateType("order").
+			SetAggregateType(e.GetAggregateType()).
 			SetEventVersion(order.Version).
 			SetEventData(&common.EventData{
-				Type:  e.GetType(),
 				Event: e,
 			})
 	}
@@ -123,7 +122,17 @@ func (o *OrderRepo) Save(order *aggregate.Order) error {
 	return nil
 }
 
-func (o *OrderRepo) FindById(id int64) (*aggregate.Order, error) {
-	//TODO implement me
-	panic("implement me")
+func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
+	// 1. 尝试加载最新快照
+	snapshot, err := o.db.OrderSnapshots.
+		Query().
+		Where(ordersnapshots.AggregateID(id)).
+		Order(ent.Desc(ordersnapshots.FieldAggregateVersion)).
+		First(o.ctx)
+	if err != nil && !ent.IsNotFound(err) {
+		return nil, errors.Wrap(err, "查询快照失败")
+	}
+	var lastVersion int64
+
+	return
 }

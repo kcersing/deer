@@ -16,20 +16,17 @@ type CreatedOrderEvent struct {
 	CreatedId   int64
 }
 
-func (e *CreatedOrderEvent) GetId() string {
-	return uuid.New().String()
-}
-
 func (e *CreatedOrderEvent) GetType() string { return string(status.Created) }
 
-func NewCreatedOrderEvent(orderID int64, items []common.Item, amount float64, MemberId int64, userID int64) *CreatedOrderEvent {
+func (e *CreatedOrderEvent) HandleType() string { return string(status.Created) }
+func NewCreatedOrderEvent(AggregateID int64, items []common.Item, amount float64, MemberId int64, userID int64) *CreatedOrderEvent {
 	return &CreatedOrderEvent{
 		EventBase: common.EventBase{
 			EventID:     uuid.New().String(),
-			AggregateID: orderID,
+			AggregateID: AggregateID,
 			Timestamp:   time.Now(),
 
-			EventType:     "created",
+			EventType:     string(status.Created),
 			AggregateType: "order",
 			Version:       1,
 		},

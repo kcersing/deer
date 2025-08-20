@@ -3,6 +3,7 @@ package infras
 import (
 	"context"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/infras/common"
 	"sync"
@@ -14,7 +15,7 @@ type EventHandler interface {
 	Handle(ctx context.Context, event common.Event) error
 }
 
-// EventDispatcher 事件分发器
+// EventDispatcher 事件分发器 EventBus
 type EventDispatcher struct {
 	handlers map[string][]EventHandler
 	mu       sync.RWMutex
@@ -30,6 +31,7 @@ func NewEventDispatcher() *EventDispatcher {
 func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
+
 	d.handlers[eventType] = append(d.handlers[eventType], handler)
 }
 
@@ -37,9 +39,9 @@ func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler
 func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) error {
 
 	d.mu.RLock()
-	handlers, ok := d.handlers[event.GetType()]
-	d.mu.RUnlock()
+	defer d.mu.RUnlock()
 
+	handlers, ok := d.handlers[event.GetType()]
 	if !ok || len(handlers) == 0 {
 		return nil
 	}
@@ -48,6 +50,7 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 	errCh := make(chan error, len(handlers))
 
 	for _, handler := range handlers {
+		klog.Infof("开始处理事件: %s", event.GetType())
 		wg.Add(1)
 		go func(h EventHandler) {
 			defer wg.Done()
@@ -91,4 +94,21 @@ func withRetry(fn func() error, maxRetries int) error {
 		time.Sleep(time.Millisecond * 100 * time.Duration(i+1)) // 指数退避
 	}
 	return err
+}
+
+// 添加单例实例和同步控制变量
+var (
+	dispatcherInstance *EventDispatcher
+	once               sync.Once
+)
+
+func initEventHandlers() *EventDispatcher {
+	// 使用sync.Once确保初始化代码只执行一次
+	once.Do(func() {
+		dispatcherInstance = NewEventDispatcher()
+		inventoryHandler := &InventoryHandler{}
+		dispatcherInstance.RegisterHandler("created", inventoryHandler)
+		dispatcherInstance.RegisterHandler("cancelled", inventoryHandler)
+	})
+	return dispatcherInstance
 }

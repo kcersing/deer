@@ -9,7 +9,9 @@ type Event interface {
 	GetType() string
 	GetAggregateID() int64
 	GetVersion() int64
-
+	GetAggregateType() string
+	GetTimestamp() time.Time
+	
 	SetAggregateID(aggregateID int64)
 	SetType(eventType string)
 	SetVersion(version int64)
@@ -23,12 +25,15 @@ type EventBase struct {
 	Timestamp     time.Time
 }
 
-func (e *EventBase) GetID() string            { return e.EventID }
+func (e *EventBase) GetId() string {
+	return e.EventID
+}
 func (e *EventBase) GetType() string          { return e.EventType }
 func (e *EventBase) GetAggregateID() int64    { return e.AggregateID }
 func (e *EventBase) GetAggregateType() string { return e.AggregateType }
 func (e *EventBase) GetVersion() int64        { return e.Version }
 func (e *EventBase) GetTimestamp() time.Time  { return e.Timestamp }
+
 func (e *EventBase) SetAggregateID(aggregateID int64) {
 	e.AggregateID = aggregateID
 }
@@ -40,6 +45,5 @@ func (e *EventBase) SetVersion(version int64) {
 }
 
 type EventData struct {
-	Type  string
 	Event interface{}
 }
