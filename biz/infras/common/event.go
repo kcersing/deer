@@ -11,8 +11,9 @@ type Event interface {
 	GetVersion() int64
 	GetAggregateType() string
 	GetTimestamp() time.Time
-	
+
 	SetAggregateID(aggregateID int64)
+	SetAggregateType(aggregateType string)
 	SetType(eventType string)
 	SetVersion(version int64)
 }
@@ -36,6 +37,9 @@ func (e *EventBase) GetTimestamp() time.Time  { return e.Timestamp }
 
 func (e *EventBase) SetAggregateID(aggregateID int64) {
 	e.AggregateID = aggregateID
+}
+func (e *EventBase) SetAggregateType(aggregateType string) {
+	e.AggregateType = aggregateType
 }
 func (e *EventBase) SetType(eventType string) {
 	e.EventType = eventType

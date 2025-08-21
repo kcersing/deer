@@ -1,8 +1,10 @@
 package events
 
 import (
+	"github.com/google/uuid"
 	"kcers-order/biz/infras/common"
 	"kcers-order/biz/infras/status"
+	"time"
 )
 
 // RefundedOrderEvent 退款事件
@@ -13,3 +15,17 @@ type RefundedOrderEvent struct {
 }
 
 func (e *RefundedOrderEvent) GetType() string { return string(status.Refunded) }
+func NewRefundedOrderEvent(AggregateID int64, userID int64) *RefundedOrderEvent {
+	return &RefundedOrderEvent{
+		EventBase: common.EventBase{
+			EventID:     uuid.New().String(),
+			AggregateID: AggregateID,
+			Timestamp:   time.Now(),
+
+			EventType:     string(status.Refunded),
+			AggregateType: "order",
+			Version:       1,
+		},
+		CreatedId: userID,
+	}
+}
