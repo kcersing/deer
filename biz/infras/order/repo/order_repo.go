@@ -5,9 +5,12 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
+	orderevents2 "kcers-order/biz/dal/db/mysql/ent/orderevents"
+	ordersnapshots2 "kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
 	"kcers-order/biz/infras/common"
 	"kcers-order/biz/infras/order/aggregate"
+	"kcers-order/biz/infras/order/events"
+	"kcers-order/biz/infras/status"
 )
 
 type OrderRepository interface {
@@ -126,13 +129,46 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
-		Where(ordersnapshots.AggregateID(id)).
-		Order(ent.Desc(ordersnapshots.FieldAggregateVersion)).
+		Where(ordersnapshots2.AggregateID(id)).
+		Order(ent.Desc(ordersnapshots2.FieldAggregateVersion)).
 		First(o.ctx)
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, errors.Wrap(err, "查询快照失败")
 	}
 	var lastVersion int64
+	if snapshot != nil {
+		lastVersion = snapshot.AggregateVersion
+	}
 
-	return
+	eventAlls, err := o.db.OrderEvents.Query().Where(
+		orderevents2.AggregateID(id),
+		orderevents2.EventVersionGT(lastVersion),
+	).
+		Order(ent.Asc(orderevents2.FieldCreatedAt)).
+		All(o.ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "查询事件记录失败")
+	}
+	for _, eventEnt := range eventAlls {
+		var event common.Event
+		switch eventEnt.EventType {
+		case string(status.Created):
+			event = &events.CreatedOrderEvent{}
+		case string(status.Paid):
+			event = &events.PaidOrderEvent{}
+		case string(status.Shipped):
+			event = &events.ShippedOrderEvent{}
+		case string(status.Cancelled):
+			event = &events.CancelledOrderEvent{}
+		case string(status.Refunded):
+			event = &events.RefundedOrderEvent{}
+		case string(status.Completed):
+			event = &events.CompletedOrderEvent{}
+		default:
+			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
+			continue
+		}
+		klog.Info(event)
+	}
+	return nil, nil
 }

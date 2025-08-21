@@ -10,6 +10,7 @@ import (
 // CreatedOrderEvent 创建订单事件
 type CreatedOrderEvent struct {
 	common.EventBase
+	Sn          string
 	TotalAmount float64
 	Items       []common.Item
 	MemberId    int64
@@ -18,18 +19,17 @@ type CreatedOrderEvent struct {
 
 func (e *CreatedOrderEvent) GetType() string { return string(status.Created) }
 
-func (e *CreatedOrderEvent) HandleType() string { return string(status.Created) }
-func NewCreatedOrderEvent(AggregateID int64, items []common.Item, amount float64, MemberId int64, userID int64) *CreatedOrderEvent {
+func NewCreatedOrderEvent(sn string, items []common.Item, amount float64, MemberId int64, userID int64) *CreatedOrderEvent {
 	return &CreatedOrderEvent{
 		EventBase: common.EventBase{
-			EventID:     uuid.New().String(),
-			AggregateID: AggregateID,
-			Timestamp:   time.Now(),
+			EventID:   uuid.New().String(),
+			Timestamp: time.Now(),
 
 			EventType:     string(status.Created),
 			AggregateType: "order",
 			Version:       1,
 		},
+		Sn:          sn,
 		TotalAmount: amount,
 		Items:       items,
 		MemberId:    MemberId,
