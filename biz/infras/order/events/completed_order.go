@@ -14,6 +14,7 @@ type CompletedOrderEvent struct {
 }
 
 func (e *CompletedOrderEvent) GetType() string { return string(status.Completed) }
+
 func NewCompletedOrderEvent(AggregateID int64, userID int64) *CompletedOrderEvent {
 	return &CompletedOrderEvent{
 		EventBase: common.EventBase{

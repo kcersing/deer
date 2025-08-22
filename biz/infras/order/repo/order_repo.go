@@ -126,34 +126,60 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 }
 
 func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
+	klog.Info("123")
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
 		Where(ordersnapshots2.AggregateID(id)).
 		Order(ent.Desc(ordersnapshots2.FieldAggregateVersion)).
 		First(o.ctx)
+	klog.Info(err)
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, errors.Wrap(err, "查询快照失败")
 	}
+	klog.Info(snapshot)
 	var lastVersion int64
 	if snapshot != nil {
 		lastVersion = snapshot.AggregateVersion
 	}
 
-	eventAlls, err := o.db.OrderEvents.Query().Where(
+	eventAlls, err := o.db.Debug().OrderEvents.Query().Where(
 		orderevents2.AggregateID(id),
 		orderevents2.EventVersionGT(lastVersion),
 	).
 		Order(ent.Asc(orderevents2.FieldCreatedAt)).
 		All(o.ctx)
+	klog.Info(eventAlls)
 	if err != nil {
 		return nil, errors.Wrap(err, "查询事件记录失败")
 	}
+
 	for _, eventEnt := range eventAlls {
+
+		klog.Info(eventEnt)
 		var event common.Event
+		klog.Info(eventEnt.EventType)
 		switch eventEnt.EventType {
 		case string(status.Created):
-			event = &events.CreatedOrderEvent{}
+
+			eventData, ok := eventEnt.EventData.Event.(events.CreatedOrderEvent)
+			if ok {
+				klog.Info(eventData)
+			}
+			klog.Info(eventData, ok)
+			//event = &events.CreatedOrderEvent{
+			//	EventBase: common.EventBase{
+			//		EventID:     eventEnt.EventID,
+			//		AggregateID: eventEnt.AggregateID,
+			//		Timestamp:   eventEnt.CreatedAt,
+			//		EventType:   eventEnt.EventType,
+			//	},
+			//	Sn:          eventEnt.EventData.Sn,
+			//	TotalAmount: eventEnt.EventData.TotalAmount,
+			//	Items:       eventEnt.EventData.Items,
+			//	MemberId:    eventEnt.EventData.MemberId,
+			//	CreatedId:   eventEnt.EventData.CreatedId,
+			//}
 		case string(status.Paid):
 			event = &events.PaidOrderEvent{}
 		case string(status.Shipped):
@@ -168,7 +194,11 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		klog.Info(event)
+		err := order.Apply(event)
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	return nil, nil
 }

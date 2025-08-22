@@ -23,8 +23,8 @@ type Order struct {
 	Status       status.OrderStatus
 	stateMachine *StateMachine
 
-	mu sync.RWMutex
-
+	Nature string
+	mu     sync.RWMutex
 	common.AggregateBase
 }
 
