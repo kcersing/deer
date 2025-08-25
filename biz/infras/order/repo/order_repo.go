@@ -126,7 +126,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 }
 
 func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
-	klog.Info("123")
+
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
@@ -138,14 +138,14 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 		return nil, errors.Wrap(err, "查询快照失败")
 	}
 	klog.Info(snapshot)
-	var lastVersion int64
-	if snapshot != nil {
-		lastVersion = snapshot.AggregateVersion
-	}
+	//var lastVersion int64
+	//if snapshot != nil {
+	//	lastVersion = snapshot.AggregateVersion
+	//}
 
 	eventAlls, err := o.db.Debug().OrderEvents.Query().Where(
 		orderevents2.AggregateID(id),
-		orderevents2.EventVersionGT(lastVersion),
+		//orderevents2.EventVersionGT(lastVersion),
 	).
 		Order(ent.Asc(orderevents2.FieldCreatedAt)).
 		All(o.ctx)
@@ -157,16 +157,16 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 	for _, eventEnt := range eventAlls {
 
 		klog.Info(eventEnt)
-		var event common.Event
+		var eventAll []common.Event
 		klog.Info(eventEnt.EventType)
 		switch eventEnt.EventType {
 		case string(status.Created):
 
 			eventData, ok := eventEnt.EventData.Event.(events.CreatedOrderEvent)
 			if ok {
-				klog.Info(eventData)
+				eventAll = append(eventAll, &eventData)
 			}
-			klog.Info(eventData, ok)
+
 			//event = &events.CreatedOrderEvent{
 			//	EventBase: common.EventBase{
 			//		EventID:     eventEnt.EventID,
@@ -181,20 +181,23 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 			//	CreatedId:   eventEnt.EventData.CreatedId,
 			//}
 		case string(status.Paid):
-			event = &events.PaidOrderEvent{}
+			//event = &events.PaidOrderEvent{}
 		case string(status.Shipped):
-			event = &events.ShippedOrderEvent{}
+			//event = &events.ShippedOrderEvent{}
 		case string(status.Cancelled):
-			event = &events.CancelledOrderEvent{}
+			//event = &events.CancelledOrderEvent{}
 		case string(status.Refunded):
-			event = &events.RefundedOrderEvent{}
+			//event = &events.RefundedOrderEvent{}
 		case string(status.Completed):
-			event = &events.CompletedOrderEvent{}
+			//event = &events.CompletedOrderEvent{}
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		err := order.Apply(event)
+		klog.Info(eventAll)
+
+		return
+		err := order.Load(eventAll)
 		if err != nil {
 			return nil, err
 		}

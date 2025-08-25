@@ -51,18 +51,31 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 
 	for _, handler := range handlers {
 		klog.Infof("开始处理事件: %s", event.GetType())
-		wg.Add(1)
-		go func(h EventHandler) {
-			defer wg.Done()
-			// 带超时和重试的事件处理
-			if err := withRetry(func() error {
-				ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-				defer cancel()
-				return h.Handle(ctx, event)
-			}, 3); err != nil {
-				errCh <- err
-			}
-		}(handler)
+
+		wg.Go(func() {
+			func(h EventHandler) {
+				// 带超时和重试的事件处理
+				if err := withRetry(func() error {
+					ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+					defer cancel()
+					return h.Handle(ctx, event)
+				}, 3); err != nil {
+					errCh <- err
+				}
+			}(handler)
+		})
+		//wg.Add(1)
+		//go func(h EventHandler) {
+		//	defer wg.Done()
+		//	// 带超时和重试的事件处理
+		//	if err := withRetry(func() error {
+		//		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+		//		defer cancel()
+		//		return h.Handle(ctx, event)
+		//	}, 3); err != nil {
+		//		errCh <- err
+		//	}
+		//}(handler)
 	}
 
 	// 等待所有处理器完成
