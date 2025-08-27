@@ -4,8 +4,8 @@ package ent
 
 import (
 	"context"
-	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
-	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"deer/biz/dal/db/mysql/ent/orderstatushistory"
+	"deer/biz/dal/db/mysql/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

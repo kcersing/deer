@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
-	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"deer/biz/dal/db/mysql/ent/ordereventsubscriptions"
+	"deer/biz/dal/db/mysql/ent/predicate"
 	"math"
 
 	"entgo.io/ent"

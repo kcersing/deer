@@ -1,3 +1,5 @@
+
+
 *.o
 *.a
 *.so
@@ -35,3 +37,4 @@ _testmain.go
 *.local.yml
 conf.yaml
 /vendor
+/.trae

@@ -1,8 +1,8 @@
 package db
 
 import (
-	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/conf"
+	"deer/biz/dal/db/mysql/ent"
+	"deer/conf"
 	"sync"
 )
 

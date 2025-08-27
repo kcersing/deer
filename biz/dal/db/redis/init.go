@@ -3,8 +3,8 @@ package redis
 import (
 	"context"
 
+	"deer/conf"
 	"github.com/redis/go-redis/v9"
-	"kcers-order/conf"
 )
 
 var (

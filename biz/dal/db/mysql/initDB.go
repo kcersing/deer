@@ -6,12 +6,12 @@ import (
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
 	"fmt"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
+
+	"deer/biz/dal/db/mysql/ent"
+	"deer/biz/dal/db/mysql/ent/migrate"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	_ "github.com/lib/pq"
-	"kcers-order/biz/dal/db/mysql/ent"
-	"kcers-order/biz/dal/db/mysql/ent/migrate"
 	"log"
 	"time"
 )
@@ -48,15 +48,15 @@ func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
 	// 生产环境使用默认mysql驱动，开发环境使用debug驱动
 	var drive dialect.Driver
 	if isProd {
-		hlog.Info("默认mysql驱动")
+		klog.Info("默认mysql驱动")
 		drive = drv
 	} else {
 		// Debug driver.
-		hlog.Info("debug驱动")
+		klog.Info("debug驱动")
 		drive = &DebugTimeDriver{
 			Driver: drv,
 			log: func(ctx context.Context, info ...any) {
-				hlog.Info(info...)
+				klog.Info(info...)
 			},
 		}
 	}
@@ -78,30 +78,30 @@ func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
 	//_, err = os.Stat(migrationsPath)
 	//if err != nil {
 	//	if !os.IsNotExist(err) {
-	//		hlog.Fatalf("failed to stat migrations path: %v", err)
+	//		klog.Fatalf("failed to stat migrations path: %v", err)
 	//		return nil
 	//	}
 	//	// Create the directory if it doesn't exist.
 	//	err = os.MkdirAll(migrationsPath, os.ModePerm)
 	//	if err != nil {
-	//		hlog.Fatalf("failed creating migrations path: %v", err)
+	//		klog.Fatalf("failed creating migrations path: %v", err)
 	//		return nil
 	//	}
 	//}
 	//dir, err := migrate.NewLocalDir(migrationsPath)
 	//if err != nil {
-	//	hlog.Fatalf("failed creating atlas migration directory: %v", err)
+	//	klog.Fatalf("failed creating atlas migration directory: %v", err)
 	//	return nil
 	//}
 	//// Write migration diff.
 	//err = schema.Diff(ctx, schema.WithDir(dir), schema.WithForeignKeys(false))
 	//if err != nil {
-	//	hlog.Fatalf("failed creating schema resources: %v", err)
+	//	klog.Fatalf("failed creating schema resources: %v", err)
 	//	return nil
 	//}
 	//// Run the auto migration tool.
 	//if err := DB.Schema.Create(ctx, schema.WithForeignKeys(false)); err != nil {
-	//	hlog.Fatalf("failed creating schema resources: %v", err)
+	//	klog.Fatalf("failed creating schema resources: %v", err)
 	//	return nil
 	//}
 

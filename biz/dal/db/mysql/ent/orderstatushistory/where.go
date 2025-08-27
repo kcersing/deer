@@ -3,7 +3,7 @@
 package orderstatushistory
 
 import (
-	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"deer/biz/dal/db/mysql/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

@@ -4,7 +4,7 @@ package ent
 
 import (
 	"fmt"
-	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
+	"deer/biz/dal/db/mysql/ent/ordereventsubscriptions"
 	"strings"
 	"time"
 

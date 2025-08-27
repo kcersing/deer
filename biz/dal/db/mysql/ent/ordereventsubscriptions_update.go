@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
-	"kcers-order/biz/dal/db/mysql/ent/predicate"
+	"deer/biz/dal/db/mysql/ent/ordereventsubscriptions"
+	"deer/biz/dal/db/mysql/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

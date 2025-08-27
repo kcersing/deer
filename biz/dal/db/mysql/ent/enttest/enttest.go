@@ -5,11 +5,11 @@ package enttest
 import (
 	"context"
 
-	"kcers-order/biz/dal/db/mysql/ent"
+	"deer/biz/dal/db/mysql/ent"
 	// required by schema hooks.
-	_ "kcers-order/biz/dal/db/mysql/ent/runtime"
+	_ "deer/biz/dal/db/mysql/ent/runtime"
 
-	"kcers-order/biz/dal/db/mysql/ent/migrate"
+	"deer/biz/dal/db/mysql/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

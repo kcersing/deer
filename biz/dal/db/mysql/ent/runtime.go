@@ -3,13 +3,13 @@
 package ent
 
 import (
-	"kcers-order/biz/dal/db/mysql/ent/order"
-	"kcers-order/biz/dal/db/mysql/ent/orderevents"
-	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
-	"kcers-order/biz/dal/db/mysql/ent/orderitem"
-	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
-	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
-	"kcers-order/biz/dal/db/mysql/ent/schema"
+	"deer/biz/dal/db/mysql/ent/order"
+	"deer/biz/dal/db/mysql/ent/orderevents"
+	"deer/biz/dal/db/mysql/ent/ordereventsubscriptions"
+	"deer/biz/dal/db/mysql/ent/orderitem"
+	"deer/biz/dal/db/mysql/ent/ordersnapshots"
+	"deer/biz/dal/db/mysql/ent/orderstatushistory"
+	"deer/biz/dal/db/mysql/ent/schema"
 	"time"
 )
 

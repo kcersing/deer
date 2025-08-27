@@ -1,8 +1,8 @@
 package dal
 
 import (
-	db "kcers-order/biz/dal/db/mysql"
-	"kcers-order/biz/dal/db/redis"
+	db "deer/biz/dal/db/mysql"
+	"deer/biz/dal/db/redis"
 )
 
 func Init() {

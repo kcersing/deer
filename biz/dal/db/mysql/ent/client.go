@@ -9,14 +9,14 @@ import (
 	"log"
 	"reflect"
 
-	"kcers-order/biz/dal/db/mysql/ent/migrate"
+	"deer/biz/dal/db/mysql/ent/migrate"
 
-	"kcers-order/biz/dal/db/mysql/ent/order"
-	"kcers-order/biz/dal/db/mysql/ent/orderevents"
-	"kcers-order/biz/dal/db/mysql/ent/ordereventsubscriptions"
-	"kcers-order/biz/dal/db/mysql/ent/orderitem"
-	"kcers-order/biz/dal/db/mysql/ent/ordersnapshots"
-	"kcers-order/biz/dal/db/mysql/ent/orderstatushistory"
+	"deer/biz/dal/db/mysql/ent/order"
+	"deer/biz/dal/db/mysql/ent/orderevents"
+	"deer/biz/dal/db/mysql/ent/ordereventsubscriptions"
+	"deer/biz/dal/db/mysql/ent/orderitem"
+	"deer/biz/dal/db/mysql/ent/ordersnapshots"
+	"deer/biz/dal/db/mysql/ent/orderstatushistory"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
