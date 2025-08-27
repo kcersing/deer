@@ -105,10 +105,3 @@ func (a *AggregateBase) Apply(event Event) error {
 	a.uncommittedEvents = append(a.uncommittedEvents, event)
 	return nil
 }
-
-type Item struct {
-	ProductId int64
-	Quantity  int64
-	Price     float64
-	Name      string
-}

@@ -1,14 +1,14 @@
 package main
 
 import (
-	"deer/biz/dal"
+	"deer/rpc/order/biz/dal"
+	"deer/rpc/order/conf"
 	"log"
 	"net"
 	"os"
 	"path"
 	"time"
 
-	"deer/conf"
 	"deer/kitex_gen/deer/order/orderservice"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"

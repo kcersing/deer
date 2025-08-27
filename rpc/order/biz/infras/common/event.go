@@ -18,22 +18,32 @@ type Event interface {
 	SetVersion(version int64)
 }
 type EventBase struct {
-	EventID       string
-	EventType     string
-	AggregateID   int64
-	AggregateType string
-	Version       int64
-	Timestamp     time.Time
+	EventID       string    `json:"EventID,omitempty"`
+	EventType     string    `json:"EventType,omitempty"`
+	AggregateID   int64     `json:"AggregateID,omitempty"`
+	AggregateType string    `json:"AggregateType,omitempty"`
+	Version       int64     `json:"Version,omitempty"`
+	Timestamp     time.Time `json:"Timestamp,omitempty"`
 }
 
 func (e *EventBase) GetId() string {
 	return e.EventID
 }
-func (e *EventBase) GetType() string          { return e.EventType }
-func (e *EventBase) GetAggregateID() int64    { return e.AggregateID }
-func (e *EventBase) GetAggregateType() string { return e.AggregateType }
-func (e *EventBase) GetVersion() int64        { return e.Version }
-func (e *EventBase) GetTimestamp() time.Time  { return e.Timestamp }
+func (e *EventBase) GetType() string {
+	return e.EventType
+}
+func (e *EventBase) GetAggregateID() int64 {
+	return e.AggregateID
+}
+func (e *EventBase) GetAggregateType() string {
+	return e.AggregateType
+}
+func (e *EventBase) GetVersion() int64 {
+	return e.Version
+}
+func (e *EventBase) GetTimestamp() time.Time {
+	return e.Timestamp
+}
 
 func (e *EventBase) SetAggregateID(aggregateID int64) {
 	e.AggregateID = aggregateID
@@ -49,5 +59,5 @@ func (e *EventBase) SetVersion(version int64) {
 }
 
 type EventData struct {
-	Event interface{}
+	Event Event
 }

@@ -319,7 +319,7 @@ func (p *Order) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				l, err = p.FastReadField3(buf[offset:])
 				offset += l
 				if err != nil {
@@ -444,20 +444,6 @@ func (p *Order) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 12:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField12(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
 		case 13:
 			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField13(buf[offset:])
@@ -534,11 +520,24 @@ func (p *Order) FastReadField2(buf []byte) (int, error) {
 
 func (p *Order) FastReadField3(buf []byte) (int, error) {
 	offset := 0
-	_field := NewItem()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
 		return offset, err
-	} else {
-		offset += l
+	}
+	_field := make([]*Item, 0, size)
+	values := make([]Item, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
 	}
 	p.Items = _field
 	return offset, nil
@@ -656,20 +655,6 @@ func (p *Order) FastReadField11(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *Order) FastReadField12(buf []byte) (int, error) {
-	offset := 0
-
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = v
-	}
-	p.Version = _field
-	return offset, nil
-}
-
 func (p *Order) FastReadField13(buf []byte) (int, error) {
 	offset := 0
 
@@ -717,7 +702,6 @@ func (p *Order) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField10(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
-		offset += p.fastWriteField12(buf[offset:], w)
 		offset += p.fastWriteField13(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
@@ -738,7 +722,6 @@ func (p *Order) BLength() int {
 		l += p.field9Length()
 		l += p.field10Length()
 		l += p.field11Length()
-		l += p.field12Length()
 		l += p.field13Length()
 		l += p.field254Length()
 	}
@@ -767,8 +750,15 @@ func (p *Order) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 func (p *Order) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetItems() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 3)
-		offset += p.Items.FastWriteNocopy(buf[offset:], w)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 3)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Items {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -845,15 +835,6 @@ func (p *Order) fastWriteField11(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
-func (p *Order) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetVersion() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 12)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Version)
-	}
-	return offset
-}
-
 func (p *Order) fastWriteField13(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetUpdatedAt() {
@@ -894,7 +875,11 @@ func (p *Order) field3Length() int {
 	l := 0
 	if p.IsSetItems() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Items.BLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Items {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }
@@ -967,15 +952,6 @@ func (p *Order) field11Length() int {
 	if p.IsSetRefundAt() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.StringLengthNocopy(p.RefundAt)
-	}
-	return l
-}
-
-func (p *Order) field12Length() int {
-	l := 0
-	if p.IsSetVersion() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Version)
 	}
 	return l
 }

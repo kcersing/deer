@@ -2,8 +2,8 @@ package infras
 
 import (
 	"context"
-	"deer/biz/dal/db/mysql/ent"
-	"deer/biz/infras/common"
+	"deer/rpc/order/biz/dal/mysql/ent"
+	"deer/rpc/order/biz/infras/common"
 )
 
 // 订单状态变更 → 生成事件 → 仓储保存事件（事务）→ 事务提交 → 订阅服务通知订阅者 → 更新订阅状态

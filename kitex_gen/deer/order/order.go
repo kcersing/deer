@@ -113,7 +113,7 @@ var fieldIDToName_Item = map[int16]string{
 type Order struct {
 	MemberId     int64   `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
 	CreatedId    int64   `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
-	Items        *Item   `thrift:"items,3,optional" frugal:"3,optional,Item" json:"items,omitempty"`
+	Items        []*Item `thrift:"items,3,optional" frugal:"3,optional,list<Item>" json:"items,omitempty"`
 	Sn           string  `thrift:"sn,4,optional" frugal:"4,optional,string" json:"sn,omitempty"`
 	TotalAmount  float64 `thrift:"totalAmount,5,optional" frugal:"5,optional,double" json:"totalAmount,omitempty"`
 	Status       string  `thrift:"status,6,optional" frugal:"6,optional,string" json:"status,omitempty"`
@@ -122,7 +122,6 @@ type Order struct {
 	CompletionAt string  `thrift:"completionAt,9,optional" frugal:"9,optional,string" json:"completionAt,omitempty"`
 	CloseAt      string  `thrift:"closeAt,10,optional" frugal:"10,optional,string" json:"closeAt,omitempty"`
 	RefundAt     string  `thrift:"refundAt,11,optional" frugal:"11,optional,string" json:"refundAt,omitempty"`
-	Version      string  `thrift:"version,12,optional" frugal:"12,optional,string" json:"version,omitempty"`
 	UpdatedAt    string  `thrift:"updatedAt,13,optional" frugal:"13,optional,string" json:"updatedAt,omitempty"`
 	Id           int64   `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
 }
@@ -132,7 +131,7 @@ func NewOrder() *Order {
 
 		MemberId:     0,
 		CreatedId:    1,
-		Items:        &Item{},
+		Items:        []*Item{},
 		Sn:           "",
 		TotalAmount:  0.0,
 		Status:       "",
@@ -141,7 +140,6 @@ func NewOrder() *Order {
 		CompletionAt: "",
 		CloseAt:      "",
 		RefundAt:     "",
-		Version:      "",
 		UpdatedAt:    "",
 		Id:           0,
 	}
@@ -150,7 +148,7 @@ func NewOrder() *Order {
 func (p *Order) InitDefault() {
 	p.MemberId = 0
 	p.CreatedId = 1
-	p.Items = &Item{}
+	p.Items = []*Item{}
 	p.Sn = ""
 	p.TotalAmount = 0.0
 	p.Status = ""
@@ -159,7 +157,6 @@ func (p *Order) InitDefault() {
 	p.CompletionAt = ""
 	p.CloseAt = ""
 	p.RefundAt = ""
-	p.Version = ""
 	p.UpdatedAt = ""
 	p.Id = 0
 }
@@ -182,9 +179,9 @@ func (p *Order) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var Order_Items_DEFAULT *Item = &Item{}
+var Order_Items_DEFAULT []*Item = []*Item{}
 
-func (p *Order) GetItems() (v *Item) {
+func (p *Order) GetItems() (v []*Item) {
 	if !p.IsSetItems() {
 		return Order_Items_DEFAULT
 	}
@@ -263,15 +260,6 @@ func (p *Order) GetRefundAt() (v string) {
 	return p.RefundAt
 }
 
-var Order_Version_DEFAULT string = ""
-
-func (p *Order) GetVersion() (v string) {
-	if !p.IsSetVersion() {
-		return Order_Version_DEFAULT
-	}
-	return p.Version
-}
-
 var Order_UpdatedAt_DEFAULT string = ""
 
 func (p *Order) GetUpdatedAt() (v string) {
@@ -295,7 +283,7 @@ func (p *Order) SetMemberId(val int64) {
 func (p *Order) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *Order) SetItems(val *Item) {
+func (p *Order) SetItems(val []*Item) {
 	p.Items = val
 }
 func (p *Order) SetSn(val string) {
@@ -321,9 +309,6 @@ func (p *Order) SetCloseAt(val string) {
 }
 func (p *Order) SetRefundAt(val string) {
 	p.RefundAt = val
-}
-func (p *Order) SetVersion(val string) {
-	p.Version = val
 }
 func (p *Order) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
@@ -376,10 +361,6 @@ func (p *Order) IsSetRefundAt() bool {
 	return p.RefundAt != Order_RefundAt_DEFAULT
 }
 
-func (p *Order) IsSetVersion() bool {
-	return p.Version != Order_Version_DEFAULT
-}
-
 func (p *Order) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != Order_UpdatedAt_DEFAULT
 }
@@ -407,7 +388,6 @@ var fieldIDToName_Order = map[int16]string{
 	9:   "completionAt",
 	10:  "closeAt",
 	11:  "refundAt",
-	12:  "version",
 	13:  "updatedAt",
 	254: "id",
 }

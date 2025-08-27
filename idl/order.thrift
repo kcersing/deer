@@ -12,7 +12,7 @@ struct Order {
     1:optional i64 memberId=0 (api.raw = "memberId")
     2:optional i64 createdId=1 (api.raw = "createdId")
 
-    3:optional Item items={} (api.raw = "items")
+    3:optional list<Item> items={} (api.raw = "items")
     4:optional string sn="" (api.raw = "sn")
     5:optional double totalAmount=0 (api.raw = "totalAmount")
     6:optional string status="" (api.raw = "status")
@@ -22,7 +22,7 @@ struct Order {
     9:optional string completionAt="" (api.raw = "completionAt")
     10:optional string closeAt="" (api.raw = "closeAt")
     11:optional string refundAt="" (api.raw = "refundAt")
-    12:optional string version="" (api.raw = "version")
+//    12:optional i64 version=0 (api.raw = "version")
     13:optional string updatedAt="" (api.raw = "updatedAt")
 
     254:optional i64 id=0 (api.raw = "id")

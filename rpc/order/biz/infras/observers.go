@@ -2,7 +2,7 @@ package infras
 
 import (
 	"context"
-	"deer/biz/infras/common"
+	"deer/rpc/order/biz/infras/common"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 	"sync"

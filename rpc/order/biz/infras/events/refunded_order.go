@@ -1,0 +1,30 @@
+package events
+
+import (
+	"deer/rpc/order/biz/infras/common"
+	"github.com/google/uuid"
+	"time"
+)
+
+// RefundedOrderEvent 退款事件
+type RefundedOrderEvent struct {
+	common.EventBase
+	RefundedAmount float64
+	CreatedId      int64
+}
+
+func (e *RefundedOrderEvent) GetType() string { return string(common.Refunded) }
+func NewRefundedOrderEvent(AggregateID int64, userID int64) *RefundedOrderEvent {
+	return &RefundedOrderEvent{
+		EventBase: common.EventBase{
+			EventID:     uuid.New().String(),
+			AggregateID: AggregateID,
+			Timestamp:   time.Now(),
+
+			EventType:     string(common.Refunded),
+			AggregateType: "order",
+			Version:       1,
+		},
+		CreatedId: userID,
+	}
+}
