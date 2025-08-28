@@ -3,6 +3,7 @@
 package order
 
 import (
+	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -38,8 +39,24 @@ const (
 	FieldRefundAt = "refund_at"
 	// FieldVersion holds the string denoting the version field in the database.
 	FieldVersion = "version"
+	// FieldTotalAmount holds the string denoting the total_amount field in the database.
+	FieldTotalAmount = "total_amount"
+	// FieldActual holds the string denoting the actual field in the database.
+	FieldActual = "actual"
+	// FieldResidue holds the string denoting the residue field in the database.
+	FieldResidue = "residue"
+	// FieldRemission holds the string denoting the remission field in the database.
+	FieldRemission = "remission"
+	// FieldRefund holds the string denoting the refund field in the database.
+	FieldRefund = "refund"
+	// FieldCloseNature holds the string denoting the close_nature field in the database.
+	FieldCloseNature = "close_nature"
+	// FieldRefundNature holds the string denoting the refund_nature field in the database.
+	FieldRefundNature = "refund_nature"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
+	// EdgePay holds the string denoting the pay edge name in mutations.
+	EdgePay = "pay"
 	// EdgeEvents holds the string denoting the events edge name in mutations.
 	EdgeEvents = "events"
 	// EdgeSnapshots holds the string denoting the snapshots edge name in mutations.
@@ -55,6 +72,13 @@ const (
 	ItemsInverseTable = "order_item"
 	// ItemsColumn is the table column denoting the items relation/edge.
 	ItemsColumn = "order_id"
+	// PayTable is the table that holds the pay relation/edge.
+	PayTable = "order_pay"
+	// PayInverseTable is the table name for the OrderPay entity.
+	// It exists in this package in order to avoid circular dependency with the "orderpay" package.
+	PayInverseTable = "order_pay"
+	// PayColumn is the table column denoting the pay relation/edge.
+	PayColumn = "order_id"
 	// EventsTable is the table that holds the events relation/edge.
 	EventsTable = "order_events"
 	// EventsInverseTable is the table name for the OrderEvents entity.
@@ -93,6 +117,13 @@ var Columns = []string{
 	FieldCloseAt,
 	FieldRefundAt,
 	FieldVersion,
+	FieldTotalAmount,
+	FieldActual,
+	FieldResidue,
+	FieldRemission,
+	FieldRefund,
+	FieldCloseNature,
+	FieldRefundNature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -116,7 +147,49 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
+	// DefaultVersion holds the default value on creation for the "version" field.
+	DefaultVersion int64
+	// DefaultTotalAmount holds the default value on creation for the "total_amount" field.
+	DefaultTotalAmount float64
+	// DefaultActual holds the default value on creation for the "actual" field.
+	DefaultActual float64
+	// DefaultResidue holds the default value on creation for the "residue" field.
+	DefaultResidue float64
+	// DefaultRemission holds the default value on creation for the "remission" field.
+	DefaultRemission float64
+	// DefaultRefund holds the default value on creation for the "refund" field.
+	DefaultRefund float64
 )
+
+// Status defines the type for the "status" enum field.
+type Status string
+
+// StatusCreated is the default value of the Status enum.
+const DefaultStatus = StatusCreated
+
+// Status values.
+const (
+	StatusCreated   Status = "created"
+	StatusPaid      Status = "paid"
+	StatusShipped   Status = "shipped"
+	StatusCancelled Status = "cancelled"
+	StatusCompleted Status = "completed"
+	StatusRefunded  Status = "refunded"
+)
+
+func (s Status) String() string {
+	return string(s)
+}
+
+// StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
+func StatusValidator(s Status) error {
+	switch s {
+	case StatusCreated, StatusPaid, StatusShipped, StatusCancelled, StatusCompleted, StatusRefunded:
+		return nil
+	default:
+		return fmt.Errorf("order: invalid enum value for status field: %q", s)
+	}
+}
 
 // OrderOption defines the ordering options for the Order queries.
 type OrderOption func(*sql.Selector)
@@ -186,6 +259,41 @@ func ByVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldVersion, opts...).ToFunc()
 }
 
+// ByTotalAmount orders the results by the total_amount field.
+func ByTotalAmount(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTotalAmount, opts...).ToFunc()
+}
+
+// ByActual orders the results by the actual field.
+func ByActual(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActual, opts...).ToFunc()
+}
+
+// ByResidue orders the results by the residue field.
+func ByResidue(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldResidue, opts...).ToFunc()
+}
+
+// ByRemission orders the results by the remission field.
+func ByRemission(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRemission, opts...).ToFunc()
+}
+
+// ByRefund orders the results by the refund field.
+func ByRefund(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRefund, opts...).ToFunc()
+}
+
+// ByCloseNature orders the results by the close_nature field.
+func ByCloseNature(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCloseNature, opts...).ToFunc()
+}
+
+// ByRefundNature orders the results by the refund_nature field.
+func ByRefundNature(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldRefundNature, opts...).ToFunc()
+}
+
 // ByItemsCount orders the results by items count.
 func ByItemsCount(opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
@@ -197,6 +305,20 @@ func ByItemsCount(opts ...sql.OrderTermOption) OrderOption {
 func ByItems(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newItemsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// ByPayCount orders the results by pay count.
+func ByPayCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newPayStep(), opts...)
+	}
+}
+
+// ByPay orders the results by pay terms.
+func ByPay(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newPayStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
 
@@ -246,6 +368,13 @@ func newItemsStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(ItemsInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.O2M, false, ItemsTable, ItemsColumn),
+	)
+}
+func newPayStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(PayInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, PayTable, PayColumn),
 	)
 }
 func newEventsStep() *sqlgraph.Step {

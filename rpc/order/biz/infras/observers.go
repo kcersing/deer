@@ -14,7 +14,13 @@ type EventHandler interface {
 	Handle(ctx context.Context, event common.Event) error
 }
 
-// EventDispatcher 事件分发器 EventBus
+type Dispatcher interface {
+	RegisterHandler(eventType string, handler EventHandler)
+	Unregister(observer EventHandler)
+	Dispatch(eventType string, handler EventHandler)
+}
+
+// EventDispatcher 分发 EventBus
 type EventDispatcher struct {
 	handlers map[string][]EventHandler
 	mu       sync.RWMutex
@@ -26,12 +32,22 @@ func NewEventDispatcher() *EventDispatcher {
 	}
 }
 
-// RegisterHandler 注册处理器
+// RegisterHandler 注册
 func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 
 	d.handlers[eventType] = append(d.handlers[eventType], handler)
+}
+
+// Unregister 移除
+func (d *EventDispatcher) Unregister(eventType string, handler EventHandler) {
+	for i, obs := range d.handlers[eventType] {
+		if obs == handler {
+			d.handlers[eventType] = append(d.handlers[eventType][:i], d.handlers[eventType][i+1:]...)
+			break
+		}
+	}
 }
 
 // Dispatch 并发分发事件
@@ -63,18 +79,6 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 				}
 			}(handler)
 		})
-		//wg.Add(1)
-		//go func(h EventHandler) {
-		//	defer wg.Done()
-		//	// 带超时和重试的事件处理
-		//	if err := withRetry(func() error {
-		//		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-		//		defer cancel()
-		//		return h.Handle(ctx, event)
-		//	}, 3); err != nil {
-		//		errCh <- err
-		//	}
-		//}(handler)
 	}
 
 	// 等待所有处理器完成

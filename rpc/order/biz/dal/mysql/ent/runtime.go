@@ -7,6 +7,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/ordereventsubscriptions"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/schema"
@@ -40,6 +41,30 @@ func init() {
 	orderDescCreatedID := orderMixinFields0[4].Descriptor()
 	// order.DefaultCreatedID holds the default value on creation for the created_id field.
 	order.DefaultCreatedID = orderDescCreatedID.Default.(int64)
+	// orderDescVersion is the schema descriptor for version field.
+	orderDescVersion := orderFields[7].Descriptor()
+	// order.DefaultVersion holds the default value on creation for the version field.
+	order.DefaultVersion = orderDescVersion.Default.(int64)
+	// orderDescTotalAmount is the schema descriptor for total_amount field.
+	orderDescTotalAmount := orderFields[8].Descriptor()
+	// order.DefaultTotalAmount holds the default value on creation for the total_amount field.
+	order.DefaultTotalAmount = orderDescTotalAmount.Default.(float64)
+	// orderDescActual is the schema descriptor for actual field.
+	orderDescActual := orderFields[9].Descriptor()
+	// order.DefaultActual holds the default value on creation for the actual field.
+	order.DefaultActual = orderDescActual.Default.(float64)
+	// orderDescResidue is the schema descriptor for residue field.
+	orderDescResidue := orderFields[10].Descriptor()
+	// order.DefaultResidue holds the default value on creation for the residue field.
+	order.DefaultResidue = orderDescResidue.Default.(float64)
+	// orderDescRemission is the schema descriptor for remission field.
+	orderDescRemission := orderFields[11].Descriptor()
+	// order.DefaultRemission holds the default value on creation for the remission field.
+	order.DefaultRemission = orderDescRemission.Default.(float64)
+	// orderDescRefund is the schema descriptor for refund field.
+	orderDescRefund := orderFields[12].Descriptor()
+	// order.DefaultRefund holds the default value on creation for the refund field.
+	order.DefaultRefund = orderDescRefund.Default.(float64)
 	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()
 	ordereventsubscriptionsMixinFields0 := ordereventsubscriptionsMixin[0].Fields()
 	_ = ordereventsubscriptionsMixinFields0
@@ -113,6 +138,29 @@ func init() {
 	orderitemDescQuantity := orderitemFields[4].Descriptor()
 	// orderitem.DefaultQuantity holds the default value on creation for the quantity field.
 	orderitem.DefaultQuantity = orderitemDescQuantity.Default.(int64)
+	orderpayMixin := schema.OrderPay{}.Mixin()
+	orderpayMixinFields0 := orderpayMixin[0].Fields()
+	_ = orderpayMixinFields0
+	orderpayFields := schema.OrderPay{}.Fields()
+	_ = orderpayFields
+	// orderpayDescCreatedAt is the schema descriptor for created_at field.
+	orderpayDescCreatedAt := orderpayMixinFields0[1].Descriptor()
+	// orderpay.DefaultCreatedAt holds the default value on creation for the created_at field.
+	orderpay.DefaultCreatedAt = orderpayDescCreatedAt.Default.(func() time.Time)
+	// orderpayDescUpdatedAt is the schema descriptor for updated_at field.
+	orderpayDescUpdatedAt := orderpayMixinFields0[2].Descriptor()
+	// orderpay.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	orderpay.DefaultUpdatedAt = orderpayDescUpdatedAt.Default.(func() time.Time)
+	// orderpay.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	orderpay.UpdateDefaultUpdatedAt = orderpayDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// orderpayDescDelete is the schema descriptor for delete field.
+	orderpayDescDelete := orderpayMixinFields0[3].Descriptor()
+	// orderpay.DefaultDelete holds the default value on creation for the delete field.
+	orderpay.DefaultDelete = orderpayDescDelete.Default.(int64)
+	// orderpayDescCreatedID is the schema descriptor for created_id field.
+	orderpayDescCreatedID := orderpayMixinFields0[4].Descriptor()
+	// orderpay.DefaultCreatedID holds the default value on creation for the created_id field.
+	orderpay.DefaultCreatedID = orderpayDescCreatedID.Default.(int64)
 	ordersnapshotsMixin := schema.OrderSnapshots{}.Mixin()
 	ordersnapshotsMixinFields0 := ordersnapshotsMixin[0].Fields()
 	_ = ordersnapshotsMixinFields0

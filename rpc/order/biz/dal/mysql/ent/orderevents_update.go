@@ -7,7 +7,6 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
-	"deer/rpc/order/biz/infras/common"
 	"errors"
 	"fmt"
 	"time"
@@ -177,7 +176,7 @@ func (_u *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
 }
 
 // SetEventData sets the "event_data" field.
-func (_u *OrderEventsUpdate) SetEventData(v *common.EventData) *OrderEventsUpdate {
+func (_u *OrderEventsUpdate) SetEventData(v any) *OrderEventsUpdate {
 	_u.mutation.SetEventData(v)
 	return _u
 }
@@ -546,7 +545,7 @@ func (_u *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (_u *OrderEventsUpdateOne) SetEventData(v *common.EventData) *OrderEventsUpdateOne {
+func (_u *OrderEventsUpdateOne) SetEventData(v any) *OrderEventsUpdateOne {
 	_u.mutation.SetEventData(v)
 	return _u
 }

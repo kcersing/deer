@@ -17,15 +17,31 @@ type Order struct {
 func (Order) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("order_sn").Comment("订单编号").Unique(),
-		//field.Int64("venue_id").Comment("场馆id").Optional(),
 		field.Int64("member_id").Comment("会员id").Optional(),
-		//field.Int64("member_product_id").Comment("会员产品id").Optional(),
-		field.String("status").Comment("状态").Optional(),
+		field.Enum("status").
+			Values(
+				"created",
+				"paid",
+				"shipped",
+				"cancelled",
+				"completed",
+				"refunded",
+			).
+			Default("created").Comment("状态").Optional(),
+
 		field.Int64("nature").Comment("业务类型").Optional(),
 		field.Time("completion_at").Comment("订单完成时间").Optional(),
 		field.Time("close_at").Comment("订单关闭时间").Optional(),
 		field.Time("refund_at").Comment("订单退费时间").Optional(),
-		field.Int64("version").Comment("乐观锁版本号").Optional(),
+		field.Int64("version").Default(1).Comment("乐观锁版本号").Optional(),
+
+		field.Float("total_amount").Default(0).Comment("总金额").Optional(),
+		field.Float("actual").Default(0).Comment("实际已付款").Optional(),
+		field.Float("residue").Default(0).Comment("未支付金额").Optional(),
+		field.Float("remission").Default(0).Comment("减免").Optional(),
+		field.Float("refund").Default(0).Comment("退费金额").Optional(),
+		field.String("close_nature").Comment("关闭原因").Optional(),
+		field.String("refund_nature").Comment("退费原因").Optional(),
 	}
 }
 
@@ -37,12 +53,9 @@ func (Order) Mixin() []ent.Mixin {
 
 func (Order) Edges() []ent.Edge {
 	return []ent.Edge{
-		//edge.To("amount", OrderAmount.Type),
-		edge.To("items", OrderItem.Type),
-		//edge.To("pay", OrderPay.Type),
-		//edge.To("order_contents", MemberContract.Type),
-		//edge.To("sales", OrderSales.Type),
 
+		edge.To("items", OrderItem.Type),
+		edge.To("pay", OrderPay.Type),
 		edge.To("events", OrderEvents.Type),
 		edge.To("snapshots", OrderSnapshots.Type),
 		edge.To("status_history", OrderStatusHistory.Type),

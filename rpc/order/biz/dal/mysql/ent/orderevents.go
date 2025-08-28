@@ -5,7 +5,6 @@ package ent
 import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
-	"deer/rpc/order/biz/infras/common"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -38,7 +37,7 @@ type OrderEvents struct {
 	// 事件类型
 	EventType string `json:"event_type,omitempty"`
 	// 事件数据
-	EventData *common.EventData `json:"event_data,omitempty"`
+	EventData any `json:"event_data,omitempty"`
 	// 聚合根版本号
 	EventVersion int64 `json:"event_version,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.

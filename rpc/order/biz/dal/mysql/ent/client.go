@@ -15,6 +15,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/ordereventsubscriptions"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 
@@ -37,6 +38,8 @@ type Client struct {
 	OrderEvents *OrderEventsClient
 	// OrderItem is the client for interacting with the OrderItem builders.
 	OrderItem *OrderItemClient
+	// OrderPay is the client for interacting with the OrderPay builders.
+	OrderPay *OrderPayClient
 	// OrderSnapshots is the client for interacting with the OrderSnapshots builders.
 	OrderSnapshots *OrderSnapshotsClient
 	// OrderStatusHistory is the client for interacting with the OrderStatusHistory builders.
@@ -56,6 +59,7 @@ func (c *Client) init() {
 	c.OrderEventSubscriptions = NewOrderEventSubscriptionsClient(c.config)
 	c.OrderEvents = NewOrderEventsClient(c.config)
 	c.OrderItem = NewOrderItemClient(c.config)
+	c.OrderPay = NewOrderPayClient(c.config)
 	c.OrderSnapshots = NewOrderSnapshotsClient(c.config)
 	c.OrderStatusHistory = NewOrderStatusHistoryClient(c.config)
 }
@@ -154,6 +158,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
+		OrderPay:                NewOrderPayClient(cfg),
 		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
 		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
@@ -179,6 +184,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
+		OrderPay:                NewOrderPayClient(cfg),
 		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
 		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
@@ -210,7 +216,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
 		c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Use(hooks...)
@@ -221,7 +227,7 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
 		c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Intercept(interceptors...)
@@ -239,6 +245,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.OrderEvents.mutate(ctx, m)
 	case *OrderItemMutation:
 		return c.OrderItem.mutate(ctx, m)
+	case *OrderPayMutation:
+		return c.OrderPay.mutate(ctx, m)
 	case *OrderSnapshotsMutation:
 		return c.OrderSnapshots.mutate(ctx, m)
 	case *OrderStatusHistoryMutation:
@@ -365,6 +373,22 @@ func (c *OrderClient) QueryItems(_m *Order) *OrderItemQuery {
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(orderitem.Table, orderitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.ItemsTable, order.ItemsColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPay queries the pay edge of a Order.
+func (c *OrderClient) QueryPay(_m *Order) *OrderPayQuery {
+	query := (&OrderPayClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, id),
+			sqlgraph.To(orderpay.Table, orderpay.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.PayTable, order.PayColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
@@ -876,6 +900,155 @@ func (c *OrderItemClient) mutate(ctx context.Context, m *OrderItemMutation) (Val
 	}
 }
 
+// OrderPayClient is a client for the OrderPay schema.
+type OrderPayClient struct {
+	config
+}
+
+// NewOrderPayClient returns a client for the OrderPay from the given config.
+func NewOrderPayClient(c config) *OrderPayClient {
+	return &OrderPayClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `orderpay.Hooks(f(g(h())))`.
+func (c *OrderPayClient) Use(hooks ...Hook) {
+	c.hooks.OrderPay = append(c.hooks.OrderPay, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `orderpay.Intercept(f(g(h())))`.
+func (c *OrderPayClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrderPay = append(c.inters.OrderPay, interceptors...)
+}
+
+// Create returns a builder for creating a OrderPay entity.
+func (c *OrderPayClient) Create() *OrderPayCreate {
+	mutation := newOrderPayMutation(c.config, OpCreate)
+	return &OrderPayCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of OrderPay entities.
+func (c *OrderPayClient) CreateBulk(builders ...*OrderPayCreate) *OrderPayCreateBulk {
+	return &OrderPayCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *OrderPayClient) MapCreateBulk(slice any, setFunc func(*OrderPayCreate, int)) *OrderPayCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &OrderPayCreateBulk{err: fmt.Errorf("calling to OrderPayClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*OrderPayCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &OrderPayCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for OrderPay.
+func (c *OrderPayClient) Update() *OrderPayUpdate {
+	mutation := newOrderPayMutation(c.config, OpUpdate)
+	return &OrderPayUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *OrderPayClient) UpdateOne(_m *OrderPay) *OrderPayUpdateOne {
+	mutation := newOrderPayMutation(c.config, OpUpdateOne, withOrderPay(_m))
+	return &OrderPayUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *OrderPayClient) UpdateOneID(id int64) *OrderPayUpdateOne {
+	mutation := newOrderPayMutation(c.config, OpUpdateOne, withOrderPayID(id))
+	return &OrderPayUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for OrderPay.
+func (c *OrderPayClient) Delete() *OrderPayDelete {
+	mutation := newOrderPayMutation(c.config, OpDelete)
+	return &OrderPayDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *OrderPayClient) DeleteOne(_m *OrderPay) *OrderPayDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *OrderPayClient) DeleteOneID(id int64) *OrderPayDeleteOne {
+	builder := c.Delete().Where(orderpay.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &OrderPayDeleteOne{builder}
+}
+
+// Query returns a query builder for OrderPay.
+func (c *OrderPayClient) Query() *OrderPayQuery {
+	return &OrderPayQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeOrderPay},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a OrderPay entity by its id.
+func (c *OrderPayClient) Get(ctx context.Context, id int64) (*OrderPay, error) {
+	return c.Query().Where(orderpay.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *OrderPayClient) GetX(ctx context.Context, id int64) *OrderPay {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryOrder queries the order edge of a OrderPay.
+func (c *OrderPayClient) QueryOrder(_m *OrderPay) *OrderQuery {
+	query := (&OrderClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orderpay.Table, orderpay.FieldID, id),
+			sqlgraph.To(order.Table, order.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orderpay.OrderTable, orderpay.OrderColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *OrderPayClient) Hooks() []Hook {
+	return c.hooks.OrderPay
+}
+
+// Interceptors returns the client interceptors.
+func (c *OrderPayClient) Interceptors() []Interceptor {
+	return c.inters.OrderPay
+}
+
+func (c *OrderPayClient) mutate(ctx context.Context, m *OrderPayMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&OrderPayCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&OrderPayUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&OrderPayUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&OrderPayDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown OrderPay mutation op: %q", m.Op())
+	}
+}
+
 // OrderSnapshotsClient is a client for the OrderSnapshots schema.
 type OrderSnapshotsClient struct {
 	config
@@ -1177,11 +1350,11 @@ func (c *OrderStatusHistoryClient) mutate(ctx context.Context, m *OrderStatusHis
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderSnapshots,
-		OrderStatusHistory []ent.Hook
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		OrderSnapshots, OrderStatusHistory []ent.Hook
 	}
 	inters struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderSnapshots,
-		OrderStatusHistory []ent.Interceptor
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		OrderSnapshots, OrderStatusHistory []ent.Interceptor
 	}
 )

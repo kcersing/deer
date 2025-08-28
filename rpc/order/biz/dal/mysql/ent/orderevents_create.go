@@ -6,7 +6,6 @@ import (
 	"context"
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
-	"deer/rpc/order/biz/infras/common"
 	"errors"
 	"fmt"
 	"time"
@@ -137,7 +136,7 @@ func (_c *OrderEventsCreate) SetNillableEventType(v *string) *OrderEventsCreate 
 }
 
 // SetEventData sets the "event_data" field.
-func (_c *OrderEventsCreate) SetEventData(v *common.EventData) *OrderEventsCreate {
+func (_c *OrderEventsCreate) SetEventData(v any) *OrderEventsCreate {
 	_c.mutation.SetEventData(v)
 	return _c
 }
@@ -513,7 +512,7 @@ func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsert) SetEventData(v *common.EventData) *OrderEventsUpsert {
+func (u *OrderEventsUpsert) SetEventData(v any) *OrderEventsUpsert {
 	u.Set(orderevents.FieldEventData, v)
 	return u
 }
@@ -767,7 +766,7 @@ func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertOne) SetEventData(v *common.EventData) *OrderEventsUpsertOne {
+func (u *OrderEventsUpsertOne) SetEventData(v any) *OrderEventsUpsertOne {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})
@@ -1194,7 +1193,7 @@ func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertBulk) SetEventData(v *common.EventData) *OrderEventsUpsertBulk {
+func (u *OrderEventsUpsertBulk) SetEventData(v any) *OrderEventsUpsertBulk {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})

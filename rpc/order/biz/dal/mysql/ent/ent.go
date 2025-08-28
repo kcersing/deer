@@ -8,6 +8,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/ordereventsubscriptions"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"errors"
@@ -82,6 +83,7 @@ func checkColumn(t, c string) error {
 			ordereventsubscriptions.Table: ordereventsubscriptions.ValidColumn,
 			orderevents.Table:             orderevents.ValidColumn,
 			orderitem.Table:               orderitem.ValidColumn,
+			orderpay.Table:                orderpay.ValidColumn,
 			ordersnapshots.Table:          ordersnapshots.ValidColumn,
 			orderstatushistory.Table:      orderstatushistory.ValidColumn,
 		})

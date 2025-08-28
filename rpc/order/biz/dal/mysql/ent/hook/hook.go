@@ -56,6 +56,18 @@ func (f OrderItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, e
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderItemMutation", m)
 }
 
+// The OrderPayFunc type is an adapter to allow the use of ordinary
+// function as OrderPay mutator.
+type OrderPayFunc func(context.Context, *ent.OrderPayMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrderPayFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrderPayMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrderPayMutation", m)
+}
+
 // The OrderSnapshotsFunc type is an adapter to allow the use of ordinary
 // function as OrderSnapshots mutator.
 type OrderSnapshotsFunc func(context.Context, *ent.OrderSnapshotsMutation) (ent.Value, error)

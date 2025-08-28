@@ -5,7 +5,6 @@ package ent
 import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
-	"deer/rpc/order/biz/infras/aggregate"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -34,7 +33,7 @@ type OrderSnapshots struct {
 	// 快照版本
 	AggregateVersion int64 `json:"aggregate_version,omitempty"`
 	// 快照数据
-	AggregateData *aggregate.Order `json:"aggregate_data,omitempty"`
+	AggregateData any `json:"aggregate_data,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderSnapshotsQuery when eager-loading is set.
 	Edges        OrderSnapshotsEdges `json:"edges"`

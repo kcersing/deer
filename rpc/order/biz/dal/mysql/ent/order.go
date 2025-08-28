@@ -31,7 +31,7 @@ type Order struct {
 	// 会员id
 	MemberID int64 `json:"member_id,omitempty"`
 	// 状态
-	Status string `json:"status,omitempty"`
+	Status order.Status `json:"status,omitempty"`
 	// 业务类型
 	Nature int64 `json:"nature,omitempty"`
 	// 订单完成时间
@@ -42,6 +42,20 @@ type Order struct {
 	RefundAt time.Time `json:"refund_at,omitempty"`
 	// 乐观锁版本号
 	Version int64 `json:"version,omitempty"`
+	// 总金额
+	TotalAmount float64 `json:"total_amount,omitempty"`
+	// 实际已付款
+	Actual float64 `json:"actual,omitempty"`
+	// 未支付金额
+	Residue float64 `json:"residue,omitempty"`
+	// 减免
+	Remission float64 `json:"remission,omitempty"`
+	// 退费金额
+	Refund float64 `json:"refund,omitempty"`
+	// 关闭原因
+	CloseNature string `json:"close_nature,omitempty"`
+	// 退费原因
+	RefundNature string `json:"refund_nature,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderQuery when eager-loading is set.
 	Edges        OrderEdges `json:"edges"`
@@ -52,6 +66,8 @@ type Order struct {
 type OrderEdges struct {
 	// Items holds the value of the items edge.
 	Items []*OrderItem `json:"items,omitempty"`
+	// Pay holds the value of the pay edge.
+	Pay []*OrderPay `json:"pay,omitempty"`
 	// Events holds the value of the events edge.
 	Events []*OrderEvents `json:"events,omitempty"`
 	// Snapshots holds the value of the snapshots edge.
@@ -60,7 +76,7 @@ type OrderEdges struct {
 	StatusHistory []*OrderStatusHistory `json:"status_history,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
+	loadedTypes [5]bool
 }
 
 // ItemsOrErr returns the Items value or an error if the edge
@@ -72,10 +88,19 @@ func (e OrderEdges) ItemsOrErr() ([]*OrderItem, error) {
 	return nil, &NotLoadedError{edge: "items"}
 }
 
+// PayOrErr returns the Pay value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) PayOrErr() ([]*OrderPay, error) {
+	if e.loadedTypes[1] {
+		return e.Pay, nil
+	}
+	return nil, &NotLoadedError{edge: "pay"}
+}
+
 // EventsOrErr returns the Events value or an error if the edge
 // was not loaded in eager-loading.
 func (e OrderEdges) EventsOrErr() ([]*OrderEvents, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		return e.Events, nil
 	}
 	return nil, &NotLoadedError{edge: "events"}
@@ -84,7 +109,7 @@ func (e OrderEdges) EventsOrErr() ([]*OrderEvents, error) {
 // SnapshotsOrErr returns the Snapshots value or an error if the edge
 // was not loaded in eager-loading.
 func (e OrderEdges) SnapshotsOrErr() ([]*OrderSnapshots, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[3] {
 		return e.Snapshots, nil
 	}
 	return nil, &NotLoadedError{edge: "snapshots"}
@@ -93,7 +118,7 @@ func (e OrderEdges) SnapshotsOrErr() ([]*OrderSnapshots, error) {
 // StatusHistoryOrErr returns the StatusHistory value or an error if the edge
 // was not loaded in eager-loading.
 func (e OrderEdges) StatusHistoryOrErr() ([]*OrderStatusHistory, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		return e.StatusHistory, nil
 	}
 	return nil, &NotLoadedError{edge: "status_history"}
@@ -104,9 +129,11 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case order.FieldTotalAmount, order.FieldActual, order.FieldResidue, order.FieldRemission, order.FieldRefund:
+			values[i] = new(sql.NullFloat64)
 		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion:
 			values[i] = new(sql.NullInt64)
-		case order.FieldOrderSn, order.FieldStatus:
+		case order.FieldOrderSn, order.FieldStatus, order.FieldCloseNature, order.FieldRefundNature:
 			values[i] = new(sql.NullString)
 		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt, order.FieldRefundAt:
 			values[i] = new(sql.NullTime)
@@ -171,7 +198,7 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.Status = value.String
+				_m.Status = order.Status(value.String)
 			}
 		case order.FieldNature:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -203,6 +230,48 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Version = value.Int64
 			}
+		case order.FieldTotalAmount:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field total_amount", values[i])
+			} else if value.Valid {
+				_m.TotalAmount = value.Float64
+			}
+		case order.FieldActual:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field actual", values[i])
+			} else if value.Valid {
+				_m.Actual = value.Float64
+			}
+		case order.FieldResidue:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field residue", values[i])
+			} else if value.Valid {
+				_m.Residue = value.Float64
+			}
+		case order.FieldRemission:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field remission", values[i])
+			} else if value.Valid {
+				_m.Remission = value.Float64
+			}
+		case order.FieldRefund:
+			if value, ok := values[i].(*sql.NullFloat64); !ok {
+				return fmt.Errorf("unexpected type %T for field refund", values[i])
+			} else if value.Valid {
+				_m.Refund = value.Float64
+			}
+		case order.FieldCloseNature:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field close_nature", values[i])
+			} else if value.Valid {
+				_m.CloseNature = value.String
+			}
+		case order.FieldRefundNature:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field refund_nature", values[i])
+			} else if value.Valid {
+				_m.RefundNature = value.String
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -219,6 +288,11 @@ func (_m *Order) Value(name string) (ent.Value, error) {
 // QueryItems queries the "items" edge of the Order entity.
 func (_m *Order) QueryItems() *OrderItemQuery {
 	return NewOrderClient(_m.config).QueryItems(_m)
+}
+
+// QueryPay queries the "pay" edge of the Order entity.
+func (_m *Order) QueryPay() *OrderPayQuery {
+	return NewOrderClient(_m.config).QueryPay(_m)
 }
 
 // QueryEvents queries the "events" edge of the Order entity.
@@ -278,7 +352,7 @@ func (_m *Order) String() string {
 	builder.WriteString(fmt.Sprintf("%v", _m.MemberID))
 	builder.WriteString(", ")
 	builder.WriteString("status=")
-	builder.WriteString(_m.Status)
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteString(", ")
 	builder.WriteString("nature=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Nature))
@@ -294,6 +368,27 @@ func (_m *Order) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("version=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Version))
+	builder.WriteString(", ")
+	builder.WriteString("total_amount=")
+	builder.WriteString(fmt.Sprintf("%v", _m.TotalAmount))
+	builder.WriteString(", ")
+	builder.WriteString("actual=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Actual))
+	builder.WriteString(", ")
+	builder.WriteString("residue=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Residue))
+	builder.WriteString(", ")
+	builder.WriteString("remission=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Remission))
+	builder.WriteString(", ")
+	builder.WriteString("refund=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Refund))
+	builder.WriteString(", ")
+	builder.WriteString("close_nature=")
+	builder.WriteString(_m.CloseNature)
+	builder.WriteString(", ")
+	builder.WriteString("refund_nature=")
+	builder.WriteString(_m.RefundNature)
 	builder.WriteByte(')')
 	return builder.String()
 }

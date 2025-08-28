@@ -7,6 +7,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
@@ -140,13 +141,13 @@ func (_u *OrderUpdate) ClearMemberID() *OrderUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (_u *OrderUpdate) SetStatus(v string) *OrderUpdate {
+func (_u *OrderUpdate) SetStatus(v order.Status) *OrderUpdate {
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableStatus(v *string) *OrderUpdate {
+func (_u *OrderUpdate) SetNillableStatus(v *order.Status) *OrderUpdate {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
@@ -273,6 +274,181 @@ func (_u *OrderUpdate) ClearVersion() *OrderUpdate {
 	return _u
 }
 
+// SetTotalAmount sets the "total_amount" field.
+func (_u *OrderUpdate) SetTotalAmount(v float64) *OrderUpdate {
+	_u.mutation.ResetTotalAmount()
+	_u.mutation.SetTotalAmount(v)
+	return _u
+}
+
+// SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableTotalAmount(v *float64) *OrderUpdate {
+	if v != nil {
+		_u.SetTotalAmount(*v)
+	}
+	return _u
+}
+
+// AddTotalAmount adds value to the "total_amount" field.
+func (_u *OrderUpdate) AddTotalAmount(v float64) *OrderUpdate {
+	_u.mutation.AddTotalAmount(v)
+	return _u
+}
+
+// ClearTotalAmount clears the value of the "total_amount" field.
+func (_u *OrderUpdate) ClearTotalAmount() *OrderUpdate {
+	_u.mutation.ClearTotalAmount()
+	return _u
+}
+
+// SetActual sets the "actual" field.
+func (_u *OrderUpdate) SetActual(v float64) *OrderUpdate {
+	_u.mutation.ResetActual()
+	_u.mutation.SetActual(v)
+	return _u
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableActual(v *float64) *OrderUpdate {
+	if v != nil {
+		_u.SetActual(*v)
+	}
+	return _u
+}
+
+// AddActual adds value to the "actual" field.
+func (_u *OrderUpdate) AddActual(v float64) *OrderUpdate {
+	_u.mutation.AddActual(v)
+	return _u
+}
+
+// ClearActual clears the value of the "actual" field.
+func (_u *OrderUpdate) ClearActual() *OrderUpdate {
+	_u.mutation.ClearActual()
+	return _u
+}
+
+// SetResidue sets the "residue" field.
+func (_u *OrderUpdate) SetResidue(v float64) *OrderUpdate {
+	_u.mutation.ResetResidue()
+	_u.mutation.SetResidue(v)
+	return _u
+}
+
+// SetNillableResidue sets the "residue" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableResidue(v *float64) *OrderUpdate {
+	if v != nil {
+		_u.SetResidue(*v)
+	}
+	return _u
+}
+
+// AddResidue adds value to the "residue" field.
+func (_u *OrderUpdate) AddResidue(v float64) *OrderUpdate {
+	_u.mutation.AddResidue(v)
+	return _u
+}
+
+// ClearResidue clears the value of the "residue" field.
+func (_u *OrderUpdate) ClearResidue() *OrderUpdate {
+	_u.mutation.ClearResidue()
+	return _u
+}
+
+// SetRemission sets the "remission" field.
+func (_u *OrderUpdate) SetRemission(v float64) *OrderUpdate {
+	_u.mutation.ResetRemission()
+	_u.mutation.SetRemission(v)
+	return _u
+}
+
+// SetNillableRemission sets the "remission" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableRemission(v *float64) *OrderUpdate {
+	if v != nil {
+		_u.SetRemission(*v)
+	}
+	return _u
+}
+
+// AddRemission adds value to the "remission" field.
+func (_u *OrderUpdate) AddRemission(v float64) *OrderUpdate {
+	_u.mutation.AddRemission(v)
+	return _u
+}
+
+// ClearRemission clears the value of the "remission" field.
+func (_u *OrderUpdate) ClearRemission() *OrderUpdate {
+	_u.mutation.ClearRemission()
+	return _u
+}
+
+// SetRefund sets the "refund" field.
+func (_u *OrderUpdate) SetRefund(v float64) *OrderUpdate {
+	_u.mutation.ResetRefund()
+	_u.mutation.SetRefund(v)
+	return _u
+}
+
+// SetNillableRefund sets the "refund" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableRefund(v *float64) *OrderUpdate {
+	if v != nil {
+		_u.SetRefund(*v)
+	}
+	return _u
+}
+
+// AddRefund adds value to the "refund" field.
+func (_u *OrderUpdate) AddRefund(v float64) *OrderUpdate {
+	_u.mutation.AddRefund(v)
+	return _u
+}
+
+// ClearRefund clears the value of the "refund" field.
+func (_u *OrderUpdate) ClearRefund() *OrderUpdate {
+	_u.mutation.ClearRefund()
+	return _u
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (_u *OrderUpdate) SetCloseNature(v string) *OrderUpdate {
+	_u.mutation.SetCloseNature(v)
+	return _u
+}
+
+// SetNillableCloseNature sets the "close_nature" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableCloseNature(v *string) *OrderUpdate {
+	if v != nil {
+		_u.SetCloseNature(*v)
+	}
+	return _u
+}
+
+// ClearCloseNature clears the value of the "close_nature" field.
+func (_u *OrderUpdate) ClearCloseNature() *OrderUpdate {
+	_u.mutation.ClearCloseNature()
+	return _u
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (_u *OrderUpdate) SetRefundNature(v string) *OrderUpdate {
+	_u.mutation.SetRefundNature(v)
+	return _u
+}
+
+// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableRefundNature(v *string) *OrderUpdate {
+	if v != nil {
+		_u.SetRefundNature(*v)
+	}
+	return _u
+}
+
+// ClearRefundNature clears the value of the "refund_nature" field.
+func (_u *OrderUpdate) ClearRefundNature() *OrderUpdate {
+	_u.mutation.ClearRefundNature()
+	return _u
+}
+
 // AddItemIDs adds the "items" edge to the OrderItem entity by IDs.
 func (_u *OrderUpdate) AddItemIDs(ids ...int64) *OrderUpdate {
 	_u.mutation.AddItemIDs(ids...)
@@ -286,6 +462,21 @@ func (_u *OrderUpdate) AddItems(v ...*OrderItem) *OrderUpdate {
 		ids[i] = v[i].ID
 	}
 	return _u.AddItemIDs(ids...)
+}
+
+// AddPayIDs adds the "pay" edge to the OrderPay entity by IDs.
+func (_u *OrderUpdate) AddPayIDs(ids ...int64) *OrderUpdate {
+	_u.mutation.AddPayIDs(ids...)
+	return _u
+}
+
+// AddPay adds the "pay" edges to the OrderPay entity.
+func (_u *OrderUpdate) AddPay(v ...*OrderPay) *OrderUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddPayIDs(ids...)
 }
 
 // AddEventIDs adds the "events" edge to the OrderEvents entity by IDs.
@@ -357,6 +548,27 @@ func (_u *OrderUpdate) RemoveItems(v ...*OrderItem) *OrderUpdate {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveItemIDs(ids...)
+}
+
+// ClearPay clears all "pay" edges to the OrderPay entity.
+func (_u *OrderUpdate) ClearPay() *OrderUpdate {
+	_u.mutation.ClearPay()
+	return _u
+}
+
+// RemovePayIDs removes the "pay" edge to OrderPay entities by IDs.
+func (_u *OrderUpdate) RemovePayIDs(ids ...int64) *OrderUpdate {
+	_u.mutation.RemovePayIDs(ids...)
+	return _u
+}
+
+// RemovePay removes "pay" edges to OrderPay entities.
+func (_u *OrderUpdate) RemovePay(v ...*OrderPay) *OrderUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemovePayIDs(ids...)
 }
 
 // ClearEvents clears all "events" edges to the OrderEvents entity.
@@ -458,7 +670,20 @@ func (_u *OrderUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *OrderUpdate) check() error {
+	if v, ok := _u.mutation.Status(); ok {
+		if err := order.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Order.status": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(order.Table, order.Columns, sqlgraph.NewFieldSpec(order.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -507,10 +732,10 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(order.FieldMemberID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(order.FieldStatus, field.TypeString, value)
+		_spec.SetField(order.FieldStatus, field.TypeEnum, value)
 	}
 	if _u.mutation.StatusCleared() {
-		_spec.ClearField(order.FieldStatus, field.TypeString)
+		_spec.ClearField(order.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
@@ -547,6 +772,63 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.VersionCleared() {
 		_spec.ClearField(order.FieldVersion, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.TotalAmount(); ok {
+		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedTotalAmount(); ok {
+		_spec.AddField(order.FieldTotalAmount, field.TypeFloat64, value)
+	}
+	if _u.mutation.TotalAmountCleared() {
+		_spec.ClearField(order.FieldTotalAmount, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Actual(); ok {
+		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedActual(); ok {
+		_spec.AddField(order.FieldActual, field.TypeFloat64, value)
+	}
+	if _u.mutation.ActualCleared() {
+		_spec.ClearField(order.FieldActual, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Residue(); ok {
+		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedResidue(); ok {
+		_spec.AddField(order.FieldResidue, field.TypeFloat64, value)
+	}
+	if _u.mutation.ResidueCleared() {
+		_spec.ClearField(order.FieldResidue, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Remission(); ok {
+		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedRemission(); ok {
+		_spec.AddField(order.FieldRemission, field.TypeFloat64, value)
+	}
+	if _u.mutation.RemissionCleared() {
+		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Refund(); ok {
+		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedRefund(); ok {
+		_spec.AddField(order.FieldRefund, field.TypeFloat64, value)
+	}
+	if _u.mutation.RefundCleared() {
+		_spec.ClearField(order.FieldRefund, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.CloseNature(); ok {
+		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
+	}
+	if _u.mutation.CloseNatureCleared() {
+		_spec.ClearField(order.FieldCloseNature, field.TypeString)
+	}
+	if value, ok := _u.mutation.RefundNature(); ok {
+		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
+	}
+	if _u.mutation.RefundNatureCleared() {
+		_spec.ClearField(order.FieldRefundNature, field.TypeString)
 	}
 	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -586,6 +868,51 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.PayCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedPayIDs(); len(nodes) > 0 && !_u.mutation.PayCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.PayIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -856,13 +1183,13 @@ func (_u *OrderUpdateOne) ClearMemberID() *OrderUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (_u *OrderUpdateOne) SetStatus(v string) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetStatus(v order.Status) *OrderUpdateOne {
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableStatus(v *string) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetNillableStatus(v *order.Status) *OrderUpdateOne {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
@@ -989,6 +1316,181 @@ func (_u *OrderUpdateOne) ClearVersion() *OrderUpdateOne {
 	return _u
 }
 
+// SetTotalAmount sets the "total_amount" field.
+func (_u *OrderUpdateOne) SetTotalAmount(v float64) *OrderUpdateOne {
+	_u.mutation.ResetTotalAmount()
+	_u.mutation.SetTotalAmount(v)
+	return _u
+}
+
+// SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableTotalAmount(v *float64) *OrderUpdateOne {
+	if v != nil {
+		_u.SetTotalAmount(*v)
+	}
+	return _u
+}
+
+// AddTotalAmount adds value to the "total_amount" field.
+func (_u *OrderUpdateOne) AddTotalAmount(v float64) *OrderUpdateOne {
+	_u.mutation.AddTotalAmount(v)
+	return _u
+}
+
+// ClearTotalAmount clears the value of the "total_amount" field.
+func (_u *OrderUpdateOne) ClearTotalAmount() *OrderUpdateOne {
+	_u.mutation.ClearTotalAmount()
+	return _u
+}
+
+// SetActual sets the "actual" field.
+func (_u *OrderUpdateOne) SetActual(v float64) *OrderUpdateOne {
+	_u.mutation.ResetActual()
+	_u.mutation.SetActual(v)
+	return _u
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableActual(v *float64) *OrderUpdateOne {
+	if v != nil {
+		_u.SetActual(*v)
+	}
+	return _u
+}
+
+// AddActual adds value to the "actual" field.
+func (_u *OrderUpdateOne) AddActual(v float64) *OrderUpdateOne {
+	_u.mutation.AddActual(v)
+	return _u
+}
+
+// ClearActual clears the value of the "actual" field.
+func (_u *OrderUpdateOne) ClearActual() *OrderUpdateOne {
+	_u.mutation.ClearActual()
+	return _u
+}
+
+// SetResidue sets the "residue" field.
+func (_u *OrderUpdateOne) SetResidue(v float64) *OrderUpdateOne {
+	_u.mutation.ResetResidue()
+	_u.mutation.SetResidue(v)
+	return _u
+}
+
+// SetNillableResidue sets the "residue" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableResidue(v *float64) *OrderUpdateOne {
+	if v != nil {
+		_u.SetResidue(*v)
+	}
+	return _u
+}
+
+// AddResidue adds value to the "residue" field.
+func (_u *OrderUpdateOne) AddResidue(v float64) *OrderUpdateOne {
+	_u.mutation.AddResidue(v)
+	return _u
+}
+
+// ClearResidue clears the value of the "residue" field.
+func (_u *OrderUpdateOne) ClearResidue() *OrderUpdateOne {
+	_u.mutation.ClearResidue()
+	return _u
+}
+
+// SetRemission sets the "remission" field.
+func (_u *OrderUpdateOne) SetRemission(v float64) *OrderUpdateOne {
+	_u.mutation.ResetRemission()
+	_u.mutation.SetRemission(v)
+	return _u
+}
+
+// SetNillableRemission sets the "remission" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableRemission(v *float64) *OrderUpdateOne {
+	if v != nil {
+		_u.SetRemission(*v)
+	}
+	return _u
+}
+
+// AddRemission adds value to the "remission" field.
+func (_u *OrderUpdateOne) AddRemission(v float64) *OrderUpdateOne {
+	_u.mutation.AddRemission(v)
+	return _u
+}
+
+// ClearRemission clears the value of the "remission" field.
+func (_u *OrderUpdateOne) ClearRemission() *OrderUpdateOne {
+	_u.mutation.ClearRemission()
+	return _u
+}
+
+// SetRefund sets the "refund" field.
+func (_u *OrderUpdateOne) SetRefund(v float64) *OrderUpdateOne {
+	_u.mutation.ResetRefund()
+	_u.mutation.SetRefund(v)
+	return _u
+}
+
+// SetNillableRefund sets the "refund" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableRefund(v *float64) *OrderUpdateOne {
+	if v != nil {
+		_u.SetRefund(*v)
+	}
+	return _u
+}
+
+// AddRefund adds value to the "refund" field.
+func (_u *OrderUpdateOne) AddRefund(v float64) *OrderUpdateOne {
+	_u.mutation.AddRefund(v)
+	return _u
+}
+
+// ClearRefund clears the value of the "refund" field.
+func (_u *OrderUpdateOne) ClearRefund() *OrderUpdateOne {
+	_u.mutation.ClearRefund()
+	return _u
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (_u *OrderUpdateOne) SetCloseNature(v string) *OrderUpdateOne {
+	_u.mutation.SetCloseNature(v)
+	return _u
+}
+
+// SetNillableCloseNature sets the "close_nature" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableCloseNature(v *string) *OrderUpdateOne {
+	if v != nil {
+		_u.SetCloseNature(*v)
+	}
+	return _u
+}
+
+// ClearCloseNature clears the value of the "close_nature" field.
+func (_u *OrderUpdateOne) ClearCloseNature() *OrderUpdateOne {
+	_u.mutation.ClearCloseNature()
+	return _u
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (_u *OrderUpdateOne) SetRefundNature(v string) *OrderUpdateOne {
+	_u.mutation.SetRefundNature(v)
+	return _u
+}
+
+// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableRefundNature(v *string) *OrderUpdateOne {
+	if v != nil {
+		_u.SetRefundNature(*v)
+	}
+	return _u
+}
+
+// ClearRefundNature clears the value of the "refund_nature" field.
+func (_u *OrderUpdateOne) ClearRefundNature() *OrderUpdateOne {
+	_u.mutation.ClearRefundNature()
+	return _u
+}
+
 // AddItemIDs adds the "items" edge to the OrderItem entity by IDs.
 func (_u *OrderUpdateOne) AddItemIDs(ids ...int64) *OrderUpdateOne {
 	_u.mutation.AddItemIDs(ids...)
@@ -1002,6 +1504,21 @@ func (_u *OrderUpdateOne) AddItems(v ...*OrderItem) *OrderUpdateOne {
 		ids[i] = v[i].ID
 	}
 	return _u.AddItemIDs(ids...)
+}
+
+// AddPayIDs adds the "pay" edge to the OrderPay entity by IDs.
+func (_u *OrderUpdateOne) AddPayIDs(ids ...int64) *OrderUpdateOne {
+	_u.mutation.AddPayIDs(ids...)
+	return _u
+}
+
+// AddPay adds the "pay" edges to the OrderPay entity.
+func (_u *OrderUpdateOne) AddPay(v ...*OrderPay) *OrderUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddPayIDs(ids...)
 }
 
 // AddEventIDs adds the "events" edge to the OrderEvents entity by IDs.
@@ -1073,6 +1590,27 @@ func (_u *OrderUpdateOne) RemoveItems(v ...*OrderItem) *OrderUpdateOne {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveItemIDs(ids...)
+}
+
+// ClearPay clears all "pay" edges to the OrderPay entity.
+func (_u *OrderUpdateOne) ClearPay() *OrderUpdateOne {
+	_u.mutation.ClearPay()
+	return _u
+}
+
+// RemovePayIDs removes the "pay" edge to OrderPay entities by IDs.
+func (_u *OrderUpdateOne) RemovePayIDs(ids ...int64) *OrderUpdateOne {
+	_u.mutation.RemovePayIDs(ids...)
+	return _u
+}
+
+// RemovePay removes "pay" edges to OrderPay entities.
+func (_u *OrderUpdateOne) RemovePay(v ...*OrderPay) *OrderUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemovePayIDs(ids...)
 }
 
 // ClearEvents clears all "events" edges to the OrderEvents entity.
@@ -1187,7 +1725,20 @@ func (_u *OrderUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *OrderUpdateOne) check() error {
+	if v, ok := _u.mutation.Status(); ok {
+		if err := order.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Order.status": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(order.Table, order.Columns, sqlgraph.NewFieldSpec(order.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -1253,10 +1804,10 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 		_spec.ClearField(order.FieldMemberID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(order.FieldStatus, field.TypeString, value)
+		_spec.SetField(order.FieldStatus, field.TypeEnum, value)
 	}
 	if _u.mutation.StatusCleared() {
-		_spec.ClearField(order.FieldStatus, field.TypeString)
+		_spec.ClearField(order.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Nature(); ok {
 		_spec.SetField(order.FieldNature, field.TypeInt64, value)
@@ -1293,6 +1844,63 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 	}
 	if _u.mutation.VersionCleared() {
 		_spec.ClearField(order.FieldVersion, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.TotalAmount(); ok {
+		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedTotalAmount(); ok {
+		_spec.AddField(order.FieldTotalAmount, field.TypeFloat64, value)
+	}
+	if _u.mutation.TotalAmountCleared() {
+		_spec.ClearField(order.FieldTotalAmount, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Actual(); ok {
+		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedActual(); ok {
+		_spec.AddField(order.FieldActual, field.TypeFloat64, value)
+	}
+	if _u.mutation.ActualCleared() {
+		_spec.ClearField(order.FieldActual, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Residue(); ok {
+		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedResidue(); ok {
+		_spec.AddField(order.FieldResidue, field.TypeFloat64, value)
+	}
+	if _u.mutation.ResidueCleared() {
+		_spec.ClearField(order.FieldResidue, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Remission(); ok {
+		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedRemission(); ok {
+		_spec.AddField(order.FieldRemission, field.TypeFloat64, value)
+	}
+	if _u.mutation.RemissionCleared() {
+		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.Refund(); ok {
+		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
+	}
+	if value, ok := _u.mutation.AddedRefund(); ok {
+		_spec.AddField(order.FieldRefund, field.TypeFloat64, value)
+	}
+	if _u.mutation.RefundCleared() {
+		_spec.ClearField(order.FieldRefund, field.TypeFloat64)
+	}
+	if value, ok := _u.mutation.CloseNature(); ok {
+		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
+	}
+	if _u.mutation.CloseNatureCleared() {
+		_spec.ClearField(order.FieldCloseNature, field.TypeString)
+	}
+	if value, ok := _u.mutation.RefundNature(); ok {
+		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
+	}
+	if _u.mutation.RefundNatureCleared() {
+		_spec.ClearField(order.FieldRefundNature, field.TypeString)
 	}
 	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1332,6 +1940,51 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.PayCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedPayIDs(); len(nodes) > 0 && !_u.mutation.PayCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.PayIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

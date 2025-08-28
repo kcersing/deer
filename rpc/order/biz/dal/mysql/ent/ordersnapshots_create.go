@@ -6,7 +6,6 @@ import (
 	"context"
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
-	"deer/rpc/order/biz/infras/aggregate"
 	"errors"
 	"fmt"
 	"time"
@@ -109,7 +108,7 @@ func (_c *OrderSnapshotsCreate) SetNillableAggregateVersion(v *int64) *OrderSnap
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_c *OrderSnapshotsCreate) SetAggregateData(v *aggregate.Order) *OrderSnapshotsCreate {
+func (_c *OrderSnapshotsCreate) SetAggregateData(v any) *OrderSnapshotsCreate {
 	_c.mutation.SetAggregateData(v)
 	return _c
 }
@@ -429,7 +428,7 @@ func (u *OrderSnapshotsUpsert) ClearAggregateVersion() *OrderSnapshotsUpsert {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsert) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsert {
+func (u *OrderSnapshotsUpsert) SetAggregateData(v any) *OrderSnapshotsUpsert {
 	u.Set(ordersnapshots.FieldAggregateData, v)
 	return u
 }
@@ -624,7 +623,7 @@ func (u *OrderSnapshotsUpsertOne) ClearAggregateVersion() *OrderSnapshotsUpsertO
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertOne) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsertOne {
+func (u *OrderSnapshotsUpsertOne) SetAggregateData(v any) *OrderSnapshotsUpsertOne {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})
@@ -988,7 +987,7 @@ func (u *OrderSnapshotsUpsertBulk) ClearAggregateVersion() *OrderSnapshotsUpsert
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpsertBulk {
+func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v any) *OrderSnapshotsUpsertBulk {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})

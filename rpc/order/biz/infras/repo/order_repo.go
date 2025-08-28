@@ -1,15 +1,15 @@
 package repo
 
 import (
+	"context"
+	"deer/rpc/order/biz/dal/mysql/ent"
+	entOrder "deer/rpc/order/biz/dal/mysql/ent/order"
 	orderevents2 "deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	ordersnapshots2 "deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/infras/aggregate"
-	"reflect"
-
-	"context"
-	"deer/rpc/order/biz/dal/mysql/ent"
 	"deer/rpc/order/biz/infras/common"
-	"deer/rpc/order/biz/infras/events"
+	"github.com/bytedance/sonic"
+
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 )
@@ -17,11 +17,23 @@ import (
 type OrderRepository interface {
 	Save(order *aggregate.Order) (err error)
 	FindById(id int64) (order *aggregate.Order, err error)
+	FindAll()
+	Delete()
 }
 
 type OrderRepo struct {
 	db  *ent.Client
 	ctx context.Context
+}
+
+func (o *OrderRepo) FindAll() {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (o *OrderRepo) Delete() {
+	//TODO implement me
+	panic("implement me")
 }
 
 func NewOrderRepository(db *ent.Client, ctx context.Context) OrderRepository {
@@ -56,7 +68,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 
 	orderEnt := tx.Order.Create().
 		SetOrderSn(order.Sn).
-		SetStatus(string(order.Status)).
+		SetStatus(entOrder.Status(order.Status)).
 		SetCreatedID(order.CreatedId).
 		SetMemberID(order.MemberId).
 		SetVersion(order.Version).
@@ -87,6 +99,11 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
 
+		output, err := sonic.Marshal(&e)
+		klog.Info(err)
+		klog.Info(output)
+		// Unmarshal
+		//err := sonic.Unmarshal(output, &ets)
 		e.SetAggregateID(order.AggregateID)
 		ets[i] = tx.OrderEvents.
 			Create().
@@ -94,10 +111,8 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 			SetAggregateID(order.AggregateID).
 			SetEventType(e.GetType()).
 			SetAggregateType(e.GetAggregateType()).
-			SetEventVersion(order.Version).
-			SetEventData(&common.EventData{
-				Event: e,
-			})
+			SetEventVersion(order.Version)
+		//SetEventData(&e)
 	}
 	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
@@ -160,48 +175,55 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 		klog.Info(eventEnt)
 		var eventAll []common.Event
 		klog.Info(eventEnt.EventType)
-		klog.Info(eventEnt.EventData.Event)
+		klog.Info(eventEnt.EventData)
 		switch eventEnt.EventType {
 		case string(common.Created):
 
-			klog.Info(reflect.TypeOf(eventEnt.EventData.Event))
-
-			eventData, ok := eventEnt.EventData.Event.(*events.CreatedOrderEvent)
-			klog.Info(eventData)
-			klog.Info(ok)
+			//klog.Info(reflect.TypeOf(eventEnt.EventData))
+			//output, err := sonic.Marshal(&e)
+			//klog.Info(err)
+			//klog.Info(output)
+			//var output map[string]interface{}
+			//var out events.CreatedOrderEvent
+			//event, ok := eventEnt.EventData.(events.CreatedOrderEvent)
+			// Unmarshal
+			//err := sonic.Unmarshal([]byte(eventEnt.EventData), out)
+			//klog.Info(event)
+			//klog.Info(ok)
+			//eventData, ok := eventEnt.EventData.(*events.CreatedOrderEvent)
 
 			//if ok {
 			//	eventAll = append(eventAll, &eventData)
 			//}
-		case string(common.Paid):
-			eventData, ok := eventEnt.EventData.Event.(*events.PaidOrderEvent)
-			if ok {
-				eventAll = append(eventAll, eventData)
-			}
-		case string(common.Shipped):
-			//event = &events.ShippedOrderEvent{}
-			eventData, ok := eventEnt.EventData.Event.(*events.ShippedOrderEvent)
-			if ok {
-				eventAll = append(eventAll, eventData)
-			}
-		case string(common.Cancelled):
-			//event = &events.CancelledOrderEvent{}
-			eventData, ok := eventEnt.EventData.Event.(*events.CancelledOrderEvent)
-			if ok {
-				eventAll = append(eventAll, eventData)
-			}
-		case string(common.Refunded):
-			//event = &events.RefundedOrderEvent{}
-			eventData, ok := eventEnt.EventData.Event.(*events.RefundedOrderEvent)
-			if ok {
-				eventAll = append(eventAll, eventData)
-			}
-		case string(common.Completed):
-			//event = &events.CompletedOrderEvent{}
-			eventData, ok := eventEnt.EventData.Event.(*events.CompletedOrderEvent)
-			if ok {
-				eventAll = append(eventAll, eventData)
-			}
+		//case string(common.Paid):
+		//	eventData, ok := eventEnt.EventData.Event.(*events.PaidOrderEvent)
+		//	if ok {
+		//		eventAll = append(eventAll, eventData)
+		//	}
+		//case string(common.Shipped):
+		//	//event = &events.ShippedOrderEvent{}
+		//	eventData, ok := eventEnt.EventData.Event.(*events.ShippedOrderEvent)
+		//	if ok {
+		//		eventAll = append(eventAll, eventData)
+		//	}
+		//case string(common.Cancelled):
+		//	//event = &events.CancelledOrderEvent{}
+		//	eventData, ok := eventEnt.EventData.Event.(*events.CancelledOrderEvent)
+		//	if ok {
+		//		eventAll = append(eventAll, eventData)
+		//	}
+		//case string(common.Refunded):
+		//	//event = &events.RefundedOrderEvent{}
+		//	eventData, ok := eventEnt.EventData.Event.(*events.RefundedOrderEvent)
+		//	if ok {
+		//		eventAll = append(eventAll, eventData)
+		//	}
+		//case string(common.Completed):
+		//	//event = &events.CompletedOrderEvent{}
+		//	eventData, ok := eventEnt.EventData.Event.(*events.CompletedOrderEvent)
+		//	if ok {
+		//		eventAll = append(eventAll, eventData)
+		//	}
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue

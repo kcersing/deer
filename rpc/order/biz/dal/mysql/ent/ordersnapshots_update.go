@@ -7,7 +7,6 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
-	"deer/rpc/order/biz/infras/aggregate"
 	"errors"
 	"fmt"
 	"time"
@@ -144,7 +143,7 @@ func (_u *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_u *OrderSnapshotsUpdate) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpdate {
+func (_u *OrderSnapshotsUpdate) SetAggregateData(v any) *OrderSnapshotsUpdate {
 	_u.mutation.SetAggregateData(v)
 	return _u
 }
@@ -435,7 +434,7 @@ func (_u *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpdate
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_u *OrderSnapshotsUpdateOne) SetAggregateData(v *aggregate.Order) *OrderSnapshotsUpdateOne {
+func (_u *OrderSnapshotsUpdateOne) SetAggregateData(v any) *OrderSnapshotsUpdateOne {
 	_u.mutation.SetAggregateData(v)
 	return _u
 }

@@ -8,6 +8,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
@@ -28,6 +29,7 @@ type OrderQuery struct {
 	inters            []Interceptor
 	predicates        []predicate.Order
 	withItems         *OrderItemQuery
+	withPay           *OrderPayQuery
 	withEvents        *OrderEventsQuery
 	withSnapshots     *OrderSnapshotsQuery
 	withStatusHistory *OrderStatusHistoryQuery
@@ -82,6 +84,28 @@ func (_q *OrderQuery) QueryItems() *OrderItemQuery {
 			sqlgraph.From(order.Table, order.FieldID, selector),
 			sqlgraph.To(orderitem.Table, orderitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.ItemsTable, order.ItemsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryPay chains the current query on the "pay" edge.
+func (_q *OrderQuery) QueryPay() *OrderPayQuery {
+	query := (&OrderPayClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(orderpay.Table, orderpay.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.PayTable, order.PayColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
@@ -348,6 +372,7 @@ func (_q *OrderQuery) Clone() *OrderQuery {
 		inters:            append([]Interceptor{}, _q.inters...),
 		predicates:        append([]predicate.Order{}, _q.predicates...),
 		withItems:         _q.withItems.Clone(),
+		withPay:           _q.withPay.Clone(),
 		withEvents:        _q.withEvents.Clone(),
 		withSnapshots:     _q.withSnapshots.Clone(),
 		withStatusHistory: _q.withStatusHistory.Clone(),
@@ -365,6 +390,17 @@ func (_q *OrderQuery) WithItems(opts ...func(*OrderItemQuery)) *OrderQuery {
 		opt(query)
 	}
 	_q.withItems = query
+	return _q
+}
+
+// WithPay tells the query-builder to eager-load the nodes that are connected to
+// the "pay" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *OrderQuery) WithPay(opts ...func(*OrderPayQuery)) *OrderQuery {
+	query := (&OrderPayClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withPay = query
 	return _q
 }
 
@@ -479,8 +515,9 @@ func (_q *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 	var (
 		nodes       = []*Order{}
 		_spec       = _q.querySpec()
-		loadedTypes = [4]bool{
+		loadedTypes = [5]bool{
 			_q.withItems != nil,
+			_q.withPay != nil,
 			_q.withEvents != nil,
 			_q.withSnapshots != nil,
 			_q.withStatusHistory != nil,
@@ -508,6 +545,13 @@ func (_q *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 		if err := _q.loadItems(ctx, query, nodes,
 			func(n *Order) { n.Edges.Items = []*OrderItem{} },
 			func(n *Order, e *OrderItem) { n.Edges.Items = append(n.Edges.Items, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := _q.withPay; query != nil {
+		if err := _q.loadPay(ctx, query, nodes,
+			func(n *Order) { n.Edges.Pay = []*OrderPay{} },
+			func(n *Order, e *OrderPay) { n.Edges.Pay = append(n.Edges.Pay, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -550,6 +594,36 @@ func (_q *OrderQuery) loadItems(ctx context.Context, query *OrderItemQuery, node
 	}
 	query.Where(predicate.OrderItem(func(s *sql.Selector) {
 		s.Where(sql.InValues(s.C(order.ItemsColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.OrderID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "order_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (_q *OrderQuery) loadPay(ctx context.Context, query *OrderPayQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderPay)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orderpay.FieldOrderID)
+	}
+	query.Where(predicate.OrderPay(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.PayColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {

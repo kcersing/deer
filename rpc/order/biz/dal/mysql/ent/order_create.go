@@ -7,6 +7,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
+	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"errors"
@@ -103,13 +104,13 @@ func (_c *OrderCreate) SetNillableMemberID(v *int64) *OrderCreate {
 }
 
 // SetStatus sets the "status" field.
-func (_c *OrderCreate) SetStatus(v string) *OrderCreate {
+func (_c *OrderCreate) SetStatus(v order.Status) *OrderCreate {
 	_c.mutation.SetStatus(v)
 	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableStatus(v *string) *OrderCreate {
+func (_c *OrderCreate) SetNillableStatus(v *order.Status) *OrderCreate {
 	if v != nil {
 		_c.SetStatus(*v)
 	}
@@ -186,6 +187,104 @@ func (_c *OrderCreate) SetNillableVersion(v *int64) *OrderCreate {
 	return _c
 }
 
+// SetTotalAmount sets the "total_amount" field.
+func (_c *OrderCreate) SetTotalAmount(v float64) *OrderCreate {
+	_c.mutation.SetTotalAmount(v)
+	return _c
+}
+
+// SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableTotalAmount(v *float64) *OrderCreate {
+	if v != nil {
+		_c.SetTotalAmount(*v)
+	}
+	return _c
+}
+
+// SetActual sets the "actual" field.
+func (_c *OrderCreate) SetActual(v float64) *OrderCreate {
+	_c.mutation.SetActual(v)
+	return _c
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableActual(v *float64) *OrderCreate {
+	if v != nil {
+		_c.SetActual(*v)
+	}
+	return _c
+}
+
+// SetResidue sets the "residue" field.
+func (_c *OrderCreate) SetResidue(v float64) *OrderCreate {
+	_c.mutation.SetResidue(v)
+	return _c
+}
+
+// SetNillableResidue sets the "residue" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableResidue(v *float64) *OrderCreate {
+	if v != nil {
+		_c.SetResidue(*v)
+	}
+	return _c
+}
+
+// SetRemission sets the "remission" field.
+func (_c *OrderCreate) SetRemission(v float64) *OrderCreate {
+	_c.mutation.SetRemission(v)
+	return _c
+}
+
+// SetNillableRemission sets the "remission" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableRemission(v *float64) *OrderCreate {
+	if v != nil {
+		_c.SetRemission(*v)
+	}
+	return _c
+}
+
+// SetRefund sets the "refund" field.
+func (_c *OrderCreate) SetRefund(v float64) *OrderCreate {
+	_c.mutation.SetRefund(v)
+	return _c
+}
+
+// SetNillableRefund sets the "refund" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableRefund(v *float64) *OrderCreate {
+	if v != nil {
+		_c.SetRefund(*v)
+	}
+	return _c
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (_c *OrderCreate) SetCloseNature(v string) *OrderCreate {
+	_c.mutation.SetCloseNature(v)
+	return _c
+}
+
+// SetNillableCloseNature sets the "close_nature" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableCloseNature(v *string) *OrderCreate {
+	if v != nil {
+		_c.SetCloseNature(*v)
+	}
+	return _c
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (_c *OrderCreate) SetRefundNature(v string) *OrderCreate {
+	_c.mutation.SetRefundNature(v)
+	return _c
+}
+
+// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
+func (_c *OrderCreate) SetNillableRefundNature(v *string) *OrderCreate {
+	if v != nil {
+		_c.SetRefundNature(*v)
+	}
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *OrderCreate) SetID(v int64) *OrderCreate {
 	_c.mutation.SetID(v)
@@ -205,6 +304,21 @@ func (_c *OrderCreate) AddItems(v ...*OrderItem) *OrderCreate {
 		ids[i] = v[i].ID
 	}
 	return _c.AddItemIDs(ids...)
+}
+
+// AddPayIDs adds the "pay" edge to the OrderPay entity by IDs.
+func (_c *OrderCreate) AddPayIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddPayIDs(ids...)
+	return _c
+}
+
+// AddPay adds the "pay" edges to the OrderPay entity.
+func (_c *OrderCreate) AddPay(v ...*OrderPay) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddPayIDs(ids...)
 }
 
 // AddEventIDs adds the "events" edge to the OrderEvents entity by IDs.
@@ -303,12 +417,45 @@ func (_c *OrderCreate) defaults() {
 		v := order.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := order.DefaultStatus
+		_c.mutation.SetStatus(v)
+	}
+	if _, ok := _c.mutation.Version(); !ok {
+		v := order.DefaultVersion
+		_c.mutation.SetVersion(v)
+	}
+	if _, ok := _c.mutation.TotalAmount(); !ok {
+		v := order.DefaultTotalAmount
+		_c.mutation.SetTotalAmount(v)
+	}
+	if _, ok := _c.mutation.Actual(); !ok {
+		v := order.DefaultActual
+		_c.mutation.SetActual(v)
+	}
+	if _, ok := _c.mutation.Residue(); !ok {
+		v := order.DefaultResidue
+		_c.mutation.SetResidue(v)
+	}
+	if _, ok := _c.mutation.Remission(); !ok {
+		v := order.DefaultRemission
+		_c.mutation.SetRemission(v)
+	}
+	if _, ok := _c.mutation.Refund(); !ok {
+		v := order.DefaultRefund
+		_c.mutation.SetRefund(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *OrderCreate) check() error {
 	if _, ok := _c.mutation.OrderSn(); !ok {
 		return &ValidationError{Name: "order_sn", err: errors.New(`ent: missing required field "Order.order_sn"`)}
+	}
+	if v, ok := _c.mutation.Status(); ok {
+		if err := order.StatusValidator(v); err != nil {
+			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Order.status": %w`, err)}
+		}
 	}
 	return nil
 }
@@ -368,7 +515,7 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_node.MemberID = value
 	}
 	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(order.FieldStatus, field.TypeString, value)
+		_spec.SetField(order.FieldStatus, field.TypeEnum, value)
 		_node.Status = value
 	}
 	if value, ok := _c.mutation.Nature(); ok {
@@ -391,6 +538,34 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
 		_node.Version = value
 	}
+	if value, ok := _c.mutation.TotalAmount(); ok {
+		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_node.TotalAmount = value
+	}
+	if value, ok := _c.mutation.Actual(); ok {
+		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+		_node.Actual = value
+	}
+	if value, ok := _c.mutation.Residue(); ok {
+		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
+		_node.Residue = value
+	}
+	if value, ok := _c.mutation.Remission(); ok {
+		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+		_node.Remission = value
+	}
+	if value, ok := _c.mutation.Refund(); ok {
+		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
+		_node.Refund = value
+	}
+	if value, ok := _c.mutation.CloseNature(); ok {
+		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
+		_node.CloseNature = value
+	}
+	if value, ok := _c.mutation.RefundNature(); ok {
+		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
+		_node.RefundNature = value
+	}
 	if nodes := _c.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -400,6 +575,22 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderitem.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.PayIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.PayTable,
+			Columns: []string{order.PayColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderpay.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -610,7 +801,7 @@ func (u *OrderUpsert) ClearMemberID() *OrderUpsert {
 }
 
 // SetStatus sets the "status" field.
-func (u *OrderUpsert) SetStatus(v string) *OrderUpsert {
+func (u *OrderUpsert) SetStatus(v order.Status) *OrderUpsert {
 	u.Set(order.FieldStatus, v)
 	return u
 }
@@ -726,6 +917,162 @@ func (u *OrderUpsert) AddVersion(v int64) *OrderUpsert {
 // ClearVersion clears the value of the "version" field.
 func (u *OrderUpsert) ClearVersion() *OrderUpsert {
 	u.SetNull(order.FieldVersion)
+	return u
+}
+
+// SetTotalAmount sets the "total_amount" field.
+func (u *OrderUpsert) SetTotalAmount(v float64) *OrderUpsert {
+	u.Set(order.FieldTotalAmount, v)
+	return u
+}
+
+// UpdateTotalAmount sets the "total_amount" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateTotalAmount() *OrderUpsert {
+	u.SetExcluded(order.FieldTotalAmount)
+	return u
+}
+
+// AddTotalAmount adds v to the "total_amount" field.
+func (u *OrderUpsert) AddTotalAmount(v float64) *OrderUpsert {
+	u.Add(order.FieldTotalAmount, v)
+	return u
+}
+
+// ClearTotalAmount clears the value of the "total_amount" field.
+func (u *OrderUpsert) ClearTotalAmount() *OrderUpsert {
+	u.SetNull(order.FieldTotalAmount)
+	return u
+}
+
+// SetActual sets the "actual" field.
+func (u *OrderUpsert) SetActual(v float64) *OrderUpsert {
+	u.Set(order.FieldActual, v)
+	return u
+}
+
+// UpdateActual sets the "actual" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateActual() *OrderUpsert {
+	u.SetExcluded(order.FieldActual)
+	return u
+}
+
+// AddActual adds v to the "actual" field.
+func (u *OrderUpsert) AddActual(v float64) *OrderUpsert {
+	u.Add(order.FieldActual, v)
+	return u
+}
+
+// ClearActual clears the value of the "actual" field.
+func (u *OrderUpsert) ClearActual() *OrderUpsert {
+	u.SetNull(order.FieldActual)
+	return u
+}
+
+// SetResidue sets the "residue" field.
+func (u *OrderUpsert) SetResidue(v float64) *OrderUpsert {
+	u.Set(order.FieldResidue, v)
+	return u
+}
+
+// UpdateResidue sets the "residue" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateResidue() *OrderUpsert {
+	u.SetExcluded(order.FieldResidue)
+	return u
+}
+
+// AddResidue adds v to the "residue" field.
+func (u *OrderUpsert) AddResidue(v float64) *OrderUpsert {
+	u.Add(order.FieldResidue, v)
+	return u
+}
+
+// ClearResidue clears the value of the "residue" field.
+func (u *OrderUpsert) ClearResidue() *OrderUpsert {
+	u.SetNull(order.FieldResidue)
+	return u
+}
+
+// SetRemission sets the "remission" field.
+func (u *OrderUpsert) SetRemission(v float64) *OrderUpsert {
+	u.Set(order.FieldRemission, v)
+	return u
+}
+
+// UpdateRemission sets the "remission" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateRemission() *OrderUpsert {
+	u.SetExcluded(order.FieldRemission)
+	return u
+}
+
+// AddRemission adds v to the "remission" field.
+func (u *OrderUpsert) AddRemission(v float64) *OrderUpsert {
+	u.Add(order.FieldRemission, v)
+	return u
+}
+
+// ClearRemission clears the value of the "remission" field.
+func (u *OrderUpsert) ClearRemission() *OrderUpsert {
+	u.SetNull(order.FieldRemission)
+	return u
+}
+
+// SetRefund sets the "refund" field.
+func (u *OrderUpsert) SetRefund(v float64) *OrderUpsert {
+	u.Set(order.FieldRefund, v)
+	return u
+}
+
+// UpdateRefund sets the "refund" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateRefund() *OrderUpsert {
+	u.SetExcluded(order.FieldRefund)
+	return u
+}
+
+// AddRefund adds v to the "refund" field.
+func (u *OrderUpsert) AddRefund(v float64) *OrderUpsert {
+	u.Add(order.FieldRefund, v)
+	return u
+}
+
+// ClearRefund clears the value of the "refund" field.
+func (u *OrderUpsert) ClearRefund() *OrderUpsert {
+	u.SetNull(order.FieldRefund)
+	return u
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (u *OrderUpsert) SetCloseNature(v string) *OrderUpsert {
+	u.Set(order.FieldCloseNature, v)
+	return u
+}
+
+// UpdateCloseNature sets the "close_nature" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateCloseNature() *OrderUpsert {
+	u.SetExcluded(order.FieldCloseNature)
+	return u
+}
+
+// ClearCloseNature clears the value of the "close_nature" field.
+func (u *OrderUpsert) ClearCloseNature() *OrderUpsert {
+	u.SetNull(order.FieldCloseNature)
+	return u
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (u *OrderUpsert) SetRefundNature(v string) *OrderUpsert {
+	u.Set(order.FieldRefundNature, v)
+	return u
+}
+
+// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateRefundNature() *OrderUpsert {
+	u.SetExcluded(order.FieldRefundNature)
+	return u
+}
+
+// ClearRefundNature clears the value of the "refund_nature" field.
+func (u *OrderUpsert) ClearRefundNature() *OrderUpsert {
+	u.SetNull(order.FieldRefundNature)
 	return u
 }
 
@@ -900,7 +1247,7 @@ func (u *OrderUpsertOne) ClearMemberID() *OrderUpsertOne {
 }
 
 // SetStatus sets the "status" field.
-func (u *OrderUpsertOne) SetStatus(v string) *OrderUpsertOne {
+func (u *OrderUpsertOne) SetStatus(v order.Status) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.SetStatus(v)
 	})
@@ -1036,6 +1383,188 @@ func (u *OrderUpsertOne) UpdateVersion() *OrderUpsertOne {
 func (u *OrderUpsertOne) ClearVersion() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearVersion()
+	})
+}
+
+// SetTotalAmount sets the "total_amount" field.
+func (u *OrderUpsertOne) SetTotalAmount(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetTotalAmount(v)
+	})
+}
+
+// AddTotalAmount adds v to the "total_amount" field.
+func (u *OrderUpsertOne) AddTotalAmount(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddTotalAmount(v)
+	})
+}
+
+// UpdateTotalAmount sets the "total_amount" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateTotalAmount() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateTotalAmount()
+	})
+}
+
+// ClearTotalAmount clears the value of the "total_amount" field.
+func (u *OrderUpsertOne) ClearTotalAmount() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearTotalAmount()
+	})
+}
+
+// SetActual sets the "actual" field.
+func (u *OrderUpsertOne) SetActual(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetActual(v)
+	})
+}
+
+// AddActual adds v to the "actual" field.
+func (u *OrderUpsertOne) AddActual(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddActual(v)
+	})
+}
+
+// UpdateActual sets the "actual" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateActual() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateActual()
+	})
+}
+
+// ClearActual clears the value of the "actual" field.
+func (u *OrderUpsertOne) ClearActual() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearActual()
+	})
+}
+
+// SetResidue sets the "residue" field.
+func (u *OrderUpsertOne) SetResidue(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetResidue(v)
+	})
+}
+
+// AddResidue adds v to the "residue" field.
+func (u *OrderUpsertOne) AddResidue(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddResidue(v)
+	})
+}
+
+// UpdateResidue sets the "residue" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateResidue() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateResidue()
+	})
+}
+
+// ClearResidue clears the value of the "residue" field.
+func (u *OrderUpsertOne) ClearResidue() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearResidue()
+	})
+}
+
+// SetRemission sets the "remission" field.
+func (u *OrderUpsertOne) SetRemission(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRemission(v)
+	})
+}
+
+// AddRemission adds v to the "remission" field.
+func (u *OrderUpsertOne) AddRemission(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddRemission(v)
+	})
+}
+
+// UpdateRemission sets the "remission" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateRemission() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRemission()
+	})
+}
+
+// ClearRemission clears the value of the "remission" field.
+func (u *OrderUpsertOne) ClearRemission() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRemission()
+	})
+}
+
+// SetRefund sets the "refund" field.
+func (u *OrderUpsertOne) SetRefund(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRefund(v)
+	})
+}
+
+// AddRefund adds v to the "refund" field.
+func (u *OrderUpsertOne) AddRefund(v float64) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddRefund(v)
+	})
+}
+
+// UpdateRefund sets the "refund" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateRefund() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRefund()
+	})
+}
+
+// ClearRefund clears the value of the "refund" field.
+func (u *OrderUpsertOne) ClearRefund() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRefund()
+	})
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (u *OrderUpsertOne) SetCloseNature(v string) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetCloseNature(v)
+	})
+}
+
+// UpdateCloseNature sets the "close_nature" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateCloseNature() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateCloseNature()
+	})
+}
+
+// ClearCloseNature clears the value of the "close_nature" field.
+func (u *OrderUpsertOne) ClearCloseNature() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearCloseNature()
+	})
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (u *OrderUpsertOne) SetRefundNature(v string) *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRefundNature(v)
+	})
+}
+
+// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateRefundNature() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRefundNature()
+	})
+}
+
+// ClearRefundNature clears the value of the "refund_nature" field.
+func (u *OrderUpsertOne) ClearRefundNature() *OrderUpsertOne {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRefundNature()
 	})
 }
 
@@ -1376,7 +1905,7 @@ func (u *OrderUpsertBulk) ClearMemberID() *OrderUpsertBulk {
 }
 
 // SetStatus sets the "status" field.
-func (u *OrderUpsertBulk) SetStatus(v string) *OrderUpsertBulk {
+func (u *OrderUpsertBulk) SetStatus(v order.Status) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.SetStatus(v)
 	})
@@ -1512,6 +2041,188 @@ func (u *OrderUpsertBulk) UpdateVersion() *OrderUpsertBulk {
 func (u *OrderUpsertBulk) ClearVersion() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearVersion()
+	})
+}
+
+// SetTotalAmount sets the "total_amount" field.
+func (u *OrderUpsertBulk) SetTotalAmount(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetTotalAmount(v)
+	})
+}
+
+// AddTotalAmount adds v to the "total_amount" field.
+func (u *OrderUpsertBulk) AddTotalAmount(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddTotalAmount(v)
+	})
+}
+
+// UpdateTotalAmount sets the "total_amount" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateTotalAmount() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateTotalAmount()
+	})
+}
+
+// ClearTotalAmount clears the value of the "total_amount" field.
+func (u *OrderUpsertBulk) ClearTotalAmount() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearTotalAmount()
+	})
+}
+
+// SetActual sets the "actual" field.
+func (u *OrderUpsertBulk) SetActual(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetActual(v)
+	})
+}
+
+// AddActual adds v to the "actual" field.
+func (u *OrderUpsertBulk) AddActual(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddActual(v)
+	})
+}
+
+// UpdateActual sets the "actual" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateActual() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateActual()
+	})
+}
+
+// ClearActual clears the value of the "actual" field.
+func (u *OrderUpsertBulk) ClearActual() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearActual()
+	})
+}
+
+// SetResidue sets the "residue" field.
+func (u *OrderUpsertBulk) SetResidue(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetResidue(v)
+	})
+}
+
+// AddResidue adds v to the "residue" field.
+func (u *OrderUpsertBulk) AddResidue(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddResidue(v)
+	})
+}
+
+// UpdateResidue sets the "residue" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateResidue() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateResidue()
+	})
+}
+
+// ClearResidue clears the value of the "residue" field.
+func (u *OrderUpsertBulk) ClearResidue() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearResidue()
+	})
+}
+
+// SetRemission sets the "remission" field.
+func (u *OrderUpsertBulk) SetRemission(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRemission(v)
+	})
+}
+
+// AddRemission adds v to the "remission" field.
+func (u *OrderUpsertBulk) AddRemission(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddRemission(v)
+	})
+}
+
+// UpdateRemission sets the "remission" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateRemission() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRemission()
+	})
+}
+
+// ClearRemission clears the value of the "remission" field.
+func (u *OrderUpsertBulk) ClearRemission() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRemission()
+	})
+}
+
+// SetRefund sets the "refund" field.
+func (u *OrderUpsertBulk) SetRefund(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRefund(v)
+	})
+}
+
+// AddRefund adds v to the "refund" field.
+func (u *OrderUpsertBulk) AddRefund(v float64) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.AddRefund(v)
+	})
+}
+
+// UpdateRefund sets the "refund" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateRefund() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRefund()
+	})
+}
+
+// ClearRefund clears the value of the "refund" field.
+func (u *OrderUpsertBulk) ClearRefund() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRefund()
+	})
+}
+
+// SetCloseNature sets the "close_nature" field.
+func (u *OrderUpsertBulk) SetCloseNature(v string) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetCloseNature(v)
+	})
+}
+
+// UpdateCloseNature sets the "close_nature" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateCloseNature() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateCloseNature()
+	})
+}
+
+// ClearCloseNature clears the value of the "close_nature" field.
+func (u *OrderUpsertBulk) ClearCloseNature() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearCloseNature()
+	})
+}
+
+// SetRefundNature sets the "refund_nature" field.
+func (u *OrderUpsertBulk) SetRefundNature(v string) *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.SetRefundNature(v)
+	})
+}
+
+// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateRefundNature() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.UpdateRefundNature()
+	})
+}
+
+// ClearRefundNature clears the value of the "refund_nature" field.
+func (u *OrderUpsertBulk) ClearRefundNature() *OrderUpsertBulk {
+	return u.Update(func(s *OrderUpsert) {
+		s.ClearRefundNature()
 	})
 }
 

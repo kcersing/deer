@@ -20,6 +20,8 @@ type Tx struct {
 	OrderEvents *OrderEventsClient
 	// OrderItem is the client for interacting with the OrderItem builders.
 	OrderItem *OrderItemClient
+	// OrderPay is the client for interacting with the OrderPay builders.
+	OrderPay *OrderPayClient
 	// OrderSnapshots is the client for interacting with the OrderSnapshots builders.
 	OrderSnapshots *OrderSnapshotsClient
 	// OrderStatusHistory is the client for interacting with the OrderStatusHistory builders.
@@ -159,6 +161,7 @@ func (tx *Tx) init() {
 	tx.OrderEventSubscriptions = NewOrderEventSubscriptionsClient(tx.config)
 	tx.OrderEvents = NewOrderEventsClient(tx.config)
 	tx.OrderItem = NewOrderItemClient(tx.config)
+	tx.OrderPay = NewOrderPayClient(tx.config)
 	tx.OrderSnapshots = NewOrderSnapshotsClient(tx.config)
 	tx.OrderStatusHistory = NewOrderStatusHistoryClient(tx.config)
 }

@@ -85,11 +85,6 @@ func MemberID(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldMemberID, v))
 }
 
-// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
-func Status(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldStatus, v))
-}
-
 // Nature applies equality check predicate on the "nature" field. It's identical to NatureEQ.
 func Nature(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldNature, v))
@@ -113,6 +108,41 @@ func RefundAt(v time.Time) predicate.Order {
 // Version applies equality check predicate on the "version" field. It's identical to VersionEQ.
 func Version(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldVersion, v))
+}
+
+// TotalAmount applies equality check predicate on the "total_amount" field. It's identical to TotalAmountEQ.
+func TotalAmount(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldTotalAmount, v))
+}
+
+// Actual applies equality check predicate on the "actual" field. It's identical to ActualEQ.
+func Actual(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldActual, v))
+}
+
+// Residue applies equality check predicate on the "residue" field. It's identical to ResidueEQ.
+func Residue(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldResidue, v))
+}
+
+// Remission applies equality check predicate on the "remission" field. It's identical to RemissionEQ.
+func Remission(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRemission, v))
+}
+
+// Refund applies equality check predicate on the "refund" field. It's identical to RefundEQ.
+func Refund(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRefund, v))
+}
+
+// CloseNature applies equality check predicate on the "close_nature" field. It's identical to CloseNatureEQ.
+func CloseNature(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldCloseNature, v))
+}
+
+// RefundNature applies equality check predicate on the "refund_nature" field. It's identical to RefundNatureEQ.
+func RefundNature(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRefundNature, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -431,58 +461,23 @@ func MemberIDNotNil() predicate.Order {
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v string) predicate.Order {
+func StatusEQ(v Status) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldStatus, v))
 }
 
 // StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v string) predicate.Order {
+func StatusNEQ(v Status) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldStatus, v))
 }
 
 // StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...string) predicate.Order {
+func StatusIn(vs ...Status) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldStatus, vs...))
 }
 
 // StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...string) predicate.Order {
+func StatusNotIn(vs ...Status) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldStatus, vs...))
-}
-
-// StatusGT applies the GT predicate on the "status" field.
-func StatusGT(v string) predicate.Order {
-	return predicate.Order(sql.FieldGT(FieldStatus, v))
-}
-
-// StatusGTE applies the GTE predicate on the "status" field.
-func StatusGTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldGTE(FieldStatus, v))
-}
-
-// StatusLT applies the LT predicate on the "status" field.
-func StatusLT(v string) predicate.Order {
-	return predicate.Order(sql.FieldLT(FieldStatus, v))
-}
-
-// StatusLTE applies the LTE predicate on the "status" field.
-func StatusLTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldLTE(FieldStatus, v))
-}
-
-// StatusContains applies the Contains predicate on the "status" field.
-func StatusContains(v string) predicate.Order {
-	return predicate.Order(sql.FieldContains(FieldStatus, v))
-}
-
-// StatusHasPrefix applies the HasPrefix predicate on the "status" field.
-func StatusHasPrefix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasPrefix(FieldStatus, v))
-}
-
-// StatusHasSuffix applies the HasSuffix predicate on the "status" field.
-func StatusHasSuffix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasSuffix(FieldStatus, v))
 }
 
 // StatusIsNil applies the IsNil predicate on the "status" field.
@@ -493,16 +488,6 @@ func StatusIsNil() predicate.Order {
 // StatusNotNil applies the NotNil predicate on the "status" field.
 func StatusNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldStatus))
-}
-
-// StatusEqualFold applies the EqualFold predicate on the "status" field.
-func StatusEqualFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldEqualFold(FieldStatus, v))
-}
-
-// StatusContainsFold applies the ContainsFold predicate on the "status" field.
-func StatusContainsFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldContainsFold(FieldStatus, v))
 }
 
 // NatureEQ applies the EQ predicate on the "nature" field.
@@ -755,6 +740,406 @@ func VersionNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldVersion))
 }
 
+// TotalAmountEQ applies the EQ predicate on the "total_amount" field.
+func TotalAmountEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldTotalAmount, v))
+}
+
+// TotalAmountNEQ applies the NEQ predicate on the "total_amount" field.
+func TotalAmountNEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldTotalAmount, v))
+}
+
+// TotalAmountIn applies the In predicate on the "total_amount" field.
+func TotalAmountIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldTotalAmount, vs...))
+}
+
+// TotalAmountNotIn applies the NotIn predicate on the "total_amount" field.
+func TotalAmountNotIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldTotalAmount, vs...))
+}
+
+// TotalAmountGT applies the GT predicate on the "total_amount" field.
+func TotalAmountGT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldTotalAmount, v))
+}
+
+// TotalAmountGTE applies the GTE predicate on the "total_amount" field.
+func TotalAmountGTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldTotalAmount, v))
+}
+
+// TotalAmountLT applies the LT predicate on the "total_amount" field.
+func TotalAmountLT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldTotalAmount, v))
+}
+
+// TotalAmountLTE applies the LTE predicate on the "total_amount" field.
+func TotalAmountLTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldTotalAmount, v))
+}
+
+// TotalAmountIsNil applies the IsNil predicate on the "total_amount" field.
+func TotalAmountIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldTotalAmount))
+}
+
+// TotalAmountNotNil applies the NotNil predicate on the "total_amount" field.
+func TotalAmountNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldTotalAmount))
+}
+
+// ActualEQ applies the EQ predicate on the "actual" field.
+func ActualEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldActual, v))
+}
+
+// ActualNEQ applies the NEQ predicate on the "actual" field.
+func ActualNEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldActual, v))
+}
+
+// ActualIn applies the In predicate on the "actual" field.
+func ActualIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldActual, vs...))
+}
+
+// ActualNotIn applies the NotIn predicate on the "actual" field.
+func ActualNotIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldActual, vs...))
+}
+
+// ActualGT applies the GT predicate on the "actual" field.
+func ActualGT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldActual, v))
+}
+
+// ActualGTE applies the GTE predicate on the "actual" field.
+func ActualGTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldActual, v))
+}
+
+// ActualLT applies the LT predicate on the "actual" field.
+func ActualLT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldActual, v))
+}
+
+// ActualLTE applies the LTE predicate on the "actual" field.
+func ActualLTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldActual, v))
+}
+
+// ActualIsNil applies the IsNil predicate on the "actual" field.
+func ActualIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldActual))
+}
+
+// ActualNotNil applies the NotNil predicate on the "actual" field.
+func ActualNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldActual))
+}
+
+// ResidueEQ applies the EQ predicate on the "residue" field.
+func ResidueEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldResidue, v))
+}
+
+// ResidueNEQ applies the NEQ predicate on the "residue" field.
+func ResidueNEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldResidue, v))
+}
+
+// ResidueIn applies the In predicate on the "residue" field.
+func ResidueIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldResidue, vs...))
+}
+
+// ResidueNotIn applies the NotIn predicate on the "residue" field.
+func ResidueNotIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldResidue, vs...))
+}
+
+// ResidueGT applies the GT predicate on the "residue" field.
+func ResidueGT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldResidue, v))
+}
+
+// ResidueGTE applies the GTE predicate on the "residue" field.
+func ResidueGTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldResidue, v))
+}
+
+// ResidueLT applies the LT predicate on the "residue" field.
+func ResidueLT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldResidue, v))
+}
+
+// ResidueLTE applies the LTE predicate on the "residue" field.
+func ResidueLTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldResidue, v))
+}
+
+// ResidueIsNil applies the IsNil predicate on the "residue" field.
+func ResidueIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldResidue))
+}
+
+// ResidueNotNil applies the NotNil predicate on the "residue" field.
+func ResidueNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldResidue))
+}
+
+// RemissionEQ applies the EQ predicate on the "remission" field.
+func RemissionEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRemission, v))
+}
+
+// RemissionNEQ applies the NEQ predicate on the "remission" field.
+func RemissionNEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldRemission, v))
+}
+
+// RemissionIn applies the In predicate on the "remission" field.
+func RemissionIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldRemission, vs...))
+}
+
+// RemissionNotIn applies the NotIn predicate on the "remission" field.
+func RemissionNotIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldRemission, vs...))
+}
+
+// RemissionGT applies the GT predicate on the "remission" field.
+func RemissionGT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldRemission, v))
+}
+
+// RemissionGTE applies the GTE predicate on the "remission" field.
+func RemissionGTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldRemission, v))
+}
+
+// RemissionLT applies the LT predicate on the "remission" field.
+func RemissionLT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldRemission, v))
+}
+
+// RemissionLTE applies the LTE predicate on the "remission" field.
+func RemissionLTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldRemission, v))
+}
+
+// RemissionIsNil applies the IsNil predicate on the "remission" field.
+func RemissionIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldRemission))
+}
+
+// RemissionNotNil applies the NotNil predicate on the "remission" field.
+func RemissionNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldRemission))
+}
+
+// RefundEQ applies the EQ predicate on the "refund" field.
+func RefundEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRefund, v))
+}
+
+// RefundNEQ applies the NEQ predicate on the "refund" field.
+func RefundNEQ(v float64) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldRefund, v))
+}
+
+// RefundIn applies the In predicate on the "refund" field.
+func RefundIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldRefund, vs...))
+}
+
+// RefundNotIn applies the NotIn predicate on the "refund" field.
+func RefundNotIn(vs ...float64) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldRefund, vs...))
+}
+
+// RefundGT applies the GT predicate on the "refund" field.
+func RefundGT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldRefund, v))
+}
+
+// RefundGTE applies the GTE predicate on the "refund" field.
+func RefundGTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldRefund, v))
+}
+
+// RefundLT applies the LT predicate on the "refund" field.
+func RefundLT(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldRefund, v))
+}
+
+// RefundLTE applies the LTE predicate on the "refund" field.
+func RefundLTE(v float64) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldRefund, v))
+}
+
+// RefundIsNil applies the IsNil predicate on the "refund" field.
+func RefundIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldRefund))
+}
+
+// RefundNotNil applies the NotNil predicate on the "refund" field.
+func RefundNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldRefund))
+}
+
+// CloseNatureEQ applies the EQ predicate on the "close_nature" field.
+func CloseNatureEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldCloseNature, v))
+}
+
+// CloseNatureNEQ applies the NEQ predicate on the "close_nature" field.
+func CloseNatureNEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldCloseNature, v))
+}
+
+// CloseNatureIn applies the In predicate on the "close_nature" field.
+func CloseNatureIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldCloseNature, vs...))
+}
+
+// CloseNatureNotIn applies the NotIn predicate on the "close_nature" field.
+func CloseNatureNotIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldCloseNature, vs...))
+}
+
+// CloseNatureGT applies the GT predicate on the "close_nature" field.
+func CloseNatureGT(v string) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldCloseNature, v))
+}
+
+// CloseNatureGTE applies the GTE predicate on the "close_nature" field.
+func CloseNatureGTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldCloseNature, v))
+}
+
+// CloseNatureLT applies the LT predicate on the "close_nature" field.
+func CloseNatureLT(v string) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldCloseNature, v))
+}
+
+// CloseNatureLTE applies the LTE predicate on the "close_nature" field.
+func CloseNatureLTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldCloseNature, v))
+}
+
+// CloseNatureContains applies the Contains predicate on the "close_nature" field.
+func CloseNatureContains(v string) predicate.Order {
+	return predicate.Order(sql.FieldContains(FieldCloseNature, v))
+}
+
+// CloseNatureHasPrefix applies the HasPrefix predicate on the "close_nature" field.
+func CloseNatureHasPrefix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasPrefix(FieldCloseNature, v))
+}
+
+// CloseNatureHasSuffix applies the HasSuffix predicate on the "close_nature" field.
+func CloseNatureHasSuffix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasSuffix(FieldCloseNature, v))
+}
+
+// CloseNatureIsNil applies the IsNil predicate on the "close_nature" field.
+func CloseNatureIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldCloseNature))
+}
+
+// CloseNatureNotNil applies the NotNil predicate on the "close_nature" field.
+func CloseNatureNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldCloseNature))
+}
+
+// CloseNatureEqualFold applies the EqualFold predicate on the "close_nature" field.
+func CloseNatureEqualFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldEqualFold(FieldCloseNature, v))
+}
+
+// CloseNatureContainsFold applies the ContainsFold predicate on the "close_nature" field.
+func CloseNatureContainsFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldContainsFold(FieldCloseNature, v))
+}
+
+// RefundNatureEQ applies the EQ predicate on the "refund_nature" field.
+func RefundNatureEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldRefundNature, v))
+}
+
+// RefundNatureNEQ applies the NEQ predicate on the "refund_nature" field.
+func RefundNatureNEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldRefundNature, v))
+}
+
+// RefundNatureIn applies the In predicate on the "refund_nature" field.
+func RefundNatureIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldRefundNature, vs...))
+}
+
+// RefundNatureNotIn applies the NotIn predicate on the "refund_nature" field.
+func RefundNatureNotIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldRefundNature, vs...))
+}
+
+// RefundNatureGT applies the GT predicate on the "refund_nature" field.
+func RefundNatureGT(v string) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldRefundNature, v))
+}
+
+// RefundNatureGTE applies the GTE predicate on the "refund_nature" field.
+func RefundNatureGTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldRefundNature, v))
+}
+
+// RefundNatureLT applies the LT predicate on the "refund_nature" field.
+func RefundNatureLT(v string) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldRefundNature, v))
+}
+
+// RefundNatureLTE applies the LTE predicate on the "refund_nature" field.
+func RefundNatureLTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldRefundNature, v))
+}
+
+// RefundNatureContains applies the Contains predicate on the "refund_nature" field.
+func RefundNatureContains(v string) predicate.Order {
+	return predicate.Order(sql.FieldContains(FieldRefundNature, v))
+}
+
+// RefundNatureHasPrefix applies the HasPrefix predicate on the "refund_nature" field.
+func RefundNatureHasPrefix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasPrefix(FieldRefundNature, v))
+}
+
+// RefundNatureHasSuffix applies the HasSuffix predicate on the "refund_nature" field.
+func RefundNatureHasSuffix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasSuffix(FieldRefundNature, v))
+}
+
+// RefundNatureIsNil applies the IsNil predicate on the "refund_nature" field.
+func RefundNatureIsNil() predicate.Order {
+	return predicate.Order(sql.FieldIsNull(FieldRefundNature))
+}
+
+// RefundNatureNotNil applies the NotNil predicate on the "refund_nature" field.
+func RefundNatureNotNil() predicate.Order {
+	return predicate.Order(sql.FieldNotNull(FieldRefundNature))
+}
+
+// RefundNatureEqualFold applies the EqualFold predicate on the "refund_nature" field.
+func RefundNatureEqualFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldEqualFold(FieldRefundNature, v))
+}
+
+// RefundNatureContainsFold applies the ContainsFold predicate on the "refund_nature" field.
+func RefundNatureContainsFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldContainsFold(FieldRefundNature, v))
+}
+
 // HasItems applies the HasEdge predicate on the "items" edge.
 func HasItems() predicate.Order {
 	return predicate.Order(func(s *sql.Selector) {
@@ -770,6 +1155,29 @@ func HasItems() predicate.Order {
 func HasItemsWith(preds ...predicate.OrderItem) predicate.Order {
 	return predicate.Order(func(s *sql.Selector) {
 		step := newItemsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasPay applies the HasEdge predicate on the "pay" edge.
+func HasPay() predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, PayTable, PayColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasPayWith applies the HasEdge predicate on the "pay" edge with a given conditions (other predicates).
+func HasPayWith(preds ...predicate.OrderPay) predicate.Order {
+	return predicate.Order(func(s *sql.Selector) {
+		step := newPayStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
