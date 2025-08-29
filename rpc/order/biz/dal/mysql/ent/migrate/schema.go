@@ -109,7 +109,7 @@ var (
 		{Name: "event_id", Type: field.TypeString, Nullable: true, Comment: "事件id"},
 		{Name: "aggregate_type", Type: field.TypeString, Nullable: true, Comment: "聚合根类型"},
 		{Name: "event_type", Type: field.TypeString, Nullable: true, Comment: "事件类型"},
-		{Name: "event_data", Type: field.TypeJSON, Nullable: true, Comment: "事件数据"},
+		{Name: "event_data", Type: field.TypeBytes, Nullable: true, Comment: "事件数据"},
 		{Name: "event_version", Type: field.TypeInt64, Nullable: true, Comment: "聚合根版本号"},
 		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
 	}
@@ -234,7 +234,7 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "aggregate_version", Type: field.TypeInt64, Nullable: true, Comment: "快照版本"},
-		{Name: "aggregate_data", Type: field.TypeJSON, Nullable: true, Comment: "快照数据"},
+		{Name: "aggregate_data", Type: field.TypeBytes, Nullable: true, Comment: "快照数据"},
 		{Name: "aggregate_id", Type: field.TypeInt64, Nullable: true, Comment: "聚合根ID"},
 	}
 	// OrderSnapshotsTable holds the schema information for the "order_snapshots" table.
@@ -312,29 +312,36 @@ var (
 
 func init() {
 	OrderTable.Annotation = &entsql.Annotation{
-		Table: "order",
+		Table:     "order",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderEventSubscriptionsTable.Annotation = &entsql.Annotation{
-		Table: "order_event_subscriptions",
+		Table:     "order_event_subscriptions",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderEventsTable.ForeignKeys[0].RefTable = OrderTable
 	OrderEventsTable.Annotation = &entsql.Annotation{
-		Table: "order_events",
+		Table:     "order_events",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderItemTable.ForeignKeys[0].RefTable = OrderTable
 	OrderItemTable.Annotation = &entsql.Annotation{
-		Table: "order_item",
+		Table:     "order_item",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderPayTable.ForeignKeys[0].RefTable = OrderTable
 	OrderPayTable.Annotation = &entsql.Annotation{
-		Table: "order_pay",
+		Table:     "order_pay",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderSnapshotsTable.ForeignKeys[0].RefTable = OrderTable
 	OrderSnapshotsTable.Annotation = &entsql.Annotation{
-		Table: "order_snapshots",
+		Table:     "order_snapshots",
+		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderStatusHistoryTable.ForeignKeys[0].RefTable = OrderTable
 	OrderStatusHistoryTable.Annotation = &entsql.Annotation{
-		Table: "order_status_history",
+		Table:     "order_status_history",
+		Collation: "utf8mb4_unicode_ci",
 	}
 }

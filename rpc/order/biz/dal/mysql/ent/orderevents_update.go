@@ -176,7 +176,7 @@ func (_u *OrderEventsUpdate) ClearEventType() *OrderEventsUpdate {
 }
 
 // SetEventData sets the "event_data" field.
-func (_u *OrderEventsUpdate) SetEventData(v any) *OrderEventsUpdate {
+func (_u *OrderEventsUpdate) SetEventData(v []byte) *OrderEventsUpdate {
 	_u.mutation.SetEventData(v)
 	return _u
 }
@@ -335,10 +335,10 @@ func (_u *OrderEventsUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
 	if value, ok := _u.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeBytes, value)
 	}
 	if _u.mutation.EventDataCleared() {
-		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
+		_spec.ClearField(orderevents.FieldEventData, field.TypeBytes)
 	}
 	if value, ok := _u.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)
@@ -545,7 +545,7 @@ func (_u *OrderEventsUpdateOne) ClearEventType() *OrderEventsUpdateOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (_u *OrderEventsUpdateOne) SetEventData(v any) *OrderEventsUpdateOne {
+func (_u *OrderEventsUpdateOne) SetEventData(v []byte) *OrderEventsUpdateOne {
 	_u.mutation.SetEventData(v)
 	return _u
 }
@@ -734,10 +734,10 @@ func (_u *OrderEventsUpdateOne) sqlSave(ctx context.Context) (_node *OrderEvents
 		_spec.ClearField(orderevents.FieldEventType, field.TypeString)
 	}
 	if value, ok := _u.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeBytes, value)
 	}
 	if _u.mutation.EventDataCleared() {
-		_spec.ClearField(orderevents.FieldEventData, field.TypeJSON)
+		_spec.ClearField(orderevents.FieldEventData, field.TypeBytes)
 	}
 	if value, ok := _u.mutation.EventVersion(); ok {
 		_spec.SetField(orderevents.FieldEventVersion, field.TypeInt64, value)

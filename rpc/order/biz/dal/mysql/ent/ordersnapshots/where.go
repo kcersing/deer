@@ -85,6 +85,11 @@ func AggregateVersion(v int64) predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateVersion, v))
 }
 
+// AggregateData applies equality check predicate on the "aggregate_data" field. It's identical to AggregateDataEQ.
+func AggregateData(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateData, v))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldEQ(FieldCreatedAt, v))
@@ -363,6 +368,46 @@ func AggregateVersionIsNil() predicate.OrderSnapshots {
 // AggregateVersionNotNil applies the NotNil predicate on the "aggregate_version" field.
 func AggregateVersionNotNil() predicate.OrderSnapshots {
 	return predicate.OrderSnapshots(sql.FieldNotNull(FieldAggregateVersion))
+}
+
+// AggregateDataEQ applies the EQ predicate on the "aggregate_data" field.
+func AggregateDataEQ(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldEQ(FieldAggregateData, v))
+}
+
+// AggregateDataNEQ applies the NEQ predicate on the "aggregate_data" field.
+func AggregateDataNEQ(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldNEQ(FieldAggregateData, v))
+}
+
+// AggregateDataIn applies the In predicate on the "aggregate_data" field.
+func AggregateDataIn(vs ...[]byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldIn(FieldAggregateData, vs...))
+}
+
+// AggregateDataNotIn applies the NotIn predicate on the "aggregate_data" field.
+func AggregateDataNotIn(vs ...[]byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldNotIn(FieldAggregateData, vs...))
+}
+
+// AggregateDataGT applies the GT predicate on the "aggregate_data" field.
+func AggregateDataGT(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldGT(FieldAggregateData, v))
+}
+
+// AggregateDataGTE applies the GTE predicate on the "aggregate_data" field.
+func AggregateDataGTE(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldGTE(FieldAggregateData, v))
+}
+
+// AggregateDataLT applies the LT predicate on the "aggregate_data" field.
+func AggregateDataLT(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldLT(FieldAggregateData, v))
+}
+
+// AggregateDataLTE applies the LTE predicate on the "aggregate_data" field.
+func AggregateDataLTE(v []byte) predicate.OrderSnapshots {
+	return predicate.OrderSnapshots(sql.FieldLTE(FieldAggregateData, v))
 }
 
 // AggregateDataIsNil applies the IsNil predicate on the "aggregate_data" field.

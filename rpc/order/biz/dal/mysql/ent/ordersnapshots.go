@@ -5,7 +5,6 @@ package ent
 import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -33,7 +32,7 @@ type OrderSnapshots struct {
 	// 快照版本
 	AggregateVersion int64 `json:"aggregate_version,omitempty"`
 	// 快照数据
-	AggregateData any `json:"aggregate_data,omitempty"`
+	AggregateData []byte `json:"aggregate_data,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderSnapshotsQuery when eager-loading is set.
 	Edges        OrderSnapshotsEdges `json:"edges"`
@@ -131,10 +130,8 @@ func (_m *OrderSnapshots) assignValues(columns []string, values []any) error {
 		case ordersnapshots.FieldAggregateData:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field aggregate_data", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.AggregateData); err != nil {
-					return fmt.Errorf("unmarshal field aggregate_data: %w", err)
-				}
+			} else if value != nil {
+				_m.AggregateData = *value
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])

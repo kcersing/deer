@@ -48,7 +48,7 @@ func (OrderItem) Indexes() []ent.Index {
 
 func (OrderItem) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_item"},
+		entsql.Annotation{Table: "order_item", Collation: "utf8mb4_unicode_ci"},
 		entsql.WithComments(true),
 	}
 }

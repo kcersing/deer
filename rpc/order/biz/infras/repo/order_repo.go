@@ -8,8 +8,8 @@ import (
 	ordersnapshots2 "deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/infras/aggregate"
 	"deer/rpc/order/biz/infras/common"
+	"deer/rpc/order/biz/infras/events"
 	"github.com/bytedance/sonic"
-
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 )
@@ -99,11 +99,8 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
 
-		output, err := sonic.Marshal(&e)
-		klog.Info(err)
-		klog.Info(output)
-		// Unmarshal
-		//err := sonic.Unmarshal(output, &ets)
+		eventData, _ := sonic.Marshal(e)
+
 		e.SetAggregateID(order.AggregateID)
 		ets[i] = tx.OrderEvents.
 			Create().
@@ -111,17 +108,17 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 			SetAggregateID(order.AggregateID).
 			SetEventType(e.GetType()).
 			SetAggregateType(e.GetAggregateType()).
-			SetEventVersion(order.Version)
-		//SetEventData(&e)
+			SetEventVersion(order.Version).
+			SetEventData(eventData)
 	}
 	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
 	}
-
+	orderData, _ := sonic.Marshal(order)
 	_, err = tx.OrderSnapshots.Create().
 		SetAggregateVersion(order.Version).
 		SetAggregateID(order.AggregateID).
-		SetAggregateData(order).
+		SetAggregateData(orderData).
 		Save(o.ctx)
 	if err != nil {
 		return errors.Wrap(err, "保存订单快照失败")
@@ -165,31 +162,30 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 	).
 		Order(ent.Asc(orderevents2.FieldCreatedAt)).
 		All(o.ctx)
-	klog.Info(eventAlls)
+
 	if err != nil {
 		return nil, errors.Wrap(err, "查询事件记录失败")
 	}
 
 	for _, eventEnt := range eventAlls {
 
-		klog.Info(eventEnt)
 		var eventAll []common.Event
-		klog.Info(eventEnt.EventType)
-		klog.Info(eventEnt.EventData)
 		switch eventEnt.EventType {
 		case string(common.Created):
 
-			//klog.Info(reflect.TypeOf(eventEnt.EventData))
 			//output, err := sonic.Marshal(&e)
 			//klog.Info(err)
 			//klog.Info(output)
 			//var output map[string]interface{}
-			//var out events.CreatedOrderEvent
+			var out events.CreatedOrderEvent
 			//event, ok := eventEnt.EventData.(events.CreatedOrderEvent)
 			// Unmarshal
-			//err := sonic.Unmarshal([]byte(eventEnt.EventData), out)
-			//klog.Info(event)
-			//klog.Info(ok)
+			err := sonic.Unmarshal(eventEnt.EventData, &out)
+			if err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, &out)
+
 			//eventData, ok := eventEnt.EventData.(*events.CreatedOrderEvent)
 
 			//if ok {
@@ -230,9 +226,10 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 		}
 		klog.Info(eventAll)
 
-		err := order.Load(eventAll)
+		err = order.Load(eventAll)
+
 		if err != nil {
-			return nil, err
+			return order, err
 		}
 	}
 

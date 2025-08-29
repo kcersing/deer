@@ -108,7 +108,7 @@ func (_c *OrderSnapshotsCreate) SetNillableAggregateVersion(v *int64) *OrderSnap
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_c *OrderSnapshotsCreate) SetAggregateData(v any) *OrderSnapshotsCreate {
+func (_c *OrderSnapshotsCreate) SetAggregateData(v []byte) *OrderSnapshotsCreate {
 	_c.mutation.SetAggregateData(v)
 	return _c
 }
@@ -247,7 +247,7 @@ func (_c *OrderSnapshotsCreate) createSpec() (*OrderSnapshots, *sqlgraph.CreateS
 		_node.AggregateVersion = value
 	}
 	if value, ok := _c.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeBytes, value)
 		_node.AggregateData = value
 	}
 	if nodes := _c.mutation.OrderIDs(); len(nodes) > 0 {
@@ -428,7 +428,7 @@ func (u *OrderSnapshotsUpsert) ClearAggregateVersion() *OrderSnapshotsUpsert {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsert) SetAggregateData(v any) *OrderSnapshotsUpsert {
+func (u *OrderSnapshotsUpsert) SetAggregateData(v []byte) *OrderSnapshotsUpsert {
 	u.Set(ordersnapshots.FieldAggregateData, v)
 	return u
 }
@@ -623,7 +623,7 @@ func (u *OrderSnapshotsUpsertOne) ClearAggregateVersion() *OrderSnapshotsUpsertO
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertOne) SetAggregateData(v any) *OrderSnapshotsUpsertOne {
+func (u *OrderSnapshotsUpsertOne) SetAggregateData(v []byte) *OrderSnapshotsUpsertOne {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})
@@ -987,7 +987,7 @@ func (u *OrderSnapshotsUpsertBulk) ClearAggregateVersion() *OrderSnapshotsUpsert
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v any) *OrderSnapshotsUpsertBulk {
+func (u *OrderSnapshotsUpsertBulk) SetAggregateData(v []byte) *OrderSnapshotsUpsertBulk {
 	return u.Update(func(s *OrderSnapshotsUpsert) {
 		s.SetAggregateData(v)
 	})

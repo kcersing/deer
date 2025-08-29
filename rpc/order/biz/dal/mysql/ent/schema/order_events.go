@@ -22,8 +22,7 @@ func (OrderEvents) Fields() []ent.Field {
 		field.String("aggregate_type").Comment("聚合根类型").Optional(),
 		field.String("event_type").Comment("事件类型").Optional(),
 
-		field.Any("event_data").Comment("事件数据").Optional(),
-
+		field.Bytes("event_data").Comment("事件数据").Optional(),
 		field.Int64("event_version").Comment("聚合根版本号").Optional(),
 	}
 }
@@ -51,7 +50,7 @@ func (OrderEvents) Indexes() []ent.Index {
 
 func (OrderEvents) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_events"},
+		entsql.Annotation{Table: "order_events", Collation: "utf8mb4_unicode_ci"},
 		entsql.WithComments(true),
 	}
 }

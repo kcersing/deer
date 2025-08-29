@@ -3801,7 +3801,7 @@ type OrderEventsMutation struct {
 	event_id         *string
 	aggregate_type   *string
 	event_type       *string
-	event_data       *any
+	event_data       *[]byte
 	event_version    *int64
 	addevent_version *int64
 	clearedFields    map[string]struct{}
@@ -4351,12 +4351,12 @@ func (m *OrderEventsMutation) ResetEventType() {
 }
 
 // SetEventData sets the "event_data" field.
-func (m *OrderEventsMutation) SetEventData(a any) {
-	m.event_data = &a
+func (m *OrderEventsMutation) SetEventData(b []byte) {
+	m.event_data = &b
 }
 
 // EventData returns the value of the "event_data" field in the mutation.
-func (m *OrderEventsMutation) EventData() (r any, exists bool) {
+func (m *OrderEventsMutation) EventData() (r []byte, exists bool) {
 	v := m.event_data
 	if v == nil {
 		return
@@ -4367,7 +4367,7 @@ func (m *OrderEventsMutation) EventData() (r any, exists bool) {
 // OldEventData returns the old "event_data" field's value of the OrderEvents entity.
 // If the OrderEvents object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderEventsMutation) OldEventData(ctx context.Context) (v any, err error) {
+func (m *OrderEventsMutation) OldEventData(ctx context.Context) (v []byte, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldEventData is only allowed on UpdateOne operations")
 	}
@@ -4697,7 +4697,7 @@ func (m *OrderEventsMutation) SetField(name string, value ent.Value) error {
 		m.SetEventType(v)
 		return nil
 	case orderevents.FieldEventData:
-		v, ok := value.(any)
+		v, ok := value.([]byte)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -7588,7 +7588,7 @@ type OrderSnapshotsMutation struct {
 	addcreated_id        *int64
 	aggregate_version    *int64
 	addaggregate_version *int64
-	aggregate_data       *any
+	aggregate_data       *[]byte
 	clearedFields        map[string]struct{}
 	_order               *int64
 	cleared_order        bool
@@ -8059,12 +8059,12 @@ func (m *OrderSnapshotsMutation) ResetAggregateVersion() {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (m *OrderSnapshotsMutation) SetAggregateData(a any) {
-	m.aggregate_data = &a
+func (m *OrderSnapshotsMutation) SetAggregateData(b []byte) {
+	m.aggregate_data = &b
 }
 
 // AggregateData returns the value of the "aggregate_data" field in the mutation.
-func (m *OrderSnapshotsMutation) AggregateData() (r any, exists bool) {
+func (m *OrderSnapshotsMutation) AggregateData() (r []byte, exists bool) {
 	v := m.aggregate_data
 	if v == nil {
 		return
@@ -8075,7 +8075,7 @@ func (m *OrderSnapshotsMutation) AggregateData() (r any, exists bool) {
 // OldAggregateData returns the old "aggregate_data" field's value of the OrderSnapshots entity.
 // If the OrderSnapshots object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderSnapshotsMutation) OldAggregateData(ctx context.Context) (v any, err error) {
+func (m *OrderSnapshotsMutation) OldAggregateData(ctx context.Context) (v []byte, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldAggregateData is only allowed on UpdateOne operations")
 	}
@@ -8300,7 +8300,7 @@ func (m *OrderSnapshotsMutation) SetField(name string, value ent.Value) error {
 		m.SetAggregateVersion(v)
 		return nil
 	case ordersnapshots.FieldAggregateData:
-		v, ok := value.(any)
+		v, ok := value.([]byte)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

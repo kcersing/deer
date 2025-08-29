@@ -19,7 +19,7 @@ func (OrderSnapshots) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("aggregate_id").Comment("聚合根ID").Optional(),
 		field.Int64("aggregate_version").Comment("快照版本").Optional(),
-		field.Any("aggregate_data").Comment("快照数据").Optional(),
+		field.Bytes("aggregate_data").Comment("快照数据").Optional(),
 	}
 }
 
@@ -46,7 +46,7 @@ func (OrderSnapshots) Indexes() []ent.Index {
 
 func (OrderSnapshots) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_snapshots"},
+		entsql.Annotation{Table: "order_snapshots", Collation: "utf8mb4_unicode_ci"},
 		entsql.WithComments(true),
 	}
 }

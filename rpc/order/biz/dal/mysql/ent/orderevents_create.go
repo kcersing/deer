@@ -136,7 +136,7 @@ func (_c *OrderEventsCreate) SetNillableEventType(v *string) *OrderEventsCreate 
 }
 
 // SetEventData sets the "event_data" field.
-func (_c *OrderEventsCreate) SetEventData(v any) *OrderEventsCreate {
+func (_c *OrderEventsCreate) SetEventData(v []byte) *OrderEventsCreate {
 	_c.mutation.SetEventData(v)
 	return _c
 }
@@ -297,7 +297,7 @@ func (_c *OrderEventsCreate) createSpec() (*OrderEvents, *sqlgraph.CreateSpec) {
 		_node.EventType = value
 	}
 	if value, ok := _c.mutation.EventData(); ok {
-		_spec.SetField(orderevents.FieldEventData, field.TypeJSON, value)
+		_spec.SetField(orderevents.FieldEventData, field.TypeBytes, value)
 		_node.EventData = value
 	}
 	if value, ok := _c.mutation.EventVersion(); ok {
@@ -512,7 +512,7 @@ func (u *OrderEventsUpsert) ClearEventType() *OrderEventsUpsert {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsert) SetEventData(v any) *OrderEventsUpsert {
+func (u *OrderEventsUpsert) SetEventData(v []byte) *OrderEventsUpsert {
 	u.Set(orderevents.FieldEventData, v)
 	return u
 }
@@ -766,7 +766,7 @@ func (u *OrderEventsUpsertOne) ClearEventType() *OrderEventsUpsertOne {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertOne) SetEventData(v any) *OrderEventsUpsertOne {
+func (u *OrderEventsUpsertOne) SetEventData(v []byte) *OrderEventsUpsertOne {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})
@@ -1193,7 +1193,7 @@ func (u *OrderEventsUpsertBulk) ClearEventType() *OrderEventsUpsertBulk {
 }
 
 // SetEventData sets the "event_data" field.
-func (u *OrderEventsUpsertBulk) SetEventData(v any) *OrderEventsUpsertBulk {
+func (u *OrderEventsUpsertBulk) SetEventData(v []byte) *OrderEventsUpsertBulk {
 	return u.Update(func(s *OrderEventsUpsert) {
 		s.SetEventData(v)
 	})

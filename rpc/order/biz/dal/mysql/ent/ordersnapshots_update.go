@@ -143,7 +143,7 @@ func (_u *OrderSnapshotsUpdate) ClearAggregateVersion() *OrderSnapshotsUpdate {
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_u *OrderSnapshotsUpdate) SetAggregateData(v any) *OrderSnapshotsUpdate {
+func (_u *OrderSnapshotsUpdate) SetAggregateData(v []byte) *OrderSnapshotsUpdate {
 	_u.mutation.SetAggregateData(v)
 	return _u
 }
@@ -266,10 +266,10 @@ func (_u *OrderSnapshotsUpdate) sqlSave(ctx context.Context) (_node int, err err
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeBytes, value)
 	}
 	if _u.mutation.AggregateDataCleared() {
-		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
+		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeBytes)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -434,7 +434,7 @@ func (_u *OrderSnapshotsUpdateOne) ClearAggregateVersion() *OrderSnapshotsUpdate
 }
 
 // SetAggregateData sets the "aggregate_data" field.
-func (_u *OrderSnapshotsUpdateOne) SetAggregateData(v any) *OrderSnapshotsUpdateOne {
+func (_u *OrderSnapshotsUpdateOne) SetAggregateData(v []byte) *OrderSnapshotsUpdateOne {
 	_u.mutation.SetAggregateData(v)
 	return _u
 }
@@ -587,10 +587,10 @@ func (_u *OrderSnapshotsUpdateOne) sqlSave(ctx context.Context) (_node *OrderSna
 		_spec.ClearField(ordersnapshots.FieldAggregateVersion, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.AggregateData(); ok {
-		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeJSON, value)
+		_spec.SetField(ordersnapshots.FieldAggregateData, field.TypeBytes, value)
 	}
 	if _u.mutation.AggregateDataCleared() {
-		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeJSON)
+		_spec.ClearField(ordersnapshots.FieldAggregateData, field.TypeBytes)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{

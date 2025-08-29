@@ -45,7 +45,7 @@ func (OrderEventSubscriptions) Indexes() []ent.Index {
 
 func (OrderEventSubscriptions) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_event_subscriptions"},
+		entsql.Annotation{Table: "order_event_subscriptions", Collation: "utf8mb4_unicode_ci"},
 		entsql.WithComments(true),
 	}
 }

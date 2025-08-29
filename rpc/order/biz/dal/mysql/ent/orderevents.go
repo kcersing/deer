@@ -5,7 +5,6 @@ package ent
 import (
 	"deer/rpc/order/biz/dal/mysql/ent/order"
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -37,7 +36,7 @@ type OrderEvents struct {
 	// 事件类型
 	EventType string `json:"event_type,omitempty"`
 	// 事件数据
-	EventData any `json:"event_data,omitempty"`
+	EventData []byte `json:"event_data,omitempty"`
 	// 聚合根版本号
 	EventVersion int64 `json:"event_version,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -151,10 +150,8 @@ func (_m *OrderEvents) assignValues(columns []string, values []any) error {
 		case orderevents.FieldEventData:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field event_data", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.EventData); err != nil {
-					return fmt.Errorf("unmarshal field event_data: %w", err)
-				}
+			} else if value != nil {
+				_m.EventData = *value
 			}
 		case orderevents.FieldEventVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

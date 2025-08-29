@@ -47,7 +47,7 @@ func (OrderStatusHistory) Indexes() []ent.Index {
 
 func (OrderStatusHistory) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_status_history"},
+		entsql.Annotation{Table: "order_status_history", Collation: "utf8mb4_unicode_ci"},
 		entsql.WithComments(true),
 	}
 }
