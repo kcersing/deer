@@ -67,7 +67,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	}()
 
 	orderEnt := tx.Order.Create().
-		SetOrderSn(order.Sn).
+		SetSn(order.Sn).
 		SetStatus(entOrder.Status(order.Status)).
 		SetCreatedID(order.CreatedId).
 		SetMemberID(order.MemberId).
@@ -75,8 +75,8 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 		OnConflict().
 		UpdateNewValues()
 
-	order.AggregateID, err = orderEnt.ID(o.ctx)
-
+	order.Id, err = orderEnt.ID(o.ctx)
+	order.AggregateID = order.Id
 	if err != nil {
 		klog.Errorf("save order failed: %v", err)
 		return errors.Wrap(err, "保存订单失败")
@@ -98,10 +98,8 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	}
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
-
-		eventData, _ := sonic.Marshal(e)
-
 		e.SetAggregateID(order.AggregateID)
+		eventData, _ := sonic.Marshal(e)
 		ets[i] = tx.OrderEvents.
 			Create().
 			SetEventID(e.GetId()).
@@ -114,6 +112,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
 	}
+	order.Id = order.AggregateID
 	orderData, _ := sonic.Marshal(order)
 	_, err = tx.OrderSnapshots.Create().
 		SetAggregateVersion(order.Version).
@@ -139,18 +138,22 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 }
 
 func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
-
+	order = aggregate.NewOrder()
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
 		Where(ordersnapshots2.AggregateID(id)).
 		Order(ent.Desc(ordersnapshots2.FieldAggregateVersion)).
 		First(o.ctx)
-	klog.Info(err)
+
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, errors.Wrap(err, "查询快照失败")
 	}
-	klog.Info(snapshot)
+	err = sonic.Unmarshal(snapshot.AggregateData, &order)
+	if err != nil {
+		return nil, err
+	}
+
 	//var lastVersion int64
 	//if snapshot != nil {
 	//	lastVersion = snapshot.AggregateVersion
@@ -185,6 +188,8 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 				return nil, err
 			}
 			eventAll = append(eventAll, &out)
+
+			klog.Info(out)
 
 			//eventData, ok := eventEnt.EventData.(*events.CreatedOrderEvent)
 
@@ -224,7 +229,7 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		klog.Info(eventAll)
+		klog.Info(order)
 
 		err = order.Load(eventAll)
 

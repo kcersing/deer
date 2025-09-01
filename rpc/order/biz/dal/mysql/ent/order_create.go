@@ -83,9 +83,9 @@ func (_c *OrderCreate) SetNillableCreatedID(v *int64) *OrderCreate {
 	return _c
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (_c *OrderCreate) SetOrderSn(v string) *OrderCreate {
-	_c.mutation.SetOrderSn(v)
+// SetSn sets the "sn" field.
+func (_c *OrderCreate) SetSn(v string) *OrderCreate {
+	_c.mutation.SetSn(v)
 	return _c
 }
 
@@ -211,20 +211,6 @@ func (_c *OrderCreate) SetActual(v float64) *OrderCreate {
 func (_c *OrderCreate) SetNillableActual(v *float64) *OrderCreate {
 	if v != nil {
 		_c.SetActual(*v)
-	}
-	return _c
-}
-
-// SetResidue sets the "residue" field.
-func (_c *OrderCreate) SetResidue(v float64) *OrderCreate {
-	_c.mutation.SetResidue(v)
-	return _c
-}
-
-// SetNillableResidue sets the "residue" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableResidue(v *float64) *OrderCreate {
-	if v != nil {
-		_c.SetResidue(*v)
 	}
 	return _c
 }
@@ -433,10 +419,6 @@ func (_c *OrderCreate) defaults() {
 		v := order.DefaultActual
 		_c.mutation.SetActual(v)
 	}
-	if _, ok := _c.mutation.Residue(); !ok {
-		v := order.DefaultResidue
-		_c.mutation.SetResidue(v)
-	}
 	if _, ok := _c.mutation.Remission(); !ok {
 		v := order.DefaultRemission
 		_c.mutation.SetRemission(v)
@@ -449,8 +431,8 @@ func (_c *OrderCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *OrderCreate) check() error {
-	if _, ok := _c.mutation.OrderSn(); !ok {
-		return &ValidationError{Name: "order_sn", err: errors.New(`ent: missing required field "Order.order_sn"`)}
+	if _, ok := _c.mutation.Sn(); !ok {
+		return &ValidationError{Name: "sn", err: errors.New(`ent: missing required field "Order.sn"`)}
 	}
 	if v, ok := _c.mutation.Status(); ok {
 		if err := order.StatusValidator(v); err != nil {
@@ -506,9 +488,9 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_spec.SetField(order.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := _c.mutation.OrderSn(); ok {
-		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
-		_node.OrderSn = value
+	if value, ok := _c.mutation.Sn(); ok {
+		_spec.SetField(order.FieldSn, field.TypeString, value)
+		_node.Sn = value
 	}
 	if value, ok := _c.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
@@ -545,10 +527,6 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Actual(); ok {
 		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
 		_node.Actual = value
-	}
-	if value, ok := _c.mutation.Residue(); ok {
-		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
-		_node.Residue = value
 	}
 	if value, ok := _c.mutation.Remission(); ok {
 		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
@@ -764,15 +742,15 @@ func (u *OrderUpsert) ClearCreatedID() *OrderUpsert {
 	return u
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (u *OrderUpsert) SetOrderSn(v string) *OrderUpsert {
-	u.Set(order.FieldOrderSn, v)
+// SetSn sets the "sn" field.
+func (u *OrderUpsert) SetSn(v string) *OrderUpsert {
+	u.Set(order.FieldSn, v)
 	return u
 }
 
-// UpdateOrderSn sets the "order_sn" field to the value that was provided on create.
-func (u *OrderUpsert) UpdateOrderSn() *OrderUpsert {
-	u.SetExcluded(order.FieldOrderSn)
+// UpdateSn sets the "sn" field to the value that was provided on create.
+func (u *OrderUpsert) UpdateSn() *OrderUpsert {
+	u.SetExcluded(order.FieldSn)
 	return u
 }
 
@@ -965,30 +943,6 @@ func (u *OrderUpsert) AddActual(v float64) *OrderUpsert {
 // ClearActual clears the value of the "actual" field.
 func (u *OrderUpsert) ClearActual() *OrderUpsert {
 	u.SetNull(order.FieldActual)
-	return u
-}
-
-// SetResidue sets the "residue" field.
-func (u *OrderUpsert) SetResidue(v float64) *OrderUpsert {
-	u.Set(order.FieldResidue, v)
-	return u
-}
-
-// UpdateResidue sets the "residue" field to the value that was provided on create.
-func (u *OrderUpsert) UpdateResidue() *OrderUpsert {
-	u.SetExcluded(order.FieldResidue)
-	return u
-}
-
-// AddResidue adds v to the "residue" field.
-func (u *OrderUpsert) AddResidue(v float64) *OrderUpsert {
-	u.Add(order.FieldResidue, v)
-	return u
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (u *OrderUpsert) ClearResidue() *OrderUpsert {
-	u.SetNull(order.FieldResidue)
 	return u
 }
 
@@ -1204,17 +1158,17 @@ func (u *OrderUpsertOne) ClearCreatedID() *OrderUpsertOne {
 	})
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (u *OrderUpsertOne) SetOrderSn(v string) *OrderUpsertOne {
+// SetSn sets the "sn" field.
+func (u *OrderUpsertOne) SetSn(v string) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
-		s.SetOrderSn(v)
+		s.SetSn(v)
 	})
 }
 
-// UpdateOrderSn sets the "order_sn" field to the value that was provided on create.
-func (u *OrderUpsertOne) UpdateOrderSn() *OrderUpsertOne {
+// UpdateSn sets the "sn" field to the value that was provided on create.
+func (u *OrderUpsertOne) UpdateSn() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
-		s.UpdateOrderSn()
+		s.UpdateSn()
 	})
 }
 
@@ -1439,34 +1393,6 @@ func (u *OrderUpsertOne) UpdateActual() *OrderUpsertOne {
 func (u *OrderUpsertOne) ClearActual() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearActual()
-	})
-}
-
-// SetResidue sets the "residue" field.
-func (u *OrderUpsertOne) SetResidue(v float64) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetResidue(v)
-	})
-}
-
-// AddResidue adds v to the "residue" field.
-func (u *OrderUpsertOne) AddResidue(v float64) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.AddResidue(v)
-	})
-}
-
-// UpdateResidue sets the "residue" field to the value that was provided on create.
-func (u *OrderUpsertOne) UpdateResidue() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateResidue()
-	})
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (u *OrderUpsertOne) ClearResidue() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearResidue()
 	})
 }
 
@@ -1862,17 +1788,17 @@ func (u *OrderUpsertBulk) ClearCreatedID() *OrderUpsertBulk {
 	})
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (u *OrderUpsertBulk) SetOrderSn(v string) *OrderUpsertBulk {
+// SetSn sets the "sn" field.
+func (u *OrderUpsertBulk) SetSn(v string) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
-		s.SetOrderSn(v)
+		s.SetSn(v)
 	})
 }
 
-// UpdateOrderSn sets the "order_sn" field to the value that was provided on create.
-func (u *OrderUpsertBulk) UpdateOrderSn() *OrderUpsertBulk {
+// UpdateSn sets the "sn" field to the value that was provided on create.
+func (u *OrderUpsertBulk) UpdateSn() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
-		s.UpdateOrderSn()
+		s.UpdateSn()
 	})
 }
 
@@ -2097,34 +2023,6 @@ func (u *OrderUpsertBulk) UpdateActual() *OrderUpsertBulk {
 func (u *OrderUpsertBulk) ClearActual() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearActual()
-	})
-}
-
-// SetResidue sets the "residue" field.
-func (u *OrderUpsertBulk) SetResidue(v float64) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetResidue(v)
-	})
-}
-
-// AddResidue adds v to the "residue" field.
-func (u *OrderUpsertBulk) AddResidue(v float64) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.AddResidue(v)
-	})
-}
-
-// UpdateResidue sets the "residue" field to the value that was provided on create.
-func (u *OrderUpsertBulk) UpdateResidue() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateResidue()
-	})
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (u *OrderUpsertBulk) ClearResidue() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearResidue()
 	})
 }
 

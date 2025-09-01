@@ -53,16 +53,12 @@ func init() {
 	orderDescActual := orderFields[9].Descriptor()
 	// order.DefaultActual holds the default value on creation for the actual field.
 	order.DefaultActual = orderDescActual.Default.(float64)
-	// orderDescResidue is the schema descriptor for residue field.
-	orderDescResidue := orderFields[10].Descriptor()
-	// order.DefaultResidue holds the default value on creation for the residue field.
-	order.DefaultResidue = orderDescResidue.Default.(float64)
 	// orderDescRemission is the schema descriptor for remission field.
-	orderDescRemission := orderFields[11].Descriptor()
+	orderDescRemission := orderFields[10].Descriptor()
 	// order.DefaultRemission holds the default value on creation for the remission field.
 	order.DefaultRemission = orderDescRemission.Default.(float64)
 	// orderDescRefund is the schema descriptor for refund field.
-	orderDescRefund := orderFields[12].Descriptor()
+	orderDescRefund := orderFields[11].Descriptor()
 	// order.DefaultRefund holds the default value on creation for the refund field.
 	order.DefaultRefund = orderDescRefund.Default.(float64)
 	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()

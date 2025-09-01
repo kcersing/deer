@@ -42,6 +42,6 @@ func TestOrderFindById(t *testing.T) {
 	if err != nil {
 		klog.Info(err)
 	}
-	klog.Info(id)
+	klog.Info(id.AggregateID)
 
 }

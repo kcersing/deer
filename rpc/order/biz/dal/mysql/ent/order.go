@@ -27,7 +27,7 @@ type Order struct {
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 订单编号
-	OrderSn string `json:"order_sn,omitempty"`
+	Sn string `json:"sn,omitempty"`
 	// 会员id
 	MemberID int64 `json:"member_id,omitempty"`
 	// 状态
@@ -46,8 +46,6 @@ type Order struct {
 	TotalAmount float64 `json:"total_amount,omitempty"`
 	// 实际已付款
 	Actual float64 `json:"actual,omitempty"`
-	// 未支付金额
-	Residue float64 `json:"residue,omitempty"`
 	// 减免
 	Remission float64 `json:"remission,omitempty"`
 	// 退费金额
@@ -129,11 +127,11 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldTotalAmount, order.FieldActual, order.FieldResidue, order.FieldRemission, order.FieldRefund:
+		case order.FieldTotalAmount, order.FieldActual, order.FieldRemission, order.FieldRefund:
 			values[i] = new(sql.NullFloat64)
 		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion:
 			values[i] = new(sql.NullInt64)
-		case order.FieldOrderSn, order.FieldStatus, order.FieldCloseNature, order.FieldRefundNature:
+		case order.FieldSn, order.FieldStatus, order.FieldCloseNature, order.FieldRefundNature:
 			values[i] = new(sql.NullString)
 		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt, order.FieldRefundAt:
 			values[i] = new(sql.NullTime)
@@ -182,11 +180,11 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.CreatedID = value.Int64
 			}
-		case order.FieldOrderSn:
+		case order.FieldSn:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field order_sn", values[i])
+				return fmt.Errorf("unexpected type %T for field sn", values[i])
 			} else if value.Valid {
-				_m.OrderSn = value.String
+				_m.Sn = value.String
 			}
 		case order.FieldMemberID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -241,12 +239,6 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field actual", values[i])
 			} else if value.Valid {
 				_m.Actual = value.Float64
-			}
-		case order.FieldResidue:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
-				return fmt.Errorf("unexpected type %T for field residue", values[i])
-			} else if value.Valid {
-				_m.Residue = value.Float64
 			}
 		case order.FieldRemission:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
@@ -345,8 +337,8 @@ func (_m *Order) String() string {
 	builder.WriteString("created_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
-	builder.WriteString("order_sn=")
-	builder.WriteString(_m.OrderSn)
+	builder.WriteString("sn=")
+	builder.WriteString(_m.Sn)
 	builder.WriteString(", ")
 	builder.WriteString("member_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.MemberID))
@@ -374,9 +366,6 @@ func (_m *Order) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("actual=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Actual))
-	builder.WriteString(", ")
-	builder.WriteString("residue=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Residue))
 	builder.WriteString(", ")
 	builder.WriteString("remission=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Remission))

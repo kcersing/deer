@@ -18,12 +18,12 @@ type Event interface {
 	SetVersion(version int64)
 }
 type EventBase struct {
-	EventID       string    `json:"EventID,omitempty"`
-	EventType     string    `json:"EventType,omitempty"`
-	AggregateID   int64     `json:"AggregateID,omitempty"`
-	AggregateType string    `json:"AggregateType,omitempty"`
-	Version       int64     `json:"Version,omitempty"`
-	Timestamp     time.Time `json:"Timestamp,omitempty"`
+	EventID       string
+	EventType     string
+	AggregateID   int64
+	AggregateType string
+	Version       int64
+	Timestamp     time.Time
 }
 
 func (e *EventBase) GetId() string {

@@ -78,6 +78,7 @@ func (a *AggregateBase) SetAggregateType(aggregateType string) {
 	a.AggregateType = aggregateType
 }
 func (a *AggregateBase) Load(events []Event) error {
+
 	for _, evt := range events {
 		if evt.GetAggregateID() != a.AggregateID {
 			return ErrInvalidAggregate

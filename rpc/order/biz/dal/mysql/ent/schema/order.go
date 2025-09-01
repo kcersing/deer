@@ -16,7 +16,7 @@ type Order struct {
 
 func (Order) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("order_sn").Comment("订单编号").Unique(),
+		field.String("sn").Comment("订单编号").Unique(),
 		field.Int64("member_id").Comment("会员id").Optional(),
 		field.Enum("status").
 			Values(
@@ -37,7 +37,6 @@ func (Order) Fields() []ent.Field {
 
 		field.Float("total_amount").Default(0).Comment("总金额").Optional(),
 		field.Float("actual").Default(0).Comment("实际已付款").Optional(),
-		field.Float("residue").Default(0).Comment("未支付金额").Optional(),
 		field.Float("remission").Default(0).Comment("减免").Optional(),
 		field.Float("refund").Default(0).Comment("退费金额").Optional(),
 		field.String("close_nature").Comment("关闭原因").Optional(),
@@ -69,7 +68,7 @@ func (Order) Edges() []ent.Edge {
 func (Order) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
-		index.Fields("order_sn"),
+		index.Fields("sn"),
 		//index.Fields("venue_id"),
 		index.Fields("member_id"),
 		index.Fields("status"),

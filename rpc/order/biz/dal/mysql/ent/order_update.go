@@ -99,16 +99,16 @@ func (_u *OrderUpdate) ClearCreatedID() *OrderUpdate {
 	return _u
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (_u *OrderUpdate) SetOrderSn(v string) *OrderUpdate {
-	_u.mutation.SetOrderSn(v)
+// SetSn sets the "sn" field.
+func (_u *OrderUpdate) SetSn(v string) *OrderUpdate {
+	_u.mutation.SetSn(v)
 	return _u
 }
 
-// SetNillableOrderSn sets the "order_sn" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableOrderSn(v *string) *OrderUpdate {
+// SetNillableSn sets the "sn" field if the given value is not nil.
+func (_u *OrderUpdate) SetNillableSn(v *string) *OrderUpdate {
 	if v != nil {
-		_u.SetOrderSn(*v)
+		_u.SetSn(*v)
 	}
 	return _u
 }
@@ -325,33 +325,6 @@ func (_u *OrderUpdate) AddActual(v float64) *OrderUpdate {
 // ClearActual clears the value of the "actual" field.
 func (_u *OrderUpdate) ClearActual() *OrderUpdate {
 	_u.mutation.ClearActual()
-	return _u
-}
-
-// SetResidue sets the "residue" field.
-func (_u *OrderUpdate) SetResidue(v float64) *OrderUpdate {
-	_u.mutation.ResetResidue()
-	_u.mutation.SetResidue(v)
-	return _u
-}
-
-// SetNillableResidue sets the "residue" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableResidue(v *float64) *OrderUpdate {
-	if v != nil {
-		_u.SetResidue(*v)
-	}
-	return _u
-}
-
-// AddResidue adds value to the "residue" field.
-func (_u *OrderUpdate) AddResidue(v float64) *OrderUpdate {
-	_u.mutation.AddResidue(v)
-	return _u
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (_u *OrderUpdate) ClearResidue() *OrderUpdate {
-	_u.mutation.ClearResidue()
 	return _u
 }
 
@@ -719,8 +692,8 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(order.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.OrderSn(); ok {
-		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
+	if value, ok := _u.mutation.Sn(); ok {
+		_spec.SetField(order.FieldSn, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
@@ -790,15 +763,6 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.ActualCleared() {
 		_spec.ClearField(order.FieldActual, field.TypeFloat64)
-	}
-	if value, ok := _u.mutation.Residue(); ok {
-		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
-	}
-	if value, ok := _u.mutation.AddedResidue(); ok {
-		_spec.AddField(order.FieldResidue, field.TypeFloat64, value)
-	}
-	if _u.mutation.ResidueCleared() {
-		_spec.ClearField(order.FieldResidue, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
 		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
@@ -1141,16 +1105,16 @@ func (_u *OrderUpdateOne) ClearCreatedID() *OrderUpdateOne {
 	return _u
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (_u *OrderUpdateOne) SetOrderSn(v string) *OrderUpdateOne {
-	_u.mutation.SetOrderSn(v)
+// SetSn sets the "sn" field.
+func (_u *OrderUpdateOne) SetSn(v string) *OrderUpdateOne {
+	_u.mutation.SetSn(v)
 	return _u
 }
 
-// SetNillableOrderSn sets the "order_sn" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableOrderSn(v *string) *OrderUpdateOne {
+// SetNillableSn sets the "sn" field if the given value is not nil.
+func (_u *OrderUpdateOne) SetNillableSn(v *string) *OrderUpdateOne {
 	if v != nil {
-		_u.SetOrderSn(*v)
+		_u.SetSn(*v)
 	}
 	return _u
 }
@@ -1367,33 +1331,6 @@ func (_u *OrderUpdateOne) AddActual(v float64) *OrderUpdateOne {
 // ClearActual clears the value of the "actual" field.
 func (_u *OrderUpdateOne) ClearActual() *OrderUpdateOne {
 	_u.mutation.ClearActual()
-	return _u
-}
-
-// SetResidue sets the "residue" field.
-func (_u *OrderUpdateOne) SetResidue(v float64) *OrderUpdateOne {
-	_u.mutation.ResetResidue()
-	_u.mutation.SetResidue(v)
-	return _u
-}
-
-// SetNillableResidue sets the "residue" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableResidue(v *float64) *OrderUpdateOne {
-	if v != nil {
-		_u.SetResidue(*v)
-	}
-	return _u
-}
-
-// AddResidue adds value to the "residue" field.
-func (_u *OrderUpdateOne) AddResidue(v float64) *OrderUpdateOne {
-	_u.mutation.AddResidue(v)
-	return _u
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (_u *OrderUpdateOne) ClearResidue() *OrderUpdateOne {
-	_u.mutation.ClearResidue()
 	return _u
 }
 
@@ -1791,8 +1728,8 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(order.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.OrderSn(); ok {
-		_spec.SetField(order.FieldOrderSn, field.TypeString, value)
+	if value, ok := _u.mutation.Sn(); ok {
+		_spec.SetField(order.FieldSn, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.MemberID(); ok {
 		_spec.SetField(order.FieldMemberID, field.TypeInt64, value)
@@ -1862,15 +1799,6 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 	}
 	if _u.mutation.ActualCleared() {
 		_spec.ClearField(order.FieldActual, field.TypeFloat64)
-	}
-	if value, ok := _u.mutation.Residue(); ok {
-		_spec.SetField(order.FieldResidue, field.TypeFloat64, value)
-	}
-	if value, ok := _u.mutation.AddedResidue(); ok {
-		_spec.AddField(order.FieldResidue, field.TypeFloat64, value)
-	}
-	if _u.mutation.ResidueCleared() {
-		_spec.ClearField(order.FieldResidue, field.TypeFloat64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
 		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)

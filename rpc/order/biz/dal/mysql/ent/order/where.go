@@ -75,9 +75,9 @@ func CreatedID(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldCreatedID, v))
 }
 
-// OrderSn applies equality check predicate on the "order_sn" field. It's identical to OrderSnEQ.
-func OrderSn(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldOrderSn, v))
+// Sn applies equality check predicate on the "sn" field. It's identical to SnEQ.
+func Sn(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldSn, v))
 }
 
 // MemberID applies equality check predicate on the "member_id" field. It's identical to MemberIDEQ.
@@ -118,11 +118,6 @@ func TotalAmount(v float64) predicate.Order {
 // Actual applies equality check predicate on the "actual" field. It's identical to ActualEQ.
 func Actual(v float64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldActual, v))
-}
-
-// Residue applies equality check predicate on the "residue" field. It's identical to ResidueEQ.
-func Residue(v float64) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldResidue, v))
 }
 
 // Remission applies equality check predicate on the "remission" field. It's identical to RemissionEQ.
@@ -345,69 +340,69 @@ func CreatedIDNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldCreatedID))
 }
 
-// OrderSnEQ applies the EQ predicate on the "order_sn" field.
-func OrderSnEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldOrderSn, v))
+// SnEQ applies the EQ predicate on the "sn" field.
+func SnEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldEQ(FieldSn, v))
 }
 
-// OrderSnNEQ applies the NEQ predicate on the "order_sn" field.
-func OrderSnNEQ(v string) predicate.Order {
-	return predicate.Order(sql.FieldNEQ(FieldOrderSn, v))
+// SnNEQ applies the NEQ predicate on the "sn" field.
+func SnNEQ(v string) predicate.Order {
+	return predicate.Order(sql.FieldNEQ(FieldSn, v))
 }
 
-// OrderSnIn applies the In predicate on the "order_sn" field.
-func OrderSnIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldIn(FieldOrderSn, vs...))
+// SnIn applies the In predicate on the "sn" field.
+func SnIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldIn(FieldSn, vs...))
 }
 
-// OrderSnNotIn applies the NotIn predicate on the "order_sn" field.
-func OrderSnNotIn(vs ...string) predicate.Order {
-	return predicate.Order(sql.FieldNotIn(FieldOrderSn, vs...))
+// SnNotIn applies the NotIn predicate on the "sn" field.
+func SnNotIn(vs ...string) predicate.Order {
+	return predicate.Order(sql.FieldNotIn(FieldSn, vs...))
 }
 
-// OrderSnGT applies the GT predicate on the "order_sn" field.
-func OrderSnGT(v string) predicate.Order {
-	return predicate.Order(sql.FieldGT(FieldOrderSn, v))
+// SnGT applies the GT predicate on the "sn" field.
+func SnGT(v string) predicate.Order {
+	return predicate.Order(sql.FieldGT(FieldSn, v))
 }
 
-// OrderSnGTE applies the GTE predicate on the "order_sn" field.
-func OrderSnGTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldGTE(FieldOrderSn, v))
+// SnGTE applies the GTE predicate on the "sn" field.
+func SnGTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldGTE(FieldSn, v))
 }
 
-// OrderSnLT applies the LT predicate on the "order_sn" field.
-func OrderSnLT(v string) predicate.Order {
-	return predicate.Order(sql.FieldLT(FieldOrderSn, v))
+// SnLT applies the LT predicate on the "sn" field.
+func SnLT(v string) predicate.Order {
+	return predicate.Order(sql.FieldLT(FieldSn, v))
 }
 
-// OrderSnLTE applies the LTE predicate on the "order_sn" field.
-func OrderSnLTE(v string) predicate.Order {
-	return predicate.Order(sql.FieldLTE(FieldOrderSn, v))
+// SnLTE applies the LTE predicate on the "sn" field.
+func SnLTE(v string) predicate.Order {
+	return predicate.Order(sql.FieldLTE(FieldSn, v))
 }
 
-// OrderSnContains applies the Contains predicate on the "order_sn" field.
-func OrderSnContains(v string) predicate.Order {
-	return predicate.Order(sql.FieldContains(FieldOrderSn, v))
+// SnContains applies the Contains predicate on the "sn" field.
+func SnContains(v string) predicate.Order {
+	return predicate.Order(sql.FieldContains(FieldSn, v))
 }
 
-// OrderSnHasPrefix applies the HasPrefix predicate on the "order_sn" field.
-func OrderSnHasPrefix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasPrefix(FieldOrderSn, v))
+// SnHasPrefix applies the HasPrefix predicate on the "sn" field.
+func SnHasPrefix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasPrefix(FieldSn, v))
 }
 
-// OrderSnHasSuffix applies the HasSuffix predicate on the "order_sn" field.
-func OrderSnHasSuffix(v string) predicate.Order {
-	return predicate.Order(sql.FieldHasSuffix(FieldOrderSn, v))
+// SnHasSuffix applies the HasSuffix predicate on the "sn" field.
+func SnHasSuffix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasSuffix(FieldSn, v))
 }
 
-// OrderSnEqualFold applies the EqualFold predicate on the "order_sn" field.
-func OrderSnEqualFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldEqualFold(FieldOrderSn, v))
+// SnEqualFold applies the EqualFold predicate on the "sn" field.
+func SnEqualFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldEqualFold(FieldSn, v))
 }
 
-// OrderSnContainsFold applies the ContainsFold predicate on the "order_sn" field.
-func OrderSnContainsFold(v string) predicate.Order {
-	return predicate.Order(sql.FieldContainsFold(FieldOrderSn, v))
+// SnContainsFold applies the ContainsFold predicate on the "sn" field.
+func SnContainsFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldContainsFold(FieldSn, v))
 }
 
 // MemberIDEQ applies the EQ predicate on the "member_id" field.
@@ -838,56 +833,6 @@ func ActualIsNil() predicate.Order {
 // ActualNotNil applies the NotNil predicate on the "actual" field.
 func ActualNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldActual))
-}
-
-// ResidueEQ applies the EQ predicate on the "residue" field.
-func ResidueEQ(v float64) predicate.Order {
-	return predicate.Order(sql.FieldEQ(FieldResidue, v))
-}
-
-// ResidueNEQ applies the NEQ predicate on the "residue" field.
-func ResidueNEQ(v float64) predicate.Order {
-	return predicate.Order(sql.FieldNEQ(FieldResidue, v))
-}
-
-// ResidueIn applies the In predicate on the "residue" field.
-func ResidueIn(vs ...float64) predicate.Order {
-	return predicate.Order(sql.FieldIn(FieldResidue, vs...))
-}
-
-// ResidueNotIn applies the NotIn predicate on the "residue" field.
-func ResidueNotIn(vs ...float64) predicate.Order {
-	return predicate.Order(sql.FieldNotIn(FieldResidue, vs...))
-}
-
-// ResidueGT applies the GT predicate on the "residue" field.
-func ResidueGT(v float64) predicate.Order {
-	return predicate.Order(sql.FieldGT(FieldResidue, v))
-}
-
-// ResidueGTE applies the GTE predicate on the "residue" field.
-func ResidueGTE(v float64) predicate.Order {
-	return predicate.Order(sql.FieldGTE(FieldResidue, v))
-}
-
-// ResidueLT applies the LT predicate on the "residue" field.
-func ResidueLT(v float64) predicate.Order {
-	return predicate.Order(sql.FieldLT(FieldResidue, v))
-}
-
-// ResidueLTE applies the LTE predicate on the "residue" field.
-func ResidueLTE(v float64) predicate.Order {
-	return predicate.Order(sql.FieldLTE(FieldResidue, v))
-}
-
-// ResidueIsNil applies the IsNil predicate on the "residue" field.
-func ResidueIsNil() predicate.Order {
-	return predicate.Order(sql.FieldIsNull(FieldResidue))
-}
-
-// ResidueNotNil applies the NotNil predicate on the "residue" field.
-func ResidueNotNil() predicate.Order {
-	return predicate.Order(sql.FieldNotNull(FieldResidue))
 }
 
 // RemissionEQ applies the EQ predicate on the "remission" field.

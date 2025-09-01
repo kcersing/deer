@@ -51,7 +51,7 @@ type OrderMutation struct {
 	adddelete             *int64
 	created_id            *int64
 	addcreated_id         *int64
-	order_sn              *string
+	sn                    *string
 	member_id             *int64
 	addmember_id          *int64
 	status                *order.Status
@@ -66,8 +66,6 @@ type OrderMutation struct {
 	addtotal_amount       *float64
 	actual                *float64
 	addactual             *float64
-	residue               *float64
-	addresidue            *float64
 	remission             *float64
 	addremission          *float64
 	refund                *float64
@@ -437,40 +435,40 @@ func (m *OrderMutation) ResetCreatedID() {
 	delete(m.clearedFields, order.FieldCreatedID)
 }
 
-// SetOrderSn sets the "order_sn" field.
-func (m *OrderMutation) SetOrderSn(s string) {
-	m.order_sn = &s
+// SetSn sets the "sn" field.
+func (m *OrderMutation) SetSn(s string) {
+	m.sn = &s
 }
 
-// OrderSn returns the value of the "order_sn" field in the mutation.
-func (m *OrderMutation) OrderSn() (r string, exists bool) {
-	v := m.order_sn
+// Sn returns the value of the "sn" field in the mutation.
+func (m *OrderMutation) Sn() (r string, exists bool) {
+	v := m.sn
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldOrderSn returns the old "order_sn" field's value of the Order entity.
+// OldSn returns the old "sn" field's value of the Order entity.
 // If the Order object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderMutation) OldOrderSn(ctx context.Context) (v string, err error) {
+func (m *OrderMutation) OldSn(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldOrderSn is only allowed on UpdateOne operations")
+		return v, errors.New("OldSn is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldOrderSn requires an ID field in the mutation")
+		return v, errors.New("OldSn requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldOrderSn: %w", err)
+		return v, fmt.Errorf("querying old value for OldSn: %w", err)
 	}
-	return oldValue.OrderSn, nil
+	return oldValue.Sn, nil
 }
 
-// ResetOrderSn resets all changes to the "order_sn" field.
-func (m *OrderMutation) ResetOrderSn() {
-	m.order_sn = nil
+// ResetSn resets all changes to the "sn" field.
+func (m *OrderMutation) ResetSn() {
+	m.sn = nil
 }
 
 // SetMemberID sets the "member_id" field.
@@ -1019,76 +1017,6 @@ func (m *OrderMutation) ResetActual() {
 	delete(m.clearedFields, order.FieldActual)
 }
 
-// SetResidue sets the "residue" field.
-func (m *OrderMutation) SetResidue(f float64) {
-	m.residue = &f
-	m.addresidue = nil
-}
-
-// Residue returns the value of the "residue" field in the mutation.
-func (m *OrderMutation) Residue() (r float64, exists bool) {
-	v := m.residue
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldResidue returns the old "residue" field's value of the Order entity.
-// If the Order object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderMutation) OldResidue(ctx context.Context) (v float64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldResidue is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldResidue requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldResidue: %w", err)
-	}
-	return oldValue.Residue, nil
-}
-
-// AddResidue adds f to the "residue" field.
-func (m *OrderMutation) AddResidue(f float64) {
-	if m.addresidue != nil {
-		*m.addresidue += f
-	} else {
-		m.addresidue = &f
-	}
-}
-
-// AddedResidue returns the value that was added to the "residue" field in this mutation.
-func (m *OrderMutation) AddedResidue() (r float64, exists bool) {
-	v := m.addresidue
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ClearResidue clears the value of the "residue" field.
-func (m *OrderMutation) ClearResidue() {
-	m.residue = nil
-	m.addresidue = nil
-	m.clearedFields[order.FieldResidue] = struct{}{}
-}
-
-// ResidueCleared returns if the "residue" field was cleared in this mutation.
-func (m *OrderMutation) ResidueCleared() bool {
-	_, ok := m.clearedFields[order.FieldResidue]
-	return ok
-}
-
-// ResetResidue resets all changes to the "residue" field.
-func (m *OrderMutation) ResetResidue() {
-	m.residue = nil
-	m.addresidue = nil
-	delete(m.clearedFields, order.FieldResidue)
-}
-
 // SetRemission sets the "remission" field.
 func (m *OrderMutation) SetRemission(f float64) {
 	m.remission = &f
@@ -1631,7 +1559,7 @@ func (m *OrderMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrderMutation) Fields() []string {
-	fields := make([]string, 0, 19)
+	fields := make([]string, 0, 18)
 	if m.created_at != nil {
 		fields = append(fields, order.FieldCreatedAt)
 	}
@@ -1644,8 +1572,8 @@ func (m *OrderMutation) Fields() []string {
 	if m.created_id != nil {
 		fields = append(fields, order.FieldCreatedID)
 	}
-	if m.order_sn != nil {
-		fields = append(fields, order.FieldOrderSn)
+	if m.sn != nil {
+		fields = append(fields, order.FieldSn)
 	}
 	if m.member_id != nil {
 		fields = append(fields, order.FieldMemberID)
@@ -1673,9 +1601,6 @@ func (m *OrderMutation) Fields() []string {
 	}
 	if m.actual != nil {
 		fields = append(fields, order.FieldActual)
-	}
-	if m.residue != nil {
-		fields = append(fields, order.FieldResidue)
 	}
 	if m.remission != nil {
 		fields = append(fields, order.FieldRemission)
@@ -1705,8 +1630,8 @@ func (m *OrderMutation) Field(name string) (ent.Value, bool) {
 		return m.Delete()
 	case order.FieldCreatedID:
 		return m.CreatedID()
-	case order.FieldOrderSn:
-		return m.OrderSn()
+	case order.FieldSn:
+		return m.Sn()
 	case order.FieldMemberID:
 		return m.MemberID()
 	case order.FieldStatus:
@@ -1725,8 +1650,6 @@ func (m *OrderMutation) Field(name string) (ent.Value, bool) {
 		return m.TotalAmount()
 	case order.FieldActual:
 		return m.Actual()
-	case order.FieldResidue:
-		return m.Residue()
 	case order.FieldRemission:
 		return m.Remission()
 	case order.FieldRefund:
@@ -1752,8 +1675,8 @@ func (m *OrderMutation) OldField(ctx context.Context, name string) (ent.Value, e
 		return m.OldDelete(ctx)
 	case order.FieldCreatedID:
 		return m.OldCreatedID(ctx)
-	case order.FieldOrderSn:
-		return m.OldOrderSn(ctx)
+	case order.FieldSn:
+		return m.OldSn(ctx)
 	case order.FieldMemberID:
 		return m.OldMemberID(ctx)
 	case order.FieldStatus:
@@ -1772,8 +1695,6 @@ func (m *OrderMutation) OldField(ctx context.Context, name string) (ent.Value, e
 		return m.OldTotalAmount(ctx)
 	case order.FieldActual:
 		return m.OldActual(ctx)
-	case order.FieldResidue:
-		return m.OldResidue(ctx)
 	case order.FieldRemission:
 		return m.OldRemission(ctx)
 	case order.FieldRefund:
@@ -1819,12 +1740,12 @@ func (m *OrderMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetCreatedID(v)
 		return nil
-	case order.FieldOrderSn:
+	case order.FieldSn:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetOrderSn(v)
+		m.SetSn(v)
 		return nil
 	case order.FieldMemberID:
 		v, ok := value.(int64)
@@ -1889,13 +1810,6 @@ func (m *OrderMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetActual(v)
 		return nil
-	case order.FieldResidue:
-		v, ok := value.(float64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetResidue(v)
-		return nil
 	case order.FieldRemission:
 		v, ok := value.(float64)
 		if !ok {
@@ -1953,9 +1867,6 @@ func (m *OrderMutation) AddedFields() []string {
 	if m.addactual != nil {
 		fields = append(fields, order.FieldActual)
 	}
-	if m.addresidue != nil {
-		fields = append(fields, order.FieldResidue)
-	}
 	if m.addremission != nil {
 		fields = append(fields, order.FieldRemission)
 	}
@@ -1984,8 +1895,6 @@ func (m *OrderMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedTotalAmount()
 	case order.FieldActual:
 		return m.AddedActual()
-	case order.FieldResidue:
-		return m.AddedResidue()
 	case order.FieldRemission:
 		return m.AddedRemission()
 	case order.FieldRefund:
@@ -2048,13 +1957,6 @@ func (m *OrderMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddActual(v)
 		return nil
-	case order.FieldResidue:
-		v, ok := value.(float64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddResidue(v)
-		return nil
 	case order.FieldRemission:
 		v, ok := value.(float64)
 		if !ok {
@@ -2115,9 +2017,6 @@ func (m *OrderMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(order.FieldActual) {
 		fields = append(fields, order.FieldActual)
-	}
-	if m.FieldCleared(order.FieldResidue) {
-		fields = append(fields, order.FieldResidue)
 	}
 	if m.FieldCleared(order.FieldRemission) {
 		fields = append(fields, order.FieldRemission)
@@ -2184,9 +2083,6 @@ func (m *OrderMutation) ClearField(name string) error {
 	case order.FieldActual:
 		m.ClearActual()
 		return nil
-	case order.FieldResidue:
-		m.ClearResidue()
-		return nil
 	case order.FieldRemission:
 		m.ClearRemission()
 		return nil
@@ -2219,8 +2115,8 @@ func (m *OrderMutation) ResetField(name string) error {
 	case order.FieldCreatedID:
 		m.ResetCreatedID()
 		return nil
-	case order.FieldOrderSn:
-		m.ResetOrderSn()
+	case order.FieldSn:
+		m.ResetSn()
 		return nil
 	case order.FieldMemberID:
 		m.ResetMemberID()
@@ -2248,9 +2144,6 @@ func (m *OrderMutation) ResetField(name string) error {
 		return nil
 	case order.FieldActual:
 		m.ResetActual()
-		return nil
-	case order.FieldResidue:
-		m.ResetResidue()
 		return nil
 	case order.FieldRemission:
 		m.ResetRemission()

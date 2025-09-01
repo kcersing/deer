@@ -6,6 +6,7 @@ replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
 	entgo.io/ent v0.14.5
+	github.com/bytedance/sonic v1.14.0
 	github.com/cloudwego/gopkg v0.1.5
 	github.com/cloudwego/kitex v0.14.1
 	github.com/go-sql-driver/mysql v1.9.3
@@ -30,7 +31,6 @@ require (
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
 	github.com/bufbuild/protocompile v0.14.1 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
-	github.com/bytedance/sonic v1.14.0 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect

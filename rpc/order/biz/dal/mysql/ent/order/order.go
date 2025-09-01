@@ -23,8 +23,8 @@ const (
 	FieldDelete = "delete"
 	// FieldCreatedID holds the string denoting the created_id field in the database.
 	FieldCreatedID = "created_id"
-	// FieldOrderSn holds the string denoting the order_sn field in the database.
-	FieldOrderSn = "order_sn"
+	// FieldSn holds the string denoting the sn field in the database.
+	FieldSn = "sn"
 	// FieldMemberID holds the string denoting the member_id field in the database.
 	FieldMemberID = "member_id"
 	// FieldStatus holds the string denoting the status field in the database.
@@ -43,8 +43,6 @@ const (
 	FieldTotalAmount = "total_amount"
 	// FieldActual holds the string denoting the actual field in the database.
 	FieldActual = "actual"
-	// FieldResidue holds the string denoting the residue field in the database.
-	FieldResidue = "residue"
 	// FieldRemission holds the string denoting the remission field in the database.
 	FieldRemission = "remission"
 	// FieldRefund holds the string denoting the refund field in the database.
@@ -109,7 +107,7 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDelete,
 	FieldCreatedID,
-	FieldOrderSn,
+	FieldSn,
 	FieldMemberID,
 	FieldStatus,
 	FieldNature,
@@ -119,7 +117,6 @@ var Columns = []string{
 	FieldVersion,
 	FieldTotalAmount,
 	FieldActual,
-	FieldResidue,
 	FieldRemission,
 	FieldRefund,
 	FieldCloseNature,
@@ -153,8 +150,6 @@ var (
 	DefaultTotalAmount float64
 	// DefaultActual holds the default value on creation for the "actual" field.
 	DefaultActual float64
-	// DefaultResidue holds the default value on creation for the "residue" field.
-	DefaultResidue float64
 	// DefaultRemission holds the default value on creation for the "remission" field.
 	DefaultRemission float64
 	// DefaultRefund holds the default value on creation for the "refund" field.
@@ -219,9 +214,9 @@ func ByCreatedID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedID, opts...).ToFunc()
 }
 
-// ByOrderSn orders the results by the order_sn field.
-func ByOrderSn(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOrderSn, opts...).ToFunc()
+// BySn orders the results by the sn field.
+func BySn(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSn, opts...).ToFunc()
 }
 
 // ByMemberID orders the results by the member_id field.
@@ -267,11 +262,6 @@ func ByTotalAmount(opts ...sql.OrderTermOption) OrderOption {
 // ByActual orders the results by the actual field.
 func ByActual(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldActual, opts...).ToFunc()
-}
-
-// ByResidue orders the results by the residue field.
-func ByResidue(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldResidue, opts...).ToFunc()
 }
 
 // ByRemission orders the results by the remission field.
