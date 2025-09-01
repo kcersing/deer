@@ -35,8 +35,6 @@ const (
 	FieldCompletionAt = "completion_at"
 	// FieldCloseAt holds the string denoting the close_at field in the database.
 	FieldCloseAt = "close_at"
-	// FieldRefundAt holds the string denoting the refund_at field in the database.
-	FieldRefundAt = "refund_at"
 	// FieldVersion holds the string denoting the version field in the database.
 	FieldVersion = "version"
 	// FieldTotalAmount holds the string denoting the total_amount field in the database.
@@ -45,12 +43,8 @@ const (
 	FieldActual = "actual"
 	// FieldRemission holds the string denoting the remission field in the database.
 	FieldRemission = "remission"
-	// FieldRefund holds the string denoting the refund field in the database.
-	FieldRefund = "refund"
 	// FieldCloseNature holds the string denoting the close_nature field in the database.
 	FieldCloseNature = "close_nature"
-	// FieldRefundNature holds the string denoting the refund_nature field in the database.
-	FieldRefundNature = "refund_nature"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
 	// EdgePay holds the string denoting the pay edge name in mutations.
@@ -61,6 +55,8 @@ const (
 	EdgeSnapshots = "snapshots"
 	// EdgeStatusHistory holds the string denoting the status_history edge name in mutations.
 	EdgeStatusHistory = "status_history"
+	// EdgeRefund holds the string denoting the refund edge name in mutations.
+	EdgeRefund = "refund"
 	// Table holds the table name of the order in the database.
 	Table = "order"
 	// ItemsTable is the table that holds the items relation/edge.
@@ -98,6 +94,13 @@ const (
 	StatusHistoryInverseTable = "order_status_history"
 	// StatusHistoryColumn is the table column denoting the status_history relation/edge.
 	StatusHistoryColumn = "order_id"
+	// RefundTable is the table that holds the refund relation/edge.
+	RefundTable = "order_refund"
+	// RefundInverseTable is the table name for the OrderRefund entity.
+	// It exists in this package in order to avoid circular dependency with the "orderrefund" package.
+	RefundInverseTable = "order_refund"
+	// RefundColumn is the table column denoting the refund relation/edge.
+	RefundColumn = "order_id"
 )
 
 // Columns holds all SQL columns for order fields.
@@ -113,14 +116,11 @@ var Columns = []string{
 	FieldNature,
 	FieldCompletionAt,
 	FieldCloseAt,
-	FieldRefundAt,
 	FieldVersion,
 	FieldTotalAmount,
 	FieldActual,
 	FieldRemission,
-	FieldRefund,
 	FieldCloseNature,
-	FieldRefundNature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -152,8 +152,6 @@ var (
 	DefaultActual float64
 	// DefaultRemission holds the default value on creation for the "remission" field.
 	DefaultRemission float64
-	// DefaultRefund holds the default value on creation for the "refund" field.
-	DefaultRefund float64
 )
 
 // Status defines the type for the "status" enum field.
@@ -244,11 +242,6 @@ func ByCloseAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCloseAt, opts...).ToFunc()
 }
 
-// ByRefundAt orders the results by the refund_at field.
-func ByRefundAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRefundAt, opts...).ToFunc()
-}
-
 // ByVersion orders the results by the version field.
 func ByVersion(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldVersion, opts...).ToFunc()
@@ -269,19 +262,9 @@ func ByRemission(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRemission, opts...).ToFunc()
 }
 
-// ByRefund orders the results by the refund field.
-func ByRefund(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRefund, opts...).ToFunc()
-}
-
 // ByCloseNature orders the results by the close_nature field.
 func ByCloseNature(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCloseNature, opts...).ToFunc()
-}
-
-// ByRefundNature orders the results by the refund_nature field.
-func ByRefundNature(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRefundNature, opts...).ToFunc()
 }
 
 // ByItemsCount orders the results by items count.
@@ -353,6 +336,20 @@ func ByStatusHistory(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newStatusHistoryStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
+
+// ByRefundCount orders the results by refund count.
+func ByRefundCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newRefundStep(), opts...)
+	}
+}
+
+// ByRefund orders the results by refund terms.
+func ByRefund(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newRefundStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
 func newItemsStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
@@ -386,5 +383,12 @@ func newStatusHistoryStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(StatusHistoryInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.O2M, false, StatusHistoryTable, StatusHistoryColumn),
+	)
+}
+func newRefundStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(RefundInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, RefundTable, RefundColumn),
 	)
 }

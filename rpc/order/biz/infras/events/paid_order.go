@@ -12,6 +12,11 @@ type PaidOrderEvent struct {
 	PayedAmount float64
 	PayMethod   string
 	CreatedId   int64
+	Remission   float64
+	Reason      string
+	PaySn       string
+	PrepayId    string
+	PayExtra    string
 }
 
 func (e *PaidOrderEvent) GetType() string { return string(common.Paid) }

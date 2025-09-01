@@ -16,6 +16,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/ordereventsubscriptions"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
 	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
+	"deer/rpc/order/biz/dal/mysql/ent/orderrefund"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 
@@ -40,6 +41,8 @@ type Client struct {
 	OrderItem *OrderItemClient
 	// OrderPay is the client for interacting with the OrderPay builders.
 	OrderPay *OrderPayClient
+	// OrderRefund is the client for interacting with the OrderRefund builders.
+	OrderRefund *OrderRefundClient
 	// OrderSnapshots is the client for interacting with the OrderSnapshots builders.
 	OrderSnapshots *OrderSnapshotsClient
 	// OrderStatusHistory is the client for interacting with the OrderStatusHistory builders.
@@ -60,6 +63,7 @@ func (c *Client) init() {
 	c.OrderEvents = NewOrderEventsClient(c.config)
 	c.OrderItem = NewOrderItemClient(c.config)
 	c.OrderPay = NewOrderPayClient(c.config)
+	c.OrderRefund = NewOrderRefundClient(c.config)
 	c.OrderSnapshots = NewOrderSnapshotsClient(c.config)
 	c.OrderStatusHistory = NewOrderStatusHistoryClient(c.config)
 }
@@ -159,6 +163,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
 		OrderPay:                NewOrderPayClient(cfg),
+		OrderRefund:             NewOrderRefundClient(cfg),
 		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
 		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
@@ -185,6 +190,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
 		OrderPay:                NewOrderPayClient(cfg),
+		OrderRefund:             NewOrderRefundClient(cfg),
 		OrderSnapshots:          NewOrderSnapshotsClient(cfg),
 		OrderStatusHistory:      NewOrderStatusHistoryClient(cfg),
 	}, nil
@@ -217,7 +223,7 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
 		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
-		c.OrderSnapshots, c.OrderStatusHistory,
+		c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Use(hooks...)
 	}
@@ -228,7 +234,7 @@ func (c *Client) Use(hooks ...Hook) {
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
 		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
-		c.OrderSnapshots, c.OrderStatusHistory,
+		c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -247,6 +253,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.OrderItem.mutate(ctx, m)
 	case *OrderPayMutation:
 		return c.OrderPay.mutate(ctx, m)
+	case *OrderRefundMutation:
+		return c.OrderRefund.mutate(ctx, m)
 	case *OrderSnapshotsMutation:
 		return c.OrderSnapshots.mutate(ctx, m)
 	case *OrderStatusHistoryMutation:
@@ -437,6 +445,22 @@ func (c *OrderClient) QueryStatusHistory(_m *Order) *OrderStatusHistoryQuery {
 			sqlgraph.From(order.Table, order.FieldID, id),
 			sqlgraph.To(orderstatushistory.Table, orderstatushistory.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.StatusHistoryTable, order.StatusHistoryColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryRefund queries the refund edge of a Order.
+func (c *OrderClient) QueryRefund(_m *Order) *OrderRefundQuery {
+	query := (&OrderRefundClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, id),
+			sqlgraph.To(orderrefund.Table, orderrefund.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.RefundTable, order.RefundColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
@@ -1049,6 +1073,155 @@ func (c *OrderPayClient) mutate(ctx context.Context, m *OrderPayMutation) (Value
 	}
 }
 
+// OrderRefundClient is a client for the OrderRefund schema.
+type OrderRefundClient struct {
+	config
+}
+
+// NewOrderRefundClient returns a client for the OrderRefund from the given config.
+func NewOrderRefundClient(c config) *OrderRefundClient {
+	return &OrderRefundClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `orderrefund.Hooks(f(g(h())))`.
+func (c *OrderRefundClient) Use(hooks ...Hook) {
+	c.hooks.OrderRefund = append(c.hooks.OrderRefund, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `orderrefund.Intercept(f(g(h())))`.
+func (c *OrderRefundClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrderRefund = append(c.inters.OrderRefund, interceptors...)
+}
+
+// Create returns a builder for creating a OrderRefund entity.
+func (c *OrderRefundClient) Create() *OrderRefundCreate {
+	mutation := newOrderRefundMutation(c.config, OpCreate)
+	return &OrderRefundCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of OrderRefund entities.
+func (c *OrderRefundClient) CreateBulk(builders ...*OrderRefundCreate) *OrderRefundCreateBulk {
+	return &OrderRefundCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *OrderRefundClient) MapCreateBulk(slice any, setFunc func(*OrderRefundCreate, int)) *OrderRefundCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &OrderRefundCreateBulk{err: fmt.Errorf("calling to OrderRefundClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*OrderRefundCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &OrderRefundCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for OrderRefund.
+func (c *OrderRefundClient) Update() *OrderRefundUpdate {
+	mutation := newOrderRefundMutation(c.config, OpUpdate)
+	return &OrderRefundUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *OrderRefundClient) UpdateOne(_m *OrderRefund) *OrderRefundUpdateOne {
+	mutation := newOrderRefundMutation(c.config, OpUpdateOne, withOrderRefund(_m))
+	return &OrderRefundUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *OrderRefundClient) UpdateOneID(id int64) *OrderRefundUpdateOne {
+	mutation := newOrderRefundMutation(c.config, OpUpdateOne, withOrderRefundID(id))
+	return &OrderRefundUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for OrderRefund.
+func (c *OrderRefundClient) Delete() *OrderRefundDelete {
+	mutation := newOrderRefundMutation(c.config, OpDelete)
+	return &OrderRefundDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *OrderRefundClient) DeleteOne(_m *OrderRefund) *OrderRefundDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *OrderRefundClient) DeleteOneID(id int64) *OrderRefundDeleteOne {
+	builder := c.Delete().Where(orderrefund.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &OrderRefundDeleteOne{builder}
+}
+
+// Query returns a query builder for OrderRefund.
+func (c *OrderRefundClient) Query() *OrderRefundQuery {
+	return &OrderRefundQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeOrderRefund},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a OrderRefund entity by its id.
+func (c *OrderRefundClient) Get(ctx context.Context, id int64) (*OrderRefund, error) {
+	return c.Query().Where(orderrefund.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *OrderRefundClient) GetX(ctx context.Context, id int64) *OrderRefund {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryOrder queries the order edge of a OrderRefund.
+func (c *OrderRefundClient) QueryOrder(_m *OrderRefund) *OrderQuery {
+	query := (&OrderClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orderrefund.Table, orderrefund.FieldID, id),
+			sqlgraph.To(order.Table, order.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orderrefund.OrderTable, orderrefund.OrderColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *OrderRefundClient) Hooks() []Hook {
+	return c.hooks.OrderRefund
+}
+
+// Interceptors returns the client interceptors.
+func (c *OrderRefundClient) Interceptors() []Interceptor {
+	return c.inters.OrderRefund
+}
+
+func (c *OrderRefundClient) mutate(ctx context.Context, m *OrderRefundMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&OrderRefundCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&OrderRefundUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&OrderRefundUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&OrderRefundDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown OrderRefund mutation op: %q", m.Op())
+	}
+}
+
 // OrderSnapshotsClient is a client for the OrderSnapshots schema.
 type OrderSnapshotsClient struct {
 	config
@@ -1350,11 +1523,11 @@ func (c *OrderStatusHistoryClient) mutate(ctx context.Context, m *OrderStatusHis
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay, OrderRefund,
 		OrderSnapshots, OrderStatusHistory []ent.Hook
 	}
 	inters struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay, OrderRefund,
 		OrderSnapshots, OrderStatusHistory []ent.Interceptor
 	}
 )

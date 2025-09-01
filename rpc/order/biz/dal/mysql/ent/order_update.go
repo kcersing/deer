@@ -8,6 +8,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
 	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
+	"deer/rpc/order/biz/dal/mysql/ent/orderrefund"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
@@ -227,26 +228,6 @@ func (_u *OrderUpdate) ClearCloseAt() *OrderUpdate {
 	return _u
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (_u *OrderUpdate) SetRefundAt(v time.Time) *OrderUpdate {
-	_u.mutation.SetRefundAt(v)
-	return _u
-}
-
-// SetNillableRefundAt sets the "refund_at" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableRefundAt(v *time.Time) *OrderUpdate {
-	if v != nil {
-		_u.SetRefundAt(*v)
-	}
-	return _u
-}
-
-// ClearRefundAt clears the value of the "refund_at" field.
-func (_u *OrderUpdate) ClearRefundAt() *OrderUpdate {
-	_u.mutation.ClearRefundAt()
-	return _u
-}
-
 // SetVersion sets the "version" field.
 func (_u *OrderUpdate) SetVersion(v int64) *OrderUpdate {
 	_u.mutation.ResetVersion()
@@ -355,33 +336,6 @@ func (_u *OrderUpdate) ClearRemission() *OrderUpdate {
 	return _u
 }
 
-// SetRefund sets the "refund" field.
-func (_u *OrderUpdate) SetRefund(v float64) *OrderUpdate {
-	_u.mutation.ResetRefund()
-	_u.mutation.SetRefund(v)
-	return _u
-}
-
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableRefund(v *float64) *OrderUpdate {
-	if v != nil {
-		_u.SetRefund(*v)
-	}
-	return _u
-}
-
-// AddRefund adds value to the "refund" field.
-func (_u *OrderUpdate) AddRefund(v float64) *OrderUpdate {
-	_u.mutation.AddRefund(v)
-	return _u
-}
-
-// ClearRefund clears the value of the "refund" field.
-func (_u *OrderUpdate) ClearRefund() *OrderUpdate {
-	_u.mutation.ClearRefund()
-	return _u
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (_u *OrderUpdate) SetCloseNature(v string) *OrderUpdate {
 	_u.mutation.SetCloseNature(v)
@@ -399,26 +353,6 @@ func (_u *OrderUpdate) SetNillableCloseNature(v *string) *OrderUpdate {
 // ClearCloseNature clears the value of the "close_nature" field.
 func (_u *OrderUpdate) ClearCloseNature() *OrderUpdate {
 	_u.mutation.ClearCloseNature()
-	return _u
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (_u *OrderUpdate) SetRefundNature(v string) *OrderUpdate {
-	_u.mutation.SetRefundNature(v)
-	return _u
-}
-
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableRefundNature(v *string) *OrderUpdate {
-	if v != nil {
-		_u.SetRefundNature(*v)
-	}
-	return _u
-}
-
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (_u *OrderUpdate) ClearRefundNature() *OrderUpdate {
-	_u.mutation.ClearRefundNature()
 	return _u
 }
 
@@ -495,6 +429,21 @@ func (_u *OrderUpdate) AddStatusHistory(v ...*OrderStatusHistory) *OrderUpdate {
 		ids[i] = v[i].ID
 	}
 	return _u.AddStatusHistoryIDs(ids...)
+}
+
+// AddRefundIDs adds the "refund" edge to the OrderRefund entity by IDs.
+func (_u *OrderUpdate) AddRefundIDs(ids ...int64) *OrderUpdate {
+	_u.mutation.AddRefundIDs(ids...)
+	return _u
+}
+
+// AddRefund adds the "refund" edges to the OrderRefund entity.
+func (_u *OrderUpdate) AddRefund(v ...*OrderRefund) *OrderUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddRefundIDs(ids...)
 }
 
 // Mutation returns the OrderMutation object of the builder.
@@ -605,6 +554,27 @@ func (_u *OrderUpdate) RemoveStatusHistory(v ...*OrderStatusHistory) *OrderUpdat
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveStatusHistoryIDs(ids...)
+}
+
+// ClearRefund clears all "refund" edges to the OrderRefund entity.
+func (_u *OrderUpdate) ClearRefund() *OrderUpdate {
+	_u.mutation.ClearRefund()
+	return _u
+}
+
+// RemoveRefundIDs removes the "refund" edge to OrderRefund entities by IDs.
+func (_u *OrderUpdate) RemoveRefundIDs(ids ...int64) *OrderUpdate {
+	_u.mutation.RemoveRefundIDs(ids...)
+	return _u
+}
+
+// RemoveRefund removes "refund" edges to OrderRefund entities.
+func (_u *OrderUpdate) RemoveRefund(v ...*OrderRefund) *OrderUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveRefundIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -731,12 +701,6 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.CloseAtCleared() {
 		_spec.ClearField(order.FieldCloseAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.RefundAt(); ok {
-		_spec.SetField(order.FieldRefundAt, field.TypeTime, value)
-	}
-	if _u.mutation.RefundAtCleared() {
-		_spec.ClearField(order.FieldRefundAt, field.TypeTime)
-	}
 	if value, ok := _u.mutation.Version(); ok {
 		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
 	}
@@ -773,26 +737,11 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.RemissionCleared() {
 		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
 	}
-	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
-	}
-	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(order.FieldRefund, field.TypeFloat64, value)
-	}
-	if _u.mutation.RefundCleared() {
-		_spec.ClearField(order.FieldRefund, field.TypeFloat64)
-	}
 	if value, ok := _u.mutation.CloseNature(); ok {
 		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
 	}
 	if _u.mutation.CloseNatureCleared() {
 		_spec.ClearField(order.FieldCloseNature, field.TypeString)
-	}
-	if value, ok := _u.mutation.RefundNature(); ok {
-		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
-	}
-	if _u.mutation.RefundNatureCleared() {
-		_spec.ClearField(order.FieldRefundNature, field.TypeString)
 	}
 	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1012,6 +961,51 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.RefundCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedRefundIDs(); len(nodes) > 0 && !_u.mutation.RefundCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RefundIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -1233,26 +1227,6 @@ func (_u *OrderUpdateOne) ClearCloseAt() *OrderUpdateOne {
 	return _u
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (_u *OrderUpdateOne) SetRefundAt(v time.Time) *OrderUpdateOne {
-	_u.mutation.SetRefundAt(v)
-	return _u
-}
-
-// SetNillableRefundAt sets the "refund_at" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableRefundAt(v *time.Time) *OrderUpdateOne {
-	if v != nil {
-		_u.SetRefundAt(*v)
-	}
-	return _u
-}
-
-// ClearRefundAt clears the value of the "refund_at" field.
-func (_u *OrderUpdateOne) ClearRefundAt() *OrderUpdateOne {
-	_u.mutation.ClearRefundAt()
-	return _u
-}
-
 // SetVersion sets the "version" field.
 func (_u *OrderUpdateOne) SetVersion(v int64) *OrderUpdateOne {
 	_u.mutation.ResetVersion()
@@ -1361,33 +1335,6 @@ func (_u *OrderUpdateOne) ClearRemission() *OrderUpdateOne {
 	return _u
 }
 
-// SetRefund sets the "refund" field.
-func (_u *OrderUpdateOne) SetRefund(v float64) *OrderUpdateOne {
-	_u.mutation.ResetRefund()
-	_u.mutation.SetRefund(v)
-	return _u
-}
-
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableRefund(v *float64) *OrderUpdateOne {
-	if v != nil {
-		_u.SetRefund(*v)
-	}
-	return _u
-}
-
-// AddRefund adds value to the "refund" field.
-func (_u *OrderUpdateOne) AddRefund(v float64) *OrderUpdateOne {
-	_u.mutation.AddRefund(v)
-	return _u
-}
-
-// ClearRefund clears the value of the "refund" field.
-func (_u *OrderUpdateOne) ClearRefund() *OrderUpdateOne {
-	_u.mutation.ClearRefund()
-	return _u
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (_u *OrderUpdateOne) SetCloseNature(v string) *OrderUpdateOne {
 	_u.mutation.SetCloseNature(v)
@@ -1405,26 +1352,6 @@ func (_u *OrderUpdateOne) SetNillableCloseNature(v *string) *OrderUpdateOne {
 // ClearCloseNature clears the value of the "close_nature" field.
 func (_u *OrderUpdateOne) ClearCloseNature() *OrderUpdateOne {
 	_u.mutation.ClearCloseNature()
-	return _u
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (_u *OrderUpdateOne) SetRefundNature(v string) *OrderUpdateOne {
-	_u.mutation.SetRefundNature(v)
-	return _u
-}
-
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableRefundNature(v *string) *OrderUpdateOne {
-	if v != nil {
-		_u.SetRefundNature(*v)
-	}
-	return _u
-}
-
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (_u *OrderUpdateOne) ClearRefundNature() *OrderUpdateOne {
-	_u.mutation.ClearRefundNature()
 	return _u
 }
 
@@ -1501,6 +1428,21 @@ func (_u *OrderUpdateOne) AddStatusHistory(v ...*OrderStatusHistory) *OrderUpdat
 		ids[i] = v[i].ID
 	}
 	return _u.AddStatusHistoryIDs(ids...)
+}
+
+// AddRefundIDs adds the "refund" edge to the OrderRefund entity by IDs.
+func (_u *OrderUpdateOne) AddRefundIDs(ids ...int64) *OrderUpdateOne {
+	_u.mutation.AddRefundIDs(ids...)
+	return _u
+}
+
+// AddRefund adds the "refund" edges to the OrderRefund entity.
+func (_u *OrderUpdateOne) AddRefund(v ...*OrderRefund) *OrderUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddRefundIDs(ids...)
 }
 
 // Mutation returns the OrderMutation object of the builder.
@@ -1611,6 +1553,27 @@ func (_u *OrderUpdateOne) RemoveStatusHistory(v ...*OrderStatusHistory) *OrderUp
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveStatusHistoryIDs(ids...)
+}
+
+// ClearRefund clears all "refund" edges to the OrderRefund entity.
+func (_u *OrderUpdateOne) ClearRefund() *OrderUpdateOne {
+	_u.mutation.ClearRefund()
+	return _u
+}
+
+// RemoveRefundIDs removes the "refund" edge to OrderRefund entities by IDs.
+func (_u *OrderUpdateOne) RemoveRefundIDs(ids ...int64) *OrderUpdateOne {
+	_u.mutation.RemoveRefundIDs(ids...)
+	return _u
+}
+
+// RemoveRefund removes "refund" edges to OrderRefund entities.
+func (_u *OrderUpdateOne) RemoveRefund(v ...*OrderRefund) *OrderUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveRefundIDs(ids...)
 }
 
 // Where appends a list predicates to the OrderUpdate builder.
@@ -1767,12 +1730,6 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 	if _u.mutation.CloseAtCleared() {
 		_spec.ClearField(order.FieldCloseAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.RefundAt(); ok {
-		_spec.SetField(order.FieldRefundAt, field.TypeTime, value)
-	}
-	if _u.mutation.RefundAtCleared() {
-		_spec.ClearField(order.FieldRefundAt, field.TypeTime)
-	}
 	if value, ok := _u.mutation.Version(); ok {
 		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
 	}
@@ -1809,26 +1766,11 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 	if _u.mutation.RemissionCleared() {
 		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
 	}
-	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
-	}
-	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(order.FieldRefund, field.TypeFloat64, value)
-	}
-	if _u.mutation.RefundCleared() {
-		_spec.ClearField(order.FieldRefund, field.TypeFloat64)
-	}
 	if value, ok := _u.mutation.CloseNature(); ok {
 		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
 	}
 	if _u.mutation.CloseNatureCleared() {
 		_spec.ClearField(order.FieldCloseNature, field.TypeString)
-	}
-	if value, ok := _u.mutation.RefundNature(); ok {
-		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
-	}
-	if _u.mutation.RefundNatureCleared() {
-		_spec.ClearField(order.FieldRefundNature, field.TypeString)
 	}
 	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -2048,6 +1990,51 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.RefundCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedRefundIDs(); len(nodes) > 0 && !_u.mutation.RefundCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RefundIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

@@ -22,14 +22,11 @@ var (
 		{Name: "nature", Type: field.TypeInt64, Nullable: true, Comment: "业务类型"},
 		{Name: "completion_at", Type: field.TypeTime, Nullable: true, Comment: "订单完成时间"},
 		{Name: "close_at", Type: field.TypeTime, Nullable: true, Comment: "订单关闭时间"},
-		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
 		{Name: "version", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号", Default: 1},
 		{Name: "total_amount", Type: field.TypeFloat64, Nullable: true, Comment: "总金额", Default: 0},
 		{Name: "actual", Type: field.TypeFloat64, Nullable: true, Comment: "实际已付款", Default: 0},
 		{Name: "remission", Type: field.TypeFloat64, Nullable: true, Comment: "减免", Default: 0},
-		{Name: "refund", Type: field.TypeFloat64, Nullable: true, Comment: "退费金额", Default: 0},
 		{Name: "close_nature", Type: field.TypeString, Nullable: true, Comment: "关闭原因"},
-		{Name: "refund_nature", Type: field.TypeString, Nullable: true, Comment: "退费原因"},
 	}
 	// OrderTable holds the schema information for the "order" table.
 	OrderTable = &schema.Table{
@@ -225,6 +222,44 @@ var (
 			},
 		},
 	}
+	// OrderRefundColumns holds the columns for the "order_refund" table.
+	OrderRefundColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
+		{Name: "refund", Type: field.TypeFloat64, Nullable: true, Comment: "退费金额", Default: 0},
+		{Name: "refund_nature", Type: field.TypeString, Nullable: true, Comment: "退费原因"},
+		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
+	}
+	// OrderRefundTable holds the schema information for the "order_refund" table.
+	OrderRefundTable = &schema.Table{
+		Name:       "order_refund",
+		Columns:    OrderRefundColumns,
+		PrimaryKey: []*schema.Column{OrderRefundColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "order_refund_order_refund",
+				Columns:    []*schema.Column{OrderRefundColumns[8]},
+				RefColumns: []*schema.Column{OrderColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orderrefund_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderRefundColumns[0]},
+			},
+			{
+				Name:    "orderrefund_order_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrderRefundColumns[8]},
+			},
+		},
+	}
 	// OrderSnapshotsColumns holds the columns for the "order_snapshots" table.
 	OrderSnapshotsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -304,6 +339,7 @@ var (
 		OrderEventsTable,
 		OrderItemTable,
 		OrderPayTable,
+		OrderRefundTable,
 		OrderSnapshotsTable,
 		OrderStatusHistoryTable,
 	}
@@ -331,6 +367,11 @@ func init() {
 	OrderPayTable.ForeignKeys[0].RefTable = OrderTable
 	OrderPayTable.Annotation = &entsql.Annotation{
 		Table:     "order_pay",
+		Collation: "utf8mb4_unicode_ci",
+	}
+	OrderRefundTable.ForeignKeys[0].RefTable = OrderTable
+	OrderRefundTable.Annotation = &entsql.Annotation{
+		Table:     "order_refund",
 		Collation: "utf8mb4_unicode_ci",
 	}
 	OrderSnapshotsTable.ForeignKeys[0].RefTable = OrderTable

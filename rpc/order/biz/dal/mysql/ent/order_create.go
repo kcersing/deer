@@ -8,6 +8,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
 	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
+	"deer/rpc/order/biz/dal/mysql/ent/orderrefund"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"errors"
@@ -159,20 +160,6 @@ func (_c *OrderCreate) SetNillableCloseAt(v *time.Time) *OrderCreate {
 	return _c
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (_c *OrderCreate) SetRefundAt(v time.Time) *OrderCreate {
-	_c.mutation.SetRefundAt(v)
-	return _c
-}
-
-// SetNillableRefundAt sets the "refund_at" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableRefundAt(v *time.Time) *OrderCreate {
-	if v != nil {
-		_c.SetRefundAt(*v)
-	}
-	return _c
-}
-
 // SetVersion sets the "version" field.
 func (_c *OrderCreate) SetVersion(v int64) *OrderCreate {
 	_c.mutation.SetVersion(v)
@@ -229,20 +216,6 @@ func (_c *OrderCreate) SetNillableRemission(v *float64) *OrderCreate {
 	return _c
 }
 
-// SetRefund sets the "refund" field.
-func (_c *OrderCreate) SetRefund(v float64) *OrderCreate {
-	_c.mutation.SetRefund(v)
-	return _c
-}
-
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableRefund(v *float64) *OrderCreate {
-	if v != nil {
-		_c.SetRefund(*v)
-	}
-	return _c
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (_c *OrderCreate) SetCloseNature(v string) *OrderCreate {
 	_c.mutation.SetCloseNature(v)
@@ -253,20 +226,6 @@ func (_c *OrderCreate) SetCloseNature(v string) *OrderCreate {
 func (_c *OrderCreate) SetNillableCloseNature(v *string) *OrderCreate {
 	if v != nil {
 		_c.SetCloseNature(*v)
-	}
-	return _c
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (_c *OrderCreate) SetRefundNature(v string) *OrderCreate {
-	_c.mutation.SetRefundNature(v)
-	return _c
-}
-
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableRefundNature(v *string) *OrderCreate {
-	if v != nil {
-		_c.SetRefundNature(*v)
 	}
 	return _c
 }
@@ -352,6 +311,21 @@ func (_c *OrderCreate) AddStatusHistory(v ...*OrderStatusHistory) *OrderCreate {
 	return _c.AddStatusHistoryIDs(ids...)
 }
 
+// AddRefundIDs adds the "refund" edge to the OrderRefund entity by IDs.
+func (_c *OrderCreate) AddRefundIDs(ids ...int64) *OrderCreate {
+	_c.mutation.AddRefundIDs(ids...)
+	return _c
+}
+
+// AddRefund adds the "refund" edges to the OrderRefund entity.
+func (_c *OrderCreate) AddRefund(v ...*OrderRefund) *OrderCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddRefundIDs(ids...)
+}
+
 // Mutation returns the OrderMutation object of the builder.
 func (_c *OrderCreate) Mutation() *OrderMutation {
 	return _c.mutation
@@ -422,10 +396,6 @@ func (_c *OrderCreate) defaults() {
 	if _, ok := _c.mutation.Remission(); !ok {
 		v := order.DefaultRemission
 		_c.mutation.SetRemission(v)
-	}
-	if _, ok := _c.mutation.Refund(); !ok {
-		v := order.DefaultRefund
-		_c.mutation.SetRefund(v)
 	}
 }
 
@@ -512,10 +482,6 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_spec.SetField(order.FieldCloseAt, field.TypeTime, value)
 		_node.CloseAt = value
 	}
-	if value, ok := _c.mutation.RefundAt(); ok {
-		_spec.SetField(order.FieldRefundAt, field.TypeTime, value)
-		_node.RefundAt = value
-	}
 	if value, ok := _c.mutation.Version(); ok {
 		_spec.SetField(order.FieldVersion, field.TypeInt64, value)
 		_node.Version = value
@@ -532,17 +498,9 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
 		_node.Remission = value
 	}
-	if value, ok := _c.mutation.Refund(); ok {
-		_spec.SetField(order.FieldRefund, field.TypeFloat64, value)
-		_node.Refund = value
-	}
 	if value, ok := _c.mutation.CloseNature(); ok {
 		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
 		_node.CloseNature = value
-	}
-	if value, ok := _c.mutation.RefundNature(); ok {
-		_spec.SetField(order.FieldRefundNature, field.TypeString, value)
-		_node.RefundNature = value
 	}
 	if nodes := _c.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -617,6 +575,22 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orderstatushistory.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.RefundIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   order.RefundTable,
+			Columns: []string{order.RefundColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orderrefund.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -856,24 +830,6 @@ func (u *OrderUpsert) ClearCloseAt() *OrderUpsert {
 	return u
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (u *OrderUpsert) SetRefundAt(v time.Time) *OrderUpsert {
-	u.Set(order.FieldRefundAt, v)
-	return u
-}
-
-// UpdateRefundAt sets the "refund_at" field to the value that was provided on create.
-func (u *OrderUpsert) UpdateRefundAt() *OrderUpsert {
-	u.SetExcluded(order.FieldRefundAt)
-	return u
-}
-
-// ClearRefundAt clears the value of the "refund_at" field.
-func (u *OrderUpsert) ClearRefundAt() *OrderUpsert {
-	u.SetNull(order.FieldRefundAt)
-	return u
-}
-
 // SetVersion sets the "version" field.
 func (u *OrderUpsert) SetVersion(v int64) *OrderUpsert {
 	u.Set(order.FieldVersion, v)
@@ -970,30 +926,6 @@ func (u *OrderUpsert) ClearRemission() *OrderUpsert {
 	return u
 }
 
-// SetRefund sets the "refund" field.
-func (u *OrderUpsert) SetRefund(v float64) *OrderUpsert {
-	u.Set(order.FieldRefund, v)
-	return u
-}
-
-// UpdateRefund sets the "refund" field to the value that was provided on create.
-func (u *OrderUpsert) UpdateRefund() *OrderUpsert {
-	u.SetExcluded(order.FieldRefund)
-	return u
-}
-
-// AddRefund adds v to the "refund" field.
-func (u *OrderUpsert) AddRefund(v float64) *OrderUpsert {
-	u.Add(order.FieldRefund, v)
-	return u
-}
-
-// ClearRefund clears the value of the "refund" field.
-func (u *OrderUpsert) ClearRefund() *OrderUpsert {
-	u.SetNull(order.FieldRefund)
-	return u
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (u *OrderUpsert) SetCloseNature(v string) *OrderUpsert {
 	u.Set(order.FieldCloseNature, v)
@@ -1009,24 +941,6 @@ func (u *OrderUpsert) UpdateCloseNature() *OrderUpsert {
 // ClearCloseNature clears the value of the "close_nature" field.
 func (u *OrderUpsert) ClearCloseNature() *OrderUpsert {
 	u.SetNull(order.FieldCloseNature)
-	return u
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (u *OrderUpsert) SetRefundNature(v string) *OrderUpsert {
-	u.Set(order.FieldRefundNature, v)
-	return u
-}
-
-// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
-func (u *OrderUpsert) UpdateRefundNature() *OrderUpsert {
-	u.SetExcluded(order.FieldRefundNature)
-	return u
-}
-
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (u *OrderUpsert) ClearRefundNature() *OrderUpsert {
-	u.SetNull(order.FieldRefundNature)
 	return u
 }
 
@@ -1291,27 +1205,6 @@ func (u *OrderUpsertOne) ClearCloseAt() *OrderUpsertOne {
 	})
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (u *OrderUpsertOne) SetRefundAt(v time.Time) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefundAt(v)
-	})
-}
-
-// UpdateRefundAt sets the "refund_at" field to the value that was provided on create.
-func (u *OrderUpsertOne) UpdateRefundAt() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefundAt()
-	})
-}
-
-// ClearRefundAt clears the value of the "refund_at" field.
-func (u *OrderUpsertOne) ClearRefundAt() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefundAt()
-	})
-}
-
 // SetVersion sets the "version" field.
 func (u *OrderUpsertOne) SetVersion(v int64) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
@@ -1424,34 +1317,6 @@ func (u *OrderUpsertOne) ClearRemission() *OrderUpsertOne {
 	})
 }
 
-// SetRefund sets the "refund" field.
-func (u *OrderUpsertOne) SetRefund(v float64) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefund(v)
-	})
-}
-
-// AddRefund adds v to the "refund" field.
-func (u *OrderUpsertOne) AddRefund(v float64) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.AddRefund(v)
-	})
-}
-
-// UpdateRefund sets the "refund" field to the value that was provided on create.
-func (u *OrderUpsertOne) UpdateRefund() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefund()
-	})
-}
-
-// ClearRefund clears the value of the "refund" field.
-func (u *OrderUpsertOne) ClearRefund() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefund()
-	})
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (u *OrderUpsertOne) SetCloseNature(v string) *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
@@ -1470,27 +1335,6 @@ func (u *OrderUpsertOne) UpdateCloseNature() *OrderUpsertOne {
 func (u *OrderUpsertOne) ClearCloseNature() *OrderUpsertOne {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearCloseNature()
-	})
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (u *OrderUpsertOne) SetRefundNature(v string) *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefundNature(v)
-	})
-}
-
-// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
-func (u *OrderUpsertOne) UpdateRefundNature() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefundNature()
-	})
-}
-
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (u *OrderUpsertOne) ClearRefundNature() *OrderUpsertOne {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefundNature()
 	})
 }
 
@@ -1921,27 +1765,6 @@ func (u *OrderUpsertBulk) ClearCloseAt() *OrderUpsertBulk {
 	})
 }
 
-// SetRefundAt sets the "refund_at" field.
-func (u *OrderUpsertBulk) SetRefundAt(v time.Time) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefundAt(v)
-	})
-}
-
-// UpdateRefundAt sets the "refund_at" field to the value that was provided on create.
-func (u *OrderUpsertBulk) UpdateRefundAt() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefundAt()
-	})
-}
-
-// ClearRefundAt clears the value of the "refund_at" field.
-func (u *OrderUpsertBulk) ClearRefundAt() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefundAt()
-	})
-}
-
 // SetVersion sets the "version" field.
 func (u *OrderUpsertBulk) SetVersion(v int64) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
@@ -2054,34 +1877,6 @@ func (u *OrderUpsertBulk) ClearRemission() *OrderUpsertBulk {
 	})
 }
 
-// SetRefund sets the "refund" field.
-func (u *OrderUpsertBulk) SetRefund(v float64) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefund(v)
-	})
-}
-
-// AddRefund adds v to the "refund" field.
-func (u *OrderUpsertBulk) AddRefund(v float64) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.AddRefund(v)
-	})
-}
-
-// UpdateRefund sets the "refund" field to the value that was provided on create.
-func (u *OrderUpsertBulk) UpdateRefund() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefund()
-	})
-}
-
-// ClearRefund clears the value of the "refund" field.
-func (u *OrderUpsertBulk) ClearRefund() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefund()
-	})
-}
-
 // SetCloseNature sets the "close_nature" field.
 func (u *OrderUpsertBulk) SetCloseNature(v string) *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
@@ -2100,27 +1895,6 @@ func (u *OrderUpsertBulk) UpdateCloseNature() *OrderUpsertBulk {
 func (u *OrderUpsertBulk) ClearCloseNature() *OrderUpsertBulk {
 	return u.Update(func(s *OrderUpsert) {
 		s.ClearCloseNature()
-	})
-}
-
-// SetRefundNature sets the "refund_nature" field.
-func (u *OrderUpsertBulk) SetRefundNature(v string) *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.SetRefundNature(v)
-	})
-}
-
-// UpdateRefundNature sets the "refund_nature" field to the value that was provided on create.
-func (u *OrderUpsertBulk) UpdateRefundNature() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.UpdateRefundNature()
-	})
-}
-
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (u *OrderUpsertBulk) ClearRefundNature() *OrderUpsertBulk {
-	return u.Update(func(s *OrderUpsert) {
-		s.ClearRefundNature()
 	})
 }
 

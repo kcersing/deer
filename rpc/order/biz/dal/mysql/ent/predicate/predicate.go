@@ -21,6 +21,9 @@ type OrderItem func(*sql.Selector)
 // OrderPay is the predicate function for orderpay builders.
 type OrderPay func(*sql.Selector)
 
+// OrderRefund is the predicate function for orderrefund builders.
+type OrderRefund func(*sql.Selector)
+
 // OrderSnapshots is the predicate function for ordersnapshots builders.
 type OrderSnapshots func(*sql.Selector)
 

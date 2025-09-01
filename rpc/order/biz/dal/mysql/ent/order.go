@@ -38,8 +38,6 @@ type Order struct {
 	CompletionAt time.Time `json:"completion_at,omitempty"`
 	// 订单关闭时间
 	CloseAt time.Time `json:"close_at,omitempty"`
-	// 订单退费时间
-	RefundAt time.Time `json:"refund_at,omitempty"`
 	// 乐观锁版本号
 	Version int64 `json:"version,omitempty"`
 	// 总金额
@@ -48,12 +46,8 @@ type Order struct {
 	Actual float64 `json:"actual,omitempty"`
 	// 减免
 	Remission float64 `json:"remission,omitempty"`
-	// 退费金额
-	Refund float64 `json:"refund,omitempty"`
 	// 关闭原因
 	CloseNature string `json:"close_nature,omitempty"`
-	// 退费原因
-	RefundNature string `json:"refund_nature,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderQuery when eager-loading is set.
 	Edges        OrderEdges `json:"edges"`
@@ -72,9 +66,11 @@ type OrderEdges struct {
 	Snapshots []*OrderSnapshots `json:"snapshots,omitempty"`
 	// StatusHistory holds the value of the status_history edge.
 	StatusHistory []*OrderStatusHistory `json:"status_history,omitempty"`
+	// Refund holds the value of the refund edge.
+	Refund []*OrderRefund `json:"refund,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [5]bool
+	loadedTypes [6]bool
 }
 
 // ItemsOrErr returns the Items value or an error if the edge
@@ -122,18 +118,27 @@ func (e OrderEdges) StatusHistoryOrErr() ([]*OrderStatusHistory, error) {
 	return nil, &NotLoadedError{edge: "status_history"}
 }
 
+// RefundOrErr returns the Refund value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrderEdges) RefundOrErr() ([]*OrderRefund, error) {
+	if e.loadedTypes[5] {
+		return e.Refund, nil
+	}
+	return nil, &NotLoadedError{edge: "refund"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldTotalAmount, order.FieldActual, order.FieldRemission, order.FieldRefund:
+		case order.FieldTotalAmount, order.FieldActual, order.FieldRemission:
 			values[i] = new(sql.NullFloat64)
 		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion:
 			values[i] = new(sql.NullInt64)
-		case order.FieldSn, order.FieldStatus, order.FieldCloseNature, order.FieldRefundNature:
+		case order.FieldSn, order.FieldStatus, order.FieldCloseNature:
 			values[i] = new(sql.NullString)
-		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt, order.FieldRefundAt:
+		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -216,12 +221,6 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.CloseAt = value.Time
 			}
-		case order.FieldRefundAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field refund_at", values[i])
-			} else if value.Valid {
-				_m.RefundAt = value.Time
-			}
 		case order.FieldVersion:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field version", values[i])
@@ -246,23 +245,11 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Remission = value.Float64
 			}
-		case order.FieldRefund:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
-				return fmt.Errorf("unexpected type %T for field refund", values[i])
-			} else if value.Valid {
-				_m.Refund = value.Float64
-			}
 		case order.FieldCloseNature:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field close_nature", values[i])
 			} else if value.Valid {
 				_m.CloseNature = value.String
-			}
-		case order.FieldRefundNature:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field refund_nature", values[i])
-			} else if value.Valid {
-				_m.RefundNature = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -300,6 +287,11 @@ func (_m *Order) QuerySnapshots() *OrderSnapshotsQuery {
 // QueryStatusHistory queries the "status_history" edge of the Order entity.
 func (_m *Order) QueryStatusHistory() *OrderStatusHistoryQuery {
 	return NewOrderClient(_m.config).QueryStatusHistory(_m)
+}
+
+// QueryRefund queries the "refund" edge of the Order entity.
+func (_m *Order) QueryRefund() *OrderRefundQuery {
+	return NewOrderClient(_m.config).QueryRefund(_m)
 }
 
 // Update returns a builder for updating this Order.
@@ -355,9 +347,6 @@ func (_m *Order) String() string {
 	builder.WriteString("close_at=")
 	builder.WriteString(_m.CloseAt.Format(time.ANSIC))
 	builder.WriteString(", ")
-	builder.WriteString("refund_at=")
-	builder.WriteString(_m.RefundAt.Format(time.ANSIC))
-	builder.WriteString(", ")
 	builder.WriteString("version=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Version))
 	builder.WriteString(", ")
@@ -370,14 +359,8 @@ func (_m *Order) String() string {
 	builder.WriteString("remission=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Remission))
 	builder.WriteString(", ")
-	builder.WriteString("refund=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Refund))
-	builder.WriteString(", ")
 	builder.WriteString("close_nature=")
 	builder.WriteString(_m.CloseNature)
-	builder.WriteString(", ")
-	builder.WriteString("refund_nature=")
-	builder.WriteString(_m.RefundNature)
 	builder.WriteByte(')')
 	return builder.String()
 }

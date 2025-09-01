@@ -111,43 +111,47 @@ var fieldIDToName_Item = map[int16]string{
 }
 
 type Order struct {
-	MemberId     int64   `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	CreatedId    int64   `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
-	Items        []*Item `thrift:"items,3,optional" frugal:"3,optional,list<Item>" json:"items,omitempty"`
-	Sn           string  `thrift:"sn,4,optional" frugal:"4,optional,string" json:"sn,omitempty"`
-	TotalAmount  float64 `thrift:"totalAmount,5,optional" frugal:"5,optional,double" json:"totalAmount,omitempty"`
-	Status       string  `thrift:"status,6,optional" frugal:"6,optional,string" json:"status,omitempty"`
-	Nature       string  `thrift:"nature,7,optional" frugal:"7,optional,string" json:"nature,omitempty"`
-	CreatedAt    string  `thrift:"createdAt,8,optional" frugal:"8,optional,string" json:"createdAt,omitempty"`
-	CompletionAt string  `thrift:"completionAt,9,optional" frugal:"9,optional,string" json:"completionAt,omitempty"`
-	CloseAt      string  `thrift:"closeAt,10,optional" frugal:"10,optional,string" json:"closeAt,omitempty"`
-	RefundAt     string  `thrift:"refundAt,11,optional" frugal:"11,optional,string" json:"refundAt,omitempty"`
-	UpdatedAt    string  `thrift:"updatedAt,13,optional" frugal:"13,optional,string" json:"updatedAt,omitempty"`
-	Id           int64   `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
+	MemberId        int64        `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	CreatedId       int64        `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
+	Items           []*Item      `thrift:"items,3,optional" frugal:"3,optional,list<Item>" json:"items,omitempty"`
+	Sn              string       `thrift:"sn,4,optional" frugal:"4,optional,string" json:"sn,omitempty"`
+	TotalAmount     float64      `thrift:"totalAmount,5,optional" frugal:"5,optional,double" json:"totalAmount,omitempty"`
+	Status          string       `thrift:"status,6,optional" frugal:"6,optional,string" json:"status,omitempty"`
+	Nature          string       `thrift:"nature,7,optional" frugal:"7,optional,string" json:"nature,omitempty"`
+	CreatedAt       string       `thrift:"createdAt,8,optional" frugal:"8,optional,string" json:"createdAt,omitempty"`
+	CompletionAt    string       `thrift:"completionAt,9,optional" frugal:"9,optional,string" json:"completionAt,omitempty"`
+	CloseAt         string       `thrift:"closeAt,10,optional" frugal:"10,optional,string" json:"closeAt,omitempty"`
+	UpdatedAt       string       `thrift:"updatedAt,11,optional" frugal:"11,optional,string" json:"updatedAt,omitempty"`
+	CancelledReason string       `thrift:"cancelledReason,12,optional" frugal:"12,optional,string" json:"cancelledReason,omitempty"`
+	OrderPays       []*OrderPay  `thrift:"orderPays,13,optional" frugal:"13,optional,list<OrderPay>" json:"orderPays,omitempty"`
+	OrderRefund     *OrderRefund `thrift:"orderRefund,14,optional" frugal:"14,optional,OrderRefund" json:"orderRefund,omitempty"`
+	Id              int64        `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
 }
 
 func NewOrder() *Order {
 	return &Order{
 
-		MemberId:     0,
-		CreatedId:    1,
-		Items:        []*Item{},
-		Sn:           "",
-		TotalAmount:  0.0,
-		Status:       "",
-		Nature:       "",
-		CreatedAt:    "",
-		CompletionAt: "",
-		CloseAt:      "",
-		RefundAt:     "",
-		UpdatedAt:    "",
-		Id:           0,
+		MemberId:        0,
+		CreatedId:       0,
+		Items:           []*Item{},
+		Sn:              "",
+		TotalAmount:     0.0,
+		Status:          "",
+		Nature:          "",
+		CreatedAt:       "",
+		CompletionAt:    "",
+		CloseAt:         "",
+		UpdatedAt:       "",
+		CancelledReason: "",
+		OrderPays:       []*OrderPay{},
+		OrderRefund:     &OrderRefund{},
+		Id:              0,
 	}
 }
 
 func (p *Order) InitDefault() {
 	p.MemberId = 0
-	p.CreatedId = 1
+	p.CreatedId = 0
 	p.Items = []*Item{}
 	p.Sn = ""
 	p.TotalAmount = 0.0
@@ -156,8 +160,10 @@ func (p *Order) InitDefault() {
 	p.CreatedAt = ""
 	p.CompletionAt = ""
 	p.CloseAt = ""
-	p.RefundAt = ""
 	p.UpdatedAt = ""
+	p.CancelledReason = ""
+	p.OrderPays = []*OrderPay{}
+	p.OrderRefund = &OrderRefund{}
 	p.Id = 0
 }
 
@@ -170,7 +176,7 @@ func (p *Order) GetMemberId() (v int64) {
 	return p.MemberId
 }
 
-var Order_CreatedId_DEFAULT int64 = 1
+var Order_CreatedId_DEFAULT int64 = 0
 
 func (p *Order) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
@@ -251,15 +257,6 @@ func (p *Order) GetCloseAt() (v string) {
 	return p.CloseAt
 }
 
-var Order_RefundAt_DEFAULT string = ""
-
-func (p *Order) GetRefundAt() (v string) {
-	if !p.IsSetRefundAt() {
-		return Order_RefundAt_DEFAULT
-	}
-	return p.RefundAt
-}
-
 var Order_UpdatedAt_DEFAULT string = ""
 
 func (p *Order) GetUpdatedAt() (v string) {
@@ -267,6 +264,33 @@ func (p *Order) GetUpdatedAt() (v string) {
 		return Order_UpdatedAt_DEFAULT
 	}
 	return p.UpdatedAt
+}
+
+var Order_CancelledReason_DEFAULT string = ""
+
+func (p *Order) GetCancelledReason() (v string) {
+	if !p.IsSetCancelledReason() {
+		return Order_CancelledReason_DEFAULT
+	}
+	return p.CancelledReason
+}
+
+var Order_OrderPays_DEFAULT []*OrderPay = []*OrderPay{}
+
+func (p *Order) GetOrderPays() (v []*OrderPay) {
+	if !p.IsSetOrderPays() {
+		return Order_OrderPays_DEFAULT
+	}
+	return p.OrderPays
+}
+
+var Order_OrderRefund_DEFAULT *OrderRefund = &OrderRefund{}
+
+func (p *Order) GetOrderRefund() (v *OrderRefund) {
+	if !p.IsSetOrderRefund() {
+		return Order_OrderRefund_DEFAULT
+	}
+	return p.OrderRefund
 }
 
 var Order_Id_DEFAULT int64 = 0
@@ -307,11 +331,17 @@ func (p *Order) SetCompletionAt(val string) {
 func (p *Order) SetCloseAt(val string) {
 	p.CloseAt = val
 }
-func (p *Order) SetRefundAt(val string) {
-	p.RefundAt = val
-}
 func (p *Order) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
+}
+func (p *Order) SetCancelledReason(val string) {
+	p.CancelledReason = val
+}
+func (p *Order) SetOrderPays(val []*OrderPay) {
+	p.OrderPays = val
+}
+func (p *Order) SetOrderRefund(val *OrderRefund) {
+	p.OrderRefund = val
 }
 func (p *Order) SetId(val int64) {
 	p.Id = val
@@ -357,12 +387,20 @@ func (p *Order) IsSetCloseAt() bool {
 	return p.CloseAt != Order_CloseAt_DEFAULT
 }
 
-func (p *Order) IsSetRefundAt() bool {
-	return p.RefundAt != Order_RefundAt_DEFAULT
-}
-
 func (p *Order) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != Order_UpdatedAt_DEFAULT
+}
+
+func (p *Order) IsSetCancelledReason() bool {
+	return p.CancelledReason != Order_CancelledReason_DEFAULT
+}
+
+func (p *Order) IsSetOrderPays() bool {
+	return p.OrderPays != nil
+}
+
+func (p *Order) IsSetOrderRefund() bool {
+	return p.OrderRefund != nil
 }
 
 func (p *Order) IsSetId() bool {
@@ -387,9 +425,315 @@ var fieldIDToName_Order = map[int16]string{
 	8:   "createdAt",
 	9:   "completionAt",
 	10:  "closeAt",
-	11:  "refundAt",
-	13:  "updatedAt",
+	11:  "updatedAt",
+	12:  "cancelledReason",
+	13:  "orderPays",
+	14:  "orderRefund",
 	254: "id",
+}
+
+type OrderRefund struct {
+	RefundAt     string  `thrift:"refundAt,1,optional" frugal:"1,optional,string" json:"refundAt,omitempty"`
+	RefundReason string  `thrift:"refundReason,2,optional" frugal:"2,optional,string" json:"refundReason,omitempty"`
+	CreatedId    int64   `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
+	RefundAmount float64 `thrift:"refundAmount,4,optional" frugal:"4,optional,double" json:"refundAmount,omitempty"`
+}
+
+func NewOrderRefund() *OrderRefund {
+	return &OrderRefund{
+
+		RefundAt:     "",
+		RefundReason: "",
+		CreatedId:    0,
+		RefundAmount: 0.0,
+	}
+}
+
+func (p *OrderRefund) InitDefault() {
+	p.RefundAt = ""
+	p.RefundReason = ""
+	p.CreatedId = 0
+	p.RefundAmount = 0.0
+}
+
+var OrderRefund_RefundAt_DEFAULT string = ""
+
+func (p *OrderRefund) GetRefundAt() (v string) {
+	if !p.IsSetRefundAt() {
+		return OrderRefund_RefundAt_DEFAULT
+	}
+	return p.RefundAt
+}
+
+var OrderRefund_RefundReason_DEFAULT string = ""
+
+func (p *OrderRefund) GetRefundReason() (v string) {
+	if !p.IsSetRefundReason() {
+		return OrderRefund_RefundReason_DEFAULT
+	}
+	return p.RefundReason
+}
+
+var OrderRefund_CreatedId_DEFAULT int64 = 0
+
+func (p *OrderRefund) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return OrderRefund_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var OrderRefund_RefundAmount_DEFAULT float64 = 0.0
+
+func (p *OrderRefund) GetRefundAmount() (v float64) {
+	if !p.IsSetRefundAmount() {
+		return OrderRefund_RefundAmount_DEFAULT
+	}
+	return p.RefundAmount
+}
+func (p *OrderRefund) SetRefundAt(val string) {
+	p.RefundAt = val
+}
+func (p *OrderRefund) SetRefundReason(val string) {
+	p.RefundReason = val
+}
+func (p *OrderRefund) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *OrderRefund) SetRefundAmount(val float64) {
+	p.RefundAmount = val
+}
+
+func (p *OrderRefund) IsSetRefundAt() bool {
+	return p.RefundAt != OrderRefund_RefundAt_DEFAULT
+}
+
+func (p *OrderRefund) IsSetRefundReason() bool {
+	return p.RefundReason != OrderRefund_RefundReason_DEFAULT
+}
+
+func (p *OrderRefund) IsSetCreatedId() bool {
+	return p.CreatedId != OrderRefund_CreatedId_DEFAULT
+}
+
+func (p *OrderRefund) IsSetRefundAmount() bool {
+	return p.RefundAmount != OrderRefund_RefundAmount_DEFAULT
+}
+
+func (p *OrderRefund) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderRefund(%+v)", *p)
+}
+
+var fieldIDToName_OrderRefund = map[int16]string{
+	1: "refundAt",
+	2: "refundReason",
+	3: "createdId",
+	4: "refundAmount",
+}
+
+type OrderPay struct {
+	Remission float64 `thrift:"remission,1,optional" frugal:"1,optional,double" json:"remission,omitempty"`
+	Pay       float64 `thrift:"pay,2,optional" frugal:"2,optional,double" json:"pay,omitempty"`
+	Reason    string  `thrift:"reason,3,optional" frugal:"3,optional,string" json:"reason,omitempty"`
+	PayAt     string  `thrift:"payAt,4,optional" frugal:"4,optional,string" json:"payAt,omitempty"`
+	PayWay    string  `thrift:"payWay,5,optional" frugal:"5,optional,string" json:"payWay,omitempty"`
+	PaySn     string  `thrift:"paySn,6,optional" frugal:"6,optional,string" json:"paySn,omitempty"`
+	PrepayId  string  `thrift:"prepayId,7,optional" frugal:"7,optional,string" json:"prepayId,omitempty"`
+	PayExtra  string  `thrift:"payExtra,8,optional" frugal:"8,optional,string" json:"payExtra,omitempty"`
+	CreatedId int64   `thrift:"createdId,9,optional" frugal:"9,optional,i64" json:"createdId,omitempty"`
+}
+
+func NewOrderPay() *OrderPay {
+	return &OrderPay{
+
+		Remission: 0.0,
+		Pay:       0.0,
+		Reason:    "",
+		PayAt:     "",
+		PayWay:    "",
+		PaySn:     "",
+		PrepayId:  "",
+		PayExtra:  "",
+		CreatedId: 0,
+	}
+}
+
+func (p *OrderPay) InitDefault() {
+	p.Remission = 0.0
+	p.Pay = 0.0
+	p.Reason = ""
+	p.PayAt = ""
+	p.PayWay = ""
+	p.PaySn = ""
+	p.PrepayId = ""
+	p.PayExtra = ""
+	p.CreatedId = 0
+}
+
+var OrderPay_Remission_DEFAULT float64 = 0.0
+
+func (p *OrderPay) GetRemission() (v float64) {
+	if !p.IsSetRemission() {
+		return OrderPay_Remission_DEFAULT
+	}
+	return p.Remission
+}
+
+var OrderPay_Pay_DEFAULT float64 = 0.0
+
+func (p *OrderPay) GetPay() (v float64) {
+	if !p.IsSetPay() {
+		return OrderPay_Pay_DEFAULT
+	}
+	return p.Pay
+}
+
+var OrderPay_Reason_DEFAULT string = ""
+
+func (p *OrderPay) GetReason() (v string) {
+	if !p.IsSetReason() {
+		return OrderPay_Reason_DEFAULT
+	}
+	return p.Reason
+}
+
+var OrderPay_PayAt_DEFAULT string = ""
+
+func (p *OrderPay) GetPayAt() (v string) {
+	if !p.IsSetPayAt() {
+		return OrderPay_PayAt_DEFAULT
+	}
+	return p.PayAt
+}
+
+var OrderPay_PayWay_DEFAULT string = ""
+
+func (p *OrderPay) GetPayWay() (v string) {
+	if !p.IsSetPayWay() {
+		return OrderPay_PayWay_DEFAULT
+	}
+	return p.PayWay
+}
+
+var OrderPay_PaySn_DEFAULT string = ""
+
+func (p *OrderPay) GetPaySn() (v string) {
+	if !p.IsSetPaySn() {
+		return OrderPay_PaySn_DEFAULT
+	}
+	return p.PaySn
+}
+
+var OrderPay_PrepayId_DEFAULT string = ""
+
+func (p *OrderPay) GetPrepayId() (v string) {
+	if !p.IsSetPrepayId() {
+		return OrderPay_PrepayId_DEFAULT
+	}
+	return p.PrepayId
+}
+
+var OrderPay_PayExtra_DEFAULT string = ""
+
+func (p *OrderPay) GetPayExtra() (v string) {
+	if !p.IsSetPayExtra() {
+		return OrderPay_PayExtra_DEFAULT
+	}
+	return p.PayExtra
+}
+
+var OrderPay_CreatedId_DEFAULT int64 = 0
+
+func (p *OrderPay) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return OrderPay_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *OrderPay) SetRemission(val float64) {
+	p.Remission = val
+}
+func (p *OrderPay) SetPay(val float64) {
+	p.Pay = val
+}
+func (p *OrderPay) SetReason(val string) {
+	p.Reason = val
+}
+func (p *OrderPay) SetPayAt(val string) {
+	p.PayAt = val
+}
+func (p *OrderPay) SetPayWay(val string) {
+	p.PayWay = val
+}
+func (p *OrderPay) SetPaySn(val string) {
+	p.PaySn = val
+}
+func (p *OrderPay) SetPrepayId(val string) {
+	p.PrepayId = val
+}
+func (p *OrderPay) SetPayExtra(val string) {
+	p.PayExtra = val
+}
+func (p *OrderPay) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+
+func (p *OrderPay) IsSetRemission() bool {
+	return p.Remission != OrderPay_Remission_DEFAULT
+}
+
+func (p *OrderPay) IsSetPay() bool {
+	return p.Pay != OrderPay_Pay_DEFAULT
+}
+
+func (p *OrderPay) IsSetReason() bool {
+	return p.Reason != OrderPay_Reason_DEFAULT
+}
+
+func (p *OrderPay) IsSetPayAt() bool {
+	return p.PayAt != OrderPay_PayAt_DEFAULT
+}
+
+func (p *OrderPay) IsSetPayWay() bool {
+	return p.PayWay != OrderPay_PayWay_DEFAULT
+}
+
+func (p *OrderPay) IsSetPaySn() bool {
+	return p.PaySn != OrderPay_PaySn_DEFAULT
+}
+
+func (p *OrderPay) IsSetPrepayId() bool {
+	return p.PrepayId != OrderPay_PrepayId_DEFAULT
+}
+
+func (p *OrderPay) IsSetPayExtra() bool {
+	return p.PayExtra != OrderPay_PayExtra_DEFAULT
+}
+
+func (p *OrderPay) IsSetCreatedId() bool {
+	return p.CreatedId != OrderPay_CreatedId_DEFAULT
+}
+
+func (p *OrderPay) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderPay(%+v)", *p)
+}
+
+var fieldIDToName_OrderPay = map[int16]string{
+	1: "remission",
+	2: "pay",
+	3: "reason",
+	4: "payAt",
+	5: "payWay",
+	6: "paySn",
+	7: "prepayId",
+	8: "payExtra",
+	9: "createdId",
 }
 
 type GetOrderInfoReq struct {
@@ -465,7 +809,7 @@ func NewGetOrderListReq() *GetOrderListReq {
 	return &GetOrderListReq{
 
 		MemberId:  0,
-		CreatedId: 1,
+		CreatedId: 0,
 		Nature:    "",
 		SearchKey: "",
 	}
@@ -473,7 +817,7 @@ func NewGetOrderListReq() *GetOrderListReq {
 
 func (p *GetOrderListReq) InitDefault() {
 	p.MemberId = 0
-	p.CreatedId = 1
+	p.CreatedId = 0
 	p.Nature = ""
 	p.SearchKey = ""
 }
@@ -487,7 +831,7 @@ func (p *GetOrderListReq) GetMemberId() (v int64) {
 	return p.MemberId
 }
 
-var GetOrderListReq_CreatedId_DEFAULT int64 = 1
+var GetOrderListReq_CreatedId_DEFAULT int64 = 0
 
 func (p *GetOrderListReq) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
@@ -659,7 +1003,7 @@ func NewRefundOrderReq() *RefundOrderReq {
 		Id:        0,
 		Reason:    "",
 		Amount:    0.0,
-		CreatedId: 1,
+		CreatedId: 0,
 	}
 }
 
@@ -667,7 +1011,7 @@ func (p *RefundOrderReq) InitDefault() {
 	p.Id = 0
 	p.Reason = ""
 	p.Amount = 0.0
-	p.CreatedId = 1
+	p.CreatedId = 0
 }
 
 var RefundOrderReq_Id_DEFAULT int64 = 0
@@ -697,7 +1041,7 @@ func (p *RefundOrderReq) GetAmount() (v float64) {
 	return p.Amount
 }
 
-var RefundOrderReq_CreatedId_DEFAULT int64 = 1
+var RefundOrderReq_CreatedId_DEFAULT int64 = 0
 
 func (p *RefundOrderReq) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
@@ -759,14 +1103,14 @@ func NewCancelledOrderReq() *CancelledOrderReq {
 
 		Id:        0,
 		Reason:    "",
-		CreatedId: 1,
+		CreatedId: 0,
 	}
 }
 
 func (p *CancelledOrderReq) InitDefault() {
 	p.Id = 0
 	p.Reason = ""
-	p.CreatedId = 1
+	p.CreatedId = 0
 }
 
 var CancelledOrderReq_Id_DEFAULT int64 = 0
@@ -787,7 +1131,7 @@ func (p *CancelledOrderReq) GetReason() (v string) {
 	return p.Reason
 }
 
-var CancelledOrderReq_CreatedId_DEFAULT int64 = 1
+var CancelledOrderReq_CreatedId_DEFAULT int64 = 0
 
 func (p *CancelledOrderReq) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
@@ -953,7 +1297,7 @@ func NewCreateOrderReq() *CreateOrderReq {
 	return &CreateOrderReq{
 
 		MemberId:    0,
-		CreatedId:   1,
+		CreatedId:   0,
 		Items:       &Item{},
 		TotalAmount: 0.0,
 	}
@@ -961,7 +1305,7 @@ func NewCreateOrderReq() *CreateOrderReq {
 
 func (p *CreateOrderReq) InitDefault() {
 	p.MemberId = 0
-	p.CreatedId = 1
+	p.CreatedId = 0
 	p.Items = &Item{}
 	p.TotalAmount = 0.0
 }
@@ -975,7 +1319,7 @@ func (p *CreateOrderReq) GetMemberId() (v int64) {
 	return p.MemberId
 }
 
-var CreateOrderReq_CreatedId_DEFAULT int64 = 1
+var CreateOrderReq_CreatedId_DEFAULT int64 = 0
 
 func (p *CreateOrderReq) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {

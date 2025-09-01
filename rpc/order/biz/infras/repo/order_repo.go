@@ -170,73 +170,35 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 		return nil, errors.Wrap(err, "查询事件记录失败")
 	}
 
+	var eventAll []common.Event
+	var out common.Event
 	for _, eventEnt := range eventAlls {
-
-		var eventAll []common.Event
 		switch eventEnt.EventType {
 		case string(common.Created):
-
-			//output, err := sonic.Marshal(&e)
-			//klog.Info(err)
-			//klog.Info(output)
-			//var output map[string]interface{}
-			var out events.CreatedOrderEvent
-			//event, ok := eventEnt.EventData.(events.CreatedOrderEvent)
-			// Unmarshal
-			err := sonic.Unmarshal(eventEnt.EventData, &out)
-			if err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, &out)
-
-			klog.Info(out)
-
-			//eventData, ok := eventEnt.EventData.(*events.CreatedOrderEvent)
-
-			//if ok {
-			//	eventAll = append(eventAll, &eventData)
-			//}
-		//case string(common.Paid):
-		//	eventData, ok := eventEnt.EventData.Event.(*events.PaidOrderEvent)
-		//	if ok {
-		//		eventAll = append(eventAll, eventData)
-		//	}
-		//case string(common.Shipped):
-		//	//event = &events.ShippedOrderEvent{}
-		//	eventData, ok := eventEnt.EventData.Event.(*events.ShippedOrderEvent)
-		//	if ok {
-		//		eventAll = append(eventAll, eventData)
-		//	}
-		//case string(common.Cancelled):
-		//	//event = &events.CancelledOrderEvent{}
-		//	eventData, ok := eventEnt.EventData.Event.(*events.CancelledOrderEvent)
-		//	if ok {
-		//		eventAll = append(eventAll, eventData)
-		//	}
-		//case string(common.Refunded):
-		//	//event = &events.RefundedOrderEvent{}
-		//	eventData, ok := eventEnt.EventData.Event.(*events.RefundedOrderEvent)
-		//	if ok {
-		//		eventAll = append(eventAll, eventData)
-		//	}
-		//case string(common.Completed):
-		//	//event = &events.CompletedOrderEvent{}
-		//	eventData, ok := eventEnt.EventData.Event.(*events.CompletedOrderEvent)
-		//	if ok {
-		//		eventAll = append(eventAll, eventData)
-		//	}
+			out = &events.CreatedOrderEvent{}
+		case string(common.Paid):
+			out = &events.PaidOrderEvent{}
+		case string(common.Shipped):
+			out = &events.ShippedOrderEvent{}
+		case string(common.Cancelled):
+			out = &events.CancelledOrderEvent{}
+		case string(common.Refunded):
+			out = &events.RefundedOrderEvent{}
+		case string(common.Completed):
+			out = &events.CompletedOrderEvent{}
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		klog.Info(order)
-
-		err = order.Load(eventAll)
-
+		err := sonic.Unmarshal(eventEnt.EventData, &out)
 		if err != nil {
-			return order, err
+			return nil, err
 		}
+		eventAll = append(eventAll, out)
 	}
-
-	return nil, nil
+	err = order.Load(eventAll)
+	if err != nil {
+		return nil, err
+	}
+	return order, err
 }

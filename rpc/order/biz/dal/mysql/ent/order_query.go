@@ -9,6 +9,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/orderevents"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
 	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
+	"deer/rpc/order/biz/dal/mysql/ent/orderrefund"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/predicate"
@@ -33,6 +34,7 @@ type OrderQuery struct {
 	withEvents        *OrderEventsQuery
 	withSnapshots     *OrderSnapshotsQuery
 	withStatusHistory *OrderStatusHistoryQuery
+	withRefund        *OrderRefundQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -172,6 +174,28 @@ func (_q *OrderQuery) QueryStatusHistory() *OrderStatusHistoryQuery {
 			sqlgraph.From(order.Table, order.FieldID, selector),
 			sqlgraph.To(orderstatushistory.Table, orderstatushistory.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, order.StatusHistoryTable, order.StatusHistoryColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryRefund chains the current query on the "refund" edge.
+func (_q *OrderQuery) QueryRefund() *OrderRefundQuery {
+	query := (&OrderRefundClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(order.Table, order.FieldID, selector),
+			sqlgraph.To(orderrefund.Table, orderrefund.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, order.RefundTable, order.RefundColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
@@ -376,6 +400,7 @@ func (_q *OrderQuery) Clone() *OrderQuery {
 		withEvents:        _q.withEvents.Clone(),
 		withSnapshots:     _q.withSnapshots.Clone(),
 		withStatusHistory: _q.withStatusHistory.Clone(),
+		withRefund:        _q.withRefund.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
@@ -434,6 +459,17 @@ func (_q *OrderQuery) WithStatusHistory(opts ...func(*OrderStatusHistoryQuery)) 
 		opt(query)
 	}
 	_q.withStatusHistory = query
+	return _q
+}
+
+// WithRefund tells the query-builder to eager-load the nodes that are connected to
+// the "refund" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *OrderQuery) WithRefund(opts ...func(*OrderRefundQuery)) *OrderQuery {
+	query := (&OrderRefundClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withRefund = query
 	return _q
 }
 
@@ -515,12 +551,13 @@ func (_q *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 	var (
 		nodes       = []*Order{}
 		_spec       = _q.querySpec()
-		loadedTypes = [5]bool{
+		loadedTypes = [6]bool{
 			_q.withItems != nil,
 			_q.withPay != nil,
 			_q.withEvents != nil,
 			_q.withSnapshots != nil,
 			_q.withStatusHistory != nil,
+			_q.withRefund != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -573,6 +610,13 @@ func (_q *OrderQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Order,
 		if err := _q.loadStatusHistory(ctx, query, nodes,
 			func(n *Order) { n.Edges.StatusHistory = []*OrderStatusHistory{} },
 			func(n *Order, e *OrderStatusHistory) { n.Edges.StatusHistory = append(n.Edges.StatusHistory, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := _q.withRefund; query != nil {
+		if err := _q.loadRefund(ctx, query, nodes,
+			func(n *Order) { n.Edges.Refund = []*OrderRefund{} },
+			func(n *Order, e *OrderRefund) { n.Edges.Refund = append(n.Edges.Refund, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -714,6 +758,36 @@ func (_q *OrderQuery) loadStatusHistory(ctx context.Context, query *OrderStatusH
 	}
 	query.Where(predicate.OrderStatusHistory(func(s *sql.Selector) {
 		s.Where(sql.InValues(s.C(order.StatusHistoryColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.OrderID
+		node, ok := nodeids[fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "order_id" returned %v for node %v`, fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (_q *OrderQuery) loadRefund(ctx context.Context, query *OrderRefundQuery, nodes []*Order, init func(*Order), assign func(*Order, *OrderRefund)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[int64]*Order)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orderrefund.FieldOrderID)
+	}
+	query.Where(predicate.OrderRefund(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(order.RefundColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {

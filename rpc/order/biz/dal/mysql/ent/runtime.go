@@ -8,6 +8,7 @@ import (
 	"deer/rpc/order/biz/dal/mysql/ent/ordereventsubscriptions"
 	"deer/rpc/order/biz/dal/mysql/ent/orderitem"
 	"deer/rpc/order/biz/dal/mysql/ent/orderpay"
+	"deer/rpc/order/biz/dal/mysql/ent/orderrefund"
 	"deer/rpc/order/biz/dal/mysql/ent/ordersnapshots"
 	"deer/rpc/order/biz/dal/mysql/ent/orderstatushistory"
 	"deer/rpc/order/biz/dal/mysql/ent/schema"
@@ -42,25 +43,21 @@ func init() {
 	// order.DefaultCreatedID holds the default value on creation for the created_id field.
 	order.DefaultCreatedID = orderDescCreatedID.Default.(int64)
 	// orderDescVersion is the schema descriptor for version field.
-	orderDescVersion := orderFields[7].Descriptor()
+	orderDescVersion := orderFields[6].Descriptor()
 	// order.DefaultVersion holds the default value on creation for the version field.
 	order.DefaultVersion = orderDescVersion.Default.(int64)
 	// orderDescTotalAmount is the schema descriptor for total_amount field.
-	orderDescTotalAmount := orderFields[8].Descriptor()
+	orderDescTotalAmount := orderFields[7].Descriptor()
 	// order.DefaultTotalAmount holds the default value on creation for the total_amount field.
 	order.DefaultTotalAmount = orderDescTotalAmount.Default.(float64)
 	// orderDescActual is the schema descriptor for actual field.
-	orderDescActual := orderFields[9].Descriptor()
+	orderDescActual := orderFields[8].Descriptor()
 	// order.DefaultActual holds the default value on creation for the actual field.
 	order.DefaultActual = orderDescActual.Default.(float64)
 	// orderDescRemission is the schema descriptor for remission field.
-	orderDescRemission := orderFields[10].Descriptor()
+	orderDescRemission := orderFields[9].Descriptor()
 	// order.DefaultRemission holds the default value on creation for the remission field.
 	order.DefaultRemission = orderDescRemission.Default.(float64)
-	// orderDescRefund is the schema descriptor for refund field.
-	orderDescRefund := orderFields[11].Descriptor()
-	// order.DefaultRefund holds the default value on creation for the refund field.
-	order.DefaultRefund = orderDescRefund.Default.(float64)
 	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()
 	ordereventsubscriptionsMixinFields0 := ordereventsubscriptionsMixin[0].Fields()
 	_ = ordereventsubscriptionsMixinFields0
@@ -157,6 +154,33 @@ func init() {
 	orderpayDescCreatedID := orderpayMixinFields0[4].Descriptor()
 	// orderpay.DefaultCreatedID holds the default value on creation for the created_id field.
 	orderpay.DefaultCreatedID = orderpayDescCreatedID.Default.(int64)
+	orderrefundMixin := schema.OrderRefund{}.Mixin()
+	orderrefundMixinFields0 := orderrefundMixin[0].Fields()
+	_ = orderrefundMixinFields0
+	orderrefundFields := schema.OrderRefund{}.Fields()
+	_ = orderrefundFields
+	// orderrefundDescCreatedAt is the schema descriptor for created_at field.
+	orderrefundDescCreatedAt := orderrefundMixinFields0[1].Descriptor()
+	// orderrefund.DefaultCreatedAt holds the default value on creation for the created_at field.
+	orderrefund.DefaultCreatedAt = orderrefundDescCreatedAt.Default.(func() time.Time)
+	// orderrefundDescUpdatedAt is the schema descriptor for updated_at field.
+	orderrefundDescUpdatedAt := orderrefundMixinFields0[2].Descriptor()
+	// orderrefund.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	orderrefund.DefaultUpdatedAt = orderrefundDescUpdatedAt.Default.(func() time.Time)
+	// orderrefund.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	orderrefund.UpdateDefaultUpdatedAt = orderrefundDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// orderrefundDescDelete is the schema descriptor for delete field.
+	orderrefundDescDelete := orderrefundMixinFields0[3].Descriptor()
+	// orderrefund.DefaultDelete holds the default value on creation for the delete field.
+	orderrefund.DefaultDelete = orderrefundDescDelete.Default.(int64)
+	// orderrefundDescCreatedID is the schema descriptor for created_id field.
+	orderrefundDescCreatedID := orderrefundMixinFields0[4].Descriptor()
+	// orderrefund.DefaultCreatedID holds the default value on creation for the created_id field.
+	orderrefund.DefaultCreatedID = orderrefundDescCreatedID.Default.(int64)
+	// orderrefundDescRefund is the schema descriptor for refund field.
+	orderrefundDescRefund := orderrefundFields[2].Descriptor()
+	// orderrefund.DefaultRefund holds the default value on creation for the refund field.
+	orderrefund.DefaultRefund = orderrefundDescRefund.Default.(float64)
 	ordersnapshotsMixin := schema.OrderSnapshots{}.Mixin()
 	ordersnapshotsMixinFields0 := ordersnapshotsMixin[0].Fields()
 	_ = ordersnapshotsMixinFields0

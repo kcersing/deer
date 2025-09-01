@@ -4,6 +4,7 @@ import (
 	"deer/kitex_gen/deer/order"
 	"deer/rpc/order/biz/infras/common"
 	"deer/rpc/order/biz/infras/events"
+	"time"
 
 	"sync"
 )
@@ -14,9 +15,10 @@ const (
 
 type Order struct {
 	order.Order
+
 	stateMachine *StateMachine
-	mu           sync.RWMutex
 	common.AggregateBase
+	mu sync.RWMutex
 }
 
 func NewOrder() (order *Order) {
@@ -47,7 +49,6 @@ func (o *Order) When(evt common.Event) error {
 	default:
 		return common.ErrInvalidType
 	}
-	//}
 }
 
 func (o *Order) onCreated(evt common.Event) (err error) {
@@ -69,10 +70,9 @@ func (o *Order) onCancelled(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.CancelledOrderEvent); ok {
-
-		//o.Reason   = eventData.Reason
+		o.CancelledReason = eventData.Reason
 		o.CreatedId = eventData.CreatedId
-
+		o.CloseAt = eventData.Timestamp.Format(time.DateTime)
 	}
 	return nil
 }
@@ -82,6 +82,7 @@ func (o *Order) onCompleted(evt common.Event) (err error) {
 	if eventData, ok := evt.(*events.CompletedOrderEvent); ok {
 
 		o.CreatedId = eventData.CreatedId
+		o.CompletionAt = eventData.Timestamp.Format(time.DateTime)
 
 	}
 	return nil
@@ -90,9 +91,17 @@ func (o *Order) onPaid(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.PaidOrderEvent); ok {
-
-		o.CreatedId = eventData.CreatedId
-
+		var orderPay order.OrderPay
+		orderPay.CreatedId = eventData.CreatedId
+		orderPay.Pay = eventData.PayedAmount
+		orderPay.PayWay = eventData.PayMethod
+		orderPay.PayAt = eventData.Timestamp.Format(time.DateTime)
+		orderPay.Remission = eventData.Remission
+		orderPay.Reason = eventData.Reason
+		orderPay.PaySn = eventData.PaySn
+		orderPay.PrepayId = eventData.PrepayId
+		orderPay.PayExtra = eventData.PayExtra
+		o.OrderPays = append(o.OrderPays, &orderPay)
 	}
 	return nil
 }
@@ -100,8 +109,10 @@ func (o *Order) onRefunded(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.RefundedOrderEvent); ok {
-
-		o.CreatedId = eventData.CreatedId
+		o.OrderRefund.RefundId = eventData.CreatedId
+		o.OrderRefund.RefundAmount = eventData.RefundedAmount
+		o.OrderRefund.RefundReason = eventData.Reason
+		o.OrderRefund.RefundAt = eventData.Timestamp.Format(time.DateTime)
 	}
 	return nil
 }
@@ -109,7 +120,6 @@ func (o *Order) onShipped(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.ShippedOrderEvent); ok {
-
 		o.CreatedId = eventData.CreatedId
 	}
 	return nil

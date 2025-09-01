@@ -9,6 +9,7 @@ import (
 // RefundedOrderEvent 退款事件
 type RefundedOrderEvent struct {
 	common.EventBase
+	Reason         string
 	RefundedAmount float64
 	CreatedId      int64
 }

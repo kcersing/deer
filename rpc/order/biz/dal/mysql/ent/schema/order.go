@@ -32,15 +32,13 @@ func (Order) Fields() []ent.Field {
 		field.Int64("nature").Comment("业务类型").Optional(),
 		field.Time("completion_at").Comment("订单完成时间").Optional(),
 		field.Time("close_at").Comment("订单关闭时间").Optional(),
-		field.Time("refund_at").Comment("订单退费时间").Optional(),
+
 		field.Int64("version").Default(1).Comment("乐观锁版本号").Optional(),
 
 		field.Float("total_amount").Default(0).Comment("总金额").Optional(),
 		field.Float("actual").Default(0).Comment("实际已付款").Optional(),
 		field.Float("remission").Default(0).Comment("减免").Optional(),
-		field.Float("refund").Default(0).Comment("退费金额").Optional(),
 		field.String("close_nature").Comment("关闭原因").Optional(),
-		field.String("refund_nature").Comment("退费原因").Optional(),
 	}
 }
 
@@ -60,7 +58,7 @@ func (Order) Edges() []ent.Edge {
 		edge.To("status_history", OrderStatusHistory.Type),
 
 		//edge.From("order_venues", Venue.Type).Ref("venue_orders").Field("venue_id").Unique(),
-		//edge.From("order_members", Member.Type).Ref("member_orders").Field("member_id").Unique(),
+		edge.To("refund", OrderRefund.Type),
 		//edge.From("order_creates", User.Type).Ref("created_orders").Field("created_id").Unique(),
 	}
 }
