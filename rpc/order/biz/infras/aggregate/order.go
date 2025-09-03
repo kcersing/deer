@@ -109,7 +109,7 @@ func (o *Order) onRefunded(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.RefundedOrderEvent); ok {
-		o.OrderRefund.RefundId = eventData.CreatedId
+		o.OrderRefund.CreatedId = eventData.CreatedId
 		o.OrderRefund.RefundAmount = eventData.RefundedAmount
 		o.OrderRefund.RefundReason = eventData.Reason
 		o.OrderRefund.RefundAt = eventData.Timestamp.Format(time.DateTime)

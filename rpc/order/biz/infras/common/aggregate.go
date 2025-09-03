@@ -86,8 +86,10 @@ func (a *AggregateBase) Load(events []Event) error {
 		if err := a.when(evt); err != nil {
 			return err
 		}
+
 		a.Version++
 	}
+	a.SetAppliedEvents(events)
 	return nil
 }
 
