@@ -1,5 +1,6 @@
 
 namespace go deer.base
+
 struct BaseResp {
     1: i64 code=0
     2: string message=""
@@ -13,4 +14,7 @@ struct PageReq {
 }
 struct IDReq {
     1: i64 id
+}
+struct NilResponse {
+
 }
