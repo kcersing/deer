@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	order "order/kitex_gen/order"
+	order "gen/kitex_gen/order"
 )
 
 type GetOrderInfoService struct {

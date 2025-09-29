@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	base "order/kitex_gen/deer/base"
+	base "gen/kitex_gen/base"
 )
 
 type DeleteOrderService struct {

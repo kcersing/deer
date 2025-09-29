@@ -13,8 +13,16 @@ init:
 	go install github.com/cloudwego/cwgo@latest
 	go install github.com/cloudwego/thriftgo@latest
 
-
-
+kitex_gen_order:
+	kitex --thrift-plugin validator -module gen ../idl/rpc/user.thrift
+	kitex --thrift-plugin validator -module gen ../idl/rpc/product.thrift
+	kitex --thrift-plugin validator -module gen ../idl/rpc/member.thrift
+	kitex --thrift-plugin validator -module gen ../idl/rpc/order.thrift
+hertz_gen_facade:
+	hz model --idl=../idl/api/user.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/api/product.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/api/member.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/api/order.thrift --mod=gen --model_dir=hertz_gen
 # start the environment of demo
 .PHONY: start
 start:
@@ -28,24 +36,29 @@ stop:
 # run the facade service
 .PHONY: facade
 facade:
+	cd app/facade
 	sh app/facade/run.sh
 
 # run the user service
 .PHONY: user
 user:
+	cd app/user
 	go run app/user/*.go
 
 # run the member service
 .PHONY: member
-item:
+member:
+	cd app/member
 	go run app/member/*.go
 
 # run the order service
 .PHONY: order
 order:
+	cd app/order
 	go run app/order/*.go
 
 # run the product service
 .PHONY: product
 product:
+	cd app/product
 	go run app/product/*.go

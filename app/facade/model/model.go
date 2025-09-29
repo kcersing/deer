@@ -1,6 +1,7 @@
 package model
 
 import (
+	"common/pkg/errno"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/hertz-contrib/jwt"
 	"net/http"

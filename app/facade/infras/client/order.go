@@ -1,11 +1,12 @@
 package client
 
 import (
+	"common/pkg/conf"
+	"common/pkg/errno"
 	"context"
-	"deer/kitex_gen/deer/order"
-	"deer/kitex_gen/deer/order/orderservice"
-	"deer/pkg/conf"
-	"deer/pkg/errno"
+	"gen/kitex_gen/order"
+	"gen/kitex_gen/order/orderservice"
+
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"

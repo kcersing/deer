@@ -2,8 +2,7 @@ package service
 
 import (
 	"context"
-	base "order/kitex_gen/deer/base"
-	order "order/kitex_gen/order"
+	order "gen/kitex_gen/order"
 	"testing"
 )
 

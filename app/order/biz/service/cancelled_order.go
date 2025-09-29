@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	base "order/kitex_gen/deer/base"
-	order "order/kitex_gen/order"
+	base "gen/kitex_gen/base"
+	order "gen/kitex_gen/order"
 )
 
 type CancelledOrderService struct {
