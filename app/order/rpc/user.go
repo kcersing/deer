@@ -3,6 +3,7 @@ package rpc
 import (
 	mw "common/pkg/mv"
 	"context"
+	"gen/kitex_gen/base"
 	"gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -40,4 +41,8 @@ func initUser() {
 		panic(err)
 	}
 	userClient = c
+}
+func GetUserInfo(ctx context.Context, id int64) error {
+	_, err := userClient.GetUserInfo(ctx, &base.IdReq{Id: id})
+	return err
 }
