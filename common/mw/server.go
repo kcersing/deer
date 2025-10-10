@@ -10,11 +10,11 @@ import (
 
 var _ endpoint.Middleware = ServerMiddleware
 
-// ServerMiddleware server mw print client address
+// ServerMiddleware 中间件
 func ServerMiddleware(next endpoint.Endpoint) endpoint.Endpoint {
 	return func(ctx context.Context, req, resp interface{}) (err error) {
 		ri := rpcinfo.GetRPCInfo(ctx)
-		// get client information
+		// 打印客户端信息
 		klog.Infof("client address: %v\n", ri.From().Address())
 		if err = next(ctx, req, resp); err != nil {
 			return err

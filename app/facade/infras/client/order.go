@@ -1,11 +1,14 @@
 package client
 
 import (
+	"common/mw"
 	"common/pkg/conf"
 	"common/pkg/errno"
 	"context"
 	"gen/kitex_gen/order"
 	"gen/kitex_gen/order/orderservice"
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
@@ -22,10 +25,16 @@ func initOrderRpc() {
 	}
 	c, err := orderservice.NewClient(
 		conf.OrderRpcServiceName,
+		client.WithResolver(r), // resolver
+		client.WithMuxConnection(1),
 		client.WithRPCTimeout(3*time.Second),              // rpc timeout
 		client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
 		client.WithFailureRetry(retry.NewFailurePolicy()), // retry
-		client.WithResolver(r),                            // resolver
+
+		client.WithMiddleware(mw.CommonMiddleware),
+		client.WithInstanceMW(mw.ClientsMiddleware),
+		client.WithSuite(tracing.NewClientSuite()),
+		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "facade"}),
 	)
 	if err != nil {
 		panic(err)

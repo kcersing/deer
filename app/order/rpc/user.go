@@ -1,7 +1,7 @@
 package rpc
 
 import (
-	mw "common/pkg/mv"
+	"common/mw"
 	"context"
 	"gen/kitex_gen/base"
 	"gen/kitex_gen/user/userservice"
@@ -33,7 +33,7 @@ func initUser() {
 		client.WithResolver(r),
 		client.WithMuxConnection(1),
 		client.WithMiddleware(mw.CommonMiddleware),
-		client.WithInstanceMW(mw.ClientMiddleware),
+		client.WithInstanceMW(mw.ClientsMiddleware),
 		client.WithSuite(tracing.NewClientSuite()),
 		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: conf.GetConf().Etcd.Address}),
 	)
