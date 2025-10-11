@@ -3,10 +3,11 @@ package mw
 import (
 	"common/consts"
 	"common/pkg/errno"
+	"common/pkg/utils"
 	"context"
 	"encoding/json"
-	"facade/model"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	jwtv4 "github.com/golang-jwt/jwt/v4"
 	"github.com/hertz-contrib/jwt"
 	"github.com/pkg/errors"
@@ -39,8 +40,46 @@ func InitJwt() {
 				//res, err = rpc.CheckUser(req.Username,req.Password)
 				payLoadMap := make(map[string]interface{})
 				//payLoadMap[consts.IdentityKey] = strconv.Itoa(int(res.UserId))
-
+				//payLoadMap["roleIds"] = res.UserRoleIds
+				//payLoadMap["type"] = strconv.Itoa(int(res.UserId))
 				return payLoadMap, nil
+			},
+			Authorizator: func(data interface{}, ctx context.Context, c *app.RequestContext) bool {
+
+				obj := string(c.URI().Path())
+				act := string(c.Method())
+				hlog.Info(obj, act)
+				//existToken := rpc.NewToken(ctx, c).IsExistByUserId(int64(id))
+				//if !existToken {
+				//	return false
+				//}
+				// check the role status
+				//roleInfo, err := rpc.NewRole(ctx, c).RoleInfoByID(cast.ToInt64(roleId))
+				//// if the role is not exist or the role is not active, return false
+				//if err != nil {
+				//	hlog.Error(err, "role is not exist")
+				//	return false
+				//}
+
+				//if roleInfo.Status != 1 {
+				//	hlog.Error("role cache is not a valid *ent.Role or the role is not active")
+				//	return false
+				//}
+
+				//sub := roleId
+				//check the permission
+				//pass, err := enforcer.Enforce(sub, obj, act)
+				//if err != nil {
+				//	hlog.Error("casbin err,  role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass, " err: ", err.Error())
+				//	return false
+				//}
+				//if !pass {
+				//	hlog.Info("casbin forbid role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass)
+				//}
+				//hlog.Info("casbin allow role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass)
+				//return pass
+
+				return true
 			},
 			PayloadFunc: func(data interface{}) jwt.MapClaims {
 				if v, ok := data.(int64); ok {
@@ -51,10 +90,10 @@ func InitJwt() {
 				return jwt.MapClaims{}
 			},
 			Unauthorized: func(ctx context.Context, c *app.RequestContext, code int, message string) {
-				model.SendResponse(c, errno.NewErrNo(10002, "您没有访问此资源的权限"), message, 0, "")
+				utils.SendResponse(c, errno.NewErrNo(10002, "您没有访问此资源的权限"), message, 0, "")
 			},
 			LoginResponse: func(ctx context.Context, c *app.RequestContext, code int, token string, expire time.Time) {
-				model.SendResponse(c, errno.Success,
+				utils.SendResponse(c, errno.Success,
 					map[string]interface{}{
 						"token":  token,
 						"expire": expire.Format(time.RFC3339),
@@ -65,9 +104,9 @@ func InitJwt() {
 				var err error
 				//err = func...
 				if err != nil {
-					model.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+					utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 				}
-				model.SendResponse(c, errno.Success, nil, 0, "")
+				utils.SendResponse(c, errno.Success, nil, 0, "")
 
 			},
 			IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {

@@ -4,7 +4,9 @@ use (
 	./gen
 	./common
 	./app/facade
+	./app/admin
 	./app/order
+	./app/test
 
 )
 

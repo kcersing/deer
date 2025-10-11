@@ -1,16 +1,10 @@
-package model
+package utils
 
 import (
 	"common/pkg/errno"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/hertz-contrib/jwt"
 	"net/http"
 	"time"
-)
-
-var (
-	UserAuthMiddleware *jwt.HertzJWTMiddleware
-	DeerAuthMiddleware *jwt.HertzJWTMiddleware
 )
 
 type Response struct {

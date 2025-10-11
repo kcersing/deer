@@ -10,7 +10,6 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	"github.com/joho/godotenv"
-	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
@@ -69,7 +68,7 @@ func kitexInit() (opts []server.Option) {
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
-		server.WithSuite(tracing.NewServerSuite()),
+		//server.WithSuite(tracing.NewServerSuite()),
 	)
 
 	return
