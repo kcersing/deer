@@ -1,30 +1,57 @@
-# kcers-order
+# Ant Design Pro
 
-### DDD和事件溯源模式
+This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
 
-#### RPC 调用的流程
-一次 rpc 调用包括以下基本流程，分为客户端和服务端两个部分：
+## Environment Prepare
 
-（客户端）构造请求参数，发起调用
-（客户端）通过服务发现、负载均衡等得到服务端实例地址，并建立连接
-（客户端）请求参数序列化成二进制数据
-（客户端）通过网络将数据发送给服务端
-（服务端）服务端接收数据
-（服务端）反序列化出请求参数
-（服务端）handler 处理请求并返回响应结果
-（服务端）将响应结果序列化成二进制数据
-（服务端）通过网络将数据返回给客户端
-（客户端）接收数据
-（客户端）反序列化出结果
-（客户端）得到调用的结果
+Install `node_modules`:
 
+```bash
+npm install
+```
 
+or
 
+```bash
+yarn
+```
 
+## Provided Scripts
 
-cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers-order --hex 
+Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
 
+Scripts provided in `package.json`. It's safe to modify or add additional script:
 
+### Start project
 
+```bash
+npm start
+```
 
+### Build project
 
+```bash
+npm run build
+```
+
+### Check code style
+
+```bash
+npm run lint
+```
+
+You can also use script to auto fix some lint error:
+
+```bash
+npm run lint:fix
+```
+
+### Test code
+
+```bash
+npm test
+```
+
+## More
+
+You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
