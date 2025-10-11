@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RUN_NAME="member"
+RUN_NAME="product"
 
 mkdir -p output/bin
 cp script/* output/

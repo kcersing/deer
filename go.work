@@ -5,7 +5,10 @@ use (
 	./common
 	./app/facade
 	./app/admin
+	./app/user
+	./app/member
 	./app/order
+	./app/product
 	./app/test
 
 )

@@ -25,7 +25,7 @@ func (s *OrderServiceImpl) GetOrderList(ctx context.Context, req *order.GetOrder
 }
 
 // DeleteOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IDReq) (resp *base.BaseResp, err error) {
+func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IdReq) (resp *base.BaseResp, err error) {
 	resp, err = service.NewDeleteOrderService(ctx).Run(req)
 
 	return resp, err

@@ -1,12 +1,12 @@
 package main
 
 import (
-	member "gen/kitex_gen/member/memberservice"
+	user "gen/kitex_gen/user/userservice"
 	"log"
 )
 
 func main() {
-	svr := member.NewServer(new(MemberServiceImpl))
+	svr := user.NewServer(new(UserServiceImpl))
 
 	err := svr.Run()
 
