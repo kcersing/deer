@@ -1,5 +1,3 @@
-
-
 *.o
 *.a
 *.so
@@ -35,7 +33,6 @@ _testmain.go
 /.vscode
 /output
 *.local.yml
-conf.yaml
 /vendor
 /.trae
-/.env
+.env

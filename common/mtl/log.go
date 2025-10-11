@@ -5,9 +5,9 @@ import (
 	"github.com/cloudwego/kitex/server"
 	kitexzap "github.com/kitex-contrib/obs-opentelemetry/logging/zap"
 	"go.uber.org/zap"
-	"time"
-
 	"go.uber.org/zap/zapcore"
+	"os"
+	"time"
 
 	"io"
 )
@@ -15,19 +15,22 @@ import (
 func InitLog(ioWriter io.Writer) {
 	var opts []kitexzap.Option
 	var output zapcore.WriteSyncer
-	klog.Info(opts, output)
 
-	//opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())))
-	//output = zapcore.AddSync(ioWriter)
-
-	opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())))
-	output = &zapcore.BufferedWriteSyncer{
-		WS:            zapcore.AddSync(ioWriter),
-		FlushInterval: time.Minute,
+	if os.Getenv("GO_ENV") != "online" {
+		opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())))
+		output = os.Stdout
+	} else {
+		opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())))
+		// async log
+		output = &zapcore.BufferedWriteSyncer{
+			WS:            zapcore.AddSync(os.Stdout),
+			FlushInterval: time.Minute,
+		}
+		server.RegisterShutdownHook(func() {
+			output.Sync() //nolint:errcheck
+		})
 	}
-	server.RegisterShutdownHook(func() {
-		output.Sync()
-	})
+
 	log := kitexzap.NewLogger(opts...)
 	klog.SetLogger(log)
 	klog.SetLevel(klog.LevelTrace)

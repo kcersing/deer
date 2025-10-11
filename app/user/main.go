@@ -5,6 +5,7 @@ import (
 	"common/mw"
 	"common/pkg/utils"
 	user "gen/kitex_gen/user/userservice"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"
@@ -31,6 +32,7 @@ func main() {
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
 	})
 	mtl.InitTracing(serviceName)
+	klog.Info(serviceName)
 	mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
 
 	opts := kitexInit()
