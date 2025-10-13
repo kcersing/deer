@@ -4,6 +4,8 @@ package member
 
 import (
 	"context"
+	base "facade/biz/model/base"
+	member "facade/biz/model/member"
 
 	base "gen/hertz_gen/base"
 	member "gen/hertz_gen/member"

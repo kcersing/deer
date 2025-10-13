@@ -1,6 +1,5 @@
 namespace go order
-include "../base.thrift"
-
+include "../base/base.thrift"
 //
 
 struct Item {
@@ -104,7 +103,7 @@ struct PaymentReq {
 service OrderService  {
     OrderResp GetOrderInfo(1:GetOrderInfoReq req)
     GetOrderListResp GetOrderList(1:GetOrderListReq req)
-    base.BaseResp DeleteOrder(1:base.IDReq req)
+    base.BaseResp DeleteOrder(1:base.IdReq req)
     OrderResp CreateOrder(1:GetOrderListReq req)
     OrderResp Payment(1:PaymentReq req)
     base.BaseResp CancelledOrder(1:CreateOrderReq req)

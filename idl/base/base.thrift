@@ -1,0 +1,26 @@
+
+namespace go base
+
+struct BaseResp {
+    1:optional i64 code=0
+    2:optional string message=""
+    3:optional string time=""
+    4:optional i64 total=0
+}
+struct PageReq {
+    1:optional i64 page=1
+    2:optional i64 pageSize=10
+    3:optional string Keyword=""
+}
+struct IdReq {
+    1:optional i64 id
+}
+struct NilResponse {
+
+}
+
+struct CheckAccountReq {
+    1:string username (vt.min_size = "1")
+    2:string password (vt.min_size = "1")
+    3:optional string captcha (vt.min_size = "1")
+}

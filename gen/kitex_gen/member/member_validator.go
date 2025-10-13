@@ -24,12 +24,31 @@ var (
 func (p *Member) IsValid() error {
 	return nil
 }
+func (p *CreateMemberReq) IsValid() error {
+	return nil
+}
+func (p *GetMemberListReq) IsValid() error {
+	if p.Pages != nil {
+		if err := p.Pages.IsValid(); err != nil {
+			return fmt.Errorf("field Pages not valid, %w", err)
+		}
+	}
+	return nil
+}
 func (p *MemberResp) IsValid() error {
 	if p.Member != nil {
 		if err := p.Member.IsValid(); err != nil {
 			return fmt.Errorf("field Member not valid, %w", err)
 		}
 	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *MemberListResp) IsValid() error {
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)

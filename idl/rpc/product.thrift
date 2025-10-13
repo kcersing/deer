@@ -1,5 +1,5 @@
 namespace go product
-include "../base.thrift"
+include "../base/base.thrift"
 
 struct Product {
     254:optional i64 id=0 (api.raw = "id")

@@ -1,5 +1,5 @@
 namespace go order
-include "../base.thrift"
+include "../base/base.thrift"
 
 service OrderService {
 

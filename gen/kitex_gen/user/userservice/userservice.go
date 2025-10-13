@@ -14,10 +14,31 @@ import (
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"GetUserInfo": kitex.NewMethodInfo(
-		getUserInfoHandler,
-		newUserServiceGetUserInfoArgs,
-		newUserServiceGetUserInfoResult,
+	"CreateUser": kitex.NewMethodInfo(
+		createUserHandler,
+		newUserServiceCreateUserArgs,
+		newUserServiceCreateUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetUser": kitex.NewMethodInfo(
+		getUserHandler,
+		newUserServiceGetUserArgs,
+		newUserServiceGetUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"LoginUser": kitex.NewMethodInfo(
+		loginUserHandler,
+		newUserServiceLoginUserArgs,
+		newUserServiceLoginUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetUserList": kitex.NewMethodInfo(
+		getUserListHandler,
+		newUserServiceGetUserListArgs,
+		newUserServiceGetUserListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -87,22 +108,76 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func getUserInfoHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*user.UserServiceGetUserInfoArgs)
-	realResult := result.(*user.UserServiceGetUserInfoResult)
-	success, err := handler.(user.UserService).GetUserInfo(ctx, realArg.Req)
+func createUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceCreateUserArgs)
+	realResult := result.(*user.UserServiceCreateUserResult)
+	success, err := handler.(user.UserService).CreateUser(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newUserServiceGetUserInfoArgs() interface{} {
-	return user.NewUserServiceGetUserInfoArgs()
+func newUserServiceCreateUserArgs() interface{} {
+	return user.NewUserServiceCreateUserArgs()
 }
 
-func newUserServiceGetUserInfoResult() interface{} {
-	return user.NewUserServiceGetUserInfoResult()
+func newUserServiceCreateUserResult() interface{} {
+	return user.NewUserServiceCreateUserResult()
+}
+
+func getUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetUserArgs)
+	realResult := result.(*user.UserServiceGetUserResult)
+	success, err := handler.(user.UserService).GetUser(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetUserArgs() interface{} {
+	return user.NewUserServiceGetUserArgs()
+}
+
+func newUserServiceGetUserResult() interface{} {
+	return user.NewUserServiceGetUserResult()
+}
+
+func loginUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceLoginUserArgs)
+	realResult := result.(*user.UserServiceLoginUserResult)
+	success, err := handler.(user.UserService).LoginUser(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceLoginUserArgs() interface{} {
+	return user.NewUserServiceLoginUserArgs()
+}
+
+func newUserServiceLoginUserResult() interface{} {
+	return user.NewUserServiceLoginUserResult()
+}
+
+func getUserListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetUserListArgs)
+	realResult := result.(*user.UserServiceGetUserListResult)
+	success, err := handler.(user.UserService).GetUserList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetUserListArgs() interface{} {
+	return user.NewUserServiceGetUserListArgs()
+}
+
+func newUserServiceGetUserListResult() interface{} {
+	return user.NewUserServiceGetUserListResult()
 }
 
 type kClient struct {
@@ -115,11 +190,41 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) GetUserInfo(ctx context.Context, req *base.IdReq) (r *user.UserResp, err error) {
-	var _args user.UserServiceGetUserInfoArgs
+func (p *kClient) CreateUser(ctx context.Context, req *user.CreateUserReq) (r *user.UserResp, err error) {
+	var _args user.UserServiceCreateUserArgs
 	_args.Req = req
-	var _result user.UserServiceGetUserInfoResult
-	if err = p.c.Call(ctx, "GetUserInfo", &_args, &_result); err != nil {
+	var _result user.UserServiceCreateUserResult
+	if err = p.c.Call(ctx, "CreateUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetUser(ctx context.Context, req *base.IdReq) (r *user.UserResp, err error) {
+	var _args user.UserServiceGetUserArgs
+	_args.Req = req
+	var _result user.UserServiceGetUserResult
+	if err = p.c.Call(ctx, "GetUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) LoginUser(ctx context.Context, req *user.CheckUserReq) (r *user.UserResp, err error) {
+	var _args user.UserServiceLoginUserArgs
+	_args.Req = req
+	var _result user.UserServiceLoginUserResult
+	if err = p.c.Call(ctx, "LoginUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetUserList(ctx context.Context, req *user.GetUserListReq) (r *user.UserListResp, err error) {
+	var _args user.UserServiceGetUserListArgs
+	_args.Req = req
+	var _result user.UserServiceGetUserListResult
+	if err = p.c.Call(ctx, "GetUserList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

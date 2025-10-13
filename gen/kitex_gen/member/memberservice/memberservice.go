@@ -14,10 +14,31 @@ import (
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"GetMemberInfo": kitex.NewMethodInfo(
-		getMemberInfoHandler,
-		newMemberServiceGetMemberInfoArgs,
-		newMemberServiceGetMemberInfoResult,
+	"CreateMember": kitex.NewMethodInfo(
+		createMemberHandler,
+		newMemberServiceCreateMemberArgs,
+		newMemberServiceCreateMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetMember": kitex.NewMethodInfo(
+		getMemberHandler,
+		newMemberServiceGetMemberArgs,
+		newMemberServiceGetMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"LoginMember": kitex.NewMethodInfo(
+		loginMemberHandler,
+		newMemberServiceLoginMemberArgs,
+		newMemberServiceLoginMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetMemberList": kitex.NewMethodInfo(
+		getMemberListHandler,
+		newMemberServiceGetMemberListArgs,
+		newMemberServiceGetMemberListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -87,22 +108,76 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func getMemberInfoHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*member.MemberServiceGetMemberInfoArgs)
-	realResult := result.(*member.MemberServiceGetMemberInfoResult)
-	success, err := handler.(member.MemberService).GetMemberInfo(ctx, realArg.Req)
+func createMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceCreateMemberArgs)
+	realResult := result.(*member.MemberServiceCreateMemberResult)
+	success, err := handler.(member.MemberService).CreateMember(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMemberServiceGetMemberInfoArgs() interface{} {
-	return member.NewMemberServiceGetMemberInfoArgs()
+func newMemberServiceCreateMemberArgs() interface{} {
+	return member.NewMemberServiceCreateMemberArgs()
 }
 
-func newMemberServiceGetMemberInfoResult() interface{} {
-	return member.NewMemberServiceGetMemberInfoResult()
+func newMemberServiceCreateMemberResult() interface{} {
+	return member.NewMemberServiceCreateMemberResult()
+}
+
+func getMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceGetMemberArgs)
+	realResult := result.(*member.MemberServiceGetMemberResult)
+	success, err := handler.(member.MemberService).GetMember(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceGetMemberArgs() interface{} {
+	return member.NewMemberServiceGetMemberArgs()
+}
+
+func newMemberServiceGetMemberResult() interface{} {
+	return member.NewMemberServiceGetMemberResult()
+}
+
+func loginMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceLoginMemberArgs)
+	realResult := result.(*member.MemberServiceLoginMemberResult)
+	success, err := handler.(member.MemberService).LoginMember(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceLoginMemberArgs() interface{} {
+	return member.NewMemberServiceLoginMemberArgs()
+}
+
+func newMemberServiceLoginMemberResult() interface{} {
+	return member.NewMemberServiceLoginMemberResult()
+}
+
+func getMemberListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceGetMemberListArgs)
+	realResult := result.(*member.MemberServiceGetMemberListResult)
+	success, err := handler.(member.MemberService).GetMemberList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceGetMemberListArgs() interface{} {
+	return member.NewMemberServiceGetMemberListArgs()
+}
+
+func newMemberServiceGetMemberListResult() interface{} {
+	return member.NewMemberServiceGetMemberListResult()
 }
 
 type kClient struct {
@@ -115,11 +190,41 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) GetMemberInfo(ctx context.Context, req *base.IdReq) (r *member.MemberResp, err error) {
-	var _args member.MemberServiceGetMemberInfoArgs
+func (p *kClient) CreateMember(ctx context.Context, req *member.CreateMemberReq) (r *member.MemberResp, err error) {
+	var _args member.MemberServiceCreateMemberArgs
 	_args.Req = req
-	var _result member.MemberServiceGetMemberInfoResult
-	if err = p.c.Call(ctx, "GetMemberInfo", &_args, &_result); err != nil {
+	var _result member.MemberServiceCreateMemberResult
+	if err = p.c.Call(ctx, "CreateMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetMember(ctx context.Context, req *base.IdReq) (r *member.MemberResp, err error) {
+	var _args member.MemberServiceGetMemberArgs
+	_args.Req = req
+	var _result member.MemberServiceGetMemberResult
+	if err = p.c.Call(ctx, "GetMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) LoginMember(ctx context.Context, req *base.CheckAccountReq) (r *member.MemberResp, err error) {
+	var _args member.MemberServiceLoginMemberArgs
+	_args.Req = req
+	var _result member.MemberServiceLoginMemberResult
+	if err = p.c.Call(ctx, "LoginMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetMemberList(ctx context.Context, req *member.GetMemberListReq) (r *member.MemberListResp, err error) {
+	var _args member.MemberServiceGetMemberListArgs
+	_args.Req = req
+	var _result member.MemberServiceGetMemberListResult
+	if err = p.c.Call(ctx, "GetMemberList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

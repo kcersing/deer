@@ -4,8 +4,6 @@ package user
 
 import (
 	"admin/biz/mw"
-	"common/pkg/errno"
-	"common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
 	user "gen/hertz_gen/user"
@@ -20,17 +18,13 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 	var req user.CreateUserReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
 
-	//u, err := UserService.NewUser(ctx, c).CreateUser(&req)
-	//if err != nil {
-	//	utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-	//	return
-	//}
-	//utils.SendResponse(c, errno.Success, u, 1, "")
-	//return
+	resp := new(base.NilResponse)
+
+	c.JSON(consts.StatusOK, resp)
 }
 
 // GetUser .

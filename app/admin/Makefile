@@ -5,4 +5,4 @@ new_facade:
 	hz new --idl=../../idl/api/order.thrift --service=facade -f -use=deer/hertz_gen
 
 update_facade:
-	hz update --idl=../../idl/api/order.thrift -use=deer/hertz_gen/
+	hz update --idl=../../idl/admin/user.thrift -use=deer/hertz_gen/

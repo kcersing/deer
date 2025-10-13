@@ -12,7 +12,10 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	GetUserInfo(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
+	CreateUser(ctx context.Context, req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
+	GetUser(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
+	LoginUser(ctx context.Context, req *user.CheckUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
+	GetUserList(ctx context.Context, req *user.GetUserListReq, callOptions ...callopt.Option) (r *user.UserListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -44,7 +47,22 @@ type kUserServiceClient struct {
 	*kClient
 }
 
-func (p *kUserServiceClient) GetUserInfo(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.UserResp, err error) {
+func (p *kUserServiceClient) CreateUser(ctx context.Context, req *user.CreateUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetUserInfo(ctx, req)
+	return p.kClient.CreateUser(ctx, req)
+}
+
+func (p *kUserServiceClient) GetUser(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.UserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUser(ctx, req)
+}
+
+func (p *kUserServiceClient) LoginUser(ctx context.Context, req *user.CheckUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.LoginUser(ctx, req)
+}
+
+func (p *kUserServiceClient) GetUserList(ctx context.Context, req *user.GetUserListReq, callOptions ...callopt.Option) (r *user.UserListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUserList(ctx, req)
 }

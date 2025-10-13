@@ -7,10 +7,10 @@ import (
 )
 
 type BaseResp struct {
-	Code    int64  `thrift:"code,1" frugal:"1,default,i64" json:"code"`
-	Message string `thrift:"message,2" frugal:"2,default,string" json:"message"`
-	Time    string `thrift:"time,3" frugal:"3,default,string" json:"time"`
-	Total   int64  `thrift:"total,4" frugal:"4,default,i64" json:"total"`
+	Code    int64  `thrift:"code,1,optional" frugal:"1,optional,i64" json:"code,omitempty"`
+	Message string `thrift:"message,2,optional" frugal:"2,optional,string" json:"message,omitempty"`
+	Time    string `thrift:"time,3,optional" frugal:"3,optional,string" json:"time,omitempty"`
+	Total   int64  `thrift:"total,4,optional" frugal:"4,optional,i64" json:"total,omitempty"`
 }
 
 func NewBaseResp() *BaseResp {
@@ -29,19 +29,39 @@ func (p *BaseResp) InitDefault() {
 	p.Total = 0
 }
 
+var BaseResp_Code_DEFAULT int64 = 0
+
 func (p *BaseResp) GetCode() (v int64) {
+	if !p.IsSetCode() {
+		return BaseResp_Code_DEFAULT
+	}
 	return p.Code
 }
 
+var BaseResp_Message_DEFAULT string = ""
+
 func (p *BaseResp) GetMessage() (v string) {
+	if !p.IsSetMessage() {
+		return BaseResp_Message_DEFAULT
+	}
 	return p.Message
 }
 
+var BaseResp_Time_DEFAULT string = ""
+
 func (p *BaseResp) GetTime() (v string) {
+	if !p.IsSetTime() {
+		return BaseResp_Time_DEFAULT
+	}
 	return p.Time
 }
 
+var BaseResp_Total_DEFAULT int64 = 0
+
 func (p *BaseResp) GetTotal() (v int64) {
+	if !p.IsSetTotal() {
+		return BaseResp_Total_DEFAULT
+	}
 	return p.Total
 }
 func (p *BaseResp) SetCode(val int64) {
@@ -55,6 +75,22 @@ func (p *BaseResp) SetTime(val string) {
 }
 func (p *BaseResp) SetTotal(val int64) {
 	p.Total = val
+}
+
+func (p *BaseResp) IsSetCode() bool {
+	return p.Code != BaseResp_Code_DEFAULT
+}
+
+func (p *BaseResp) IsSetMessage() bool {
+	return p.Message != BaseResp_Message_DEFAULT
+}
+
+func (p *BaseResp) IsSetTime() bool {
+	return p.Time != BaseResp_Time_DEFAULT
+}
+
+func (p *BaseResp) IsSetTotal() bool {
+	return p.Total != BaseResp_Total_DEFAULT
 }
 
 func (p *BaseResp) String() string {
@@ -72,8 +108,8 @@ var fieldIDToName_BaseResp = map[int16]string{
 }
 
 type PageReq struct {
-	Page     int64  `thrift:"page,1" frugal:"1,default,i64" json:"page"`
-	PageSize int64  `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
 	Keyword  string `thrift:"Keyword,3,optional" frugal:"3,optional,string" json:"Keyword,omitempty"`
 }
 
@@ -91,11 +127,21 @@ func (p *PageReq) InitDefault() {
 	p.Keyword = ""
 }
 
+var PageReq_Page_DEFAULT int64 = 1
+
 func (p *PageReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return PageReq_Page_DEFAULT
+	}
 	return p.Page
 }
 
+var PageReq_PageSize_DEFAULT int64 = 10
+
 func (p *PageReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return PageReq_PageSize_DEFAULT
+	}
 	return p.PageSize
 }
 
@@ -117,6 +163,14 @@ func (p *PageReq) SetKeyword(val string) {
 	p.Keyword = val
 }
 
+func (p *PageReq) IsSetPage() bool {
+	return p.Page != PageReq_Page_DEFAULT
+}
+
+func (p *PageReq) IsSetPageSize() bool {
+	return p.PageSize != PageReq_PageSize_DEFAULT
+}
+
 func (p *PageReq) IsSetKeyword() bool {
 	return p.Keyword != PageReq_Keyword_DEFAULT
 }
@@ -135,7 +189,7 @@ var fieldIDToName_PageReq = map[int16]string{
 }
 
 type IdReq struct {
-	Id int64 `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Id *int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 }
 
 func NewIdReq() *IdReq {
@@ -145,11 +199,20 @@ func NewIdReq() *IdReq {
 func (p *IdReq) InitDefault() {
 }
 
+var IdReq_Id_DEFAULT int64
+
 func (p *IdReq) GetId() (v int64) {
-	return p.Id
+	if !p.IsSetId() {
+		return IdReq_Id_DEFAULT
+	}
+	return *p.Id
 }
-func (p *IdReq) SetId(val int64) {
+func (p *IdReq) SetId(val *int64) {
 	p.Id = val
+}
+
+func (p *IdReq) IsSetId() bool {
+	return p.Id != nil
 }
 
 func (p *IdReq) String() string {
@@ -181,3 +244,59 @@ func (p *NilResponse) String() string {
 }
 
 var fieldIDToName_NilResponse = map[int16]string{}
+
+type CheckAccountReq struct {
+	Username string  `thrift:"username,1" frugal:"1,default,string" json:"username"`
+	Password string  `thrift:"password,2" frugal:"2,default,string" json:"password"`
+	Captcha  *string `thrift:"captcha,3,optional" frugal:"3,optional,string" json:"captcha,omitempty"`
+}
+
+func NewCheckAccountReq() *CheckAccountReq {
+	return &CheckAccountReq{}
+}
+
+func (p *CheckAccountReq) InitDefault() {
+}
+
+func (p *CheckAccountReq) GetUsername() (v string) {
+	return p.Username
+}
+
+func (p *CheckAccountReq) GetPassword() (v string) {
+	return p.Password
+}
+
+var CheckAccountReq_Captcha_DEFAULT string
+
+func (p *CheckAccountReq) GetCaptcha() (v string) {
+	if !p.IsSetCaptcha() {
+		return CheckAccountReq_Captcha_DEFAULT
+	}
+	return *p.Captcha
+}
+func (p *CheckAccountReq) SetUsername(val string) {
+	p.Username = val
+}
+func (p *CheckAccountReq) SetPassword(val string) {
+	p.Password = val
+}
+func (p *CheckAccountReq) SetCaptcha(val *string) {
+	p.Captcha = val
+}
+
+func (p *CheckAccountReq) IsSetCaptcha() bool {
+	return p.Captcha != nil
+}
+
+func (p *CheckAccountReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CheckAccountReq(%+v)", *p)
+}
+
+var fieldIDToName_CheckAccountReq = map[int16]string{
+	1: "username",
+	2: "password",
+	3: "captcha",
+}

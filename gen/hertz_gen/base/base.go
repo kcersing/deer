@@ -8,10 +8,10 @@ import (
 )
 
 type BaseResp struct {
-	Code    int64  `thrift:"code,1" form:"code" json:"code" query:"code"`
-	Message string `thrift:"message,2" form:"message" json:"message" query:"message"`
-	Time    string `thrift:"time,3" form:"time" json:"time" query:"time"`
-	Total   int64  `thrift:"total,4" form:"total" json:"total" query:"total"`
+	Code    int64  `thrift:"code,1,optional" form:"code" json:"code,omitempty" query:"code"`
+	Message string `thrift:"message,2,optional" form:"message" json:"message,omitempty" query:"message"`
+	Time    string `thrift:"time,3,optional" form:"time" json:"time,omitempty" query:"time"`
+	Total   int64  `thrift:"total,4,optional" form:"total" json:"total,omitempty" query:"total"`
 }
 
 func NewBaseResp() *BaseResp {
@@ -30,19 +30,39 @@ func (p *BaseResp) InitDefault() {
 	p.Total = 0
 }
 
+var BaseResp_Code_DEFAULT int64 = 0
+
 func (p *BaseResp) GetCode() (v int64) {
+	if !p.IsSetCode() {
+		return BaseResp_Code_DEFAULT
+	}
 	return p.Code
 }
 
+var BaseResp_Message_DEFAULT string = ""
+
 func (p *BaseResp) GetMessage() (v string) {
+	if !p.IsSetMessage() {
+		return BaseResp_Message_DEFAULT
+	}
 	return p.Message
 }
 
+var BaseResp_Time_DEFAULT string = ""
+
 func (p *BaseResp) GetTime() (v string) {
+	if !p.IsSetTime() {
+		return BaseResp_Time_DEFAULT
+	}
 	return p.Time
 }
 
+var BaseResp_Total_DEFAULT int64 = 0
+
 func (p *BaseResp) GetTotal() (v int64) {
+	if !p.IsSetTotal() {
+		return BaseResp_Total_DEFAULT
+	}
 	return p.Total
 }
 
@@ -51,6 +71,22 @@ var fieldIDToName_BaseResp = map[int16]string{
 	2: "message",
 	3: "time",
 	4: "total",
+}
+
+func (p *BaseResp) IsSetCode() bool {
+	return p.Code != BaseResp_Code_DEFAULT
+}
+
+func (p *BaseResp) IsSetMessage() bool {
+	return p.Message != BaseResp_Message_DEFAULT
+}
+
+func (p *BaseResp) IsSetTime() bool {
+	return p.Time != BaseResp_Time_DEFAULT
+}
+
+func (p *BaseResp) IsSetTotal() bool {
+	return p.Total != BaseResp_Total_DEFAULT
 }
 
 func (p *BaseResp) Read(iprot thrift.TProtocol) (err error) {
@@ -219,14 +255,16 @@ WriteStructEndError:
 }
 
 func (p *BaseResp) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("code", thrift.I64, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.Code); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetCode() {
+		if err = oprot.WriteFieldBegin("code", thrift.I64, 1); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Code); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -236,14 +274,16 @@ WriteFieldEndError:
 }
 
 func (p *BaseResp) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Message); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetMessage() {
+		if err = oprot.WriteFieldBegin("message", thrift.STRING, 2); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Message); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -253,14 +293,16 @@ WriteFieldEndError:
 }
 
 func (p *BaseResp) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("time", thrift.STRING, 3); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Time); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetTime() {
+		if err = oprot.WriteFieldBegin("time", thrift.STRING, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Time); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -270,14 +312,16 @@ WriteFieldEndError:
 }
 
 func (p *BaseResp) writeField4(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("total", thrift.I64, 4); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.Total); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetTotal() {
+		if err = oprot.WriteFieldBegin("total", thrift.I64, 4); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Total); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -295,8 +339,8 @@ func (p *BaseResp) String() string {
 }
 
 type PageReq struct {
-	Page     int64  `thrift:"page,1" form:"page" json:"page" query:"page"`
-	PageSize int64  `thrift:"pageSize,2" form:"pageSize" json:"pageSize" query:"pageSize"`
+	Page     int64  `thrift:"page,1,optional" form:"page" json:"page,omitempty" query:"page"`
+	PageSize int64  `thrift:"pageSize,2,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
 	Keyword  string `thrift:"Keyword,3,optional" form:"Keyword" json:"Keyword,omitempty" query:"Keyword"`
 }
 
@@ -314,11 +358,21 @@ func (p *PageReq) InitDefault() {
 	p.Keyword = ""
 }
 
+var PageReq_Page_DEFAULT int64 = 1
+
 func (p *PageReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return PageReq_Page_DEFAULT
+	}
 	return p.Page
 }
 
+var PageReq_PageSize_DEFAULT int64 = 10
+
 func (p *PageReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return PageReq_PageSize_DEFAULT
+	}
 	return p.PageSize
 }
 
@@ -335,6 +389,14 @@ var fieldIDToName_PageReq = map[int16]string{
 	1: "page",
 	2: "pageSize",
 	3: "Keyword",
+}
+
+func (p *PageReq) IsSetPage() bool {
+	return p.Page != PageReq_Page_DEFAULT
+}
+
+func (p *PageReq) IsSetPageSize() bool {
+	return p.PageSize != PageReq_PageSize_DEFAULT
 }
 
 func (p *PageReq) IsSetKeyword() bool {
@@ -484,14 +546,16 @@ WriteStructEndError:
 }
 
 func (p *PageReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("page", thrift.I64, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.Page); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetPage() {
+		if err = oprot.WriteFieldBegin("page", thrift.I64, 1); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Page); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -501,14 +565,16 @@ WriteFieldEndError:
 }
 
 func (p *PageReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("pageSize", thrift.I64, 2); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.PageSize); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetPageSize() {
+		if err = oprot.WriteFieldBegin("pageSize", thrift.I64, 2); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.PageSize); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -545,7 +611,7 @@ func (p *PageReq) String() string {
 }
 
 type IdReq struct {
-	ID int64 `thrift:"id,1" form:"id" json:"id" query:"id"`
+	ID *int64 `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
 }
 
 func NewIdReq() *IdReq {
@@ -555,12 +621,21 @@ func NewIdReq() *IdReq {
 func (p *IdReq) InitDefault() {
 }
 
+var IdReq_ID_DEFAULT int64
+
 func (p *IdReq) GetID() (v int64) {
-	return p.ID
+	if !p.IsSetID() {
+		return IdReq_ID_DEFAULT
+	}
+	return *p.ID
 }
 
 var fieldIDToName_IdReq = map[int16]string{
 	1: "id",
+}
+
+func (p *IdReq) IsSetID() bool {
+	return p.ID != nil
 }
 
 func (p *IdReq) Read(iprot thrift.TProtocol) (err error) {
@@ -621,11 +696,11 @@ ReadStructEndError:
 
 func (p *IdReq) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field int64
+	var _field *int64
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = &v
 	}
 	p.ID = _field
 	return nil
@@ -660,14 +735,16 @@ WriteStructEndError:
 }
 
 func (p *IdReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteI64(p.ID); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
+	if p.IsSetID() {
+		if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(*p.ID); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
 	}
 	return nil
 WriteFieldBeginError:
@@ -764,5 +841,248 @@ func (p *NilResponse) String() string {
 		return "<nil>"
 	}
 	return fmt.Sprintf("NilResponse(%+v)", *p)
+
+}
+
+type CheckAccountReq struct {
+	Username string  `thrift:"username,1" form:"username" json:"username" query:"username"`
+	Password string  `thrift:"password,2" form:"password" json:"password" query:"password"`
+	Captcha  *string `thrift:"captcha,3,optional" form:"captcha" json:"captcha,omitempty" query:"captcha"`
+}
+
+func NewCheckAccountReq() *CheckAccountReq {
+	return &CheckAccountReq{}
+}
+
+func (p *CheckAccountReq) InitDefault() {
+}
+
+func (p *CheckAccountReq) GetUsername() (v string) {
+	return p.Username
+}
+
+func (p *CheckAccountReq) GetPassword() (v string) {
+	return p.Password
+}
+
+var CheckAccountReq_Captcha_DEFAULT string
+
+func (p *CheckAccountReq) GetCaptcha() (v string) {
+	if !p.IsSetCaptcha() {
+		return CheckAccountReq_Captcha_DEFAULT
+	}
+	return *p.Captcha
+}
+
+var fieldIDToName_CheckAccountReq = map[int16]string{
+	1: "username",
+	2: "password",
+	3: "captcha",
+}
+
+func (p *CheckAccountReq) IsSetCaptcha() bool {
+	return p.Captcha != nil
+}
+
+func (p *CheckAccountReq) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_CheckAccountReq[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *CheckAccountReq) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Username = _field
+	return nil
+}
+func (p *CheckAccountReq) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Password = _field
+	return nil
+}
+func (p *CheckAccountReq) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field *string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = &v
+	}
+	p.Captcha = _field
+	return nil
+}
+
+func (p *CheckAccountReq) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("CheckAccountReq"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *CheckAccountReq) writeField1(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("username", thrift.STRING, 1); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Username); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *CheckAccountReq) writeField2(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("password", thrift.STRING, 2); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Password); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *CheckAccountReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCaptcha() {
+		if err = oprot.WriteFieldBegin("captcha", thrift.STRING, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(*p.Captcha); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *CheckAccountReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CheckAccountReq(%+v)", *p)
 
 }

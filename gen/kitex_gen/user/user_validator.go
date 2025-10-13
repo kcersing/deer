@@ -37,3 +37,25 @@ func (p *UserResp) IsValid() error {
 	}
 	return nil
 }
+func (p *UserListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *CreateUserReq) IsValid() error {
+	return nil
+}
+func (p *CheckUserReq) IsValid() error {
+	return nil
+}
+func (p *GetUserListReq) IsValid() error {
+	if p.Pages != nil {
+		if err := p.Pages.IsValid(); err != nil {
+			return fmt.Errorf("field Pages not valid, %w", err)
+		}
+	}
+	return nil
+}

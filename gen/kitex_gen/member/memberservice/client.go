@@ -12,7 +12,10 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	GetMemberInfo(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
+	CreateMember(ctx context.Context, req *member.CreateMemberReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
+	GetMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
+	LoginMember(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
+	GetMemberList(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -44,7 +47,22 @@ type kMemberServiceClient struct {
 	*kClient
 }
 
-func (p *kMemberServiceClient) GetMemberInfo(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.MemberResp, err error) {
+func (p *kMemberServiceClient) CreateMember(ctx context.Context, req *member.CreateMemberReq, callOptions ...callopt.Option) (r *member.MemberResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetMemberInfo(ctx, req)
+	return p.kClient.CreateMember(ctx, req)
+}
+
+func (p *kMemberServiceClient) GetMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.MemberResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetMember(ctx, req)
+}
+
+func (p *kMemberServiceClient) LoginMember(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *member.MemberResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.LoginMember(ctx, req)
+}
+
+func (p *kMemberServiceClient) GetMemberList(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetMemberList(ctx, req)
 }
