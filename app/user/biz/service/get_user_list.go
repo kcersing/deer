@@ -13,7 +13,7 @@ func NewGetUserListService(ctx context.Context) *GetUserListService {
 }
 
 // Run Update
-func (s *GetUserListService) Run(req *User.GetUserListReq) (resp *User.UserResp, err error) {
+func (s *GetUserListService) Run(req *User.GetUserListReq) (resp *User.UserListResp, err error) {
 
 	return
 }

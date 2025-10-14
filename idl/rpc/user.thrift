@@ -1,6 +1,6 @@
 namespace go user
 include "../base/base.thrift"
-
+include "role.thrift"
 struct User {
      1:optional i64 id,
      2:optional string username,
@@ -16,19 +16,11 @@ struct User {
      12:optional string  lastIp,//最后一次登录ip
 
      13:optional string  detail,//详情
-     14:optional list<Role> roles,//角色
+     14:optional list<role.Role> roles,//角色
 
      251:optional string createdAt,
      252:optional string updatedAt,
      253:optional string createdId,
-}
-struct Role{
-    1:optional i64 id,
-    2:optional string name,
-    3:optional string value,
-    4:optional string defaultRouter,
-    5:optional string remark,
-    6:optional list<i64> apis,
 }
 
 struct UserResp {
@@ -58,10 +50,24 @@ struct UpdateUserReq {
     8:optional string  detail,
     9:optional i64 roleId,
 }
+
+struct ChangePasswordReq {
+    1:optional i64 id,
+    2:optional string password,
+}
+struct SetUserRoleReq{
+    1:optional i64 id,
+    2:optional string roleId,
+}
+
 service UserService  {
     UserResp CreateUser(1: CreateUserReq req)
     UserResp GetUser(1: base.IdReq req)
     UserResp LoginUser(1: base.CheckAccountReq req)
     UserListResp GetUserList(1: GetUserListReq req)
     UserResp UpdateUser(1: UpdateUserReq req)
+    
+    base.BaseResp ChangePassword(1: ChangePasswordReq req)
+    base.BaseResp DeleteUser(1: base.IdReq req)
+    base.BaseResp SetUserRole(1: SetUserRoleReq  req)
 }

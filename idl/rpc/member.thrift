@@ -2,7 +2,7 @@ namespace go member
 include "../base/base.thrift"
 struct Member {
     1:optional i64 id,
-    2:optional string username,
+    2:optional string Membername,
     3:optional string password,
     4:optional string avatar,
     5:optional string mobile,
@@ -22,7 +22,8 @@ struct Member {
 }
 
 struct CreateMemberReq{
-
+    1:optional string Membername,
+    2:optional string password,
 }
 struct GetMemberListReq{
   2:optional base.PageReq pages
@@ -36,10 +37,23 @@ struct MemberListResp {
     1:optional list<Member> data
     255:optional base.BaseResp baseResp
 }
-
+struct UpdateMemberReq {
+    1:optional Member member
+    255:optional base.BaseResp baseResp
+}
+struct ChangePasswordReq {
+    1:optional i64 id,
+    2:optional string password,
+}
 service MemberService  {
-     MemberResp CreateMember(1: CreateMemberReq req)(api.post = "/service/member/create")
-     MemberResp GetMember(1: base.IdReq req)(api.post = "/service/member")
-     MemberResp LoginMember(1: base.CheckAccountReq req) (api.post = "/service/member/login")
-     MemberListResp GetMemberList(1: GetMemberListReq req)(api.post = "/service/member/list")
+
+     MemberResp CreateMember(1: CreateMemberReq req)
+     base.BaseResp DeleteMember(1: base.IdReq req)
+     MemberResp UpdateMember(1: UpdateMemberReq req)
+     MemberResp GetMember(1: base.IdReq req)
+     MemberListResp GetMemberList(1: GetMemberListReq req)
+
+     MemberResp LoginMember(1: base.CheckAccountReq req)
+     base.BaseResp ChangePassword(1: ChangePasswordReq req)
+
 }

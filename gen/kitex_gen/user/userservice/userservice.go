@@ -49,6 +49,27 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"ChangePassword": kitex.NewMethodInfo(
+		changePasswordHandler,
+		newUserServiceChangePasswordArgs,
+		newUserServiceChangePasswordResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DeleteUser": kitex.NewMethodInfo(
+		deleteUserHandler,
+		newUserServiceDeleteUserArgs,
+		newUserServiceDeleteUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"SetUserRole": kitex.NewMethodInfo(
+		setUserRoleHandler,
+		newUserServiceSetUserRoleArgs,
+		newUserServiceSetUserRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -205,6 +226,60 @@ func newUserServiceUpdateUserResult() interface{} {
 	return user.NewUserServiceUpdateUserResult()
 }
 
+func changePasswordHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceChangePasswordArgs)
+	realResult := result.(*user.UserServiceChangePasswordResult)
+	success, err := handler.(user.UserService).ChangePassword(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceChangePasswordArgs() interface{} {
+	return user.NewUserServiceChangePasswordArgs()
+}
+
+func newUserServiceChangePasswordResult() interface{} {
+	return user.NewUserServiceChangePasswordResult()
+}
+
+func deleteUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceDeleteUserArgs)
+	realResult := result.(*user.UserServiceDeleteUserResult)
+	success, err := handler.(user.UserService).DeleteUser(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceDeleteUserArgs() interface{} {
+	return user.NewUserServiceDeleteUserArgs()
+}
+
+func newUserServiceDeleteUserResult() interface{} {
+	return user.NewUserServiceDeleteUserResult()
+}
+
+func setUserRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceSetUserRoleArgs)
+	realResult := result.(*user.UserServiceSetUserRoleResult)
+	success, err := handler.(user.UserService).SetUserRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceSetUserRoleArgs() interface{} {
+	return user.NewUserServiceSetUserRoleArgs()
+}
+
+func newUserServiceSetUserRoleResult() interface{} {
+	return user.NewUserServiceSetUserRoleResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -260,6 +335,36 @@ func (p *kClient) UpdateUser(ctx context.Context, req *user.UpdateUserReq) (r *u
 	_args.Req = req
 	var _result user.UserServiceUpdateUserResult
 	if err = p.c.Call(ctx, "UpdateUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ChangePassword(ctx context.Context, req *user.ChangePasswordReq) (r *base.BaseResp, err error) {
+	var _args user.UserServiceChangePasswordArgs
+	_args.Req = req
+	var _result user.UserServiceChangePasswordResult
+	if err = p.c.Call(ctx, "ChangePassword", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteUser(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+	var _args user.UserServiceDeleteUserArgs
+	_args.Req = req
+	var _result user.UserServiceDeleteUserResult
+	if err = p.c.Call(ctx, "DeleteUser", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq) (r *base.BaseResp, err error) {
+	var _args user.UserServiceSetUserRoleArgs
+	_args.Req = req
+	var _result user.UserServiceSetUserRoleResult
+	if err = p.c.Call(ctx, "SetUserRole", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

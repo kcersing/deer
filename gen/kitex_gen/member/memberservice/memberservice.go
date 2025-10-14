@@ -21,10 +21,31 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"DeleteMember": kitex.NewMethodInfo(
+		deleteMemberHandler,
+		newMemberServiceDeleteMemberArgs,
+		newMemberServiceDeleteMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateMember": kitex.NewMethodInfo(
+		updateMemberHandler,
+		newMemberServiceUpdateMemberArgs,
+		newMemberServiceUpdateMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"GetMember": kitex.NewMethodInfo(
 		getMemberHandler,
 		newMemberServiceGetMemberArgs,
 		newMemberServiceGetMemberResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetMemberList": kitex.NewMethodInfo(
+		getMemberListHandler,
+		newMemberServiceGetMemberListArgs,
+		newMemberServiceGetMemberListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -35,10 +56,10 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"GetMemberList": kitex.NewMethodInfo(
-		getMemberListHandler,
-		newMemberServiceGetMemberListArgs,
-		newMemberServiceGetMemberListResult,
+	"ChangePassword": kitex.NewMethodInfo(
+		changePasswordHandler,
+		newMemberServiceChangePasswordArgs,
+		newMemberServiceChangePasswordResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -126,6 +147,42 @@ func newMemberServiceCreateMemberResult() interface{} {
 	return member.NewMemberServiceCreateMemberResult()
 }
 
+func deleteMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceDeleteMemberArgs)
+	realResult := result.(*member.MemberServiceDeleteMemberResult)
+	success, err := handler.(member.MemberService).DeleteMember(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceDeleteMemberArgs() interface{} {
+	return member.NewMemberServiceDeleteMemberArgs()
+}
+
+func newMemberServiceDeleteMemberResult() interface{} {
+	return member.NewMemberServiceDeleteMemberResult()
+}
+
+func updateMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceUpdateMemberArgs)
+	realResult := result.(*member.MemberServiceUpdateMemberResult)
+	success, err := handler.(member.MemberService).UpdateMember(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceUpdateMemberArgs() interface{} {
+	return member.NewMemberServiceUpdateMemberArgs()
+}
+
+func newMemberServiceUpdateMemberResult() interface{} {
+	return member.NewMemberServiceUpdateMemberResult()
+}
+
 func getMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*member.MemberServiceGetMemberArgs)
 	realResult := result.(*member.MemberServiceGetMemberResult)
@@ -142,6 +199,24 @@ func newMemberServiceGetMemberArgs() interface{} {
 
 func newMemberServiceGetMemberResult() interface{} {
 	return member.NewMemberServiceGetMemberResult()
+}
+
+func getMemberListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceGetMemberListArgs)
+	realResult := result.(*member.MemberServiceGetMemberListResult)
+	success, err := handler.(member.MemberService).GetMemberList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceGetMemberListArgs() interface{} {
+	return member.NewMemberServiceGetMemberListArgs()
+}
+
+func newMemberServiceGetMemberListResult() interface{} {
+	return member.NewMemberServiceGetMemberListResult()
 }
 
 func loginMemberHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -162,22 +237,22 @@ func newMemberServiceLoginMemberResult() interface{} {
 	return member.NewMemberServiceLoginMemberResult()
 }
 
-func getMemberListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*member.MemberServiceGetMemberListArgs)
-	realResult := result.(*member.MemberServiceGetMemberListResult)
-	success, err := handler.(member.MemberService).GetMemberList(ctx, realArg.Req)
+func changePasswordHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceChangePasswordArgs)
+	realResult := result.(*member.MemberServiceChangePasswordResult)
+	success, err := handler.(member.MemberService).ChangePassword(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMemberServiceGetMemberListArgs() interface{} {
-	return member.NewMemberServiceGetMemberListArgs()
+func newMemberServiceChangePasswordArgs() interface{} {
+	return member.NewMemberServiceChangePasswordArgs()
 }
 
-func newMemberServiceGetMemberListResult() interface{} {
-	return member.NewMemberServiceGetMemberListResult()
+func newMemberServiceChangePasswordResult() interface{} {
+	return member.NewMemberServiceChangePasswordResult()
 }
 
 type kClient struct {
@@ -200,11 +275,41 @@ func (p *kClient) CreateMember(ctx context.Context, req *member.CreateMemberReq)
 	return _result.GetSuccess(), nil
 }
 
+func (p *kClient) DeleteMember(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+	var _args member.MemberServiceDeleteMemberArgs
+	_args.Req = req
+	var _result member.MemberServiceDeleteMemberResult
+	if err = p.c.Call(ctx, "DeleteMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateMember(ctx context.Context, req *member.UpdateMemberReq) (r *member.MemberResp, err error) {
+	var _args member.MemberServiceUpdateMemberArgs
+	_args.Req = req
+	var _result member.MemberServiceUpdateMemberResult
+	if err = p.c.Call(ctx, "UpdateMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
 func (p *kClient) GetMember(ctx context.Context, req *base.IdReq) (r *member.MemberResp, err error) {
 	var _args member.MemberServiceGetMemberArgs
 	_args.Req = req
 	var _result member.MemberServiceGetMemberResult
 	if err = p.c.Call(ctx, "GetMember", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetMemberList(ctx context.Context, req *member.GetMemberListReq) (r *member.MemberListResp, err error) {
+	var _args member.MemberServiceGetMemberListArgs
+	_args.Req = req
+	var _result member.MemberServiceGetMemberListResult
+	if err = p.c.Call(ctx, "GetMemberList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -220,11 +325,11 @@ func (p *kClient) LoginMember(ctx context.Context, req *base.CheckAccountReq) (r
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetMemberList(ctx context.Context, req *member.GetMemberListReq) (r *member.MemberListResp, err error) {
-	var _args member.MemberServiceGetMemberListArgs
+func (p *kClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq) (r *base.BaseResp, err error) {
+	var _args member.MemberServiceChangePasswordArgs
 	_args.Req = req
-	var _result member.MemberServiceGetMemberListResult
-	if err = p.c.Call(ctx, "GetMemberList", &_args, &_result); err != nil {
+	var _result member.MemberServiceChangePasswordResult
+	if err = p.c.Call(ctx, "ChangePassword", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -5,26 +5,27 @@ package user
 import (
 	"context"
 	"fmt"
+	role "gen/kitex_gen/Role"
 	"gen/kitex_gen/base"
 )
 
 type User struct {
-	Id        *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  *string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  *string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    *string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      *string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    *int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender    *int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Detail    *string `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
-	Roles     []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
-	CreatedAt *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
+	Id        *int64       `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username  *string      `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password  *string      `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar    *string      `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    *string      `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      *string      `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    *int64       `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Gender    *int64       `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  *string      `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt    *string      `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp    *string      `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Detail    *string      `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
+	Roles     []*role.Role `thrift:"roles,14,optional" frugal:"14,optional,list<role.Role>" json:"roles,omitempty"`
+	CreatedAt *string      `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt *string      `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId *string      `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
 }
 
 func NewUser() *User {
@@ -142,9 +143,9 @@ func (p *User) GetDetail() (v string) {
 	return *p.Detail
 }
 
-var User_Roles_DEFAULT []*Role
+var User_Roles_DEFAULT []*role.Role
 
-func (p *User) GetRoles() (v []*Role) {
+func (p *User) GetRoles() (v []*role.Role) {
 	if !p.IsSetRoles() {
 		return User_Roles_DEFAULT
 	}
@@ -213,7 +214,7 @@ func (p *User) SetLastIp(val *string) {
 func (p *User) SetDetail(val *string) {
 	p.Detail = val
 }
-func (p *User) SetRoles(val []*Role) {
+func (p *User) SetRoles(val []*role.Role) {
 	p.Roles = val
 }
 func (p *User) SetCreatedAt(val *string) {
@@ -314,134 +315,6 @@ var fieldIDToName_User = map[int16]string{
 	251: "createdAt",
 	252: "updatedAt",
 	253: "createdId",
-}
-
-type Role struct {
-	Id            *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name          *string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Value         *string `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
-	DefaultRouter *string `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
-	Remark        *string `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
-	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
-}
-
-func NewRole() *Role {
-	return &Role{}
-}
-
-func (p *Role) InitDefault() {
-}
-
-var Role_Id_DEFAULT int64
-
-func (p *Role) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Role_Id_DEFAULT
-	}
-	return *p.Id
-}
-
-var Role_Name_DEFAULT string
-
-func (p *Role) GetName() (v string) {
-	if !p.IsSetName() {
-		return Role_Name_DEFAULT
-	}
-	return *p.Name
-}
-
-var Role_Value_DEFAULT string
-
-func (p *Role) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return Role_Value_DEFAULT
-	}
-	return *p.Value
-}
-
-var Role_DefaultRouter_DEFAULT string
-
-func (p *Role) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return Role_DefaultRouter_DEFAULT
-	}
-	return *p.DefaultRouter
-}
-
-var Role_Remark_DEFAULT string
-
-func (p *Role) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return Role_Remark_DEFAULT
-	}
-	return *p.Remark
-}
-
-var Role_Apis_DEFAULT []int64
-
-func (p *Role) GetApis() (v []int64) {
-	if !p.IsSetApis() {
-		return Role_Apis_DEFAULT
-	}
-	return p.Apis
-}
-func (p *Role) SetId(val *int64) {
-	p.Id = val
-}
-func (p *Role) SetName(val *string) {
-	p.Name = val
-}
-func (p *Role) SetValue(val *string) {
-	p.Value = val
-}
-func (p *Role) SetDefaultRouter(val *string) {
-	p.DefaultRouter = val
-}
-func (p *Role) SetRemark(val *string) {
-	p.Remark = val
-}
-func (p *Role) SetApis(val []int64) {
-	p.Apis = val
-}
-
-func (p *Role) IsSetId() bool {
-	return p.Id != nil
-}
-
-func (p *Role) IsSetName() bool {
-	return p.Name != nil
-}
-
-func (p *Role) IsSetValue() bool {
-	return p.Value != nil
-}
-
-func (p *Role) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != nil
-}
-
-func (p *Role) IsSetRemark() bool {
-	return p.Remark != nil
-}
-
-func (p *Role) IsSetApis() bool {
-	return p.Apis != nil
-}
-
-func (p *Role) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Role(%+v)", *p)
-}
-
-var fieldIDToName_Role = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
-	6: "apis",
 }
 
 type UserResp struct {
@@ -832,6 +705,118 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 	9: "roleId",
 }
 
+type ChangePasswordReq struct {
+	Id       *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+}
+
+func NewChangePasswordReq() *ChangePasswordReq {
+	return &ChangePasswordReq{}
+}
+
+func (p *ChangePasswordReq) InitDefault() {
+}
+
+var ChangePasswordReq_Id_DEFAULT int64
+
+func (p *ChangePasswordReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return ChangePasswordReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var ChangePasswordReq_Password_DEFAULT string
+
+func (p *ChangePasswordReq) GetPassword() (v string) {
+	if !p.IsSetPassword() {
+		return ChangePasswordReq_Password_DEFAULT
+	}
+	return *p.Password
+}
+func (p *ChangePasswordReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *ChangePasswordReq) SetPassword(val *string) {
+	p.Password = val
+}
+
+func (p *ChangePasswordReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *ChangePasswordReq) IsSetPassword() bool {
+	return p.Password != nil
+}
+
+func (p *ChangePasswordReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ChangePasswordReq(%+v)", *p)
+}
+
+var fieldIDToName_ChangePasswordReq = map[int16]string{
+	1: "id",
+	2: "password",
+}
+
+type SetUserRoleReq struct {
+	Id     *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	RoleId *string `thrift:"roleId,2,optional" frugal:"2,optional,string" json:"roleId,omitempty"`
+}
+
+func NewSetUserRoleReq() *SetUserRoleReq {
+	return &SetUserRoleReq{}
+}
+
+func (p *SetUserRoleReq) InitDefault() {
+}
+
+var SetUserRoleReq_Id_DEFAULT int64
+
+func (p *SetUserRoleReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return SetUserRoleReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var SetUserRoleReq_RoleId_DEFAULT string
+
+func (p *SetUserRoleReq) GetRoleId() (v string) {
+	if !p.IsSetRoleId() {
+		return SetUserRoleReq_RoleId_DEFAULT
+	}
+	return *p.RoleId
+}
+func (p *SetUserRoleReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *SetUserRoleReq) SetRoleId(val *string) {
+	p.RoleId = val
+}
+
+func (p *SetUserRoleReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *SetUserRoleReq) IsSetRoleId() bool {
+	return p.RoleId != nil
+}
+
+func (p *SetUserRoleReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SetUserRoleReq(%+v)", *p)
+}
+
+var fieldIDToName_SetUserRoleReq = map[int16]string{
+	1: "id",
+	2: "roleId",
+}
+
 type UserService interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (r *UserResp, err error)
 
@@ -842,6 +827,12 @@ type UserService interface {
 	GetUserList(ctx context.Context, req *GetUserListReq) (r *UserListResp, err error)
 
 	UpdateUser(ctx context.Context, req *UpdateUserReq) (r *UserResp, err error)
+
+	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.BaseResp, err error)
+
+	DeleteUser(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+
+	SetUserRole(ctx context.Context, req *SetUserRoleReq) (r *base.BaseResp, err error)
 }
 
 type UserServiceCreateUserArgs struct {
@@ -1221,5 +1212,233 @@ func (p *UserServiceUpdateUserResult) String() string {
 }
 
 var fieldIDToName_UserServiceUpdateUserResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceChangePasswordArgs struct {
+	Req *ChangePasswordReq `thrift:"req,1" frugal:"1,default,ChangePasswordReq" json:"req"`
+}
+
+func NewUserServiceChangePasswordArgs() *UserServiceChangePasswordArgs {
+	return &UserServiceChangePasswordArgs{}
+}
+
+func (p *UserServiceChangePasswordArgs) InitDefault() {
+}
+
+var UserServiceChangePasswordArgs_Req_DEFAULT *ChangePasswordReq
+
+func (p *UserServiceChangePasswordArgs) GetReq() (v *ChangePasswordReq) {
+	if !p.IsSetReq() {
+		return UserServiceChangePasswordArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceChangePasswordArgs) SetReq(val *ChangePasswordReq) {
+	p.Req = val
+}
+
+func (p *UserServiceChangePasswordArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceChangePasswordArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceChangePasswordArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceChangePasswordArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceChangePasswordResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewUserServiceChangePasswordResult() *UserServiceChangePasswordResult {
+	return &UserServiceChangePasswordResult{}
+}
+
+func (p *UserServiceChangePasswordResult) InitDefault() {
+}
+
+var UserServiceChangePasswordResult_Success_DEFAULT *base.BaseResp
+
+func (p *UserServiceChangePasswordResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceChangePasswordResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceChangePasswordResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *UserServiceChangePasswordResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceChangePasswordResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceChangePasswordResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceChangePasswordResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceDeleteUserArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewUserServiceDeleteUserArgs() *UserServiceDeleteUserArgs {
+	return &UserServiceDeleteUserArgs{}
+}
+
+func (p *UserServiceDeleteUserArgs) InitDefault() {
+}
+
+var UserServiceDeleteUserArgs_Req_DEFAULT *base.IdReq
+
+func (p *UserServiceDeleteUserArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return UserServiceDeleteUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceDeleteUserArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *UserServiceDeleteUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceDeleteUserArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeleteUserArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeleteUserArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceDeleteUserResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewUserServiceDeleteUserResult() *UserServiceDeleteUserResult {
+	return &UserServiceDeleteUserResult{}
+}
+
+func (p *UserServiceDeleteUserResult) InitDefault() {
+}
+
+var UserServiceDeleteUserResult_Success_DEFAULT *base.BaseResp
+
+func (p *UserServiceDeleteUserResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceDeleteUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceDeleteUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *UserServiceDeleteUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceDeleteUserResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeleteUserResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeleteUserResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceSetUserRoleArgs struct {
+	Req *SetUserRoleReq `thrift:"req,1" frugal:"1,default,SetUserRoleReq" json:"req"`
+}
+
+func NewUserServiceSetUserRoleArgs() *UserServiceSetUserRoleArgs {
+	return &UserServiceSetUserRoleArgs{}
+}
+
+func (p *UserServiceSetUserRoleArgs) InitDefault() {
+}
+
+var UserServiceSetUserRoleArgs_Req_DEFAULT *SetUserRoleReq
+
+func (p *UserServiceSetUserRoleArgs) GetReq() (v *SetUserRoleReq) {
+	if !p.IsSetReq() {
+		return UserServiceSetUserRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceSetUserRoleArgs) SetReq(val *SetUserRoleReq) {
+	p.Req = val
+}
+
+func (p *UserServiceSetUserRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceSetUserRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceSetUserRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceSetUserRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceSetUserRoleResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewUserServiceSetUserRoleResult() *UserServiceSetUserRoleResult {
+	return &UserServiceSetUserRoleResult{}
+}
+
+func (p *UserServiceSetUserRoleResult) InitDefault() {
+}
+
+var UserServiceSetUserRoleResult_Success_DEFAULT *base.BaseResp
+
+func (p *UserServiceSetUserRoleResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceSetUserRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceSetUserRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *UserServiceSetUserRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceSetUserRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceSetUserRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceSetUserRoleResult = map[int16]string{
 	0: "success",
 }

@@ -9,21 +9,21 @@ import (
 )
 
 type Member struct {
-	Id        *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  *string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  *string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    *string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      *string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    *int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Level     *int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
-	Gender    *int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	CreatedAt *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
+	Id         *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Membername *string `thrift:"Membername,2,optional" frugal:"2,optional,string" json:"Membername,omitempty"`
+	Password   *string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar     *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile     *string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name       *string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status     *int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Level      *int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
+	Gender     *int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday   *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt     *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp     *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	CreatedAt  *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt  *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId  *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
 }
 
 func NewMember() *Member {
@@ -42,13 +42,13 @@ func (p *Member) GetId() (v int64) {
 	return *p.Id
 }
 
-var Member_Username_DEFAULT string
+var Member_Membername_DEFAULT string
 
-func (p *Member) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return Member_Username_DEFAULT
+func (p *Member) GetMembername() (v string) {
+	if !p.IsSetMembername() {
+		return Member_Membername_DEFAULT
 	}
-	return *p.Username
+	return *p.Membername
 }
 
 var Member_Password_DEFAULT string
@@ -170,8 +170,8 @@ func (p *Member) GetCreatedId() (v string) {
 func (p *Member) SetId(val *int64) {
 	p.Id = val
 }
-func (p *Member) SetUsername(val *string) {
-	p.Username = val
+func (p *Member) SetMembername(val *string) {
+	p.Membername = val
 }
 func (p *Member) SetPassword(val *string) {
 	p.Password = val
@@ -217,8 +217,8 @@ func (p *Member) IsSetId() bool {
 	return p.Id != nil
 }
 
-func (p *Member) IsSetUsername() bool {
-	return p.Username != nil
+func (p *Member) IsSetMembername() bool {
+	return p.Membername != nil
 }
 
 func (p *Member) IsSetPassword() bool {
@@ -282,7 +282,7 @@ func (p *Member) String() string {
 
 var fieldIDToName_Member = map[int16]string{
 	1:   "id",
-	2:   "username",
+	2:   "Membername",
 	3:   "password",
 	4:   "avatar",
 	5:   "mobile",
@@ -299,6 +299,8 @@ var fieldIDToName_Member = map[int16]string{
 }
 
 type CreateMemberReq struct {
+	Membername *string `thrift:"Membername,1,optional" frugal:"1,optional,string" json:"Membername,omitempty"`
+	Password   *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
 }
 
 func NewCreateMemberReq() *CreateMemberReq {
@@ -308,6 +310,38 @@ func NewCreateMemberReq() *CreateMemberReq {
 func (p *CreateMemberReq) InitDefault() {
 }
 
+var CreateMemberReq_Membername_DEFAULT string
+
+func (p *CreateMemberReq) GetMembername() (v string) {
+	if !p.IsSetMembername() {
+		return CreateMemberReq_Membername_DEFAULT
+	}
+	return *p.Membername
+}
+
+var CreateMemberReq_Password_DEFAULT string
+
+func (p *CreateMemberReq) GetPassword() (v string) {
+	if !p.IsSetPassword() {
+		return CreateMemberReq_Password_DEFAULT
+	}
+	return *p.Password
+}
+func (p *CreateMemberReq) SetMembername(val *string) {
+	p.Membername = val
+}
+func (p *CreateMemberReq) SetPassword(val *string) {
+	p.Password = val
+}
+
+func (p *CreateMemberReq) IsSetMembername() bool {
+	return p.Membername != nil
+}
+
+func (p *CreateMemberReq) IsSetPassword() bool {
+	return p.Password != nil
+}
+
 func (p *CreateMemberReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -315,10 +349,13 @@ func (p *CreateMemberReq) String() string {
 	return fmt.Sprintf("CreateMemberReq(%+v)", *p)
 }
 
-var fieldIDToName_CreateMemberReq = map[int16]string{}
+var fieldIDToName_CreateMemberReq = map[int16]string{
+	1: "Membername",
+	2: "password",
+}
 
 type GetMemberListReq struct {
-	Pages *base.PageReq `thrift:"pages,1,optional" frugal:"1,optional,base.PageReq" json:"pages,omitempty"`
+	Pages *base.PageReq `thrift:"pages,2,optional" frugal:"2,optional,base.PageReq" json:"pages,omitempty"`
 }
 
 func NewGetMemberListReq() *GetMemberListReq {
@@ -352,7 +389,7 @@ func (p *GetMemberListReq) String() string {
 }
 
 var fieldIDToName_GetMemberListReq = map[int16]string{
-	1: "pages",
+	2: "pages",
 }
 
 type MemberResp struct {
@@ -412,7 +449,7 @@ var fieldIDToName_MemberResp = map[int16]string{
 }
 
 type MemberListResp struct {
-	Member   []*Member      `thrift:"member,1,optional" frugal:"1,optional,list<Member>" json:"member,omitempty"`
+	Data     []*Member      `thrift:"data,1,optional" frugal:"1,optional,list<Member>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
@@ -423,13 +460,13 @@ func NewMemberListResp() *MemberListResp {
 func (p *MemberListResp) InitDefault() {
 }
 
-var MemberListResp_Member_DEFAULT []*Member
+var MemberListResp_Data_DEFAULT []*Member
 
-func (p *MemberListResp) GetMember() (v []*Member) {
-	if !p.IsSetMember() {
-		return MemberListResp_Member_DEFAULT
+func (p *MemberListResp) GetData() (v []*Member) {
+	if !p.IsSetData() {
+		return MemberListResp_Data_DEFAULT
 	}
-	return p.Member
+	return p.Data
 }
 
 var MemberListResp_BaseResp_DEFAULT *base.BaseResp
@@ -440,15 +477,15 @@ func (p *MemberListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MemberListResp) SetMember(val []*Member) {
-	p.Member = val
+func (p *MemberListResp) SetData(val []*Member) {
+	p.Data = val
 }
 func (p *MemberListResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *MemberListResp) IsSetMember() bool {
-	return p.Member != nil
+func (p *MemberListResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *MemberListResp) IsSetBaseResp() bool {
@@ -463,18 +500,136 @@ func (p *MemberListResp) String() string {
 }
 
 var fieldIDToName_MemberListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type UpdateMemberReq struct {
+	Member   *Member        `thrift:"member,1,optional" frugal:"1,optional,Member" json:"member,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewUpdateMemberReq() *UpdateMemberReq {
+	return &UpdateMemberReq{}
+}
+
+func (p *UpdateMemberReq) InitDefault() {
+}
+
+var UpdateMemberReq_Member_DEFAULT *Member
+
+func (p *UpdateMemberReq) GetMember() (v *Member) {
+	if !p.IsSetMember() {
+		return UpdateMemberReq_Member_DEFAULT
+	}
+	return p.Member
+}
+
+var UpdateMemberReq_BaseResp_DEFAULT *base.BaseResp
+
+func (p *UpdateMemberReq) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return UpdateMemberReq_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *UpdateMemberReq) SetMember(val *Member) {
+	p.Member = val
+}
+func (p *UpdateMemberReq) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *UpdateMemberReq) IsSetMember() bool {
+	return p.Member != nil
+}
+
+func (p *UpdateMemberReq) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *UpdateMemberReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateMemberReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateMemberReq = map[int16]string{
 	1:   "member",
 	255: "baseResp",
+}
+
+type ChangePasswordReq struct {
+	Id       *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+}
+
+func NewChangePasswordReq() *ChangePasswordReq {
+	return &ChangePasswordReq{}
+}
+
+func (p *ChangePasswordReq) InitDefault() {
+}
+
+var ChangePasswordReq_Id_DEFAULT int64
+
+func (p *ChangePasswordReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return ChangePasswordReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var ChangePasswordReq_Password_DEFAULT string
+
+func (p *ChangePasswordReq) GetPassword() (v string) {
+	if !p.IsSetPassword() {
+		return ChangePasswordReq_Password_DEFAULT
+	}
+	return *p.Password
+}
+func (p *ChangePasswordReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *ChangePasswordReq) SetPassword(val *string) {
+	p.Password = val
+}
+
+func (p *ChangePasswordReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *ChangePasswordReq) IsSetPassword() bool {
+	return p.Password != nil
+}
+
+func (p *ChangePasswordReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ChangePasswordReq(%+v)", *p)
+}
+
+var fieldIDToName_ChangePasswordReq = map[int16]string{
+	1: "id",
+	2: "password",
 }
 
 type MemberService interface {
 	CreateMember(ctx context.Context, req *CreateMemberReq) (r *MemberResp, err error)
 
+	DeleteMember(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+
+	UpdateMember(ctx context.Context, req *UpdateMemberReq) (r *MemberResp, err error)
+
 	GetMember(ctx context.Context, req *base.IdReq) (r *MemberResp, err error)
+
+	GetMemberList(ctx context.Context, req *GetMemberListReq) (r *MemberListResp, err error)
 
 	LoginMember(ctx context.Context, req *base.CheckAccountReq) (r *MemberResp, err error)
 
-	GetMemberList(ctx context.Context, req *GetMemberListReq) (r *MemberListResp, err error)
+	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.BaseResp, err error)
 }
 
 type MemberServiceCreateMemberArgs struct {
@@ -550,6 +705,158 @@ func (p *MemberServiceCreateMemberResult) String() string {
 }
 
 var fieldIDToName_MemberServiceCreateMemberResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceDeleteMemberArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewMemberServiceDeleteMemberArgs() *MemberServiceDeleteMemberArgs {
+	return &MemberServiceDeleteMemberArgs{}
+}
+
+func (p *MemberServiceDeleteMemberArgs) InitDefault() {
+}
+
+var MemberServiceDeleteMemberArgs_Req_DEFAULT *base.IdReq
+
+func (p *MemberServiceDeleteMemberArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return MemberServiceDeleteMemberArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceDeleteMemberArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceDeleteMemberArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceDeleteMemberArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceDeleteMemberArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceDeleteMemberArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceDeleteMemberResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceDeleteMemberResult() *MemberServiceDeleteMemberResult {
+	return &MemberServiceDeleteMemberResult{}
+}
+
+func (p *MemberServiceDeleteMemberResult) InitDefault() {
+}
+
+var MemberServiceDeleteMemberResult_Success_DEFAULT *base.BaseResp
+
+func (p *MemberServiceDeleteMemberResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceDeleteMemberResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceDeleteMemberResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *MemberServiceDeleteMemberResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceDeleteMemberResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceDeleteMemberResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceDeleteMemberResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceUpdateMemberArgs struct {
+	Req *UpdateMemberReq `thrift:"req,1" frugal:"1,default,UpdateMemberReq" json:"req"`
+}
+
+func NewMemberServiceUpdateMemberArgs() *MemberServiceUpdateMemberArgs {
+	return &MemberServiceUpdateMemberArgs{}
+}
+
+func (p *MemberServiceUpdateMemberArgs) InitDefault() {
+}
+
+var MemberServiceUpdateMemberArgs_Req_DEFAULT *UpdateMemberReq
+
+func (p *MemberServiceUpdateMemberArgs) GetReq() (v *UpdateMemberReq) {
+	if !p.IsSetReq() {
+		return MemberServiceUpdateMemberArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceUpdateMemberArgs) SetReq(val *UpdateMemberReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceUpdateMemberArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceUpdateMemberArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceUpdateMemberArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceUpdateMemberArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceUpdateMemberResult struct {
+	Success *MemberResp `thrift:"success,0,optional" frugal:"0,optional,MemberResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceUpdateMemberResult() *MemberServiceUpdateMemberResult {
+	return &MemberServiceUpdateMemberResult{}
+}
+
+func (p *MemberServiceUpdateMemberResult) InitDefault() {
+}
+
+var MemberServiceUpdateMemberResult_Success_DEFAULT *MemberResp
+
+func (p *MemberServiceUpdateMemberResult) GetSuccess() (v *MemberResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceUpdateMemberResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceUpdateMemberResult) SetSuccess(x interface{}) {
+	p.Success = x.(*MemberResp)
+}
+
+func (p *MemberServiceUpdateMemberResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceUpdateMemberResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceUpdateMemberResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceUpdateMemberResult = map[int16]string{
 	0: "success",
 }
 
@@ -629,6 +936,82 @@ var fieldIDToName_MemberServiceGetMemberResult = map[int16]string{
 	0: "success",
 }
 
+type MemberServiceGetMemberListArgs struct {
+	Req *GetMemberListReq `thrift:"req,1" frugal:"1,default,GetMemberListReq" json:"req"`
+}
+
+func NewMemberServiceGetMemberListArgs() *MemberServiceGetMemberListArgs {
+	return &MemberServiceGetMemberListArgs{}
+}
+
+func (p *MemberServiceGetMemberListArgs) InitDefault() {
+}
+
+var MemberServiceGetMemberListArgs_Req_DEFAULT *GetMemberListReq
+
+func (p *MemberServiceGetMemberListArgs) GetReq() (v *GetMemberListReq) {
+	if !p.IsSetReq() {
+		return MemberServiceGetMemberListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceGetMemberListArgs) SetReq(val *GetMemberListReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceGetMemberListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceGetMemberListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetMemberListArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetMemberListArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceGetMemberListResult struct {
+	Success *MemberListResp `thrift:"success,0,optional" frugal:"0,optional,MemberListResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceGetMemberListResult() *MemberServiceGetMemberListResult {
+	return &MemberServiceGetMemberListResult{}
+}
+
+func (p *MemberServiceGetMemberListResult) InitDefault() {
+}
+
+var MemberServiceGetMemberListResult_Success_DEFAULT *MemberListResp
+
+func (p *MemberServiceGetMemberListResult) GetSuccess() (v *MemberListResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceGetMemberListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceGetMemberListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*MemberListResp)
+}
+
+func (p *MemberServiceGetMemberListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceGetMemberListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetMemberListResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetMemberListResult = map[int16]string{
+	0: "success",
+}
+
 type MemberServiceLoginMemberArgs struct {
 	Req *base.CheckAccountReq `thrift:"req,1" frugal:"1,default,base.CheckAccountReq" json:"req"`
 }
@@ -705,78 +1088,78 @@ var fieldIDToName_MemberServiceLoginMemberResult = map[int16]string{
 	0: "success",
 }
 
-type MemberServiceGetMemberListArgs struct {
-	Req *GetMemberListReq `thrift:"req,1" frugal:"1,default,GetMemberListReq" json:"req"`
+type MemberServiceChangePasswordArgs struct {
+	Req *ChangePasswordReq `thrift:"req,1" frugal:"1,default,ChangePasswordReq" json:"req"`
 }
 
-func NewMemberServiceGetMemberListArgs() *MemberServiceGetMemberListArgs {
-	return &MemberServiceGetMemberListArgs{}
+func NewMemberServiceChangePasswordArgs() *MemberServiceChangePasswordArgs {
+	return &MemberServiceChangePasswordArgs{}
 }
 
-func (p *MemberServiceGetMemberListArgs) InitDefault() {
+func (p *MemberServiceChangePasswordArgs) InitDefault() {
 }
 
-var MemberServiceGetMemberListArgs_Req_DEFAULT *GetMemberListReq
+var MemberServiceChangePasswordArgs_Req_DEFAULT *ChangePasswordReq
 
-func (p *MemberServiceGetMemberListArgs) GetReq() (v *GetMemberListReq) {
+func (p *MemberServiceChangePasswordArgs) GetReq() (v *ChangePasswordReq) {
 	if !p.IsSetReq() {
-		return MemberServiceGetMemberListArgs_Req_DEFAULT
+		return MemberServiceChangePasswordArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *MemberServiceGetMemberListArgs) SetReq(val *GetMemberListReq) {
+func (p *MemberServiceChangePasswordArgs) SetReq(val *ChangePasswordReq) {
 	p.Req = val
 }
 
-func (p *MemberServiceGetMemberListArgs) IsSetReq() bool {
+func (p *MemberServiceChangePasswordArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *MemberServiceGetMemberListArgs) String() string {
+func (p *MemberServiceChangePasswordArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MemberServiceGetMemberListArgs(%+v)", *p)
+	return fmt.Sprintf("MemberServiceChangePasswordArgs(%+v)", *p)
 }
 
-var fieldIDToName_MemberServiceGetMemberListArgs = map[int16]string{
+var fieldIDToName_MemberServiceChangePasswordArgs = map[int16]string{
 	1: "req",
 }
 
-type MemberServiceGetMemberListResult struct {
-	Success *MemberListResp `thrift:"success,0,optional" frugal:"0,optional,MemberListResp" json:"success,omitempty"`
+type MemberServiceChangePasswordResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
 }
 
-func NewMemberServiceGetMemberListResult() *MemberServiceGetMemberListResult {
-	return &MemberServiceGetMemberListResult{}
+func NewMemberServiceChangePasswordResult() *MemberServiceChangePasswordResult {
+	return &MemberServiceChangePasswordResult{}
 }
 
-func (p *MemberServiceGetMemberListResult) InitDefault() {
+func (p *MemberServiceChangePasswordResult) InitDefault() {
 }
 
-var MemberServiceGetMemberListResult_Success_DEFAULT *MemberListResp
+var MemberServiceChangePasswordResult_Success_DEFAULT *base.BaseResp
 
-func (p *MemberServiceGetMemberListResult) GetSuccess() (v *MemberListResp) {
+func (p *MemberServiceChangePasswordResult) GetSuccess() (v *base.BaseResp) {
 	if !p.IsSetSuccess() {
-		return MemberServiceGetMemberListResult_Success_DEFAULT
+		return MemberServiceChangePasswordResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *MemberServiceGetMemberListResult) SetSuccess(x interface{}) {
-	p.Success = x.(*MemberListResp)
+func (p *MemberServiceChangePasswordResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
 }
 
-func (p *MemberServiceGetMemberListResult) IsSetSuccess() bool {
+func (p *MemberServiceChangePasswordResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *MemberServiceGetMemberListResult) String() string {
+func (p *MemberServiceChangePasswordResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MemberServiceGetMemberListResult(%+v)", *p)
+	return fmt.Sprintf("MemberServiceChangePasswordResult(%+v)", *p)
 }
 
-var fieldIDToName_MemberServiceGetMemberListResult = map[int16]string{
+var fieldIDToName_MemberServiceChangePasswordResult = map[int16]string{
 	0: "success",
 }

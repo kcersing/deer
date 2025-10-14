@@ -17,6 +17,9 @@ type Client interface {
 	LoginUser(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
 	GetUserList(ctx context.Context, req *user.GetUserListReq, callOptions ...callopt.Option) (r *user.UserListResp, err error)
 	UpdateUser(ctx context.Context, req *user.UpdateUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error)
+	ChangePassword(ctx context.Context, req *user.ChangePasswordReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	DeleteUser(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	SetUserRole(ctx context.Context, req *user.SetUserRoleReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -71,4 +74,19 @@ func (p *kUserServiceClient) GetUserList(ctx context.Context, req *user.GetUserL
 func (p *kUserServiceClient) UpdateUser(ctx context.Context, req *user.UpdateUserReq, callOptions ...callopt.Option) (r *user.UserResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateUser(ctx, req)
+}
+
+func (p *kUserServiceClient) ChangePassword(ctx context.Context, req *user.ChangePasswordReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ChangePassword(ctx, req)
+}
+
+func (p *kUserServiceClient) DeleteUser(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteUser(ctx, req)
+}
+
+func (p *kUserServiceClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SetUserRole(ctx, req)
 }
