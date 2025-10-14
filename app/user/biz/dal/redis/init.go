@@ -2,7 +2,8 @@ package redis
 
 import (
 	"context"
-	"deer/app/order/conf"
+	"user/conf"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -11,7 +12,6 @@ var (
 )
 
 func Init() {
-	return
 	RedisClient = redis.NewClient(&redis.Options{
 		Addr:     conf.GetConf().Redis.Address,
 		Username: conf.GetConf().Redis.Username,

@@ -24,10 +24,13 @@ var (
 func (p *User) IsValid() error {
 	return nil
 }
+func (p *Role) IsValid() error {
+	return nil
+}
 func (p *UserResp) IsValid() error {
-	if p.User != nil {
-		if err := p.User.IsValid(); err != nil {
-			return fmt.Errorf("field User not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {
@@ -48,14 +51,14 @@ func (p *UserListResp) IsValid() error {
 func (p *CreateUserReq) IsValid() error {
 	return nil
 }
-func (p *CheckUserReq) IsValid() error {
-	return nil
-}
 func (p *GetUserListReq) IsValid() error {
 	if p.Pages != nil {
 		if err := p.Pages.IsValid(); err != nil {
 			return fmt.Errorf("field Pages not valid, %w", err)
 		}
 	}
+	return nil
+}
+func (p *UpdateUserReq) IsValid() error {
 	return nil
 }

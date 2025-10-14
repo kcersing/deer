@@ -13,14 +13,20 @@ struct User {
 
     11:optional string  lastAt,//最后一次登录时间
     12:optional string  lastIp,//最后一次登录ip
+    13:optional string  detail,
 
+    14:optional list<Role> roles,//角色
     251:optional string createdAt,
     252:optional string updatedAt,
     253:optional string createdId,
 }
 struct Role{
-    1:optional i64 roleId
-    2:optional i64 roleName
+    1:optional i64 id,
+    2:optional string name,
+    3:optional string value,
+    4:optional string defaultRouter,
+    5:optional string remark,
+    6:optional list<i64> apis,
 }
 
 

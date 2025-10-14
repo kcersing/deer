@@ -2,16 +2,16 @@ package service
 
 import (
 	"context"
-	order "gen/kitex_gen/user"
+	User "gen/kitex_gen/user"
 	"testing"
 )
 
-func TestCreateOrder_Run(t *testing.T) {
+func TestCreateUser_Run(t *testing.T) {
 	ctx := context.Background()
 	s := NewCreateUserService(ctx)
 	// init req and assert value
 
-	req := &order.GetUserListReq{}
+	req := &User.CreateUserReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

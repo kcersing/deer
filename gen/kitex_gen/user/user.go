@@ -20,6 +20,8 @@ type User struct {
 	Birthday  *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
 	LastAt    *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
 	LastIp    *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Detail    *string `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
+	Roles     []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
 	CreatedAt *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
 	CreatedId *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
@@ -131,6 +133,24 @@ func (p *User) GetLastIp() (v string) {
 	return *p.LastIp
 }
 
+var User_Detail_DEFAULT string
+
+func (p *User) GetDetail() (v string) {
+	if !p.IsSetDetail() {
+		return User_Detail_DEFAULT
+	}
+	return *p.Detail
+}
+
+var User_Roles_DEFAULT []*Role
+
+func (p *User) GetRoles() (v []*Role) {
+	if !p.IsSetRoles() {
+		return User_Roles_DEFAULT
+	}
+	return p.Roles
+}
+
 var User_CreatedAt_DEFAULT string
 
 func (p *User) GetCreatedAt() (v string) {
@@ -190,6 +210,12 @@ func (p *User) SetLastAt(val *string) {
 func (p *User) SetLastIp(val *string) {
 	p.LastIp = val
 }
+func (p *User) SetDetail(val *string) {
+	p.Detail = val
+}
+func (p *User) SetRoles(val []*Role) {
+	p.Roles = val
+}
 func (p *User) SetCreatedAt(val *string) {
 	p.CreatedAt = val
 }
@@ -244,6 +270,14 @@ func (p *User) IsSetLastIp() bool {
 	return p.LastIp != nil
 }
 
+func (p *User) IsSetDetail() bool {
+	return p.Detail != nil
+}
+
+func (p *User) IsSetRoles() bool {
+	return p.Roles != nil
+}
+
 func (p *User) IsSetCreatedAt() bool {
 	return p.CreatedAt != nil
 }
@@ -275,13 +309,143 @@ var fieldIDToName_User = map[int16]string{
 	10:  "birthday",
 	11:  "lastAt",
 	12:  "lastIp",
+	13:  "detail",
+	14:  "roles",
 	251: "createdAt",
 	252: "updatedAt",
 	253: "createdId",
 }
 
+type Role struct {
+	Id            *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name          *string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Value         *string `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
+	DefaultRouter *string `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
+	Remark        *string `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
+	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+}
+
+func NewRole() *Role {
+	return &Role{}
+}
+
+func (p *Role) InitDefault() {
+}
+
+var Role_Id_DEFAULT int64
+
+func (p *Role) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Role_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var Role_Name_DEFAULT string
+
+func (p *Role) GetName() (v string) {
+	if !p.IsSetName() {
+		return Role_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var Role_Value_DEFAULT string
+
+func (p *Role) GetValue() (v string) {
+	if !p.IsSetValue() {
+		return Role_Value_DEFAULT
+	}
+	return *p.Value
+}
+
+var Role_DefaultRouter_DEFAULT string
+
+func (p *Role) GetDefaultRouter() (v string) {
+	if !p.IsSetDefaultRouter() {
+		return Role_DefaultRouter_DEFAULT
+	}
+	return *p.DefaultRouter
+}
+
+var Role_Remark_DEFAULT string
+
+func (p *Role) GetRemark() (v string) {
+	if !p.IsSetRemark() {
+		return Role_Remark_DEFAULT
+	}
+	return *p.Remark
+}
+
+var Role_Apis_DEFAULT []int64
+
+func (p *Role) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return Role_Apis_DEFAULT
+	}
+	return p.Apis
+}
+func (p *Role) SetId(val *int64) {
+	p.Id = val
+}
+func (p *Role) SetName(val *string) {
+	p.Name = val
+}
+func (p *Role) SetValue(val *string) {
+	p.Value = val
+}
+func (p *Role) SetDefaultRouter(val *string) {
+	p.DefaultRouter = val
+}
+func (p *Role) SetRemark(val *string) {
+	p.Remark = val
+}
+func (p *Role) SetApis(val []int64) {
+	p.Apis = val
+}
+
+func (p *Role) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *Role) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *Role) IsSetValue() bool {
+	return p.Value != nil
+}
+
+func (p *Role) IsSetDefaultRouter() bool {
+	return p.DefaultRouter != nil
+}
+
+func (p *Role) IsSetRemark() bool {
+	return p.Remark != nil
+}
+
+func (p *Role) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *Role) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Role(%+v)", *p)
+}
+
+var fieldIDToName_Role = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "value",
+	4: "defaultRouter",
+	5: "remark",
+	6: "apis",
+}
+
 type UserResp struct {
-	User     *User          `thrift:"user,1,optional" frugal:"1,optional,User" json:"user,omitempty"`
+	Data     *User          `thrift:"data,1,optional" frugal:"1,optional,User" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
@@ -292,13 +456,13 @@ func NewUserResp() *UserResp {
 func (p *UserResp) InitDefault() {
 }
 
-var UserResp_User_DEFAULT *User
+var UserResp_Data_DEFAULT *User
 
-func (p *UserResp) GetUser() (v *User) {
-	if !p.IsSetUser() {
-		return UserResp_User_DEFAULT
+func (p *UserResp) GetData() (v *User) {
+	if !p.IsSetData() {
+		return UserResp_Data_DEFAULT
 	}
-	return p.User
+	return p.Data
 }
 
 var UserResp_BaseResp_DEFAULT *base.BaseResp
@@ -309,15 +473,15 @@ func (p *UserResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UserResp) SetUser(val *User) {
-	p.User = val
+func (p *UserResp) SetData(val *User) {
+	p.Data = val
 }
 func (p *UserResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *UserResp) IsSetUser() bool {
-	return p.User != nil
+func (p *UserResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *UserResp) IsSetBaseResp() bool {
@@ -332,12 +496,12 @@ func (p *UserResp) String() string {
 }
 
 var fieldIDToName_UserResp = map[int16]string{
-	1:   "user",
+	1:   "data",
 	255: "baseResp",
 }
 
 type UserListResp struct {
-	User     []*User        `thrift:"user,1,optional" frugal:"1,optional,list<User>" json:"user,omitempty"`
+	Data     []*User        `thrift:"data,1,optional" frugal:"1,optional,list<User>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
@@ -348,13 +512,13 @@ func NewUserListResp() *UserListResp {
 func (p *UserListResp) InitDefault() {
 }
 
-var UserListResp_User_DEFAULT []*User
+var UserListResp_Data_DEFAULT []*User
 
-func (p *UserListResp) GetUser() (v []*User) {
-	if !p.IsSetUser() {
-		return UserListResp_User_DEFAULT
+func (p *UserListResp) GetData() (v []*User) {
+	if !p.IsSetData() {
+		return UserListResp_Data_DEFAULT
 	}
-	return p.User
+	return p.Data
 }
 
 var UserListResp_BaseResp_DEFAULT *base.BaseResp
@@ -365,15 +529,15 @@ func (p *UserListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UserListResp) SetUser(val []*User) {
-	p.User = val
+func (p *UserListResp) SetData(val []*User) {
+	p.Data = val
 }
 func (p *UserListResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *UserListResp) IsSetUser() bool {
-	return p.User != nil
+func (p *UserListResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *UserListResp) IsSetBaseResp() bool {
@@ -388,11 +552,13 @@ func (p *UserListResp) String() string {
 }
 
 var fieldIDToName_UserListResp = map[int16]string{
-	1:   "user",
+	1:   "data",
 	255: "baseResp",
 }
 
 type CreateUserReq struct {
+	Username *string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
+	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
 }
 
 func NewCreateUserReq() *CreateUserReq {
@@ -402,6 +568,38 @@ func NewCreateUserReq() *CreateUserReq {
 func (p *CreateUserReq) InitDefault() {
 }
 
+var CreateUserReq_Username_DEFAULT string
+
+func (p *CreateUserReq) GetUsername() (v string) {
+	if !p.IsSetUsername() {
+		return CreateUserReq_Username_DEFAULT
+	}
+	return *p.Username
+}
+
+var CreateUserReq_Password_DEFAULT string
+
+func (p *CreateUserReq) GetPassword() (v string) {
+	if !p.IsSetPassword() {
+		return CreateUserReq_Password_DEFAULT
+	}
+	return *p.Password
+}
+func (p *CreateUserReq) SetUsername(val *string) {
+	p.Username = val
+}
+func (p *CreateUserReq) SetPassword(val *string) {
+	p.Password = val
+}
+
+func (p *CreateUserReq) IsSetUsername() bool {
+	return p.Username != nil
+}
+
+func (p *CreateUserReq) IsSetPassword() bool {
+	return p.Password != nil
+}
+
 func (p *CreateUserReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -409,26 +607,10 @@ func (p *CreateUserReq) String() string {
 	return fmt.Sprintf("CreateUserReq(%+v)", *p)
 }
 
-var fieldIDToName_CreateUserReq = map[int16]string{}
-
-type CheckUserReq struct {
+var fieldIDToName_CreateUserReq = map[int16]string{
+	1: "username",
+	2: "password",
 }
-
-func NewCheckUserReq() *CheckUserReq {
-	return &CheckUserReq{}
-}
-
-func (p *CheckUserReq) InitDefault() {
-}
-
-func (p *CheckUserReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("CheckUserReq(%+v)", *p)
-}
-
-var fieldIDToName_CheckUserReq = map[int16]string{}
 
 type GetUserListReq struct {
 	Pages *base.PageReq `thrift:"pages,1,optional" frugal:"1,optional,base.PageReq" json:"pages,omitempty"`
@@ -468,14 +650,198 @@ var fieldIDToName_GetUserListReq = map[int16]string{
 	1: "pages",
 }
 
+type UpdateUserReq struct {
+	Id       *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar   *string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile   *string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name     *string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status   *int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender   *int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday *string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Detail   *string `thrift:"detail,8,optional" frugal:"8,optional,string" json:"detail,omitempty"`
+	RoleId   *int64  `thrift:"roleId,9,optional" frugal:"9,optional,i64" json:"roleId,omitempty"`
+}
+
+func NewUpdateUserReq() *UpdateUserReq {
+	return &UpdateUserReq{}
+}
+
+func (p *UpdateUserReq) InitDefault() {
+}
+
+var UpdateUserReq_Id_DEFAULT int64
+
+func (p *UpdateUserReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateUserReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var UpdateUserReq_Avatar_DEFAULT string
+
+func (p *UpdateUserReq) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return UpdateUserReq_Avatar_DEFAULT
+	}
+	return *p.Avatar
+}
+
+var UpdateUserReq_Mobile_DEFAULT string
+
+func (p *UpdateUserReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return UpdateUserReq_Mobile_DEFAULT
+	}
+	return *p.Mobile
+}
+
+var UpdateUserReq_Name_DEFAULT string
+
+func (p *UpdateUserReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdateUserReq_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var UpdateUserReq_Status_DEFAULT int64
+
+func (p *UpdateUserReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateUserReq_Status_DEFAULT
+	}
+	return *p.Status
+}
+
+var UpdateUserReq_Gender_DEFAULT int64
+
+func (p *UpdateUserReq) GetGender() (v int64) {
+	if !p.IsSetGender() {
+		return UpdateUserReq_Gender_DEFAULT
+	}
+	return *p.Gender
+}
+
+var UpdateUserReq_Birthday_DEFAULT string
+
+func (p *UpdateUserReq) GetBirthday() (v string) {
+	if !p.IsSetBirthday() {
+		return UpdateUserReq_Birthday_DEFAULT
+	}
+	return *p.Birthday
+}
+
+var UpdateUserReq_Detail_DEFAULT string
+
+func (p *UpdateUserReq) GetDetail() (v string) {
+	if !p.IsSetDetail() {
+		return UpdateUserReq_Detail_DEFAULT
+	}
+	return *p.Detail
+}
+
+var UpdateUserReq_RoleId_DEFAULT int64
+
+func (p *UpdateUserReq) GetRoleId() (v int64) {
+	if !p.IsSetRoleId() {
+		return UpdateUserReq_RoleId_DEFAULT
+	}
+	return *p.RoleId
+}
+func (p *UpdateUserReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *UpdateUserReq) SetAvatar(val *string) {
+	p.Avatar = val
+}
+func (p *UpdateUserReq) SetMobile(val *string) {
+	p.Mobile = val
+}
+func (p *UpdateUserReq) SetName(val *string) {
+	p.Name = val
+}
+func (p *UpdateUserReq) SetStatus(val *int64) {
+	p.Status = val
+}
+func (p *UpdateUserReq) SetGender(val *int64) {
+	p.Gender = val
+}
+func (p *UpdateUserReq) SetBirthday(val *string) {
+	p.Birthday = val
+}
+func (p *UpdateUserReq) SetDetail(val *string) {
+	p.Detail = val
+}
+func (p *UpdateUserReq) SetRoleId(val *int64) {
+	p.RoleId = val
+}
+
+func (p *UpdateUserReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *UpdateUserReq) IsSetAvatar() bool {
+	return p.Avatar != nil
+}
+
+func (p *UpdateUserReq) IsSetMobile() bool {
+	return p.Mobile != nil
+}
+
+func (p *UpdateUserReq) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *UpdateUserReq) IsSetStatus() bool {
+	return p.Status != nil
+}
+
+func (p *UpdateUserReq) IsSetGender() bool {
+	return p.Gender != nil
+}
+
+func (p *UpdateUserReq) IsSetBirthday() bool {
+	return p.Birthday != nil
+}
+
+func (p *UpdateUserReq) IsSetDetail() bool {
+	return p.Detail != nil
+}
+
+func (p *UpdateUserReq) IsSetRoleId() bool {
+	return p.RoleId != nil
+}
+
+func (p *UpdateUserReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateUserReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateUserReq = map[int16]string{
+	1: "id",
+	2: "avatar",
+	3: "mobile",
+	4: "name",
+	5: "status",
+	6: "gender",
+	7: "birthday",
+	8: "detail",
+	9: "roleId",
+}
+
 type UserService interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (r *UserResp, err error)
 
 	GetUser(ctx context.Context, req *base.IdReq) (r *UserResp, err error)
 
-	LoginUser(ctx context.Context, req *CheckUserReq) (r *UserResp, err error)
+	LoginUser(ctx context.Context, req *base.CheckAccountReq) (r *UserResp, err error)
 
 	GetUserList(ctx context.Context, req *GetUserListReq) (r *UserListResp, err error)
+
+	UpdateUser(ctx context.Context, req *UpdateUserReq) (r *UserResp, err error)
 }
 
 type UserServiceCreateUserArgs struct {
@@ -631,7 +997,7 @@ var fieldIDToName_UserServiceGetUserResult = map[int16]string{
 }
 
 type UserServiceLoginUserArgs struct {
-	Req *CheckUserReq `thrift:"req,1" frugal:"1,default,CheckUserReq" json:"req"`
+	Req *base.CheckAccountReq `thrift:"req,1" frugal:"1,default,base.CheckAccountReq" json:"req"`
 }
 
 func NewUserServiceLoginUserArgs() *UserServiceLoginUserArgs {
@@ -641,15 +1007,15 @@ func NewUserServiceLoginUserArgs() *UserServiceLoginUserArgs {
 func (p *UserServiceLoginUserArgs) InitDefault() {
 }
 
-var UserServiceLoginUserArgs_Req_DEFAULT *CheckUserReq
+var UserServiceLoginUserArgs_Req_DEFAULT *base.CheckAccountReq
 
-func (p *UserServiceLoginUserArgs) GetReq() (v *CheckUserReq) {
+func (p *UserServiceLoginUserArgs) GetReq() (v *base.CheckAccountReq) {
 	if !p.IsSetReq() {
 		return UserServiceLoginUserArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *UserServiceLoginUserArgs) SetReq(val *CheckUserReq) {
+func (p *UserServiceLoginUserArgs) SetReq(val *base.CheckAccountReq) {
 	p.Req = val
 }
 
@@ -779,5 +1145,81 @@ func (p *UserServiceGetUserListResult) String() string {
 }
 
 var fieldIDToName_UserServiceGetUserListResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceUpdateUserArgs struct {
+	Req *UpdateUserReq `thrift:"req,1" frugal:"1,default,UpdateUserReq" json:"req"`
+}
+
+func NewUserServiceUpdateUserArgs() *UserServiceUpdateUserArgs {
+	return &UserServiceUpdateUserArgs{}
+}
+
+func (p *UserServiceUpdateUserArgs) InitDefault() {
+}
+
+var UserServiceUpdateUserArgs_Req_DEFAULT *UpdateUserReq
+
+func (p *UserServiceUpdateUserArgs) GetReq() (v *UpdateUserReq) {
+	if !p.IsSetReq() {
+		return UserServiceUpdateUserArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceUpdateUserArgs) SetReq(val *UpdateUserReq) {
+	p.Req = val
+}
+
+func (p *UserServiceUpdateUserArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceUpdateUserArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdateUserArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdateUserArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceUpdateUserResult struct {
+	Success *UserResp `thrift:"success,0,optional" frugal:"0,optional,UserResp" json:"success,omitempty"`
+}
+
+func NewUserServiceUpdateUserResult() *UserServiceUpdateUserResult {
+	return &UserServiceUpdateUserResult{}
+}
+
+func (p *UserServiceUpdateUserResult) InitDefault() {
+}
+
+var UserServiceUpdateUserResult_Success_DEFAULT *UserResp
+
+func (p *UserServiceUpdateUserResult) GetSuccess() (v *UserResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceUpdateUserResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceUpdateUserResult) SetSuccess(x interface{}) {
+	p.Success = x.(*UserResp)
+}
+
+func (p *UserServiceUpdateUserResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceUpdateUserResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdateUserResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdateUserResult = map[int16]string{
 	0: "success",
 }

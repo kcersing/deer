@@ -42,6 +42,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"UpdateUser": kitex.NewMethodInfo(
+		updateUserHandler,
+		newUserServiceUpdateUserArgs,
+		newUserServiceUpdateUserResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -180,6 +187,24 @@ func newUserServiceGetUserListResult() interface{} {
 	return user.NewUserServiceGetUserListResult()
 }
 
+func updateUserHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceUpdateUserArgs)
+	realResult := result.(*user.UserServiceUpdateUserResult)
+	success, err := handler.(user.UserService).UpdateUser(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceUpdateUserArgs() interface{} {
+	return user.NewUserServiceUpdateUserArgs()
+}
+
+func newUserServiceUpdateUserResult() interface{} {
+	return user.NewUserServiceUpdateUserResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -210,7 +235,7 @@ func (p *kClient) GetUser(ctx context.Context, req *base.IdReq) (r *user.UserRes
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) LoginUser(ctx context.Context, req *user.CheckUserReq) (r *user.UserResp, err error) {
+func (p *kClient) LoginUser(ctx context.Context, req *base.CheckAccountReq) (r *user.UserResp, err error) {
 	var _args user.UserServiceLoginUserArgs
 	_args.Req = req
 	var _result user.UserServiceLoginUserResult
@@ -225,6 +250,16 @@ func (p *kClient) GetUserList(ctx context.Context, req *user.GetUserListReq) (r 
 	_args.Req = req
 	var _result user.UserServiceGetUserListResult
 	if err = p.c.Call(ctx, "GetUserList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateUser(ctx context.Context, req *user.UpdateUserReq) (r *user.UserResp, err error) {
+	var _args user.UserServiceUpdateUserArgs
+	_args.Req = req
+	var _result user.UserServiceUpdateUserResult
+	if err = p.c.Call(ctx, "UpdateUser", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

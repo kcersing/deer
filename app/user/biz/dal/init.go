@@ -1,8 +1,8 @@
 package dal
 
 import (
-	db "deer/app/order/biz/dal/mysql"
-	"deer/app/order/biz/dal/redis"
+	"user/biz/dal/db"
+	"user/biz/dal/redis"
 )
 
 func Init() {

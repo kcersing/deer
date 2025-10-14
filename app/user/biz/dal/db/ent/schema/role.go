@@ -7,7 +7,7 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
-	"kcers/biz/dal/db/mysql/ent/schema/mixins"
+	"user/biz/dal/mysql/ent/schema/mixins"
 )
 
 type Role struct {
@@ -21,8 +21,7 @@ func (Role) Fields() []ent.Field {
 		field.String("default_router").Default("dashboard").Comment("default menu : dashboard | 默认登录页面"),
 		field.String("remark").Default("").Comment("remark | 备注"),
 		field.Int64("order_no").Default(0).Comment("order number | 排序编号"),
-		field.Ints("apis").Default([]int{}).
-			Comment("apis"),
+		field.Ints("apis").Default([]int{}).Comment("apis"),
 	}
 }
 

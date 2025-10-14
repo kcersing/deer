@@ -25,7 +25,7 @@ struct CreateMemberReq{
 
 }
 struct GetMemberListReq{
-  1:optional base.PageReq pages
+  2:optional base.PageReq pages
 }
 struct MemberResp {
     1:optional Member member
@@ -33,7 +33,7 @@ struct MemberResp {
 }
 
 struct MemberListResp {
-    1:optional list<Member> member
+    1:optional list<Member> data
     255:optional base.BaseResp baseResp
 }
 

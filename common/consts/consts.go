@@ -5,6 +5,7 @@ const (
 	ProductTableName = "t_product"
 	OrderTableName   = "t_order"
 	MemberTableName  = "t_member"
+	LogFilePath      = "./log/"
 
 	SecretKey   = "secret key"
 	IdentityKey = "id"

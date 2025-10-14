@@ -1,8 +1,13 @@
 package service
 
 import (
+	"common/pkg/encrypt"
+	"common/pkg/errno"
 	"context"
+	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
+	"user/biz/dal/db"
+	"user/biz/dal/db/ent/user"
 )
 
 type LoginUserService struct {
@@ -13,8 +18,15 @@ func NewLoginUserService(ctx context.Context) *LoginUserService {
 }
 
 // Run create note info
-func (s *LoginUserService) Run(req *User.CheckAccountReq) (resp *User.UserResp, err error) {
+func (s *LoginUserService) Run(req *Base.CheckAccountReq) (resp *User.UserResp, err error) {
 	// Finish your business logic.
+	only, err := db.Client.User.Query().Where(user.Username(req.GetUsername())).Only(s.ctx)
+	if err != nil {
+		return nil, errno.UserNotExistErr
+	}
+	if ok := encrypt.VerifyPassword(req.Password, only.Password); !ok {
 
+		return nil, errno.LoginPasswordErr
+	}
 	return
 }

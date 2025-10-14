@@ -5,7 +5,7 @@ struct Product {
     254:optional i64 id=0 (api.raw = "id")
 }
 struct ProductResp {
-    1:optional Product product
+    1:optional Product data
     255:optional base.BaseResp baseResp
 }
 

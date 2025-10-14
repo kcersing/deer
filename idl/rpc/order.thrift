@@ -81,12 +81,12 @@ struct CancelledOrderReq {
 }
 
 struct CreateOrderResp {
-    1:optional Order order
+    1:optional Order data
     255:optional base.BaseResp baseResp
 }
 
 struct OrderResp {
-    1:optional Order order
+    1:optional Order data
     255:optional base.BaseResp baseResp
 }
 struct CreateOrderReq {

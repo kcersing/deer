@@ -44,9 +44,11 @@ var (
 	UnauthorizedErr  = NewErrNo(Unauthorized, "无权限")
 	AuthorizeFailErr = NewErrNo(AuthorizeFail, "授权失败")
 
-	LoginErr            = NewErrNo(LoginErrCode, "账号或密码错误")
+	LoginPasswordErr    = NewErrNo(LoginErrCode, "密码错误")
 	UserNotExistErr     = NewErrNo(UserNotExistErrCode, "用户不存在")
 	UserAlreadyExistErr = NewErrNo(UserAlreadyExistErrCode, "用户已存在")
+	UserMobileExistErr  = NewErrNo(UserAlreadyExistErrCode, "手机号已存在")
+	TimeFormatErr       = NewErrNo(ParamErrCode, "日期格式错误")
 )
 
 // ConvertErr convert error to Errno

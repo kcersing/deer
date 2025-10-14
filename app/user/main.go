@@ -1,6 +1,7 @@
 package main
 
 import (
+	"common/consts"
 	"common/mtl"
 	"common/mw"
 	"common/pkg/utils"
@@ -14,16 +15,38 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net"
+	"os"
+	"path"
 	"strings"
+	"time"
+	"user/biz/dal"
 	"user/conf"
 	"user/rpc"
 )
+
+func init() {
+	dal.Init()
+}
 
 var serviceName = conf.GetConf().Kitex.Service
 
 func main() {
 	_ = godotenv.Load()
 
+	logFilePath := consts.LogFilePath
+	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
+		panic(err)
+	}
+
+	// Set filename to date
+	logFileName := time.Now().Format(time.DateOnly) + ".log"
+	fileName := path.Join(logFilePath, logFileName)
+	if _, err := os.Stat(fileName); err != nil {
+		if _, err := os.Create(fileName); err != nil {
+			log.Println(err.Error())
+			return
+		}
+	}
 	mtl.InitLog(&lumberjack.Logger{
 		Filename:   conf.GetConf().Kitex.LogFileName,
 		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
