@@ -10,12 +10,12 @@ import (
 
 	"github.com/cloudwego/gopkg/protocol/thrift"
 
-	role "gen/kitex_gen/Role"
+	system "gen/kitex_gen/System"
 	"gen/kitex_gen/base"
 )
 
 var (
-	_ = role.KitexUnusedProtection
+	_ = system.KitexUnusedProtection
 	_ = base.KitexUnusedProtection
 )
 
@@ -463,8 +463,8 @@ func (p *User) FastReadField14(buf []byte) (int, error) {
 	if err != nil {
 		return offset, err
 	}
-	_field := make([]*role.Role, 0, size)
-	values := make([]role.Role, size)
+	_field := make([]*system.Role, 0, size)
+	values := make([]system.Role, size)
 	for i := 0; i < size; i++ {
 		_elem := &values[i]
 		_elem.InitDefault()

@@ -9,21 +9,21 @@ import (
 )
 
 type Member struct {
-	Id         *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Membername *string `thrift:"Membername,2,optional" frugal:"2,optional,string" json:"Membername,omitempty"`
-	Password   *string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar     *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile     *string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name       *string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status     *int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Level      *int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
-	Gender     *int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday   *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt     *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp     *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	CreatedAt  *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt  *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId  *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
+	Id        *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username  *string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password  *string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar    *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    *string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      *string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    *int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Level     *int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
+	Gender    *int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  *string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt    *string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp    *string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	CreatedAt *string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt *string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId *string `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
 }
 
 func NewMember() *Member {
@@ -42,13 +42,13 @@ func (p *Member) GetId() (v int64) {
 	return *p.Id
 }
 
-var Member_Membername_DEFAULT string
+var Member_Username_DEFAULT string
 
-func (p *Member) GetMembername() (v string) {
-	if !p.IsSetMembername() {
-		return Member_Membername_DEFAULT
+func (p *Member) GetUsername() (v string) {
+	if !p.IsSetUsername() {
+		return Member_Username_DEFAULT
 	}
-	return *p.Membername
+	return *p.Username
 }
 
 var Member_Password_DEFAULT string
@@ -170,8 +170,8 @@ func (p *Member) GetCreatedId() (v string) {
 func (p *Member) SetId(val *int64) {
 	p.Id = val
 }
-func (p *Member) SetMembername(val *string) {
-	p.Membername = val
+func (p *Member) SetUsername(val *string) {
+	p.Username = val
 }
 func (p *Member) SetPassword(val *string) {
 	p.Password = val
@@ -217,8 +217,8 @@ func (p *Member) IsSetId() bool {
 	return p.Id != nil
 }
 
-func (p *Member) IsSetMembername() bool {
-	return p.Membername != nil
+func (p *Member) IsSetUsername() bool {
+	return p.Username != nil
 }
 
 func (p *Member) IsSetPassword() bool {
@@ -282,7 +282,7 @@ func (p *Member) String() string {
 
 var fieldIDToName_Member = map[int16]string{
 	1:   "id",
-	2:   "Membername",
+	2:   "username",
 	3:   "password",
 	4:   "avatar",
 	5:   "mobile",
@@ -299,8 +299,8 @@ var fieldIDToName_Member = map[int16]string{
 }
 
 type CreateMemberReq struct {
-	Membername *string `thrift:"Membername,1,optional" frugal:"1,optional,string" json:"Membername,omitempty"`
-	Password   *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Username *string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
+	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
 }
 
 func NewCreateMemberReq() *CreateMemberReq {
@@ -310,13 +310,13 @@ func NewCreateMemberReq() *CreateMemberReq {
 func (p *CreateMemberReq) InitDefault() {
 }
 
-var CreateMemberReq_Membername_DEFAULT string
+var CreateMemberReq_Username_DEFAULT string
 
-func (p *CreateMemberReq) GetMembername() (v string) {
-	if !p.IsSetMembername() {
-		return CreateMemberReq_Membername_DEFAULT
+func (p *CreateMemberReq) GetUsername() (v string) {
+	if !p.IsSetUsername() {
+		return CreateMemberReq_Username_DEFAULT
 	}
-	return *p.Membername
+	return *p.Username
 }
 
 var CreateMemberReq_Password_DEFAULT string
@@ -327,15 +327,15 @@ func (p *CreateMemberReq) GetPassword() (v string) {
 	}
 	return *p.Password
 }
-func (p *CreateMemberReq) SetMembername(val *string) {
-	p.Membername = val
+func (p *CreateMemberReq) SetUsername(val *string) {
+	p.Username = val
 }
 func (p *CreateMemberReq) SetPassword(val *string) {
 	p.Password = val
 }
 
-func (p *CreateMemberReq) IsSetMembername() bool {
-	return p.Membername != nil
+func (p *CreateMemberReq) IsSetUsername() bool {
+	return p.Username != nil
 }
 
 func (p *CreateMemberReq) IsSetPassword() bool {
@@ -350,7 +350,7 @@ func (p *CreateMemberReq) String() string {
 }
 
 var fieldIDToName_CreateMemberReq = map[int16]string{
-	1: "Membername",
+	1: "username",
 	2: "password",
 }
 
@@ -393,7 +393,7 @@ var fieldIDToName_GetMemberListReq = map[int16]string{
 }
 
 type MemberResp struct {
-	Member   *Member        `thrift:"member,1,optional" frugal:"1,optional,Member" json:"member,omitempty"`
+	Data     *Member        `thrift:"data,1,optional" frugal:"1,optional,Member" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
@@ -404,13 +404,13 @@ func NewMemberResp() *MemberResp {
 func (p *MemberResp) InitDefault() {
 }
 
-var MemberResp_Member_DEFAULT *Member
+var MemberResp_Data_DEFAULT *Member
 
-func (p *MemberResp) GetMember() (v *Member) {
-	if !p.IsSetMember() {
-		return MemberResp_Member_DEFAULT
+func (p *MemberResp) GetData() (v *Member) {
+	if !p.IsSetData() {
+		return MemberResp_Data_DEFAULT
 	}
-	return p.Member
+	return p.Data
 }
 
 var MemberResp_BaseResp_DEFAULT *base.BaseResp
@@ -421,15 +421,15 @@ func (p *MemberResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MemberResp) SetMember(val *Member) {
-	p.Member = val
+func (p *MemberResp) SetData(val *Member) {
+	p.Data = val
 }
 func (p *MemberResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *MemberResp) IsSetMember() bool {
-	return p.Member != nil
+func (p *MemberResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *MemberResp) IsSetBaseResp() bool {
@@ -444,7 +444,7 @@ func (p *MemberResp) String() string {
 }
 
 var fieldIDToName_MemberResp = map[int16]string{
-	1:   "member",
+	1:   "data",
 	255: "baseResp",
 }
 
@@ -505,7 +505,7 @@ var fieldIDToName_MemberListResp = map[int16]string{
 }
 
 type UpdateMemberReq struct {
-	Member   *Member        `thrift:"member,1,optional" frugal:"1,optional,Member" json:"member,omitempty"`
+	Data     *Member        `thrift:"data,1,optional" frugal:"1,optional,Member" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
@@ -516,13 +516,13 @@ func NewUpdateMemberReq() *UpdateMemberReq {
 func (p *UpdateMemberReq) InitDefault() {
 }
 
-var UpdateMemberReq_Member_DEFAULT *Member
+var UpdateMemberReq_Data_DEFAULT *Member
 
-func (p *UpdateMemberReq) GetMember() (v *Member) {
-	if !p.IsSetMember() {
-		return UpdateMemberReq_Member_DEFAULT
+func (p *UpdateMemberReq) GetData() (v *Member) {
+	if !p.IsSetData() {
+		return UpdateMemberReq_Data_DEFAULT
 	}
-	return p.Member
+	return p.Data
 }
 
 var UpdateMemberReq_BaseResp_DEFAULT *base.BaseResp
@@ -533,15 +533,15 @@ func (p *UpdateMemberReq) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UpdateMemberReq) SetMember(val *Member) {
-	p.Member = val
+func (p *UpdateMemberReq) SetData(val *Member) {
+	p.Data = val
 }
 func (p *UpdateMemberReq) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *UpdateMemberReq) IsSetMember() bool {
-	return p.Member != nil
+func (p *UpdateMemberReq) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *UpdateMemberReq) IsSetBaseResp() bool {
@@ -556,7 +556,7 @@ func (p *UpdateMemberReq) String() string {
 }
 
 var fieldIDToName_UpdateMemberReq = map[int16]string{
-	1:   "member",
+	1:   "data",
 	255: "baseResp",
 }
 

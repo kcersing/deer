@@ -5,27 +5,27 @@ package user
 import (
 	"context"
 	"fmt"
-	role "gen/kitex_gen/Role"
+	system "gen/kitex_gen/System"
 	"gen/kitex_gen/base"
 )
 
 type User struct {
-	Id        *int64       `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  *string      `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  *string      `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    *string      `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    *string      `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      *string      `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    *int64       `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender    *int64       `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  *string      `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    *string      `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    *string      `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Detail    *string      `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
-	Roles     []*role.Role `thrift:"roles,14,optional" frugal:"14,optional,list<role.Role>" json:"roles,omitempty"`
-	CreatedAt *string      `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt *string      `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId *string      `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
+	Id        *int64         `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username  *string        `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password  *string        `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar    *string        `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    *string        `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      *string        `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    *int64         `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Gender    *int64         `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  *string        `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt    *string        `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp    *string        `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Detail    *string        `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
+	Roles     []*system.Role `thrift:"roles,14,optional" frugal:"14,optional,list<system.Role>" json:"roles,omitempty"`
+	CreatedAt *string        `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt *string        `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId *string        `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
 }
 
 func NewUser() *User {
@@ -143,9 +143,9 @@ func (p *User) GetDetail() (v string) {
 	return *p.Detail
 }
 
-var User_Roles_DEFAULT []*role.Role
+var User_Roles_DEFAULT []*system.Role
 
-func (p *User) GetRoles() (v []*role.Role) {
+func (p *User) GetRoles() (v []*system.Role) {
 	if !p.IsSetRoles() {
 		return User_Roles_DEFAULT
 	}
@@ -214,7 +214,7 @@ func (p *User) SetLastIp(val *string) {
 func (p *User) SetDetail(val *string) {
 	p.Detail = val
 }
-func (p *User) SetRoles(val []*role.Role) {
+func (p *User) SetRoles(val []*system.Role) {
 	p.Roles = val
 }
 func (p *User) SetCreatedAt(val *string) {

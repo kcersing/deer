@@ -45,3 +45,24 @@ func (s *UserServiceImpl) UpdateUser(ctx context.Context, req *user.UpdateUserRe
 
 	return resp, err
 }
+
+// ChangePassword implements the UserServiceImpl interface.
+func (s *UserServiceImpl) ChangePassword(ctx context.Context, req *user.ChangePasswordReq) (resp *base.BaseResp, err error) {
+	resp, err = service.NewChangePasswordService(ctx).Run(req)
+
+	return resp, err
+}
+
+// DeleteUser implements the UserServiceImpl interface.
+func (s *UserServiceImpl) DeleteUser(ctx context.Context, req *base.IdReq) (resp *base.BaseResp, err error) {
+	resp, err = service.NewDeleteUserService(ctx).Run(req)
+
+	return resp, err
+}
+
+// SetUserRole implements the UserServiceImpl interface.
+func (s *UserServiceImpl) SetUserRole(ctx context.Context, req *user.SetUserRoleReq) (resp *base.BaseResp, err error) {
+	resp, err = service.NewSetUserRoleService(ctx).Run(req)
+
+	return resp, err
+}

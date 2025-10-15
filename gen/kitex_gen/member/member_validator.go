@@ -36,9 +36,9 @@ func (p *GetMemberListReq) IsValid() error {
 	return nil
 }
 func (p *MemberResp) IsValid() error {
-	if p.Member != nil {
-		if err := p.Member.IsValid(); err != nil {
-			return fmt.Errorf("field Member not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {
@@ -57,9 +57,9 @@ func (p *MemberListResp) IsValid() error {
 	return nil
 }
 func (p *UpdateMemberReq) IsValid() error {
-	if p.Member != nil {
-		if err := p.Member.IsValid(); err != nil {
-			return fmt.Errorf("field Member not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {

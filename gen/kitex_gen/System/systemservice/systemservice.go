@@ -91,6 +91,76 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"CreateRole": kitex.NewMethodInfo(
+		createRoleHandler,
+		newSystemServiceCreateRoleArgs,
+		newSystemServiceCreateRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetRole": kitex.NewMethodInfo(
+		getRoleHandler,
+		newSystemServiceGetRoleArgs,
+		newSystemServiceGetRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"LoginRole": kitex.NewMethodInfo(
+		loginRoleHandler,
+		newSystemServiceLoginRoleArgs,
+		newSystemServiceLoginRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetRoleList": kitex.NewMethodInfo(
+		getRoleListHandler,
+		newSystemServiceGetRoleListArgs,
+		newSystemServiceGetRoleListResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateRole": kitex.NewMethodInfo(
+		updateRoleHandler,
+		newSystemServiceUpdateRoleArgs,
+		newSystemServiceUpdateRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DeleteRole": kitex.NewMethodInfo(
+		deleteRoleHandler,
+		newSystemServiceDeleteRoleArgs,
+		newSystemServiceDeleteRoleResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"CreateRoleMenu": kitex.NewMethodInfo(
+		createRoleMenuHandler,
+		newSystemServiceCreateRoleMenuArgs,
+		newSystemServiceCreateRoleMenuResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"CreateRoleApi": kitex.NewMethodInfo(
+		createRoleApiHandler,
+		newSystemServiceCreateRoleApiArgs,
+		newSystemServiceCreateRoleApiResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetRoleApi": kitex.NewMethodInfo(
+		getRoleApiHandler,
+		newSystemServiceGetRoleApiArgs,
+		newSystemServiceGetRoleApiResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetRoleMenu": kitex.NewMethodInfo(
+		getRoleMenuHandler,
+		newSystemServiceGetRoleMenuArgs,
+		newSystemServiceGetRoleMenuResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -355,6 +425,186 @@ func newSystemServiceMenuTreeResult() interface{} {
 	return system.NewSystemServiceMenuTreeResult()
 }
 
+func createRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceCreateRoleArgs)
+	realResult := result.(*system.SystemServiceCreateRoleResult)
+	success, err := handler.(system.SystemService).CreateRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceCreateRoleArgs() interface{} {
+	return system.NewSystemServiceCreateRoleArgs()
+}
+
+func newSystemServiceCreateRoleResult() interface{} {
+	return system.NewSystemServiceCreateRoleResult()
+}
+
+func getRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceGetRoleArgs)
+	realResult := result.(*system.SystemServiceGetRoleResult)
+	success, err := handler.(system.SystemService).GetRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceGetRoleArgs() interface{} {
+	return system.NewSystemServiceGetRoleArgs()
+}
+
+func newSystemServiceGetRoleResult() interface{} {
+	return system.NewSystemServiceGetRoleResult()
+}
+
+func loginRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceLoginRoleArgs)
+	realResult := result.(*system.SystemServiceLoginRoleResult)
+	success, err := handler.(system.SystemService).LoginRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceLoginRoleArgs() interface{} {
+	return system.NewSystemServiceLoginRoleArgs()
+}
+
+func newSystemServiceLoginRoleResult() interface{} {
+	return system.NewSystemServiceLoginRoleResult()
+}
+
+func getRoleListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceGetRoleListArgs)
+	realResult := result.(*system.SystemServiceGetRoleListResult)
+	success, err := handler.(system.SystemService).GetRoleList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceGetRoleListArgs() interface{} {
+	return system.NewSystemServiceGetRoleListArgs()
+}
+
+func newSystemServiceGetRoleListResult() interface{} {
+	return system.NewSystemServiceGetRoleListResult()
+}
+
+func updateRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceUpdateRoleArgs)
+	realResult := result.(*system.SystemServiceUpdateRoleResult)
+	success, err := handler.(system.SystemService).UpdateRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceUpdateRoleArgs() interface{} {
+	return system.NewSystemServiceUpdateRoleArgs()
+}
+
+func newSystemServiceUpdateRoleResult() interface{} {
+	return system.NewSystemServiceUpdateRoleResult()
+}
+
+func deleteRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceDeleteRoleArgs)
+	realResult := result.(*system.SystemServiceDeleteRoleResult)
+	success, err := handler.(system.SystemService).DeleteRole(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceDeleteRoleArgs() interface{} {
+	return system.NewSystemServiceDeleteRoleArgs()
+}
+
+func newSystemServiceDeleteRoleResult() interface{} {
+	return system.NewSystemServiceDeleteRoleResult()
+}
+
+func createRoleMenuHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceCreateRoleMenuArgs)
+	realResult := result.(*system.SystemServiceCreateRoleMenuResult)
+	success, err := handler.(system.SystemService).CreateRoleMenu(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceCreateRoleMenuArgs() interface{} {
+	return system.NewSystemServiceCreateRoleMenuArgs()
+}
+
+func newSystemServiceCreateRoleMenuResult() interface{} {
+	return system.NewSystemServiceCreateRoleMenuResult()
+}
+
+func createRoleApiHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceCreateRoleApiArgs)
+	realResult := result.(*system.SystemServiceCreateRoleApiResult)
+	success, err := handler.(system.SystemService).CreateRoleApi(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceCreateRoleApiArgs() interface{} {
+	return system.NewSystemServiceCreateRoleApiArgs()
+}
+
+func newSystemServiceCreateRoleApiResult() interface{} {
+	return system.NewSystemServiceCreateRoleApiResult()
+}
+
+func getRoleApiHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceGetRoleApiArgs)
+	realResult := result.(*system.SystemServiceGetRoleApiResult)
+	success, err := handler.(system.SystemService).GetRoleApi(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceGetRoleApiArgs() interface{} {
+	return system.NewSystemServiceGetRoleApiArgs()
+}
+
+func newSystemServiceGetRoleApiResult() interface{} {
+	return system.NewSystemServiceGetRoleApiResult()
+}
+
+func getRoleMenuHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceGetRoleMenuArgs)
+	realResult := result.(*system.SystemServiceGetRoleMenuResult)
+	success, err := handler.(system.SystemService).GetRoleMenu(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceGetRoleMenuArgs() interface{} {
+	return system.NewSystemServiceGetRoleMenuArgs()
+}
+
+func newSystemServiceGetRoleMenuResult() interface{} {
+	return system.NewSystemServiceGetRoleMenuResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -470,6 +720,106 @@ func (p *kClient) MenuTree(ctx context.Context, req *system.MenuListReq) (r *sys
 	_args.Req = req
 	var _result system.SystemServiceMenuTreeResult
 	if err = p.c.Call(ctx, "MenuTree", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateRole(ctx context.Context, req *system.CreateRoleReq) (r *system.RoleResp, err error) {
+	var _args system.SystemServiceCreateRoleArgs
+	_args.Req = req
+	var _result system.SystemServiceCreateRoleResult
+	if err = p.c.Call(ctx, "CreateRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRole(ctx context.Context, req *base.IdReq) (r *system.RoleResp, err error) {
+	var _args system.SystemServiceGetRoleArgs
+	_args.Req = req
+	var _result system.SystemServiceGetRoleResult
+	if err = p.c.Call(ctx, "GetRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) LoginRole(ctx context.Context, req *base.CheckAccountReq) (r *system.RoleResp, err error) {
+	var _args system.SystemServiceLoginRoleArgs
+	_args.Req = req
+	var _result system.SystemServiceLoginRoleResult
+	if err = p.c.Call(ctx, "LoginRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRoleList(ctx context.Context, req *system.GetRoleListReq) (r *system.RoleListResp, err error) {
+	var _args system.SystemServiceGetRoleListArgs
+	_args.Req = req
+	var _result system.SystemServiceGetRoleListResult
+	if err = p.c.Call(ctx, "GetRoleList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateRole(ctx context.Context, req *system.UpdateRoleReq) (r *system.RoleResp, err error) {
+	var _args system.SystemServiceUpdateRoleArgs
+	_args.Req = req
+	var _result system.SystemServiceUpdateRoleResult
+	if err = p.c.Call(ctx, "UpdateRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteRole(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+	var _args system.SystemServiceDeleteRoleArgs
+	_args.Req = req
+	var _result system.SystemServiceDeleteRoleResult
+	if err = p.c.Call(ctx, "DeleteRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.BaseResp, err error) {
+	var _args system.SystemServiceCreateRoleMenuArgs
+	_args.Req = req
+	var _result system.SystemServiceCreateRoleMenuResult
+	if err = p.c.Call(ctx, "CreateRoleMenu", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.BaseResp, err error) {
+	var _args system.SystemServiceCreateRoleApiArgs
+	_args.Req = req
+	var _result system.SystemServiceCreateRoleApiResult
+	if err = p.c.Call(ctx, "CreateRoleApi", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRoleApi(ctx context.Context, req *base.IdReq) (r *system.MenuListResp, err error) {
+	var _args system.SystemServiceGetRoleApiArgs
+	_args.Req = req
+	var _result system.SystemServiceGetRoleApiResult
+	if err = p.c.Call(ctx, "GetRoleApi", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetRoleMenu(ctx context.Context, req *base.IdReq) (r *system.MenuListResp, err error) {
+	var _args system.SystemServiceGetRoleMenuArgs
+	_args.Req = req
+	var _result system.SystemServiceGetRoleMenuResult
+	if err = p.c.Call(ctx, "GetRoleMenu", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

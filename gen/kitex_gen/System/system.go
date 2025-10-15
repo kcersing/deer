@@ -9,6 +9,13 @@ import (
 )
 
 type Api struct {
+	Id          *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	CreatedAt   *string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   *string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
+	Path        *string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Description *string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
+	Group       *string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method      *string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
 }
 
 func NewApi() *Api {
@@ -18,6 +25,118 @@ func NewApi() *Api {
 func (p *Api) InitDefault() {
 }
 
+var Api_Id_DEFAULT int64
+
+func (p *Api) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Api_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var Api_CreatedAt_DEFAULT string
+
+func (p *Api) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Api_CreatedAt_DEFAULT
+	}
+	return *p.CreatedAt
+}
+
+var Api_UpdatedAt_DEFAULT string
+
+func (p *Api) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return Api_UpdatedAt_DEFAULT
+	}
+	return *p.UpdatedAt
+}
+
+var Api_Path_DEFAULT string
+
+func (p *Api) GetPath() (v string) {
+	if !p.IsSetPath() {
+		return Api_Path_DEFAULT
+	}
+	return *p.Path
+}
+
+var Api_Description_DEFAULT string
+
+func (p *Api) GetDescription() (v string) {
+	if !p.IsSetDescription() {
+		return Api_Description_DEFAULT
+	}
+	return *p.Description
+}
+
+var Api_Group_DEFAULT string
+
+func (p *Api) GetGroup() (v string) {
+	if !p.IsSetGroup() {
+		return Api_Group_DEFAULT
+	}
+	return *p.Group
+}
+
+var Api_Method_DEFAULT string
+
+func (p *Api) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return Api_Method_DEFAULT
+	}
+	return *p.Method
+}
+func (p *Api) SetId(val *int64) {
+	p.Id = val
+}
+func (p *Api) SetCreatedAt(val *string) {
+	p.CreatedAt = val
+}
+func (p *Api) SetUpdatedAt(val *string) {
+	p.UpdatedAt = val
+}
+func (p *Api) SetPath(val *string) {
+	p.Path = val
+}
+func (p *Api) SetDescription(val *string) {
+	p.Description = val
+}
+func (p *Api) SetGroup(val *string) {
+	p.Group = val
+}
+func (p *Api) SetMethod(val *string) {
+	p.Method = val
+}
+
+func (p *Api) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *Api) IsSetCreatedAt() bool {
+	return p.CreatedAt != nil
+}
+
+func (p *Api) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != nil
+}
+
+func (p *Api) IsSetPath() bool {
+	return p.Path != nil
+}
+
+func (p *Api) IsSetDescription() bool {
+	return p.Description != nil
+}
+
+func (p *Api) IsSetGroup() bool {
+	return p.Group != nil
+}
+
+func (p *Api) IsSetMethod() bool {
+	return p.Method != nil
+}
+
 func (p *Api) String() string {
 	if p == nil {
 		return "<nil>"
@@ -25,7 +144,15 @@ func (p *Api) String() string {
 	return fmt.Sprintf("Api(%+v)", *p)
 }
 
-var fieldIDToName_Api = map[int16]string{}
+var fieldIDToName_Api = map[int16]string{
+	1: "id",
+	2: "createdAt",
+	3: "updatedAt",
+	4: "path",
+	5: "description",
+	6: "group",
+	7: "method",
+}
 
 type ApiResp struct {
 	Data     *Api           `thrift:"data,1,optional" frugal:"1,optional,Api" json:"data,omitempty"`
@@ -140,13 +267,71 @@ var fieldIDToName_ApiListResp = map[int16]string{
 }
 
 type ApiListReq struct {
+	Pages       *base.PageReq `thrift:"pages,1,optional" frugal:"1,optional,base.PageReq" json:"pages,omitempty"`
+	Path        string        `thrift:"path,3" frugal:"3,default,string" json:"path"`
+	Description string        `thrift:"description,4" frugal:"4,default,string" json:"description"`
+	Method      string        `thrift:"method,5" frugal:"5,default,string" json:"method"`
+	Group       string        `thrift:"group,6" frugal:"6,default,string" json:"group"`
 }
 
 func NewApiListReq() *ApiListReq {
-	return &ApiListReq{}
+	return &ApiListReq{
+		Path:        "",
+		Description: "",
+		Method:      "",
+		Group:       "",
+	}
 }
 
 func (p *ApiListReq) InitDefault() {
+	p.Path = ""
+	p.Description = ""
+	p.Method = ""
+	p.Group = ""
+}
+
+var ApiListReq_Pages_DEFAULT *base.PageReq
+
+func (p *ApiListReq) GetPages() (v *base.PageReq) {
+	if !p.IsSetPages() {
+		return ApiListReq_Pages_DEFAULT
+	}
+	return p.Pages
+}
+
+func (p *ApiListReq) GetPath() (v string) {
+	return p.Path
+}
+
+func (p *ApiListReq) GetDescription() (v string) {
+	return p.Description
+}
+
+func (p *ApiListReq) GetMethod() (v string) {
+	return p.Method
+}
+
+func (p *ApiListReq) GetGroup() (v string) {
+	return p.Group
+}
+func (p *ApiListReq) SetPages(val *base.PageReq) {
+	p.Pages = val
+}
+func (p *ApiListReq) SetPath(val string) {
+	p.Path = val
+}
+func (p *ApiListReq) SetDescription(val string) {
+	p.Description = val
+}
+func (p *ApiListReq) SetMethod(val string) {
+	p.Method = val
+}
+func (p *ApiListReq) SetGroup(val string) {
+	p.Group = val
+}
+
+func (p *ApiListReq) IsSetPages() bool {
+	return p.Pages != nil
 }
 
 func (p *ApiListReq) String() string {
@@ -156,16 +341,270 @@ func (p *ApiListReq) String() string {
 	return fmt.Sprintf("ApiListReq(%+v)", *p)
 }
 
-var fieldIDToName_ApiListReq = map[int16]string{}
+var fieldIDToName_ApiListReq = map[int16]string{
+	1: "pages",
+	3: "path",
+	4: "description",
+	5: "method",
+	6: "group",
+}
 
 type CreateApiReq struct {
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId  int64  `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level     int64  `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path      string `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    bool   `thrift:"hidden,9,optional" frugal:"9,optional,bool" json:"hidden,omitempty"`
+	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
+	Type      string `thrift:"type,14,optional" frugal:"14,optional,string" json:"type,omitempty"`
 }
 
 func NewCreateApiReq() *CreateApiReq {
-	return &CreateApiReq{}
+	return &CreateApiReq{
+		Id:        0,
+		Name:      "",
+		ParentId:  0,
+		Level:     0,
+		Path:      "",
+		Redirect:  "",
+		Component: "",
+		MenuType:  0,
+		Hidden:    true,
+		Sort:      0,
+		Status:    1,
+		Url:       "",
+		Type:      "",
+	}
 }
 
 func (p *CreateApiReq) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.ParentId = 0
+	p.Level = 0
+	p.Path = ""
+	p.Redirect = ""
+	p.Component = ""
+	p.MenuType = 0
+	p.Hidden = true
+	p.Sort = 0
+	p.Status = 1
+	p.Url = ""
+	p.Type = ""
+}
+
+var CreateApiReq_Id_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return CreateApiReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var CreateApiReq_Name_DEFAULT string = ""
+
+func (p *CreateApiReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateApiReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var CreateApiReq_ParentId_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetParentId() (v int64) {
+	if !p.IsSetParentId() {
+		return CreateApiReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var CreateApiReq_Level_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetLevel() (v int64) {
+	if !p.IsSetLevel() {
+		return CreateApiReq_Level_DEFAULT
+	}
+	return p.Level
+}
+
+var CreateApiReq_Path_DEFAULT string = ""
+
+func (p *CreateApiReq) GetPath() (v string) {
+	if !p.IsSetPath() {
+		return CreateApiReq_Path_DEFAULT
+	}
+	return p.Path
+}
+
+var CreateApiReq_Redirect_DEFAULT string = ""
+
+func (p *CreateApiReq) GetRedirect() (v string) {
+	if !p.IsSetRedirect() {
+		return CreateApiReq_Redirect_DEFAULT
+	}
+	return p.Redirect
+}
+
+var CreateApiReq_Component_DEFAULT string = ""
+
+func (p *CreateApiReq) GetComponent() (v string) {
+	if !p.IsSetComponent() {
+		return CreateApiReq_Component_DEFAULT
+	}
+	return p.Component
+}
+
+var CreateApiReq_MenuType_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetMenuType() (v int64) {
+	if !p.IsSetMenuType() {
+		return CreateApiReq_MenuType_DEFAULT
+	}
+	return p.MenuType
+}
+
+var CreateApiReq_Hidden_DEFAULT bool = true
+
+func (p *CreateApiReq) GetHidden() (v bool) {
+	if !p.IsSetHidden() {
+		return CreateApiReq_Hidden_DEFAULT
+	}
+	return p.Hidden
+}
+
+var CreateApiReq_Sort_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetSort() (v int64) {
+	if !p.IsSetSort() {
+		return CreateApiReq_Sort_DEFAULT
+	}
+	return p.Sort
+}
+
+var CreateApiReq_Status_DEFAULT int64 = 1
+
+func (p *CreateApiReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateApiReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateApiReq_Url_DEFAULT string = ""
+
+func (p *CreateApiReq) GetUrl() (v string) {
+	if !p.IsSetUrl() {
+		return CreateApiReq_Url_DEFAULT
+	}
+	return p.Url
+}
+
+var CreateApiReq_Type_DEFAULT string = ""
+
+func (p *CreateApiReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return CreateApiReq_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *CreateApiReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *CreateApiReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreateApiReq) SetParentId(val int64) {
+	p.ParentId = val
+}
+func (p *CreateApiReq) SetLevel(val int64) {
+	p.Level = val
+}
+func (p *CreateApiReq) SetPath(val string) {
+	p.Path = val
+}
+func (p *CreateApiReq) SetRedirect(val string) {
+	p.Redirect = val
+}
+func (p *CreateApiReq) SetComponent(val string) {
+	p.Component = val
+}
+func (p *CreateApiReq) SetMenuType(val int64) {
+	p.MenuType = val
+}
+func (p *CreateApiReq) SetHidden(val bool) {
+	p.Hidden = val
+}
+func (p *CreateApiReq) SetSort(val int64) {
+	p.Sort = val
+}
+func (p *CreateApiReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreateApiReq) SetUrl(val string) {
+	p.Url = val
+}
+func (p *CreateApiReq) SetType(val string) {
+	p.Type = val
+}
+
+func (p *CreateApiReq) IsSetId() bool {
+	return p.Id != CreateApiReq_Id_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetName() bool {
+	return p.Name != CreateApiReq_Name_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetParentId() bool {
+	return p.ParentId != CreateApiReq_ParentId_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetLevel() bool {
+	return p.Level != CreateApiReq_Level_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetPath() bool {
+	return p.Path != CreateApiReq_Path_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetRedirect() bool {
+	return p.Redirect != CreateApiReq_Redirect_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetComponent() bool {
+	return p.Component != CreateApiReq_Component_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetMenuType() bool {
+	return p.MenuType != CreateApiReq_MenuType_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetHidden() bool {
+	return p.Hidden != CreateApiReq_Hidden_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetSort() bool {
+	return p.Sort != CreateApiReq_Sort_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetStatus() bool {
+	return p.Status != CreateApiReq_Status_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetUrl() bool {
+	return p.Url != CreateApiReq_Url_DEFAULT
+}
+
+func (p *CreateApiReq) IsSetType() bool {
+	return p.Type != CreateApiReq_Type_DEFAULT
 }
 
 func (p *CreateApiReq) String() string {
@@ -175,7 +614,21 @@ func (p *CreateApiReq) String() string {
 	return fmt.Sprintf("CreateApiReq(%+v)", *p)
 }
 
-var fieldIDToName_CreateApiReq = map[int16]string{}
+var fieldIDToName_CreateApiReq = map[int16]string{
+	1:  "id",
+	2:  "name",
+	3:  "parentId",
+	4:  "level",
+	5:  "path",
+	6:  "redirect",
+	7:  "component",
+	8:  "menuType",
+	9:  "hidden",
+	10: "sort",
+	12: "status",
+	13: "url",
+	14: "type",
+}
 
 type UpdateApiReq struct {
 }
@@ -253,7 +706,250 @@ func (p *MenuListReq) String() string {
 
 var fieldIDToName_MenuListReq = map[int16]string{}
 
+type MenuTree struct {
+	MenuInfo *Menu       `thrift:"menuInfo,1" frugal:"1,default,Menu" json:"menuInfo"`
+	Children []*MenuTree `thrift:"children,4" frugal:"4,default,list<MenuTree>" json:"children"`
+	Ignore   bool        `thrift:"ignore,5" frugal:"5,default,bool" json:"ignore"`
+}
+
+func NewMenuTree() *MenuTree {
+	return &MenuTree{}
+}
+
+func (p *MenuTree) InitDefault() {
+}
+
+var MenuTree_MenuInfo_DEFAULT *Menu
+
+func (p *MenuTree) GetMenuInfo() (v *Menu) {
+	if !p.IsSetMenuInfo() {
+		return MenuTree_MenuInfo_DEFAULT
+	}
+	return p.MenuInfo
+}
+
+func (p *MenuTree) GetChildren() (v []*MenuTree) {
+	return p.Children
+}
+
+func (p *MenuTree) GetIgnore() (v bool) {
+	return p.Ignore
+}
+func (p *MenuTree) SetMenuInfo(val *Menu) {
+	p.MenuInfo = val
+}
+func (p *MenuTree) SetChildren(val []*MenuTree) {
+	p.Children = val
+}
+func (p *MenuTree) SetIgnore(val bool) {
+	p.Ignore = val
+}
+
+func (p *MenuTree) IsSetMenuInfo() bool {
+	return p.MenuInfo != nil
+}
+
+func (p *MenuTree) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MenuTree(%+v)", *p)
+}
+
+var fieldIDToName_MenuTree = map[int16]string{
+	1: "menuInfo",
+	4: "children",
+	5: "ignore",
+}
+
+type Menu struct {
+	Id        int64   `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Name      string  `thrift:"name,2" frugal:"2,default,string" json:"name"`
+	ParentId  int64   `thrift:"parentId,3" frugal:"3,default,i64" json:"parentId"`
+	Level     int64   `thrift:"level,4" frugal:"4,default,i64" json:"level"`
+	Path      string  `thrift:"path,5" frugal:"5,default,string" json:"path"`
+	Redirect  string  `thrift:"redirect,6" frugal:"6,default,string" json:"redirect"`
+	Component string  `thrift:"component,7" frugal:"7,default,string" json:"component"`
+	MenuType  int64   `thrift:"menuType,8" frugal:"8,default,i64" json:"menuType"`
+	Hidden    bool    `thrift:"hidden,9" frugal:"9,default,bool" json:"hidden"`
+	Sort      int64   `thrift:"sort,10" frugal:"10,default,i64" json:"sort"`
+	Status    int64   `thrift:"status,12" frugal:"12,default,i64" json:"status"`
+	Url       string  `thrift:"url,13" frugal:"13,default,string" json:"url"`
+	Children  []*Menu `thrift:"children,14" frugal:"14,default,list<Menu>" json:"children"`
+	CreatedAt string  `thrift:"createdAt,15" frugal:"15,default,string" json:"createdAt"`
+	UpdatedAt string  `thrift:"updatedAt,16" frugal:"16,default,string" json:"updatedAt"`
+	Title     string  `thrift:"title,17" frugal:"17,default,string" json:"title"`
+	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+}
+
+func NewMenu() *Menu {
+	return &Menu{
+		Type: "",
+	}
+}
+
+func (p *Menu) InitDefault() {
+	p.Type = ""
+}
+
+func (p *Menu) GetId() (v int64) {
+	return p.Id
+}
+
+func (p *Menu) GetName() (v string) {
+	return p.Name
+}
+
+func (p *Menu) GetParentId() (v int64) {
+	return p.ParentId
+}
+
+func (p *Menu) GetLevel() (v int64) {
+	return p.Level
+}
+
+func (p *Menu) GetPath() (v string) {
+	return p.Path
+}
+
+func (p *Menu) GetRedirect() (v string) {
+	return p.Redirect
+}
+
+func (p *Menu) GetComponent() (v string) {
+	return p.Component
+}
+
+func (p *Menu) GetMenuType() (v int64) {
+	return p.MenuType
+}
+
+func (p *Menu) GetHidden() (v bool) {
+	return p.Hidden
+}
+
+func (p *Menu) GetSort() (v int64) {
+	return p.Sort
+}
+
+func (p *Menu) GetStatus() (v int64) {
+	return p.Status
+}
+
+func (p *Menu) GetUrl() (v string) {
+	return p.Url
+}
+
+func (p *Menu) GetChildren() (v []*Menu) {
+	return p.Children
+}
+
+func (p *Menu) GetCreatedAt() (v string) {
+	return p.CreatedAt
+}
+
+func (p *Menu) GetUpdatedAt() (v string) {
+	return p.UpdatedAt
+}
+
+func (p *Menu) GetTitle() (v string) {
+	return p.Title
+}
+
+var Menu_Type_DEFAULT string = ""
+
+func (p *Menu) GetType() (v string) {
+	if !p.IsSetType() {
+		return Menu_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *Menu) SetId(val int64) {
+	p.Id = val
+}
+func (p *Menu) SetName(val string) {
+	p.Name = val
+}
+func (p *Menu) SetParentId(val int64) {
+	p.ParentId = val
+}
+func (p *Menu) SetLevel(val int64) {
+	p.Level = val
+}
+func (p *Menu) SetPath(val string) {
+	p.Path = val
+}
+func (p *Menu) SetRedirect(val string) {
+	p.Redirect = val
+}
+func (p *Menu) SetComponent(val string) {
+	p.Component = val
+}
+func (p *Menu) SetMenuType(val int64) {
+	p.MenuType = val
+}
+func (p *Menu) SetHidden(val bool) {
+	p.Hidden = val
+}
+func (p *Menu) SetSort(val int64) {
+	p.Sort = val
+}
+func (p *Menu) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *Menu) SetUrl(val string) {
+	p.Url = val
+}
+func (p *Menu) SetChildren(val []*Menu) {
+	p.Children = val
+}
+func (p *Menu) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Menu) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *Menu) SetTitle(val string) {
+	p.Title = val
+}
+func (p *Menu) SetType(val string) {
+	p.Type = val
+}
+
+func (p *Menu) IsSetType() bool {
+	return p.Type != Menu_Type_DEFAULT
+}
+
+func (p *Menu) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Menu(%+v)", *p)
+}
+
+var fieldIDToName_Menu = map[int16]string{
+	1:  "id",
+	2:  "name",
+	3:  "parentId",
+	4:  "level",
+	5:  "path",
+	6:  "redirect",
+	7:  "component",
+	8:  "menuType",
+	9:  "hidden",
+	10: "sort",
+	12: "status",
+	13: "url",
+	14: "children",
+	15: "createdAt",
+	16: "updatedAt",
+	17: "title",
+	19: "type",
+}
+
 type MenuResp struct {
+	Data     *Menu          `thrift:"data,1,optional" frugal:"1,optional,Menu" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMenuResp() *MenuResp {
@@ -263,6 +959,38 @@ func NewMenuResp() *MenuResp {
 func (p *MenuResp) InitDefault() {
 }
 
+var MenuResp_Data_DEFAULT *Menu
+
+func (p *MenuResp) GetData() (v *Menu) {
+	if !p.IsSetData() {
+		return MenuResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var MenuResp_BaseResp_DEFAULT *base.BaseResp
+
+func (p *MenuResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return MenuResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *MenuResp) SetData(val *Menu) {
+	p.Data = val
+}
+func (p *MenuResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *MenuResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *MenuResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
 func (p *MenuResp) String() string {
 	if p == nil {
 		return "<nil>"
@@ -270,9 +998,14 @@ func (p *MenuResp) String() string {
 	return fmt.Sprintf("MenuResp(%+v)", *p)
 }
 
-var fieldIDToName_MenuResp = map[int16]string{}
+var fieldIDToName_MenuResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
 
 type MenuListResp struct {
+	Data     []*Menu        `thrift:"data,1,optional" frugal:"1,optional,list<Menu>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMenuListResp() *MenuListResp {
@@ -282,6 +1015,38 @@ func NewMenuListResp() *MenuListResp {
 func (p *MenuListResp) InitDefault() {
 }
 
+var MenuListResp_Data_DEFAULT []*Menu
+
+func (p *MenuListResp) GetData() (v []*Menu) {
+	if !p.IsSetData() {
+		return MenuListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var MenuListResp_BaseResp_DEFAULT *base.BaseResp
+
+func (p *MenuListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return MenuListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *MenuListResp) SetData(val []*Menu) {
+	p.Data = val
+}
+func (p *MenuListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *MenuListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *MenuListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
 func (p *MenuListResp) String() string {
 	if p == nil {
 		return "<nil>"
@@ -289,7 +1054,582 @@ func (p *MenuListResp) String() string {
 	return fmt.Sprintf("MenuListResp(%+v)", *p)
 }
 
-var fieldIDToName_MenuListResp = map[int16]string{}
+var fieldIDToName_MenuListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type Role struct {
+	Id            *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name          *string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Value         *string `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
+	DefaultRouter *string `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
+	Remark        *string `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
+	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+}
+
+func NewRole() *Role {
+	return &Role{}
+}
+
+func (p *Role) InitDefault() {
+}
+
+var Role_Id_DEFAULT int64
+
+func (p *Role) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Role_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var Role_Name_DEFAULT string
+
+func (p *Role) GetName() (v string) {
+	if !p.IsSetName() {
+		return Role_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var Role_Value_DEFAULT string
+
+func (p *Role) GetValue() (v string) {
+	if !p.IsSetValue() {
+		return Role_Value_DEFAULT
+	}
+	return *p.Value
+}
+
+var Role_DefaultRouter_DEFAULT string
+
+func (p *Role) GetDefaultRouter() (v string) {
+	if !p.IsSetDefaultRouter() {
+		return Role_DefaultRouter_DEFAULT
+	}
+	return *p.DefaultRouter
+}
+
+var Role_Remark_DEFAULT string
+
+func (p *Role) GetRemark() (v string) {
+	if !p.IsSetRemark() {
+		return Role_Remark_DEFAULT
+	}
+	return *p.Remark
+}
+
+var Role_Apis_DEFAULT []int64
+
+func (p *Role) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return Role_Apis_DEFAULT
+	}
+	return p.Apis
+}
+func (p *Role) SetId(val *int64) {
+	p.Id = val
+}
+func (p *Role) SetName(val *string) {
+	p.Name = val
+}
+func (p *Role) SetValue(val *string) {
+	p.Value = val
+}
+func (p *Role) SetDefaultRouter(val *string) {
+	p.DefaultRouter = val
+}
+func (p *Role) SetRemark(val *string) {
+	p.Remark = val
+}
+func (p *Role) SetApis(val []int64) {
+	p.Apis = val
+}
+
+func (p *Role) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *Role) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *Role) IsSetValue() bool {
+	return p.Value != nil
+}
+
+func (p *Role) IsSetDefaultRouter() bool {
+	return p.DefaultRouter != nil
+}
+
+func (p *Role) IsSetRemark() bool {
+	return p.Remark != nil
+}
+
+func (p *Role) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *Role) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Role(%+v)", *p)
+}
+
+var fieldIDToName_Role = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "value",
+	4: "defaultRouter",
+	5: "remark",
+	6: "apis",
+}
+
+type RoleResp struct {
+	Data     *Role          `thrift:"data,1,optional" frugal:"1,optional,Role" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewRoleResp() *RoleResp {
+	return &RoleResp{}
+}
+
+func (p *RoleResp) InitDefault() {
+}
+
+var RoleResp_Data_DEFAULT *Role
+
+func (p *RoleResp) GetData() (v *Role) {
+	if !p.IsSetData() {
+		return RoleResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var RoleResp_BaseResp_DEFAULT *base.BaseResp
+
+func (p *RoleResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return RoleResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *RoleResp) SetData(val *Role) {
+	p.Data = val
+}
+func (p *RoleResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *RoleResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *RoleResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *RoleResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RoleResp(%+v)", *p)
+}
+
+var fieldIDToName_RoleResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type RoleListResp struct {
+	Data     []*Role        `thrift:"data,1,optional" frugal:"1,optional,list<Role>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewRoleListResp() *RoleListResp {
+	return &RoleListResp{}
+}
+
+func (p *RoleListResp) InitDefault() {
+}
+
+var RoleListResp_Data_DEFAULT []*Role
+
+func (p *RoleListResp) GetData() (v []*Role) {
+	if !p.IsSetData() {
+		return RoleListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var RoleListResp_BaseResp_DEFAULT *base.BaseResp
+
+func (p *RoleListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return RoleListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *RoleListResp) SetData(val []*Role) {
+	p.Data = val
+}
+func (p *RoleListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *RoleListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *RoleListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *RoleListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("RoleListResp(%+v)", *p)
+}
+
+var fieldIDToName_RoleListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type CreateRoleReq struct {
+	Id            *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name          *string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Value         *string `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
+	DefaultRouter *string `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
+	Remark        *string `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
+	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+}
+
+func NewCreateRoleReq() *CreateRoleReq {
+	return &CreateRoleReq{}
+}
+
+func (p *CreateRoleReq) InitDefault() {
+}
+
+var CreateRoleReq_Id_DEFAULT int64
+
+func (p *CreateRoleReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return CreateRoleReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var CreateRoleReq_Name_DEFAULT string
+
+func (p *CreateRoleReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateRoleReq_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var CreateRoleReq_Value_DEFAULT string
+
+func (p *CreateRoleReq) GetValue() (v string) {
+	if !p.IsSetValue() {
+		return CreateRoleReq_Value_DEFAULT
+	}
+	return *p.Value
+}
+
+var CreateRoleReq_DefaultRouter_DEFAULT string
+
+func (p *CreateRoleReq) GetDefaultRouter() (v string) {
+	if !p.IsSetDefaultRouter() {
+		return CreateRoleReq_DefaultRouter_DEFAULT
+	}
+	return *p.DefaultRouter
+}
+
+var CreateRoleReq_Remark_DEFAULT string
+
+func (p *CreateRoleReq) GetRemark() (v string) {
+	if !p.IsSetRemark() {
+		return CreateRoleReq_Remark_DEFAULT
+	}
+	return *p.Remark
+}
+
+var CreateRoleReq_Apis_DEFAULT []int64
+
+func (p *CreateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return CreateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+func (p *CreateRoleReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *CreateRoleReq) SetName(val *string) {
+	p.Name = val
+}
+func (p *CreateRoleReq) SetValue(val *string) {
+	p.Value = val
+}
+func (p *CreateRoleReq) SetDefaultRouter(val *string) {
+	p.DefaultRouter = val
+}
+func (p *CreateRoleReq) SetRemark(val *string) {
+	p.Remark = val
+}
+func (p *CreateRoleReq) SetApis(val []int64) {
+	p.Apis = val
+}
+
+func (p *CreateRoleReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *CreateRoleReq) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *CreateRoleReq) IsSetValue() bool {
+	return p.Value != nil
+}
+
+func (p *CreateRoleReq) IsSetDefaultRouter() bool {
+	return p.DefaultRouter != nil
+}
+
+func (p *CreateRoleReq) IsSetRemark() bool {
+	return p.Remark != nil
+}
+
+func (p *CreateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *CreateRoleReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateRoleReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateRoleReq = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "value",
+	4: "defaultRouter",
+	5: "remark",
+	6: "apis",
+}
+
+type GetRoleListReq struct {
+	Pages *base.PageReq `thrift:"pages,1,optional" frugal:"1,optional,base.PageReq" json:"pages,omitempty"`
+}
+
+func NewGetRoleListReq() *GetRoleListReq {
+	return &GetRoleListReq{}
+}
+
+func (p *GetRoleListReq) InitDefault() {
+}
+
+var GetRoleListReq_Pages_DEFAULT *base.PageReq
+
+func (p *GetRoleListReq) GetPages() (v *base.PageReq) {
+	if !p.IsSetPages() {
+		return GetRoleListReq_Pages_DEFAULT
+	}
+	return p.Pages
+}
+func (p *GetRoleListReq) SetPages(val *base.PageReq) {
+	p.Pages = val
+}
+
+func (p *GetRoleListReq) IsSetPages() bool {
+	return p.Pages != nil
+}
+
+func (p *GetRoleListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetRoleListReq(%+v)", *p)
+}
+
+var fieldIDToName_GetRoleListReq = map[int16]string{
+	1: "pages",
+}
+
+type UpdateRoleReq struct {
+	Id            *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name          *string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Value         *string `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
+	DefaultRouter *string `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
+	Remark        *string `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
+	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+}
+
+func NewUpdateRoleReq() *UpdateRoleReq {
+	return &UpdateRoleReq{}
+}
+
+func (p *UpdateRoleReq) InitDefault() {
+}
+
+var UpdateRoleReq_Id_DEFAULT int64
+
+func (p *UpdateRoleReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateRoleReq_Id_DEFAULT
+	}
+	return *p.Id
+}
+
+var UpdateRoleReq_Name_DEFAULT string
+
+func (p *UpdateRoleReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdateRoleReq_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var UpdateRoleReq_Value_DEFAULT string
+
+func (p *UpdateRoleReq) GetValue() (v string) {
+	if !p.IsSetValue() {
+		return UpdateRoleReq_Value_DEFAULT
+	}
+	return *p.Value
+}
+
+var UpdateRoleReq_DefaultRouter_DEFAULT string
+
+func (p *UpdateRoleReq) GetDefaultRouter() (v string) {
+	if !p.IsSetDefaultRouter() {
+		return UpdateRoleReq_DefaultRouter_DEFAULT
+	}
+	return *p.DefaultRouter
+}
+
+var UpdateRoleReq_Remark_DEFAULT string
+
+func (p *UpdateRoleReq) GetRemark() (v string) {
+	if !p.IsSetRemark() {
+		return UpdateRoleReq_Remark_DEFAULT
+	}
+	return *p.Remark
+}
+
+var UpdateRoleReq_Apis_DEFAULT []int64
+
+func (p *UpdateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return UpdateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+func (p *UpdateRoleReq) SetId(val *int64) {
+	p.Id = val
+}
+func (p *UpdateRoleReq) SetName(val *string) {
+	p.Name = val
+}
+func (p *UpdateRoleReq) SetValue(val *string) {
+	p.Value = val
+}
+func (p *UpdateRoleReq) SetDefaultRouter(val *string) {
+	p.DefaultRouter = val
+}
+func (p *UpdateRoleReq) SetRemark(val *string) {
+	p.Remark = val
+}
+func (p *UpdateRoleReq) SetApis(val []int64) {
+	p.Apis = val
+}
+
+func (p *UpdateRoleReq) IsSetId() bool {
+	return p.Id != nil
+}
+
+func (p *UpdateRoleReq) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *UpdateRoleReq) IsSetValue() bool {
+	return p.Value != nil
+}
+
+func (p *UpdateRoleReq) IsSetDefaultRouter() bool {
+	return p.DefaultRouter != nil
+}
+
+func (p *UpdateRoleReq) IsSetRemark() bool {
+	return p.Remark != nil
+}
+
+func (p *UpdateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *UpdateRoleReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateRoleReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateRoleReq = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "value",
+	4: "defaultRouter",
+	5: "remark",
+	6: "apis",
+}
+
+type CreateMenuAuthReq struct {
+	RoleId int64   `thrift:"roleId,1" frugal:"1,default,i64" json:"roleId"`
+	Ids    []int64 `thrift:"Ids,2" frugal:"2,default,list<i64>" json:"Ids"`
+}
+
+func NewCreateMenuAuthReq() *CreateMenuAuthReq {
+	return &CreateMenuAuthReq{}
+}
+
+func (p *CreateMenuAuthReq) InitDefault() {
+}
+
+func (p *CreateMenuAuthReq) GetRoleId() (v int64) {
+	return p.RoleId
+}
+
+func (p *CreateMenuAuthReq) GetIds() (v []int64) {
+	return p.Ids
+}
+func (p *CreateMenuAuthReq) SetRoleId(val int64) {
+	p.RoleId = val
+}
+func (p *CreateMenuAuthReq) SetIds(val []int64) {
+	p.Ids = val
+}
+
+func (p *CreateMenuAuthReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateMenuAuthReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateMenuAuthReq = map[int16]string{
+	1: "roleId",
+	2: "Ids",
+}
 
 type SystemService interface {
 	CreateApi(ctx context.Context, req *CreateApiReq) (r *ApiResp, err error)
@@ -313,6 +1653,26 @@ type SystemService interface {
 	MenuList(ctx context.Context, req *MenuListReq) (r *MenuListResp, err error)
 
 	MenuTree(ctx context.Context, req *MenuListReq) (r *MenuListResp, err error)
+
+	CreateRole(ctx context.Context, req *CreateRoleReq) (r *RoleResp, err error)
+
+	GetRole(ctx context.Context, req *base.IdReq) (r *RoleResp, err error)
+
+	LoginRole(ctx context.Context, req *base.CheckAccountReq) (r *RoleResp, err error)
+
+	GetRoleList(ctx context.Context, req *GetRoleListReq) (r *RoleListResp, err error)
+
+	UpdateRole(ctx context.Context, req *UpdateRoleReq) (r *RoleResp, err error)
+
+	DeleteRole(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+
+	CreateRoleMenu(ctx context.Context, req *CreateMenuAuthReq) (r *base.BaseResp, err error)
+
+	CreateRoleApi(ctx context.Context, req *CreateMenuAuthReq) (r *base.BaseResp, err error)
+
+	GetRoleApi(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
+
+	GetRoleMenu(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
 }
 
 type SystemServiceCreateApiArgs struct {
@@ -1148,5 +2508,765 @@ func (p *SystemServiceMenuTreeResult) String() string {
 }
 
 var fieldIDToName_SystemServiceMenuTreeResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceCreateRoleArgs struct {
+	Req *CreateRoleReq `thrift:"req,1" frugal:"1,default,CreateRoleReq" json:"req"`
+}
+
+func NewSystemServiceCreateRoleArgs() *SystemServiceCreateRoleArgs {
+	return &SystemServiceCreateRoleArgs{}
+}
+
+func (p *SystemServiceCreateRoleArgs) InitDefault() {
+}
+
+var SystemServiceCreateRoleArgs_Req_DEFAULT *CreateRoleReq
+
+func (p *SystemServiceCreateRoleArgs) GetReq() (v *CreateRoleReq) {
+	if !p.IsSetReq() {
+		return SystemServiceCreateRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceCreateRoleArgs) SetReq(val *CreateRoleReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceCreateRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceCreateRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceCreateRoleResult struct {
+	Success *RoleResp `thrift:"success,0,optional" frugal:"0,optional,RoleResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceCreateRoleResult() *SystemServiceCreateRoleResult {
+	return &SystemServiceCreateRoleResult{}
+}
+
+func (p *SystemServiceCreateRoleResult) InitDefault() {
+}
+
+var SystemServiceCreateRoleResult_Success_DEFAULT *RoleResp
+
+func (p *SystemServiceCreateRoleResult) GetSuccess() (v *RoleResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceCreateRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceCreateRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RoleResp)
+}
+
+func (p *SystemServiceCreateRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceCreateRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceGetRoleArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewSystemServiceGetRoleArgs() *SystemServiceGetRoleArgs {
+	return &SystemServiceGetRoleArgs{}
+}
+
+func (p *SystemServiceGetRoleArgs) InitDefault() {
+}
+
+var SystemServiceGetRoleArgs_Req_DEFAULT *base.IdReq
+
+func (p *SystemServiceGetRoleArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return SystemServiceGetRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceGetRoleArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceGetRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceGetRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceGetRoleResult struct {
+	Success *RoleResp `thrift:"success,0,optional" frugal:"0,optional,RoleResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceGetRoleResult() *SystemServiceGetRoleResult {
+	return &SystemServiceGetRoleResult{}
+}
+
+func (p *SystemServiceGetRoleResult) InitDefault() {
+}
+
+var SystemServiceGetRoleResult_Success_DEFAULT *RoleResp
+
+func (p *SystemServiceGetRoleResult) GetSuccess() (v *RoleResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceGetRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceGetRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RoleResp)
+}
+
+func (p *SystemServiceGetRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceGetRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceLoginRoleArgs struct {
+	Req *base.CheckAccountReq `thrift:"req,1" frugal:"1,default,base.CheckAccountReq" json:"req"`
+}
+
+func NewSystemServiceLoginRoleArgs() *SystemServiceLoginRoleArgs {
+	return &SystemServiceLoginRoleArgs{}
+}
+
+func (p *SystemServiceLoginRoleArgs) InitDefault() {
+}
+
+var SystemServiceLoginRoleArgs_Req_DEFAULT *base.CheckAccountReq
+
+func (p *SystemServiceLoginRoleArgs) GetReq() (v *base.CheckAccountReq) {
+	if !p.IsSetReq() {
+		return SystemServiceLoginRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceLoginRoleArgs) SetReq(val *base.CheckAccountReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceLoginRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceLoginRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceLoginRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceLoginRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceLoginRoleResult struct {
+	Success *RoleResp `thrift:"success,0,optional" frugal:"0,optional,RoleResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceLoginRoleResult() *SystemServiceLoginRoleResult {
+	return &SystemServiceLoginRoleResult{}
+}
+
+func (p *SystemServiceLoginRoleResult) InitDefault() {
+}
+
+var SystemServiceLoginRoleResult_Success_DEFAULT *RoleResp
+
+func (p *SystemServiceLoginRoleResult) GetSuccess() (v *RoleResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceLoginRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceLoginRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RoleResp)
+}
+
+func (p *SystemServiceLoginRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceLoginRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceLoginRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceLoginRoleResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceGetRoleListArgs struct {
+	Req *GetRoleListReq `thrift:"req,1" frugal:"1,default,GetRoleListReq" json:"req"`
+}
+
+func NewSystemServiceGetRoleListArgs() *SystemServiceGetRoleListArgs {
+	return &SystemServiceGetRoleListArgs{}
+}
+
+func (p *SystemServiceGetRoleListArgs) InitDefault() {
+}
+
+var SystemServiceGetRoleListArgs_Req_DEFAULT *GetRoleListReq
+
+func (p *SystemServiceGetRoleListArgs) GetReq() (v *GetRoleListReq) {
+	if !p.IsSetReq() {
+		return SystemServiceGetRoleListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceGetRoleListArgs) SetReq(val *GetRoleListReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceGetRoleListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceGetRoleListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleListArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleListArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceGetRoleListResult struct {
+	Success *RoleListResp `thrift:"success,0,optional" frugal:"0,optional,RoleListResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceGetRoleListResult() *SystemServiceGetRoleListResult {
+	return &SystemServiceGetRoleListResult{}
+}
+
+func (p *SystemServiceGetRoleListResult) InitDefault() {
+}
+
+var SystemServiceGetRoleListResult_Success_DEFAULT *RoleListResp
+
+func (p *SystemServiceGetRoleListResult) GetSuccess() (v *RoleListResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceGetRoleListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceGetRoleListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RoleListResp)
+}
+
+func (p *SystemServiceGetRoleListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceGetRoleListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleListResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleListResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceUpdateRoleArgs struct {
+	Req *UpdateRoleReq `thrift:"req,1" frugal:"1,default,UpdateRoleReq" json:"req"`
+}
+
+func NewSystemServiceUpdateRoleArgs() *SystemServiceUpdateRoleArgs {
+	return &SystemServiceUpdateRoleArgs{}
+}
+
+func (p *SystemServiceUpdateRoleArgs) InitDefault() {
+}
+
+var SystemServiceUpdateRoleArgs_Req_DEFAULT *UpdateRoleReq
+
+func (p *SystemServiceUpdateRoleArgs) GetReq() (v *UpdateRoleReq) {
+	if !p.IsSetReq() {
+		return SystemServiceUpdateRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceUpdateRoleArgs) SetReq(val *UpdateRoleReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceUpdateRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceUpdateRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceUpdateRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceUpdateRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceUpdateRoleResult struct {
+	Success *RoleResp `thrift:"success,0,optional" frugal:"0,optional,RoleResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceUpdateRoleResult() *SystemServiceUpdateRoleResult {
+	return &SystemServiceUpdateRoleResult{}
+}
+
+func (p *SystemServiceUpdateRoleResult) InitDefault() {
+}
+
+var SystemServiceUpdateRoleResult_Success_DEFAULT *RoleResp
+
+func (p *SystemServiceUpdateRoleResult) GetSuccess() (v *RoleResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceUpdateRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceUpdateRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*RoleResp)
+}
+
+func (p *SystemServiceUpdateRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceUpdateRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceUpdateRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceUpdateRoleResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceDeleteRoleArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewSystemServiceDeleteRoleArgs() *SystemServiceDeleteRoleArgs {
+	return &SystemServiceDeleteRoleArgs{}
+}
+
+func (p *SystemServiceDeleteRoleArgs) InitDefault() {
+}
+
+var SystemServiceDeleteRoleArgs_Req_DEFAULT *base.IdReq
+
+func (p *SystemServiceDeleteRoleArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return SystemServiceDeleteRoleArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceDeleteRoleArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceDeleteRoleArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceDeleteRoleArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceDeleteRoleArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceDeleteRoleArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceDeleteRoleResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceDeleteRoleResult() *SystemServiceDeleteRoleResult {
+	return &SystemServiceDeleteRoleResult{}
+}
+
+func (p *SystemServiceDeleteRoleResult) InitDefault() {
+}
+
+var SystemServiceDeleteRoleResult_Success_DEFAULT *base.BaseResp
+
+func (p *SystemServiceDeleteRoleResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceDeleteRoleResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceDeleteRoleResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *SystemServiceDeleteRoleResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceDeleteRoleResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceDeleteRoleResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceDeleteRoleResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceCreateRoleMenuArgs struct {
+	Req *CreateMenuAuthReq `thrift:"req,1" frugal:"1,default,CreateMenuAuthReq" json:"req"`
+}
+
+func NewSystemServiceCreateRoleMenuArgs() *SystemServiceCreateRoleMenuArgs {
+	return &SystemServiceCreateRoleMenuArgs{}
+}
+
+func (p *SystemServiceCreateRoleMenuArgs) InitDefault() {
+}
+
+var SystemServiceCreateRoleMenuArgs_Req_DEFAULT *CreateMenuAuthReq
+
+func (p *SystemServiceCreateRoleMenuArgs) GetReq() (v *CreateMenuAuthReq) {
+	if !p.IsSetReq() {
+		return SystemServiceCreateRoleMenuArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceCreateRoleMenuArgs) SetReq(val *CreateMenuAuthReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceCreateRoleMenuArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceCreateRoleMenuArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleMenuArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleMenuArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceCreateRoleMenuResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceCreateRoleMenuResult() *SystemServiceCreateRoleMenuResult {
+	return &SystemServiceCreateRoleMenuResult{}
+}
+
+func (p *SystemServiceCreateRoleMenuResult) InitDefault() {
+}
+
+var SystemServiceCreateRoleMenuResult_Success_DEFAULT *base.BaseResp
+
+func (p *SystemServiceCreateRoleMenuResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceCreateRoleMenuResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceCreateRoleMenuResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *SystemServiceCreateRoleMenuResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceCreateRoleMenuResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleMenuResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleMenuResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceCreateRoleApiArgs struct {
+	Req *CreateMenuAuthReq `thrift:"req,1" frugal:"1,default,CreateMenuAuthReq" json:"req"`
+}
+
+func NewSystemServiceCreateRoleApiArgs() *SystemServiceCreateRoleApiArgs {
+	return &SystemServiceCreateRoleApiArgs{}
+}
+
+func (p *SystemServiceCreateRoleApiArgs) InitDefault() {
+}
+
+var SystemServiceCreateRoleApiArgs_Req_DEFAULT *CreateMenuAuthReq
+
+func (p *SystemServiceCreateRoleApiArgs) GetReq() (v *CreateMenuAuthReq) {
+	if !p.IsSetReq() {
+		return SystemServiceCreateRoleApiArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceCreateRoleApiArgs) SetReq(val *CreateMenuAuthReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceCreateRoleApiArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceCreateRoleApiArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleApiArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleApiArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceCreateRoleApiResult struct {
+	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceCreateRoleApiResult() *SystemServiceCreateRoleApiResult {
+	return &SystemServiceCreateRoleApiResult{}
+}
+
+func (p *SystemServiceCreateRoleApiResult) InitDefault() {
+}
+
+var SystemServiceCreateRoleApiResult_Success_DEFAULT *base.BaseResp
+
+func (p *SystemServiceCreateRoleApiResult) GetSuccess() (v *base.BaseResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceCreateRoleApiResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceCreateRoleApiResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.BaseResp)
+}
+
+func (p *SystemServiceCreateRoleApiResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceCreateRoleApiResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateRoleApiResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateRoleApiResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceGetRoleApiArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewSystemServiceGetRoleApiArgs() *SystemServiceGetRoleApiArgs {
+	return &SystemServiceGetRoleApiArgs{}
+}
+
+func (p *SystemServiceGetRoleApiArgs) InitDefault() {
+}
+
+var SystemServiceGetRoleApiArgs_Req_DEFAULT *base.IdReq
+
+func (p *SystemServiceGetRoleApiArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return SystemServiceGetRoleApiArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceGetRoleApiArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceGetRoleApiArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceGetRoleApiArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleApiArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleApiArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceGetRoleApiResult struct {
+	Success *MenuListResp `thrift:"success,0,optional" frugal:"0,optional,MenuListResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceGetRoleApiResult() *SystemServiceGetRoleApiResult {
+	return &SystemServiceGetRoleApiResult{}
+}
+
+func (p *SystemServiceGetRoleApiResult) InitDefault() {
+}
+
+var SystemServiceGetRoleApiResult_Success_DEFAULT *MenuListResp
+
+func (p *SystemServiceGetRoleApiResult) GetSuccess() (v *MenuListResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceGetRoleApiResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceGetRoleApiResult) SetSuccess(x interface{}) {
+	p.Success = x.(*MenuListResp)
+}
+
+func (p *SystemServiceGetRoleApiResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceGetRoleApiResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleApiResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleApiResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceGetRoleMenuArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewSystemServiceGetRoleMenuArgs() *SystemServiceGetRoleMenuArgs {
+	return &SystemServiceGetRoleMenuArgs{}
+}
+
+func (p *SystemServiceGetRoleMenuArgs) InitDefault() {
+}
+
+var SystemServiceGetRoleMenuArgs_Req_DEFAULT *base.IdReq
+
+func (p *SystemServiceGetRoleMenuArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return SystemServiceGetRoleMenuArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceGetRoleMenuArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceGetRoleMenuArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceGetRoleMenuArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleMenuArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleMenuArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceGetRoleMenuResult struct {
+	Success *MenuListResp `thrift:"success,0,optional" frugal:"0,optional,MenuListResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceGetRoleMenuResult() *SystemServiceGetRoleMenuResult {
+	return &SystemServiceGetRoleMenuResult{}
+}
+
+func (p *SystemServiceGetRoleMenuResult) InitDefault() {
+}
+
+var SystemServiceGetRoleMenuResult_Success_DEFAULT *MenuListResp
+
+func (p *SystemServiceGetRoleMenuResult) GetSuccess() (v *MenuListResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceGetRoleMenuResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceGetRoleMenuResult) SetSuccess(x interface{}) {
+	p.Success = x.(*MenuListResp)
+}
+
+func (p *SystemServiceGetRoleMenuResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceGetRoleMenuResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceGetRoleMenuResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceGetRoleMenuResult = map[int16]string{
 	0: "success",
 }

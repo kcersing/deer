@@ -5,10 +5,9 @@ import (
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"user/biz/dal/mysql/ent/schema/mixins"
+	"user/biz/dal/db/ent/schema/mixins"
 )
 
 type User struct {
@@ -42,9 +41,7 @@ func (User) Mixin() []ent.Mixin {
 }
 
 func (User) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("roles", Role.Type),
-	}
+	return []ent.Edge{}
 }
 
 func (User) Indexes() []ent.Index {

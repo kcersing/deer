@@ -1,6 +1,6 @@
 namespace go user
 include "../base/base.thrift"
-include "role.thrift"
+include "system.thrift"
 struct User {
      1:optional i64 id,
      2:optional string username,
@@ -16,7 +16,7 @@ struct User {
      12:optional string  lastIp,//最后一次登录ip
 
      13:optional string  detail,//详情
-     14:optional list<role.Role> roles,//角色
+     14:optional list<system.Role> roles,//角色
 
      251:optional string createdAt,
      252:optional string updatedAt,

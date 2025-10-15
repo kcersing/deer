@@ -51,6 +51,11 @@ func (p *ApiListResp) IsValid() error {
 	return nil
 }
 func (p *ApiListReq) IsValid() error {
+	if p.Pages != nil {
+		if err := p.Pages.IsValid(); err != nil {
+			return fmt.Errorf("field Pages not valid, %w", err)
+		}
+	}
 	return nil
 }
 func (p *CreateApiReq) IsValid() error {
@@ -68,9 +73,76 @@ func (p *UpdateMenuReq) IsValid() error {
 func (p *MenuListReq) IsValid() error {
 	return nil
 }
+func (p *MenuTree) IsValid() error {
+	if p.MenuInfo != nil {
+		if err := p.MenuInfo.IsValid(); err != nil {
+			return fmt.Errorf("field MenuInfo not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *Menu) IsValid() error {
+	return nil
+}
 func (p *MenuResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
 	return nil
 }
 func (p *MenuListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *Role) IsValid() error {
+	return nil
+}
+func (p *RoleResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *RoleListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *CreateRoleReq) IsValid() error {
+	return nil
+}
+func (p *GetRoleListReq) IsValid() error {
+	if p.Pages != nil {
+		if err := p.Pages.IsValid(); err != nil {
+			return fmt.Errorf("field Pages not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *UpdateRoleReq) IsValid() error {
+	return nil
+}
+func (p *CreateMenuAuthReq) IsValid() error {
 	return nil
 }

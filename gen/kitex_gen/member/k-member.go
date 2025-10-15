@@ -295,7 +295,7 @@ func (p *Member) FastReadField2(buf []byte) (int, error) {
 		offset += l
 		_field = &v
 	}
-	p.Membername = _field
+	p.Username = _field
 	return offset, nil
 }
 
@@ -542,9 +542,9 @@ func (p *Member) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *Member) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetMembername() {
+	if p.IsSetUsername() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Membername)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Username)
 	}
 	return offset
 }
@@ -677,9 +677,9 @@ func (p *Member) field1Length() int {
 
 func (p *Member) field2Length() int {
 	l := 0
-	if p.IsSetMembername() {
+	if p.IsSetUsername() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Membername)
+		l += thrift.Binary.StringLengthNocopy(*p.Username)
 	}
 	return l
 }
@@ -874,7 +874,7 @@ func (p *CreateMemberReq) FastReadField1(buf []byte) (int, error) {
 		offset += l
 		_field = &v
 	}
-	p.Membername = _field
+	p.Username = _field
 	return offset, nil
 }
 
@@ -918,9 +918,9 @@ func (p *CreateMemberReq) BLength() int {
 
 func (p *CreateMemberReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetMembername() {
+	if p.IsSetUsername() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Membername)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Username)
 	}
 	return offset
 }
@@ -936,9 +936,9 @@ func (p *CreateMemberReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int
 
 func (p *CreateMemberReq) field1Length() int {
 	l := 0
-	if p.IsSetMembername() {
+	if p.IsSetUsername() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Membername)
+		l += thrift.Binary.StringLengthNocopy(*p.Username)
 	}
 	return l
 }
@@ -1124,7 +1124,7 @@ func (p *MemberResp) FastReadField1(buf []byte) (int, error) {
 	} else {
 		offset += l
 	}
-	p.Member = _field
+	p.Data = _field
 	return offset, nil
 }
 
@@ -1166,9 +1166,9 @@ func (p *MemberResp) BLength() int {
 
 func (p *MemberResp) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetMember() {
+	if p.IsSetData() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
-		offset += p.Member.FastWriteNocopy(buf[offset:], w)
+		offset += p.Data.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
 }
@@ -1184,9 +1184,9 @@ func (p *MemberResp) fastWriteField255(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *MemberResp) field1Length() int {
 	l := 0
-	if p.IsSetMember() {
+	if p.IsSetData() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Member.BLength()
+		l += p.Data.BLength()
 	}
 	return l
 }
@@ -1442,7 +1442,7 @@ func (p *UpdateMemberReq) FastReadField1(buf []byte) (int, error) {
 	} else {
 		offset += l
 	}
-	p.Member = _field
+	p.Data = _field
 	return offset, nil
 }
 
@@ -1484,9 +1484,9 @@ func (p *UpdateMemberReq) BLength() int {
 
 func (p *UpdateMemberReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetMember() {
+	if p.IsSetData() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
-		offset += p.Member.FastWriteNocopy(buf[offset:], w)
+		offset += p.Data.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
 }
@@ -1502,9 +1502,9 @@ func (p *UpdateMemberReq) fastWriteField255(buf []byte, w thrift.NocopyWriter) i
 
 func (p *UpdateMemberReq) field1Length() int {
 	l := 0
-	if p.IsSetMember() {
+	if p.IsSetData() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Member.BLength()
+		l += p.Data.BLength()
 	}
 	return l
 }

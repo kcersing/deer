@@ -2,7 +2,7 @@ namespace go member
 include "../base/base.thrift"
 struct Member {
     1:optional i64 id,
-    2:optional string Membername,
+    2:optional string username,
     3:optional string password,
     4:optional string avatar,
     5:optional string mobile,
@@ -22,14 +22,14 @@ struct Member {
 }
 
 struct CreateMemberReq{
-    1:optional string Membername,
+    1:optional string username,
     2:optional string password,
 }
 struct GetMemberListReq{
   2:optional base.PageReq pages
 }
 struct MemberResp {
-    1:optional Member member
+    1:optional Member data
     255:optional base.BaseResp baseResp
 }
 
@@ -38,7 +38,7 @@ struct MemberListResp {
     255:optional base.BaseResp baseResp
 }
 struct UpdateMemberReq {
-    1:optional Member member
+    1:optional Member data
     255:optional base.BaseResp baseResp
 }
 struct ChangePasswordReq {

@@ -23,6 +23,16 @@ type Client interface {
 	Menu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuResp, err error)
 	MenuList(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
 	MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
+	CreateRole(ctx context.Context, req *system.CreateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
+	GetRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
+	LoginRole(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
+	GetRoleList(ctx context.Context, req *system.GetRoleListReq, callOptions ...callopt.Option) (r *system.RoleListResp, err error)
+	UpdateRole(ctx context.Context, req *system.UpdateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
+	DeleteRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuthReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	GetRoleApi(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
+	GetRoleMenu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -107,4 +117,54 @@ func (p *kSystemServiceClient) MenuList(ctx context.Context, req *system.MenuLis
 func (p *kSystemServiceClient) MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.MenuTree(ctx, req)
+}
+
+func (p *kSystemServiceClient) CreateRole(ctx context.Context, req *system.CreateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateRole(ctx, req)
+}
+
+func (p *kSystemServiceClient) GetRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRole(ctx, req)
+}
+
+func (p *kSystemServiceClient) LoginRole(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.LoginRole(ctx, req)
+}
+
+func (p *kSystemServiceClient) GetRoleList(ctx context.Context, req *system.GetRoleListReq, callOptions ...callopt.Option) (r *system.RoleListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRoleList(ctx, req)
+}
+
+func (p *kSystemServiceClient) UpdateRole(ctx context.Context, req *system.UpdateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateRole(ctx, req)
+}
+
+func (p *kSystemServiceClient) DeleteRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteRole(ctx, req)
+}
+
+func (p *kSystemServiceClient) CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuthReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateRoleMenu(ctx, req)
+}
+
+func (p *kSystemServiceClient) CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateRoleApi(ctx, req)
+}
+
+func (p *kSystemServiceClient) GetRoleApi(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRoleApi(ctx, req)
+}
+
+func (p *kSystemServiceClient) GetRoleMenu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetRoleMenu(ctx, req)
 }
