@@ -5432,7 +5432,7 @@ SkipFieldError:
 
 func (p *SystemServiceDeleteApiResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -6422,7 +6422,7 @@ SkipFieldError:
 
 func (p *SystemServiceDeleteMenuResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -8204,7 +8204,7 @@ SkipFieldError:
 
 func (p *SystemServiceDeleteRoleResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -8402,7 +8402,7 @@ SkipFieldError:
 
 func (p *SystemServiceCreateRoleMenuResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -8600,7 +8600,7 @@ SkipFieldError:
 
 func (p *SystemServiceCreateRoleApiResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

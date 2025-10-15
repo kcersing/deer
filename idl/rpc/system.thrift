@@ -128,13 +128,13 @@ struct CreateMenuAuthReq{
 service SystemService  {
     ApiResp CreateApi(1: CreateApiReq req)
     ApiResp UpdateApi(1: UpdateApiReq req)
-    base.BaseResp DeleteApi(1: base.IdReq req)
+    base.NilResponse DeleteApi(1: base.IdReq req)
     ApiListResp ApiList(1: ApiListReq req)
     ApiListResp ApiTree(1: ApiListReq req)
 
     MenuResp CreateMenu(1: CreateMenuReq req)
     MenuResp UpdateMenu(1: UpdateMenuReq req)
-    base.BaseResp DeleteMenu(1: base.IdReq req)
+    base.NilResponse DeleteMenu(1: base.IdReq req)
     MenuResp Menu(1: base.IdReq req)
     MenuListResp MenuList(1: MenuListReq req)
     MenuListResp MenuTree(1: MenuListReq req)
@@ -144,11 +144,11 @@ service SystemService  {
     RoleResp LoginRole(1: base.CheckAccountReq req)
     RoleListResp GetRoleList(1: GetRoleListReq req)
     RoleResp UpdateRole(1: UpdateRoleReq req)
-    base.BaseResp DeleteRole(1: base.IdReq req)
+    base.NilResponse DeleteRole(1: base.IdReq req)
     // 创建菜单权限
-    base.BaseResp CreateRoleMenu(1: CreateMenuAuthReq req)
+    base.NilResponse CreateRoleMenu(1: CreateMenuAuthReq req)
     // 创建API权限
-    base.BaseResp CreateRoleApi(1: CreateMenuAuthReq req)
+    base.NilResponse CreateRoleApi(1: CreateMenuAuthReq req)
     // 获取角色API列表
     MenuListResp GetRoleApi(1: base.IdReq req)
     //获取角色菜单列表

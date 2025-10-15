@@ -3370,7 +3370,7 @@ SkipFieldError:
 
 func (p *UserServiceChangePasswordResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -3568,7 +3568,7 @@ SkipFieldError:
 
 func (p *UserServiceDeleteUserResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -3766,7 +3766,7 @@ SkipFieldError:
 
 func (p *UserServiceSetUserRoleResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewBaseResp()
+	_field := base.NewNilResponse()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

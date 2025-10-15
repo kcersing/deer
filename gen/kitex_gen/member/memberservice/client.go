@@ -13,12 +13,12 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateMember(ctx context.Context, req *member.CreateMemberReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
-	DeleteMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	DeleteMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	UpdateMember(ctx context.Context, req *member.UpdateMemberReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
 	GetMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
 	GetMemberList(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberListResp, err error)
 	LoginMember(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
-	ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.BaseResp, err error)
+	ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -55,7 +55,7 @@ func (p *kMemberServiceClient) CreateMember(ctx context.Context, req *member.Cre
 	return p.kClient.CreateMember(ctx, req)
 }
 
-func (p *kMemberServiceClient) DeleteMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+func (p *kMemberServiceClient) DeleteMember(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteMember(ctx, req)
 }
@@ -80,7 +80,7 @@ func (p *kMemberServiceClient) LoginMember(ctx context.Context, req *base.CheckA
 	return p.kClient.LoginMember(ctx, req)
 }
 
-func (p *kMemberServiceClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.BaseResp, err error) {
+func (p *kMemberServiceClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ChangePassword(ctx, req)
 }

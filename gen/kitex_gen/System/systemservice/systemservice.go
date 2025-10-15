@@ -635,7 +635,7 @@ func (p *kClient) UpdateApi(ctx context.Context, req *system.UpdateApiReq) (r *s
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteApi(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+func (p *kClient) DeleteApi(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceDeleteApiArgs
 	_args.Req = req
 	var _result system.SystemServiceDeleteApiResult
@@ -685,7 +685,7 @@ func (p *kClient) UpdateMenu(ctx context.Context, req *system.UpdateMenuReq) (r 
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+func (p *kClient) DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceDeleteMenuArgs
 	_args.Req = req
 	var _result system.SystemServiceDeleteMenuResult
@@ -775,7 +775,7 @@ func (p *kClient) UpdateRole(ctx context.Context, req *system.UpdateRoleReq) (r 
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteRole(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+func (p *kClient) DeleteRole(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceDeleteRoleArgs
 	_args.Req = req
 	var _result system.SystemServiceDeleteRoleResult
@@ -785,7 +785,7 @@ func (p *kClient) DeleteRole(ctx context.Context, req *base.IdReq) (r *base.Base
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.BaseResp, err error) {
+func (p *kClient) CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceCreateRoleMenuArgs
 	_args.Req = req
 	var _result system.SystemServiceCreateRoleMenuResult
@@ -795,7 +795,7 @@ func (p *kClient) CreateRoleMenu(ctx context.Context, req *system.CreateMenuAuth
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.BaseResp, err error) {
+func (p *kClient) CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceCreateRoleApiArgs
 	_args.Req = req
 	var _result system.SystemServiceCreateRoleApiResult

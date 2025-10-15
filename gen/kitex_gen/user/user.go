@@ -828,11 +828,11 @@ type UserService interface {
 
 	UpdateUser(ctx context.Context, req *UpdateUserReq) (r *UserResp, err error)
 
-	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.BaseResp, err error)
+	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.NilResponse, err error)
 
-	DeleteUser(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+	DeleteUser(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
-	SetUserRole(ctx context.Context, req *SetUserRoleReq) (r *base.BaseResp, err error)
+	SetUserRole(ctx context.Context, req *SetUserRoleReq) (r *base.NilResponse, err error)
 }
 
 type UserServiceCreateUserArgs struct {
@@ -1254,7 +1254,7 @@ var fieldIDToName_UserServiceChangePasswordArgs = map[int16]string{
 }
 
 type UserServiceChangePasswordResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewUserServiceChangePasswordResult() *UserServiceChangePasswordResult {
@@ -1264,16 +1264,16 @@ func NewUserServiceChangePasswordResult() *UserServiceChangePasswordResult {
 func (p *UserServiceChangePasswordResult) InitDefault() {
 }
 
-var UserServiceChangePasswordResult_Success_DEFAULT *base.BaseResp
+var UserServiceChangePasswordResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceChangePasswordResult) GetSuccess() (v *base.BaseResp) {
+func (p *UserServiceChangePasswordResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return UserServiceChangePasswordResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *UserServiceChangePasswordResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *UserServiceChangePasswordResult) IsSetSuccess() bool {
@@ -1330,7 +1330,7 @@ var fieldIDToName_UserServiceDeleteUserArgs = map[int16]string{
 }
 
 type UserServiceDeleteUserResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewUserServiceDeleteUserResult() *UserServiceDeleteUserResult {
@@ -1340,16 +1340,16 @@ func NewUserServiceDeleteUserResult() *UserServiceDeleteUserResult {
 func (p *UserServiceDeleteUserResult) InitDefault() {
 }
 
-var UserServiceDeleteUserResult_Success_DEFAULT *base.BaseResp
+var UserServiceDeleteUserResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceDeleteUserResult) GetSuccess() (v *base.BaseResp) {
+func (p *UserServiceDeleteUserResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return UserServiceDeleteUserResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *UserServiceDeleteUserResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *UserServiceDeleteUserResult) IsSetSuccess() bool {
@@ -1406,7 +1406,7 @@ var fieldIDToName_UserServiceSetUserRoleArgs = map[int16]string{
 }
 
 type UserServiceSetUserRoleResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewUserServiceSetUserRoleResult() *UserServiceSetUserRoleResult {
@@ -1416,16 +1416,16 @@ func NewUserServiceSetUserRoleResult() *UserServiceSetUserRoleResult {
 func (p *UserServiceSetUserRoleResult) InitDefault() {
 }
 
-var UserServiceSetUserRoleResult_Success_DEFAULT *base.BaseResp
+var UserServiceSetUserRoleResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceSetUserRoleResult) GetSuccess() (v *base.BaseResp) {
+func (p *UserServiceSetUserRoleResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return UserServiceSetUserRoleResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *UserServiceSetUserRoleResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *UserServiceSetUserRoleResult) IsSetSuccess() bool {

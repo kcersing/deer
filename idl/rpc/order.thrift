@@ -103,9 +103,9 @@ struct PaymentReq {
 service OrderService  {
     OrderResp GetOrderInfo(1:GetOrderInfoReq req)
     GetOrderListResp GetOrderList(1:GetOrderListReq req)
-    base.BaseResp DeleteOrder(1:base.IdReq req)
+    base.NilResponse DeleteOrder(1:base.IdReq req)
     OrderResp CreateOrder(1:GetOrderListReq req)
     OrderResp Payment(1:PaymentReq req)
-    base.BaseResp CancelledOrder(1:CreateOrderReq req)
-    base.BaseResp RefundOrder(1:RefundOrderReq req)
+    base.NilResponse CancelledOrder(1:CreateOrderReq req)
+    base.NilResponse RefundOrder(1:RefundOrderReq req)
 }

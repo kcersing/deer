@@ -18,7 +18,7 @@ func (s *MemberServiceImpl) CreateMember(ctx context.Context, req *member.Create
 }
 
 // DeleteMember implements the MemberServiceImpl interface.
-func (s *MemberServiceImpl) DeleteMember(ctx context.Context, req *base.IdReq) (resp *base.BaseResp, err error) {
+func (s *MemberServiceImpl) DeleteMember(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewDeleteMemberService(ctx).Run(req)
 
 	return resp, err
@@ -53,7 +53,7 @@ func (s *MemberServiceImpl) LoginMember(ctx context.Context, req *base.CheckAcco
 }
 
 // ChangePassword implements the MemberServiceImpl interface.
-func (s *MemberServiceImpl) ChangePassword(ctx context.Context, req *member.ChangePasswordReq) (resp *base.BaseResp, err error) {
+func (s *MemberServiceImpl) ChangePassword(ctx context.Context, req *member.ChangePasswordReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewChangePasswordService(ctx).Run(req)
 
 	return resp, err

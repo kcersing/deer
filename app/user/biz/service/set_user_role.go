@@ -14,6 +14,6 @@ func NewSetUserRoleService(ctx context.Context) *SetUserRoleService {
 }
 
 // Run create note info
-func (s *SetUserRoleService) Run(req *User.SetUserRoleReq) (resp *Base.BaseResp, err error) {
+func (s *SetUserRoleService) Run(req *User.SetUserRoleReq) (resp *Base.NilResponse, err error) {
 	return
 }

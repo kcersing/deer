@@ -48,12 +48,12 @@ struct ChangePasswordReq {
 service MemberService  {
 
      MemberResp CreateMember(1: CreateMemberReq req)
-     base.BaseResp DeleteMember(1: base.IdReq req)
+     base.NilResponse DeleteMember(1: base.IdReq req)
      MemberResp UpdateMember(1: UpdateMemberReq req)
      MemberResp GetMember(1: base.IdReq req)
      MemberListResp GetMemberList(1: GetMemberListReq req)
 
      MemberResp LoginMember(1: base.CheckAccountReq req)
-     base.BaseResp ChangePassword(1: ChangePasswordReq req)
+     base.NilResponse ChangePassword(1: ChangePasswordReq req)
 
 }

@@ -2,7 +2,7 @@
 
 .PHONY: kitex_gen_server
 kitex_gen_server:
-	kitex --thrift-plugin validator -module user -service user -use kitex_gen ../../idl/rpc/user.thrift
+	kitex --thrift-plugin validator -module user -service user -use gen/kitex_gen ../../idl/rpc/user.thrift
 
 .PHONY: gen-ent
 gen-ent:

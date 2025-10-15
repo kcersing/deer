@@ -275,7 +275,7 @@ func (p *kClient) CreateMember(ctx context.Context, req *member.CreateMemberReq)
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteMember(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+func (p *kClient) DeleteMember(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
 	var _args member.MemberServiceDeleteMemberArgs
 	_args.Req = req
 	var _result member.MemberServiceDeleteMemberResult
@@ -325,7 +325,7 @@ func (p *kClient) LoginMember(ctx context.Context, req *base.CheckAccountReq) (r
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq) (r *base.BaseResp, err error) {
+func (p *kClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq) (r *base.NilResponse, err error) {
 	var _args member.MemberServiceChangePasswordArgs
 	_args.Req = req
 	var _result member.MemberServiceChangePasswordResult

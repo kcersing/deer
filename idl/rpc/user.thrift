@@ -67,7 +67,7 @@ service UserService  {
     UserListResp GetUserList(1: GetUserListReq req)
     UserResp UpdateUser(1: UpdateUserReq req)
     
-    base.BaseResp ChangePassword(1: ChangePasswordReq req)
-    base.BaseResp DeleteUser(1: base.IdReq req)
-    base.BaseResp SetUserRole(1: SetUserRoleReq  req)
+    base.NilResponse ChangePassword(1: ChangePasswordReq req)
+    base.NilResponse DeleteUser(1: base.IdReq req)
+    base.NilResponse SetUserRole(1: SetUserRoleReq  req)
 }

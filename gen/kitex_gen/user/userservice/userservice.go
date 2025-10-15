@@ -340,7 +340,7 @@ func (p *kClient) UpdateUser(ctx context.Context, req *user.UpdateUserReq) (r *u
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ChangePassword(ctx context.Context, req *user.ChangePasswordReq) (r *base.BaseResp, err error) {
+func (p *kClient) ChangePassword(ctx context.Context, req *user.ChangePasswordReq) (r *base.NilResponse, err error) {
 	var _args user.UserServiceChangePasswordArgs
 	_args.Req = req
 	var _result user.UserServiceChangePasswordResult
@@ -350,7 +350,7 @@ func (p *kClient) ChangePassword(ctx context.Context, req *user.ChangePasswordRe
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteUser(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error) {
+func (p *kClient) DeleteUser(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
 	var _args user.UserServiceDeleteUserArgs
 	_args.Req = req
 	var _result user.UserServiceDeleteUserResult
@@ -360,7 +360,7 @@ func (p *kClient) DeleteUser(ctx context.Context, req *base.IdReq) (r *base.Base
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq) (r *base.BaseResp, err error) {
+func (p *kClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq) (r *base.NilResponse, err error) {
 	var _args user.UserServiceSetUserRoleArgs
 	_args.Req = req
 	var _result user.UserServiceSetUserRoleResult

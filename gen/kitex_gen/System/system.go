@@ -1636,7 +1636,7 @@ type SystemService interface {
 
 	UpdateApi(ctx context.Context, req *UpdateApiReq) (r *ApiResp, err error)
 
-	DeleteApi(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+	DeleteApi(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
 	ApiList(ctx context.Context, req *ApiListReq) (r *ApiListResp, err error)
 
@@ -1646,7 +1646,7 @@ type SystemService interface {
 
 	UpdateMenu(ctx context.Context, req *UpdateMenuReq) (r *MenuResp, err error)
 
-	DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+	DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
 	Menu(ctx context.Context, req *base.IdReq) (r *MenuResp, err error)
 
@@ -1664,11 +1664,11 @@ type SystemService interface {
 
 	UpdateRole(ctx context.Context, req *UpdateRoleReq) (r *RoleResp, err error)
 
-	DeleteRole(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+	DeleteRole(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
-	CreateRoleMenu(ctx context.Context, req *CreateMenuAuthReq) (r *base.BaseResp, err error)
+	CreateRoleMenu(ctx context.Context, req *CreateMenuAuthReq) (r *base.NilResponse, err error)
 
-	CreateRoleApi(ctx context.Context, req *CreateMenuAuthReq) (r *base.BaseResp, err error)
+	CreateRoleApi(ctx context.Context, req *CreateMenuAuthReq) (r *base.NilResponse, err error)
 
 	GetRoleApi(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
 
@@ -1866,7 +1866,7 @@ var fieldIDToName_SystemServiceDeleteApiArgs = map[int16]string{
 }
 
 type SystemServiceDeleteApiResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewSystemServiceDeleteApiResult() *SystemServiceDeleteApiResult {
@@ -1876,16 +1876,16 @@ func NewSystemServiceDeleteApiResult() *SystemServiceDeleteApiResult {
 func (p *SystemServiceDeleteApiResult) InitDefault() {
 }
 
-var SystemServiceDeleteApiResult_Success_DEFAULT *base.BaseResp
+var SystemServiceDeleteApiResult_Success_DEFAULT *base.NilResponse
 
-func (p *SystemServiceDeleteApiResult) GetSuccess() (v *base.BaseResp) {
+func (p *SystemServiceDeleteApiResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return SystemServiceDeleteApiResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceDeleteApiResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *SystemServiceDeleteApiResult) IsSetSuccess() bool {
@@ -2246,7 +2246,7 @@ var fieldIDToName_SystemServiceDeleteMenuArgs = map[int16]string{
 }
 
 type SystemServiceDeleteMenuResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewSystemServiceDeleteMenuResult() *SystemServiceDeleteMenuResult {
@@ -2256,16 +2256,16 @@ func NewSystemServiceDeleteMenuResult() *SystemServiceDeleteMenuResult {
 func (p *SystemServiceDeleteMenuResult) InitDefault() {
 }
 
-var SystemServiceDeleteMenuResult_Success_DEFAULT *base.BaseResp
+var SystemServiceDeleteMenuResult_Success_DEFAULT *base.NilResponse
 
-func (p *SystemServiceDeleteMenuResult) GetSuccess() (v *base.BaseResp) {
+func (p *SystemServiceDeleteMenuResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return SystemServiceDeleteMenuResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceDeleteMenuResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *SystemServiceDeleteMenuResult) IsSetSuccess() bool {
@@ -2930,7 +2930,7 @@ var fieldIDToName_SystemServiceDeleteRoleArgs = map[int16]string{
 }
 
 type SystemServiceDeleteRoleResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewSystemServiceDeleteRoleResult() *SystemServiceDeleteRoleResult {
@@ -2940,16 +2940,16 @@ func NewSystemServiceDeleteRoleResult() *SystemServiceDeleteRoleResult {
 func (p *SystemServiceDeleteRoleResult) InitDefault() {
 }
 
-var SystemServiceDeleteRoleResult_Success_DEFAULT *base.BaseResp
+var SystemServiceDeleteRoleResult_Success_DEFAULT *base.NilResponse
 
-func (p *SystemServiceDeleteRoleResult) GetSuccess() (v *base.BaseResp) {
+func (p *SystemServiceDeleteRoleResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return SystemServiceDeleteRoleResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceDeleteRoleResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *SystemServiceDeleteRoleResult) IsSetSuccess() bool {
@@ -3006,7 +3006,7 @@ var fieldIDToName_SystemServiceCreateRoleMenuArgs = map[int16]string{
 }
 
 type SystemServiceCreateRoleMenuResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewSystemServiceCreateRoleMenuResult() *SystemServiceCreateRoleMenuResult {
@@ -3016,16 +3016,16 @@ func NewSystemServiceCreateRoleMenuResult() *SystemServiceCreateRoleMenuResult {
 func (p *SystemServiceCreateRoleMenuResult) InitDefault() {
 }
 
-var SystemServiceCreateRoleMenuResult_Success_DEFAULT *base.BaseResp
+var SystemServiceCreateRoleMenuResult_Success_DEFAULT *base.NilResponse
 
-func (p *SystemServiceCreateRoleMenuResult) GetSuccess() (v *base.BaseResp) {
+func (p *SystemServiceCreateRoleMenuResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return SystemServiceCreateRoleMenuResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceCreateRoleMenuResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *SystemServiceCreateRoleMenuResult) IsSetSuccess() bool {
@@ -3082,7 +3082,7 @@ var fieldIDToName_SystemServiceCreateRoleApiArgs = map[int16]string{
 }
 
 type SystemServiceCreateRoleApiResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewSystemServiceCreateRoleApiResult() *SystemServiceCreateRoleApiResult {
@@ -3092,16 +3092,16 @@ func NewSystemServiceCreateRoleApiResult() *SystemServiceCreateRoleApiResult {
 func (p *SystemServiceCreateRoleApiResult) InitDefault() {
 }
 
-var SystemServiceCreateRoleApiResult_Success_DEFAULT *base.BaseResp
+var SystemServiceCreateRoleApiResult_Success_DEFAULT *base.NilResponse
 
-func (p *SystemServiceCreateRoleApiResult) GetSuccess() (v *base.BaseResp) {
+func (p *SystemServiceCreateRoleApiResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return SystemServiceCreateRoleApiResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceCreateRoleApiResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *SystemServiceCreateRoleApiResult) IsSetSuccess() bool {

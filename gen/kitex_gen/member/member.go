@@ -619,7 +619,7 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 type MemberService interface {
 	CreateMember(ctx context.Context, req *CreateMemberReq) (r *MemberResp, err error)
 
-	DeleteMember(ctx context.Context, req *base.IdReq) (r *base.BaseResp, err error)
+	DeleteMember(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
 	UpdateMember(ctx context.Context, req *UpdateMemberReq) (r *MemberResp, err error)
 
@@ -629,7 +629,7 @@ type MemberService interface {
 
 	LoginMember(ctx context.Context, req *base.CheckAccountReq) (r *MemberResp, err error)
 
-	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.BaseResp, err error)
+	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.NilResponse, err error)
 }
 
 type MemberServiceCreateMemberArgs struct {
@@ -747,7 +747,7 @@ var fieldIDToName_MemberServiceDeleteMemberArgs = map[int16]string{
 }
 
 type MemberServiceDeleteMemberResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewMemberServiceDeleteMemberResult() *MemberServiceDeleteMemberResult {
@@ -757,16 +757,16 @@ func NewMemberServiceDeleteMemberResult() *MemberServiceDeleteMemberResult {
 func (p *MemberServiceDeleteMemberResult) InitDefault() {
 }
 
-var MemberServiceDeleteMemberResult_Success_DEFAULT *base.BaseResp
+var MemberServiceDeleteMemberResult_Success_DEFAULT *base.NilResponse
 
-func (p *MemberServiceDeleteMemberResult) GetSuccess() (v *base.BaseResp) {
+func (p *MemberServiceDeleteMemberResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return MemberServiceDeleteMemberResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MemberServiceDeleteMemberResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *MemberServiceDeleteMemberResult) IsSetSuccess() bool {
@@ -1127,7 +1127,7 @@ var fieldIDToName_MemberServiceChangePasswordArgs = map[int16]string{
 }
 
 type MemberServiceChangePasswordResult struct {
-	Success *base.BaseResp `thrift:"success,0,optional" frugal:"0,optional,base.BaseResp" json:"success,omitempty"`
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
 func NewMemberServiceChangePasswordResult() *MemberServiceChangePasswordResult {
@@ -1137,16 +1137,16 @@ func NewMemberServiceChangePasswordResult() *MemberServiceChangePasswordResult {
 func (p *MemberServiceChangePasswordResult) InitDefault() {
 }
 
-var MemberServiceChangePasswordResult_Success_DEFAULT *base.BaseResp
+var MemberServiceChangePasswordResult_Success_DEFAULT *base.NilResponse
 
-func (p *MemberServiceChangePasswordResult) GetSuccess() (v *base.BaseResp) {
+func (p *MemberServiceChangePasswordResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
 		return MemberServiceChangePasswordResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *MemberServiceChangePasswordResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.BaseResp)
+	p.Success = x.(*base.NilResponse)
 }
 
 func (p *MemberServiceChangePasswordResult) IsSetSuccess() bool {
