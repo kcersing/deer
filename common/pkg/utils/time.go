@@ -17,7 +17,7 @@
 package utils
 
 import (
-	"saas/biz/pkg/errno"
+	"common/pkg/errno"
 	"time"
 )
 
@@ -47,14 +47,14 @@ func GetLastDateOfMonth(d time.Time) time.Time {
 func GetStringDateTime(d string) (time.Time, error) {
 	at, err := time.ParseInLocation(time.DateTime, d, time.Local)
 	if err != nil {
-		return GetZeroTime(time.Now()), errno.DateErr
+		return GetZeroTime(time.Now()), errno.TimeFormatErr
 	}
 	return at, nil
 }
 func GetStringDateOnlyZeroTime(d string) (time.Time, error) {
 	at, err := time.ParseInLocation(time.DateOnly, d, time.Local)
 	if err != nil {
-		return GetZeroTime(time.Now()), errno.DateErr
+		return GetZeroTime(time.Now()), errno.TimeFormatErr
 	}
 	return GetZeroTime(at), nil
 }

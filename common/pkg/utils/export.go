@@ -1,8 +1,7 @@
 package utils
 
 import (
-	"kcers/biz/dal/config"
-	"kcers/biz/pkg/consts"
+	"common/consts"
 	"os"
 	"strconv"
 	"time"
@@ -17,6 +16,6 @@ func ExportFilePath(v string) (string, string) {
 	ing := strconv.FormatInt(time.Now().Unix(), 10)
 	name := v + ing + ".xlsx"
 	files := exportFilePath + name
-	domain := config.GlobalServerConfig.Domain + "export/" + timePath + name
+	domain := "export/" + timePath + name
 	return files, domain
 }

@@ -18,38 +18,36 @@ var (
 )
 
 type Config struct {
-	Env      string
-	Kitex    Kitex    `yaml:"kitex"`
-	MySQL    MySQL    `yaml:"mysql"`
-	Redis    Redis    `yaml:"redis"`
-	Registry Registry `yaml:"registry"`
+	Env   string
+	Kitex Kitex `yaml:"Kitex"`
+	MySQL MySQL `yaml:"MySQL"`
+	Redis Redis `yaml:"Redis"`
 }
 
 type MySQL struct {
-	DSN string `yaml:"dsn"`
+	DSN string `yaml:"DSN"`
 }
 
 type Redis struct {
-	Address  string `yaml:"address"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	DB       int    `yaml:"db"`
+	Host     string `yaml:"Host"`
+	Password string `yaml:"Password"`
+	DB       int    `yaml:"DB"`
 }
 
 type Kitex struct {
-	Service       string `yaml:"service"`
-	Address       string `yaml:"address"`
-	LogLevel      string `yaml:"log_level"`
-	LogFileName   string `yaml:"log_file_name"`
-	LogMaxSize    int    `yaml:"log_max_size"`
-	LogMaxBackups int    `yaml:"log_max_backups"`
-	LogMaxAge     int    `yaml:"log_max_age"`
-}
+	Service string `yaml:"Service"`
+	Address string `yaml:"Address"`
 
-type Registry struct {
-	RegistryAddress []string `yaml:"registry_address"`
-	Username        string   `yaml:"username"`
-	Password        string   `yaml:"password"`
+	MetricsPort     string `yaml:"MetricsPort"`
+	EnablePprof     bool   `yaml:"EnablePprof"`
+	EnableGzip      bool   `yaml:"EnableGzip"`
+	EnableAccessLog bool   `yaml:"EnableAccessLog"`
+
+	LogLevel      string `yaml:"LogLevel"`
+	LogFileName   string `yaml:"LogFileName"`
+	LogMaxSize    int    `yaml:"LogMaxSize"`
+	LogMaxBackups int    `yaml:"LogMaxBackups"`
+	LogMaxAge     int    `yaml:"LogMaxAge"`
 }
 
 // GetConf gets configuration instance

@@ -12,6 +12,11 @@ import (
 
 var TracerProvider *tracesdk.TracerProvider
 
+/**
+* Tracing 提供了从请求开始接收到处理完毕的整个生命周期的全貌
+* https://cloudwego.cn/zh/docs/hertz/tutorials/third-party/open-telemetry/#tracing
+ */
+
 func InitTracing(serviceName string) {
 	exporter, err := otlptracegrpc.New(context.Background())
 	if err != nil {

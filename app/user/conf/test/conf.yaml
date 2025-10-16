@@ -1,21 +1,12 @@
 Kitex:
   Service: "user"
-  Address: ":8881"
-  MetricsPort: ":9991"
-  EnablePprof:
-  EnableGzip:
-  EnableAccessLog:
+  Address: ":9101"
+
   LogLevel: "debug"
   LogFileName: "log/kitex.log"
   LogMaxSize: 10
   LogMaxBackups: 3
   LogMaxAge: 50
-
-Registry:
-  RegistryAddress:
-    - "127.0.0.1:2379"
-  Username:
-  Password:
 
 #Captcha:
 #  KeyLong: 5
@@ -23,13 +14,14 @@ Registry:
 #  ImgHeight: 80
 
 Redis:
-  Host: "127.0.0.1:6379"
+  Address: "127.0.0.1:6379"
+  Username: ""
   Password: ""
   DB: 1
 
 MySQL:
-  DSN: "%s:%s@tcp(%s:3306)/user?charset=utf8mb4&parseTime=True&loc=Local"
-
+#  DSN: "%s:%s@tcp(%s:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
+  DSN: "root:root@tcp(127.0.0.1:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
 #Casbin:
 #  ModelText: |
 #    [request_definition]

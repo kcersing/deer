@@ -48,7 +48,7 @@ func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 	//	detailsResp = res
 	//	return nil
 	//})
-	if err := eg.Wait(); err != nil {
+	if err = eg.Wait(); err != nil {
 		return
 	}
 

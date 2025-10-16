@@ -18,12 +18,10 @@ var (
 )
 
 type Config struct {
-	Env      string
-	Kitex    Kitex    `yaml:"Kitex"`
-	MySQL    MySQL    `yaml:"MySQL"`
-	Redis    Redis    `yaml:"Redis"`
-	Registry Registry `yaml:"Registry"`
-	Etcd     Etcd     `yaml:"Etcd"`
+	Env   string
+	Kitex Kitex `yaml:"Kitex"`
+	MySQL MySQL `yaml:"MySQL"`
+	Redis Redis `yaml:"Redis"`
 }
 
 type MySQL struct {
@@ -50,18 +48,6 @@ type Kitex struct {
 	LogMaxSize    int    `yaml:"LogMaxSize"`
 	LogMaxBackups int    `yaml:"LogMaxBackups"`
 	LogMaxAge     int    `yaml:"LogMaxAge"`
-}
-
-type Registry struct {
-	RegistryAddress []string `yaml:"RegistryAddress"`
-	Username        string   `yaml:"Username"`
-	Password        string   `yaml:"Password"`
-}
-
-type Etcd struct {
-	Address        string `yaml:"address"`
-	ExportEndpoint string `yaml:"export_endpoint"`
-	UserName       string `yaml:"user_name"`
 }
 
 // GetConf gets configuration instance

@@ -4,60 +4,14 @@ package ent
 
 import (
 	"time"
-	"user/biz/dal/mysql/ent/role"
-	"user/biz/dal/mysql/ent/schema"
-	"user/biz/dal/mysql/ent/user"
+	"user/biz/dal/db/ent/schema"
+	"user/biz/dal/db/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	roleMixin := schema.Role{}.Mixin()
-	roleMixinFields0 := roleMixin[0].Fields()
-	_ = roleMixinFields0
-	roleMixinFields1 := roleMixin[1].Fields()
-	_ = roleMixinFields1
-	roleFields := schema.Role{}.Fields()
-	_ = roleFields
-	// roleDescCreatedAt is the schema descriptor for created_at field.
-	roleDescCreatedAt := roleMixinFields0[1].Descriptor()
-	// role.DefaultCreatedAt holds the default value on creation for the created_at field.
-	role.DefaultCreatedAt = roleDescCreatedAt.Default.(func() time.Time)
-	// roleDescUpdatedAt is the schema descriptor for updated_at field.
-	roleDescUpdatedAt := roleMixinFields0[2].Descriptor()
-	// role.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	role.DefaultUpdatedAt = roleDescUpdatedAt.Default.(func() time.Time)
-	// role.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	role.UpdateDefaultUpdatedAt = roleDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// roleDescDelete is the schema descriptor for delete field.
-	roleDescDelete := roleMixinFields0[3].Descriptor()
-	// role.DefaultDelete holds the default value on creation for the delete field.
-	role.DefaultDelete = roleDescDelete.Default.(int64)
-	// roleDescCreatedID is the schema descriptor for created_id field.
-	roleDescCreatedID := roleMixinFields0[4].Descriptor()
-	// role.DefaultCreatedID holds the default value on creation for the created_id field.
-	role.DefaultCreatedID = roleDescCreatedID.Default.(int64)
-	// roleDescStatus is the schema descriptor for status field.
-	roleDescStatus := roleMixinFields1[0].Descriptor()
-	// role.DefaultStatus holds the default value on creation for the status field.
-	role.DefaultStatus = roleDescStatus.Default.(int64)
-	// roleDescDefaultRouter is the schema descriptor for default_router field.
-	roleDescDefaultRouter := roleFields[2].Descriptor()
-	// role.DefaultDefaultRouter holds the default value on creation for the default_router field.
-	role.DefaultDefaultRouter = roleDescDefaultRouter.Default.(string)
-	// roleDescRemark is the schema descriptor for remark field.
-	roleDescRemark := roleFields[3].Descriptor()
-	// role.DefaultRemark holds the default value on creation for the remark field.
-	role.DefaultRemark = roleDescRemark.Default.(string)
-	// roleDescOrderNo is the schema descriptor for order_no field.
-	roleDescOrderNo := roleFields[4].Descriptor()
-	// role.DefaultOrderNo holds the default value on creation for the order_no field.
-	role.DefaultOrderNo = roleDescOrderNo.Default.(int64)
-	// roleDescApis is the schema descriptor for apis field.
-	roleDescApis := roleFields[5].Descriptor()
-	// role.DefaultApis holds the default value on creation for the apis field.
-	role.DefaultApis = roleDescApis.Default.([]int)
 	userMixin := schema.User{}.Mixin()
 	userMixinFields0 := userMixin[0].Fields()
 	_ = userMixinFields0

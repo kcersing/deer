@@ -17,6 +17,12 @@ import (
 
 var Registry *prometheus.Registry
 
+/**
+* Metric
+* Metric 包括了追踪样本以及自动将指标与产生它们的追踪样本联系起来。
+# https://cloudwego.cn/zh/docs/hertz/tutorials/third-party/open-telemetry/#metric
+*/
+
 func InitMetric(serviceName string, metricsPort string, registryAddr string) {
 	Registry = prometheus.NewRegistry()
 	Registry.MustRegister(collectors.NewGoCollector())

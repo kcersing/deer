@@ -1,15 +1,27 @@
-version: '3.7'
-
 services:
 
   Etcd:
     image: 'bitnami/etcd:latest'
+    volumes:
+      - "./etcd/data:/bitnami/etcd/data"
     environment:
-      - ALLOW_NONE_AUTHENTICATION=yes
-      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - "ALLOW_NONE_AUTHENTICATION=yes"
+      - "ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379"
     ports:
       - "2379:2379"
       - "2380:2380"
+
+  # Etcd 管理工具keeper (视图)
+  Etcd-Keeper:
+    hostname: etcdkeeper
+    image: evildecay/etcdkeeper:latest
+    volumes:
+      - "./etcdkeeper/tls:/opt/etcdkeeper/tls"
+    environment:
+      - "ETCD_SERVERS=http://101.201.55.134:2379"
+      - "ETCD_ENDPOINTS=http://101.201.55.134:2379"
+    ports:
+      - "9100:8080"
 
 #  elasticsearch:
 #    image: elasticsearch:7.6.2
@@ -20,7 +32,8 @@ services:
 #    ports:
 #      - "9200:9200"
 #      - "9300:9300"
-#
+
+#  # Kibana 可视化搜索和分析工具
 #  kibana:
 #    image: kibana:7.6.2
 #    links:
@@ -31,8 +44,11 @@ services:
 #      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
 #    ports:
 #      - "5601:5601"
-#
-#  # Collector
+
+
+
+
+#  # OpenTelemetry Collector 遥测数据收集、处理和导出工具
 #  otel-collector:
 #    image: otel/opentelemetry-collector-contrib-dev:latest
 #    command: [ "--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}" ]
@@ -48,7 +64,9 @@ services:
 #    depends_on:
 #      - jaeger-all-in-one
 #
-#  # Jaeger
+
+
+#  # Jaeger 链跟踪
 #  jaeger-all-in-one:
 #    image: jaegertracing/all-in-one:latest
 #    environment:
@@ -60,15 +78,6 @@ services:
 #      - "6831:6831"
 #      - "4317"   # OTLP gRPC receiver
 #
-#  # Grafana
-#  grafana:
-#    image: grafana/grafana:latest
-#    environment:
-#      - GF_AUTH_ANONYMOUS_ENABLED=true
-#      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-#      - GF_AUTH_DISABLE_LOGIN_FORM=true
-#    ports:
-#      - "3000:3000"
 
 #  # Victoriametrics 时序数据库
 #  victoriametrics:
@@ -88,3 +97,14 @@ services:
 #      - '--httpListenAddr=:8428'
 #      - '--influxListenAddr=:8089'
 #    restart: always
+
+
+#  # Grafana 可视化和监控工具
+#  grafana:
+#    image: grafana/grafana:latest
+#    environment:
+#      - GF_AUTH_ANONYMOUS_ENABLED=true
+#      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+#      - GF_AUTH_DISABLE_LOGIN_FORM=true
+#    ports:
+#      - "3000:3000"

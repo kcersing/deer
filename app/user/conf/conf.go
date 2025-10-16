@@ -18,51 +18,37 @@ var (
 )
 
 type Config struct {
-	Env      string
-	Kitex    Kitex    `yaml:"kitex"`
-	MySQL    MySQL    `yaml:"mysql"`
-	Redis    Redis    `yaml:"redis"`
-	Registry Registry `yaml:"registry"`
-	Etcd     Etcd     `yaml:"etcd"`
+	Env   string
+	Kitex Kitex `yaml:"Kitex"`
+	MySQL MySQL `yaml:"MySQL"`
+	Redis Redis `yaml:"Redis"`
 }
 
 type MySQL struct {
-	DSN string `yaml:"dsn"`
+	DSN string `yaml:"DSN"`
 }
 
 type Redis struct {
-	Address  string `yaml:"address"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
-	DB       int    `yaml:"db"`
+	Address  string `yaml:"Address"`
+	Username string `yaml:"Username"`
+	Password string `yaml:"Password"`
+	DB       int    `yaml:"DB"`
 }
 
 type Kitex struct {
-	Service string `yaml:"service"`
-	Address string `yaml:"address"`
+	Service string `yaml:"Service"`
+	Address string `yaml:"Address"`
 
-	MetricsPort     string `yaml:"metrics_port"`
-	EnablePprof     bool   `yaml:"enable_pprof"`
-	EnableGzip      bool   `yaml:"enable_gzip"`
-	EnableAccessLog bool   `yaml:"enable_access_log"`
+	MetricsPort     string `yaml:"MetricsPort"`
+	EnablePprof     bool   `yaml:"EnablePprof"`
+	EnableGzip      bool   `yaml:"EnableGzip"`
+	EnableAccessLog bool   `yaml:"EnableAccessLog"`
 
-	LogLevel      string `yaml:"log_level"`
-	LogFileName   string `yaml:"log_file_name"`
-	LogMaxSize    int    `yaml:"log_max_size"`
-	LogMaxBackups int    `yaml:"log_max_backups"`
-	LogMaxAge     int    `yaml:"log_max_age"`
-}
-
-type Registry struct {
-	RegistryAddress []string `yaml:"registry_address"`
-	Username        string   `yaml:"username"`
-	Password        string   `yaml:"password"`
-}
-
-type Etcd struct {
-	Address        string `yaml:"address"`
-	ExportEndpoint string `yaml:"export_endpoint"`
-	UserName       string `yaml:"user_name"`
+	LogLevel      string `yaml:"LogLevel"`
+	LogFileName   string `yaml:"LogFileName"`
+	LogMaxSize    int    `yaml:"LogMaxSize"`
+	LogMaxBackups int    `yaml:"LogMaxBackups"`
+	LogMaxAge     int    `yaml:"LogMaxAge"`
 }
 
 // GetConf gets configuration instance

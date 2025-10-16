@@ -6,6 +6,7 @@ import (
 	"common/mw"
 	"common/pkg/utils"
 	user "gen/kitex_gen/user/userservice"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"
@@ -53,9 +54,12 @@ func main() {
 		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
 	})
+
 	//mtl.InitTracing(serviceName)
 
 	//mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
+
+	//mtl.InitProvider(serviceName)
 
 	opts := kitexInit()
 
@@ -66,7 +70,7 @@ func main() {
 	err := svr.Run()
 
 	if err != nil {
-		log.Println(err.Error())
+		klog.Fatal(err)
 	}
 }
 func kitexInit() (opts []server.Option) {
@@ -77,12 +81,12 @@ func kitexInit() (opts []server.Option) {
 		localIp := utils.MustGetLocalIPv4()
 		address = localIp + address
 	}
-	addr, err := net.ResolveTCPAddr("tcp", address)
+	addr, err := net.ResolveTCPAddr(consts.TCP, address)
 	if err != nil {
 		panic(err)
 	}
 
-	r, err := etcd.NewEtcdRegistry([]string{conf.GetConf().Etcd.Address})
+	r, err := etcd.NewEtcdRegistry([]string{consts.EtcdAddress})
 	opts = append(opts,
 		server.WithServiceAddr(addr),
 		server.WithRegistry(r),

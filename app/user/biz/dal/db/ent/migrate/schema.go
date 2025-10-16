@@ -9,27 +9,6 @@ import (
 )
 
 var (
-	// RolesColumns holds the columns for the "roles" table.
-	RolesColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
-		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
-		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "name", Type: field.TypeString, Comment: "role name | 角色名"},
-		{Name: "value", Type: field.TypeString, Unique: true, Comment: "role value for permission control in front end | 角色值，用于前端权限控制"},
-		{Name: "default_router", Type: field.TypeString, Comment: "default menu : dashboard | 默认登录页面", Default: "dashboard"},
-		{Name: "remark", Type: field.TypeString, Comment: "remark | 备注", Default: ""},
-		{Name: "order_no", Type: field.TypeInt64, Comment: "order number | 排序编号", Default: 0},
-		{Name: "apis", Type: field.TypeJSON, Comment: "apis"},
-	}
-	// RolesTable holds the schema information for the "roles" table.
-	RolesTable = &schema.Table{
-		Name:       "roles",
-		Columns:    RolesColumns,
-		PrimaryKey: []*schema.Column{RolesColumns[0]},
-	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -72,46 +51,14 @@ var (
 			},
 		},
 	}
-	// UserRolesColumns holds the columns for the "user_roles" table.
-	UserRolesColumns = []*schema.Column{
-		{Name: "user_id", Type: field.TypeInt64},
-		{Name: "role_id", Type: field.TypeInt64},
-	}
-	// UserRolesTable holds the schema information for the "user_roles" table.
-	UserRolesTable = &schema.Table{
-		Name:       "user_roles",
-		Columns:    UserRolesColumns,
-		PrimaryKey: []*schema.Column{UserRolesColumns[0], UserRolesColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "user_roles_user_id",
-				Columns:    []*schema.Column{UserRolesColumns[0]},
-				RefColumns: []*schema.Column{UsersColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "user_roles_role_id",
-				Columns:    []*schema.Column{UserRolesColumns[1]},
-				RefColumns: []*schema.Column{RolesColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		RolesTable,
 		UsersTable,
-		UserRolesTable,
 	}
 )
 
 func init() {
-	RolesTable.Annotation = &entsql.Annotation{
-		Table: "roles",
-	}
 	UsersTable.Annotation = &entsql.Annotation{
 		Table: "users",
 	}
-	UserRolesTable.ForeignKeys[0].RefTable = UsersTable
-	UserRolesTable.ForeignKeys[1].RefTable = RolesTable
 }

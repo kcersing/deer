@@ -8,8 +8,7 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
-	"user/biz/dal/mysql/ent/role"
-	"user/biz/dal/mysql/ent/user"
+	"user/biz/dal/db/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -74,7 +73,6 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			role.Table: role.ValidColumn,
 			user.Table: user.ValidColumn,
 		})
 	})

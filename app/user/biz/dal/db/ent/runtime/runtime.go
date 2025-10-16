@@ -2,7 +2,7 @@
 
 package runtime
 
-// The schema-stitching logic is generated in user/biz/dal/mysql/ent/runtime.go
+// The schema-stitching logic is generated in user/biz/dal/db/ent/runtime.go
 
 const (
 	Version = "v0.14.5"                                         // Version of ent codegen.
