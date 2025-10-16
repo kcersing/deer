@@ -2,11 +2,9 @@ services:
 
   Etcd:
     image: 'bitnami/etcd:latest'
-    volumes:
-      - "./etcd/data:/bitnami/etcd/data"
     environment:
-      - "ALLOW_NONE_AUTHENTICATION=yes"
-      - "ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379"
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
     ports:
       - "2379:2379"
       - "2380:2380"
@@ -15,11 +13,9 @@ services:
   Etcd-Keeper:
     hostname: etcdkeeper
     image: evildecay/etcdkeeper:latest
-    volumes:
-      - "./etcdkeeper/tls:/opt/etcdkeeper/tls"
     environment:
-      - "ETCD_SERVERS=http://101.201.55.134:2379"
-      - "ETCD_ENDPOINTS=http://101.201.55.134:2379"
+      - ETCD_SERVERS=http://etcd:2379
+      - ETCD_ENDPOINTS=http://etcd:2379
     ports:
       - "9100:8080"
 
