@@ -13,9 +13,6 @@ services:
   Etcd-Keeper:
     hostname: etcdkeeper
     image: evildecay/etcdkeeper:latest
-    environment:
-      - ETCD_SERVERS=http://etcd:2379
-      - ETCD_ENDPOINTS=http://etcd:2379
     ports:
       - "9100:8080"
 
