@@ -35,8 +35,8 @@ var (
 			},
 		},
 	}
-	// SysDictionariesColumns holds the columns for the "sys_dictionaries" table.
-	SysDictionariesColumns = []*schema.Column{
+	// SysDictColumns holds the columns for the "sys_dict" table.
+	SysDictColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -47,14 +47,26 @@ var (
 		{Name: "name", Type: field.TypeString, Unique: true, Comment: "the name of dictionary for search | 字典搜索名称"},
 		{Name: "description", Type: field.TypeString, Comment: "the description of dictionary | 字典描述"},
 	}
-	// SysDictionariesTable holds the schema information for the "sys_dictionaries" table.
-	SysDictionariesTable = &schema.Table{
-		Name:       "sys_dictionaries",
-		Columns:    SysDictionariesColumns,
-		PrimaryKey: []*schema.Column{SysDictionariesColumns[0]},
+	// SysDictTable holds the schema information for the "sys_dict" table.
+	SysDictTable = &schema.Table{
+		Name:       "sys_dict",
+		Columns:    SysDictColumns,
+		PrimaryKey: []*schema.Column{SysDictColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "dict_title",
+				Unique:  true,
+				Columns: []*schema.Column{SysDictColumns[6]},
+			},
+			{
+				Name:    "dict_name",
+				Unique:  true,
+				Columns: []*schema.Column{SysDictColumns[7]},
+			},
+		},
 	}
-	// SysDictionaryDetailsColumns holds the columns for the "sys_dictionary_details" table.
-	SysDictionaryDetailsColumns = []*schema.Column{
+	// SysDicthtColumns holds the columns for the "sys_dictht" table.
+	SysDicthtColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -64,26 +76,41 @@ var (
 		{Name: "title", Type: field.TypeString, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
 		{Name: "key", Type: field.TypeString, Comment: "key | 键"},
 		{Name: "value", Type: field.TypeString, Comment: "value | 值"},
-		{Name: "dictionary_id", Type: field.TypeInt64, Nullable: true, Comment: "Dictionary ID | 字典ID"},
+		{Name: "dict_id", Type: field.TypeInt64, Nullable: true, Comment: "Dictionary ID | 字典ID"},
 	}
-	// SysDictionaryDetailsTable holds the schema information for the "sys_dictionary_details" table.
-	SysDictionaryDetailsTable = &schema.Table{
-		Name:       "sys_dictionary_details",
-		Columns:    SysDictionaryDetailsColumns,
-		PrimaryKey: []*schema.Column{SysDictionaryDetailsColumns[0]},
+	// SysDicthtTable holds the schema information for the "sys_dictht" table.
+	SysDicthtTable = &schema.Table{
+		Name:       "sys_dictht",
+		Columns:    SysDicthtColumns,
+		PrimaryKey: []*schema.Column{SysDicthtColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "sys_dictionary_details_sys_dictionaries_dictionary_details",
-				Columns:    []*schema.Column{SysDictionaryDetailsColumns[9]},
-				RefColumns: []*schema.Column{SysDictionariesColumns[0]},
+				Symbol:     "sys_dictht_sys_dict_dictht",
+				Columns:    []*schema.Column{SysDicthtColumns[9]},
+				RefColumns: []*schema.Column{SysDictColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
 		Indexes: []*schema.Index{
 			{
-				Name:    "dictionarydetail_key_dictionary_id",
+				Name:    "dictht_title",
 				Unique:  true,
-				Columns: []*schema.Column{SysDictionaryDetailsColumns[7], SysDictionaryDetailsColumns[9]},
+				Columns: []*schema.Column{SysDicthtColumns[6]},
+			},
+			{
+				Name:    "dictht_key",
+				Unique:  true,
+				Columns: []*schema.Column{SysDicthtColumns[7]},
+			},
+			{
+				Name:    "dictht_value",
+				Unique:  true,
+				Columns: []*schema.Column{SysDicthtColumns[8]},
+			},
+			{
+				Name:    "dictht_dict_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysDicthtColumns[9]},
 			},
 		},
 	}
@@ -258,8 +285,8 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		SysApisTable,
-		SysDictionariesTable,
-		SysDictionaryDetailsTable,
+		SysDictTable,
+		SysDicthtTable,
 		SysLogsTable,
 		SysMenusTable,
 		MessagesTable,
@@ -274,12 +301,12 @@ func init() {
 	SysApisTable.Annotation = &entsql.Annotation{
 		Table: "sys_apis",
 	}
-	SysDictionariesTable.Annotation = &entsql.Annotation{
-		Table: "sys_dictionaries",
+	SysDictTable.Annotation = &entsql.Annotation{
+		Table: "sys_dict",
 	}
-	SysDictionaryDetailsTable.ForeignKeys[0].RefTable = SysDictionariesTable
-	SysDictionaryDetailsTable.Annotation = &entsql.Annotation{
-		Table: "sys_dictionary_details",
+	SysDicthtTable.ForeignKeys[0].RefTable = SysDictTable
+	SysDicthtTable.Annotation = &entsql.Annotation{
+		Table: "sys_dictht",
 	}
 	SysLogsTable.Annotation = &entsql.Annotation{
 		Table: "sys_logs",

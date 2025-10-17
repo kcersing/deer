@@ -7,6 +7,7 @@ import (
 	"user/biz/dal/db/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -1022,6 +1023,29 @@ func DetailEqualFold(v string) predicate.User {
 // DetailContainsFold applies the ContainsFold predicate on the "detail" field.
 func DetailContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldDetail, v))
+}
+
+// HasUserRole applies the HasEdge predicate on the "user_role" edge.
+func HasUserRole() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, UserRoleTable, UserRoleColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasUserRoleWith applies the HasEdge predicate on the "user_role" edge with a given conditions (other predicates).
+func HasUserRoleWith(preds ...predicate.UserRole) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := newUserRoleStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

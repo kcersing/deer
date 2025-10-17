@@ -3,7 +3,7 @@
 .PHONY: kitex_gen_server
 kitex_gen_server:
 	kitex --thrift-plugin validator -module system -service system -use gen/kitex_gen ../../idl/rpc/system.thrift
-
+#cwgo server --type RPC --idl ../../../idl/rpc/system.thrift --server_name system --module system --hex
 .PHONY: gen-ent
 gen-ent:
 	go generate ./biz/dal/db/ent

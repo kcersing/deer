@@ -5,145 +5,178 @@ package user
 import (
 	"context"
 	"fmt"
-	system "gen/kitex_gen/System"
 	"gen/kitex_gen/base"
+	"gen/kitex_gen/system"
 )
 
 type User struct {
-	Id        *int64         `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  *string        `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  *string        `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    *string        `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    *string        `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      *string        `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    *int64         `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender    *int64         `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  *string        `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    *string        `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    *string        `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Detail    *string        `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
+	Id        int64          `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username  string         `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password  string         `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar    string         `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    string         `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      string         `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    int64          `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Gender    int64          `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  string         `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt    string         `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp    string         `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Detail    string         `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
 	Roles     []*system.Role `thrift:"roles,14,optional" frugal:"14,optional,list<system.Role>" json:"roles,omitempty"`
-	CreatedAt *string        `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt *string        `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId *string        `thrift:"createdId,253,optional" frugal:"253,optional,string" json:"createdId,omitempty"`
+	CreatedAt string         `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string         `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId int64          `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUser() *User {
-	return &User{}
+	return &User{
+		Id:        0,
+		Username:  "",
+		Password:  "",
+		Avatar:    "",
+		Mobile:    "",
+		Name:      "",
+		Status:    0,
+		Gender:    0,
+		Birthday:  "",
+		LastAt:    "",
+		LastIp:    "",
+		Detail:    "",
+		Roles:     []*system.Role{},
+		CreatedAt: "",
+		UpdatedAt: "",
+		CreatedId: 0,
+	}
 }
 
 func (p *User) InitDefault() {
+	p.Id = 0
+	p.Username = ""
+	p.Password = ""
+	p.Avatar = ""
+	p.Mobile = ""
+	p.Name = ""
+	p.Status = 0
+	p.Gender = 0
+	p.Birthday = ""
+	p.LastAt = ""
+	p.LastIp = ""
+	p.Detail = ""
+	p.Roles = []*system.Role{}
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.CreatedId = 0
 }
 
-var User_Id_DEFAULT int64
+var User_Id_DEFAULT int64 = 0
 
 func (p *User) GetId() (v int64) {
 	if !p.IsSetId() {
 		return User_Id_DEFAULT
 	}
-	return *p.Id
+	return p.Id
 }
 
-var User_Username_DEFAULT string
+var User_Username_DEFAULT string = ""
 
 func (p *User) GetUsername() (v string) {
 	if !p.IsSetUsername() {
 		return User_Username_DEFAULT
 	}
-	return *p.Username
+	return p.Username
 }
 
-var User_Password_DEFAULT string
+var User_Password_DEFAULT string = ""
 
 func (p *User) GetPassword() (v string) {
 	if !p.IsSetPassword() {
 		return User_Password_DEFAULT
 	}
-	return *p.Password
+	return p.Password
 }
 
-var User_Avatar_DEFAULT string
+var User_Avatar_DEFAULT string = ""
 
 func (p *User) GetAvatar() (v string) {
 	if !p.IsSetAvatar() {
 		return User_Avatar_DEFAULT
 	}
-	return *p.Avatar
+	return p.Avatar
 }
 
-var User_Mobile_DEFAULT string
+var User_Mobile_DEFAULT string = ""
 
 func (p *User) GetMobile() (v string) {
 	if !p.IsSetMobile() {
 		return User_Mobile_DEFAULT
 	}
-	return *p.Mobile
+	return p.Mobile
 }
 
-var User_Name_DEFAULT string
+var User_Name_DEFAULT string = ""
 
 func (p *User) GetName() (v string) {
 	if !p.IsSetName() {
 		return User_Name_DEFAULT
 	}
-	return *p.Name
+	return p.Name
 }
 
-var User_Status_DEFAULT int64
+var User_Status_DEFAULT int64 = 0
 
 func (p *User) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return User_Status_DEFAULT
 	}
-	return *p.Status
+	return p.Status
 }
 
-var User_Gender_DEFAULT int64
+var User_Gender_DEFAULT int64 = 0
 
 func (p *User) GetGender() (v int64) {
 	if !p.IsSetGender() {
 		return User_Gender_DEFAULT
 	}
-	return *p.Gender
+	return p.Gender
 }
 
-var User_Birthday_DEFAULT string
+var User_Birthday_DEFAULT string = ""
 
 func (p *User) GetBirthday() (v string) {
 	if !p.IsSetBirthday() {
 		return User_Birthday_DEFAULT
 	}
-	return *p.Birthday
+	return p.Birthday
 }
 
-var User_LastAt_DEFAULT string
+var User_LastAt_DEFAULT string = ""
 
 func (p *User) GetLastAt() (v string) {
 	if !p.IsSetLastAt() {
 		return User_LastAt_DEFAULT
 	}
-	return *p.LastAt
+	return p.LastAt
 }
 
-var User_LastIp_DEFAULT string
+var User_LastIp_DEFAULT string = ""
 
 func (p *User) GetLastIp() (v string) {
 	if !p.IsSetLastIp() {
 		return User_LastIp_DEFAULT
 	}
-	return *p.LastIp
+	return p.LastIp
 }
 
-var User_Detail_DEFAULT string
+var User_Detail_DEFAULT string = ""
 
 func (p *User) GetDetail() (v string) {
 	if !p.IsSetDetail() {
 		return User_Detail_DEFAULT
 	}
-	return *p.Detail
+	return p.Detail
 }
 
-var User_Roles_DEFAULT []*system.Role
+var User_Roles_DEFAULT []*system.Role = []*system.Role{}
 
 func (p *User) GetRoles() (v []*system.Role) {
 	if !p.IsSetRoles() {
@@ -152,127 +185,127 @@ func (p *User) GetRoles() (v []*system.Role) {
 	return p.Roles
 }
 
-var User_CreatedAt_DEFAULT string
+var User_CreatedAt_DEFAULT string = ""
 
 func (p *User) GetCreatedAt() (v string) {
 	if !p.IsSetCreatedAt() {
 		return User_CreatedAt_DEFAULT
 	}
-	return *p.CreatedAt
+	return p.CreatedAt
 }
 
-var User_UpdatedAt_DEFAULT string
+var User_UpdatedAt_DEFAULT string = ""
 
 func (p *User) GetUpdatedAt() (v string) {
 	if !p.IsSetUpdatedAt() {
 		return User_UpdatedAt_DEFAULT
 	}
-	return *p.UpdatedAt
+	return p.UpdatedAt
 }
 
-var User_CreatedId_DEFAULT string
+var User_CreatedId_DEFAULT int64 = 0
 
-func (p *User) GetCreatedId() (v string) {
+func (p *User) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
 		return User_CreatedId_DEFAULT
 	}
-	return *p.CreatedId
+	return p.CreatedId
 }
-func (p *User) SetId(val *int64) {
+func (p *User) SetId(val int64) {
 	p.Id = val
 }
-func (p *User) SetUsername(val *string) {
+func (p *User) SetUsername(val string) {
 	p.Username = val
 }
-func (p *User) SetPassword(val *string) {
+func (p *User) SetPassword(val string) {
 	p.Password = val
 }
-func (p *User) SetAvatar(val *string) {
+func (p *User) SetAvatar(val string) {
 	p.Avatar = val
 }
-func (p *User) SetMobile(val *string) {
+func (p *User) SetMobile(val string) {
 	p.Mobile = val
 }
-func (p *User) SetName(val *string) {
+func (p *User) SetName(val string) {
 	p.Name = val
 }
-func (p *User) SetStatus(val *int64) {
+func (p *User) SetStatus(val int64) {
 	p.Status = val
 }
-func (p *User) SetGender(val *int64) {
+func (p *User) SetGender(val int64) {
 	p.Gender = val
 }
-func (p *User) SetBirthday(val *string) {
+func (p *User) SetBirthday(val string) {
 	p.Birthday = val
 }
-func (p *User) SetLastAt(val *string) {
+func (p *User) SetLastAt(val string) {
 	p.LastAt = val
 }
-func (p *User) SetLastIp(val *string) {
+func (p *User) SetLastIp(val string) {
 	p.LastIp = val
 }
-func (p *User) SetDetail(val *string) {
+func (p *User) SetDetail(val string) {
 	p.Detail = val
 }
 func (p *User) SetRoles(val []*system.Role) {
 	p.Roles = val
 }
-func (p *User) SetCreatedAt(val *string) {
+func (p *User) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *User) SetUpdatedAt(val *string) {
+func (p *User) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
-func (p *User) SetCreatedId(val *string) {
+func (p *User) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
 
 func (p *User) IsSetId() bool {
-	return p.Id != nil
+	return p.Id != User_Id_DEFAULT
 }
 
 func (p *User) IsSetUsername() bool {
-	return p.Username != nil
+	return p.Username != User_Username_DEFAULT
 }
 
 func (p *User) IsSetPassword() bool {
-	return p.Password != nil
+	return p.Password != User_Password_DEFAULT
 }
 
 func (p *User) IsSetAvatar() bool {
-	return p.Avatar != nil
+	return p.Avatar != User_Avatar_DEFAULT
 }
 
 func (p *User) IsSetMobile() bool {
-	return p.Mobile != nil
+	return p.Mobile != User_Mobile_DEFAULT
 }
 
 func (p *User) IsSetName() bool {
-	return p.Name != nil
+	return p.Name != User_Name_DEFAULT
 }
 
 func (p *User) IsSetStatus() bool {
-	return p.Status != nil
+	return p.Status != User_Status_DEFAULT
 }
 
 func (p *User) IsSetGender() bool {
-	return p.Gender != nil
+	return p.Gender != User_Gender_DEFAULT
 }
 
 func (p *User) IsSetBirthday() bool {
-	return p.Birthday != nil
+	return p.Birthday != User_Birthday_DEFAULT
 }
 
 func (p *User) IsSetLastAt() bool {
-	return p.LastAt != nil
+	return p.LastAt != User_LastAt_DEFAULT
 }
 
 func (p *User) IsSetLastIp() bool {
-	return p.LastIp != nil
+	return p.LastIp != User_LastIp_DEFAULT
 }
 
 func (p *User) IsSetDetail() bool {
-	return p.Detail != nil
+	return p.Detail != User_Detail_DEFAULT
 }
 
 func (p *User) IsSetRoles() bool {
@@ -280,15 +313,15 @@ func (p *User) IsSetRoles() bool {
 }
 
 func (p *User) IsSetCreatedAt() bool {
-	return p.CreatedAt != nil
+	return p.CreatedAt != User_CreatedAt_DEFAULT
 }
 
 func (p *User) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != nil
+	return p.UpdatedAt != User_UpdatedAt_DEFAULT
 }
 
 func (p *User) IsSetCreatedId() bool {
-	return p.CreatedId != nil
+	return p.CreatedId != User_CreatedId_DEFAULT
 }
 
 func (p *User) String() string {
@@ -323,13 +356,18 @@ type UserResp struct {
 }
 
 func NewUserResp() *UserResp {
-	return &UserResp{}
+	return &UserResp{
+		Data:     &User{},
+		BaseResp: &base.BaseResp{},
+	}
 }
 
 func (p *UserResp) InitDefault() {
+	p.Data = &User{}
+	p.BaseResp = &base.BaseResp{}
 }
 
-var UserResp_Data_DEFAULT *User
+var UserResp_Data_DEFAULT *User = &User{}
 
 func (p *UserResp) GetData() (v *User) {
 	if !p.IsSetData() {
@@ -338,7 +376,7 @@ func (p *UserResp) GetData() (v *User) {
 	return p.Data
 }
 
-var UserResp_BaseResp_DEFAULT *base.BaseResp
+var UserResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
 
 func (p *UserResp) GetBaseResp() (v *base.BaseResp) {
 	if !p.IsSetBaseResp() {
@@ -379,13 +417,18 @@ type UserListResp struct {
 }
 
 func NewUserListResp() *UserListResp {
-	return &UserListResp{}
+	return &UserListResp{
+		Data:     []*User{},
+		BaseResp: &base.BaseResp{},
+	}
 }
 
 func (p *UserListResp) InitDefault() {
+	p.Data = []*User{}
+	p.BaseResp = &base.BaseResp{}
 }
 
-var UserListResp_Data_DEFAULT []*User
+var UserListResp_Data_DEFAULT []*User = []*User{}
 
 func (p *UserListResp) GetData() (v []*User) {
 	if !p.IsSetData() {
@@ -394,7 +437,7 @@ func (p *UserListResp) GetData() (v []*User) {
 	return p.Data
 }
 
-var UserListResp_BaseResp_DEFAULT *base.BaseResp
+var UserListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
 
 func (p *UserListResp) GetBaseResp() (v *base.BaseResp) {
 	if !p.IsSetBaseResp() {
@@ -486,30 +529,109 @@ var fieldIDToName_CreateUserReq = map[int16]string{
 }
 
 type GetUserListReq struct {
-	Pages *base.PageReq `thrift:"pages,1,optional" frugal:"1,optional,base.PageReq" json:"pages,omitempty"`
+	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+	Name     string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Mobile   string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
 }
 
 func NewGetUserListReq() *GetUserListReq {
-	return &GetUserListReq{}
+	return &GetUserListReq{
+		Page:     1,
+		PageSize: 10,
+		Keyword:  "",
+		Name:     "",
+		Mobile:   "",
+	}
 }
 
 func (p *GetUserListReq) InitDefault() {
+	p.Page = 1
+	p.PageSize = 10
+	p.Keyword = ""
+	p.Name = ""
+	p.Mobile = ""
 }
 
-var GetUserListReq_Pages_DEFAULT *base.PageReq
+var GetUserListReq_Page_DEFAULT int64 = 1
 
-func (p *GetUserListReq) GetPages() (v *base.PageReq) {
-	if !p.IsSetPages() {
-		return GetUserListReq_Pages_DEFAULT
+func (p *GetUserListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return GetUserListReq_Page_DEFAULT
 	}
-	return p.Pages
-}
-func (p *GetUserListReq) SetPages(val *base.PageReq) {
-	p.Pages = val
+	return p.Page
 }
 
-func (p *GetUserListReq) IsSetPages() bool {
-	return p.Pages != nil
+var GetUserListReq_PageSize_DEFAULT int64 = 10
+
+func (p *GetUserListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return GetUserListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
+}
+
+var GetUserListReq_Keyword_DEFAULT string = ""
+
+func (p *GetUserListReq) GetKeyword() (v string) {
+	if !p.IsSetKeyword() {
+		return GetUserListReq_Keyword_DEFAULT
+	}
+	return p.Keyword
+}
+
+var GetUserListReq_Name_DEFAULT string = ""
+
+func (p *GetUserListReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return GetUserListReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var GetUserListReq_Mobile_DEFAULT string = ""
+
+func (p *GetUserListReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return GetUserListReq_Mobile_DEFAULT
+	}
+	return p.Mobile
+}
+func (p *GetUserListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *GetUserListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *GetUserListReq) SetKeyword(val string) {
+	p.Keyword = val
+}
+func (p *GetUserListReq) SetName(val string) {
+	p.Name = val
+}
+func (p *GetUserListReq) SetMobile(val string) {
+	p.Mobile = val
+}
+
+func (p *GetUserListReq) IsSetPage() bool {
+	return p.Page != GetUserListReq_Page_DEFAULT
+}
+
+func (p *GetUserListReq) IsSetPageSize() bool {
+	return p.PageSize != GetUserListReq_PageSize_DEFAULT
+}
+
+func (p *GetUserListReq) IsSetKeyword() bool {
+	return p.Keyword != GetUserListReq_Keyword_DEFAULT
+}
+
+func (p *GetUserListReq) IsSetName() bool {
+	return p.Name != GetUserListReq_Name_DEFAULT
+}
+
+func (p *GetUserListReq) IsSetMobile() bool {
+	return p.Mobile != GetUserListReq_Mobile_DEFAULT
 }
 
 func (p *GetUserListReq) String() string {
@@ -520,170 +642,193 @@ func (p *GetUserListReq) String() string {
 }
 
 var fieldIDToName_GetUserListReq = map[int16]string{
-	1: "pages",
+	1: "page",
+	2: "pageSize",
+	3: "keyword",
+	4: "name",
+	5: "mobile",
 }
 
 type UpdateUserReq struct {
-	Id       *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Avatar   *string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
-	Mobile   *string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Name     *string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	Status   *int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
-	Gender   *int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
-	Birthday *string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
-	Detail   *string `thrift:"detail,8,optional" frugal:"8,optional,string" json:"detail,omitempty"`
-	RoleId   *int64  `thrift:"roleId,9,optional" frugal:"9,optional,i64" json:"roleId,omitempty"`
+	Id       int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar   string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile   string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name     string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status   int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender   int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Detail   string `thrift:"detail,8,optional" frugal:"8,optional,string" json:"detail,omitempty"`
+	RoleId   int64  `thrift:"roleId,9,optional" frugal:"9,optional,i64" json:"roleId,omitempty"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
-	return &UpdateUserReq{}
+	return &UpdateUserReq{
+		Id:       0,
+		Avatar:   "",
+		Mobile:   "",
+		Name:     "",
+		Status:   0,
+		Gender:   0,
+		Birthday: "",
+		Detail:   "",
+		RoleId:   0,
+	}
 }
 
 func (p *UpdateUserReq) InitDefault() {
+	p.Id = 0
+	p.Avatar = ""
+	p.Mobile = ""
+	p.Name = ""
+	p.Status = 0
+	p.Gender = 0
+	p.Birthday = ""
+	p.Detail = ""
+	p.RoleId = 0
 }
 
-var UpdateUserReq_Id_DEFAULT int64
+var UpdateUserReq_Id_DEFAULT int64 = 0
 
 func (p *UpdateUserReq) GetId() (v int64) {
 	if !p.IsSetId() {
 		return UpdateUserReq_Id_DEFAULT
 	}
-	return *p.Id
+	return p.Id
 }
 
-var UpdateUserReq_Avatar_DEFAULT string
+var UpdateUserReq_Avatar_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetAvatar() (v string) {
 	if !p.IsSetAvatar() {
 		return UpdateUserReq_Avatar_DEFAULT
 	}
-	return *p.Avatar
+	return p.Avatar
 }
 
-var UpdateUserReq_Mobile_DEFAULT string
+var UpdateUserReq_Mobile_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetMobile() (v string) {
 	if !p.IsSetMobile() {
 		return UpdateUserReq_Mobile_DEFAULT
 	}
-	return *p.Mobile
+	return p.Mobile
 }
 
-var UpdateUserReq_Name_DEFAULT string
+var UpdateUserReq_Name_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetName() (v string) {
 	if !p.IsSetName() {
 		return UpdateUserReq_Name_DEFAULT
 	}
-	return *p.Name
+	return p.Name
 }
 
-var UpdateUserReq_Status_DEFAULT int64
+var UpdateUserReq_Status_DEFAULT int64 = 0
 
 func (p *UpdateUserReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return UpdateUserReq_Status_DEFAULT
 	}
-	return *p.Status
+	return p.Status
 }
 
-var UpdateUserReq_Gender_DEFAULT int64
+var UpdateUserReq_Gender_DEFAULT int64 = 0
 
 func (p *UpdateUserReq) GetGender() (v int64) {
 	if !p.IsSetGender() {
 		return UpdateUserReq_Gender_DEFAULT
 	}
-	return *p.Gender
+	return p.Gender
 }
 
-var UpdateUserReq_Birthday_DEFAULT string
+var UpdateUserReq_Birthday_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetBirthday() (v string) {
 	if !p.IsSetBirthday() {
 		return UpdateUserReq_Birthday_DEFAULT
 	}
-	return *p.Birthday
+	return p.Birthday
 }
 
-var UpdateUserReq_Detail_DEFAULT string
+var UpdateUserReq_Detail_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetDetail() (v string) {
 	if !p.IsSetDetail() {
 		return UpdateUserReq_Detail_DEFAULT
 	}
-	return *p.Detail
+	return p.Detail
 }
 
-var UpdateUserReq_RoleId_DEFAULT int64
+var UpdateUserReq_RoleId_DEFAULT int64 = 0
 
 func (p *UpdateUserReq) GetRoleId() (v int64) {
 	if !p.IsSetRoleId() {
 		return UpdateUserReq_RoleId_DEFAULT
 	}
-	return *p.RoleId
+	return p.RoleId
 }
-func (p *UpdateUserReq) SetId(val *int64) {
+func (p *UpdateUserReq) SetId(val int64) {
 	p.Id = val
 }
-func (p *UpdateUserReq) SetAvatar(val *string) {
+func (p *UpdateUserReq) SetAvatar(val string) {
 	p.Avatar = val
 }
-func (p *UpdateUserReq) SetMobile(val *string) {
+func (p *UpdateUserReq) SetMobile(val string) {
 	p.Mobile = val
 }
-func (p *UpdateUserReq) SetName(val *string) {
+func (p *UpdateUserReq) SetName(val string) {
 	p.Name = val
 }
-func (p *UpdateUserReq) SetStatus(val *int64) {
+func (p *UpdateUserReq) SetStatus(val int64) {
 	p.Status = val
 }
-func (p *UpdateUserReq) SetGender(val *int64) {
+func (p *UpdateUserReq) SetGender(val int64) {
 	p.Gender = val
 }
-func (p *UpdateUserReq) SetBirthday(val *string) {
+func (p *UpdateUserReq) SetBirthday(val string) {
 	p.Birthday = val
 }
-func (p *UpdateUserReq) SetDetail(val *string) {
+func (p *UpdateUserReq) SetDetail(val string) {
 	p.Detail = val
 }
-func (p *UpdateUserReq) SetRoleId(val *int64) {
+func (p *UpdateUserReq) SetRoleId(val int64) {
 	p.RoleId = val
 }
 
 func (p *UpdateUserReq) IsSetId() bool {
-	return p.Id != nil
+	return p.Id != UpdateUserReq_Id_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetAvatar() bool {
-	return p.Avatar != nil
+	return p.Avatar != UpdateUserReq_Avatar_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetMobile() bool {
-	return p.Mobile != nil
+	return p.Mobile != UpdateUserReq_Mobile_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetName() bool {
-	return p.Name != nil
+	return p.Name != UpdateUserReq_Name_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetStatus() bool {
-	return p.Status != nil
+	return p.Status != UpdateUserReq_Status_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetGender() bool {
-	return p.Gender != nil
+	return p.Gender != UpdateUserReq_Gender_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetBirthday() bool {
-	return p.Birthday != nil
+	return p.Birthday != UpdateUserReq_Birthday_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetDetail() bool {
-	return p.Detail != nil
+	return p.Detail != UpdateUserReq_Detail_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetRoleId() bool {
-	return p.RoleId != nil
+	return p.RoleId != UpdateUserReq_RoleId_DEFAULT
 }
 
 func (p *UpdateUserReq) String() string {
@@ -706,47 +851,52 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 }
 
 type ChangePasswordReq struct {
-	Id       *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Id       int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Password string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
 }
 
 func NewChangePasswordReq() *ChangePasswordReq {
-	return &ChangePasswordReq{}
+	return &ChangePasswordReq{
+		Id:       0,
+		Password: "",
+	}
 }
 
 func (p *ChangePasswordReq) InitDefault() {
+	p.Id = 0
+	p.Password = ""
 }
 
-var ChangePasswordReq_Id_DEFAULT int64
+var ChangePasswordReq_Id_DEFAULT int64 = 0
 
 func (p *ChangePasswordReq) GetId() (v int64) {
 	if !p.IsSetId() {
 		return ChangePasswordReq_Id_DEFAULT
 	}
-	return *p.Id
+	return p.Id
 }
 
-var ChangePasswordReq_Password_DEFAULT string
+var ChangePasswordReq_Password_DEFAULT string = ""
 
 func (p *ChangePasswordReq) GetPassword() (v string) {
 	if !p.IsSetPassword() {
 		return ChangePasswordReq_Password_DEFAULT
 	}
-	return *p.Password
+	return p.Password
 }
-func (p *ChangePasswordReq) SetId(val *int64) {
+func (p *ChangePasswordReq) SetId(val int64) {
 	p.Id = val
 }
-func (p *ChangePasswordReq) SetPassword(val *string) {
+func (p *ChangePasswordReq) SetPassword(val string) {
 	p.Password = val
 }
 
 func (p *ChangePasswordReq) IsSetId() bool {
-	return p.Id != nil
+	return p.Id != ChangePasswordReq_Id_DEFAULT
 }
 
 func (p *ChangePasswordReq) IsSetPassword() bool {
-	return p.Password != nil
+	return p.Password != ChangePasswordReq_Password_DEFAULT
 }
 
 func (p *ChangePasswordReq) String() string {
@@ -762,47 +912,52 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 }
 
 type SetUserRoleReq struct {
-	Id     *int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	RoleId *string `thrift:"roleId,2,optional" frugal:"2,optional,string" json:"roleId,omitempty"`
+	Id     int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	RoleId int64 `thrift:"roleId,2,optional" frugal:"2,optional,i64" json:"roleId,omitempty"`
 }
 
 func NewSetUserRoleReq() *SetUserRoleReq {
-	return &SetUserRoleReq{}
+	return &SetUserRoleReq{
+		Id:     0,
+		RoleId: 0,
+	}
 }
 
 func (p *SetUserRoleReq) InitDefault() {
+	p.Id = 0
+	p.RoleId = 0
 }
 
-var SetUserRoleReq_Id_DEFAULT int64
+var SetUserRoleReq_Id_DEFAULT int64 = 0
 
 func (p *SetUserRoleReq) GetId() (v int64) {
 	if !p.IsSetId() {
 		return SetUserRoleReq_Id_DEFAULT
 	}
-	return *p.Id
+	return p.Id
 }
 
-var SetUserRoleReq_RoleId_DEFAULT string
+var SetUserRoleReq_RoleId_DEFAULT int64 = 0
 
-func (p *SetUserRoleReq) GetRoleId() (v string) {
+func (p *SetUserRoleReq) GetRoleId() (v int64) {
 	if !p.IsSetRoleId() {
 		return SetUserRoleReq_RoleId_DEFAULT
 	}
-	return *p.RoleId
+	return p.RoleId
 }
-func (p *SetUserRoleReq) SetId(val *int64) {
+func (p *SetUserRoleReq) SetId(val int64) {
 	p.Id = val
 }
-func (p *SetUserRoleReq) SetRoleId(val *string) {
+func (p *SetUserRoleReq) SetRoleId(val int64) {
 	p.RoleId = val
 }
 
 func (p *SetUserRoleReq) IsSetId() bool {
-	return p.Id != nil
+	return p.Id != SetUserRoleReq_Id_DEFAULT
 }
 
 func (p *SetUserRoleReq) IsSetRoleId() bool {
-	return p.RoleId != nil
+	return p.RoleId != SetUserRoleReq_RoleId_DEFAULT
 }
 
 func (p *SetUserRoleReq) String() string {

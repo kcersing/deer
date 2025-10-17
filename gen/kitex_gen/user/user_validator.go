@@ -49,11 +49,6 @@ func (p *CreateUserReq) IsValid() error {
 	return nil
 }
 func (p *GetUserListReq) IsValid() error {
-	if p.Pages != nil {
-		if err := p.Pages.IsValid(); err != nil {
-			return fmt.Errorf("field Pages not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *UpdateUserReq) IsValid() error {

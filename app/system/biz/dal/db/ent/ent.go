@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"sync"
 	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/dictionary"
-	"system/biz/dal/db/ent/dictionarydetail"
+	"system/biz/dal/db/ent/dict"
+	"system/biz/dal/db/ent/dictht"
 	"system/biz/dal/db/ent/logs"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/messages"
@@ -81,15 +81,15 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			api.Table:              api.ValidColumn,
-			dictionary.Table:       dictionary.ValidColumn,
-			dictionarydetail.Table: dictionarydetail.ValidColumn,
-			logs.Table:             logs.ValidColumn,
-			menu.Table:             menu.ValidColumn,
-			messages.Table:         messages.ValidColumn,
-			role.Table:             role.ValidColumn,
-			sms.Table:              sms.ValidColumn,
-			smslog.Table:           smslog.ValidColumn,
+			api.Table:      api.ValidColumn,
+			dict.Table:     dict.ValidColumn,
+			dictht.Table:   dictht.ValidColumn,
+			logs.Table:     logs.ValidColumn,
+			menu.Table:     menu.ValidColumn,
+			messages.Table: messages.ValidColumn,
+			role.Table:     role.ValidColumn,
+			sms.Table:      sms.ValidColumn,
+			smslog.Table:   smslog.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

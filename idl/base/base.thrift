@@ -13,7 +13,7 @@ struct PageReq {
     3:optional string Keyword=""
 }
 struct IdReq {
-    1:optional i64 id
+    1:optional i64 id=0
 }
 struct NilResponse {
 

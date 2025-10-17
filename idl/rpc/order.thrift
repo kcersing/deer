@@ -60,11 +60,11 @@ struct GetOrderListReq{
     4:optional string nature="" (api.raw = "nature")
     5:optional string searchKey="" (api.raw = "searchKey")
 
-    254:optional base.PageReq pageReq
+    254:optional base.PageReq pageReq = {}
 }
 struct GetOrderListResp {
-    1:optional list<Order> data
-    255:optional base.BaseResp baseResp
+    1:optional list<Order> data={}
+    255:optional base.BaseResp baseResp={}
 }
 
 struct RefundOrderReq {
@@ -81,13 +81,13 @@ struct CancelledOrderReq {
 }
 
 struct CreateOrderResp {
-    1:optional Order data
-    255:optional base.BaseResp baseResp
+    1:optional Order data={}
+    255:optional base.BaseResp baseResp={}
 }
 
 struct OrderResp {
-    1:optional Order data
-    255:optional base.BaseResp baseResp
+    1:optional Order data={}
+    255:optional base.BaseResp baseResp={}
 }
 struct CreateOrderReq {
     1:optional i64 memberId=0 (api.raw = "memberId")

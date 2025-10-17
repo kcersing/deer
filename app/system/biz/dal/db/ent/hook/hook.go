@@ -20,28 +20,28 @@ func (f APIFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) 
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.APIMutation", m)
 }
 
-// The DictionaryFunc type is an adapter to allow the use of ordinary
-// function as Dictionary mutator.
-type DictionaryFunc func(context.Context, *ent.DictionaryMutation) (ent.Value, error)
+// The DictFunc type is an adapter to allow the use of ordinary
+// function as Dict mutator.
+type DictFunc func(context.Context, *ent.DictMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f DictionaryFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.DictionaryMutation); ok {
+func (f DictFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.DictMutation); ok {
 		return f(ctx, mv)
 	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DictionaryMutation", m)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DictMutation", m)
 }
 
-// The DictionaryDetailFunc type is an adapter to allow the use of ordinary
-// function as DictionaryDetail mutator.
-type DictionaryDetailFunc func(context.Context, *ent.DictionaryDetailMutation) (ent.Value, error)
+// The DicthtFunc type is an adapter to allow the use of ordinary
+// function as Dictht mutator.
+type DicthtFunc func(context.Context, *ent.DicthtMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
-func (f DictionaryDetailFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.DictionaryDetailMutation); ok {
+func (f DicthtFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.DicthtMutation); ok {
 		return f(ctx, mv)
 	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DictionaryDetailMutation", m)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DicthtMutation", m)
 }
 
 // The LogsFunc type is an adapter to allow the use of ordinary

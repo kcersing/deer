@@ -4,6 +4,8 @@ import (
 	"context"
 	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
+	"user/biz/dal/db"
+	"user/biz/dal/db/ent/user"
 )
 
 type SetUserRoleService struct {
@@ -15,5 +17,12 @@ func NewSetUserRoleService(ctx context.Context) *SetUserRoleService {
 
 // Run create note info
 func (s *SetUserRoleService) Run(req *User.SetUserRoleReq) (resp *Base.NilResponse, err error) {
+	_, err = db.Client.User.Update().
+		Where(user.IDEQ(req.GetId())).AddUserRoleIDs(int(req.GetRoleId())).
+		Save(s.ctx)
+
+	if err != nil {
+		return nil, err
+	}
 	return
 }

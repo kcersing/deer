@@ -12,8 +12,8 @@ import (
 	"system/biz/dal/db/ent/migrate"
 
 	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/dictionary"
-	"system/biz/dal/db/ent/dictionarydetail"
+	"system/biz/dal/db/ent/dict"
+	"system/biz/dal/db/ent/dictht"
 	"system/biz/dal/db/ent/logs"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/messages"
@@ -34,10 +34,10 @@ type Client struct {
 	Schema *migrate.Schema
 	// API is the client for interacting with the API builders.
 	API *APIClient
-	// Dictionary is the client for interacting with the Dictionary builders.
-	Dictionary *DictionaryClient
-	// DictionaryDetail is the client for interacting with the DictionaryDetail builders.
-	DictionaryDetail *DictionaryDetailClient
+	// Dict is the client for interacting with the Dict builders.
+	Dict *DictClient
+	// Dictht is the client for interacting with the Dictht builders.
+	Dictht *DicthtClient
 	// Logs is the client for interacting with the Logs builders.
 	Logs *LogsClient
 	// Menu is the client for interacting with the Menu builders.
@@ -62,8 +62,8 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.API = NewAPIClient(c.config)
-	c.Dictionary = NewDictionaryClient(c.config)
-	c.DictionaryDetail = NewDictionaryDetailClient(c.config)
+	c.Dict = NewDictClient(c.config)
+	c.Dictht = NewDicthtClient(c.config)
 	c.Logs = NewLogsClient(c.config)
 	c.Menu = NewMenuClient(c.config)
 	c.Messages = NewMessagesClient(c.config)
@@ -160,17 +160,17 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:              ctx,
-		config:           cfg,
-		API:              NewAPIClient(cfg),
-		Dictionary:       NewDictionaryClient(cfg),
-		DictionaryDetail: NewDictionaryDetailClient(cfg),
-		Logs:             NewLogsClient(cfg),
-		Menu:             NewMenuClient(cfg),
-		Messages:         NewMessagesClient(cfg),
-		Role:             NewRoleClient(cfg),
-		Sms:              NewSmsClient(cfg),
-		SmsLog:           NewSmsLogClient(cfg),
+		ctx:      ctx,
+		config:   cfg,
+		API:      NewAPIClient(cfg),
+		Dict:     NewDictClient(cfg),
+		Dictht:   NewDicthtClient(cfg),
+		Logs:     NewLogsClient(cfg),
+		Menu:     NewMenuClient(cfg),
+		Messages: NewMessagesClient(cfg),
+		Role:     NewRoleClient(cfg),
+		Sms:      NewSmsClient(cfg),
+		SmsLog:   NewSmsLogClient(cfg),
 	}, nil
 }
 
@@ -188,17 +188,17 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:              ctx,
-		config:           cfg,
-		API:              NewAPIClient(cfg),
-		Dictionary:       NewDictionaryClient(cfg),
-		DictionaryDetail: NewDictionaryDetailClient(cfg),
-		Logs:             NewLogsClient(cfg),
-		Menu:             NewMenuClient(cfg),
-		Messages:         NewMessagesClient(cfg),
-		Role:             NewRoleClient(cfg),
-		Sms:              NewSmsClient(cfg),
-		SmsLog:           NewSmsLogClient(cfg),
+		ctx:      ctx,
+		config:   cfg,
+		API:      NewAPIClient(cfg),
+		Dict:     NewDictClient(cfg),
+		Dictht:   NewDicthtClient(cfg),
+		Logs:     NewLogsClient(cfg),
+		Menu:     NewMenuClient(cfg),
+		Messages: NewMessagesClient(cfg),
+		Role:     NewRoleClient(cfg),
+		Sms:      NewSmsClient(cfg),
+		SmsLog:   NewSmsLogClient(cfg),
 	}, nil
 }
 
@@ -228,8 +228,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.API, c.Dictionary, c.DictionaryDetail, c.Logs, c.Menu, c.Messages, c.Role,
-		c.Sms, c.SmsLog,
+		c.API, c.Dict, c.Dictht, c.Logs, c.Menu, c.Messages, c.Role, c.Sms, c.SmsLog,
 	} {
 		n.Use(hooks...)
 	}
@@ -239,8 +238,7 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.API, c.Dictionary, c.DictionaryDetail, c.Logs, c.Menu, c.Messages, c.Role,
-		c.Sms, c.SmsLog,
+		c.API, c.Dict, c.Dictht, c.Logs, c.Menu, c.Messages, c.Role, c.Sms, c.SmsLog,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -251,10 +249,10 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
 	case *APIMutation:
 		return c.API.mutate(ctx, m)
-	case *DictionaryMutation:
-		return c.Dictionary.mutate(ctx, m)
-	case *DictionaryDetailMutation:
-		return c.DictionaryDetail.mutate(ctx, m)
+	case *DictMutation:
+		return c.Dict.mutate(ctx, m)
+	case *DicthtMutation:
+		return c.Dictht.mutate(ctx, m)
 	case *LogsMutation:
 		return c.Logs.mutate(ctx, m)
 	case *MenuMutation:
@@ -405,107 +403,107 @@ func (c *APIClient) mutate(ctx context.Context, m *APIMutation) (Value, error) {
 	}
 }
 
-// DictionaryClient is a client for the Dictionary schema.
-type DictionaryClient struct {
+// DictClient is a client for the Dict schema.
+type DictClient struct {
 	config
 }
 
-// NewDictionaryClient returns a client for the Dictionary from the given config.
-func NewDictionaryClient(c config) *DictionaryClient {
-	return &DictionaryClient{config: c}
+// NewDictClient returns a client for the Dict from the given config.
+func NewDictClient(c config) *DictClient {
+	return &DictClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `dictionary.Hooks(f(g(h())))`.
-func (c *DictionaryClient) Use(hooks ...Hook) {
-	c.hooks.Dictionary = append(c.hooks.Dictionary, hooks...)
+// A call to `Use(f, g, h)` equals to `dict.Hooks(f(g(h())))`.
+func (c *DictClient) Use(hooks ...Hook) {
+	c.hooks.Dict = append(c.hooks.Dict, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `dictionary.Intercept(f(g(h())))`.
-func (c *DictionaryClient) Intercept(interceptors ...Interceptor) {
-	c.inters.Dictionary = append(c.inters.Dictionary, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `dict.Intercept(f(g(h())))`.
+func (c *DictClient) Intercept(interceptors ...Interceptor) {
+	c.inters.Dict = append(c.inters.Dict, interceptors...)
 }
 
-// Create returns a builder for creating a Dictionary entity.
-func (c *DictionaryClient) Create() *DictionaryCreate {
-	mutation := newDictionaryMutation(c.config, OpCreate)
-	return &DictionaryCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a Dict entity.
+func (c *DictClient) Create() *DictCreate {
+	mutation := newDictMutation(c.config, OpCreate)
+	return &DictCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of Dictionary entities.
-func (c *DictionaryClient) CreateBulk(builders ...*DictionaryCreate) *DictionaryCreateBulk {
-	return &DictionaryCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of Dict entities.
+func (c *DictClient) CreateBulk(builders ...*DictCreate) *DictCreateBulk {
+	return &DictCreateBulk{config: c.config, builders: builders}
 }
 
 // MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
 // a builder and applies setFunc on it.
-func (c *DictionaryClient) MapCreateBulk(slice any, setFunc func(*DictionaryCreate, int)) *DictionaryCreateBulk {
+func (c *DictClient) MapCreateBulk(slice any, setFunc func(*DictCreate, int)) *DictCreateBulk {
 	rv := reflect.ValueOf(slice)
 	if rv.Kind() != reflect.Slice {
-		return &DictionaryCreateBulk{err: fmt.Errorf("calling to DictionaryClient.MapCreateBulk with wrong type %T, need slice", slice)}
+		return &DictCreateBulk{err: fmt.Errorf("calling to DictClient.MapCreateBulk with wrong type %T, need slice", slice)}
 	}
-	builders := make([]*DictionaryCreate, rv.Len())
+	builders := make([]*DictCreate, rv.Len())
 	for i := 0; i < rv.Len(); i++ {
 		builders[i] = c.Create()
 		setFunc(builders[i], i)
 	}
-	return &DictionaryCreateBulk{config: c.config, builders: builders}
+	return &DictCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for Dictionary.
-func (c *DictionaryClient) Update() *DictionaryUpdate {
-	mutation := newDictionaryMutation(c.config, OpUpdate)
-	return &DictionaryUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Dict.
+func (c *DictClient) Update() *DictUpdate {
+	mutation := newDictMutation(c.config, OpUpdate)
+	return &DictUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *DictionaryClient) UpdateOne(_m *Dictionary) *DictionaryUpdateOne {
-	mutation := newDictionaryMutation(c.config, OpUpdateOne, withDictionary(_m))
-	return &DictionaryUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DictClient) UpdateOne(_m *Dict) *DictUpdateOne {
+	mutation := newDictMutation(c.config, OpUpdateOne, withDict(_m))
+	return &DictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *DictionaryClient) UpdateOneID(id int64) *DictionaryUpdateOne {
-	mutation := newDictionaryMutation(c.config, OpUpdateOne, withDictionaryID(id))
-	return &DictionaryUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DictClient) UpdateOneID(id int64) *DictUpdateOne {
+	mutation := newDictMutation(c.config, OpUpdateOne, withDictID(id))
+	return &DictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for Dictionary.
-func (c *DictionaryClient) Delete() *DictionaryDelete {
-	mutation := newDictionaryMutation(c.config, OpDelete)
-	return &DictionaryDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Dict.
+func (c *DictClient) Delete() *DictDelete {
+	mutation := newDictMutation(c.config, OpDelete)
+	return &DictDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *DictionaryClient) DeleteOne(_m *Dictionary) *DictionaryDeleteOne {
+func (c *DictClient) DeleteOne(_m *Dict) *DictDeleteOne {
 	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *DictionaryClient) DeleteOneID(id int64) *DictionaryDeleteOne {
-	builder := c.Delete().Where(dictionary.ID(id))
+func (c *DictClient) DeleteOneID(id int64) *DictDeleteOne {
+	builder := c.Delete().Where(dict.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &DictionaryDeleteOne{builder}
+	return &DictDeleteOne{builder}
 }
 
-// Query returns a query builder for Dictionary.
-func (c *DictionaryClient) Query() *DictionaryQuery {
-	return &DictionaryQuery{
+// Query returns a query builder for Dict.
+func (c *DictClient) Query() *DictQuery {
+	return &DictQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeDictionary},
+		ctx:    &QueryContext{Type: TypeDict},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a Dictionary entity by its id.
-func (c *DictionaryClient) Get(ctx context.Context, id int64) (*Dictionary, error) {
-	return c.Query().Where(dictionary.ID(id)).Only(ctx)
+// Get returns a Dict entity by its id.
+func (c *DictClient) Get(ctx context.Context, id int64) (*Dict, error) {
+	return c.Query().Where(dict.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *DictionaryClient) GetX(ctx context.Context, id int64) *Dictionary {
+func (c *DictClient) GetX(ctx context.Context, id int64) *Dict {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -513,15 +511,15 @@ func (c *DictionaryClient) GetX(ctx context.Context, id int64) *Dictionary {
 	return obj
 }
 
-// QueryDictionaryDetails queries the dictionary_details edge of a Dictionary.
-func (c *DictionaryClient) QueryDictionaryDetails(_m *Dictionary) *DictionaryDetailQuery {
-	query := (&DictionaryDetailClient{config: c.config}).Query()
+// QueryDictht queries the dictht edge of a Dict.
+func (c *DictClient) QueryDictht(_m *Dict) *DicthtQuery {
+	query := (&DicthtClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := _m.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(dictionary.Table, dictionary.FieldID, id),
-			sqlgraph.To(dictionarydetail.Table, dictionarydetail.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, dictionary.DictionaryDetailsTable, dictionary.DictionaryDetailsColumn),
+			sqlgraph.From(dict.Table, dict.FieldID, id),
+			sqlgraph.To(dictht.Table, dictht.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, dict.DicthtTable, dict.DicthtColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
@@ -530,131 +528,131 @@ func (c *DictionaryClient) QueryDictionaryDetails(_m *Dictionary) *DictionaryDet
 }
 
 // Hooks returns the client hooks.
-func (c *DictionaryClient) Hooks() []Hook {
-	return c.hooks.Dictionary
+func (c *DictClient) Hooks() []Hook {
+	return c.hooks.Dict
 }
 
 // Interceptors returns the client interceptors.
-func (c *DictionaryClient) Interceptors() []Interceptor {
-	return c.inters.Dictionary
+func (c *DictClient) Interceptors() []Interceptor {
+	return c.inters.Dict
 }
 
-func (c *DictionaryClient) mutate(ctx context.Context, m *DictionaryMutation) (Value, error) {
+func (c *DictClient) mutate(ctx context.Context, m *DictMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&DictionaryCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DictCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&DictionaryUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DictUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&DictionaryUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&DictionaryDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&DictDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("ent: unknown Dictionary mutation op: %q", m.Op())
+		return nil, fmt.Errorf("ent: unknown Dict mutation op: %q", m.Op())
 	}
 }
 
-// DictionaryDetailClient is a client for the DictionaryDetail schema.
-type DictionaryDetailClient struct {
+// DicthtClient is a client for the Dictht schema.
+type DicthtClient struct {
 	config
 }
 
-// NewDictionaryDetailClient returns a client for the DictionaryDetail from the given config.
-func NewDictionaryDetailClient(c config) *DictionaryDetailClient {
-	return &DictionaryDetailClient{config: c}
+// NewDicthtClient returns a client for the Dictht from the given config.
+func NewDicthtClient(c config) *DicthtClient {
+	return &DicthtClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `dictionarydetail.Hooks(f(g(h())))`.
-func (c *DictionaryDetailClient) Use(hooks ...Hook) {
-	c.hooks.DictionaryDetail = append(c.hooks.DictionaryDetail, hooks...)
+// A call to `Use(f, g, h)` equals to `dictht.Hooks(f(g(h())))`.
+func (c *DicthtClient) Use(hooks ...Hook) {
+	c.hooks.Dictht = append(c.hooks.Dictht, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `dictionarydetail.Intercept(f(g(h())))`.
-func (c *DictionaryDetailClient) Intercept(interceptors ...Interceptor) {
-	c.inters.DictionaryDetail = append(c.inters.DictionaryDetail, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `dictht.Intercept(f(g(h())))`.
+func (c *DicthtClient) Intercept(interceptors ...Interceptor) {
+	c.inters.Dictht = append(c.inters.Dictht, interceptors...)
 }
 
-// Create returns a builder for creating a DictionaryDetail entity.
-func (c *DictionaryDetailClient) Create() *DictionaryDetailCreate {
-	mutation := newDictionaryDetailMutation(c.config, OpCreate)
-	return &DictionaryDetailCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a Dictht entity.
+func (c *DicthtClient) Create() *DicthtCreate {
+	mutation := newDicthtMutation(c.config, OpCreate)
+	return &DicthtCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of DictionaryDetail entities.
-func (c *DictionaryDetailClient) CreateBulk(builders ...*DictionaryDetailCreate) *DictionaryDetailCreateBulk {
-	return &DictionaryDetailCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of Dictht entities.
+func (c *DicthtClient) CreateBulk(builders ...*DicthtCreate) *DicthtCreateBulk {
+	return &DicthtCreateBulk{config: c.config, builders: builders}
 }
 
 // MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
 // a builder and applies setFunc on it.
-func (c *DictionaryDetailClient) MapCreateBulk(slice any, setFunc func(*DictionaryDetailCreate, int)) *DictionaryDetailCreateBulk {
+func (c *DicthtClient) MapCreateBulk(slice any, setFunc func(*DicthtCreate, int)) *DicthtCreateBulk {
 	rv := reflect.ValueOf(slice)
 	if rv.Kind() != reflect.Slice {
-		return &DictionaryDetailCreateBulk{err: fmt.Errorf("calling to DictionaryDetailClient.MapCreateBulk with wrong type %T, need slice", slice)}
+		return &DicthtCreateBulk{err: fmt.Errorf("calling to DicthtClient.MapCreateBulk with wrong type %T, need slice", slice)}
 	}
-	builders := make([]*DictionaryDetailCreate, rv.Len())
+	builders := make([]*DicthtCreate, rv.Len())
 	for i := 0; i < rv.Len(); i++ {
 		builders[i] = c.Create()
 		setFunc(builders[i], i)
 	}
-	return &DictionaryDetailCreateBulk{config: c.config, builders: builders}
+	return &DicthtCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for DictionaryDetail.
-func (c *DictionaryDetailClient) Update() *DictionaryDetailUpdate {
-	mutation := newDictionaryDetailMutation(c.config, OpUpdate)
-	return &DictionaryDetailUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for Dictht.
+func (c *DicthtClient) Update() *DicthtUpdate {
+	mutation := newDicthtMutation(c.config, OpUpdate)
+	return &DicthtUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *DictionaryDetailClient) UpdateOne(_m *DictionaryDetail) *DictionaryDetailUpdateOne {
-	mutation := newDictionaryDetailMutation(c.config, OpUpdateOne, withDictionaryDetail(_m))
-	return &DictionaryDetailUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DicthtClient) UpdateOne(_m *Dictht) *DicthtUpdateOne {
+	mutation := newDicthtMutation(c.config, OpUpdateOne, withDictht(_m))
+	return &DicthtUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *DictionaryDetailClient) UpdateOneID(id int64) *DictionaryDetailUpdateOne {
-	mutation := newDictionaryDetailMutation(c.config, OpUpdateOne, withDictionaryDetailID(id))
-	return &DictionaryDetailUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *DicthtClient) UpdateOneID(id int64) *DicthtUpdateOne {
+	mutation := newDicthtMutation(c.config, OpUpdateOne, withDicthtID(id))
+	return &DicthtUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for DictionaryDetail.
-func (c *DictionaryDetailClient) Delete() *DictionaryDetailDelete {
-	mutation := newDictionaryDetailMutation(c.config, OpDelete)
-	return &DictionaryDetailDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for Dictht.
+func (c *DicthtClient) Delete() *DicthtDelete {
+	mutation := newDicthtMutation(c.config, OpDelete)
+	return &DicthtDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *DictionaryDetailClient) DeleteOne(_m *DictionaryDetail) *DictionaryDetailDeleteOne {
+func (c *DicthtClient) DeleteOne(_m *Dictht) *DicthtDeleteOne {
 	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *DictionaryDetailClient) DeleteOneID(id int64) *DictionaryDetailDeleteOne {
-	builder := c.Delete().Where(dictionarydetail.ID(id))
+func (c *DicthtClient) DeleteOneID(id int64) *DicthtDeleteOne {
+	builder := c.Delete().Where(dictht.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &DictionaryDetailDeleteOne{builder}
+	return &DicthtDeleteOne{builder}
 }
 
-// Query returns a query builder for DictionaryDetail.
-func (c *DictionaryDetailClient) Query() *DictionaryDetailQuery {
-	return &DictionaryDetailQuery{
+// Query returns a query builder for Dictht.
+func (c *DicthtClient) Query() *DicthtQuery {
+	return &DicthtQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeDictionaryDetail},
+		ctx:    &QueryContext{Type: TypeDictht},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a DictionaryDetail entity by its id.
-func (c *DictionaryDetailClient) Get(ctx context.Context, id int64) (*DictionaryDetail, error) {
-	return c.Query().Where(dictionarydetail.ID(id)).Only(ctx)
+// Get returns a Dictht entity by its id.
+func (c *DicthtClient) Get(ctx context.Context, id int64) (*Dictht, error) {
+	return c.Query().Where(dictht.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *DictionaryDetailClient) GetX(ctx context.Context, id int64) *DictionaryDetail {
+func (c *DicthtClient) GetX(ctx context.Context, id int64) *Dictht {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -662,15 +660,15 @@ func (c *DictionaryDetailClient) GetX(ctx context.Context, id int64) *Dictionary
 	return obj
 }
 
-// QueryDictionary queries the dictionary edge of a DictionaryDetail.
-func (c *DictionaryDetailClient) QueryDictionary(_m *DictionaryDetail) *DictionaryQuery {
-	query := (&DictionaryClient{config: c.config}).Query()
+// QueryDict queries the dict edge of a Dictht.
+func (c *DicthtClient) QueryDict(_m *Dictht) *DictQuery {
+	query := (&DictClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := _m.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(dictionarydetail.Table, dictionarydetail.FieldID, id),
-			sqlgraph.To(dictionary.Table, dictionary.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, dictionarydetail.DictionaryTable, dictionarydetail.DictionaryColumn),
+			sqlgraph.From(dictht.Table, dictht.FieldID, id),
+			sqlgraph.To(dict.Table, dict.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, dictht.DictTable, dictht.DictColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
@@ -679,27 +677,27 @@ func (c *DictionaryDetailClient) QueryDictionary(_m *DictionaryDetail) *Dictiona
 }
 
 // Hooks returns the client hooks.
-func (c *DictionaryDetailClient) Hooks() []Hook {
-	return c.hooks.DictionaryDetail
+func (c *DicthtClient) Hooks() []Hook {
+	return c.hooks.Dictht
 }
 
 // Interceptors returns the client interceptors.
-func (c *DictionaryDetailClient) Interceptors() []Interceptor {
-	return c.inters.DictionaryDetail
+func (c *DicthtClient) Interceptors() []Interceptor {
+	return c.inters.Dictht
 }
 
-func (c *DictionaryDetailClient) mutate(ctx context.Context, m *DictionaryDetailMutation) (Value, error) {
+func (c *DicthtClient) mutate(ctx context.Context, m *DicthtMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&DictionaryDetailCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DicthtCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&DictionaryDetailUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DicthtUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&DictionaryDetailUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&DicthtUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&DictionaryDetailDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&DicthtDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("ent: unknown DictionaryDetail mutation op: %q", m.Op())
+		return nil, fmt.Errorf("ent: unknown Dictht mutation op: %q", m.Op())
 	}
 }
 
@@ -1568,11 +1566,9 @@ func (c *SmsLogClient) mutate(ctx context.Context, m *SmsLogMutation) (Value, er
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		API, Dictionary, DictionaryDetail, Logs, Menu, Messages, Role, Sms,
-		SmsLog []ent.Hook
+		API, Dict, Dictht, Logs, Menu, Messages, Role, Sms, SmsLog []ent.Hook
 	}
 	inters struct {
-		API, Dictionary, DictionaryDetail, Logs, Menu, Messages, Role, Sms,
-		SmsLog []ent.Interceptor
+		API, Dict, Dictht, Logs, Menu, Messages, Role, Sms, SmsLog []ent.Interceptor
 	}
 )

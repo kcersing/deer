@@ -189,30 +189,33 @@ var fieldIDToName_PageReq = map[int16]string{
 }
 
 type IdReq struct {
-	Id *int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Id int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 }
 
 func NewIdReq() *IdReq {
-	return &IdReq{}
+	return &IdReq{
+		Id: 0,
+	}
 }
 
 func (p *IdReq) InitDefault() {
+	p.Id = 0
 }
 
-var IdReq_Id_DEFAULT int64
+var IdReq_Id_DEFAULT int64 = 0
 
 func (p *IdReq) GetId() (v int64) {
 	if !p.IsSetId() {
 		return IdReq_Id_DEFAULT
 	}
-	return *p.Id
+	return p.Id
 }
-func (p *IdReq) SetId(val *int64) {
+func (p *IdReq) SetId(val int64) {
 	p.Id = val
 }
 
 func (p *IdReq) IsSetId() bool {
-	return p.Id != nil
+	return p.Id != IdReq_Id_DEFAULT
 }
 
 func (p *IdReq) String() string {

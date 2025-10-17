@@ -3,12 +3,12 @@ package db
 import (
 	"context"
 	"database/sql"
-	"deer/app/order/biz/dal/mysql/ent"
-	"deer/app/order/biz/dal/mysql/ent/migrate"
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
 	"fmt"
 	"github.com/cloudwego/kitex/pkg/klog"
+	"system/biz/dal/db/ent"
+	"system/biz/dal/db/ent/migrate"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v5/stdlib"

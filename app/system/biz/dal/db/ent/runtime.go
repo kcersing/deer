@@ -4,8 +4,8 @@ package ent
 
 import (
 	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/dictionary"
-	"system/biz/dal/db/ent/dictionarydetail"
+	"system/biz/dal/db/ent/dict"
+	"system/biz/dal/db/ent/dictht"
 	"system/biz/dal/db/ent/logs"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/messages"
@@ -47,64 +47,64 @@ func init() {
 	apiDescMethod := apiFields[4].Descriptor()
 	// api.DefaultMethod holds the default value on creation for the method field.
 	api.DefaultMethod = apiDescMethod.Default.(string)
-	dictionaryMixin := schema.Dictionary{}.Mixin()
-	dictionaryMixinFields0 := dictionaryMixin[0].Fields()
-	_ = dictionaryMixinFields0
-	dictionaryMixinFields1 := dictionaryMixin[1].Fields()
-	_ = dictionaryMixinFields1
-	dictionaryFields := schema.Dictionary{}.Fields()
-	_ = dictionaryFields
-	// dictionaryDescCreatedAt is the schema descriptor for created_at field.
-	dictionaryDescCreatedAt := dictionaryMixinFields0[1].Descriptor()
-	// dictionary.DefaultCreatedAt holds the default value on creation for the created_at field.
-	dictionary.DefaultCreatedAt = dictionaryDescCreatedAt.Default.(func() time.Time)
-	// dictionaryDescUpdatedAt is the schema descriptor for updated_at field.
-	dictionaryDescUpdatedAt := dictionaryMixinFields0[2].Descriptor()
-	// dictionary.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	dictionary.DefaultUpdatedAt = dictionaryDescUpdatedAt.Default.(func() time.Time)
-	// dictionary.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	dictionary.UpdateDefaultUpdatedAt = dictionaryDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// dictionaryDescDelete is the schema descriptor for delete field.
-	dictionaryDescDelete := dictionaryMixinFields0[3].Descriptor()
-	// dictionary.DefaultDelete holds the default value on creation for the delete field.
-	dictionary.DefaultDelete = dictionaryDescDelete.Default.(int64)
-	// dictionaryDescCreatedID is the schema descriptor for created_id field.
-	dictionaryDescCreatedID := dictionaryMixinFields0[4].Descriptor()
-	// dictionary.DefaultCreatedID holds the default value on creation for the created_id field.
-	dictionary.DefaultCreatedID = dictionaryDescCreatedID.Default.(int64)
-	// dictionaryDescStatus is the schema descriptor for status field.
-	dictionaryDescStatus := dictionaryMixinFields1[0].Descriptor()
-	// dictionary.DefaultStatus holds the default value on creation for the status field.
-	dictionary.DefaultStatus = dictionaryDescStatus.Default.(int64)
-	dictionarydetailMixin := schema.DictionaryDetail{}.Mixin()
-	dictionarydetailMixinFields0 := dictionarydetailMixin[0].Fields()
-	_ = dictionarydetailMixinFields0
-	dictionarydetailMixinFields1 := dictionarydetailMixin[1].Fields()
-	_ = dictionarydetailMixinFields1
-	dictionarydetailFields := schema.DictionaryDetail{}.Fields()
-	_ = dictionarydetailFields
-	// dictionarydetailDescCreatedAt is the schema descriptor for created_at field.
-	dictionarydetailDescCreatedAt := dictionarydetailMixinFields0[1].Descriptor()
-	// dictionarydetail.DefaultCreatedAt holds the default value on creation for the created_at field.
-	dictionarydetail.DefaultCreatedAt = dictionarydetailDescCreatedAt.Default.(func() time.Time)
-	// dictionarydetailDescUpdatedAt is the schema descriptor for updated_at field.
-	dictionarydetailDescUpdatedAt := dictionarydetailMixinFields0[2].Descriptor()
-	// dictionarydetail.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	dictionarydetail.DefaultUpdatedAt = dictionarydetailDescUpdatedAt.Default.(func() time.Time)
-	// dictionarydetail.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	dictionarydetail.UpdateDefaultUpdatedAt = dictionarydetailDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// dictionarydetailDescDelete is the schema descriptor for delete field.
-	dictionarydetailDescDelete := dictionarydetailMixinFields0[3].Descriptor()
-	// dictionarydetail.DefaultDelete holds the default value on creation for the delete field.
-	dictionarydetail.DefaultDelete = dictionarydetailDescDelete.Default.(int64)
-	// dictionarydetailDescCreatedID is the schema descriptor for created_id field.
-	dictionarydetailDescCreatedID := dictionarydetailMixinFields0[4].Descriptor()
-	// dictionarydetail.DefaultCreatedID holds the default value on creation for the created_id field.
-	dictionarydetail.DefaultCreatedID = dictionarydetailDescCreatedID.Default.(int64)
-	// dictionarydetailDescStatus is the schema descriptor for status field.
-	dictionarydetailDescStatus := dictionarydetailMixinFields1[0].Descriptor()
-	// dictionarydetail.DefaultStatus holds the default value on creation for the status field.
-	dictionarydetail.DefaultStatus = dictionarydetailDescStatus.Default.(int64)
+	dictMixin := schema.Dict{}.Mixin()
+	dictMixinFields0 := dictMixin[0].Fields()
+	_ = dictMixinFields0
+	dictMixinFields1 := dictMixin[1].Fields()
+	_ = dictMixinFields1
+	dictFields := schema.Dict{}.Fields()
+	_ = dictFields
+	// dictDescCreatedAt is the schema descriptor for created_at field.
+	dictDescCreatedAt := dictMixinFields0[1].Descriptor()
+	// dict.DefaultCreatedAt holds the default value on creation for the created_at field.
+	dict.DefaultCreatedAt = dictDescCreatedAt.Default.(func() time.Time)
+	// dictDescUpdatedAt is the schema descriptor for updated_at field.
+	dictDescUpdatedAt := dictMixinFields0[2].Descriptor()
+	// dict.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	dict.DefaultUpdatedAt = dictDescUpdatedAt.Default.(func() time.Time)
+	// dict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	dict.UpdateDefaultUpdatedAt = dictDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// dictDescDelete is the schema descriptor for delete field.
+	dictDescDelete := dictMixinFields0[3].Descriptor()
+	// dict.DefaultDelete holds the default value on creation for the delete field.
+	dict.DefaultDelete = dictDescDelete.Default.(int64)
+	// dictDescCreatedID is the schema descriptor for created_id field.
+	dictDescCreatedID := dictMixinFields0[4].Descriptor()
+	// dict.DefaultCreatedID holds the default value on creation for the created_id field.
+	dict.DefaultCreatedID = dictDescCreatedID.Default.(int64)
+	// dictDescStatus is the schema descriptor for status field.
+	dictDescStatus := dictMixinFields1[0].Descriptor()
+	// dict.DefaultStatus holds the default value on creation for the status field.
+	dict.DefaultStatus = dictDescStatus.Default.(int64)
+	dicthtMixin := schema.Dictht{}.Mixin()
+	dicthtMixinFields0 := dicthtMixin[0].Fields()
+	_ = dicthtMixinFields0
+	dicthtMixinFields1 := dicthtMixin[1].Fields()
+	_ = dicthtMixinFields1
+	dicthtFields := schema.Dictht{}.Fields()
+	_ = dicthtFields
+	// dicthtDescCreatedAt is the schema descriptor for created_at field.
+	dicthtDescCreatedAt := dicthtMixinFields0[1].Descriptor()
+	// dictht.DefaultCreatedAt holds the default value on creation for the created_at field.
+	dictht.DefaultCreatedAt = dicthtDescCreatedAt.Default.(func() time.Time)
+	// dicthtDescUpdatedAt is the schema descriptor for updated_at field.
+	dicthtDescUpdatedAt := dicthtMixinFields0[2].Descriptor()
+	// dictht.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	dictht.DefaultUpdatedAt = dicthtDescUpdatedAt.Default.(func() time.Time)
+	// dictht.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	dictht.UpdateDefaultUpdatedAt = dicthtDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// dicthtDescDelete is the schema descriptor for delete field.
+	dicthtDescDelete := dicthtMixinFields0[3].Descriptor()
+	// dictht.DefaultDelete holds the default value on creation for the delete field.
+	dictht.DefaultDelete = dicthtDescDelete.Default.(int64)
+	// dicthtDescCreatedID is the schema descriptor for created_id field.
+	dicthtDescCreatedID := dicthtMixinFields0[4].Descriptor()
+	// dictht.DefaultCreatedID holds the default value on creation for the created_id field.
+	dictht.DefaultCreatedID = dicthtDescCreatedID.Default.(int64)
+	// dicthtDescStatus is the schema descriptor for status field.
+	dicthtDescStatus := dicthtMixinFields1[0].Descriptor()
+	// dictht.DefaultStatus holds the default value on creation for the status field.
+	dictht.DefaultStatus = dicthtDescStatus.Default.(int64)
 	logsMixin := schema.Logs{}.Mixin()
 	logsMixinFields0 := logsMixin[0].Fields()
 	_ = logsMixinFields0

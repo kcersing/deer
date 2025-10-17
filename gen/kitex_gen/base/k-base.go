@@ -518,12 +518,12 @@ SkipFieldError:
 func (p *IdReq) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *int64
+	var _field int64
 	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Id = _field
 	return offset, nil
@@ -555,7 +555,7 @@ func (p *IdReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetId() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 1)
-		offset += thrift.Binary.WriteI64(buf[offset:], *p.Id)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Id)
 	}
 	return offset
 }

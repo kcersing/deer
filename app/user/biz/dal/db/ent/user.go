@@ -47,8 +47,29 @@ type User struct {
 	// 最后一次登录ip
 	LastIP string `json:"last_ip,omitempty"`
 	// 详情
-	Detail       string `json:"detail,omitempty"`
+	Detail string `json:"detail,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the UserQuery when eager-loading is set.
+	Edges        UserEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// UserEdges holds the relations/edges for other nodes in the graph.
+type UserEdges struct {
+	// UserRole holds the value of the user_role edge.
+	UserRole []*UserRole `json:"user_role,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// UserRoleOrErr returns the UserRole value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) UserRoleOrErr() ([]*UserRole, error) {
+	if e.loadedTypes[0] {
+		return e.UserRole, nil
+	}
+	return nil, &NotLoadedError{edge: "user_role"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -184,6 +205,11 @@ func (_m *User) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *User) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QueryUserRole queries the "user_role" edge of the User entity.
+func (_m *User) QueryUserRole() *UserRoleQuery {
+	return NewUserClient(_m.config).QueryUserRole(_m)
 }
 
 // Update returns a builder for updating this User.

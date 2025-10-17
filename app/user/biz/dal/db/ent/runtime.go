@@ -6,6 +6,7 @@ import (
 	"time"
 	"user/biz/dal/db/ent/schema"
 	"user/biz/dal/db/ent/user"
+	"user/biz/dal/db/ent/userrole"
 )
 
 // The init function reads all schema descriptors with runtime code
@@ -45,4 +46,10 @@ func init() {
 	userDescGender := userFields[5].Descriptor()
 	// user.DefaultGender holds the default value on creation for the gender field.
 	user.DefaultGender = userDescGender.Default.(int64)
+	userroleFields := schema.UserRole{}.Fields()
+	_ = userroleFields
+	// userroleDescRoleID is the schema descriptor for role_id field.
+	userroleDescRoleID := userroleFields[1].Descriptor()
+	// userrole.DefaultRoleID holds the default value on creation for the role_id field.
+	userrole.DefaultRoleID = userroleDescRoleID.Default.(int64)
 }

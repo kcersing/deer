@@ -14,10 +14,10 @@ type Tx struct {
 	config
 	// API is the client for interacting with the API builders.
 	API *APIClient
-	// Dictionary is the client for interacting with the Dictionary builders.
-	Dictionary *DictionaryClient
-	// DictionaryDetail is the client for interacting with the DictionaryDetail builders.
-	DictionaryDetail *DictionaryDetailClient
+	// Dict is the client for interacting with the Dict builders.
+	Dict *DictClient
+	// Dictht is the client for interacting with the Dictht builders.
+	Dictht *DicthtClient
 	// Logs is the client for interacting with the Logs builders.
 	Logs *LogsClient
 	// Menu is the client for interacting with the Menu builders.
@@ -162,8 +162,8 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.API = NewAPIClient(tx.config)
-	tx.Dictionary = NewDictionaryClient(tx.config)
-	tx.DictionaryDetail = NewDictionaryDetailClient(tx.config)
+	tx.Dict = NewDictClient(tx.config)
+	tx.Dictht = NewDicthtClient(tx.config)
 	tx.Logs = NewLogsClient(tx.config)
 	tx.Menu = NewMenuClient(tx.config)
 	tx.Messages = NewMessagesClient(tx.config)

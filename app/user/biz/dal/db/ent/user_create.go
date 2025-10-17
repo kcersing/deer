@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"time"
 	"user/biz/dal/db/ent/user"
+	"user/biz/dal/db/ent/userrole"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -212,6 +213,21 @@ func (_c *UserCreate) SetID(v int64) *UserCreate {
 	return _c
 }
 
+// AddUserRoleIDs adds the "user_role" edge to the UserRole entity by IDs.
+func (_c *UserCreate) AddUserRoleIDs(ids ...int) *UserCreate {
+	_c.mutation.AddUserRoleIDs(ids...)
+	return _c
+}
+
+// AddUserRole adds the "user_role" edges to the UserRole entity.
+func (_c *UserCreate) AddUserRole(v ...*UserRole) *UserCreate {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddUserRoleIDs(ids...)
+}
+
 // Mutation returns the UserMutation object of the builder.
 func (_c *UserCreate) Mutation() *UserMutation {
 	return _c.mutation
@@ -375,6 +391,22 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Detail(); ok {
 		_spec.SetField(user.FieldDetail, field.TypeString, value)
 		_node.Detail = value
+	}
+	if nodes := _c.mutation.UserRoleIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   user.UserRoleTable,
+			Columns: []string{user.UserRoleColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(userrole.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

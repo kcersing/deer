@@ -1,17 +1,17 @@
 package db
 
 import (
-	"deer/app/order/biz/dal/mysql/ent"
-	"deer/app/order/conf"
 	"sync"
+	"system/biz/dal/db/ent"
+	"system/conf"
 )
 
 var onceClient sync.Once
 
-var DB *ent.Client
+var Client *ent.Client
 
 func InitDB() {
 	onceClient.Do(func() {
-		DB = InItDB(conf.GetConf().MySQL.DSN, true)
+		Client = InItDB(conf.GetConf().MySQL.DSN, true)
 	})
 }

@@ -6,6 +6,7 @@ import (
 	User "gen/kitex_gen/user"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"golang.org/x/sync/errgroup"
+	"user/biz/convert"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
 )
@@ -32,11 +33,9 @@ func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
 			return err
 		}
-		userResp = &User.User{
-			Id:   &only.ID,
-			Name: &only.Name,
-		}
+		userResp = convert.EntToUser(only)
 		return nil
+
 	})
 	//eg.Go(func() error {
 	//	res, err := h.detailsClient.GetProduct(ctx, &details.GetProductReq{ID: productID})

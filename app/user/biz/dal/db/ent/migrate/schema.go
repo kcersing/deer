@@ -51,14 +51,39 @@ var (
 			},
 		},
 	}
+	// UserRolesColumns holds the columns for the "user_roles" table.
+	UserRolesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "role_id", Type: field.TypeInt64, Comment: "role id", Default: 0},
+		{Name: "user_id", Type: field.TypeInt64, Comment: "user id"},
+	}
+	// UserRolesTable holds the schema information for the "user_roles" table.
+	UserRolesTable = &schema.Table{
+		Name:       "user_roles",
+		Columns:    UserRolesColumns,
+		PrimaryKey: []*schema.Column{UserRolesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "user_roles_users_user_role",
+				Columns:    []*schema.Column{UserRolesColumns[2]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		UsersTable,
+		UserRolesTable,
 	}
 )
 
 func init() {
 	UsersTable.Annotation = &entsql.Annotation{
 		Table: "users",
+	}
+	UserRolesTable.ForeignKeys[0].RefTable = UsersTable
+	UserRolesTable.Annotation = &entsql.Annotation{
+		Table: "user_roles",
 	}
 }

@@ -9,11 +9,11 @@ import (
 // API is the predicate function for api builders.
 type API func(*sql.Selector)
 
-// Dictionary is the predicate function for dictionary builders.
-type Dictionary func(*sql.Selector)
+// Dict is the predicate function for dict builders.
+type Dict func(*sql.Selector)
 
-// DictionaryDetail is the predicate function for dictionarydetail builders.
-type DictionaryDetail func(*sql.Selector)
+// Dictht is the predicate function for dictht builders.
+type Dictht func(*sql.Selector)
 
 // Logs is the predicate function for logs builders.
 type Logs func(*sql.Selector)
