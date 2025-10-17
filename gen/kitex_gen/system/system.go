@@ -473,89 +473,29 @@ var fieldIDToName_ApiListReq = map[int16]string{
 }
 
 type CreateApiReq struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ParentId  int64  `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
-	Level     int64  `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
-	Path      string `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
-	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
-	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    bool   `thrift:"hidden,9,optional" frugal:"9,optional,bool" json:"hidden,omitempty"`
-	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
-	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
-	Type      string `thrift:"type,14,optional" frugal:"14,optional,string" json:"type,omitempty"`
+	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Description string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
+	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
 }
 
 func NewCreateApiReq() *CreateApiReq {
 	return &CreateApiReq{
-		Id:        0,
-		Name:      "",
-		ParentId:  0,
-		Level:     0,
-		Path:      "",
-		Redirect:  "",
-		Component: "",
-		MenuType:  0,
-		Hidden:    true,
-		Sort:      0,
-		Status:    1,
-		Url:       "",
-		Type:      "",
+		Path:        "",
+		Description: "",
+		Group:       "",
+		Method:      "",
+		Title:       "",
 	}
 }
 
 func (p *CreateApiReq) InitDefault() {
-	p.Id = 0
-	p.Name = ""
-	p.ParentId = 0
-	p.Level = 0
 	p.Path = ""
-	p.Redirect = ""
-	p.Component = ""
-	p.MenuType = 0
-	p.Hidden = true
-	p.Sort = 0
-	p.Status = 1
-	p.Url = ""
-	p.Type = ""
-}
-
-var CreateApiReq_Id_DEFAULT int64 = 0
-
-func (p *CreateApiReq) GetId() (v int64) {
-	if !p.IsSetId() {
-		return CreateApiReq_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var CreateApiReq_Name_DEFAULT string = ""
-
-func (p *CreateApiReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return CreateApiReq_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var CreateApiReq_ParentId_DEFAULT int64 = 0
-
-func (p *CreateApiReq) GetParentId() (v int64) {
-	if !p.IsSetParentId() {
-		return CreateApiReq_ParentId_DEFAULT
-	}
-	return p.ParentId
-}
-
-var CreateApiReq_Level_DEFAULT int64 = 0
-
-func (p *CreateApiReq) GetLevel() (v int64) {
-	if !p.IsSetLevel() {
-		return CreateApiReq_Level_DEFAULT
-	}
-	return p.Level
+	p.Description = ""
+	p.Group = ""
+	p.Method = ""
+	p.Title = ""
 }
 
 var CreateApiReq_Path_DEFAULT string = ""
@@ -567,167 +507,75 @@ func (p *CreateApiReq) GetPath() (v string) {
 	return p.Path
 }
 
-var CreateApiReq_Redirect_DEFAULT string = ""
+var CreateApiReq_Description_DEFAULT string = ""
 
-func (p *CreateApiReq) GetRedirect() (v string) {
-	if !p.IsSetRedirect() {
-		return CreateApiReq_Redirect_DEFAULT
+func (p *CreateApiReq) GetDescription() (v string) {
+	if !p.IsSetDescription() {
+		return CreateApiReq_Description_DEFAULT
 	}
-	return p.Redirect
+	return p.Description
 }
 
-var CreateApiReq_Component_DEFAULT string = ""
+var CreateApiReq_Group_DEFAULT string = ""
 
-func (p *CreateApiReq) GetComponent() (v string) {
-	if !p.IsSetComponent() {
-		return CreateApiReq_Component_DEFAULT
+func (p *CreateApiReq) GetGroup() (v string) {
+	if !p.IsSetGroup() {
+		return CreateApiReq_Group_DEFAULT
 	}
-	return p.Component
+	return p.Group
 }
 
-var CreateApiReq_MenuType_DEFAULT int64 = 0
+var CreateApiReq_Method_DEFAULT string = ""
 
-func (p *CreateApiReq) GetMenuType() (v int64) {
-	if !p.IsSetMenuType() {
-		return CreateApiReq_MenuType_DEFAULT
+func (p *CreateApiReq) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return CreateApiReq_Method_DEFAULT
 	}
-	return p.MenuType
+	return p.Method
 }
 
-var CreateApiReq_Hidden_DEFAULT bool = true
+var CreateApiReq_Title_DEFAULT string = ""
 
-func (p *CreateApiReq) GetHidden() (v bool) {
-	if !p.IsSetHidden() {
-		return CreateApiReq_Hidden_DEFAULT
+func (p *CreateApiReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return CreateApiReq_Title_DEFAULT
 	}
-	return p.Hidden
-}
-
-var CreateApiReq_Sort_DEFAULT int64 = 0
-
-func (p *CreateApiReq) GetSort() (v int64) {
-	if !p.IsSetSort() {
-		return CreateApiReq_Sort_DEFAULT
-	}
-	return p.Sort
-}
-
-var CreateApiReq_Status_DEFAULT int64 = 1
-
-func (p *CreateApiReq) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return CreateApiReq_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var CreateApiReq_Url_DEFAULT string = ""
-
-func (p *CreateApiReq) GetUrl() (v string) {
-	if !p.IsSetUrl() {
-		return CreateApiReq_Url_DEFAULT
-	}
-	return p.Url
-}
-
-var CreateApiReq_Type_DEFAULT string = ""
-
-func (p *CreateApiReq) GetType() (v string) {
-	if !p.IsSetType() {
-		return CreateApiReq_Type_DEFAULT
-	}
-	return p.Type
-}
-func (p *CreateApiReq) SetId(val int64) {
-	p.Id = val
-}
-func (p *CreateApiReq) SetName(val string) {
-	p.Name = val
-}
-func (p *CreateApiReq) SetParentId(val int64) {
-	p.ParentId = val
-}
-func (p *CreateApiReq) SetLevel(val int64) {
-	p.Level = val
+	return p.Title
 }
 func (p *CreateApiReq) SetPath(val string) {
 	p.Path = val
 }
-func (p *CreateApiReq) SetRedirect(val string) {
-	p.Redirect = val
+func (p *CreateApiReq) SetDescription(val string) {
+	p.Description = val
 }
-func (p *CreateApiReq) SetComponent(val string) {
-	p.Component = val
+func (p *CreateApiReq) SetGroup(val string) {
+	p.Group = val
 }
-func (p *CreateApiReq) SetMenuType(val int64) {
-	p.MenuType = val
+func (p *CreateApiReq) SetMethod(val string) {
+	p.Method = val
 }
-func (p *CreateApiReq) SetHidden(val bool) {
-	p.Hidden = val
-}
-func (p *CreateApiReq) SetSort(val int64) {
-	p.Sort = val
-}
-func (p *CreateApiReq) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *CreateApiReq) SetUrl(val string) {
-	p.Url = val
-}
-func (p *CreateApiReq) SetType(val string) {
-	p.Type = val
-}
-
-func (p *CreateApiReq) IsSetId() bool {
-	return p.Id != CreateApiReq_Id_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetName() bool {
-	return p.Name != CreateApiReq_Name_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetParentId() bool {
-	return p.ParentId != CreateApiReq_ParentId_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetLevel() bool {
-	return p.Level != CreateApiReq_Level_DEFAULT
+func (p *CreateApiReq) SetTitle(val string) {
+	p.Title = val
 }
 
 func (p *CreateApiReq) IsSetPath() bool {
 	return p.Path != CreateApiReq_Path_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetRedirect() bool {
-	return p.Redirect != CreateApiReq_Redirect_DEFAULT
+func (p *CreateApiReq) IsSetDescription() bool {
+	return p.Description != CreateApiReq_Description_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetComponent() bool {
-	return p.Component != CreateApiReq_Component_DEFAULT
+func (p *CreateApiReq) IsSetGroup() bool {
+	return p.Group != CreateApiReq_Group_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetMenuType() bool {
-	return p.MenuType != CreateApiReq_MenuType_DEFAULT
+func (p *CreateApiReq) IsSetMethod() bool {
+	return p.Method != CreateApiReq_Method_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetHidden() bool {
-	return p.Hidden != CreateApiReq_Hidden_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetSort() bool {
-	return p.Sort != CreateApiReq_Sort_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetStatus() bool {
-	return p.Status != CreateApiReq_Status_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetUrl() bool {
-	return p.Url != CreateApiReq_Url_DEFAULT
-}
-
-func (p *CreateApiReq) IsSetType() bool {
-	return p.Type != CreateApiReq_Type_DEFAULT
+func (p *CreateApiReq) IsSetTitle() bool {
+	return p.Title != CreateApiReq_Title_DEFAULT
 }
 
 func (p *CreateApiReq) String() string {
@@ -738,6 +586,835 @@ func (p *CreateApiReq) String() string {
 }
 
 var fieldIDToName_CreateApiReq = map[int16]string{
+	4: "path",
+	5: "description",
+	6: "group",
+	7: "method",
+	8: "title",
+}
+
+type UpdateApiReq struct {
+	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Description string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
+	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+}
+
+func NewUpdateApiReq() *UpdateApiReq {
+	return &UpdateApiReq{
+		Id:          0,
+		Path:        "",
+		Description: "",
+		Group:       "",
+		Method:      "",
+		Title:       "",
+	}
+}
+
+func (p *UpdateApiReq) InitDefault() {
+	p.Id = 0
+	p.Path = ""
+	p.Description = ""
+	p.Group = ""
+	p.Method = ""
+	p.Title = ""
+}
+
+var UpdateApiReq_Id_DEFAULT int64 = 0
+
+func (p *UpdateApiReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateApiReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var UpdateApiReq_Path_DEFAULT string = ""
+
+func (p *UpdateApiReq) GetPath() (v string) {
+	if !p.IsSetPath() {
+		return UpdateApiReq_Path_DEFAULT
+	}
+	return p.Path
+}
+
+var UpdateApiReq_Description_DEFAULT string = ""
+
+func (p *UpdateApiReq) GetDescription() (v string) {
+	if !p.IsSetDescription() {
+		return UpdateApiReq_Description_DEFAULT
+	}
+	return p.Description
+}
+
+var UpdateApiReq_Group_DEFAULT string = ""
+
+func (p *UpdateApiReq) GetGroup() (v string) {
+	if !p.IsSetGroup() {
+		return UpdateApiReq_Group_DEFAULT
+	}
+	return p.Group
+}
+
+var UpdateApiReq_Method_DEFAULT string = ""
+
+func (p *UpdateApiReq) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return UpdateApiReq_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var UpdateApiReq_Title_DEFAULT string = ""
+
+func (p *UpdateApiReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return UpdateApiReq_Title_DEFAULT
+	}
+	return p.Title
+}
+func (p *UpdateApiReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *UpdateApiReq) SetPath(val string) {
+	p.Path = val
+}
+func (p *UpdateApiReq) SetDescription(val string) {
+	p.Description = val
+}
+func (p *UpdateApiReq) SetGroup(val string) {
+	p.Group = val
+}
+func (p *UpdateApiReq) SetMethod(val string) {
+	p.Method = val
+}
+func (p *UpdateApiReq) SetTitle(val string) {
+	p.Title = val
+}
+
+func (p *UpdateApiReq) IsSetId() bool {
+	return p.Id != UpdateApiReq_Id_DEFAULT
+}
+
+func (p *UpdateApiReq) IsSetPath() bool {
+	return p.Path != UpdateApiReq_Path_DEFAULT
+}
+
+func (p *UpdateApiReq) IsSetDescription() bool {
+	return p.Description != UpdateApiReq_Description_DEFAULT
+}
+
+func (p *UpdateApiReq) IsSetGroup() bool {
+	return p.Group != UpdateApiReq_Group_DEFAULT
+}
+
+func (p *UpdateApiReq) IsSetMethod() bool {
+	return p.Method != UpdateApiReq_Method_DEFAULT
+}
+
+func (p *UpdateApiReq) IsSetTitle() bool {
+	return p.Title != UpdateApiReq_Title_DEFAULT
+}
+
+func (p *UpdateApiReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateApiReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateApiReq = map[int16]string{
+	1: "id",
+	4: "path",
+	5: "description",
+	6: "group",
+	7: "method",
+	8: "title",
+}
+
+type CreateMenuReq struct {
+	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
+	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
+	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
+	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
+	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+}
+
+func NewCreateMenuReq() *CreateMenuReq {
+	return &CreateMenuReq{
+		Name:      "",
+		ParentId:  0,
+		Level:     0,
+		Path:      "",
+		Redirect:  "",
+		Component: "",
+		MenuType:  0,
+		Hidden:    0,
+		Sort:      0,
+		Status:    1,
+		Url:       "",
+		Children:  []*Menu{},
+		CreatedAt: "",
+		UpdatedAt: "",
+		Title:     "",
+		Type:      "",
+	}
+}
+
+func (p *CreateMenuReq) InitDefault() {
+	p.Name = ""
+	p.ParentId = 0
+	p.Level = 0
+	p.Path = ""
+	p.Redirect = ""
+	p.Component = ""
+	p.MenuType = 0
+	p.Hidden = 0
+	p.Sort = 0
+	p.Status = 1
+	p.Url = ""
+	p.Children = []*Menu{}
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.Title = ""
+	p.Type = ""
+}
+
+var CreateMenuReq_Name_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateMenuReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var CreateMenuReq_ParentId_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetParentId() (v int64) {
+	if !p.IsSetParentId() {
+		return CreateMenuReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var CreateMenuReq_Level_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetLevel() (v int64) {
+	if !p.IsSetLevel() {
+		return CreateMenuReq_Level_DEFAULT
+	}
+	return p.Level
+}
+
+var CreateMenuReq_Path_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetPath() (v string) {
+	if !p.IsSetPath() {
+		return CreateMenuReq_Path_DEFAULT
+	}
+	return p.Path
+}
+
+var CreateMenuReq_Redirect_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetRedirect() (v string) {
+	if !p.IsSetRedirect() {
+		return CreateMenuReq_Redirect_DEFAULT
+	}
+	return p.Redirect
+}
+
+var CreateMenuReq_Component_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetComponent() (v string) {
+	if !p.IsSetComponent() {
+		return CreateMenuReq_Component_DEFAULT
+	}
+	return p.Component
+}
+
+var CreateMenuReq_MenuType_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetMenuType() (v int64) {
+	if !p.IsSetMenuType() {
+		return CreateMenuReq_MenuType_DEFAULT
+	}
+	return p.MenuType
+}
+
+var CreateMenuReq_Hidden_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetHidden() (v int64) {
+	if !p.IsSetHidden() {
+		return CreateMenuReq_Hidden_DEFAULT
+	}
+	return p.Hidden
+}
+
+var CreateMenuReq_Sort_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetSort() (v int64) {
+	if !p.IsSetSort() {
+		return CreateMenuReq_Sort_DEFAULT
+	}
+	return p.Sort
+}
+
+var CreateMenuReq_Status_DEFAULT int64 = 1
+
+func (p *CreateMenuReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateMenuReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateMenuReq_Url_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetUrl() (v string) {
+	if !p.IsSetUrl() {
+		return CreateMenuReq_Url_DEFAULT
+	}
+	return p.Url
+}
+
+var CreateMenuReq_Children_DEFAULT []*Menu = []*Menu{}
+
+func (p *CreateMenuReq) GetChildren() (v []*Menu) {
+	if !p.IsSetChildren() {
+		return CreateMenuReq_Children_DEFAULT
+	}
+	return p.Children
+}
+
+var CreateMenuReq_CreatedAt_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return CreateMenuReq_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var CreateMenuReq_UpdatedAt_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return CreateMenuReq_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var CreateMenuReq_Title_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return CreateMenuReq_Title_DEFAULT
+	}
+	return p.Title
+}
+
+var CreateMenuReq_Type_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return CreateMenuReq_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *CreateMenuReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreateMenuReq) SetParentId(val int64) {
+	p.ParentId = val
+}
+func (p *CreateMenuReq) SetLevel(val int64) {
+	p.Level = val
+}
+func (p *CreateMenuReq) SetPath(val string) {
+	p.Path = val
+}
+func (p *CreateMenuReq) SetRedirect(val string) {
+	p.Redirect = val
+}
+func (p *CreateMenuReq) SetComponent(val string) {
+	p.Component = val
+}
+func (p *CreateMenuReq) SetMenuType(val int64) {
+	p.MenuType = val
+}
+func (p *CreateMenuReq) SetHidden(val int64) {
+	p.Hidden = val
+}
+func (p *CreateMenuReq) SetSort(val int64) {
+	p.Sort = val
+}
+func (p *CreateMenuReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreateMenuReq) SetUrl(val string) {
+	p.Url = val
+}
+func (p *CreateMenuReq) SetChildren(val []*Menu) {
+	p.Children = val
+}
+func (p *CreateMenuReq) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *CreateMenuReq) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *CreateMenuReq) SetTitle(val string) {
+	p.Title = val
+}
+func (p *CreateMenuReq) SetType(val string) {
+	p.Type = val
+}
+
+func (p *CreateMenuReq) IsSetName() bool {
+	return p.Name != CreateMenuReq_Name_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetParentId() bool {
+	return p.ParentId != CreateMenuReq_ParentId_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetLevel() bool {
+	return p.Level != CreateMenuReq_Level_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetPath() bool {
+	return p.Path != CreateMenuReq_Path_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetRedirect() bool {
+	return p.Redirect != CreateMenuReq_Redirect_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetComponent() bool {
+	return p.Component != CreateMenuReq_Component_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetMenuType() bool {
+	return p.MenuType != CreateMenuReq_MenuType_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetHidden() bool {
+	return p.Hidden != CreateMenuReq_Hidden_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetSort() bool {
+	return p.Sort != CreateMenuReq_Sort_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetStatus() bool {
+	return p.Status != CreateMenuReq_Status_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetUrl() bool {
+	return p.Url != CreateMenuReq_Url_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetChildren() bool {
+	return p.Children != nil
+}
+
+func (p *CreateMenuReq) IsSetCreatedAt() bool {
+	return p.CreatedAt != CreateMenuReq_CreatedAt_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != CreateMenuReq_UpdatedAt_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetTitle() bool {
+	return p.Title != CreateMenuReq_Title_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetType() bool {
+	return p.Type != CreateMenuReq_Type_DEFAULT
+}
+
+func (p *CreateMenuReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateMenuReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateMenuReq = map[int16]string{
+	2:  "name",
+	3:  "parentId",
+	4:  "level",
+	5:  "path",
+	6:  "redirect",
+	7:  "component",
+	8:  "menuType",
+	9:  "hidden",
+	10: "sort",
+	12: "status",
+	13: "url",
+	14: "children",
+	15: "createdAt",
+	16: "updatedAt",
+	17: "title",
+	19: "type",
+}
+
+type UpdateMenuReq struct {
+	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
+	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
+	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
+	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
+	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+}
+
+func NewUpdateMenuReq() *UpdateMenuReq {
+	return &UpdateMenuReq{
+		Id:        0,
+		Name:      "",
+		ParentId:  0,
+		Level:     0,
+		Path:      "",
+		Redirect:  "",
+		Component: "",
+		MenuType:  0,
+		Hidden:    0,
+		Sort:      0,
+		Status:    1,
+		Url:       "",
+		CreatedAt: "",
+		UpdatedAt: "",
+		Title:     "",
+		Type:      "",
+	}
+}
+
+func (p *UpdateMenuReq) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.ParentId = 0
+	p.Level = 0
+	p.Path = ""
+	p.Redirect = ""
+	p.Component = ""
+	p.MenuType = 0
+	p.Hidden = 0
+	p.Sort = 0
+	p.Status = 1
+	p.Url = ""
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.Title = ""
+	p.Type = ""
+}
+
+var UpdateMenuReq_Id_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateMenuReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var UpdateMenuReq_Name_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdateMenuReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var UpdateMenuReq_ParentId_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetParentId() (v int64) {
+	if !p.IsSetParentId() {
+		return UpdateMenuReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var UpdateMenuReq_Level_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetLevel() (v int64) {
+	if !p.IsSetLevel() {
+		return UpdateMenuReq_Level_DEFAULT
+	}
+	return p.Level
+}
+
+var UpdateMenuReq_Path_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetPath() (v string) {
+	if !p.IsSetPath() {
+		return UpdateMenuReq_Path_DEFAULT
+	}
+	return p.Path
+}
+
+var UpdateMenuReq_Redirect_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetRedirect() (v string) {
+	if !p.IsSetRedirect() {
+		return UpdateMenuReq_Redirect_DEFAULT
+	}
+	return p.Redirect
+}
+
+var UpdateMenuReq_Component_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetComponent() (v string) {
+	if !p.IsSetComponent() {
+		return UpdateMenuReq_Component_DEFAULT
+	}
+	return p.Component
+}
+
+var UpdateMenuReq_MenuType_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetMenuType() (v int64) {
+	if !p.IsSetMenuType() {
+		return UpdateMenuReq_MenuType_DEFAULT
+	}
+	return p.MenuType
+}
+
+var UpdateMenuReq_Hidden_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetHidden() (v int64) {
+	if !p.IsSetHidden() {
+		return UpdateMenuReq_Hidden_DEFAULT
+	}
+	return p.Hidden
+}
+
+var UpdateMenuReq_Sort_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetSort() (v int64) {
+	if !p.IsSetSort() {
+		return UpdateMenuReq_Sort_DEFAULT
+	}
+	return p.Sort
+}
+
+var UpdateMenuReq_Status_DEFAULT int64 = 1
+
+func (p *UpdateMenuReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateMenuReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var UpdateMenuReq_Url_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetUrl() (v string) {
+	if !p.IsSetUrl() {
+		return UpdateMenuReq_Url_DEFAULT
+	}
+	return p.Url
+}
+
+var UpdateMenuReq_Children_DEFAULT []*Menu
+
+func (p *UpdateMenuReq) GetChildren() (v []*Menu) {
+	if !p.IsSetChildren() {
+		return UpdateMenuReq_Children_DEFAULT
+	}
+	return p.Children
+}
+
+var UpdateMenuReq_CreatedAt_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return UpdateMenuReq_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var UpdateMenuReq_UpdatedAt_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return UpdateMenuReq_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var UpdateMenuReq_Title_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return UpdateMenuReq_Title_DEFAULT
+	}
+	return p.Title
+}
+
+var UpdateMenuReq_Type_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return UpdateMenuReq_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *UpdateMenuReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *UpdateMenuReq) SetName(val string) {
+	p.Name = val
+}
+func (p *UpdateMenuReq) SetParentId(val int64) {
+	p.ParentId = val
+}
+func (p *UpdateMenuReq) SetLevel(val int64) {
+	p.Level = val
+}
+func (p *UpdateMenuReq) SetPath(val string) {
+	p.Path = val
+}
+func (p *UpdateMenuReq) SetRedirect(val string) {
+	p.Redirect = val
+}
+func (p *UpdateMenuReq) SetComponent(val string) {
+	p.Component = val
+}
+func (p *UpdateMenuReq) SetMenuType(val int64) {
+	p.MenuType = val
+}
+func (p *UpdateMenuReq) SetHidden(val int64) {
+	p.Hidden = val
+}
+func (p *UpdateMenuReq) SetSort(val int64) {
+	p.Sort = val
+}
+func (p *UpdateMenuReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *UpdateMenuReq) SetUrl(val string) {
+	p.Url = val
+}
+func (p *UpdateMenuReq) SetChildren(val []*Menu) {
+	p.Children = val
+}
+func (p *UpdateMenuReq) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *UpdateMenuReq) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *UpdateMenuReq) SetTitle(val string) {
+	p.Title = val
+}
+func (p *UpdateMenuReq) SetType(val string) {
+	p.Type = val
+}
+
+func (p *UpdateMenuReq) IsSetId() bool {
+	return p.Id != UpdateMenuReq_Id_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetName() bool {
+	return p.Name != UpdateMenuReq_Name_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetParentId() bool {
+	return p.ParentId != UpdateMenuReq_ParentId_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetLevel() bool {
+	return p.Level != UpdateMenuReq_Level_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetPath() bool {
+	return p.Path != UpdateMenuReq_Path_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetRedirect() bool {
+	return p.Redirect != UpdateMenuReq_Redirect_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetComponent() bool {
+	return p.Component != UpdateMenuReq_Component_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetMenuType() bool {
+	return p.MenuType != UpdateMenuReq_MenuType_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetHidden() bool {
+	return p.Hidden != UpdateMenuReq_Hidden_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetSort() bool {
+	return p.Sort != UpdateMenuReq_Sort_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetStatus() bool {
+	return p.Status != UpdateMenuReq_Status_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetUrl() bool {
+	return p.Url != UpdateMenuReq_Url_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetChildren() bool {
+	return p.Children != nil
+}
+
+func (p *UpdateMenuReq) IsSetCreatedAt() bool {
+	return p.CreatedAt != UpdateMenuReq_CreatedAt_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != UpdateMenuReq_UpdatedAt_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetTitle() bool {
+	return p.Title != UpdateMenuReq_Title_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetType() bool {
+	return p.Type != UpdateMenuReq_Type_DEFAULT
+}
+
+func (p *UpdateMenuReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateMenuReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateMenuReq = map[int16]string{
 	1:  "id",
 	2:  "name",
 	3:  "parentId",
@@ -750,74 +1427,60 @@ var fieldIDToName_CreateApiReq = map[int16]string{
 	10: "sort",
 	12: "status",
 	13: "url",
-	14: "type",
+	14: "children",
+	15: "createdAt",
+	16: "updatedAt",
+	17: "title",
+	19: "type",
 }
-
-type UpdateApiReq struct {
-}
-
-func NewUpdateApiReq() *UpdateApiReq {
-	return &UpdateApiReq{}
-}
-
-func (p *UpdateApiReq) InitDefault() {
-}
-
-func (p *UpdateApiReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("UpdateApiReq(%+v)", *p)
-}
-
-var fieldIDToName_UpdateApiReq = map[int16]string{}
-
-type CreateMenuReq struct {
-}
-
-func NewCreateMenuReq() *CreateMenuReq {
-	return &CreateMenuReq{}
-}
-
-func (p *CreateMenuReq) InitDefault() {
-}
-
-func (p *CreateMenuReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("CreateMenuReq(%+v)", *p)
-}
-
-var fieldIDToName_CreateMenuReq = map[int16]string{}
-
-type UpdateMenuReq struct {
-}
-
-func NewUpdateMenuReq() *UpdateMenuReq {
-	return &UpdateMenuReq{}
-}
-
-func (p *UpdateMenuReq) InitDefault() {
-}
-
-func (p *UpdateMenuReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("UpdateMenuReq(%+v)", *p)
-}
-
-var fieldIDToName_UpdateMenuReq = map[int16]string{}
 
 type MenuListReq struct {
+	Page     int64 `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64 `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
 }
 
 func NewMenuListReq() *MenuListReq {
-	return &MenuListReq{}
+	return &MenuListReq{
+		Page:     1,
+		PageSize: 100,
+	}
 }
 
 func (p *MenuListReq) InitDefault() {
+	p.Page = 1
+	p.PageSize = 100
+}
+
+var MenuListReq_Page_DEFAULT int64 = 1
+
+func (p *MenuListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return MenuListReq_Page_DEFAULT
+	}
+	return p.Page
+}
+
+var MenuListReq_PageSize_DEFAULT int64 = 100
+
+func (p *MenuListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return MenuListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
+}
+func (p *MenuListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *MenuListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+
+func (p *MenuListReq) IsSetPage() bool {
+	return p.Page != MenuListReq_Page_DEFAULT
+}
+
+func (p *MenuListReq) IsSetPageSize() bool {
+	return p.PageSize != MenuListReq_PageSize_DEFAULT
 }
 
 func (p *MenuListReq) String() string {
@@ -827,7 +1490,10 @@ func (p *MenuListReq) String() string {
 	return fmt.Sprintf("MenuListReq(%+v)", *p)
 }
 
-var fieldIDToName_MenuListReq = map[int16]string{}
+var fieldIDToName_MenuListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+}
 
 type MenuTree struct {
 	MenuInfo *Menu       `thrift:"menuInfo,1,optional" frugal:"1,optional,Menu" json:"menuInfo,omitempty"`
@@ -918,9 +1584,9 @@ type Menu struct {
 	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
 	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
 	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  *int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    *bool   `thrift:"hidden,9,optional" frugal:"9,optional,bool" json:"hidden,omitempty"`
-	Sort      *int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
+	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
 	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
 	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
 	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
@@ -939,6 +1605,9 @@ func NewMenu() *Menu {
 		Path:      "",
 		Redirect:  "",
 		Component: "",
+		MenuType:  0,
+		Hidden:    0,
+		Sort:      0,
 		Status:    1,
 		Url:       "",
 		CreatedAt: "",
@@ -956,6 +1625,9 @@ func (p *Menu) InitDefault() {
 	p.Path = ""
 	p.Redirect = ""
 	p.Component = ""
+	p.MenuType = 0
+	p.Hidden = 0
+	p.Sort = 0
 	p.Status = 1
 	p.Url = ""
 	p.CreatedAt = ""
@@ -1027,31 +1699,31 @@ func (p *Menu) GetComponent() (v string) {
 	return p.Component
 }
 
-var Menu_MenuType_DEFAULT int64
+var Menu_MenuType_DEFAULT int64 = 0
 
 func (p *Menu) GetMenuType() (v int64) {
 	if !p.IsSetMenuType() {
 		return Menu_MenuType_DEFAULT
 	}
-	return *p.MenuType
+	return p.MenuType
 }
 
-var Menu_Hidden_DEFAULT bool
+var Menu_Hidden_DEFAULT int64 = 0
 
-func (p *Menu) GetHidden() (v bool) {
+func (p *Menu) GetHidden() (v int64) {
 	if !p.IsSetHidden() {
 		return Menu_Hidden_DEFAULT
 	}
-	return *p.Hidden
+	return p.Hidden
 }
 
-var Menu_Sort_DEFAULT int64
+var Menu_Sort_DEFAULT int64 = 0
 
 func (p *Menu) GetSort() (v int64) {
 	if !p.IsSetSort() {
 		return Menu_Sort_DEFAULT
 	}
-	return *p.Sort
+	return p.Sort
 }
 
 var Menu_Status_DEFAULT int64 = 1
@@ -1137,13 +1809,13 @@ func (p *Menu) SetRedirect(val string) {
 func (p *Menu) SetComponent(val string) {
 	p.Component = val
 }
-func (p *Menu) SetMenuType(val *int64) {
+func (p *Menu) SetMenuType(val int64) {
 	p.MenuType = val
 }
-func (p *Menu) SetHidden(val *bool) {
+func (p *Menu) SetHidden(val int64) {
 	p.Hidden = val
 }
-func (p *Menu) SetSort(val *int64) {
+func (p *Menu) SetSort(val int64) {
 	p.Sort = val
 }
 func (p *Menu) SetStatus(val int64) {
@@ -1197,15 +1869,15 @@ func (p *Menu) IsSetComponent() bool {
 }
 
 func (p *Menu) IsSetMenuType() bool {
-	return p.MenuType != nil
+	return p.MenuType != Menu_MenuType_DEFAULT
 }
 
 func (p *Menu) IsSetHidden() bool {
-	return p.Hidden != nil
+	return p.Hidden != Menu_Hidden_DEFAULT
 }
 
 func (p *Menu) IsSetSort() bool {
-	return p.Sort != nil
+	return p.Sort != Menu_Sort_DEFAULT
 }
 
 func (p *Menu) IsSetStatus() bool {

@@ -74,6 +74,11 @@ func CreatedID(v int64) predicate.Sms {
 	return predicate.Sms(sql.FieldEQ(FieldCreatedID, v))
 }
 
+// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
+func Status(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldEQ(FieldStatus, v))
+}
+
 // NoticeCount applies equality check predicate on the "notice_count" field. It's identical to NoticeCountEQ.
 func NoticeCount(v int64) predicate.Sms {
 	return predicate.Sms(sql.FieldEQ(FieldNoticeCount, v))
@@ -282,6 +287,56 @@ func CreatedIDIsNil() predicate.Sms {
 // CreatedIDNotNil applies the NotNil predicate on the "created_id" field.
 func CreatedIDNotNil() predicate.Sms {
 	return predicate.Sms(sql.FieldNotNull(FieldCreatedID))
+}
+
+// StatusEQ applies the EQ predicate on the "status" field.
+func StatusEQ(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldEQ(FieldStatus, v))
+}
+
+// StatusNEQ applies the NEQ predicate on the "status" field.
+func StatusNEQ(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldNEQ(FieldStatus, v))
+}
+
+// StatusIn applies the In predicate on the "status" field.
+func StatusIn(vs ...int64) predicate.Sms {
+	return predicate.Sms(sql.FieldIn(FieldStatus, vs...))
+}
+
+// StatusNotIn applies the NotIn predicate on the "status" field.
+func StatusNotIn(vs ...int64) predicate.Sms {
+	return predicate.Sms(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// StatusGT applies the GT predicate on the "status" field.
+func StatusGT(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldGT(FieldStatus, v))
+}
+
+// StatusGTE applies the GTE predicate on the "status" field.
+func StatusGTE(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldGTE(FieldStatus, v))
+}
+
+// StatusLT applies the LT predicate on the "status" field.
+func StatusLT(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldLT(FieldStatus, v))
+}
+
+// StatusLTE applies the LTE predicate on the "status" field.
+func StatusLTE(v int64) predicate.Sms {
+	return predicate.Sms(sql.FieldLTE(FieldStatus, v))
+}
+
+// StatusIsNil applies the IsNil predicate on the "status" field.
+func StatusIsNil() predicate.Sms {
+	return predicate.Sms(sql.FieldIsNull(FieldStatus))
+}
+
+// StatusNotNil applies the NotNil predicate on the "status" field.
+func StatusNotNil() predicate.Sms {
+	return predicate.Sms(sql.FieldNotNull(FieldStatus))
 }
 
 // NoticeCountEQ applies the EQ predicate on the "notice_count" field.

@@ -153,11 +153,22 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "index path | 菜单路由路径", Default: ""},
 		{Name: "name", Type: field.TypeString, Comment: "index name | 菜单名称"},
 		{Name: "order_no", Type: field.TypeInt64, Comment: "sorting numbers | 排序编号", Default: 0},
 		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
 		{Name: "ignore", Type: field.TypeBool, Nullable: true, Comment: "当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问", Default: false},
+		{Name: "type", Type: field.TypeString, Comment: "type | 菜单类别"},
+		{Name: "level", Type: field.TypeInt64, Comment: "menu level | 菜单层级"},
+		{Name: "menu_type", Type: field.TypeInt64, Comment: "menu type | 菜单类型 0 目录 1 菜单 2 按钮"},
+		{Name: "redirect", Type: field.TypeString, Nullable: true, Comment: "redirect path | 跳转路径 （外链）", Default: ""},
+		{Name: "component", Type: field.TypeString, Nullable: true, Comment: "the path of vue file | 组件路径", Default: ""},
+		{Name: "title", Type: field.TypeString, Comment: "menu name | 菜单显示标题"},
+		{Name: "icon", Type: field.TypeString, Comment: "menu icon | 菜单图标"},
+		{Name: "hidden", Type: field.TypeString, Comment: "hidden "},
+		{Name: "sort", Type: field.TypeInt64, Comment: "sort"},
+		{Name: "url", Type: field.TypeString, Comment: "url"},
 		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "parent menu ID | 父菜单ID"},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
@@ -168,7 +179,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_menus_sys_menus_children",
-				Columns:    []*schema.Column{SysMenusColumns[10]},
+				Columns:    []*schema.Column{SysMenusColumns[21]},
 				RefColumns: []*schema.Column{SysMenusColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -227,6 +238,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "notice_count", Type: field.TypeInt64, Comment: "通知短信数量", Default: 0},
 		{Name: "used_notice", Type: field.TypeInt64, Comment: "已用通知", Default: 0},
 	}

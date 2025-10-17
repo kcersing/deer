@@ -77,6 +77,20 @@ func (_c *MenuCreate) SetNillableCreatedID(v *int64) *MenuCreate {
 	return _c
 }
 
+// SetStatus sets the "status" field.
+func (_c *MenuCreate) SetStatus(v int64) *MenuCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableStatus(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetStatus(*v)
+	}
+	return _c
+}
+
 // SetParentID sets the "parent_id" field.
 func (_c *MenuCreate) SetParentID(v int64) *MenuCreate {
 	_c.mutation.SetParentID(v)
@@ -150,6 +164,82 @@ func (_c *MenuCreate) SetNillableIgnore(v *bool) *MenuCreate {
 	if v != nil {
 		_c.SetIgnore(*v)
 	}
+	return _c
+}
+
+// SetType sets the "type" field.
+func (_c *MenuCreate) SetType(v string) *MenuCreate {
+	_c.mutation.SetType(v)
+	return _c
+}
+
+// SetLevel sets the "level" field.
+func (_c *MenuCreate) SetLevel(v int64) *MenuCreate {
+	_c.mutation.SetLevel(v)
+	return _c
+}
+
+// SetMenuType sets the "menu_type" field.
+func (_c *MenuCreate) SetMenuType(v int64) *MenuCreate {
+	_c.mutation.SetMenuType(v)
+	return _c
+}
+
+// SetRedirect sets the "redirect" field.
+func (_c *MenuCreate) SetRedirect(v string) *MenuCreate {
+	_c.mutation.SetRedirect(v)
+	return _c
+}
+
+// SetNillableRedirect sets the "redirect" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableRedirect(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetRedirect(*v)
+	}
+	return _c
+}
+
+// SetComponent sets the "component" field.
+func (_c *MenuCreate) SetComponent(v string) *MenuCreate {
+	_c.mutation.SetComponent(v)
+	return _c
+}
+
+// SetNillableComponent sets the "component" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableComponent(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetComponent(*v)
+	}
+	return _c
+}
+
+// SetTitle sets the "title" field.
+func (_c *MenuCreate) SetTitle(v string) *MenuCreate {
+	_c.mutation.SetTitle(v)
+	return _c
+}
+
+// SetIcon sets the "icon" field.
+func (_c *MenuCreate) SetIcon(v string) *MenuCreate {
+	_c.mutation.SetIcon(v)
+	return _c
+}
+
+// SetHidden sets the "hidden" field.
+func (_c *MenuCreate) SetHidden(v string) *MenuCreate {
+	_c.mutation.SetHidden(v)
+	return _c
+}
+
+// SetSort sets the "sort" field.
+func (_c *MenuCreate) SetSort(v int64) *MenuCreate {
+	_c.mutation.SetSort(v)
+	return _c
+}
+
+// SetURL sets the "url" field.
+func (_c *MenuCreate) SetURL(v string) *MenuCreate {
+	_c.mutation.SetURL(v)
 	return _c
 }
 
@@ -245,6 +335,10 @@ func (_c *MenuCreate) defaults() {
 		v := menu.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := menu.DefaultStatus
+		_c.mutation.SetStatus(v)
+	}
 	if _, ok := _c.mutation.Path(); !ok {
 		v := menu.DefaultPath
 		_c.mutation.SetPath(v)
@@ -261,6 +355,14 @@ func (_c *MenuCreate) defaults() {
 		v := menu.DefaultIgnore
 		_c.mutation.SetIgnore(v)
 	}
+	if _, ok := _c.mutation.Redirect(); !ok {
+		v := menu.DefaultRedirect
+		_c.mutation.SetRedirect(v)
+	}
+	if _, ok := _c.mutation.Component(); !ok {
+		v := menu.DefaultComponent
+		_c.mutation.SetComponent(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -270,6 +372,30 @@ func (_c *MenuCreate) check() error {
 	}
 	if _, ok := _c.mutation.OrderNo(); !ok {
 		return &ValidationError{Name: "order_no", err: errors.New(`ent: missing required field "Menu.order_no"`)}
+	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Menu.type"`)}
+	}
+	if _, ok := _c.mutation.Level(); !ok {
+		return &ValidationError{Name: "level", err: errors.New(`ent: missing required field "Menu.level"`)}
+	}
+	if _, ok := _c.mutation.MenuType(); !ok {
+		return &ValidationError{Name: "menu_type", err: errors.New(`ent: missing required field "Menu.menu_type"`)}
+	}
+	if _, ok := _c.mutation.Title(); !ok {
+		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "Menu.title"`)}
+	}
+	if _, ok := _c.mutation.Icon(); !ok {
+		return &ValidationError{Name: "icon", err: errors.New(`ent: missing required field "Menu.icon"`)}
+	}
+	if _, ok := _c.mutation.Hidden(); !ok {
+		return &ValidationError{Name: "hidden", err: errors.New(`ent: missing required field "Menu.hidden"`)}
+	}
+	if _, ok := _c.mutation.Sort(); !ok {
+		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "Menu.sort"`)}
+	}
+	if _, ok := _c.mutation.URL(); !ok {
+		return &ValidationError{Name: "url", err: errors.New(`ent: missing required field "Menu.url"`)}
 	}
 	return nil
 }
@@ -319,6 +445,10 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 		_spec.SetField(menu.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(menu.FieldStatus, field.TypeInt64, value)
+		_node.Status = value
+	}
 	if value, ok := _c.mutation.Path(); ok {
 		_spec.SetField(menu.FieldPath, field.TypeString, value)
 		_node.Path = value
@@ -338,6 +468,46 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Ignore(); ok {
 		_spec.SetField(menu.FieldIgnore, field.TypeBool, value)
 		_node.Ignore = value
+	}
+	if value, ok := _c.mutation.GetType(); ok {
+		_spec.SetField(menu.FieldType, field.TypeString, value)
+		_node.Type = value
+	}
+	if value, ok := _c.mutation.Level(); ok {
+		_spec.SetField(menu.FieldLevel, field.TypeInt64, value)
+		_node.Level = value
+	}
+	if value, ok := _c.mutation.MenuType(); ok {
+		_spec.SetField(menu.FieldMenuType, field.TypeInt64, value)
+		_node.MenuType = value
+	}
+	if value, ok := _c.mutation.Redirect(); ok {
+		_spec.SetField(menu.FieldRedirect, field.TypeString, value)
+		_node.Redirect = value
+	}
+	if value, ok := _c.mutation.Component(); ok {
+		_spec.SetField(menu.FieldComponent, field.TypeString, value)
+		_node.Component = value
+	}
+	if value, ok := _c.mutation.Title(); ok {
+		_spec.SetField(menu.FieldTitle, field.TypeString, value)
+		_node.Title = value
+	}
+	if value, ok := _c.mutation.Icon(); ok {
+		_spec.SetField(menu.FieldIcon, field.TypeString, value)
+		_node.Icon = value
+	}
+	if value, ok := _c.mutation.Hidden(); ok {
+		_spec.SetField(menu.FieldHidden, field.TypeString, value)
+		_node.Hidden = value
+	}
+	if value, ok := _c.mutation.Sort(); ok {
+		_spec.SetField(menu.FieldSort, field.TypeInt64, value)
+		_node.Sort = value
+	}
+	if value, ok := _c.mutation.URL(); ok {
+		_spec.SetField(menu.FieldURL, field.TypeString, value)
+		_node.URL = value
 	}
 	if nodes := _c.mutation.RolesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

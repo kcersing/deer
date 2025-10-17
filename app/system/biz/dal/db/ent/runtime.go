@@ -131,6 +131,8 @@ func init() {
 	menuMixin := schema.Menu{}.Mixin()
 	menuMixinFields0 := menuMixin[0].Fields()
 	_ = menuMixinFields0
+	menuMixinFields1 := menuMixin[1].Fields()
+	_ = menuMixinFields1
 	menuFields := schema.Menu{}.Fields()
 	_ = menuFields
 	// menuDescCreatedAt is the schema descriptor for created_at field.
@@ -151,6 +153,10 @@ func init() {
 	menuDescCreatedID := menuMixinFields0[4].Descriptor()
 	// menu.DefaultCreatedID holds the default value on creation for the created_id field.
 	menu.DefaultCreatedID = menuDescCreatedID.Default.(int64)
+	// menuDescStatus is the schema descriptor for status field.
+	menuDescStatus := menuMixinFields1[0].Descriptor()
+	// menu.DefaultStatus holds the default value on creation for the status field.
+	menu.DefaultStatus = menuDescStatus.Default.(int64)
 	// menuDescPath is the schema descriptor for path field.
 	menuDescPath := menuFields[1].Descriptor()
 	// menu.DefaultPath holds the default value on creation for the path field.
@@ -167,6 +173,14 @@ func init() {
 	menuDescIgnore := menuFields[5].Descriptor()
 	// menu.DefaultIgnore holds the default value on creation for the ignore field.
 	menu.DefaultIgnore = menuDescIgnore.Default.(bool)
+	// menuDescRedirect is the schema descriptor for redirect field.
+	menuDescRedirect := menuFields[9].Descriptor()
+	// menu.DefaultRedirect holds the default value on creation for the redirect field.
+	menu.DefaultRedirect = menuDescRedirect.Default.(string)
+	// menuDescComponent is the schema descriptor for component field.
+	menuDescComponent := menuFields[10].Descriptor()
+	// menu.DefaultComponent holds the default value on creation for the component field.
+	menu.DefaultComponent = menuDescComponent.Default.(string)
 	messagesMixin := schema.Messages{}.Mixin()
 	messagesMixinFields0 := messagesMixin[0].Fields()
 	_ = messagesMixinFields0
@@ -238,6 +252,8 @@ func init() {
 	smsMixin := schema.Sms{}.Mixin()
 	smsMixinFields0 := smsMixin[0].Fields()
 	_ = smsMixinFields0
+	smsMixinFields1 := smsMixin[1].Fields()
+	_ = smsMixinFields1
 	smsFields := schema.Sms{}.Fields()
 	_ = smsFields
 	// smsDescCreatedAt is the schema descriptor for created_at field.
@@ -258,6 +274,10 @@ func init() {
 	smsDescCreatedID := smsMixinFields0[4].Descriptor()
 	// sms.DefaultCreatedID holds the default value on creation for the created_id field.
 	sms.DefaultCreatedID = smsDescCreatedID.Default.(int64)
+	// smsDescStatus is the schema descriptor for status field.
+	smsDescStatus := smsMixinFields1[0].Descriptor()
+	// sms.DefaultStatus holds the default value on creation for the status field.
+	sms.DefaultStatus = smsDescStatus.Default.(int64)
 	// smsDescNoticeCount is the schema descriptor for notice_count field.
 	smsDescNoticeCount := smsFields[0].Descriptor()
 	// sms.DefaultNoticeCount holds the default value on creation for the notice_count field.

@@ -4,6 +4,7 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
+	"system/biz/dal/db"
 )
 
 type DeleteLogService struct {
@@ -15,7 +16,9 @@ func NewDeleteLogService(ctx context.Context) *DeleteLogService {
 
 // Run create note info
 func (s *DeleteLogService) Run(req *system.DeleteLog) (resp *base.NilResponse, err error) {
-	// Finish your business logic.
-
+	_, err = db.Client.Logs.Delete().Exec(s.ctx)
+	if err != nil {
+		return nil, err
+	}
 	return
 }

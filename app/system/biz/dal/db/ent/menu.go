@@ -26,6 +26,8 @@ type Menu struct {
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
+	// 状态[0:禁用;1:正常]
+	Status int64 `json:"status,omitempty"`
 	// parent menu ID | 父菜单ID
 	ParentID int64 `json:"parent_id,omitempty"`
 	// index path | 菜单路由路径
@@ -38,6 +40,26 @@ type Menu struct {
 	Disabled int64 `json:"disabled,omitempty"`
 	// 当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问
 	Ignore bool `json:"ignore,omitempty"`
+	// type | 菜单类别
+	Type string `json:"type,omitempty"`
+	// menu level | 菜单层级
+	Level int64 `json:"level,omitempty"`
+	// menu type | 菜单类型 0 目录 1 菜单 2 按钮
+	MenuType int64 `json:"menu_type,omitempty"`
+	// redirect path | 跳转路径 （外链）
+	Redirect string `json:"redirect,omitempty"`
+	// the path of vue file | 组件路径
+	Component string `json:"component,omitempty"`
+	// menu name | 菜单显示标题
+	Title string `json:"title,omitempty"`
+	// menu icon | 菜单图标
+	Icon string `json:"icon,omitempty"`
+	// hidden
+	Hidden string `json:"hidden,omitempty"`
+	// sort
+	Sort int64 `json:"sort,omitempty"`
+	// url
+	URL string `json:"url,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MenuQuery when eager-loading is set.
 	Edges        MenuEdges `json:"edges"`
@@ -93,9 +115,9 @@ func (*Menu) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case menu.FieldIgnore:
 			values[i] = new(sql.NullBool)
-		case menu.FieldID, menu.FieldDelete, menu.FieldCreatedID, menu.FieldParentID, menu.FieldOrderNo, menu.FieldDisabled:
+		case menu.FieldID, menu.FieldDelete, menu.FieldCreatedID, menu.FieldStatus, menu.FieldParentID, menu.FieldOrderNo, menu.FieldDisabled, menu.FieldLevel, menu.FieldMenuType, menu.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case menu.FieldPath, menu.FieldName:
+		case menu.FieldPath, menu.FieldName, menu.FieldType, menu.FieldRedirect, menu.FieldComponent, menu.FieldTitle, menu.FieldIcon, menu.FieldHidden, menu.FieldURL:
 			values[i] = new(sql.NullString)
 		case menu.FieldCreatedAt, menu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -144,6 +166,12 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.CreatedID = value.Int64
 			}
+		case menu.FieldStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = value.Int64
+			}
 		case menu.FieldParentID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
@@ -179,6 +207,66 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field ignore", values[i])
 			} else if value.Valid {
 				_m.Ignore = value.Bool
+			}
+		case menu.FieldType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				_m.Type = value.String
+			}
+		case menu.FieldLevel:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field level", values[i])
+			} else if value.Valid {
+				_m.Level = value.Int64
+			}
+		case menu.FieldMenuType:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field menu_type", values[i])
+			} else if value.Valid {
+				_m.MenuType = value.Int64
+			}
+		case menu.FieldRedirect:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field redirect", values[i])
+			} else if value.Valid {
+				_m.Redirect = value.String
+			}
+		case menu.FieldComponent:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field component", values[i])
+			} else if value.Valid {
+				_m.Component = value.String
+			}
+		case menu.FieldTitle:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field title", values[i])
+			} else if value.Valid {
+				_m.Title = value.String
+			}
+		case menu.FieldIcon:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field icon", values[i])
+			} else if value.Valid {
+				_m.Icon = value.String
+			}
+		case menu.FieldHidden:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field hidden", values[i])
+			} else if value.Valid {
+				_m.Hidden = value.String
+			}
+		case menu.FieldSort:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field sort", values[i])
+			} else if value.Valid {
+				_m.Sort = value.Int64
+			}
+		case menu.FieldURL:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field url", values[i])
+			} else if value.Valid {
+				_m.URL = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -243,6 +331,9 @@ func (_m *Menu) String() string {
 	builder.WriteString("created_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
+	builder.WriteString(", ")
 	builder.WriteString("parent_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.ParentID))
 	builder.WriteString(", ")
@@ -260,6 +351,36 @@ func (_m *Menu) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("ignore=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Ignore))
+	builder.WriteString(", ")
+	builder.WriteString("type=")
+	builder.WriteString(_m.Type)
+	builder.WriteString(", ")
+	builder.WriteString("level=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Level))
+	builder.WriteString(", ")
+	builder.WriteString("menu_type=")
+	builder.WriteString(fmt.Sprintf("%v", _m.MenuType))
+	builder.WriteString(", ")
+	builder.WriteString("redirect=")
+	builder.WriteString(_m.Redirect)
+	builder.WriteString(", ")
+	builder.WriteString("component=")
+	builder.WriteString(_m.Component)
+	builder.WriteString(", ")
+	builder.WriteString("title=")
+	builder.WriteString(_m.Title)
+	builder.WriteString(", ")
+	builder.WriteString("icon=")
+	builder.WriteString(_m.Icon)
+	builder.WriteString(", ")
+	builder.WriteString("hidden=")
+	builder.WriteString(_m.Hidden)
+	builder.WriteString(", ")
+	builder.WriteString("sort=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
+	builder.WriteString(", ")
+	builder.WriteString("url=")
+	builder.WriteString(_m.URL)
 	builder.WriteByte(')')
 	return builder.String()
 }

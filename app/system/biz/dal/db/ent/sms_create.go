@@ -76,6 +76,20 @@ func (_c *SmsCreate) SetNillableCreatedID(v *int64) *SmsCreate {
 	return _c
 }
 
+// SetStatus sets the "status" field.
+func (_c *SmsCreate) SetStatus(v int64) *SmsCreate {
+	_c.mutation.SetStatus(v)
+	return _c
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_c *SmsCreate) SetNillableStatus(v *int64) *SmsCreate {
+	if v != nil {
+		_c.SetStatus(*v)
+	}
+	return _c
+}
+
 // SetNoticeCount sets the "notice_count" field.
 func (_c *SmsCreate) SetNoticeCount(v int64) *SmsCreate {
 	_c.mutation.SetNoticeCount(v)
@@ -161,6 +175,10 @@ func (_c *SmsCreate) defaults() {
 		v := sms.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
+	if _, ok := _c.mutation.Status(); !ok {
+		v := sms.DefaultStatus
+		_c.mutation.SetStatus(v)
+	}
 	if _, ok := _c.mutation.NoticeCount(); !ok {
 		v := sms.DefaultNoticeCount
 		_c.mutation.SetNoticeCount(v)
@@ -226,6 +244,10 @@ func (_c *SmsCreate) createSpec() (*Sms, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.CreatedID(); ok {
 		_spec.SetField(sms.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
+	}
+	if value, ok := _c.mutation.Status(); ok {
+		_spec.SetField(sms.FieldStatus, field.TypeInt64, value)
+		_node.Status = value
 	}
 	if value, ok := _c.mutation.NoticeCount(); ok {
 		_spec.SetField(sms.FieldNoticeCount, field.TypeInt64, value)

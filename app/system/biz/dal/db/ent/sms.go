@@ -26,6 +26,8 @@ type Sms struct {
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
+	// 状态[0:禁用;1:正常]
+	Status int64 `json:"status,omitempty"`
 	// 通知短信数量
 	NoticeCount int64 `json:"notice_count,omitempty"`
 	// 已用通知
@@ -38,7 +40,7 @@ func (*Sms) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sms.FieldID, sms.FieldDelete, sms.FieldCreatedID, sms.FieldNoticeCount, sms.FieldUsedNotice:
+		case sms.FieldID, sms.FieldDelete, sms.FieldCreatedID, sms.FieldStatus, sms.FieldNoticeCount, sms.FieldUsedNotice:
 			values[i] = new(sql.NullInt64)
 		case sms.FieldCreatedAt, sms.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -86,6 +88,12 @@ func (_m *Sms) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
 				_m.CreatedID = value.Int64
+			}
+		case sms.FieldStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field status", values[i])
+			} else if value.Valid {
+				_m.Status = value.Int64
 			}
 		case sms.FieldNoticeCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -146,6 +154,9 @@ func (_m *Sms) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("created_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
+	builder.WriteString(", ")
+	builder.WriteString("status=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteString(", ")
 	builder.WriteString("notice_count=")
 	builder.WriteString(fmt.Sprintf("%v", _m.NoticeCount))

@@ -21,6 +21,8 @@ const (
 	FieldDelete = "delete"
 	// FieldCreatedID holds the string denoting the created_id field in the database.
 	FieldCreatedID = "created_id"
+	// FieldStatus holds the string denoting the status field in the database.
+	FieldStatus = "status"
 	// FieldNoticeCount holds the string denoting the notice_count field in the database.
 	FieldNoticeCount = "notice_count"
 	// FieldUsedNotice holds the string denoting the used_notice field in the database.
@@ -36,6 +38,7 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDelete,
 	FieldCreatedID,
+	FieldStatus,
 	FieldNoticeCount,
 	FieldUsedNotice,
 }
@@ -61,6 +64,8 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
+	// DefaultStatus holds the default value on creation for the "status" field.
+	DefaultStatus int64
 	// DefaultNoticeCount holds the default value on creation for the "notice_count" field.
 	DefaultNoticeCount int64
 	// DefaultUsedNotice holds the default value on creation for the "used_notice" field.
@@ -93,6 +98,11 @@ func ByDelete(opts ...sql.OrderTermOption) OrderOption {
 // ByCreatedID orders the results by the created_id field.
 func ByCreatedID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedID, opts...).ToFunc()
+}
+
+// ByStatus orders the results by the status field.
+func ByStatus(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }
 
 // ByNoticeCount orders the results by the notice_count field.

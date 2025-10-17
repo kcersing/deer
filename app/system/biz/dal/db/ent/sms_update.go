@@ -94,6 +94,33 @@ func (_u *SmsUpdate) ClearCreatedID() *SmsUpdate {
 	return _u
 }
 
+// SetStatus sets the "status" field.
+func (_u *SmsUpdate) SetStatus(v int64) *SmsUpdate {
+	_u.mutation.ResetStatus()
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *SmsUpdate) SetNillableStatus(v *int64) *SmsUpdate {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// AddStatus adds value to the "status" field.
+func (_u *SmsUpdate) AddStatus(v int64) *SmsUpdate {
+	_u.mutation.AddStatus(v)
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *SmsUpdate) ClearStatus() *SmsUpdate {
+	_u.mutation.ClearStatus()
+	return _u
+}
+
 // SetNoticeCount sets the "notice_count" field.
 func (_u *SmsUpdate) SetNoticeCount(v int64) *SmsUpdate {
 	_u.mutation.ResetNoticeCount()
@@ -213,6 +240,15 @@ func (_u *SmsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(sms.FieldCreatedID, field.TypeInt64)
 	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(sms.FieldStatus, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedStatus(); ok {
+		_spec.AddField(sms.FieldStatus, field.TypeInt64, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(sms.FieldStatus, field.TypeInt64)
+	}
 	if value, ok := _u.mutation.NoticeCount(); ok {
 		_spec.SetField(sms.FieldNoticeCount, field.TypeInt64, value)
 	}
@@ -308,6 +344,33 @@ func (_u *SmsUpdateOne) AddCreatedID(v int64) *SmsUpdateOne {
 // ClearCreatedID clears the value of the "created_id" field.
 func (_u *SmsUpdateOne) ClearCreatedID() *SmsUpdateOne {
 	_u.mutation.ClearCreatedID()
+	return _u
+}
+
+// SetStatus sets the "status" field.
+func (_u *SmsUpdateOne) SetStatus(v int64) *SmsUpdateOne {
+	_u.mutation.ResetStatus()
+	_u.mutation.SetStatus(v)
+	return _u
+}
+
+// SetNillableStatus sets the "status" field if the given value is not nil.
+func (_u *SmsUpdateOne) SetNillableStatus(v *int64) *SmsUpdateOne {
+	if v != nil {
+		_u.SetStatus(*v)
+	}
+	return _u
+}
+
+// AddStatus adds value to the "status" field.
+func (_u *SmsUpdateOne) AddStatus(v int64) *SmsUpdateOne {
+	_u.mutation.AddStatus(v)
+	return _u
+}
+
+// ClearStatus clears the value of the "status" field.
+func (_u *SmsUpdateOne) ClearStatus() *SmsUpdateOne {
+	_u.mutation.ClearStatus()
 	return _u
 }
 
@@ -459,6 +522,15 @@ func (_u *SmsUpdateOne) sqlSave(ctx context.Context) (_node *Sms, err error) {
 	}
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(sms.FieldCreatedID, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Status(); ok {
+		_spec.SetField(sms.FieldStatus, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedStatus(); ok {
+		_spec.AddField(sms.FieldStatus, field.TypeInt64, value)
+	}
+	if _u.mutation.StatusCleared() {
+		_spec.ClearField(sms.FieldStatus, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.NoticeCount(); ok {
 		_spec.SetField(sms.FieldNoticeCount, field.TypeInt64, value)

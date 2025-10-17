@@ -22,13 +22,18 @@ func (Menu) Fields() []ent.Field {
 		field.Int64("disabled").Optional().Default(0).Comment("disable status | 是否停用"),
 		field.Bool("ignore").Optional().Default(false).Comment("当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问"),
 
-		//field.Int64("menu_level").Comment("menu level | 菜单层级"),
-		//field.Int64("menu_type").Comment("menu type | 菜单类型 0 目录 1 菜单 2 按钮"),
-		//field.String("redirect").Optional().Default("").Comment("redirect path | 跳转路径 （外链）"),
-		//field.String("component").Optional().Default("").Comment("the path of vue file | 组件路径"),
+		field.String("type").Comment("type | 菜单类别"),
+
+		field.Int64("level").Comment("menu level | 菜单层级"),
+		field.Int64("menu_type").Comment("menu type | 菜单类型 0 目录 1 菜单 2 按钮"),
+		field.String("redirect").Optional().Default("").Comment("redirect path | 跳转路径 （外链）"),
+		field.String("component").Optional().Default("").Comment("the path of vue file | 组件路径"),
 		//// meta
-		//field.String("title").Comment("menu name | 菜单显示标题"),
-		//field.String("icon").Comment("menu icon | 菜单图标"),
+		field.String("title").Comment("menu name | 菜单显示标题"),
+		field.String("icon").Comment("menu icon | 菜单图标"),
+		field.String("hidden").Comment("hidden "),
+		field.Int64("sort").Comment("sort"),
+		field.String("url").Comment("url"),
 		//field.Bool("hide_menu").Optional().Default(false).Comment("hide menu | 是否隐藏菜单"),
 		//field.Bool("hide_breadcrumb").Optional().Default(false).Comment("hide the breadcrumb | 隐藏面包屑"),
 		//field.String("current_active_menu").Optional().Default("").Comment("set the active menu | 激活菜单"),
@@ -46,6 +51,7 @@ func (Menu) Fields() []ent.Field {
 func (Menu) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
+		mixins.StatusMixin{},
 	}
 }
 

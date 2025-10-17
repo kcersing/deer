@@ -22,6 +22,7 @@ func (Sms) Fields() []ent.Field {
 func (Sms) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
+		mixins.StatusMixin{},
 	}
 }
 

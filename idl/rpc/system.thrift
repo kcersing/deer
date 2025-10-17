@@ -31,6 +31,41 @@ struct ApiListReq{
     253:optional string keyword="" (api.raw = "keyword")
 }
 struct CreateApiReq{
+    4: optional string path="" (api.raw = "path")
+    5: optional string description="" (api.raw = "description")
+    6: optional string group="" (api.raw = "group")
+    7: optional string method="" (api.raw = "method")
+    8: optional string title="" (api.raw = "title")
+
+}
+struct UpdateApiReq{
+    1: optional i64 id=0 (api.raw = "id")
+    4: optional string path="" (api.raw = "path")
+    5: optional string description="" (api.raw = "description")
+    6: optional string group="" (api.raw = "group")
+    7: optional string method="" (api.raw = "method")
+    8: optional string title="" (api.raw = "title")
+}
+struct CreateMenuReq{
+    2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
+    3:optional i64 parentId=0 (api.raw = "parentId")
+    4:optional i64 level=0 (api.raw = "level")
+    5:optional string path="" (api.raw = "path")
+    6:optional string redirect="" (api.raw = "redirect")
+    7:optional string component="" (api.raw = "component")
+    8:optional i64 menuType=0 (api.raw = "menuType")
+    9:optional i64 hidden=0 (api.raw = "hidden")
+    10:optional i64 sort=0 (api.raw = "sort")
+
+    12:optional i64 status=1 (api.raw = "status")
+    13:optional string url="" (api.raw = "url")
+    14:optional list<Menu> children=[]  (api.raw = "children")
+    15:optional string createdAt="" (api.raw = "createdAt")
+    16:optional string updatedAt="" (api.raw = "updatedAt")
+    17:optional string title="" (api.raw = "title" )
+    19:optional string type="" (api.raw = "type")
+}
+struct UpdateMenuReq{
     1:optional i64 id =0(api.raw = "id" )
     2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
     3:optional i64 parentId=0 (api.raw = "parentId")
@@ -39,23 +74,20 @@ struct CreateApiReq{
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
     8:optional i64 menuType=0 (api.raw = "menuType")
-    9:optional bool hidden=true (api.raw = "hidden")
+    9:optional i64 hidden=0 (api.raw = "hidden")
     10:optional i64 sort=0 (api.raw = "sort")
+
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
-    14:optional string type="" (api.raw = "type")
-}
-struct UpdateApiReq{
-
-}
-struct CreateMenuReq{
-
-}
-struct UpdateMenuReq{
-
+    14:optional list<Menu> children  (api.raw = "children")
+    15:optional string createdAt="" (api.raw = "createdAt")
+    16:optional string updatedAt="" (api.raw = "updatedAt")
+    17:optional string title="" (api.raw = "title" )
+    19:optional string type="" (api.raw = "type")
 }
 struct MenuListReq{
-
+    1:  optional i64 page=1 (api.raw = "page")
+    2:  optional i64 pageSize=100 (api.raw = "pageSize")
 }
 struct MenuTree {
     1:optional Menu menuInfo={}
@@ -70,9 +102,9 @@ struct Menu{
     5:optional string path="" (api.raw = "path")
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
-    8:optional i64 menuType (api.raw = "menuType")
-    9:optional bool hidden (api.raw = "hidden")
-    10:optional i64 sort (api.raw = "sort")
+    8:optional i64 menuType=0 (api.raw = "menuType")
+    9:optional i64 hidden=0 (api.raw = "hidden")
+    10:optional i64 sort=0 (api.raw = "sort")
 
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
@@ -244,6 +276,7 @@ service SystemService  {
     RoleResp LoginRole(1: base.CheckAccountReq req)
     RoleListResp GetRoleList(1: GetRoleListReq req)
     RoleResp UpdateRole(1: UpdateRoleReq req)
+
     base.NilResponse DeleteRole(1: base.IdReq req)
     // 创建菜单权限
     base.NilResponse CreateRoleMenu(1: CreateMenuAuthReq req)
