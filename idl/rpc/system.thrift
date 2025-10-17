@@ -79,7 +79,7 @@ struct UpdateMenuReq{
 
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
-    14:optional list<Menu> children  (api.raw = "children")
+    14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
     17:optional string title="" (api.raw = "title" )
@@ -108,7 +108,7 @@ struct Menu{
 
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
-    14:optional list<Menu> children  (api.raw = "children")
+    14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
     17:optional string title="" (api.raw = "title" )

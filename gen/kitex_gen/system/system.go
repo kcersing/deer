@@ -1109,6 +1109,7 @@ func NewUpdateMenuReq() *UpdateMenuReq {
 		Sort:      0,
 		Status:    1,
 		Url:       "",
+		Children:  []*Menu{},
 		CreatedAt: "",
 		UpdatedAt: "",
 		Title:     "",
@@ -1129,6 +1130,7 @@ func (p *UpdateMenuReq) InitDefault() {
 	p.Sort = 0
 	p.Status = 1
 	p.Url = ""
+	p.Children = []*Menu{}
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
@@ -1243,7 +1245,7 @@ func (p *UpdateMenuReq) GetUrl() (v string) {
 	return p.Url
 }
 
-var UpdateMenuReq_Children_DEFAULT []*Menu
+var UpdateMenuReq_Children_DEFAULT []*Menu = []*Menu{}
 
 func (p *UpdateMenuReq) GetChildren() (v []*Menu) {
 	if !p.IsSetChildren() {
@@ -1610,6 +1612,7 @@ func NewMenu() *Menu {
 		Sort:      0,
 		Status:    1,
 		Url:       "",
+		Children:  []*Menu{},
 		CreatedAt: "",
 		UpdatedAt: "",
 		Title:     "",
@@ -1630,6 +1633,7 @@ func (p *Menu) InitDefault() {
 	p.Sort = 0
 	p.Status = 1
 	p.Url = ""
+	p.Children = []*Menu{}
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
@@ -1744,7 +1748,7 @@ func (p *Menu) GetUrl() (v string) {
 	return p.Url
 }
 
-var Menu_Children_DEFAULT []*Menu
+var Menu_Children_DEFAULT []*Menu = []*Menu{}
 
 func (p *Menu) GetChildren() (v []*Menu) {
 	if !p.IsSetChildren() {
