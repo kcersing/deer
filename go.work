@@ -3,13 +3,13 @@ go 1.25.0
 use (
 	./gen
 	./common
-	./app/facade
-	./app/admin
-	./app/user
-	./app/member
-	./app/order
-	./app/product
-	./app/test
+	//./app/facade
+	//./app/admin
+	//./app/user
+	//./app/member
+	//./app/order
+	//./app/product
+	//./app/test
 	./app/system
 
 )

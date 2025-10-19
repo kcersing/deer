@@ -166,7 +166,7 @@ var (
 		{Name: "component", Type: field.TypeString, Nullable: true, Comment: "the path of vue file | 组件路径", Default: ""},
 		{Name: "title", Type: field.TypeString, Comment: "menu name | 菜单显示标题"},
 		{Name: "icon", Type: field.TypeString, Comment: "menu icon | 菜单图标"},
-		{Name: "hidden", Type: field.TypeString, Comment: "hidden "},
+		{Name: "hidden", Type: field.TypeInt64, Comment: "hidden "},
 		{Name: "sort", Type: field.TypeInt64, Comment: "sort"},
 		{Name: "url", Type: field.TypeString, Comment: "url"},
 		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "parent menu ID | 父菜单ID"},

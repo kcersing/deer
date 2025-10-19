@@ -4472,7 +4472,8 @@ type MenuMutation struct {
 	component       *string
 	title           *string
 	icon            *string
-	hidden          *string
+	hidden          *int64
+	addhidden       *int64
 	sort            *int64
 	addsort         *int64
 	url             *string
@@ -5530,12 +5531,13 @@ func (m *MenuMutation) ResetIcon() {
 }
 
 // SetHidden sets the "hidden" field.
-func (m *MenuMutation) SetHidden(s string) {
-	m.hidden = &s
+func (m *MenuMutation) SetHidden(i int64) {
+	m.hidden = &i
+	m.addhidden = nil
 }
 
 // Hidden returns the value of the "hidden" field in the mutation.
-func (m *MenuMutation) Hidden() (r string, exists bool) {
+func (m *MenuMutation) Hidden() (r int64, exists bool) {
 	v := m.hidden
 	if v == nil {
 		return
@@ -5546,7 +5548,7 @@ func (m *MenuMutation) Hidden() (r string, exists bool) {
 // OldHidden returns the old "hidden" field's value of the Menu entity.
 // If the Menu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MenuMutation) OldHidden(ctx context.Context) (v string, err error) {
+func (m *MenuMutation) OldHidden(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldHidden is only allowed on UpdateOne operations")
 	}
@@ -5560,9 +5562,28 @@ func (m *MenuMutation) OldHidden(ctx context.Context) (v string, err error) {
 	return oldValue.Hidden, nil
 }
 
+// AddHidden adds i to the "hidden" field.
+func (m *MenuMutation) AddHidden(i int64) {
+	if m.addhidden != nil {
+		*m.addhidden += i
+	} else {
+		m.addhidden = &i
+	}
+}
+
+// AddedHidden returns the value that was added to the "hidden" field in this mutation.
+func (m *MenuMutation) AddedHidden() (r int64, exists bool) {
+	v := m.addhidden
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetHidden resets all changes to the "hidden" field.
 func (m *MenuMutation) ResetHidden() {
 	m.hidden = nil
+	m.addhidden = nil
 }
 
 // SetSort sets the "sort" field.
@@ -6127,7 +6148,7 @@ func (m *MenuMutation) SetField(name string, value ent.Value) error {
 		m.SetIcon(v)
 		return nil
 	case menu.FieldHidden:
-		v, ok := value.(string)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -6176,6 +6197,9 @@ func (m *MenuMutation) AddedFields() []string {
 	if m.addmenu_type != nil {
 		fields = append(fields, menu.FieldMenuType)
 	}
+	if m.addhidden != nil {
+		fields = append(fields, menu.FieldHidden)
+	}
 	if m.addsort != nil {
 		fields = append(fields, menu.FieldSort)
 	}
@@ -6201,6 +6225,8 @@ func (m *MenuMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedLevel()
 	case menu.FieldMenuType:
 		return m.AddedMenuType()
+	case menu.FieldHidden:
+		return m.AddedHidden()
 	case menu.FieldSort:
 		return m.AddedSort()
 	}
@@ -6260,6 +6286,13 @@ func (m *MenuMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddMenuType(v)
+		return nil
+	case menu.FieldHidden:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddHidden(v)
 		return nil
 	case menu.FieldSort:
 		v, ok := value.(int64)

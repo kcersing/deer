@@ -146,7 +146,7 @@ func Icon(v string) predicate.Menu {
 }
 
 // Hidden applies equality check predicate on the "hidden" field. It's identical to HiddenEQ.
-func Hidden(v string) predicate.Menu {
+func Hidden(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldEQ(FieldHidden, v))
 }
 
@@ -1116,68 +1116,43 @@ func IconContainsFold(v string) predicate.Menu {
 }
 
 // HiddenEQ applies the EQ predicate on the "hidden" field.
-func HiddenEQ(v string) predicate.Menu {
+func HiddenEQ(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldEQ(FieldHidden, v))
 }
 
 // HiddenNEQ applies the NEQ predicate on the "hidden" field.
-func HiddenNEQ(v string) predicate.Menu {
+func HiddenNEQ(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldNEQ(FieldHidden, v))
 }
 
 // HiddenIn applies the In predicate on the "hidden" field.
-func HiddenIn(vs ...string) predicate.Menu {
+func HiddenIn(vs ...int64) predicate.Menu {
 	return predicate.Menu(sql.FieldIn(FieldHidden, vs...))
 }
 
 // HiddenNotIn applies the NotIn predicate on the "hidden" field.
-func HiddenNotIn(vs ...string) predicate.Menu {
+func HiddenNotIn(vs ...int64) predicate.Menu {
 	return predicate.Menu(sql.FieldNotIn(FieldHidden, vs...))
 }
 
 // HiddenGT applies the GT predicate on the "hidden" field.
-func HiddenGT(v string) predicate.Menu {
+func HiddenGT(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldGT(FieldHidden, v))
 }
 
 // HiddenGTE applies the GTE predicate on the "hidden" field.
-func HiddenGTE(v string) predicate.Menu {
+func HiddenGTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldGTE(FieldHidden, v))
 }
 
 // HiddenLT applies the LT predicate on the "hidden" field.
-func HiddenLT(v string) predicate.Menu {
+func HiddenLT(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLT(FieldHidden, v))
 }
 
 // HiddenLTE applies the LTE predicate on the "hidden" field.
-func HiddenLTE(v string) predicate.Menu {
+func HiddenLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldHidden, v))
-}
-
-// HiddenContains applies the Contains predicate on the "hidden" field.
-func HiddenContains(v string) predicate.Menu {
-	return predicate.Menu(sql.FieldContains(FieldHidden, v))
-}
-
-// HiddenHasPrefix applies the HasPrefix predicate on the "hidden" field.
-func HiddenHasPrefix(v string) predicate.Menu {
-	return predicate.Menu(sql.FieldHasPrefix(FieldHidden, v))
-}
-
-// HiddenHasSuffix applies the HasSuffix predicate on the "hidden" field.
-func HiddenHasSuffix(v string) predicate.Menu {
-	return predicate.Menu(sql.FieldHasSuffix(FieldHidden, v))
-}
-
-// HiddenEqualFold applies the EqualFold predicate on the "hidden" field.
-func HiddenEqualFold(v string) predicate.Menu {
-	return predicate.Menu(sql.FieldEqualFold(FieldHidden, v))
-}
-
-// HiddenContainsFold applies the ContainsFold predicate on the "hidden" field.
-func HiddenContainsFold(v string) predicate.Menu {
-	return predicate.Menu(sql.FieldContainsFold(FieldHidden, v))
 }
 
 // SortEQ applies the EQ predicate on the "sort" field.

@@ -226,7 +226,7 @@ func (_c *MenuCreate) SetIcon(v string) *MenuCreate {
 }
 
 // SetHidden sets the "hidden" field.
-func (_c *MenuCreate) SetHidden(v string) *MenuCreate {
+func (_c *MenuCreate) SetHidden(v int64) *MenuCreate {
 	_c.mutation.SetHidden(v)
 	return _c
 }
@@ -498,7 +498,7 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 		_node.Icon = value
 	}
 	if value, ok := _c.mutation.Hidden(); ok {
-		_spec.SetField(menu.FieldHidden, field.TypeString, value)
+		_spec.SetField(menu.FieldHidden, field.TypeInt64, value)
 		_node.Hidden = value
 	}
 	if value, ok := _c.mutation.Sort(); ok {

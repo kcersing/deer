@@ -31,7 +31,7 @@ func (Menu) Fields() []ent.Field {
 		//// meta
 		field.String("title").Comment("menu name | 菜单显示标题"),
 		field.String("icon").Comment("menu icon | 菜单图标"),
-		field.String("hidden").Comment("hidden "),
+		field.Int64("hidden").Comment("hidden "),
 		field.Int64("sort").Comment("sort"),
 		field.String("url").Comment("url"),
 		//field.Bool("hide_menu").Optional().Default(false).Comment("hide menu | 是否隐藏菜单"),

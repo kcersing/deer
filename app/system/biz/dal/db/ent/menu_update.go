@@ -369,16 +369,23 @@ func (_u *MenuUpdate) SetNillableIcon(v *string) *MenuUpdate {
 }
 
 // SetHidden sets the "hidden" field.
-func (_u *MenuUpdate) SetHidden(v string) *MenuUpdate {
+func (_u *MenuUpdate) SetHidden(v int64) *MenuUpdate {
+	_u.mutation.ResetHidden()
 	_u.mutation.SetHidden(v)
 	return _u
 }
 
 // SetNillableHidden sets the "hidden" field if the given value is not nil.
-func (_u *MenuUpdate) SetNillableHidden(v *string) *MenuUpdate {
+func (_u *MenuUpdate) SetNillableHidden(v *int64) *MenuUpdate {
 	if v != nil {
 		_u.SetHidden(*v)
 	}
+	return _u
+}
+
+// AddHidden adds value to the "hidden" field.
+func (_u *MenuUpdate) AddHidden(v int64) *MenuUpdate {
+	_u.mutation.AddHidden(v)
 	return _u
 }
 
@@ -650,7 +657,10 @@ func (_u *MenuUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
-		_spec.SetField(menu.FieldHidden, field.TypeString, value)
+		_spec.SetField(menu.FieldHidden, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedHidden(); ok {
+		_spec.AddField(menu.FieldHidden, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(menu.FieldSort, field.TypeInt64, value)
@@ -1140,16 +1150,23 @@ func (_u *MenuUpdateOne) SetNillableIcon(v *string) *MenuUpdateOne {
 }
 
 // SetHidden sets the "hidden" field.
-func (_u *MenuUpdateOne) SetHidden(v string) *MenuUpdateOne {
+func (_u *MenuUpdateOne) SetHidden(v int64) *MenuUpdateOne {
+	_u.mutation.ResetHidden()
 	_u.mutation.SetHidden(v)
 	return _u
 }
 
 // SetNillableHidden sets the "hidden" field if the given value is not nil.
-func (_u *MenuUpdateOne) SetNillableHidden(v *string) *MenuUpdateOne {
+func (_u *MenuUpdateOne) SetNillableHidden(v *int64) *MenuUpdateOne {
 	if v != nil {
 		_u.SetHidden(*v)
 	}
+	return _u
+}
+
+// AddHidden adds value to the "hidden" field.
+func (_u *MenuUpdateOne) AddHidden(v int64) *MenuUpdateOne {
+	_u.mutation.AddHidden(v)
 	return _u
 }
 
@@ -1451,7 +1468,10 @@ func (_u *MenuUpdateOne) sqlSave(ctx context.Context) (_node *Menu, err error) {
 		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Hidden(); ok {
-		_spec.SetField(menu.FieldHidden, field.TypeString, value)
+		_spec.SetField(menu.FieldHidden, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedHidden(); ok {
+		_spec.AddField(menu.FieldHidden, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(menu.FieldSort, field.TypeInt64, value)

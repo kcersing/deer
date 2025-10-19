@@ -20,7 +20,7 @@ func (s *ApiListService) Run(req *system.ApiListReq) (resp *system.ApiListResp, 
 	// Finish your business logic.
 	var (
 		predicates []predicate.API
-		ApiResp    []*system.Api
+		dataResp   []*system.Api
 	)
 	apis, err := db.Client.API.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
@@ -29,8 +29,8 @@ func (s *ApiListService) Run(req *system.ApiListReq) (resp *system.ApiListResp, 
 		return resp, err
 	}
 	for _, v := range apis {
-		ApiResp = append(ApiResp, convert.EntToApi(v))
+		dataResp = append(dataResp, convert.EntToApi(v))
 	}
-	resp.Data = ApiResp
+	resp.Data = dataResp
 	return
 }

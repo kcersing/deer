@@ -55,7 +55,7 @@ type Menu struct {
 	// menu icon | 菜单图标
 	Icon string `json:"icon,omitempty"`
 	// hidden
-	Hidden string `json:"hidden,omitempty"`
+	Hidden int64 `json:"hidden,omitempty"`
 	// sort
 	Sort int64 `json:"sort,omitempty"`
 	// url
@@ -115,9 +115,9 @@ func (*Menu) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case menu.FieldIgnore:
 			values[i] = new(sql.NullBool)
-		case menu.FieldID, menu.FieldDelete, menu.FieldCreatedID, menu.FieldStatus, menu.FieldParentID, menu.FieldOrderNo, menu.FieldDisabled, menu.FieldLevel, menu.FieldMenuType, menu.FieldSort:
+		case menu.FieldID, menu.FieldDelete, menu.FieldCreatedID, menu.FieldStatus, menu.FieldParentID, menu.FieldOrderNo, menu.FieldDisabled, menu.FieldLevel, menu.FieldMenuType, menu.FieldHidden, menu.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case menu.FieldPath, menu.FieldName, menu.FieldType, menu.FieldRedirect, menu.FieldComponent, menu.FieldTitle, menu.FieldIcon, menu.FieldHidden, menu.FieldURL:
+		case menu.FieldPath, menu.FieldName, menu.FieldType, menu.FieldRedirect, menu.FieldComponent, menu.FieldTitle, menu.FieldIcon, menu.FieldURL:
 			values[i] = new(sql.NullString)
 		case menu.FieldCreatedAt, menu.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -251,10 +251,10 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 				_m.Icon = value.String
 			}
 		case menu.FieldHidden:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field hidden", values[i])
 			} else if value.Valid {
-				_m.Hidden = value.String
+				_m.Hidden = value.Int64
 			}
 		case menu.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -374,7 +374,7 @@ func (_m *Menu) String() string {
 	builder.WriteString(_m.Icon)
 	builder.WriteString(", ")
 	builder.WriteString("hidden=")
-	builder.WriteString(_m.Hidden)
+	builder.WriteString(fmt.Sprintf("%v", _m.Hidden))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Sort))

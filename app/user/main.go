@@ -30,7 +30,7 @@ func init() {
 }
 
 var serviceName = conf.GetConf().Kitex.Service
-
+ 
 func main() {
 	_ = godotenv.Load()
 

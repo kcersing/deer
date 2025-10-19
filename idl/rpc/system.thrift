@@ -212,11 +212,11 @@ struct DicthtResp{
     255:optional base.BaseResp baseResp={}
 }
 struct DictListResp{
-    1:optional Dict data={}
+    1:optional list<Dict> data={}
     255:optional base.BaseResp baseResp={}
 }
 struct DicthtListResp{
-    1:optional Dictht data={}
+    1:optional list<Dictht> data={}
     255:optional base.BaseResp baseResp={}
 }
 
