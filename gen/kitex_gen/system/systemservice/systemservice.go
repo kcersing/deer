@@ -105,13 +105,6 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"LoginRole": kitex.NewMethodInfo(
-		loginRoleHandler,
-		newSystemServiceLoginRoleArgs,
-		newSystemServiceLoginRoleResult,
-		false,
-		kitex.WithStreamingMode(kitex.StreamingNone),
-	),
 	"GetRoleList": kitex.NewMethodInfo(
 		getRoleListHandler,
 		newSystemServiceGetRoleListArgs,
@@ -529,24 +522,6 @@ func newSystemServiceGetRoleArgs() interface{} {
 
 func newSystemServiceGetRoleResult() interface{} {
 	return system.NewSystemServiceGetRoleResult()
-}
-
-func loginRoleHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*system.SystemServiceLoginRoleArgs)
-	realResult := result.(*system.SystemServiceLoginRoleResult)
-	success, err := handler.(system.SystemService).LoginRole(ctx, realArg.Req)
-	if err != nil {
-		return err
-	}
-	realResult.Success = success
-	return nil
-}
-func newSystemServiceLoginRoleArgs() interface{} {
-	return system.NewSystemServiceLoginRoleArgs()
-}
-
-func newSystemServiceLoginRoleResult() interface{} {
-	return system.NewSystemServiceLoginRoleResult()
 }
 
 func getRoleListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -990,16 +965,6 @@ func (p *kClient) GetRole(ctx context.Context, req *base.IdReq) (r *system.RoleR
 	_args.Req = req
 	var _result system.SystemServiceGetRoleResult
 	if err = p.c.Call(ctx, "GetRole", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) LoginRole(ctx context.Context, req *base.CheckAccountReq) (r *system.RoleResp, err error) {
-	var _args system.SystemServiceLoginRoleArgs
-	_args.Req = req
-	var _result system.SystemServiceLoginRoleResult
-	if err = p.c.Call(ctx, "LoginRole", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

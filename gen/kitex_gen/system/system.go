@@ -3948,8 +3948,6 @@ type SystemService interface {
 
 	GetRole(ctx context.Context, req *base.IdReq) (r *RoleResp, err error)
 
-	LoginRole(ctx context.Context, req *base.CheckAccountReq) (r *RoleResp, err error)
-
 	GetRoleList(ctx context.Context, req *GetRoleListReq) (r *RoleListResp, err error)
 
 	UpdateRole(ctx context.Context, req *UpdateRoleReq) (r *RoleResp, err error)
@@ -4970,82 +4968,6 @@ func (p *SystemServiceGetRoleResult) String() string {
 }
 
 var fieldIDToName_SystemServiceGetRoleResult = map[int16]string{
-	0: "success",
-}
-
-type SystemServiceLoginRoleArgs struct {
-	Req *base.CheckAccountReq `thrift:"req,1" frugal:"1,default,base.CheckAccountReq" json:"req"`
-}
-
-func NewSystemServiceLoginRoleArgs() *SystemServiceLoginRoleArgs {
-	return &SystemServiceLoginRoleArgs{}
-}
-
-func (p *SystemServiceLoginRoleArgs) InitDefault() {
-}
-
-var SystemServiceLoginRoleArgs_Req_DEFAULT *base.CheckAccountReq
-
-func (p *SystemServiceLoginRoleArgs) GetReq() (v *base.CheckAccountReq) {
-	if !p.IsSetReq() {
-		return SystemServiceLoginRoleArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-func (p *SystemServiceLoginRoleArgs) SetReq(val *base.CheckAccountReq) {
-	p.Req = val
-}
-
-func (p *SystemServiceLoginRoleArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *SystemServiceLoginRoleArgs) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("SystemServiceLoginRoleArgs(%+v)", *p)
-}
-
-var fieldIDToName_SystemServiceLoginRoleArgs = map[int16]string{
-	1: "req",
-}
-
-type SystemServiceLoginRoleResult struct {
-	Success *RoleResp `thrift:"success,0,optional" frugal:"0,optional,RoleResp" json:"success,omitempty"`
-}
-
-func NewSystemServiceLoginRoleResult() *SystemServiceLoginRoleResult {
-	return &SystemServiceLoginRoleResult{}
-}
-
-func (p *SystemServiceLoginRoleResult) InitDefault() {
-}
-
-var SystemServiceLoginRoleResult_Success_DEFAULT *RoleResp
-
-func (p *SystemServiceLoginRoleResult) GetSuccess() (v *RoleResp) {
-	if !p.IsSetSuccess() {
-		return SystemServiceLoginRoleResult_Success_DEFAULT
-	}
-	return p.Success
-}
-func (p *SystemServiceLoginRoleResult) SetSuccess(x interface{}) {
-	p.Success = x.(*RoleResp)
-}
-
-func (p *SystemServiceLoginRoleResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *SystemServiceLoginRoleResult) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("SystemServiceLoginRoleResult(%+v)", *p)
-}
-
-var fieldIDToName_SystemServiceLoginRoleResult = map[int16]string{
 	0: "success",
 }
 

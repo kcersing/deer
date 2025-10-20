@@ -101,13 +101,6 @@ func (s *SystemServiceImpl) GetRole(ctx context.Context, req *base.IdReq) (resp 
 	return resp, err
 }
 
-// LoginRole implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) LoginRole(ctx context.Context, req *base.CheckAccountReq) (resp *system.RoleResp, err error) {
-	resp, err = service.NewLoginRoleService(ctx).Run(req)
-
-	return resp, err
-}
-
 // GetRoleList implements the SystemServiceImpl interface.
 func (s *SystemServiceImpl) GetRoleList(ctx context.Context, req *system.GetRoleListReq) (resp *system.RoleListResp, err error) {
 	resp, err = service.NewGetRoleListService(ctx).Run(req)

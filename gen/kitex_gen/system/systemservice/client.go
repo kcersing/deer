@@ -25,7 +25,6 @@ type Client interface {
 	MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
 	CreateRole(ctx context.Context, req *system.CreateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
 	GetRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
-	LoginRole(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
 	GetRoleList(ctx context.Context, req *system.GetRoleListReq, callOptions ...callopt.Option) (r *system.RoleListResp, err error)
 	UpdateRole(ctx context.Context, req *system.UpdateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
 	DeleteRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
@@ -137,11 +136,6 @@ func (p *kSystemServiceClient) CreateRole(ctx context.Context, req *system.Creat
 func (p *kSystemServiceClient) GetRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetRole(ctx, req)
-}
-
-func (p *kSystemServiceClient) LoginRole(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *system.RoleResp, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.LoginRole(ctx, req)
 }
 
 func (p *kSystemServiceClient) GetRoleList(ctx context.Context, req *system.GetRoleListReq, callOptions ...callopt.Option) (r *system.RoleListResp, err error) {

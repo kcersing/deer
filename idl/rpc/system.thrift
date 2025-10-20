@@ -273,7 +273,6 @@ service SystemService  {
 
     RoleResp CreateRole(1: CreateRoleReq req)
     RoleResp GetRole(1: base.IdReq req)
-    RoleResp LoginRole(1: base.CheckAccountReq req)
     RoleListResp GetRoleList(1: GetRoleListReq req)
     RoleResp UpdateRole(1: UpdateRoleReq req)
 
