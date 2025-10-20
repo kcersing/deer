@@ -70,10 +70,10 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"Menu": kitex.NewMethodInfo(
-		menuHandler,
-		newSystemServiceMenuArgs,
-		newSystemServiceMenuResult,
+	"GetMenu": kitex.NewMethodInfo(
+		getMenuHandler,
+		newSystemServiceGetMenuArgs,
+		newSystemServiceGetMenuResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -441,22 +441,22 @@ func newSystemServiceDeleteMenuResult() interface{} {
 	return system.NewSystemServiceDeleteMenuResult()
 }
 
-func menuHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*system.SystemServiceMenuArgs)
-	realResult := result.(*system.SystemServiceMenuResult)
-	success, err := handler.(system.SystemService).Menu(ctx, realArg.Req)
+func getMenuHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceGetMenuArgs)
+	realResult := result.(*system.SystemServiceGetMenuResult)
+	success, err := handler.(system.SystemService).GetMenu(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newSystemServiceMenuArgs() interface{} {
-	return system.NewSystemServiceMenuArgs()
+func newSystemServiceGetMenuArgs() interface{} {
+	return system.NewSystemServiceGetMenuArgs()
 }
 
-func newSystemServiceMenuResult() interface{} {
-	return system.NewSystemServiceMenuResult()
+func newSystemServiceGetMenuResult() interface{} {
+	return system.NewSystemServiceGetMenuResult()
 }
 
 func menuListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -945,11 +945,11 @@ func (p *kClient) DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.NilR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) Menu(ctx context.Context, req *base.IdReq) (r *system.MenuResp, err error) {
-	var _args system.SystemServiceMenuArgs
+func (p *kClient) GetMenu(ctx context.Context, req *base.IdReq) (r *system.MenuResp, err error) {
+	var _args system.SystemServiceGetMenuArgs
 	_args.Req = req
-	var _result system.SystemServiceMenuResult
-	if err = p.c.Call(ctx, "Menu", &_args, &_result); err != nil {
+	var _result system.SystemServiceGetMenuResult
+	if err = p.c.Call(ctx, "GetMenu", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -1055,7 +1055,7 @@ func (p *kClient) CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetRoleApi(ctx context.Context, req *base.IdReq) (r *system.MenuListResp, err error) {
+func (p *kClient) GetRoleApi(ctx context.Context, req *base.IdReq) (r *system.ApiListResp, err error) {
 	var _args system.SystemServiceGetRoleApiArgs
 	_args.Req = req
 	var _result system.SystemServiceGetRoleApiResult

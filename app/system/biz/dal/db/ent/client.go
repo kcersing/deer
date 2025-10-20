@@ -378,6 +378,22 @@ func (c *APIClient) GetX(ctx context.Context, id int64) *API {
 	return obj
 }
 
+// QueryRoles queries the roles edge of a API.
+func (c *APIClient) QueryRoles(_m *API) *RoleQuery {
+	query := (&RoleClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(api.Table, api.FieldID, id),
+			sqlgraph.To(role.Table, role.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, api.RolesTable, api.RolesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *APIClient) Hooks() []Hook {
 	return c.hooks.API
@@ -1265,6 +1281,22 @@ func (c *RoleClient) QueryMenus(_m *Role) *MenuQuery {
 			sqlgraph.From(role.Table, role.FieldID, id),
 			sqlgraph.To(menu.Table, menu.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, false, role.MenusTable, role.MenusPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAPI queries the api edge of a Role.
+func (c *RoleClient) QueryAPI(_m *Role) *APIQuery {
+	query := (&APIClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(role.Table, role.FieldID, id),
+			sqlgraph.To(api.Table, api.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, role.APITable, role.APIPrimaryKey...),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil

@@ -51,9 +51,11 @@ type Role struct {
 type RoleEdges struct {
 	// Menus holds the value of the menus edge.
 	Menus []*Menu `json:"menus,omitempty"`
+	// API holds the value of the api edge.
+	API []*API `json:"api,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [2]bool
 }
 
 // MenusOrErr returns the Menus value or an error if the edge
@@ -63,6 +65,15 @@ func (e RoleEdges) MenusOrErr() ([]*Menu, error) {
 		return e.Menus, nil
 	}
 	return nil, &NotLoadedError{edge: "menus"}
+}
+
+// APIOrErr returns the API value or an error if the edge
+// was not loaded in eager-loading.
+func (e RoleEdges) APIOrErr() ([]*API, error) {
+	if e.loadedTypes[1] {
+		return e.API, nil
+	}
+	return nil, &NotLoadedError{edge: "api"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -183,6 +194,11 @@ func (_m *Role) GetValue(name string) (ent.Value, error) {
 // QueryMenus queries the "menus" edge of the Role entity.
 func (_m *Role) QueryMenus() *MenuQuery {
 	return NewRoleClient(_m.config).QueryMenus(_m)
+}
+
+// QueryAPI queries the "api" edge of the Role entity.
+func (_m *Role) QueryAPI() *APIQuery {
+	return NewRoleClient(_m.config).QueryAPI(_m)
 }
 
 // Update returns a builder for updating this Role.

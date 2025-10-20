@@ -7,6 +7,7 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"math"
+	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/predicate"
 	"system/biz/dal/db/ent/role"
@@ -25,6 +26,7 @@ type RoleQuery struct {
 	inters     []Interceptor
 	predicates []predicate.Role
 	withMenus  *MenuQuery
+	withAPI    *APIQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -76,6 +78,28 @@ func (_q *RoleQuery) QueryMenus() *MenuQuery {
 			sqlgraph.From(role.Table, role.FieldID, selector),
 			sqlgraph.To(menu.Table, menu.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, false, role.MenusTable, role.MenusPrimaryKey...),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryAPI chains the current query on the "api" edge.
+func (_q *RoleQuery) QueryAPI() *APIQuery {
+	query := (&APIClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(role.Table, role.FieldID, selector),
+			sqlgraph.To(api.Table, api.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, role.APITable, role.APIPrimaryKey...),
 		)
 		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
@@ -276,6 +300,7 @@ func (_q *RoleQuery) Clone() *RoleQuery {
 		inters:     append([]Interceptor{}, _q.inters...),
 		predicates: append([]predicate.Role{}, _q.predicates...),
 		withMenus:  _q.withMenus.Clone(),
+		withAPI:    _q.withAPI.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
@@ -290,6 +315,17 @@ func (_q *RoleQuery) WithMenus(opts ...func(*MenuQuery)) *RoleQuery {
 		opt(query)
 	}
 	_q.withMenus = query
+	return _q
+}
+
+// WithAPI tells the query-builder to eager-load the nodes that are connected to
+// the "api" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *RoleQuery) WithAPI(opts ...func(*APIQuery)) *RoleQuery {
+	query := (&APIClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withAPI = query
 	return _q
 }
 
@@ -371,8 +407,9 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 	var (
 		nodes       = []*Role{}
 		_spec       = _q.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [2]bool{
 			_q.withMenus != nil,
+			_q.withAPI != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -397,6 +434,13 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 		if err := _q.loadMenus(ctx, query, nodes,
 			func(n *Role) { n.Edges.Menus = []*Menu{} },
 			func(n *Role, e *Menu) { n.Edges.Menus = append(n.Edges.Menus, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := _q.withAPI; query != nil {
+		if err := _q.loadAPI(ctx, query, nodes,
+			func(n *Role) { n.Edges.API = []*API{} },
+			func(n *Role, e *API) { n.Edges.API = append(n.Edges.API, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -457,6 +501,67 @@ func (_q *RoleQuery) loadMenus(ctx context.Context, query *MenuQuery, nodes []*R
 		nodes, ok := nids[n.ID]
 		if !ok {
 			return fmt.Errorf(`unexpected "menus" node returned %v`, n.ID)
+		}
+		for kn := range nodes {
+			assign(kn, n)
+		}
+	}
+	return nil
+}
+func (_q *RoleQuery) loadAPI(ctx context.Context, query *APIQuery, nodes []*Role, init func(*Role), assign func(*Role, *API)) error {
+	edgeIDs := make([]driver.Value, len(nodes))
+	byID := make(map[int64]*Role)
+	nids := make(map[int64]map[*Role]struct{})
+	for i, node := range nodes {
+		edgeIDs[i] = node.ID
+		byID[node.ID] = node
+		if init != nil {
+			init(node)
+		}
+	}
+	query.Where(func(s *sql.Selector) {
+		joinT := sql.Table(role.APITable)
+		s.Join(joinT).On(s.C(api.FieldID), joinT.C(role.APIPrimaryKey[1]))
+		s.Where(sql.InValues(joinT.C(role.APIPrimaryKey[0]), edgeIDs...))
+		columns := s.SelectedColumns()
+		s.Select(joinT.C(role.APIPrimaryKey[0]))
+		s.AppendSelect(columns...)
+		s.SetDistinct(false)
+	})
+	if err := query.prepareQuery(ctx); err != nil {
+		return err
+	}
+	qr := QuerierFunc(func(ctx context.Context, q Query) (Value, error) {
+		return query.sqlAll(ctx, func(_ context.Context, spec *sqlgraph.QuerySpec) {
+			assign := spec.Assign
+			values := spec.ScanValues
+			spec.ScanValues = func(columns []string) ([]any, error) {
+				values, err := values(columns[1:])
+				if err != nil {
+					return nil, err
+				}
+				return append([]any{new(sql.NullInt64)}, values...), nil
+			}
+			spec.Assign = func(columns []string, values []any) error {
+				outValue := values[0].(*sql.NullInt64).Int64
+				inValue := values[1].(*sql.NullInt64).Int64
+				if nids[inValue] == nil {
+					nids[inValue] = map[*Role]struct{}{byID[outValue]: {}}
+					return assign(columns[1:], values[1:])
+				}
+				nids[inValue][byID[outValue]] = struct{}{}
+				return nil
+			}
+		})
+	})
+	neighbors, err := withInterceptors[[]*API](ctx, query, qr, query.inters)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected "api" node returned %v`, n.ID)
 		}
 		for kn := range nodes {
 			assign(kn, n)

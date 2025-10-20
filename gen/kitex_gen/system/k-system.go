@@ -8384,7 +8384,7 @@ func (p *DictListResp) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
@@ -8431,11 +8431,24 @@ SkipFieldError:
 
 func (p *DictListResp) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewDict()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
 		return offset, err
-	} else {
-		offset += l
+	}
+	_field := make([]*Dict, 0, size)
+	values := make([]Dict, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
 	}
 	p.Data = _field
 	return offset, nil
@@ -8480,8 +8493,15 @@ func (p *DictListResp) BLength() int {
 func (p *DictListResp) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetData() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
-		offset += p.Data.FastWriteNocopy(buf[offset:], w)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 1)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Data {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -8499,7 +8519,11 @@ func (p *DictListResp) field1Length() int {
 	l := 0
 	if p.IsSetData() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Data.BLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Data {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }
@@ -8531,7 +8555,7 @@ func (p *DicthtListResp) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
@@ -8578,11 +8602,24 @@ SkipFieldError:
 
 func (p *DicthtListResp) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewDictht()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
 		return offset, err
-	} else {
-		offset += l
+	}
+	_field := make([]*Dictht, 0, size)
+	values := make([]Dictht, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
 	}
 	p.Data = _field
 	return offset, nil
@@ -8627,8 +8664,15 @@ func (p *DicthtListResp) BLength() int {
 func (p *DicthtListResp) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetData() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
-		offset += p.Data.FastWriteNocopy(buf[offset:], w)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 1)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Data {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -8646,7 +8690,11 @@ func (p *DicthtListResp) field1Length() int {
 	l := 0
 	if p.IsSetData() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Data.BLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Data {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }
@@ -9894,7 +9942,7 @@ func (p *LogListResp) FastRead(buf []byte) (int, error) {
 		}
 		switch fieldId {
 		case 1:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				l, err = p.FastReadField1(buf[offset:])
 				offset += l
 				if err != nil {
@@ -9941,11 +9989,24 @@ SkipFieldError:
 
 func (p *LogListResp) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewLog()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
 		return offset, err
-	} else {
-		offset += l
+	}
+	_field := make([]*Log, 0, size)
+	values := make([]Log, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
 	}
 	p.Data = _field
 	return offset, nil
@@ -9990,8 +10051,15 @@ func (p *LogListResp) BLength() int {
 func (p *LogListResp) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetData() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
-		offset += p.Data.FastWriteNocopy(buf[offset:], w)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 1)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Data {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -10009,7 +10077,11 @@ func (p *LogListResp) field1Length() int {
 	l := 0
 	if p.IsSetData() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Data.BLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Data {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }
@@ -11607,7 +11679,7 @@ func (p *SystemServiceDeleteMenuResult) field0Length() int {
 	return l
 }
 
-func (p *SystemServiceMenuArgs) FastRead(buf []byte) (int, error) {
+func (p *SystemServiceGetMenuArgs) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -11651,12 +11723,12 @@ func (p *SystemServiceMenuArgs) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SystemServiceMenuArgs[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SystemServiceGetMenuArgs[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
-func (p *SystemServiceMenuArgs) FastReadField1(buf []byte) (int, error) {
+func (p *SystemServiceGetMenuArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 	_field := base.NewIdReq()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
@@ -11668,11 +11740,11 @@ func (p *SystemServiceMenuArgs) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *SystemServiceMenuArgs) FastWrite(buf []byte) int {
+func (p *SystemServiceGetMenuArgs) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *SystemServiceMenuArgs) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *SystemServiceGetMenuArgs) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -11681,7 +11753,7 @@ func (p *SystemServiceMenuArgs) FastWriteNocopy(buf []byte, w thrift.NocopyWrite
 	return offset
 }
 
-func (p *SystemServiceMenuArgs) BLength() int {
+func (p *SystemServiceGetMenuArgs) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -11690,21 +11762,21 @@ func (p *SystemServiceMenuArgs) BLength() int {
 	return l
 }
 
-func (p *SystemServiceMenuArgs) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *SystemServiceGetMenuArgs) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
 	offset += p.Req.FastWriteNocopy(buf[offset:], w)
 	return offset
 }
 
-func (p *SystemServiceMenuArgs) field1Length() int {
+func (p *SystemServiceGetMenuArgs) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += p.Req.BLength()
 	return l
 }
 
-func (p *SystemServiceMenuResult) FastRead(buf []byte) (int, error) {
+func (p *SystemServiceGetMenuResult) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -11748,12 +11820,12 @@ func (p *SystemServiceMenuResult) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SystemServiceMenuResult[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_SystemServiceGetMenuResult[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
-func (p *SystemServiceMenuResult) FastReadField0(buf []byte) (int, error) {
+func (p *SystemServiceGetMenuResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 	_field := NewMenuResp()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
@@ -11765,11 +11837,11 @@ func (p *SystemServiceMenuResult) FastReadField0(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *SystemServiceMenuResult) FastWrite(buf []byte) int {
+func (p *SystemServiceGetMenuResult) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *SystemServiceMenuResult) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *SystemServiceGetMenuResult) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField0(buf[offset:], w)
@@ -11778,7 +11850,7 @@ func (p *SystemServiceMenuResult) FastWriteNocopy(buf []byte, w thrift.NocopyWri
 	return offset
 }
 
-func (p *SystemServiceMenuResult) BLength() int {
+func (p *SystemServiceGetMenuResult) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field0Length()
@@ -11787,7 +11859,7 @@ func (p *SystemServiceMenuResult) BLength() int {
 	return l
 }
 
-func (p *SystemServiceMenuResult) fastWriteField0(buf []byte, w thrift.NocopyWriter) int {
+func (p *SystemServiceGetMenuResult) fastWriteField0(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetSuccess() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 0)
@@ -11796,7 +11868,7 @@ func (p *SystemServiceMenuResult) fastWriteField0(buf []byte, w thrift.NocopyWri
 	return offset
 }
 
-func (p *SystemServiceMenuResult) field0Length() int {
+func (p *SystemServiceGetMenuResult) field0Length() int {
 	l := 0
 	if p.IsSetSuccess() {
 		l += thrift.Binary.FieldBeginLength()
@@ -13933,7 +14005,7 @@ SkipFieldError:
 
 func (p *SystemServiceGetRoleApiResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := NewMenuListResp()
+	_field := NewApiListResp()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -16225,11 +16297,11 @@ func (p *SystemServiceDeleteMenuResult) GetResult() interface{} {
 	return p.Success
 }
 
-func (p *SystemServiceMenuArgs) GetFirstArgument() interface{} {
+func (p *SystemServiceGetMenuArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-func (p *SystemServiceMenuResult) GetResult() interface{} {
+func (p *SystemServiceGetMenuResult) GetResult() interface{} {
 	return p.Success
 }
 

@@ -35,8 +35,31 @@ type API struct {
 	// API group | API 分组
 	APIGroup string `json:"api_group,omitempty"`
 	// HTTP method | HTTP 请求类型
-	Method       string `json:"method,omitempty"`
+	Method string `json:"method,omitempty"`
+	// disable status | 是否停用
+	Disabled int64 `json:"disabled,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the APIQuery when eager-loading is set.
+	Edges        APIEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// APIEdges holds the relations/edges for other nodes in the graph.
+type APIEdges struct {
+	// Roles holds the value of the roles edge.
+	Roles []*Role `json:"roles,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// RolesOrErr returns the Roles value or an error if the edge
+// was not loaded in eager-loading.
+func (e APIEdges) RolesOrErr() ([]*Role, error) {
+	if e.loadedTypes[0] {
+		return e.Roles, nil
+	}
+	return nil, &NotLoadedError{edge: "roles"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -44,7 +67,7 @@ func (*API) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case api.FieldID, api.FieldDelete, api.FieldCreatedID:
+		case api.FieldID, api.FieldDelete, api.FieldCreatedID, api.FieldDisabled:
 			values[i] = new(sql.NullInt64)
 		case api.FieldPath, api.FieldTitle, api.FieldDescription, api.FieldAPIGroup, api.FieldMethod:
 			values[i] = new(sql.NullString)
@@ -125,6 +148,12 @@ func (_m *API) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Method = value.String
 			}
+		case api.FieldDisabled:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field disabled", values[i])
+			} else if value.Valid {
+				_m.Disabled = value.Int64
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -136,6 +165,11 @@ func (_m *API) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *API) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QueryRoles queries the "roles" edge of the API entity.
+func (_m *API) QueryRoles() *RoleQuery {
+	return NewAPIClient(_m.config).QueryRoles(_m)
 }
 
 // Update returns a builder for updating this API.
@@ -187,6 +221,9 @@ func (_m *API) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("method=")
 	builder.WriteString(_m.Method)
+	builder.WriteString(", ")
+	builder.WriteString("disabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Disabled))
 	builder.WriteByte(')')
 	return builder.String()
 }

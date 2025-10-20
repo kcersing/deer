@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -97,6 +98,11 @@ func APIGroup(v string) predicate.API {
 // Method applies equality check predicate on the "method" field. It's identical to MethodEQ.
 func Method(v string) predicate.API {
 	return predicate.API(sql.FieldEQ(FieldMethod, v))
+}
+
+// Disabled applies equality check predicate on the "disabled" field. It's identical to DisabledEQ.
+func Disabled(v int64) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldDisabled, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -622,6 +628,79 @@ func MethodEqualFold(v string) predicate.API {
 // MethodContainsFold applies the ContainsFold predicate on the "method" field.
 func MethodContainsFold(v string) predicate.API {
 	return predicate.API(sql.FieldContainsFold(FieldMethod, v))
+}
+
+// DisabledEQ applies the EQ predicate on the "disabled" field.
+func DisabledEQ(v int64) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldDisabled, v))
+}
+
+// DisabledNEQ applies the NEQ predicate on the "disabled" field.
+func DisabledNEQ(v int64) predicate.API {
+	return predicate.API(sql.FieldNEQ(FieldDisabled, v))
+}
+
+// DisabledIn applies the In predicate on the "disabled" field.
+func DisabledIn(vs ...int64) predicate.API {
+	return predicate.API(sql.FieldIn(FieldDisabled, vs...))
+}
+
+// DisabledNotIn applies the NotIn predicate on the "disabled" field.
+func DisabledNotIn(vs ...int64) predicate.API {
+	return predicate.API(sql.FieldNotIn(FieldDisabled, vs...))
+}
+
+// DisabledGT applies the GT predicate on the "disabled" field.
+func DisabledGT(v int64) predicate.API {
+	return predicate.API(sql.FieldGT(FieldDisabled, v))
+}
+
+// DisabledGTE applies the GTE predicate on the "disabled" field.
+func DisabledGTE(v int64) predicate.API {
+	return predicate.API(sql.FieldGTE(FieldDisabled, v))
+}
+
+// DisabledLT applies the LT predicate on the "disabled" field.
+func DisabledLT(v int64) predicate.API {
+	return predicate.API(sql.FieldLT(FieldDisabled, v))
+}
+
+// DisabledLTE applies the LTE predicate on the "disabled" field.
+func DisabledLTE(v int64) predicate.API {
+	return predicate.API(sql.FieldLTE(FieldDisabled, v))
+}
+
+// DisabledIsNil applies the IsNil predicate on the "disabled" field.
+func DisabledIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldDisabled))
+}
+
+// DisabledNotNil applies the NotNil predicate on the "disabled" field.
+func DisabledNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldDisabled))
+}
+
+// HasRoles applies the HasEdge predicate on the "roles" edge.
+func HasRoles() predicate.API {
+	return predicate.API(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, RolesTable, RolesPrimaryKey...),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasRolesWith applies the HasEdge predicate on the "roles" edge with a given conditions (other predicates).
+func HasRolesWith(preds ...predicate.Role) predicate.API {
+	return predicate.API(func(s *sql.Selector) {
+		step := newRolesStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

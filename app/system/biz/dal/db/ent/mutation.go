@@ -60,7 +60,12 @@ type APIMutation struct {
 	description   *string
 	api_group     *string
 	method        *string
+	disabled      *int64
+	adddisabled   *int64
 	clearedFields map[string]struct{}
+	roles         map[int64]struct{}
+	removedroles  map[int64]struct{}
+	clearedroles  bool
 	done          bool
 	oldValue      func(context.Context) (*API, error)
 	predicates    []predicate.API
@@ -588,6 +593,130 @@ func (m *APIMutation) ResetMethod() {
 	m.method = nil
 }
 
+// SetDisabled sets the "disabled" field.
+func (m *APIMutation) SetDisabled(i int64) {
+	m.disabled = &i
+	m.adddisabled = nil
+}
+
+// Disabled returns the value of the "disabled" field in the mutation.
+func (m *APIMutation) Disabled() (r int64, exists bool) {
+	v := m.disabled
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDisabled returns the old "disabled" field's value of the API entity.
+// If the API object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *APIMutation) OldDisabled(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDisabled is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDisabled requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDisabled: %w", err)
+	}
+	return oldValue.Disabled, nil
+}
+
+// AddDisabled adds i to the "disabled" field.
+func (m *APIMutation) AddDisabled(i int64) {
+	if m.adddisabled != nil {
+		*m.adddisabled += i
+	} else {
+		m.adddisabled = &i
+	}
+}
+
+// AddedDisabled returns the value that was added to the "disabled" field in this mutation.
+func (m *APIMutation) AddedDisabled() (r int64, exists bool) {
+	v := m.adddisabled
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearDisabled clears the value of the "disabled" field.
+func (m *APIMutation) ClearDisabled() {
+	m.disabled = nil
+	m.adddisabled = nil
+	m.clearedFields[api.FieldDisabled] = struct{}{}
+}
+
+// DisabledCleared returns if the "disabled" field was cleared in this mutation.
+func (m *APIMutation) DisabledCleared() bool {
+	_, ok := m.clearedFields[api.FieldDisabled]
+	return ok
+}
+
+// ResetDisabled resets all changes to the "disabled" field.
+func (m *APIMutation) ResetDisabled() {
+	m.disabled = nil
+	m.adddisabled = nil
+	delete(m.clearedFields, api.FieldDisabled)
+}
+
+// AddRoleIDs adds the "roles" edge to the Role entity by ids.
+func (m *APIMutation) AddRoleIDs(ids ...int64) {
+	if m.roles == nil {
+		m.roles = make(map[int64]struct{})
+	}
+	for i := range ids {
+		m.roles[ids[i]] = struct{}{}
+	}
+}
+
+// ClearRoles clears the "roles" edge to the Role entity.
+func (m *APIMutation) ClearRoles() {
+	m.clearedroles = true
+}
+
+// RolesCleared reports if the "roles" edge to the Role entity was cleared.
+func (m *APIMutation) RolesCleared() bool {
+	return m.clearedroles
+}
+
+// RemoveRoleIDs removes the "roles" edge to the Role entity by IDs.
+func (m *APIMutation) RemoveRoleIDs(ids ...int64) {
+	if m.removedroles == nil {
+		m.removedroles = make(map[int64]struct{})
+	}
+	for i := range ids {
+		delete(m.roles, ids[i])
+		m.removedroles[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedRoles returns the removed IDs of the "roles" edge to the Role entity.
+func (m *APIMutation) RemovedRolesIDs() (ids []int64) {
+	for id := range m.removedroles {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// RolesIDs returns the "roles" edge IDs in the mutation.
+func (m *APIMutation) RolesIDs() (ids []int64) {
+	for id := range m.roles {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetRoles resets all changes to the "roles" edge.
+func (m *APIMutation) ResetRoles() {
+	m.roles = nil
+	m.clearedroles = false
+	m.removedroles = nil
+}
+
 // Where appends a list predicates to the APIMutation builder.
 func (m *APIMutation) Where(ps ...predicate.API) {
 	m.predicates = append(m.predicates, ps...)
@@ -622,7 +751,7 @@ func (m *APIMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *APIMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.created_at != nil {
 		fields = append(fields, api.FieldCreatedAt)
 	}
@@ -650,6 +779,9 @@ func (m *APIMutation) Fields() []string {
 	if m.method != nil {
 		fields = append(fields, api.FieldMethod)
 	}
+	if m.disabled != nil {
+		fields = append(fields, api.FieldDisabled)
+	}
 	return fields
 }
 
@@ -676,6 +808,8 @@ func (m *APIMutation) Field(name string) (ent.Value, bool) {
 		return m.APIGroup()
 	case api.FieldMethod:
 		return m.Method()
+	case api.FieldDisabled:
+		return m.Disabled()
 	}
 	return nil, false
 }
@@ -703,6 +837,8 @@ func (m *APIMutation) OldField(ctx context.Context, name string) (ent.Value, err
 		return m.OldAPIGroup(ctx)
 	case api.FieldMethod:
 		return m.OldMethod(ctx)
+	case api.FieldDisabled:
+		return m.OldDisabled(ctx)
 	}
 	return nil, fmt.Errorf("unknown API field %s", name)
 }
@@ -775,6 +911,13 @@ func (m *APIMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetMethod(v)
 		return nil
+	case api.FieldDisabled:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDisabled(v)
+		return nil
 	}
 	return fmt.Errorf("unknown API field %s", name)
 }
@@ -789,6 +932,9 @@ func (m *APIMutation) AddedFields() []string {
 	if m.addcreated_id != nil {
 		fields = append(fields, api.FieldCreatedID)
 	}
+	if m.adddisabled != nil {
+		fields = append(fields, api.FieldDisabled)
+	}
 	return fields
 }
 
@@ -801,6 +947,8 @@ func (m *APIMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDelete()
 	case api.FieldCreatedID:
 		return m.AddedCreatedID()
+	case api.FieldDisabled:
+		return m.AddedDisabled()
 	}
 	return nil, false
 }
@@ -824,6 +972,13 @@ func (m *APIMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddCreatedID(v)
 		return nil
+	case api.FieldDisabled:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDisabled(v)
+		return nil
 	}
 	return fmt.Errorf("unknown API numeric field %s", name)
 }
@@ -843,6 +998,9 @@ func (m *APIMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(api.FieldCreatedID) {
 		fields = append(fields, api.FieldCreatedID)
+	}
+	if m.FieldCleared(api.FieldDisabled) {
+		fields = append(fields, api.FieldDisabled)
 	}
 	return fields
 }
@@ -869,6 +1027,9 @@ func (m *APIMutation) ClearField(name string) error {
 		return nil
 	case api.FieldCreatedID:
 		m.ClearCreatedID()
+		return nil
+	case api.FieldDisabled:
+		m.ClearDisabled()
 		return nil
 	}
 	return fmt.Errorf("unknown API nullable field %s", name)
@@ -905,55 +1066,94 @@ func (m *APIMutation) ResetField(name string) error {
 	case api.FieldMethod:
 		m.ResetMethod()
 		return nil
+	case api.FieldDisabled:
+		m.ResetDisabled()
+		return nil
 	}
 	return fmt.Errorf("unknown API field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *APIMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.roles != nil {
+		edges = append(edges, api.EdgeRoles)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *APIMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case api.EdgeRoles:
+		ids := make([]ent.Value, 0, len(m.roles))
+		for id := range m.roles {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *APIMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.removedroles != nil {
+		edges = append(edges, api.EdgeRoles)
+	}
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
 func (m *APIMutation) RemovedIDs(name string) []ent.Value {
+	switch name {
+	case api.EdgeRoles:
+		ids := make([]ent.Value, 0, len(m.removedroles))
+		for id := range m.removedroles {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *APIMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.clearedroles {
+		edges = append(edges, api.EdgeRoles)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *APIMutation) EdgeCleared(name string) bool {
+	switch name {
+	case api.EdgeRoles:
+		return m.clearedroles
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *APIMutation) ClearEdge(name string) error {
+	switch name {
+	}
 	return fmt.Errorf("unknown API unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *APIMutation) ResetEdge(name string) error {
+	switch name {
+	case api.EdgeRoles:
+		m.ResetRoles()
+		return nil
+	}
 	return fmt.Errorf("unknown API edge %s", name)
 }
 
@@ -7478,6 +7678,9 @@ type RoleMutation struct {
 	menus          map[int64]struct{}
 	removedmenus   map[int64]struct{}
 	clearedmenus   bool
+	api            map[int64]struct{}
+	removedapi     map[int64]struct{}
+	clearedapi     bool
 	done           bool
 	oldValue       func(context.Context) (*Role, error)
 	predicates     []predicate.Role
@@ -8200,6 +8403,60 @@ func (m *RoleMutation) ResetMenus() {
 	m.removedmenus = nil
 }
 
+// AddAPIIDs adds the "api" edge to the API entity by ids.
+func (m *RoleMutation) AddAPIIDs(ids ...int64) {
+	if m.api == nil {
+		m.api = make(map[int64]struct{})
+	}
+	for i := range ids {
+		m.api[ids[i]] = struct{}{}
+	}
+}
+
+// ClearAPI clears the "api" edge to the API entity.
+func (m *RoleMutation) ClearAPI() {
+	m.clearedapi = true
+}
+
+// APICleared reports if the "api" edge to the API entity was cleared.
+func (m *RoleMutation) APICleared() bool {
+	return m.clearedapi
+}
+
+// RemoveAPIIDs removes the "api" edge to the API entity by IDs.
+func (m *RoleMutation) RemoveAPIIDs(ids ...int64) {
+	if m.removedapi == nil {
+		m.removedapi = make(map[int64]struct{})
+	}
+	for i := range ids {
+		delete(m.api, ids[i])
+		m.removedapi[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedAPI returns the removed IDs of the "api" edge to the API entity.
+func (m *RoleMutation) RemovedAPIIDs() (ids []int64) {
+	for id := range m.removedapi {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// APIIDs returns the "api" edge IDs in the mutation.
+func (m *RoleMutation) APIIDs() (ids []int64) {
+	for id := range m.api {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetAPI resets all changes to the "api" edge.
+func (m *RoleMutation) ResetAPI() {
+	m.api = nil
+	m.clearedapi = false
+	m.removedapi = nil
+}
+
 // Where appends a list predicates to the RoleMutation builder.
 func (m *RoleMutation) Where(ps ...predicate.Role) {
 	m.predicates = append(m.predicates, ps...)
@@ -8587,9 +8844,12 @@ func (m *RoleMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *RoleMutation) AddedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.menus != nil {
 		edges = append(edges, role.EdgeMenus)
+	}
+	if m.api != nil {
+		edges = append(edges, role.EdgeAPI)
 	}
 	return edges
 }
@@ -8604,15 +8864,24 @@ func (m *RoleMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case role.EdgeAPI:
+		ids := make([]ent.Value, 0, len(m.api))
+		for id := range m.api {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *RoleMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.removedmenus != nil {
 		edges = append(edges, role.EdgeMenus)
+	}
+	if m.removedapi != nil {
+		edges = append(edges, role.EdgeAPI)
 	}
 	return edges
 }
@@ -8627,15 +8896,24 @@ func (m *RoleMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case role.EdgeAPI:
+		ids := make([]ent.Value, 0, len(m.removedapi))
+		for id := range m.removedapi {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *RoleMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 2)
 	if m.clearedmenus {
 		edges = append(edges, role.EdgeMenus)
+	}
+	if m.clearedapi {
+		edges = append(edges, role.EdgeAPI)
 	}
 	return edges
 }
@@ -8646,6 +8924,8 @@ func (m *RoleMutation) EdgeCleared(name string) bool {
 	switch name {
 	case role.EdgeMenus:
 		return m.clearedmenus
+	case role.EdgeAPI:
+		return m.clearedapi
 	}
 	return false
 }
@@ -8664,6 +8944,9 @@ func (m *RoleMutation) ResetEdge(name string) error {
 	switch name {
 	case role.EdgeMenus:
 		m.ResetMenus()
+		return nil
+	case role.EdgeAPI:
+		m.ResetAPI()
 		return nil
 	}
 	return fmt.Errorf("unknown Role edge %s", name)

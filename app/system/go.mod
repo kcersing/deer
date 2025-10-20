@@ -29,6 +29,7 @@ require (
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.10.9
 	github.com/minio/minio-go/v7 v7.0.95
+	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.14.0
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.21
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -127,7 +128,6 @@ require (
 	github.com/nyaruka/phonenumbers v1.0.55 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/philhofer/fwd v1.2.0 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect

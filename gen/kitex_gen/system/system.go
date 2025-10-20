@@ -3238,25 +3238,25 @@ var fieldIDToName_DicthtResp = map[int16]string{
 }
 
 type DictListResp struct {
-	Data     *Dict          `thrift:"data,1,optional" frugal:"1,optional,Dict" json:"data,omitempty"`
+	Data     []*Dict        `thrift:"data,1,optional" frugal:"1,optional,list<Dict>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDictListResp() *DictListResp {
 	return &DictListResp{
-		Data:     &Dict{},
+		Data:     []*Dict{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DictListResp) InitDefault() {
-	p.Data = &Dict{}
+	p.Data = []*Dict{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DictListResp_Data_DEFAULT *Dict = &Dict{}
+var DictListResp_Data_DEFAULT []*Dict = []*Dict{}
 
-func (p *DictListResp) GetData() (v *Dict) {
+func (p *DictListResp) GetData() (v []*Dict) {
 	if !p.IsSetData() {
 		return DictListResp_Data_DEFAULT
 	}
@@ -3271,7 +3271,7 @@ func (p *DictListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DictListResp) SetData(val *Dict) {
+func (p *DictListResp) SetData(val []*Dict) {
 	p.Data = val
 }
 func (p *DictListResp) SetBaseResp(val *base.BaseResp) {
@@ -3299,25 +3299,25 @@ var fieldIDToName_DictListResp = map[int16]string{
 }
 
 type DicthtListResp struct {
-	Data     *Dictht        `thrift:"data,1,optional" frugal:"1,optional,Dictht" json:"data,omitempty"`
+	Data     []*Dictht      `thrift:"data,1,optional" frugal:"1,optional,list<Dictht>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDicthtListResp() *DicthtListResp {
 	return &DicthtListResp{
-		Data:     &Dictht{},
+		Data:     []*Dictht{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DicthtListResp) InitDefault() {
-	p.Data = &Dictht{}
+	p.Data = []*Dictht{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DicthtListResp_Data_DEFAULT *Dictht = &Dictht{}
+var DicthtListResp_Data_DEFAULT []*Dictht = []*Dictht{}
 
-func (p *DicthtListResp) GetData() (v *Dictht) {
+func (p *DicthtListResp) GetData() (v []*Dictht) {
 	if !p.IsSetData() {
 		return DicthtListResp_Data_DEFAULT
 	}
@@ -3332,7 +3332,7 @@ func (p *DicthtListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DicthtListResp) SetData(val *Dictht) {
+func (p *DicthtListResp) SetData(val []*Dictht) {
 	p.Data = val
 }
 func (p *DicthtListResp) SetBaseResp(val *base.BaseResp) {
@@ -3861,25 +3861,25 @@ func (p *DeleteLog) String() string {
 var fieldIDToName_DeleteLog = map[int16]string{}
 
 type LogListResp struct {
-	Data     *Log           `thrift:"data,1,optional" frugal:"1,optional,Log" json:"data,omitempty"`
+	Data     []*Log         `thrift:"data,1,optional" frugal:"1,optional,list<Log>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewLogListResp() *LogListResp {
 	return &LogListResp{
-		Data:     &Log{},
+		Data:     []*Log{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *LogListResp) InitDefault() {
-	p.Data = &Log{}
+	p.Data = []*Log{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var LogListResp_Data_DEFAULT *Log = &Log{}
+var LogListResp_Data_DEFAULT []*Log = []*Log{}
 
-func (p *LogListResp) GetData() (v *Log) {
+func (p *LogListResp) GetData() (v []*Log) {
 	if !p.IsSetData() {
 		return LogListResp_Data_DEFAULT
 	}
@@ -3894,7 +3894,7 @@ func (p *LogListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *LogListResp) SetData(val *Log) {
+func (p *LogListResp) SetData(val []*Log) {
 	p.Data = val
 }
 func (p *LogListResp) SetBaseResp(val *base.BaseResp) {
@@ -3938,7 +3938,7 @@ type SystemService interface {
 
 	DeleteMenu(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
-	Menu(ctx context.Context, req *base.IdReq) (r *MenuResp, err error)
+	GetMenu(ctx context.Context, req *base.IdReq) (r *MenuResp, err error)
 
 	MenuList(ctx context.Context, req *MenuListReq) (r *MenuListResp, err error)
 
@@ -3960,7 +3960,7 @@ type SystemService interface {
 
 	CreateRoleApi(ctx context.Context, req *CreateMenuAuthReq) (r *base.NilResponse, err error)
 
-	GetRoleApi(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
+	GetRoleApi(ctx context.Context, req *base.IdReq) (r *ApiListResp, err error)
 
 	GetRoleMenu(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
 
@@ -4593,79 +4593,79 @@ var fieldIDToName_SystemServiceDeleteMenuResult = map[int16]string{
 	0: "success",
 }
 
-type SystemServiceMenuArgs struct {
+type SystemServiceGetMenuArgs struct {
 	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
 }
 
-func NewSystemServiceMenuArgs() *SystemServiceMenuArgs {
-	return &SystemServiceMenuArgs{}
+func NewSystemServiceGetMenuArgs() *SystemServiceGetMenuArgs {
+	return &SystemServiceGetMenuArgs{}
 }
 
-func (p *SystemServiceMenuArgs) InitDefault() {
+func (p *SystemServiceGetMenuArgs) InitDefault() {
 }
 
-var SystemServiceMenuArgs_Req_DEFAULT *base.IdReq
+var SystemServiceGetMenuArgs_Req_DEFAULT *base.IdReq
 
-func (p *SystemServiceMenuArgs) GetReq() (v *base.IdReq) {
+func (p *SystemServiceGetMenuArgs) GetReq() (v *base.IdReq) {
 	if !p.IsSetReq() {
-		return SystemServiceMenuArgs_Req_DEFAULT
+		return SystemServiceGetMenuArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceMenuArgs) SetReq(val *base.IdReq) {
+func (p *SystemServiceGetMenuArgs) SetReq(val *base.IdReq) {
 	p.Req = val
 }
 
-func (p *SystemServiceMenuArgs) IsSetReq() bool {
+func (p *SystemServiceGetMenuArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *SystemServiceMenuArgs) String() string {
+func (p *SystemServiceGetMenuArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SystemServiceMenuArgs(%+v)", *p)
+	return fmt.Sprintf("SystemServiceGetMenuArgs(%+v)", *p)
 }
 
-var fieldIDToName_SystemServiceMenuArgs = map[int16]string{
+var fieldIDToName_SystemServiceGetMenuArgs = map[int16]string{
 	1: "req",
 }
 
-type SystemServiceMenuResult struct {
+type SystemServiceGetMenuResult struct {
 	Success *MenuResp `thrift:"success,0,optional" frugal:"0,optional,MenuResp" json:"success,omitempty"`
 }
 
-func NewSystemServiceMenuResult() *SystemServiceMenuResult {
-	return &SystemServiceMenuResult{}
+func NewSystemServiceGetMenuResult() *SystemServiceGetMenuResult {
+	return &SystemServiceGetMenuResult{}
 }
 
-func (p *SystemServiceMenuResult) InitDefault() {
+func (p *SystemServiceGetMenuResult) InitDefault() {
 }
 
-var SystemServiceMenuResult_Success_DEFAULT *MenuResp
+var SystemServiceGetMenuResult_Success_DEFAULT *MenuResp
 
-func (p *SystemServiceMenuResult) GetSuccess() (v *MenuResp) {
+func (p *SystemServiceGetMenuResult) GetSuccess() (v *MenuResp) {
 	if !p.IsSetSuccess() {
-		return SystemServiceMenuResult_Success_DEFAULT
+		return SystemServiceGetMenuResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *SystemServiceMenuResult) SetSuccess(x interface{}) {
+func (p *SystemServiceGetMenuResult) SetSuccess(x interface{}) {
 	p.Success = x.(*MenuResp)
 }
 
-func (p *SystemServiceMenuResult) IsSetSuccess() bool {
+func (p *SystemServiceGetMenuResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *SystemServiceMenuResult) String() string {
+func (p *SystemServiceGetMenuResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SystemServiceMenuResult(%+v)", *p)
+	return fmt.Sprintf("SystemServiceGetMenuResult(%+v)", *p)
 }
 
-var fieldIDToName_SystemServiceMenuResult = map[int16]string{
+var fieldIDToName_SystemServiceGetMenuResult = map[int16]string{
 	0: "success",
 }
 
@@ -5468,7 +5468,7 @@ var fieldIDToName_SystemServiceGetRoleApiArgs = map[int16]string{
 }
 
 type SystemServiceGetRoleApiResult struct {
-	Success *MenuListResp `thrift:"success,0,optional" frugal:"0,optional,MenuListResp" json:"success,omitempty"`
+	Success *ApiListResp `thrift:"success,0,optional" frugal:"0,optional,ApiListResp" json:"success,omitempty"`
 }
 
 func NewSystemServiceGetRoleApiResult() *SystemServiceGetRoleApiResult {
@@ -5478,16 +5478,16 @@ func NewSystemServiceGetRoleApiResult() *SystemServiceGetRoleApiResult {
 func (p *SystemServiceGetRoleApiResult) InitDefault() {
 }
 
-var SystemServiceGetRoleApiResult_Success_DEFAULT *MenuListResp
+var SystemServiceGetRoleApiResult_Success_DEFAULT *ApiListResp
 
-func (p *SystemServiceGetRoleApiResult) GetSuccess() (v *MenuListResp) {
+func (p *SystemServiceGetRoleApiResult) GetSuccess() (v *ApiListResp) {
 	if !p.IsSetSuccess() {
 		return SystemServiceGetRoleApiResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceGetRoleApiResult) SetSuccess(x interface{}) {
-	p.Success = x.(*MenuListResp)
+	p.Success = x.(*ApiListResp)
 }
 
 func (p *SystemServiceGetRoleApiResult) IsSetSuccess() bool {

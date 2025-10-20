@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/api"
+	"system/biz/dal/db/ent/role"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -114,10 +115,39 @@ func (_c *APICreate) SetNillableMethod(v *string) *APICreate {
 	return _c
 }
 
+// SetDisabled sets the "disabled" field.
+func (_c *APICreate) SetDisabled(v int64) *APICreate {
+	_c.mutation.SetDisabled(v)
+	return _c
+}
+
+// SetNillableDisabled sets the "disabled" field if the given value is not nil.
+func (_c *APICreate) SetNillableDisabled(v *int64) *APICreate {
+	if v != nil {
+		_c.SetDisabled(*v)
+	}
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *APICreate) SetID(v int64) *APICreate {
 	_c.mutation.SetID(v)
 	return _c
+}
+
+// AddRoleIDs adds the "roles" edge to the Role entity by IDs.
+func (_c *APICreate) AddRoleIDs(ids ...int64) *APICreate {
+	_c.mutation.AddRoleIDs(ids...)
+	return _c
+}
+
+// AddRoles adds the "roles" edges to the Role entity.
+func (_c *APICreate) AddRoles(v ...*Role) *APICreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddRoleIDs(ids...)
 }
 
 // Mutation returns the APIMutation object of the builder.
@@ -174,6 +204,10 @@ func (_c *APICreate) defaults() {
 	if _, ok := _c.mutation.Method(); !ok {
 		v := api.DefaultMethod
 		_c.mutation.SetMethod(v)
+	}
+	if _, ok := _c.mutation.Disabled(); !ok {
+		v := api.DefaultDisabled
+		_c.mutation.SetDisabled(v)
 	}
 }
 
@@ -261,6 +295,26 @@ func (_c *APICreate) createSpec() (*API, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
 		_node.Method = value
+	}
+	if value, ok := _c.mutation.Disabled(); ok {
+		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)
+		_node.Disabled = value
+	}
+	if nodes := _c.mutation.RolesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   api.RolesTable,
+			Columns: api.RolesPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

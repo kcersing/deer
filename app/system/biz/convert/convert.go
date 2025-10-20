@@ -18,6 +18,24 @@ func EntToApi(e *ent.API) *system.Api {
 		Title:       e.Title,
 	}
 }
+func EntToLog(e *ent.Logs) *system.Log {
+	return &system.Log{
+		Type:        e.Type,
+		Method:      e.Method,
+		Api:         e.API,
+		Success:     false,
+		ReqContent:  e.ReqContent,
+		RespContent: e.RespContent,
+		Ip:          e.IP,
+		UserAgent:   e.UserAgent,
+		Operatorsr:  e.Operatorsr,
+		Time:        e.Time,
+		CreatedAt:   e.CreatedAt.Format(time.DateTime),
+		UpdatedAt:   "",
+		Identity:    0,
+		Id:          0,
+	}
+}
 
 func EntToMenu(e *ent.Menu) *system.Menu {
 	return &system.Menu{
@@ -74,4 +92,21 @@ func EntToDictht(e *ent.Dictht) *system.Dictht {
 		UpdatedAt: "",
 		ParentID:  0,
 	}
+}
+
+func FindMenuChildren(data []*ent.Menu, parentID int64) []*system.Menu {
+	if data == nil {
+		return nil
+	}
+	var result []*system.Menu
+	for _, v := range data {
+		// discard the parent menu, only find the children menu
+
+		if v.ParentID == parentID && v.ID != parentID {
+			m := EntToMenu(v)
+			m.Children = FindMenuChildren(data, v.ID)
+			result = append(result, m)
+		}
+	}
+	return result
 }

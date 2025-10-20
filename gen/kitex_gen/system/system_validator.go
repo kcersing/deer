@@ -170,11 +170,6 @@ func (p *DicthtResp) IsValid() error {
 	return nil
 }
 func (p *DictListResp) IsValid() error {
-	if p.Data != nil {
-		if err := p.Data.IsValid(); err != nil {
-			return fmt.Errorf("field Data not valid, %w", err)
-		}
-	}
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
@@ -183,11 +178,6 @@ func (p *DictListResp) IsValid() error {
 	return nil
 }
 func (p *DicthtListResp) IsValid() error {
-	if p.Data != nil {
-		if err := p.Data.IsValid(); err != nil {
-			return fmt.Errorf("field Data not valid, %w", err)
-		}
-	}
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
@@ -205,11 +195,6 @@ func (p *DeleteLog) IsValid() error {
 	return nil
 }
 func (p *LogListResp) IsValid() error {
-	if p.Data != nil {
-		if err := p.Data.IsValid(); err != nil {
-			return fmt.Errorf("field Data not valid, %w", err)
-		}
-	}
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)

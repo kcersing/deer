@@ -38,6 +38,8 @@ const (
 	FieldApis = "apis"
 	// EdgeMenus holds the string denoting the menus edge name in mutations.
 	EdgeMenus = "menus"
+	// EdgeAPI holds the string denoting the api edge name in mutations.
+	EdgeAPI = "api"
 	// Table holds the table name of the role in the database.
 	Table = "sys_roles"
 	// MenusTable is the table that holds the menus relation/edge. The primary key declared below.
@@ -45,6 +47,11 @@ const (
 	// MenusInverseTable is the table name for the Menu entity.
 	// It exists in this package in order to avoid circular dependency with the "menu" package.
 	MenusInverseTable = "sys_menus"
+	// APITable is the table that holds the api relation/edge. The primary key declared below.
+	APITable = "role_api"
+	// APIInverseTable is the table name for the API entity.
+	// It exists in this package in order to avoid circular dependency with the "api" package.
+	APIInverseTable = "sys_apis"
 )
 
 // Columns holds all SQL columns for role fields.
@@ -67,6 +74,9 @@ var (
 	// MenusPrimaryKey and MenusColumn2 are the table columns denoting the
 	// primary key for the menus relation (M2M).
 	MenusPrimaryKey = []string{"role_id", "menu_id"}
+	// APIPrimaryKey and APIColumn2 are the table columns denoting the
+	// primary key for the api relation (M2M).
+	APIPrimaryKey = []string{"role_id", "api_id"}
 )
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -173,10 +183,31 @@ func ByMenus(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newMenusStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
+
+// ByAPICount orders the results by api count.
+func ByAPICount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newAPIStep(), opts...)
+	}
+}
+
+// ByAPI orders the results by api terms.
+func ByAPI(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newAPIStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
 func newMenusStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(MenusInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2M, false, MenusTable, MenusPrimaryKey...),
+	)
+}
+func newAPIStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(APIInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2M, false, APITable, APIPrimaryKey...),
 	)
 }

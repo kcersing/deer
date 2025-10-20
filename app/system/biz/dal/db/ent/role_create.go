@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/role"
 	"time"
@@ -170,6 +171,21 @@ func (_c *RoleCreate) AddMenus(v ...*Menu) *RoleCreate {
 		ids[i] = v[i].ID
 	}
 	return _c.AddMenuIDs(ids...)
+}
+
+// AddAPIIDs adds the "api" edge to the API entity by IDs.
+func (_c *RoleCreate) AddAPIIDs(ids ...int64) *RoleCreate {
+	_c.mutation.AddAPIIDs(ids...)
+	return _c
+}
+
+// AddAPI adds the "api" edges to the API entity.
+func (_c *RoleCreate) AddAPI(v ...*API) *RoleCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddAPIIDs(ids...)
 }
 
 // Mutation returns the RoleMutation object of the builder.
@@ -350,6 +366,22 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.APIIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

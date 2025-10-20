@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/predicate"
 	"system/biz/dal/db/ent/role"
@@ -227,6 +228,21 @@ func (_u *RoleUpdate) AddMenus(v ...*Menu) *RoleUpdate {
 	return _u.AddMenuIDs(ids...)
 }
 
+// AddAPIIDs adds the "api" edge to the API entity by IDs.
+func (_u *RoleUpdate) AddAPIIDs(ids ...int64) *RoleUpdate {
+	_u.mutation.AddAPIIDs(ids...)
+	return _u
+}
+
+// AddAPI adds the "api" edges to the API entity.
+func (_u *RoleUpdate) AddAPI(v ...*API) *RoleUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddAPIIDs(ids...)
+}
+
 // Mutation returns the RoleMutation object of the builder.
 func (_u *RoleUpdate) Mutation() *RoleMutation {
 	return _u.mutation
@@ -251,6 +267,27 @@ func (_u *RoleUpdate) RemoveMenus(v ...*Menu) *RoleUpdate {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMenuIDs(ids...)
+}
+
+// ClearAPI clears all "api" edges to the API entity.
+func (_u *RoleUpdate) ClearAPI() *RoleUpdate {
+	_u.mutation.ClearAPI()
+	return _u
+}
+
+// RemoveAPIIDs removes the "api" edge to API entities by IDs.
+func (_u *RoleUpdate) RemoveAPIIDs(ids ...int64) *RoleUpdate {
+	_u.mutation.RemoveAPIIDs(ids...)
+	return _u
+}
+
+// RemoveAPI removes "api" edges to API entities.
+func (_u *RoleUpdate) RemoveAPI(v ...*API) *RoleUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveAPIIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -398,6 +435,51 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.APICleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedAPIIDs(); len(nodes) > 0 && !_u.mutation.APICleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.APIIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -622,6 +704,21 @@ func (_u *RoleUpdateOne) AddMenus(v ...*Menu) *RoleUpdateOne {
 	return _u.AddMenuIDs(ids...)
 }
 
+// AddAPIIDs adds the "api" edge to the API entity by IDs.
+func (_u *RoleUpdateOne) AddAPIIDs(ids ...int64) *RoleUpdateOne {
+	_u.mutation.AddAPIIDs(ids...)
+	return _u
+}
+
+// AddAPI adds the "api" edges to the API entity.
+func (_u *RoleUpdateOne) AddAPI(v ...*API) *RoleUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddAPIIDs(ids...)
+}
+
 // Mutation returns the RoleMutation object of the builder.
 func (_u *RoleUpdateOne) Mutation() *RoleMutation {
 	return _u.mutation
@@ -646,6 +743,27 @@ func (_u *RoleUpdateOne) RemoveMenus(v ...*Menu) *RoleUpdateOne {
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMenuIDs(ids...)
+}
+
+// ClearAPI clears all "api" edges to the API entity.
+func (_u *RoleUpdateOne) ClearAPI() *RoleUpdateOne {
+	_u.mutation.ClearAPI()
+	return _u
+}
+
+// RemoveAPIIDs removes the "api" edge to API entities by IDs.
+func (_u *RoleUpdateOne) RemoveAPIIDs(ids ...int64) *RoleUpdateOne {
+	_u.mutation.RemoveAPIIDs(ids...)
+	return _u
+}
+
+// RemoveAPI removes "api" edges to API entities.
+func (_u *RoleUpdateOne) RemoveAPI(v ...*API) *RoleUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveAPIIDs(ids...)
 }
 
 // Where appends a list predicates to the RoleUpdate builder.
@@ -823,6 +941,51 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.APICleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedAPIIDs(); len(nodes) > 0 && !_u.mutation.APICleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.APIIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   role.APITable,
+			Columns: role.APIPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

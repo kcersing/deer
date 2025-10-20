@@ -47,6 +47,10 @@ func init() {
 	apiDescMethod := apiFields[4].Descriptor()
 	// api.DefaultMethod holds the default value on creation for the method field.
 	api.DefaultMethod = apiDescMethod.Default.(string)
+	// apiDescDisabled is the schema descriptor for disabled field.
+	apiDescDisabled := apiFields[5].Descriptor()
+	// api.DefaultDisabled holds the default value on creation for the disabled field.
+	api.DefaultDisabled = apiDescDisabled.Default.(int64)
 	dictMixin := schema.Dict{}.Mixin()
 	dictMixinFields0 := dictMixin[0].Fields()
 	_ = dictMixinFields0

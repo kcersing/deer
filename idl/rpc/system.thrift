@@ -254,7 +254,7 @@ struct DeleteLog{
 
 }
 struct LogListResp{
-    1:optional Log data={}
+    1:optional list<Log> data={}
     255:optional base.BaseResp baseResp={}
 }
 service SystemService  {
@@ -267,7 +267,7 @@ service SystemService  {
     MenuResp CreateMenu(1: CreateMenuReq req)
     MenuResp UpdateMenu(1: UpdateMenuReq req)
     base.NilResponse DeleteMenu(1: base.IdReq req)
-    MenuResp Menu(1: base.IdReq req)
+    MenuResp GetMenu(1: base.IdReq req)
     MenuListResp MenuList(1: MenuListReq req)
     MenuListResp MenuTree(1: MenuListReq req)
 
@@ -283,7 +283,7 @@ service SystemService  {
     // 创建API权限
     base.NilResponse CreateRoleApi(1: CreateMenuAuthReq req)
     // 获取角色API列表
-    MenuListResp GetRoleApi(1: base.IdReq req)
+    ApiListResp GetRoleApi(1: base.IdReq req)
     //获取角色菜单列表
     MenuListResp GetRoleMenu(1: base.IdReq req)
 

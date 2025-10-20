@@ -21,6 +21,7 @@ var (
 		{Name: "description", Type: field.TypeString, Comment: "API description | API 描述"},
 		{Name: "api_group", Type: field.TypeString, Comment: "API group | API 分组"},
 		{Name: "method", Type: field.TypeString, Comment: "HTTP method | HTTP 请求类型", Default: "POST"},
+		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
 	}
 	// SysApisTable holds the schema information for the "sys_apis" table.
 	SysApisTable = &schema.Table{
@@ -294,6 +295,31 @@ var (
 			},
 		},
 	}
+	// RoleAPIColumns holds the columns for the "role_api" table.
+	RoleAPIColumns = []*schema.Column{
+		{Name: "role_id", Type: field.TypeInt64},
+		{Name: "api_id", Type: field.TypeInt64},
+	}
+	// RoleAPITable holds the schema information for the "role_api" table.
+	RoleAPITable = &schema.Table{
+		Name:       "role_api",
+		Columns:    RoleAPIColumns,
+		PrimaryKey: []*schema.Column{RoleAPIColumns[0], RoleAPIColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "role_api_role_id",
+				Columns:    []*schema.Column{RoleAPIColumns[0]},
+				RefColumns: []*schema.Column{SysRolesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "role_api_api_id",
+				Columns:    []*schema.Column{RoleAPIColumns[1]},
+				RefColumns: []*schema.Column{SysApisColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		SysApisTable,
@@ -306,6 +332,7 @@ var (
 		SysSmsTable,
 		SysSmsLogTable,
 		RoleMenusTable,
+		RoleAPITable,
 	}
 )
 
@@ -341,4 +368,6 @@ func init() {
 	}
 	RoleMenusTable.ForeignKeys[0].RefTable = SysRolesTable
 	RoleMenusTable.ForeignKeys[1].RefTable = SysMenusTable
+	RoleAPITable.ForeignKeys[0].RefTable = SysRolesTable
+	RoleAPITable.ForeignKeys[1].RefTable = SysApisTable
 }

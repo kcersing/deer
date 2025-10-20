@@ -31,5 +31,4 @@ func (s *DicthtListService) Run(req *system.DicthtListReq) (resp *system.DicthtL
 	}
 	resp.Data = dataResp
 	return
-	return
 }

@@ -22,7 +22,7 @@ func NewGetUserService(ctx context.Context) *GetUserService {
 func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 
 	var (
-		userResp *User.User
+		dataResp *User.User
 	)
 
 	eg, ctx := errgroup.WithContext(s.ctx)
@@ -33,7 +33,7 @@ func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
 			return err
 		}
-		userResp = convert.EntToUser(only)
+		dataResp = convert.EntToUser(only)
 		return nil
 
 	})
@@ -52,7 +52,7 @@ func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 	}
 
 	resp = &User.UserResp{
-		Data: userResp,
+		Data: dataResp,
 	}
 
 	return

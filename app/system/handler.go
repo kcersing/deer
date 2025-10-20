@@ -66,9 +66,9 @@ func (s *SystemServiceImpl) DeleteMenu(ctx context.Context, req *base.IdReq) (re
 	return resp, err
 }
 
-// Menu implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) Menu(ctx context.Context, req *base.IdReq) (resp *system.MenuResp, err error) {
-	resp, err = service.NewMenuService(ctx).Run(req)
+// GetMenu implements the SystemServiceImpl interface.
+func (s *SystemServiceImpl) GetMenu(ctx context.Context, req *base.IdReq) (resp *system.MenuResp, err error) {
+	resp, err = service.NewGetMenuService(ctx).Run(req)
 
 	return resp, err
 }
@@ -144,7 +144,7 @@ func (s *SystemServiceImpl) CreateRoleApi(ctx context.Context, req *system.Creat
 }
 
 // GetRoleApi implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) GetRoleApi(ctx context.Context, req *base.IdReq) (resp *system.MenuListResp, err error) {
+func (s *SystemServiceImpl) GetRoleApi(ctx context.Context, req *base.IdReq) (resp *system.ApiListResp, err error) {
 	resp, err = service.NewGetRoleApiService(ctx).Run(req)
 
 	return resp, err
