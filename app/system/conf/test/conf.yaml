@@ -22,18 +22,19 @@ Redis:
 MySQL:
 #  DSN: "%s:%s@tcp(%s:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
   DSN: "root:root@tcp(127.0.0.1:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
-#Casbin:
-#  ModelText: |
-#    [request_definition]
-#    r = sub, obj, act
-#    [policy_definition]
-#    p = sub, obj, act
-#    [role_definition]
-#    g = _, _
-#    [policy_effect]
-#    e = some(where (p.eft == allow))
-#    [matchers]
-#    m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
+  
+Casbin:
+  ModelText: |
+    [request_definition]
+    r = sub, obj, act
+    [policy_definition]
+    p = sub, obj, act
+    [role_definition]
+    g = _, _
+    [policy_effect]
+    e = some(where (p.eft == allow))
+    [matchers]
+    m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
 
   #Wechat:
   #  appid:
