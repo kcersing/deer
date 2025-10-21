@@ -3,7 +3,7 @@
 package main
 
 import (
-	handler "facade/biz/handler"
+	handler "admin/biz/handler"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

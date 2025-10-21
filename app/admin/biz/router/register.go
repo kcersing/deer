@@ -4,7 +4,6 @@ package router
 
 import (
 	user "admin/biz/router/user"
-	order "facade/biz/router/order"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -13,5 +12,4 @@ func GeneratedRegister(r *server.Hertz) {
 	//INSERT_POINT: DO NOT DELETE THIS LINE!
 	user.Register(r)
 
-	order.Register(r)
 }

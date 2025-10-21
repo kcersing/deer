@@ -1,11 +1,13 @@
 package mw
 
 import (
+	"admin/rpc/client"
 	"common/consts"
 	"common/pkg/errno"
 	"common/pkg/utils"
 	"context"
 	"encoding/json"
+	"gen/kitex_gen/base"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	jwtv4 "github.com/golang-jwt/jwt/v4"
@@ -17,9 +19,9 @@ import (
 var JwtMiddleware *jwt.HertzJWTMiddleware
 
 type jwtLogin struct {
-	Username string `form:"username,required" json:"username,required"`
-	Password string `form:"password,required" json:"password,required"`
-	Captcha  string `form:"captcha,required" json:"captcha,required"`
+	Username string `form:"username" json:"username"`
+	Password string `form:"password" json:"password"`
+	Captcha  string `form:"captcha" json:"captcha"`
 }
 
 func InitJwt() {
@@ -31,17 +33,26 @@ func InitJwt() {
 			Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
 				var err error
 				var req jwtLogin
-				if err = c.BindAndValidate(&req); err != nil {
-					return "", jwt.ErrMissingLoginValues
+
+				if err = c.Bind(&req); err != nil {
+					hlog.Info(err)
+					return "", err
 				}
 				if len(req.Username) == 0 || len(req.Password) == 0 {
 					return "", jwt.ErrMissingLoginValues
 				}
-				//res, err = rpc.CheckUser(req.Username,req.Password)
+				resp, err := client.UserClient.LoginUser(ctx, &base.CheckAccountReq{
+					Username: req.Username,
+					Password: req.Password,
+					Captcha:  req.Captcha,
+				})
+				if err != nil {
+					return nil, err
+				}
+				hlog.Info(resp)
 				payLoadMap := make(map[string]interface{})
-				//payLoadMap[consts.IdentityKey] = strconv.Itoa(int(res.UserId))
-				//payLoadMap["roleIds"] = res.UserRoleIds
-				//payLoadMap["type"] = strconv.Itoa(int(res.UserId))
+				//payLoadMap[consts.IdentityKey] = strconv.Itoa(int(resp.Data.GetId()))
+				//payLoadMap["roleIds"] = resp.Data.GetRoles()
 				return payLoadMap, nil
 			},
 			Authorizator: func(data interface{}, ctx context.Context, c *app.RequestContext) bool {

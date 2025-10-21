@@ -4,8 +4,6 @@ package member
 
 import (
 	"context"
-	base "facade/biz/model/base"
-	member "facade/biz/model/member"
 
 	base "gen/hertz_gen/base"
 	member "gen/hertz_gen/member"
@@ -48,17 +46,7 @@ func GetMember(ctx context.Context, c *app.RequestContext) {
 // LoginMember .
 // @router /service/member/login [POST]
 func LoginMember(ctx context.Context, c *app.RequestContext) {
-	var err error
-	var req member.CheckMemberReq
-	err = c.BindAndValidate(&req)
-	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
-		return
-	}
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
 }
 
 // GetMemberList .

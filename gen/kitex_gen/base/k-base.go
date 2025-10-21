@@ -727,12 +727,12 @@ func (p *CheckAccountReq) FastReadField2(buf []byte) (int, error) {
 func (p *CheckAccountReq) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *string
+	var _field string
 	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Captcha = _field
 	return offset, nil
@@ -780,10 +780,8 @@ func (p *CheckAccountReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int
 
 func (p *CheckAccountReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetCaptcha() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 3)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Captcha)
-	}
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 3)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Captcha)
 	return offset
 }
 
@@ -803,9 +801,7 @@ func (p *CheckAccountReq) field2Length() int {
 
 func (p *CheckAccountReq) field3Length() int {
 	l := 0
-	if p.IsSetCaptcha() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Captcha)
-	}
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.StringLengthNocopy(p.Captcha)
 	return l
 }

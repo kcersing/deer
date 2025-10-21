@@ -3,11 +3,10 @@ package client
 import (
 	"common/consts"
 	"common/mw"
-	"sync"
-
-	"gen/kitex_gen/member/memberservice"
+	"gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+	"sync"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
@@ -15,19 +14,17 @@ import (
 	"time"
 )
 
-var MemberClient memberservice.Client
-var memberOnceClient sync.Once
+var SystemClient userservice.Client
+var SystemOnceClient sync.Once
 
-func initMemberRpc() {
-
-	memberOnceClient.Do(func() {
-
+func initSystemRpc() {
+	SystemOnceClient.Do(func() {
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
 			panic(err)
 		}
-		c, err := memberservice.NewClient(
-			consts.MemberRpcServiceName,
+		c, err := userservice.NewClient(
+			consts.SystemRpcServiceName,
 			client.WithResolver(r), // resolver
 			client.WithMuxConnection(1),
 			client.WithRPCTimeout(3*time.Second),              // rpc timeout
@@ -42,7 +39,6 @@ func initMemberRpc() {
 		if err != nil {
 			panic(err)
 		}
-		MemberClient = c
-
+		SystemClient = c
 	})
 }

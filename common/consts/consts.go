@@ -15,4 +15,12 @@ const (
 	EtcdAddress    = "101.201.55.134:2379"
 	ESAddress      = "http://localhost:9200"
 	DefaultLimit   = 10
+
+	UserRpcServiceName    = "user"
+	SystemRpcServiceName  = "system"
+	ProductRpcServiceName = "product"
+	OrderRpcServiceName   = "order"
+	MemberRpcServiceName  = "member"
+
+	AdminServiceName = "admin"
 )

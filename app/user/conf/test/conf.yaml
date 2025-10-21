@@ -1,7 +1,6 @@
 Kitex:
   Service: "user"
   Address: ":9101"
-
   LogLevel: "debug"
   LogFileName: "log/kitex.log"
   LogMaxSize: 10
@@ -20,7 +19,7 @@ Redis:
   DB: 1
 
 MySQL:
-  DSN: "%s:%s@tcp(%s:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
+  DSN: "root:root@tcp(127.0.0.1:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
 #Casbin:
 #  ModelText: |
 #    [request_definition]

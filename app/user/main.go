@@ -9,7 +9,6 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	"github.com/joho/godotenv"
 	etcd "github.com/kitex-contrib/registry-etcd"
@@ -30,7 +29,7 @@ func init() {
 }
 
 var serviceName = conf.GetConf().Kitex.Service
- 
+
 func main() {
 	_ = godotenv.Load()
 
@@ -53,7 +52,7 @@ func main() {
 		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
 		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
-	})
+	}, false)
 
 	//mtl.InitTracing(serviceName)
 
@@ -88,15 +87,16 @@ func kitexInit() (opts []server.Option) {
 
 	r, err := etcd.NewEtcdRegistry([]string{consts.EtcdAddress})
 	opts = append(opts,
-		server.WithServiceAddr(addr),
-		server.WithRegistry(r),
-		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
-		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
-		server.WithMuxTransport(),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
+
+		server.WithServiceAddr(addr),
+		//server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
+		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
+		//server.WithMuxTransport(),
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
 		//server.WithSuite(tracing.NewServerSuite()),
+		server.WithRegistry(r),
 	)
 
 	return

@@ -3,7 +3,7 @@
 package main
 
 import (
-	router "facade/biz/router"
+	router "admin/biz/router"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 

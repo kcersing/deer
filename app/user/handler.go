@@ -4,6 +4,7 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	user "gen/kitex_gen/user"
+	"github.com/cloudwego/kitex/pkg/klog"
 
 	"user/biz/service"
 )
@@ -34,13 +35,15 @@ func (s *UserServiceImpl) GetUserList(ctx context.Context, req *user.GetUserList
 
 // LoginUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) LoginUser(ctx context.Context, req *base.CheckAccountReq) (resp *user.UserResp, err error) {
-	resp, err = service.NewLoginUserService(ctx).Run(req)
 
+	klog.Info("111111111111111111111111111111111111111")
+	resp, err = service.NewLoginUserService(ctx).Run(req)
 	return resp, err
 }
 
 // UpdateUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) UpdateUser(ctx context.Context, req *user.UpdateUserReq) (resp *user.UserResp, err error) {
+
 	resp, err = service.NewUpdateUserService(ctx).Run(req)
 
 	return resp, err

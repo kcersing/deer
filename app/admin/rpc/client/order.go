@@ -3,9 +3,6 @@ package client
 import (
 	"common/consts"
 	"common/mw"
-	"common/pkg/errno"
-	"context"
-	"gen/kitex_gen/order"
 	"gen/kitex_gen/order/orderservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
@@ -40,19 +37,4 @@ func initOrderRpc() {
 		panic(err)
 	}
 	orderClient = c
-}
-
-func GetOrderById(ctx context.Context, orderId int64) (interface{}, error) {
-	resp, err := orderClient.GetOrderInfo(ctx, &order.GetOrderInfoReq{
-		Id: 0,
-		Sn: nil,
-	})
-	if err != nil {
-		return nil, err
-	}
-	if resp.BaseResp.Code != 0 {
-		return nil, errno.NewErrNo(resp.BaseResp.Code, resp.BaseResp.Message)
-	}
-	return resp.Order, nil
-
 }

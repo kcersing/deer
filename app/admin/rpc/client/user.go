@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/user/userservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+	"sync"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
@@ -13,9 +14,12 @@ import (
 	"time"
 )
 
-var userClient userservice.Client
+var UserClient userservice.Client
+var userOnceClient sync.Once
 
 func initUserRpc() {
+	//userOnceClient.Do(func() {
+
 	r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 	if err != nil {
 		panic(err)
@@ -36,5 +40,7 @@ func initUserRpc() {
 	if err != nil {
 		panic(err)
 	}
-	userClient = c
+	UserClient = c
+
+	//})
 }

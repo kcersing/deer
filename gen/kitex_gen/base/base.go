@@ -249,9 +249,9 @@ func (p *NilResponse) String() string {
 var fieldIDToName_NilResponse = map[int16]string{}
 
 type CheckAccountReq struct {
-	Username string  `thrift:"username,1" frugal:"1,default,string" json:"username"`
-	Password string  `thrift:"password,2" frugal:"2,default,string" json:"password"`
-	Captcha  *string `thrift:"captcha,3,optional" frugal:"3,optional,string" json:"captcha,omitempty"`
+	Username string `thrift:"username,1" frugal:"1,default,string" json:"username"`
+	Password string `thrift:"password,2" frugal:"2,default,string" json:"password"`
+	Captcha  string `thrift:"captcha,3" frugal:"3,default,string" json:"captcha"`
 }
 
 func NewCheckAccountReq() *CheckAccountReq {
@@ -269,13 +269,8 @@ func (p *CheckAccountReq) GetPassword() (v string) {
 	return p.Password
 }
 
-var CheckAccountReq_Captcha_DEFAULT string
-
 func (p *CheckAccountReq) GetCaptcha() (v string) {
-	if !p.IsSetCaptcha() {
-		return CheckAccountReq_Captcha_DEFAULT
-	}
-	return *p.Captcha
+	return p.Captcha
 }
 func (p *CheckAccountReq) SetUsername(val string) {
 	p.Username = val
@@ -283,12 +278,8 @@ func (p *CheckAccountReq) SetUsername(val string) {
 func (p *CheckAccountReq) SetPassword(val string) {
 	p.Password = val
 }
-func (p *CheckAccountReq) SetCaptcha(val *string) {
+func (p *CheckAccountReq) SetCaptcha(val string) {
 	p.Captcha = val
-}
-
-func (p *CheckAccountReq) IsSetCaptcha() bool {
-	return p.Captcha != nil
 }
 
 func (p *CheckAccountReq) String() string {

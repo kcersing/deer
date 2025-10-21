@@ -3,12 +3,45 @@
 package main
 
 import (
+	"admin/biz/mw"
+	"admin/rpc/client"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	prometheus "github.com/hertz-contrib/monitor-prometheus"
+	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
+	"github.com/hertz-contrib/pprof"
 )
 
-func main() {
-	h := server.Default()
+func Init() {
+	client.Init()
+	mw.InitJwt()
+	hlog.SetLogger(hertzlogrus.NewLogger())
+	hlog.SetLevel(hlog.LevelInfo)
+	//mtl.InitProvider(consts.AdminServiceName)
+}
 
+func main() {
+
+	Init()
+
+	//tracer, cfg := tracing.NewServerTracer()
+	h := server.New(
+		server.WithStreamBody(true),
+		server.WithHostPorts(":9010"),
+		server.WithHandleMethodNotAllowed(true),
+		//tracer,
+		server.WithTracer(
+			prometheus.NewServerTracer(":9089", "/hertz",
+				prometheus.WithEnableGoCollector(true), // enable go runtime metric collector
+			),
+		),
+	)
+	h.NoHijackConnPool = true
+	h.Static("/export", "./files/")
+	// use pprof mw
+	pprof.Register(h)
+	// use otel mw
+	//h.Use(tracing.ServerMiddleware(cfg))
 	register(h)
 	h.Spin()
 }

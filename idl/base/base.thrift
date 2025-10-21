@@ -22,5 +22,5 @@ struct NilResponse {
 struct CheckAccountReq {
     1:string username (vt.min_size = "1")
     2:string password (vt.min_size = "1")
-    3:optional string captcha (vt.min_size = "1")
+    3:string captcha (vt.min_size = "1")
 }

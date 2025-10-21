@@ -40,10 +40,8 @@ func (p *CheckAccountReq) IsValid() error {
 	if len(p.Password) < int(1) {
 		return fmt.Errorf("field Password min_len rule failed, current value: %d", len(p.Password))
 	}
-	if p.Captcha != nil {
-		if len(*p.Captcha) < int(1) {
-			return fmt.Errorf("field Captcha min_len rule failed, current value: %d", len(*p.Captcha))
-		}
+	if len(p.Captcha) < int(1) {
+		return fmt.Errorf("field Captcha min_len rule failed, current value: %d", len(p.Captcha))
 	}
 	return nil
 }

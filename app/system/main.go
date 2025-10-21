@@ -52,7 +52,7 @@ func main() {
 		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
 		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
-	})
+	}, false)
 
 	//mtl.InitTracing(serviceName)
 
