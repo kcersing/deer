@@ -11,7 +11,7 @@ import (
 
 var CasbinEnforcer *casbin.Enforcer
 
-func init() {
+func InitCasbin() {
 	var err error
 	CasbinEnforcer, err = newCasbin()
 	if err != nil {
