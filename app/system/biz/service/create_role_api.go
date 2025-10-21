@@ -4,9 +4,13 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/cloudwego/hertz/pkg/common/json"
 	"github.com/pkg/errors"
+	"strconv"
+	"system/biz/dal/casbin"
 	"system/biz/dal/db"
+	"system/biz/dal/db/ent/api"
+	"system/biz/dal/db/ent/role"
 )
 
 type CreateRoleApiService struct {
@@ -18,32 +22,43 @@ func NewCreateRoleApiService(ctx context.Context) *CreateRoleApiService {
 
 // Run create note info
 func (s *CreateRoleApiService) Run(req *system.CreateMenuAuthReq) (resp *base.NilResponse, err error) {
-	// Finish your business logic.
-
-	// Finish your business logic.
-	tx, err := db.Client.Tx(s.ctx)
-	if err != nil {
-		return nil, errors.Wrap(err, "starting a transaction err")
-	}
-	defer func() {
+	var oldPolicies [][]string
+	var roleId = strconv.FormatInt(req.GetRoleId(), 10)
+	oldPolicies, _ = casbin.CasbinEnforcer.GetFilteredPolicy(0, roleId)
+	if len(oldPolicies) != 0 {
+		removeResult, err := casbin.CasbinEnforcer.RemoveFilteredPolicy(0, roleId)
 		if err != nil {
-			rollbackErr := tx.Rollback()
-			if rollbackErr != nil {
-				hlog.Error("UpdateAPIAuthority err:", err, "rollback err:", rollbackErr)
-			}
+			return nil, err
 		}
-	}()
-
-	//tx.Role.UpdateOneID(roleID).ClearAPI().Exec(a.ctx)
-	err = tx.Role.UpdateOneID(req.GetRoleId()).ClearAPI().Exec(s.ctx)
-	if err != nil {
-		return nil, errors.Wrap(err, "delete role's api failed, error")
+		if !removeResult {
+			return nil, errors.New("casbin policies remove failed")
+		}
 	}
 
-	err = tx.Role.UpdateOneID(req.GetRoleId()).AddAPIIDs(req.GetIds()...).Exec(s.ctx)
+	apiAll, err := db.Client.API.Query().Where(api.IDIn(req.GetIds()...)).All(s.ctx)
+	// add new policies
+	var policies [][]string
+	for _, v := range apiAll {
+		policies = append(policies, []string{roleId, v.Path, v.Method})
+	}
+	addResult, err := casbin.CasbinEnforcer.AddPolicies(policies)
 	if err != nil {
-		return nil, errors.Wrap(err, "add role's api failed, error")
+		return nil, err
+	}
+	if !addResult {
+		return nil, errors.New("casbin policies add failed")
 	}
 
-	return nil, tx.Commit()
+	jsonBytes, _ := json.Marshal(req.GetIds())
+	var intSlice []int
+	err = json.Unmarshal(jsonBytes, &intSlice)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = db.Client.Role.Update().Where(role.ID(req.GetRoleId())).SetApis(intSlice).Save(s.ctx)
+	if err != nil {
+		return nil, err
+	}
+	return
 }

@@ -18,10 +18,11 @@ var (
 )
 
 type Config struct {
-	Env   string
-	Kitex Kitex `yaml:"Kitex"`
-	MySQL MySQL `yaml:"MySQL"`
-	Redis Redis `yaml:"Redis"`
+	Env    string
+	Kitex  Kitex      `yaml:"Kitex"`
+	MySQL  MySQL      `yaml:"MySQL"`
+	Redis  Redis      `yaml:"Redis"`
+	Casbin CasbinConf `mapstructure:"Casbin" json:"Casbin"`
 }
 
 type MySQL struct {
@@ -49,6 +50,9 @@ type Kitex struct {
 	LogMaxSize    int    `yaml:"LogMaxSize"`
 	LogMaxBackups int    `yaml:"LogMaxBackups"`
 	LogMaxAge     int    `yaml:"LogMaxAge"`
+}
+type CasbinConf struct {
+	ModelText string `mapstructure:"ModelText" json:"ModelText"`
 }
 
 // GetConf gets configuration instance

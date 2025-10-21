@@ -3,28 +3,24 @@ package casbin
 import (
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/model"
-	entAdapter "github.com/casbin/ent-adapter"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"kcers/biz/dal/config"
+	"system/conf"
+
+	entAdapter "github.com/casbin/ent-adapter"
 )
 
-var casbinEnforcer *casbin.Enforcer
+var CasbinEnforcer *casbin.Enforcer
 
-func InitCasbin() {
+func init() {
 	var err error
-	casbinEnforcer, err = newCasbin()
+	CasbinEnforcer, err = newCasbin()
 	if err != nil {
 		hlog.Fatal(err)
 	}
-
-}
-
-func CasbinEnforcer() *casbin.Enforcer {
-	return casbinEnforcer
 }
 
 func newCasbin() (enforcer *casbin.Enforcer, err error) {
-	adapter, err := entAdapter.NewAdapter("mysql", config.GlobalServerConfig.MySQLInfo.Host)
+	adapter, err := entAdapter.NewAdapter("mysql", conf.GetConf().MySQL.DSN)
 
 	//adapter, err := entAdapter.NewAdapter("pgx", config.GlobalServerConfig.PostgreSQLInfo.Host)
 
@@ -34,7 +30,7 @@ func newCasbin() (enforcer *casbin.Enforcer, err error) {
 	}
 
 	var text string
-	if config.GlobalServerConfig.Casbin.ModelText == "" {
+	if conf.GetConf().Casbin.ModelText == "" {
 		text = `
 		[request_definition]
 		r = sub, obj, act
@@ -52,7 +48,7 @@ func newCasbin() (enforcer *casbin.Enforcer, err error) {
 		m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
 		`
 	} else {
-		text = config.GlobalServerConfig.Casbin.ModelText
+		text = conf.GetConf().Casbin.ModelText
 	}
 
 	m, err := model.NewModelFromString(text)
