@@ -36,8 +36,8 @@ func (s *UserServiceImpl) GetUserList(ctx context.Context, req *user.GetUserList
 // LoginUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) LoginUser(ctx context.Context, req *base.CheckAccountReq) (resp *user.UserResp, err error) {
 
-	klog.Info("111111111111111111111111111111111111111")
-	resp, err = service.NewLoginUserService(ctx).Run(req)
+	klog.Error("111111111111111111111111111111111111111")
+	//resp, err = service.NewLoginUserService(ctx).Run(req)
 	return resp, err
 }
 

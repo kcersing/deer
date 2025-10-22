@@ -36,3 +36,4 @@ _testmain.go
 /vendor
 /.trae
 .env
+*.out

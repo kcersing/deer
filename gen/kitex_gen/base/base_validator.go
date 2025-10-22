@@ -34,14 +34,5 @@ func (p *NilResponse) IsValid() error {
 	return nil
 }
 func (p *CheckAccountReq) IsValid() error {
-	if len(p.Username) < int(1) {
-		return fmt.Errorf("field Username min_len rule failed, current value: %d", len(p.Username))
-	}
-	if len(p.Password) < int(1) {
-		return fmt.Errorf("field Password min_len rule failed, current value: %d", len(p.Password))
-	}
-	if len(p.Captcha) < int(1) {
-		return fmt.Errorf("field Captcha min_len rule failed, current value: %d", len(p.Captcha))
-	}
 	return nil
 }

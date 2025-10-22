@@ -9,9 +9,11 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
-	"github.com/joho/godotenv"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
+	"github.com/kitex-contrib/registry-etcd/retry"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net"
@@ -31,8 +33,8 @@ func init() {
 var serviceName = conf.GetConf().Kitex.Service
 
 func main() {
-	_ = godotenv.Load()
 
+	mtl.InitFlightRecorder()
 	logFilePath := consts.LogFilePath
 	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
 		panic(err)
@@ -48,7 +50,7 @@ func main() {
 		}
 	}
 	mtl.InitLog(&lumberjack.Logger{
-		Filename:   conf.GetConf().Kitex.LogFileName,
+		Filename:   fileName,
 		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
 		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
@@ -84,18 +86,23 @@ func kitexInit() (opts []server.Option) {
 	if err != nil {
 		panic(err)
 	}
+	retryConfig := retry.NewRetryConfig(
+		retry.WithMaxAttemptTimes(10),
+		retry.WithObserveDelay(20*time.Second),
+		retry.WithRetryDelay(5*time.Second),
+	)
+	r, err := etcd.NewEtcdRegistryWithRetry([]string{consts.EtcdAddress}, retryConfig)
 
-	r, err := etcd.NewEtcdRegistry([]string{consts.EtcdAddress})
 	opts = append(opts,
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
 
 		server.WithServiceAddr(addr),
-		//server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
+		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
 		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
 		//server.WithMuxTransport(),
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
-		//server.WithSuite(tracing.NewServerSuite()),
+		server.WithSuite(tracing.NewServerSuite()),
 		server.WithRegistry(r),
 	)
 

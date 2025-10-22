@@ -46,6 +46,7 @@ func InitJwt() {
 					Password: req.Password,
 					Captcha:  req.Captcha,
 				})
+
 				if err != nil {
 					return nil, err
 				}

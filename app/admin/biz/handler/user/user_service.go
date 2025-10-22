@@ -46,7 +46,6 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 // LoginUser .
 // @router /service/user/login [POST]
 func LoginUser(ctx context.Context, c *app.RequestContext) {
-
 	mw.JwtMiddleware.LoginHandler(ctx, c)
 }
 

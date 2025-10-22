@@ -15,7 +15,10 @@ func ServerMiddleware(next endpoint.Endpoint) endpoint.Endpoint {
 		ri := rpcinfo.GetRPCInfo(ctx)
 		//// 打印客户端信息
 		klog.Infof("client address: %v\n", ri.From().Address())
+		klog.Info(req)
+		klog.Info(resp)
 		if err = next(ctx, req, resp); err != nil {
+			klog.Error(err)
 			return err
 		}
 		return nil

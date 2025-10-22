@@ -11,7 +11,11 @@ func TestLoginOrder_Run(t *testing.T) {
 	s := NewLoginUserService(ctx)
 	// init req and assert value
 
-	req := &Base.CheckAccountReq{}
+	req := &Base.CheckAccountReq{
+		Username: "admin",
+		Password: "123456",
+		Captcha:  "1234",
+	}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
