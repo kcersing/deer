@@ -16,6 +16,17 @@ export async function login(body: API.LoginReq, options?: { [key: string]: any }
     ...(options || {}),
   });
 }
+/** 退出登录接口 POST /service/user/logout */
+export async function logout(options?: { [key: string]: any }) {
+  return request<Record<string, any>>('/service/user/logout', {
+    method: 'POST',
+    headers: {
+      ...headers,
+    },
+    ...(options || {}),
+  });
+}
+
 /** 创建接口 POST /service/user/create */
 export async function create(body: API.CreateUserReq, options?: { [key: string]: any }) {
   return request<API.UserResp>('/service/user/create', {
