@@ -16,7 +16,7 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 
-import {  User  as CurrentUser ,user as getUser} from '@/services/ant-design-pro/user';
+import { getUser } from '@/services/ant-design-pro/user';
 
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -27,9 +27,9 @@ const loginPath = '/user/login';
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: CurrentUser;
+  currentUser?: API.User;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.User | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {

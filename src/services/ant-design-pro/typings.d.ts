@@ -1,27 +1,181 @@
 // @ts-ignore
 /* eslint-disable */
-
 declare namespace API {
-  type CurrentUser = {
+  type User = {
+    id?: number;
     name?: string;
     avatar?: string;
-    userid?: string;
-    email?: string;
-    signature?: string;
-    title?: string;
-    group?: string;
-    tags?: { key?: string; label?: string }[];
-    notifyCount?: number;
-    unreadCount?: number;
-    country?: string;
-    access?: string;
-    geographic?: {
-      province?: { label?: string; key?: string };
-      city?: { label?: string; key?: string };
-    };
-    address?: string;
-    phone?: string;
+    mobile?: string;
+    status?: number;
+    level?: number;
+    gender?: string;
+    birthday?: string;
+    lastAt?: string;
+    lastIp?: string;
+    detail?: string;
+    role?: Role;
   };
+  type LoginReq = {
+    username: string;
+    password: string;
+    captcha: string;
+  }
+
+
+  type CreateUserReq = {
+
+  }
+  type GetUserListReq = {
+
+  }
+
+  type BaseResp ={
+    code?: number;
+    message?: string;
+    time?: string;
+    total?: number;
+  }
+
+  export type LoginResp= {
+    expire?: string;
+    token?: string;
+    status?: number;
+    type?: string;
+  };
+  type UserResp ={
+    data?:User;
+    baseResp?: BaseResp;
+  }
+  type UserListResp ={
+    data?:User[];
+    baseResp?: BaseResp;
+  }
+
+  type Role = {
+    id?: number;
+    name?: string;
+    value?: string;
+    defaultRouter?: string;
+    remark?: number;
+    apis?: number[];
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   type LoginResult = {
     status?: string;
