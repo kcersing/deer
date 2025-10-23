@@ -10,7 +10,7 @@ import (
 
 // customizeRegister registers customize routers.
 func customizedRegister(r *server.Hertz) {
-	r.GET("/ping", handler.Ping)
+	r.GET("/service/ping", handler.Ping)
 
 	r.POST("/service/user/login", mw.JwtMiddleware.LoginHandler)
 	r.POST("/service/user/logout", mw.JwtMiddleware.LogoutHandler)
