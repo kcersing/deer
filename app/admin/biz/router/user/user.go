@@ -22,7 +22,6 @@ func Register(r *server.Hertz) {
 		_service.POST("/user", append(_getuserMw(), user.GetUser)...)
 		_user := _service.Group("/user", _userMw()...)
 		_user.POST("/list", append(_getuserlistMw(), user.GetUserList)...)
-		_user.POST("/login", append(_loginuserMw(), user.LoginUser)...)
 		{
 			_user0 := _service.Group("/user", _user0Mw()...)
 			_user0.POST("/create", append(_createuserMw(), user.CreateUser)...)

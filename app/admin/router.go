@@ -4,6 +4,7 @@ package main
 
 import (
 	handler "admin/biz/handler"
+	"admin/biz/mw"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -11,5 +12,7 @@ import (
 func customizedRegister(r *server.Hertz) {
 	r.GET("/ping", handler.Ping)
 
-	// your code ...
+	r.POST("/service/user/login", mw.JwtMiddleware.LoginHandler)
+	r.POST("/service/user/logout", mw.JwtMiddleware.LogoutHandler)
+	r.POST("/service/user/refresh_token", mw.JwtMiddleware.RefreshHandler)
 }

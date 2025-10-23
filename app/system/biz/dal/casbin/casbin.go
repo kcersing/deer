@@ -9,14 +9,19 @@ import (
 	entAdapter "github.com/casbin/ent-adapter"
 )
 
-var CasbinEnforcer *casbin.Enforcer
+var casbinEnforcer *casbin.Enforcer
 
 func InitCasbin() {
 	var err error
-	CasbinEnforcer, err = newCasbin()
+	casbinEnforcer, err = newCasbin()
 	if err != nil {
 		hlog.Fatal(err)
 	}
+
+}
+
+func CasbinEnforcer() *casbin.Enforcer {
+	return casbinEnforcer
 }
 
 func newCasbin() (enforcer *casbin.Enforcer, err error) {

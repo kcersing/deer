@@ -11,27 +11,33 @@ replace (
 require (
 	common v0.0.0-00010101000000-000000000000
 	gen v0.0.0-00010101000000-000000000000
+	github.com/casbin/casbin/v2 v2.128.0
 	github.com/cloudwego/hertz v0.10.2
 	github.com/cloudwego/kitex v0.15.1
 	github.com/golang-jwt/jwt/v4 v4.5.2
+	github.com/hertz-contrib/gzip v0.0.3
 	github.com/hertz-contrib/jwt v1.0.4
 	github.com/hertz-contrib/monitor-prometheus v0.1.3
 	github.com/hertz-contrib/obs-opentelemetry/logging/logrus v0.1.1
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
 	github.com/hertz-contrib/pprof v0.1.2
+	github.com/hertz-contrib/requestid v1.1.0
 	github.com/kitex-contrib/obs-opentelemetry v0.2.9
 	github.com/kitex-contrib/registry-etcd v0.3.0
 	github.com/pkg/errors v0.9.1
+	go.opentelemetry.io/otel/trace v1.38.0
 )
 
 require (
 	github.com/apache/thrift v0.16.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
 	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/bytedance/sonic v1.14.1 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
+	github.com/casbin/govaluate v1.3.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -110,7 +116,6 @@ require (
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.38.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.38.0 // indirect
-	go.opentelemetry.io/otel/trace v1.38.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.7.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect

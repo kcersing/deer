@@ -611,23 +611,26 @@ func (p *PageReq) String() string {
 }
 
 type IdReq struct {
-	ID *int64 `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	ID int64 `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
 }
 
 func NewIdReq() *IdReq {
-	return &IdReq{}
+	return &IdReq{
+		ID: 0,
+	}
 }
 
 func (p *IdReq) InitDefault() {
+	p.ID = 0
 }
 
-var IdReq_ID_DEFAULT int64
+var IdReq_ID_DEFAULT int64 = 0
 
 func (p *IdReq) GetID() (v int64) {
 	if !p.IsSetID() {
 		return IdReq_ID_DEFAULT
 	}
-	return *p.ID
+	return p.ID
 }
 
 var fieldIDToName_IdReq = map[int16]string{
@@ -635,7 +638,7 @@ var fieldIDToName_IdReq = map[int16]string{
 }
 
 func (p *IdReq) IsSetID() bool {
-	return p.ID != nil
+	return p.ID != IdReq_ID_DEFAULT
 }
 
 func (p *IdReq) Read(iprot thrift.TProtocol) (err error) {
@@ -696,11 +699,11 @@ ReadStructEndError:
 
 func (p *IdReq) ReadField1(iprot thrift.TProtocol) error {
 
-	var _field *int64
+	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		_field = &v
+		_field = v
 	}
 	p.ID = _field
 	return nil
@@ -739,7 +742,7 @@ func (p *IdReq) writeField1(oprot thrift.TProtocol) (err error) {
 		if err = oprot.WriteFieldBegin("id", thrift.I64, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(*p.ID); err != nil {
+		if err := oprot.WriteI64(p.ID); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -845,9 +848,9 @@ func (p *NilResponse) String() string {
 }
 
 type CheckAccountReq struct {
-	Username string  `thrift:"username,1" form:"username" json:"username" query:"username"`
-	Password string  `thrift:"password,2" form:"password" json:"password" query:"password"`
-	Captcha  *string `thrift:"captcha,3,optional" form:"captcha" json:"captcha,omitempty" query:"captcha"`
+	Username string `thrift:"username,1" form:"username" json:"username" query:"username"`
+	Password string `thrift:"password,2" form:"password" json:"password" query:"password"`
+	Captcha  string `thrift:"captcha,3" form:"captcha" json:"captcha" query:"captcha"`
 }
 
 func NewCheckAccountReq() *CheckAccountReq {
@@ -865,23 +868,14 @@ func (p *CheckAccountReq) GetPassword() (v string) {
 	return p.Password
 }
 
-var CheckAccountReq_Captcha_DEFAULT string
-
 func (p *CheckAccountReq) GetCaptcha() (v string) {
-	if !p.IsSetCaptcha() {
-		return CheckAccountReq_Captcha_DEFAULT
-	}
-	return *p.Captcha
+	return p.Captcha
 }
 
 var fieldIDToName_CheckAccountReq = map[int16]string{
 	1: "username",
 	2: "password",
 	3: "captcha",
-}
-
-func (p *CheckAccountReq) IsSetCaptcha() bool {
-	return p.Captcha != nil
 }
 
 func (p *CheckAccountReq) Read(iprot thrift.TProtocol) (err error) {
@@ -980,11 +974,11 @@ func (p *CheckAccountReq) ReadField2(iprot thrift.TProtocol) error {
 }
 func (p *CheckAccountReq) ReadField3(iprot thrift.TProtocol) error {
 
-	var _field *string
+	var _field string
 	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		_field = &v
+		_field = v
 	}
 	p.Captcha = _field
 	return nil
@@ -1061,16 +1055,14 @@ WriteFieldEndError:
 }
 
 func (p *CheckAccountReq) writeField3(oprot thrift.TProtocol) (err error) {
-	if p.IsSetCaptcha() {
-		if err = oprot.WriteFieldBegin("captcha", thrift.STRING, 3); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(*p.Captcha); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
+	if err = oprot.WriteFieldBegin("captcha", thrift.STRING, 3); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.Captcha); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
 	}
 	return nil
 WriteFieldBeginError:

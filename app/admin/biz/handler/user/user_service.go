@@ -3,7 +3,6 @@
 package user
 
 import (
-	"admin/biz/mw"
 	"admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
@@ -13,6 +12,7 @@ import (
 	user "gen/hertz_gen/user"
 	base1 "gen/kitex_gen/base"
 	"github.com/cloudwego/hertz/pkg/app"
+
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
@@ -42,10 +42,11 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 		c.String(consts.StatusBadRequest, err.Error())
 		return
 	}
+
 	var id = req.GetID()
 	if req.GetID() == 0 {
 		// get token id
-		id = utils.GetTokenId(c)
+		id = utils.GetTokenId(ctx, c)
 		if id == 0 {
 			utils2.SendResponse(c, errno.NewErrNo(10002, "token is invalid"), nil, 0, "")
 			return
@@ -62,12 +63,6 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 	}
 	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
-}
-
-// LoginUser .
-// @router /service/user/login [POST]
-func LoginUser(ctx context.Context, c *app.RequestContext) {
-	mw.JwtMiddleware.LoginHandler(ctx, c)
 }
 
 // GetUserList .

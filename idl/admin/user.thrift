@@ -41,6 +41,5 @@ struct GetUserListReq{
 service UserService  {
      base.NilResponse CreateUser(1: CreateUserReq req)(api.post = "/service/user/create")
      base.NilResponse GetUser(1: base.IdReq req)(api.post = "/service/user")
-     base.NilResponse LoginUser(1: base.CheckAccountReq req) (api.post = "/service/user/login")
      base.NilResponse GetUserList(1: GetUserListReq req)(api.post = "/service/user/list")
 }
