@@ -15,7 +15,7 @@ import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 
-import { getUser } from '@/services/ant-design-pro/user';
+import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
 
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -86,6 +86,20 @@ export const layout: RunTimeLayoutConfig = ({
     waterMarkProps: {
       content: initialState?.currentUser?.name,
     },
+    //https://pro.ant.design/zh-CN/docs/advanced-menu
+    // menu:{
+    //   // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
+    //   params: {
+    //     userId: initialState?.currentUser?.id,
+    //   },
+    //   request: async (params, defaultMenuData) => {
+    //     // initialState.currentUser 中包含了所有用户信息
+    //     const menuData = await getRoleMenuAll();
+    //     return menuData;
+    //   },
+    // },
+
+
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;

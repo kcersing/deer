@@ -50,6 +50,22 @@ export async function getUser(body: { id:number }, options?: { [key: string]: an
   });
 }
 
+
+/** 获取用户信息 POST /service/user */
+export async function getRoleMenuAll(body: { id:number }, options?: { [key: string]: any }) {
+  return request<API.LoginResp>('/service/user', {
+    method: 'POST',
+    headers: {
+      ...headers,
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+
+
+
 /** 获取user列表 POST /service/user/list*/
 export async function userList(
   params: {

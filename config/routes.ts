@@ -45,12 +45,12 @@ export default [
       },
     ],
   },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './table-list',
-  },
+  // {
+  //   name: 'user.list',
+  //   icon: 'table',
+  //   path: '/user/list',
+  //   component: './user/list',
+  // },
   {
     path: '/',
     redirect: '/welcome',
