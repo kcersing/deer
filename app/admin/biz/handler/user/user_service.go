@@ -39,10 +39,9 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
 	var id = req.GetID()
 	if req.GetID() == 0 {
 		// get token id

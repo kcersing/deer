@@ -59,7 +59,7 @@ struct CreateMenuReq{
 
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
-    14:optional list<Menu> children=[]  (api.raw = "children")
+//    14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
     17:optional string title="" (api.raw = "title" )
@@ -79,7 +79,7 @@ struct UpdateMenuReq{
 
     12:optional i64 status=1 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
-    14:optional list<Menu> children=[]  (api.raw = "children")
+//    14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
     17:optional string title="" (api.raw = "title" )
@@ -123,12 +123,12 @@ struct MenuListResp{
    255:optional base.BaseResp baseResp={}
 }
 struct Role {
-    1:optional i64 id=0,
-    2:optional string name="",
-    3:optional string value="",
-    4:optional string defaultRouter="",
-    5:optional string remark="",
-    6:optional list<i64> apis= [],
+    1:optional i64 id=0 (api.raw = "id")
+    2:optional string name="" (api.raw = "name")
+    3:optional string value=""(api.raw = "value")
+    4:optional string defaultRouter=""(api.raw = "defaultRouter")
+    5:optional string remark=""(api.raw = "remark")
+    6:optional list<i64> apis= [](api.raw = "apis")
 }
 struct RoleResp {
     1:optional Role data={}
@@ -139,33 +139,31 @@ struct RoleListResp {
     255:optional base.BaseResp baseResp={}
 }
 struct CreateRoleReq{
-    1:optional i64 id=0,
-    2:optional string name="",
-    3:optional string value="",
-    4:optional string defaultRouter="",
-    5:optional string remark="",
-    6:optional list<i64> apis= [],
+    1:optional i64 id=0(api.raw = "id")
+    2:optional string name=""(api.raw = "name")
+    3:optional string value=""(api.raw = "value")
+    4:optional string defaultRouter=""(api.raw = "defaultRouter")
+    5:optional string remark=""(api.raw = "remark")
+    6:optional list<i64> apis= [](api.raw = "apis")
 }
 
 struct GetRoleListReq{
-    1:optional i64 page=1
-    2:optional i64 pageSize=10
-    3:optional string eyword=""
+    1:optional i64 page=1(api.raw = "page")
+    2:optional i64 pageSize=10(api.raw = "pageSize")
+    3:optional string keyword=""(api.raw = "keyword")
 }
 struct UpdateRoleReq {
-    1:optional i64 id=0,
-    2:optional string name="",
-    3:optional string value="",
-    4:optional string defaultRouter="",
-    5:optional string remark="",
-    6:optional list<i64> apis= [],
+    1:optional i64 id=0(api.raw = "id")
+    2:optional string name=""(api.raw = "name")
+    3:optional string value=""(api.raw = "value")
+    4:optional string defaultRouter=""(api.raw = "defaultRouter")
+    5:optional string remark=""(api.raw = "remark")
+    6:optional list<i64> apis= [](api.raw = "apis")
 }
 struct CreateMenuAuthReq{
     1:optional i64 roleId=0 (api.raw = "roleId")
     2:optional list<i64> Ids = [] (api.raw = "ids")
 }
-
-
 
 // 字典信息
 struct Dict {
@@ -250,7 +248,7 @@ struct Log {
 
     251: optional i64 id = 0 (api.raw = "id")
 }
-struct DeleteLog{
+struct DeleteLogReq{
 
 }
 struct LogListResp{
@@ -307,7 +305,7 @@ service SystemService  {
     LogListResp LogList(1: LogListReq req)
 
     // Delete logs | 删除日志信息
-    base.NilResponse DeleteLog(1: DeleteLog req)
+    base.NilResponse DeleteLog(1: DeleteLogReq req)
 
 
 

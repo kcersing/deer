@@ -214,7 +214,7 @@ func (s *SystemServiceImpl) LogList(ctx context.Context, req *system.LogListReq)
 }
 
 // DeleteLog implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) DeleteLog(ctx context.Context, req *system.DeleteLog) (resp *base.NilResponse, err error) {
+func (s *SystemServiceImpl) DeleteLog(ctx context.Context, req *system.DeleteLogReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewDeleteLogService(ctx).Run(req)
 
 	return resp, err

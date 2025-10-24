@@ -41,7 +41,7 @@ type Client interface {
 	DeleteDictht(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DicthtList(ctx context.Context, req *system.DicthtListReq, callOptions ...callopt.Option) (r *system.DicthtListResp, err error)
 	LogList(ctx context.Context, req *system.LogListReq, callOptions ...callopt.Option) (r *system.LogListResp, err error)
-	DeleteLog(ctx context.Context, req *system.DeleteLog, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	DeleteLog(ctx context.Context, req *system.DeleteLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -218,7 +218,7 @@ func (p *kSystemServiceClient) LogList(ctx context.Context, req *system.LogListR
 	return p.kClient.LogList(ctx, req)
 }
 
-func (p *kSystemServiceClient) DeleteLog(ctx context.Context, req *system.DeleteLog, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+func (p *kSystemServiceClient) DeleteLog(ctx context.Context, req *system.DeleteLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteLog(ctx, req)
 }

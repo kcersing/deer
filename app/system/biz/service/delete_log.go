@@ -15,7 +15,7 @@ func NewDeleteLogService(ctx context.Context) *DeleteLogService {
 }
 
 // Run create note info
-func (s *DeleteLogService) Run(req *system.DeleteLog) (resp *base.NilResponse, err error) {
+func (s *DeleteLogService) Run(req *system.DeleteLogReq) (resp *base.NilResponse, err error) {
 	_, err = db.Client.Logs.Delete().Exec(s.ctx)
 	if err != nil {
 		return nil, err

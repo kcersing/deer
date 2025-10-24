@@ -3,7 +3,7 @@ package client
 import (
 	"common/consts"
 	"common/mw"
-	"gen/kitex_gen/user/userservice"
+	"gen/kitex_gen/system/systemservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	"sync"
@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var SystemClient userservice.Client
+var SystemClient systemservice.Client
 var SystemOnceClient sync.Once
 
 func initSystemRpc() {
@@ -23,7 +23,7 @@ func initSystemRpc() {
 		if err != nil {
 			panic(err)
 		}
-		c, err := userservice.NewClient(
+		c, err := systemservice.NewClient(
 			consts.SystemRpcServiceName,
 			client.WithResolver(r), // resolver
 			client.WithMuxConnection(1),

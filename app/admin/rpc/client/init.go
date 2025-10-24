@@ -4,7 +4,7 @@ import "github.com/cloudwego/hertz/pkg/common/hlog"
 
 func Init() {
 	hlog.Info("加载rpc")
-	//initSystemRpc()
+	initSystemRpc()
 	initUserRpc()
 	//initMemberRpc()
 	//initProductRpc()

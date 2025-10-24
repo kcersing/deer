@@ -735,22 +735,21 @@ var fieldIDToName_UpdateApiReq = map[int16]string{
 }
 
 type CreateMenuReq struct {
-	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
-	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
-	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
-	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
-	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
-	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
-	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
-	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
-	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
-	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId  int64  `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level     int64  `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path      string `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    int64  `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
+	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
+	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	Title     string `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
+	Type      string `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
 }
 
 func NewCreateMenuReq() *CreateMenuReq {
@@ -766,7 +765,6 @@ func NewCreateMenuReq() *CreateMenuReq {
 		Sort:      0,
 		Status:    1,
 		Url:       "",
-		Children:  []*Menu{},
 		CreatedAt: "",
 		UpdatedAt: "",
 		Title:     "",
@@ -786,7 +784,6 @@ func (p *CreateMenuReq) InitDefault() {
 	p.Sort = 0
 	p.Status = 1
 	p.Url = ""
-	p.Children = []*Menu{}
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
@@ -892,15 +889,6 @@ func (p *CreateMenuReq) GetUrl() (v string) {
 	return p.Url
 }
 
-var CreateMenuReq_Children_DEFAULT []*Menu = []*Menu{}
-
-func (p *CreateMenuReq) GetChildren() (v []*Menu) {
-	if !p.IsSetChildren() {
-		return CreateMenuReq_Children_DEFAULT
-	}
-	return p.Children
-}
-
 var CreateMenuReq_CreatedAt_DEFAULT string = ""
 
 func (p *CreateMenuReq) GetCreatedAt() (v string) {
@@ -969,9 +957,6 @@ func (p *CreateMenuReq) SetStatus(val int64) {
 func (p *CreateMenuReq) SetUrl(val string) {
 	p.Url = val
 }
-func (p *CreateMenuReq) SetChildren(val []*Menu) {
-	p.Children = val
-}
 func (p *CreateMenuReq) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
@@ -1029,10 +1014,6 @@ func (p *CreateMenuReq) IsSetUrl() bool {
 	return p.Url != CreateMenuReq_Url_DEFAULT
 }
 
-func (p *CreateMenuReq) IsSetChildren() bool {
-	return p.Children != nil
-}
-
 func (p *CreateMenuReq) IsSetCreatedAt() bool {
 	return p.CreatedAt != CreateMenuReq_CreatedAt_DEFAULT
 }
@@ -1068,7 +1049,6 @@ var fieldIDToName_CreateMenuReq = map[int16]string{
 	10: "sort",
 	12: "status",
 	13: "url",
-	14: "children",
 	15: "createdAt",
 	16: "updatedAt",
 	17: "title",
@@ -1076,23 +1056,22 @@ var fieldIDToName_CreateMenuReq = map[int16]string{
 }
 
 type UpdateMenuReq struct {
-	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
-	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
-	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
-	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
-	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
-	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
-	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
-	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
-	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
-	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId  int64  `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level     int64  `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path      string `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Hidden    int64  `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
+	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
+	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	Title     string `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
+	Type      string `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
 }
 
 func NewUpdateMenuReq() *UpdateMenuReq {
@@ -1109,7 +1088,6 @@ func NewUpdateMenuReq() *UpdateMenuReq {
 		Sort:      0,
 		Status:    1,
 		Url:       "",
-		Children:  []*Menu{},
 		CreatedAt: "",
 		UpdatedAt: "",
 		Title:     "",
@@ -1130,7 +1108,6 @@ func (p *UpdateMenuReq) InitDefault() {
 	p.Sort = 0
 	p.Status = 1
 	p.Url = ""
-	p.Children = []*Menu{}
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
@@ -1245,15 +1222,6 @@ func (p *UpdateMenuReq) GetUrl() (v string) {
 	return p.Url
 }
 
-var UpdateMenuReq_Children_DEFAULT []*Menu = []*Menu{}
-
-func (p *UpdateMenuReq) GetChildren() (v []*Menu) {
-	if !p.IsSetChildren() {
-		return UpdateMenuReq_Children_DEFAULT
-	}
-	return p.Children
-}
-
 var UpdateMenuReq_CreatedAt_DEFAULT string = ""
 
 func (p *UpdateMenuReq) GetCreatedAt() (v string) {
@@ -1325,9 +1293,6 @@ func (p *UpdateMenuReq) SetStatus(val int64) {
 func (p *UpdateMenuReq) SetUrl(val string) {
 	p.Url = val
 }
-func (p *UpdateMenuReq) SetChildren(val []*Menu) {
-	p.Children = val
-}
 func (p *UpdateMenuReq) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
@@ -1389,10 +1354,6 @@ func (p *UpdateMenuReq) IsSetUrl() bool {
 	return p.Url != UpdateMenuReq_Url_DEFAULT
 }
 
-func (p *UpdateMenuReq) IsSetChildren() bool {
-	return p.Children != nil
-}
-
 func (p *UpdateMenuReq) IsSetCreatedAt() bool {
 	return p.CreatedAt != UpdateMenuReq_CreatedAt_DEFAULT
 }
@@ -1429,7 +1390,6 @@ var fieldIDToName_UpdateMenuReq = map[int16]string{
 	10: "sort",
 	12: "status",
 	13: "url",
-	14: "children",
 	15: "createdAt",
 	16: "updatedAt",
 	17: "title",
@@ -2468,21 +2428,21 @@ var fieldIDToName_CreateRoleReq = map[int16]string{
 type GetRoleListReq struct {
 	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
 	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
-	Eyword   string `thrift:"eyword,3,optional" frugal:"3,optional,string" json:"eyword,omitempty"`
+	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
 }
 
 func NewGetRoleListReq() *GetRoleListReq {
 	return &GetRoleListReq{
 		Page:     1,
 		PageSize: 10,
-		Eyword:   "",
+		Keyword:  "",
 	}
 }
 
 func (p *GetRoleListReq) InitDefault() {
 	p.Page = 1
 	p.PageSize = 10
-	p.Eyword = ""
+	p.Keyword = ""
 }
 
 var GetRoleListReq_Page_DEFAULT int64 = 1
@@ -2503,13 +2463,13 @@ func (p *GetRoleListReq) GetPageSize() (v int64) {
 	return p.PageSize
 }
 
-var GetRoleListReq_Eyword_DEFAULT string = ""
+var GetRoleListReq_Keyword_DEFAULT string = ""
 
-func (p *GetRoleListReq) GetEyword() (v string) {
-	if !p.IsSetEyword() {
-		return GetRoleListReq_Eyword_DEFAULT
+func (p *GetRoleListReq) GetKeyword() (v string) {
+	if !p.IsSetKeyword() {
+		return GetRoleListReq_Keyword_DEFAULT
 	}
-	return p.Eyword
+	return p.Keyword
 }
 func (p *GetRoleListReq) SetPage(val int64) {
 	p.Page = val
@@ -2517,8 +2477,8 @@ func (p *GetRoleListReq) SetPage(val int64) {
 func (p *GetRoleListReq) SetPageSize(val int64) {
 	p.PageSize = val
 }
-func (p *GetRoleListReq) SetEyword(val string) {
-	p.Eyword = val
+func (p *GetRoleListReq) SetKeyword(val string) {
+	p.Keyword = val
 }
 
 func (p *GetRoleListReq) IsSetPage() bool {
@@ -2529,8 +2489,8 @@ func (p *GetRoleListReq) IsSetPageSize() bool {
 	return p.PageSize != GetRoleListReq_PageSize_DEFAULT
 }
 
-func (p *GetRoleListReq) IsSetEyword() bool {
-	return p.Eyword != GetRoleListReq_Eyword_DEFAULT
+func (p *GetRoleListReq) IsSetKeyword() bool {
+	return p.Keyword != GetRoleListReq_Keyword_DEFAULT
 }
 
 func (p *GetRoleListReq) String() string {
@@ -2543,7 +2503,7 @@ func (p *GetRoleListReq) String() string {
 var fieldIDToName_GetRoleListReq = map[int16]string{
 	1: "page",
 	2: "pageSize",
-	3: "eyword",
+	3: "keyword",
 }
 
 type UpdateRoleReq struct {
@@ -3841,24 +3801,24 @@ var fieldIDToName_Log = map[int16]string{
 	251: "id",
 }
 
-type DeleteLog struct {
+type DeleteLogReq struct {
 }
 
-func NewDeleteLog() *DeleteLog {
-	return &DeleteLog{}
+func NewDeleteLogReq() *DeleteLogReq {
+	return &DeleteLogReq{}
 }
 
-func (p *DeleteLog) InitDefault() {
+func (p *DeleteLogReq) InitDefault() {
 }
 
-func (p *DeleteLog) String() string {
+func (p *DeleteLogReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("DeleteLog(%+v)", *p)
+	return fmt.Sprintf("DeleteLogReq(%+v)", *p)
 }
 
-var fieldIDToName_DeleteLog = map[int16]string{}
+var fieldIDToName_DeleteLogReq = map[int16]string{}
 
 type LogListResp struct {
 	Data     []*Log         `thrift:"data,1,optional" frugal:"1,optional,list<Log>" json:"data,omitempty"`
@@ -3980,7 +3940,7 @@ type SystemService interface {
 
 	LogList(ctx context.Context, req *LogListReq) (r *LogListResp, err error)
 
-	DeleteLog(ctx context.Context, req *DeleteLog) (r *base.NilResponse, err error)
+	DeleteLog(ctx context.Context, req *DeleteLogReq) (r *base.NilResponse, err error)
 }
 
 type SystemServiceCreateApiArgs struct {
@@ -6188,7 +6148,7 @@ var fieldIDToName_SystemServiceLogListResult = map[int16]string{
 }
 
 type SystemServiceDeleteLogArgs struct {
-	Req *DeleteLog `thrift:"req,1" frugal:"1,default,DeleteLog" json:"req"`
+	Req *DeleteLogReq `thrift:"req,1" frugal:"1,default,DeleteLogReq" json:"req"`
 }
 
 func NewSystemServiceDeleteLogArgs() *SystemServiceDeleteLogArgs {
@@ -6198,15 +6158,15 @@ func NewSystemServiceDeleteLogArgs() *SystemServiceDeleteLogArgs {
 func (p *SystemServiceDeleteLogArgs) InitDefault() {
 }
 
-var SystemServiceDeleteLogArgs_Req_DEFAULT *DeleteLog
+var SystemServiceDeleteLogArgs_Req_DEFAULT *DeleteLogReq
 
-func (p *SystemServiceDeleteLogArgs) GetReq() (v *DeleteLog) {
+func (p *SystemServiceDeleteLogArgs) GetReq() (v *DeleteLogReq) {
 	if !p.IsSetReq() {
 		return SystemServiceDeleteLogArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceDeleteLogArgs) SetReq(val *DeleteLog) {
+func (p *SystemServiceDeleteLogArgs) SetReq(val *DeleteLogReq) {
 	p.Req = val
 }
 

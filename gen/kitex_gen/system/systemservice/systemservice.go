@@ -1130,7 +1130,7 @@ func (p *kClient) LogList(ctx context.Context, req *system.LogListReq) (r *syste
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteLog(ctx context.Context, req *system.DeleteLog) (r *base.NilResponse, err error) {
+func (p *kClient) DeleteLog(ctx context.Context, req *system.DeleteLogReq) (r *base.NilResponse, err error) {
 	var _args system.SystemServiceDeleteLogArgs
 	_args.Req = req
 	var _result system.SystemServiceDeleteLogResult

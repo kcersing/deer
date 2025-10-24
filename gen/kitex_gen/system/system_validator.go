@@ -191,7 +191,7 @@ func (p *LogListReq) IsValid() error {
 func (p *Log) IsValid() error {
 	return nil
 }
-func (p *DeleteLog) IsValid() error {
+func (p *DeleteLogReq) IsValid() error {
 	return nil
 }
 func (p *LogListResp) IsValid() error {

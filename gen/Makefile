@@ -14,3 +14,9 @@ hertz_gen_facade:
 	hz model --idl=../idl/admin/product.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/facade/member.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/order.thrift --mod=gen --model_dir=hertz_gen
+
+	hz model --idl=../idl/admin/dict.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/menu.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/role.thrift--mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/system.thrift --mod=gen --model_dir=hertz_gen
+

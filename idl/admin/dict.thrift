@@ -35,6 +35,9 @@ struct DicthtListReq{
     1:  optional string name = "" (api.raw = "name" )
     2:  optional i64 dictionaryId= 0 (api.raw = "dictionaryId" )
 }
+
+
+
 service DictService {
     // 创建字典信息
       base.NilResponse CreateDict(1: Dict req) (api.post = "/service/dict/create")
