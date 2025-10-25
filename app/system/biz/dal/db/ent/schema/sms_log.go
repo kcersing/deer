@@ -14,12 +14,12 @@ type SmsLog struct {
 
 func (SmsLog) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("mobile").Comment("手机号"),
-		field.String("biz_id").Comment("BizId"),
-		field.String("code").Comment("验证码"),
-		field.String("content").Comment("内容"),
-		field.Int64("notify_type").Comment("通知类型[1会员;2员工]").Optional(),
-		field.String("template").Comment("短信模板"),
+		field.String("mobile").Comment("手机号").Optional(),
+		field.String("biz_id").Comment("BizId").Optional(),
+		field.String("code").Comment("验证码").Optional(),
+		field.String("content").Comment("内容").Optional(),
+		field.Int64("notify_type").Comment("通知类型[1会员;2员工]").Default(1).Optional(),
+		field.String("template").Comment("短信模板").Optional(),
 	}
 }
 

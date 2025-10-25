@@ -108,6 +108,12 @@ func (_u *LogsUpdate) SetNillableType(v *string) *LogsUpdate {
 	return _u
 }
 
+// ClearType clears the value of the "type" field.
+func (_u *LogsUpdate) ClearType() *LogsUpdate {
+	_u.mutation.ClearType()
+	return _u
+}
+
 // SetMethod sets the "method" field.
 func (_u *LogsUpdate) SetMethod(v string) *LogsUpdate {
 	_u.mutation.SetMethod(v)
@@ -119,6 +125,12 @@ func (_u *LogsUpdate) SetNillableMethod(v *string) *LogsUpdate {
 	if v != nil {
 		_u.SetMethod(*v)
 	}
+	return _u
+}
+
+// ClearMethod clears the value of the "method" field.
+func (_u *LogsUpdate) ClearMethod() *LogsUpdate {
+	_u.mutation.ClearMethod()
 	return _u
 }
 
@@ -136,6 +148,12 @@ func (_u *LogsUpdate) SetNillableAPI(v *string) *LogsUpdate {
 	return _u
 }
 
+// ClearAPI clears the value of the "api" field.
+func (_u *LogsUpdate) ClearAPI() *LogsUpdate {
+	_u.mutation.ClearAPI()
+	return _u
+}
+
 // SetSuccess sets the "success" field.
 func (_u *LogsUpdate) SetSuccess(v bool) *LogsUpdate {
 	_u.mutation.SetSuccess(v)
@@ -147,6 +165,12 @@ func (_u *LogsUpdate) SetNillableSuccess(v *bool) *LogsUpdate {
 	if v != nil {
 		_u.SetSuccess(*v)
 	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *LogsUpdate) ClearSuccess() *LogsUpdate {
+	_u.mutation.ClearSuccess()
 	return _u
 }
 
@@ -384,14 +408,26 @@ func (_u *LogsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(logs.FieldType, field.TypeString, value)
 	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(logs.FieldType, field.TypeString)
+	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(logs.FieldMethod, field.TypeString, value)
+	}
+	if _u.mutation.MethodCleared() {
+		_spec.ClearField(logs.FieldMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.API(); ok {
 		_spec.SetField(logs.FieldAPI, field.TypeString, value)
 	}
+	if _u.mutation.APICleared() {
+		_spec.ClearField(logs.FieldAPI, field.TypeString)
+	}
 	if value, ok := _u.mutation.Success(); ok {
 		_spec.SetField(logs.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(logs.FieldSuccess, field.TypeBool)
 	}
 	if value, ok := _u.mutation.ReqContent(); ok {
 		_spec.SetField(logs.FieldReqContent, field.TypeString, value)
@@ -541,6 +577,12 @@ func (_u *LogsUpdateOne) SetNillableType(v *string) *LogsUpdateOne {
 	return _u
 }
 
+// ClearType clears the value of the "type" field.
+func (_u *LogsUpdateOne) ClearType() *LogsUpdateOne {
+	_u.mutation.ClearType()
+	return _u
+}
+
 // SetMethod sets the "method" field.
 func (_u *LogsUpdateOne) SetMethod(v string) *LogsUpdateOne {
 	_u.mutation.SetMethod(v)
@@ -552,6 +594,12 @@ func (_u *LogsUpdateOne) SetNillableMethod(v *string) *LogsUpdateOne {
 	if v != nil {
 		_u.SetMethod(*v)
 	}
+	return _u
+}
+
+// ClearMethod clears the value of the "method" field.
+func (_u *LogsUpdateOne) ClearMethod() *LogsUpdateOne {
+	_u.mutation.ClearMethod()
 	return _u
 }
 
@@ -569,6 +617,12 @@ func (_u *LogsUpdateOne) SetNillableAPI(v *string) *LogsUpdateOne {
 	return _u
 }
 
+// ClearAPI clears the value of the "api" field.
+func (_u *LogsUpdateOne) ClearAPI() *LogsUpdateOne {
+	_u.mutation.ClearAPI()
+	return _u
+}
+
 // SetSuccess sets the "success" field.
 func (_u *LogsUpdateOne) SetSuccess(v bool) *LogsUpdateOne {
 	_u.mutation.SetSuccess(v)
@@ -580,6 +634,12 @@ func (_u *LogsUpdateOne) SetNillableSuccess(v *bool) *LogsUpdateOne {
 	if v != nil {
 		_u.SetSuccess(*v)
 	}
+	return _u
+}
+
+// ClearSuccess clears the value of the "success" field.
+func (_u *LogsUpdateOne) ClearSuccess() *LogsUpdateOne {
+	_u.mutation.ClearSuccess()
 	return _u
 }
 
@@ -847,14 +907,26 @@ func (_u *LogsUpdateOne) sqlSave(ctx context.Context) (_node *Logs, err error) {
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(logs.FieldType, field.TypeString, value)
 	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(logs.FieldType, field.TypeString)
+	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(logs.FieldMethod, field.TypeString, value)
+	}
+	if _u.mutation.MethodCleared() {
+		_spec.ClearField(logs.FieldMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.API(); ok {
 		_spec.SetField(logs.FieldAPI, field.TypeString, value)
 	}
+	if _u.mutation.APICleared() {
+		_spec.ClearField(logs.FieldAPI, field.TypeString)
+	}
 	if value, ok := _u.mutation.Success(); ok {
 		_spec.SetField(logs.FieldSuccess, field.TypeBool, value)
+	}
+	if _u.mutation.SuccessCleared() {
+		_spec.ClearField(logs.FieldSuccess, field.TypeBool)
 	}
 	if value, ok := _u.mutation.ReqContent(); ok {
 		_spec.SetField(logs.FieldReqContent, field.TypeString, value)

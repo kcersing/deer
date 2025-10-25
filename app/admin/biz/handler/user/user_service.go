@@ -11,9 +11,8 @@ import (
 	base "gen/hertz_gen/base"
 	user "gen/hertz_gen/user"
 	base1 "gen/kitex_gen/base"
+	user2 "gen/kitex_gen/user"
 	"github.com/cloudwego/hertz/pkg/app"
-
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // CreateUser .
@@ -23,13 +22,21 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 	var req user.CreateUserReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.UserClient.CreateUser(ctx, &user2.CreateUserReq{
+		Username: req.GetUsername(),
+		Password: req.GetPassword(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // GetUser .
@@ -71,11 +78,122 @@ func GetUserList(ctx context.Context, c *app.RequestContext) {
 	var req user.GetUserListReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.UserClient.GetUserList(ctx, &user2.GetUserListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+		Name:     req.GetName(),
+		Mobile:   req.GetMobile(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
+}
+
+// UpdateUser .
+// @router /service/user/update [POST]
+func UpdateUser(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req user.UpdateUserReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+
+	resp, err := client.UserClient.UpdateUser(ctx, &user2.UpdateUserReq{
+		Id:       req.GetID(),
+		Avatar:   req.GetAvatar(),
+		Mobile:   req.GetMobile(),
+		Name:     req.GetName(),
+		Status:   req.GetStatus(),
+		Gender:   req.GetGender(),
+		Birthday: req.GetBirthday(),
+		Detail:   req.GetDetail(),
+		RoleId:   req.GetRoleId(),
+	})
+
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
+}
+
+// ChangePassword .
+// @router /service/user/change-password [POST]
+func ChangePassword(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req user.ChangePasswordReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+
+	resp, err := client.UserClient.ChangePassword(ctx, &user2.ChangePasswordReq{
+		Id:       req.GetID(),
+		Password: req.GetPassword(),
+	})
+
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
+}
+
+// DeleteUser .
+// @router /service/user/delete [POST]
+func DeleteUser(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req base.IdReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+
+	resp, err := client.UserClient.DeleteUser(ctx, &base1.IdReq{Id: req.GetID()})
+
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
+}
+
+// SetUserRole .
+// @router /service/user/set/role [POST]
+func SetUserRole(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req user.SetUserRoleReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+
+	resp, err := client.UserClient.SetUserRole(ctx, &user2.SetUserRoleReq{
+		Id:     req.GetID(),
+		RoleId: req.GetRoleId(),
+	})
+
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

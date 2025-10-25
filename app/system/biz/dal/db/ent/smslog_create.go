@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/smslog"
 	"time"
@@ -96,9 +95,25 @@ func (_c *SmsLogCreate) SetMobile(v string) *SmsLogCreate {
 	return _c
 }
 
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (_c *SmsLogCreate) SetNillableMobile(v *string) *SmsLogCreate {
+	if v != nil {
+		_c.SetMobile(*v)
+	}
+	return _c
+}
+
 // SetBizID sets the "biz_id" field.
 func (_c *SmsLogCreate) SetBizID(v string) *SmsLogCreate {
 	_c.mutation.SetBizID(v)
+	return _c
+}
+
+// SetNillableBizID sets the "biz_id" field if the given value is not nil.
+func (_c *SmsLogCreate) SetNillableBizID(v *string) *SmsLogCreate {
+	if v != nil {
+		_c.SetBizID(*v)
+	}
 	return _c
 }
 
@@ -108,9 +123,25 @@ func (_c *SmsLogCreate) SetCode(v string) *SmsLogCreate {
 	return _c
 }
 
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_c *SmsLogCreate) SetNillableCode(v *string) *SmsLogCreate {
+	if v != nil {
+		_c.SetCode(*v)
+	}
+	return _c
+}
+
 // SetContent sets the "content" field.
 func (_c *SmsLogCreate) SetContent(v string) *SmsLogCreate {
 	_c.mutation.SetContent(v)
+	return _c
+}
+
+// SetNillableContent sets the "content" field if the given value is not nil.
+func (_c *SmsLogCreate) SetNillableContent(v *string) *SmsLogCreate {
+	if v != nil {
+		_c.SetContent(*v)
+	}
 	return _c
 }
 
@@ -131,6 +162,14 @@ func (_c *SmsLogCreate) SetNillableNotifyType(v *int64) *SmsLogCreate {
 // SetTemplate sets the "template" field.
 func (_c *SmsLogCreate) SetTemplate(v string) *SmsLogCreate {
 	_c.mutation.SetTemplate(v)
+	return _c
+}
+
+// SetNillableTemplate sets the "template" field if the given value is not nil.
+func (_c *SmsLogCreate) SetNillableTemplate(v *string) *SmsLogCreate {
+	if v != nil {
+		_c.SetTemplate(*v)
+	}
 	return _c
 }
 
@@ -195,25 +234,14 @@ func (_c *SmsLogCreate) defaults() {
 		v := smslog.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
+	if _, ok := _c.mutation.NotifyType(); !ok {
+		v := smslog.DefaultNotifyType
+		_c.mutation.SetNotifyType(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *SmsLogCreate) check() error {
-	if _, ok := _c.mutation.Mobile(); !ok {
-		return &ValidationError{Name: "mobile", err: errors.New(`ent: missing required field "SmsLog.mobile"`)}
-	}
-	if _, ok := _c.mutation.BizID(); !ok {
-		return &ValidationError{Name: "biz_id", err: errors.New(`ent: missing required field "SmsLog.biz_id"`)}
-	}
-	if _, ok := _c.mutation.Code(); !ok {
-		return &ValidationError{Name: "code", err: errors.New(`ent: missing required field "SmsLog.code"`)}
-	}
-	if _, ok := _c.mutation.Content(); !ok {
-		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "SmsLog.content"`)}
-	}
-	if _, ok := _c.mutation.Template(); !ok {
-		return &ValidationError{Name: "template", err: errors.New(`ent: missing required field "SmsLog.template"`)}
-	}
 	return nil
 }
 

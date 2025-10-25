@@ -80,3 +80,28 @@ func _createuserMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _changepasswordMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _deleteuserMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _updateuserMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _setMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _setuserroleMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

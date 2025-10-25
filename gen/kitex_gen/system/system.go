@@ -3802,13 +3802,52 @@ var fieldIDToName_Log = map[int16]string{
 }
 
 type DeleteLogReq struct {
+	StartAt string `thrift:"startAt,1,optional" frugal:"1,optional,string" json:"startAt,omitempty"`
+	EndAt   string `thrift:"endAt,2,optional" frugal:"2,optional,string" json:"endAt,omitempty"`
 }
 
 func NewDeleteLogReq() *DeleteLogReq {
-	return &DeleteLogReq{}
+	return &DeleteLogReq{
+		StartAt: "",
+		EndAt:   "",
+	}
 }
 
 func (p *DeleteLogReq) InitDefault() {
+	p.StartAt = ""
+	p.EndAt = ""
+}
+
+var DeleteLogReq_StartAt_DEFAULT string = ""
+
+func (p *DeleteLogReq) GetStartAt() (v string) {
+	if !p.IsSetStartAt() {
+		return DeleteLogReq_StartAt_DEFAULT
+	}
+	return p.StartAt
+}
+
+var DeleteLogReq_EndAt_DEFAULT string = ""
+
+func (p *DeleteLogReq) GetEndAt() (v string) {
+	if !p.IsSetEndAt() {
+		return DeleteLogReq_EndAt_DEFAULT
+	}
+	return p.EndAt
+}
+func (p *DeleteLogReq) SetStartAt(val string) {
+	p.StartAt = val
+}
+func (p *DeleteLogReq) SetEndAt(val string) {
+	p.EndAt = val
+}
+
+func (p *DeleteLogReq) IsSetStartAt() bool {
+	return p.StartAt != DeleteLogReq_StartAt_DEFAULT
+}
+
+func (p *DeleteLogReq) IsSetEndAt() bool {
+	return p.EndAt != DeleteLogReq_EndAt_DEFAULT
 }
 
 func (p *DeleteLogReq) String() string {
@@ -3818,7 +3857,10 @@ func (p *DeleteLogReq) String() string {
 	return fmt.Sprintf("DeleteLogReq(%+v)", *p)
 }
 
-var fieldIDToName_DeleteLogReq = map[int16]string{}
+var fieldIDToName_DeleteLogReq = map[int16]string{
+	1: "startAt",
+	2: "endAt",
+}
 
 type LogListResp struct {
 	Data     []*Log         `thrift:"data,1,optional" frugal:"1,optional,list<Log>" json:"data,omitempty"`

@@ -16,11 +16,11 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "path", Type: field.TypeString, Comment: "API path | API 路径"},
-		{Name: "title", Type: field.TypeString, Comment: "API title | API 名称"},
-		{Name: "description", Type: field.TypeString, Comment: "API description | API 描述"},
-		{Name: "api_group", Type: field.TypeString, Comment: "API group | API 分组"},
-		{Name: "method", Type: field.TypeString, Comment: "HTTP method | HTTP 请求类型", Default: "POST"},
+		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "API path | API 路径"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "API title | API 名称"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "API description | API 描述"},
+		{Name: "api_group", Type: field.TypeString, Nullable: true, Comment: "API group | API 分组"},
+		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "HTTP method | HTTP 请求类型", Default: "POST"},
 		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
 	}
 	// SysApisTable holds the schema information for the "sys_apis" table.
@@ -44,9 +44,9 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "title", Type: field.TypeString, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
-		{Name: "name", Type: field.TypeString, Unique: true, Comment: "the name of dictionary for search | 字典搜索名称"},
-		{Name: "description", Type: field.TypeString, Comment: "the description of dictionary | 字典描述"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
+		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "the name of dictionary for search | 字典搜索名称"},
+		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "the description of dictionary | 字典描述"},
 	}
 	// SysDictTable holds the schema information for the "sys_dict" table.
 	SysDictTable = &schema.Table{
@@ -74,9 +74,9 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "title", Type: field.TypeString, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
-		{Name: "key", Type: field.TypeString, Comment: "key | 键"},
-		{Name: "value", Type: field.TypeString, Comment: "value | 值"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
+		{Name: "key", Type: field.TypeString, Nullable: true, Comment: "key | 键"},
+		{Name: "value", Type: field.TypeString, Nullable: true, Comment: "value | 值"},
 		{Name: "dict_id", Type: field.TypeInt64, Nullable: true, Comment: "Dictionary ID | 字典ID"},
 	}
 	// SysDicthtTable holds the schema information for the "sys_dictht" table.
@@ -122,10 +122,10 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "type", Type: field.TypeString, Comment: "type of log | 日志类型"},
-		{Name: "method", Type: field.TypeString, Comment: "method of log | 日志请求方法"},
-		{Name: "api", Type: field.TypeString, Comment: "api of log | 日志请求api"},
-		{Name: "success", Type: field.TypeBool, Comment: "success of log | 日志请求是否成功"},
+		{Name: "type", Type: field.TypeString, Nullable: true, Comment: "type of log | 日志类型"},
+		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "method of log | 日志请求方法"},
+		{Name: "api", Type: field.TypeString, Nullable: true, Comment: "api of log | 日志请求api"},
+		{Name: "success", Type: field.TypeBool, Nullable: true, Comment: "success of log | 日志请求是否成功"},
 		{Name: "req_content", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "content of request log | 日志请求内容"},
 		{Name: "resp_content", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "content of response log | 日志返回内容"},
 		{Name: "ip", Type: field.TypeString, Nullable: true, Comment: "ip of log | 日志IP"},
@@ -156,20 +156,20 @@ var (
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "index path | 菜单路由路径", Default: ""},
-		{Name: "name", Type: field.TypeString, Comment: "index name | 菜单名称"},
-		{Name: "order_no", Type: field.TypeInt64, Comment: "sorting numbers | 排序编号", Default: 0},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "index name | 菜单名称"},
+		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "sorting numbers | 排序编号", Default: 0},
 		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
 		{Name: "ignore", Type: field.TypeBool, Nullable: true, Comment: "当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问", Default: false},
-		{Name: "type", Type: field.TypeString, Comment: "type | 菜单类别"},
-		{Name: "level", Type: field.TypeInt64, Comment: "menu level | 菜单层级"},
-		{Name: "menu_type", Type: field.TypeInt64, Comment: "menu type | 菜单类型 0 目录 1 菜单 2 按钮"},
+		{Name: "type", Type: field.TypeString, Nullable: true, Comment: "type | 菜单类别"},
+		{Name: "level", Type: field.TypeInt64, Nullable: true, Comment: "menu level | 菜单层级"},
+		{Name: "menu_type", Type: field.TypeInt64, Nullable: true, Comment: "menu type | 菜单类型 0 目录 1 菜单 2 按钮"},
 		{Name: "redirect", Type: field.TypeString, Nullable: true, Comment: "redirect path | 跳转路径 （外链）", Default: ""},
 		{Name: "component", Type: field.TypeString, Nullable: true, Comment: "the path of vue file | 组件路径", Default: ""},
-		{Name: "title", Type: field.TypeString, Comment: "menu name | 菜单显示标题"},
-		{Name: "icon", Type: field.TypeString, Comment: "menu icon | 菜单图标"},
-		{Name: "hidden", Type: field.TypeInt64, Comment: "hidden "},
-		{Name: "sort", Type: field.TypeInt64, Comment: "sort"},
-		{Name: "url", Type: field.TypeString, Comment: "url"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "menu name | 菜单显示标题"},
+		{Name: "icon", Type: field.TypeString, Nullable: true, Comment: "menu icon | 菜单图标"},
+		{Name: "hidden", Type: field.TypeInt64, Nullable: true, Comment: "hidden "},
+		{Name: "sort", Type: field.TypeInt64, Nullable: true, Comment: "sort"},
+		{Name: "url", Type: field.TypeString, Nullable: true, Comment: "url"},
 		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "parent menu ID | 父菜单ID"},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
@@ -193,10 +193,10 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "type", Type: field.TypeString, Comment: "类型[1:用户user;2:会员member]"},
-		{Name: "to_user_id", Type: field.TypeString, Comment: "该消息接受者ID"},
-		{Name: "from_user_id", Type: field.TypeString, Comment: "该消息发送者ID"},
-		{Name: "content", Type: field.TypeString, Comment: "消息内容"},
+		{Name: "type", Type: field.TypeString, Nullable: true, Comment: "类型[1:用户user;2:会员member]"},
+		{Name: "to_user_id", Type: field.TypeString, Nullable: true, Comment: "该消息接受者ID"},
+		{Name: "from_user_id", Type: field.TypeString, Nullable: true, Comment: "该消息发送者ID"},
+		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "消息内容"},
 	}
 	// MessagesTable holds the schema information for the "messages" table.
 	MessagesTable = &schema.Table{
@@ -219,12 +219,12 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "name", Type: field.TypeString, Comment: "role name | 角色名"},
-		{Name: "value", Type: field.TypeString, Unique: true, Comment: "role value for permission control in front end | 角色值，用于前端权限控制"},
-		{Name: "default_router", Type: field.TypeString, Comment: "default menu : dashboard | 默认登录页面", Default: "dashboard"},
-		{Name: "remark", Type: field.TypeString, Comment: "remark | 备注", Default: ""},
-		{Name: "order_no", Type: field.TypeInt64, Comment: "order number | 排序编号", Default: 0},
-		{Name: "apis", Type: field.TypeJSON, Comment: "apis"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "role name | 角色名"},
+		{Name: "value", Type: field.TypeString, Unique: true, Nullable: true, Comment: "role value for permission control in front end | 角色值，用于前端权限控制"},
+		{Name: "default_router", Type: field.TypeString, Nullable: true, Comment: "default menu : dashboard | 默认登录页面", Default: "dashboard"},
+		{Name: "remark", Type: field.TypeString, Nullable: true, Comment: "remark | 备注", Default: ""},
+		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "order number | 排序编号", Default: 0},
+		{Name: "apis", Type: field.TypeJSON, Nullable: true, Comment: "apis"},
 	}
 	// SysRolesTable holds the schema information for the "sys_roles" table.
 	SysRolesTable = &schema.Table{
@@ -240,8 +240,8 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "notice_count", Type: field.TypeInt64, Comment: "通知短信数量", Default: 0},
-		{Name: "used_notice", Type: field.TypeInt64, Comment: "已用通知", Default: 0},
+		{Name: "notice_count", Type: field.TypeInt64, Nullable: true, Comment: "通知短信数量", Default: 0},
+		{Name: "used_notice", Type: field.TypeInt64, Nullable: true, Comment: "已用通知", Default: 0},
 	}
 	// SysSmsTable holds the schema information for the "sys_sms" table.
 	SysSmsTable = &schema.Table{
@@ -257,12 +257,12 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "mobile", Type: field.TypeString, Comment: "手机号"},
-		{Name: "biz_id", Type: field.TypeString, Comment: "BizId"},
-		{Name: "code", Type: field.TypeString, Comment: "验证码"},
-		{Name: "content", Type: field.TypeString, Comment: "内容"},
-		{Name: "notify_type", Type: field.TypeInt64, Nullable: true, Comment: "通知类型[1会员;2员工]"},
-		{Name: "template", Type: field.TypeString, Comment: "短信模板"},
+		{Name: "mobile", Type: field.TypeString, Nullable: true, Comment: "手机号"},
+		{Name: "biz_id", Type: field.TypeString, Nullable: true, Comment: "BizId"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "验证码"},
+		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "内容"},
+		{Name: "notify_type", Type: field.TypeInt64, Nullable: true, Comment: "通知类型[1会员;2员工]", Default: 1},
+		{Name: "template", Type: field.TypeString, Nullable: true, Comment: "短信模板"},
 	}
 	// SysSmsLogTable holds the schema information for the "sys_sms_log" table.
 	SysSmsLogTable = &schema.Table{

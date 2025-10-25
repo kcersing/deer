@@ -473,8 +473,8 @@ var fieldIDToName_UserListResp = map[int16]string{
 }
 
 type CreateUserReq struct {
-	Username *string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
-	Password *string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Username string `thrift:"username,1" frugal:"1,default,string" json:"username"`
+	Password string `thrift:"password,2" frugal:"2,default,string" json:"password"`
 }
 
 func NewCreateUserReq() *CreateUserReq {
@@ -484,36 +484,18 @@ func NewCreateUserReq() *CreateUserReq {
 func (p *CreateUserReq) InitDefault() {
 }
 
-var CreateUserReq_Username_DEFAULT string
-
 func (p *CreateUserReq) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return CreateUserReq_Username_DEFAULT
-	}
-	return *p.Username
+	return p.Username
 }
-
-var CreateUserReq_Password_DEFAULT string
 
 func (p *CreateUserReq) GetPassword() (v string) {
-	if !p.IsSetPassword() {
-		return CreateUserReq_Password_DEFAULT
-	}
-	return *p.Password
+	return p.Password
 }
-func (p *CreateUserReq) SetUsername(val *string) {
+func (p *CreateUserReq) SetUsername(val string) {
 	p.Username = val
 }
-func (p *CreateUserReq) SetPassword(val *string) {
+func (p *CreateUserReq) SetPassword(val string) {
 	p.Password = val
-}
-
-func (p *CreateUserReq) IsSetUsername() bool {
-	return p.Username != nil
-}
-
-func (p *CreateUserReq) IsSetPassword() bool {
-	return p.Password != nil
 }
 
 func (p *CreateUserReq) String() string {

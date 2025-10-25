@@ -319,4 +319,8 @@ func init() {
 	smslogDescStatus := smslogMixinFields1[0].Descriptor()
 	// smslog.DefaultStatus holds the default value on creation for the status field.
 	smslog.DefaultStatus = smslogDescStatus.Default.(int64)
+	// smslogDescNotifyType is the schema descriptor for notify_type field.
+	smslogDescNotifyType := smslogFields[4].Descriptor()
+	// smslog.DefaultNotifyType holds the default value on creation for the notify_type field.
+	smslog.DefaultNotifyType = smslogDescNotifyType.Default.(int64)
 }

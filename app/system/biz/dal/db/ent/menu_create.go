@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/role"
@@ -125,6 +124,14 @@ func (_c *MenuCreate) SetName(v string) *MenuCreate {
 	return _c
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableName(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetName(*v)
+	}
+	return _c
+}
+
 // SetOrderNo sets the "order_no" field.
 func (_c *MenuCreate) SetOrderNo(v int64) *MenuCreate {
 	_c.mutation.SetOrderNo(v)
@@ -173,15 +180,39 @@ func (_c *MenuCreate) SetType(v string) *MenuCreate {
 	return _c
 }
 
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableType(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetType(*v)
+	}
+	return _c
+}
+
 // SetLevel sets the "level" field.
 func (_c *MenuCreate) SetLevel(v int64) *MenuCreate {
 	_c.mutation.SetLevel(v)
 	return _c
 }
 
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableLevel(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetLevel(*v)
+	}
+	return _c
+}
+
 // SetMenuType sets the "menu_type" field.
 func (_c *MenuCreate) SetMenuType(v int64) *MenuCreate {
 	_c.mutation.SetMenuType(v)
+	return _c
+}
+
+// SetNillableMenuType sets the "menu_type" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableMenuType(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetMenuType(*v)
+	}
 	return _c
 }
 
@@ -219,9 +250,25 @@ func (_c *MenuCreate) SetTitle(v string) *MenuCreate {
 	return _c
 }
 
+// SetNillableTitle sets the "title" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableTitle(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetTitle(*v)
+	}
+	return _c
+}
+
 // SetIcon sets the "icon" field.
 func (_c *MenuCreate) SetIcon(v string) *MenuCreate {
 	_c.mutation.SetIcon(v)
+	return _c
+}
+
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableIcon(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetIcon(*v)
+	}
 	return _c
 }
 
@@ -231,15 +278,39 @@ func (_c *MenuCreate) SetHidden(v int64) *MenuCreate {
 	return _c
 }
 
+// SetNillableHidden sets the "hidden" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableHidden(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetHidden(*v)
+	}
+	return _c
+}
+
 // SetSort sets the "sort" field.
 func (_c *MenuCreate) SetSort(v int64) *MenuCreate {
 	_c.mutation.SetSort(v)
 	return _c
 }
 
+// SetNillableSort sets the "sort" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableSort(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetSort(*v)
+	}
+	return _c
+}
+
 // SetURL sets the "url" field.
 func (_c *MenuCreate) SetURL(v string) *MenuCreate {
 	_c.mutation.SetURL(v)
+	return _c
+}
+
+// SetNillableURL sets the "url" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableURL(v *string) *MenuCreate {
+	if v != nil {
+		_c.SetURL(*v)
+	}
 	return _c
 }
 
@@ -367,36 +438,6 @@ func (_c *MenuCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *MenuCreate) check() error {
-	if _, ok := _c.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Menu.name"`)}
-	}
-	if _, ok := _c.mutation.OrderNo(); !ok {
-		return &ValidationError{Name: "order_no", err: errors.New(`ent: missing required field "Menu.order_no"`)}
-	}
-	if _, ok := _c.mutation.GetType(); !ok {
-		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Menu.type"`)}
-	}
-	if _, ok := _c.mutation.Level(); !ok {
-		return &ValidationError{Name: "level", err: errors.New(`ent: missing required field "Menu.level"`)}
-	}
-	if _, ok := _c.mutation.MenuType(); !ok {
-		return &ValidationError{Name: "menu_type", err: errors.New(`ent: missing required field "Menu.menu_type"`)}
-	}
-	if _, ok := _c.mutation.Title(); !ok {
-		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "Menu.title"`)}
-	}
-	if _, ok := _c.mutation.Icon(); !ok {
-		return &ValidationError{Name: "icon", err: errors.New(`ent: missing required field "Menu.icon"`)}
-	}
-	if _, ok := _c.mutation.Hidden(); !ok {
-		return &ValidationError{Name: "hidden", err: errors.New(`ent: missing required field "Menu.hidden"`)}
-	}
-	if _, ok := _c.mutation.Sort(); !ok {
-		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "Menu.sort"`)}
-	}
-	if _, ok := _c.mutation.URL(); !ok {
-		return &ValidationError{Name: "url", err: errors.New(`ent: missing required field "Menu.url"`)}
-	}
 	return nil
 }
 

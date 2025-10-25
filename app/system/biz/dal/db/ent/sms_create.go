@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/sms"
 	"time"
@@ -191,12 +190,6 @@ func (_c *SmsCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *SmsCreate) check() error {
-	if _, ok := _c.mutation.NoticeCount(); !ok {
-		return &ValidationError{Name: "notice_count", err: errors.New(`ent: missing required field "Sms.notice_count"`)}
-	}
-	if _, ok := _c.mutation.UsedNotice(); !ok {
-		return &ValidationError{Name: "used_notice", err: errors.New(`ent: missing required field "Sms.used_notice"`)}
-	}
 	return nil
 }
 

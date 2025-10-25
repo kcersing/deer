@@ -138,6 +138,12 @@ func (_u *RoleUpdate) SetNillableName(v *string) *RoleUpdate {
 	return _u
 }
 
+// ClearName clears the value of the "name" field.
+func (_u *RoleUpdate) ClearName() *RoleUpdate {
+	_u.mutation.ClearName()
+	return _u
+}
+
 // SetValue sets the "value" field.
 func (_u *RoleUpdate) SetValue(v string) *RoleUpdate {
 	_u.mutation.SetValue(v)
@@ -149,6 +155,12 @@ func (_u *RoleUpdate) SetNillableValue(v *string) *RoleUpdate {
 	if v != nil {
 		_u.SetValue(*v)
 	}
+	return _u
+}
+
+// ClearValue clears the value of the "value" field.
+func (_u *RoleUpdate) ClearValue() *RoleUpdate {
+	_u.mutation.ClearValue()
 	return _u
 }
 
@@ -166,6 +178,12 @@ func (_u *RoleUpdate) SetNillableDefaultRouter(v *string) *RoleUpdate {
 	return _u
 }
 
+// ClearDefaultRouter clears the value of the "default_router" field.
+func (_u *RoleUpdate) ClearDefaultRouter() *RoleUpdate {
+	_u.mutation.ClearDefaultRouter()
+	return _u
+}
+
 // SetRemark sets the "remark" field.
 func (_u *RoleUpdate) SetRemark(v string) *RoleUpdate {
 	_u.mutation.SetRemark(v)
@@ -177,6 +195,12 @@ func (_u *RoleUpdate) SetNillableRemark(v *string) *RoleUpdate {
 	if v != nil {
 		_u.SetRemark(*v)
 	}
+	return _u
+}
+
+// ClearRemark clears the value of the "remark" field.
+func (_u *RoleUpdate) ClearRemark() *RoleUpdate {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
@@ -201,6 +225,12 @@ func (_u *RoleUpdate) AddOrderNo(v int64) *RoleUpdate {
 	return _u
 }
 
+// ClearOrderNo clears the value of the "order_no" field.
+func (_u *RoleUpdate) ClearOrderNo() *RoleUpdate {
+	_u.mutation.ClearOrderNo()
+	return _u
+}
+
 // SetApis sets the "apis" field.
 func (_u *RoleUpdate) SetApis(v []int) *RoleUpdate {
 	_u.mutation.SetApis(v)
@@ -210,6 +240,12 @@ func (_u *RoleUpdate) SetApis(v []int) *RoleUpdate {
 // AppendApis appends value to the "apis" field.
 func (_u *RoleUpdate) AppendApis(v []int) *RoleUpdate {
 	_u.mutation.AppendApis(v)
+	return _u
+}
+
+// ClearApis clears the value of the "apis" field.
+func (_u *RoleUpdate) ClearApis() *RoleUpdate {
+	_u.mutation.ClearApis()
 	return _u
 }
 
@@ -374,20 +410,35 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(role.FieldName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Value(); ok {
 		_spec.SetField(role.FieldValue, field.TypeString, value)
+	}
+	if _u.mutation.ValueCleared() {
+		_spec.ClearField(role.FieldValue, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultRouter(); ok {
 		_spec.SetField(role.FieldDefaultRouter, field.TypeString, value)
 	}
+	if _u.mutation.DefaultRouterCleared() {
+		_spec.ClearField(role.FieldDefaultRouter, field.TypeString)
+	}
 	if value, ok := _u.mutation.Remark(); ok {
 		_spec.SetField(role.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(role.FieldRemark, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrderNo(); ok {
 		_spec.SetField(role.FieldOrderNo, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedOrderNo(); ok {
 		_spec.AddField(role.FieldOrderNo, field.TypeInt64, value)
+	}
+	if _u.mutation.OrderNoCleared() {
+		_spec.ClearField(role.FieldOrderNo, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
@@ -396,6 +447,9 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.AddModifier(func(u *sql.UpdateBuilder) {
 			sqljson.Append(u, role.FieldApis, value)
 		})
+	}
+	if _u.mutation.ApisCleared() {
+		_spec.ClearField(role.FieldApis, field.TypeJSON)
 	}
 	if _u.mutation.MenusCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -614,6 +668,12 @@ func (_u *RoleUpdateOne) SetNillableName(v *string) *RoleUpdateOne {
 	return _u
 }
 
+// ClearName clears the value of the "name" field.
+func (_u *RoleUpdateOne) ClearName() *RoleUpdateOne {
+	_u.mutation.ClearName()
+	return _u
+}
+
 // SetValue sets the "value" field.
 func (_u *RoleUpdateOne) SetValue(v string) *RoleUpdateOne {
 	_u.mutation.SetValue(v)
@@ -625,6 +685,12 @@ func (_u *RoleUpdateOne) SetNillableValue(v *string) *RoleUpdateOne {
 	if v != nil {
 		_u.SetValue(*v)
 	}
+	return _u
+}
+
+// ClearValue clears the value of the "value" field.
+func (_u *RoleUpdateOne) ClearValue() *RoleUpdateOne {
+	_u.mutation.ClearValue()
 	return _u
 }
 
@@ -642,6 +708,12 @@ func (_u *RoleUpdateOne) SetNillableDefaultRouter(v *string) *RoleUpdateOne {
 	return _u
 }
 
+// ClearDefaultRouter clears the value of the "default_router" field.
+func (_u *RoleUpdateOne) ClearDefaultRouter() *RoleUpdateOne {
+	_u.mutation.ClearDefaultRouter()
+	return _u
+}
+
 // SetRemark sets the "remark" field.
 func (_u *RoleUpdateOne) SetRemark(v string) *RoleUpdateOne {
 	_u.mutation.SetRemark(v)
@@ -653,6 +725,12 @@ func (_u *RoleUpdateOne) SetNillableRemark(v *string) *RoleUpdateOne {
 	if v != nil {
 		_u.SetRemark(*v)
 	}
+	return _u
+}
+
+// ClearRemark clears the value of the "remark" field.
+func (_u *RoleUpdateOne) ClearRemark() *RoleUpdateOne {
+	_u.mutation.ClearRemark()
 	return _u
 }
 
@@ -677,6 +755,12 @@ func (_u *RoleUpdateOne) AddOrderNo(v int64) *RoleUpdateOne {
 	return _u
 }
 
+// ClearOrderNo clears the value of the "order_no" field.
+func (_u *RoleUpdateOne) ClearOrderNo() *RoleUpdateOne {
+	_u.mutation.ClearOrderNo()
+	return _u
+}
+
 // SetApis sets the "apis" field.
 func (_u *RoleUpdateOne) SetApis(v []int) *RoleUpdateOne {
 	_u.mutation.SetApis(v)
@@ -686,6 +770,12 @@ func (_u *RoleUpdateOne) SetApis(v []int) *RoleUpdateOne {
 // AppendApis appends value to the "apis" field.
 func (_u *RoleUpdateOne) AppendApis(v []int) *RoleUpdateOne {
 	_u.mutation.AppendApis(v)
+	return _u
+}
+
+// ClearApis clears the value of the "apis" field.
+func (_u *RoleUpdateOne) ClearApis() *RoleUpdateOne {
+	_u.mutation.ClearApis()
 	return _u
 }
 
@@ -880,20 +970,35 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(role.FieldName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Value(); ok {
 		_spec.SetField(role.FieldValue, field.TypeString, value)
+	}
+	if _u.mutation.ValueCleared() {
+		_spec.ClearField(role.FieldValue, field.TypeString)
 	}
 	if value, ok := _u.mutation.DefaultRouter(); ok {
 		_spec.SetField(role.FieldDefaultRouter, field.TypeString, value)
 	}
+	if _u.mutation.DefaultRouterCleared() {
+		_spec.ClearField(role.FieldDefaultRouter, field.TypeString)
+	}
 	if value, ok := _u.mutation.Remark(); ok {
 		_spec.SetField(role.FieldRemark, field.TypeString, value)
+	}
+	if _u.mutation.RemarkCleared() {
+		_spec.ClearField(role.FieldRemark, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrderNo(); ok {
 		_spec.SetField(role.FieldOrderNo, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedOrderNo(); ok {
 		_spec.AddField(role.FieldOrderNo, field.TypeInt64, value)
+	}
+	if _u.mutation.OrderNoCleared() {
+		_spec.ClearField(role.FieldOrderNo, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
@@ -902,6 +1007,9 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 		_spec.AddModifier(func(u *sql.UpdateBuilder) {
 			sqljson.Append(u, role.FieldApis, value)
 		})
+	}
+	if _u.mutation.ApisCleared() {
+		_spec.ClearField(role.FieldApis, field.TypeJSON)
 	}
 	if _u.mutation.MenusCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -142,6 +142,12 @@ func (_u *SmsUpdate) AddNoticeCount(v int64) *SmsUpdate {
 	return _u
 }
 
+// ClearNoticeCount clears the value of the "notice_count" field.
+func (_u *SmsUpdate) ClearNoticeCount() *SmsUpdate {
+	_u.mutation.ClearNoticeCount()
+	return _u
+}
+
 // SetUsedNotice sets the "used_notice" field.
 func (_u *SmsUpdate) SetUsedNotice(v int64) *SmsUpdate {
 	_u.mutation.ResetUsedNotice()
@@ -160,6 +166,12 @@ func (_u *SmsUpdate) SetNillableUsedNotice(v *int64) *SmsUpdate {
 // AddUsedNotice adds value to the "used_notice" field.
 func (_u *SmsUpdate) AddUsedNotice(v int64) *SmsUpdate {
 	_u.mutation.AddUsedNotice(v)
+	return _u
+}
+
+// ClearUsedNotice clears the value of the "used_notice" field.
+func (_u *SmsUpdate) ClearUsedNotice() *SmsUpdate {
+	_u.mutation.ClearUsedNotice()
 	return _u
 }
 
@@ -255,11 +267,17 @@ func (_u *SmsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.AddedNoticeCount(); ok {
 		_spec.AddField(sms.FieldNoticeCount, field.TypeInt64, value)
 	}
+	if _u.mutation.NoticeCountCleared() {
+		_spec.ClearField(sms.FieldNoticeCount, field.TypeInt64)
+	}
 	if value, ok := _u.mutation.UsedNotice(); ok {
 		_spec.SetField(sms.FieldUsedNotice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUsedNotice(); ok {
 		_spec.AddField(sms.FieldUsedNotice, field.TypeInt64, value)
+	}
+	if _u.mutation.UsedNoticeCleared() {
+		_spec.ClearField(sms.FieldUsedNotice, field.TypeInt64)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -395,6 +413,12 @@ func (_u *SmsUpdateOne) AddNoticeCount(v int64) *SmsUpdateOne {
 	return _u
 }
 
+// ClearNoticeCount clears the value of the "notice_count" field.
+func (_u *SmsUpdateOne) ClearNoticeCount() *SmsUpdateOne {
+	_u.mutation.ClearNoticeCount()
+	return _u
+}
+
 // SetUsedNotice sets the "used_notice" field.
 func (_u *SmsUpdateOne) SetUsedNotice(v int64) *SmsUpdateOne {
 	_u.mutation.ResetUsedNotice()
@@ -413,6 +437,12 @@ func (_u *SmsUpdateOne) SetNillableUsedNotice(v *int64) *SmsUpdateOne {
 // AddUsedNotice adds value to the "used_notice" field.
 func (_u *SmsUpdateOne) AddUsedNotice(v int64) *SmsUpdateOne {
 	_u.mutation.AddUsedNotice(v)
+	return _u
+}
+
+// ClearUsedNotice clears the value of the "used_notice" field.
+func (_u *SmsUpdateOne) ClearUsedNotice() *SmsUpdateOne {
+	_u.mutation.ClearUsedNotice()
 	return _u
 }
 
@@ -538,11 +568,17 @@ func (_u *SmsUpdateOne) sqlSave(ctx context.Context) (_node *Sms, err error) {
 	if value, ok := _u.mutation.AddedNoticeCount(); ok {
 		_spec.AddField(sms.FieldNoticeCount, field.TypeInt64, value)
 	}
+	if _u.mutation.NoticeCountCleared() {
+		_spec.ClearField(sms.FieldNoticeCount, field.TypeInt64)
+	}
 	if value, ok := _u.mutation.UsedNotice(); ok {
 		_spec.SetField(sms.FieldUsedNotice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUsedNotice(); ok {
 		_spec.AddField(sms.FieldUsedNotice, field.TypeInt64, value)
+	}
+	if _u.mutation.UsedNoticeCleared() {
+		_spec.ClearField(sms.FieldUsedNotice, field.TypeInt64)
 	}
 	_node = &Sms{config: _u.config}
 	_spec.Assign = _node.assignValues

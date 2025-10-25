@@ -108,6 +108,12 @@ func (_u *MessagesUpdate) SetNillableType(v *string) *MessagesUpdate {
 	return _u
 }
 
+// ClearType clears the value of the "type" field.
+func (_u *MessagesUpdate) ClearType() *MessagesUpdate {
+	_u.mutation.ClearType()
+	return _u
+}
+
 // SetToUserID sets the "to_user_id" field.
 func (_u *MessagesUpdate) SetToUserID(v string) *MessagesUpdate {
 	_u.mutation.SetToUserID(v)
@@ -119,6 +125,12 @@ func (_u *MessagesUpdate) SetNillableToUserID(v *string) *MessagesUpdate {
 	if v != nil {
 		_u.SetToUserID(*v)
 	}
+	return _u
+}
+
+// ClearToUserID clears the value of the "to_user_id" field.
+func (_u *MessagesUpdate) ClearToUserID() *MessagesUpdate {
+	_u.mutation.ClearToUserID()
 	return _u
 }
 
@@ -136,6 +148,12 @@ func (_u *MessagesUpdate) SetNillableFromUserID(v *string) *MessagesUpdate {
 	return _u
 }
 
+// ClearFromUserID clears the value of the "from_user_id" field.
+func (_u *MessagesUpdate) ClearFromUserID() *MessagesUpdate {
+	_u.mutation.ClearFromUserID()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *MessagesUpdate) SetContent(v string) *MessagesUpdate {
 	_u.mutation.SetContent(v)
@@ -147,6 +165,12 @@ func (_u *MessagesUpdate) SetNillableContent(v *string) *MessagesUpdate {
 	if v != nil {
 		_u.SetContent(*v)
 	}
+	return _u
+}
+
+// ClearContent clears the value of the "content" field.
+func (_u *MessagesUpdate) ClearContent() *MessagesUpdate {
+	_u.mutation.ClearContent()
 	return _u
 }
 
@@ -230,14 +254,26 @@ func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(messages.FieldType, field.TypeString, value)
 	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(messages.FieldType, field.TypeString)
+	}
 	if value, ok := _u.mutation.ToUserID(); ok {
 		_spec.SetField(messages.FieldToUserID, field.TypeString, value)
+	}
+	if _u.mutation.ToUserIDCleared() {
+		_spec.ClearField(messages.FieldToUserID, field.TypeString)
 	}
 	if value, ok := _u.mutation.FromUserID(); ok {
 		_spec.SetField(messages.FieldFromUserID, field.TypeString, value)
 	}
+	if _u.mutation.FromUserIDCleared() {
+		_spec.ClearField(messages.FieldFromUserID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
+	}
+	if _u.mutation.ContentCleared() {
+		_spec.ClearField(messages.FieldContent, field.TypeString)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -339,6 +375,12 @@ func (_u *MessagesUpdateOne) SetNillableType(v *string) *MessagesUpdateOne {
 	return _u
 }
 
+// ClearType clears the value of the "type" field.
+func (_u *MessagesUpdateOne) ClearType() *MessagesUpdateOne {
+	_u.mutation.ClearType()
+	return _u
+}
+
 // SetToUserID sets the "to_user_id" field.
 func (_u *MessagesUpdateOne) SetToUserID(v string) *MessagesUpdateOne {
 	_u.mutation.SetToUserID(v)
@@ -350,6 +392,12 @@ func (_u *MessagesUpdateOne) SetNillableToUserID(v *string) *MessagesUpdateOne {
 	if v != nil {
 		_u.SetToUserID(*v)
 	}
+	return _u
+}
+
+// ClearToUserID clears the value of the "to_user_id" field.
+func (_u *MessagesUpdateOne) ClearToUserID() *MessagesUpdateOne {
+	_u.mutation.ClearToUserID()
 	return _u
 }
 
@@ -367,6 +415,12 @@ func (_u *MessagesUpdateOne) SetNillableFromUserID(v *string) *MessagesUpdateOne
 	return _u
 }
 
+// ClearFromUserID clears the value of the "from_user_id" field.
+func (_u *MessagesUpdateOne) ClearFromUserID() *MessagesUpdateOne {
+	_u.mutation.ClearFromUserID()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *MessagesUpdateOne) SetContent(v string) *MessagesUpdateOne {
 	_u.mutation.SetContent(v)
@@ -378,6 +432,12 @@ func (_u *MessagesUpdateOne) SetNillableContent(v *string) *MessagesUpdateOne {
 	if v != nil {
 		_u.SetContent(*v)
 	}
+	return _u
+}
+
+// ClearContent clears the value of the "content" field.
+func (_u *MessagesUpdateOne) ClearContent() *MessagesUpdateOne {
+	_u.mutation.ClearContent()
 	return _u
 }
 
@@ -491,14 +551,26 @@ func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err 
 	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(messages.FieldType, field.TypeString, value)
 	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(messages.FieldType, field.TypeString)
+	}
 	if value, ok := _u.mutation.ToUserID(); ok {
 		_spec.SetField(messages.FieldToUserID, field.TypeString, value)
+	}
+	if _u.mutation.ToUserIDCleared() {
+		_spec.ClearField(messages.FieldToUserID, field.TypeString)
 	}
 	if value, ok := _u.mutation.FromUserID(); ok {
 		_spec.SetField(messages.FieldFromUserID, field.TypeString, value)
 	}
+	if _u.mutation.FromUserIDCleared() {
+		_spec.ClearField(messages.FieldFromUserID, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
+	}
+	if _u.mutation.ContentCleared() {
+		_spec.ClearField(messages.FieldContent, field.TypeString)
 	}
 	_node = &Messages{config: _u.config}
 	_spec.Assign = _node.assignValues

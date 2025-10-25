@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/dict"
 	"system/biz/dal/db/ent/dictht"
@@ -97,15 +96,39 @@ func (_c *DictCreate) SetTitle(v string) *DictCreate {
 	return _c
 }
 
+// SetNillableTitle sets the "title" field if the given value is not nil.
+func (_c *DictCreate) SetNillableTitle(v *string) *DictCreate {
+	if v != nil {
+		_c.SetTitle(*v)
+	}
+	return _c
+}
+
 // SetName sets the "name" field.
 func (_c *DictCreate) SetName(v string) *DictCreate {
 	_c.mutation.SetName(v)
 	return _c
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_c *DictCreate) SetNillableName(v *string) *DictCreate {
+	if v != nil {
+		_c.SetName(*v)
+	}
+	return _c
+}
+
 // SetDescription sets the "description" field.
 func (_c *DictCreate) SetDescription(v string) *DictCreate {
 	_c.mutation.SetDescription(v)
+	return _c
+}
+
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *DictCreate) SetNillableDescription(v *string) *DictCreate {
+	if v != nil {
+		_c.SetDescription(*v)
+	}
 	return _c
 }
 
@@ -189,15 +212,6 @@ func (_c *DictCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *DictCreate) check() error {
-	if _, ok := _c.mutation.Title(); !ok {
-		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "Dict.title"`)}
-	}
-	if _, ok := _c.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Dict.name"`)}
-	}
-	if _, ok := _c.mutation.Description(); !ok {
-		return &ValidationError{Name: "description", err: errors.New(`ent: missing required field "Dict.description"`)}
-	}
 	return nil
 }
 

@@ -10,9 +10,9 @@ import (
 	base "gen/hertz_gen/base"
 	role "gen/hertz_gen/role"
 	base1 "gen/kitex_gen/base"
+	"gen/kitex_gen/system"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // CreateRole .
@@ -26,9 +26,20 @@ func CreateRole(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateRole(ctx, &system.CreateRoleReq{
+		Name:          req.GetName(),
+		Value:         req.GetValue(),
+		DefaultRouter: req.GetDefaultRouter(),
+		Remark:        req.GetRemark(),
+		Apis:          req.GetApis(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // GetRole .
@@ -65,9 +76,18 @@ func GetRoleList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.GetRoleList(ctx, &system.GetRoleListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // UpdateRole .
@@ -81,9 +101,21 @@ func UpdateRole(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.UpdateRole(ctx, &system.UpdateRoleReq{
+		Id:            req.GetID(),
+		Name:          req.GetName(),
+		Value:         req.GetValue(),
+		DefaultRouter: req.GetDefaultRouter(),
+		Remark:        req.GetRemark(),
+		Apis:          req.GetApis(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteRole .
@@ -97,9 +129,14 @@ func DeleteRole(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DeleteRole(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateRoleMenu .
@@ -113,9 +150,17 @@ func CreateRoleMenu(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateRoleMenu(ctx, &system.CreateMenuAuthReq{
+		RoleId: req.GetRoleId(),
+		Ids:    req.GetIds(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateRoleApi .
@@ -129,9 +174,17 @@ func CreateRoleApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateRoleApi(ctx, &system.CreateMenuAuthReq{
+		RoleId: req.GetRoleId(),
+		Ids:    req.GetIds(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // GetRoleApi .
@@ -145,9 +198,16 @@ func GetRoleApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.GetRoleApi(ctx, &base1.IdReq{
+		Id: req.GetID(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // GetRoleMenu .

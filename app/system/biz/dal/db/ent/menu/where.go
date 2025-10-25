@@ -570,6 +570,16 @@ func NameHasSuffix(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldHasSuffix(FieldName, v))
 }
 
+// NameIsNil applies the IsNil predicate on the "name" field.
+func NameIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldName))
+}
+
+// NameNotNil applies the NotNil predicate on the "name" field.
+func NameNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldName))
+}
+
 // NameEqualFold applies the EqualFold predicate on the "name" field.
 func NameEqualFold(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldEqualFold(FieldName, v))
@@ -618,6 +628,16 @@ func OrderNoLT(v int64) predicate.Menu {
 // OrderNoLTE applies the LTE predicate on the "order_no" field.
 func OrderNoLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldOrderNo, v))
+}
+
+// OrderNoIsNil applies the IsNil predicate on the "order_no" field.
+func OrderNoIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldOrderNo))
+}
+
+// OrderNoNotNil applies the NotNil predicate on the "order_no" field.
+func OrderNoNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldOrderNo))
 }
 
 // DisabledEQ applies the EQ predicate on the "disabled" field.
@@ -745,6 +765,16 @@ func TypeHasSuffix(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldHasSuffix(FieldType, v))
 }
 
+// TypeIsNil applies the IsNil predicate on the "type" field.
+func TypeIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldType))
+}
+
+// TypeNotNil applies the NotNil predicate on the "type" field.
+func TypeNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldType))
+}
+
 // TypeEqualFold applies the EqualFold predicate on the "type" field.
 func TypeEqualFold(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldEqualFold(FieldType, v))
@@ -795,6 +825,16 @@ func LevelLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldLevel, v))
 }
 
+// LevelIsNil applies the IsNil predicate on the "level" field.
+func LevelIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldLevel))
+}
+
+// LevelNotNil applies the NotNil predicate on the "level" field.
+func LevelNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldLevel))
+}
+
 // MenuTypeEQ applies the EQ predicate on the "menu_type" field.
 func MenuTypeEQ(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldEQ(FieldMenuType, v))
@@ -833,6 +873,16 @@ func MenuTypeLT(v int64) predicate.Menu {
 // MenuTypeLTE applies the LTE predicate on the "menu_type" field.
 func MenuTypeLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldMenuType, v))
+}
+
+// MenuTypeIsNil applies the IsNil predicate on the "menu_type" field.
+func MenuTypeIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldMenuType))
+}
+
+// MenuTypeNotNil applies the NotNil predicate on the "menu_type" field.
+func MenuTypeNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldMenuType))
 }
 
 // RedirectEQ applies the EQ predicate on the "redirect" field.
@@ -1040,6 +1090,16 @@ func TitleHasSuffix(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldHasSuffix(FieldTitle, v))
 }
 
+// TitleIsNil applies the IsNil predicate on the "title" field.
+func TitleIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldTitle))
+}
+
+// TitleNotNil applies the NotNil predicate on the "title" field.
+func TitleNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldTitle))
+}
+
 // TitleEqualFold applies the EqualFold predicate on the "title" field.
 func TitleEqualFold(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldEqualFold(FieldTitle, v))
@@ -1105,6 +1165,16 @@ func IconHasSuffix(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldHasSuffix(FieldIcon, v))
 }
 
+// IconIsNil applies the IsNil predicate on the "icon" field.
+func IconIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldIcon))
+}
+
+// IconNotNil applies the NotNil predicate on the "icon" field.
+func IconNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldIcon))
+}
+
 // IconEqualFold applies the EqualFold predicate on the "icon" field.
 func IconEqualFold(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldEqualFold(FieldIcon, v))
@@ -1155,6 +1225,16 @@ func HiddenLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldHidden, v))
 }
 
+// HiddenIsNil applies the IsNil predicate on the "hidden" field.
+func HiddenIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldHidden))
+}
+
+// HiddenNotNil applies the NotNil predicate on the "hidden" field.
+func HiddenNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldHidden))
+}
+
 // SortEQ applies the EQ predicate on the "sort" field.
 func SortEQ(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldEQ(FieldSort, v))
@@ -1193,6 +1273,16 @@ func SortLT(v int64) predicate.Menu {
 // SortLTE applies the LTE predicate on the "sort" field.
 func SortLTE(v int64) predicate.Menu {
 	return predicate.Menu(sql.FieldLTE(FieldSort, v))
+}
+
+// SortIsNil applies the IsNil predicate on the "sort" field.
+func SortIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldSort))
+}
+
+// SortNotNil applies the NotNil predicate on the "sort" field.
+func SortNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldSort))
 }
 
 // URLEQ applies the EQ predicate on the "url" field.
@@ -1248,6 +1338,16 @@ func URLHasPrefix(v string) predicate.Menu {
 // URLHasSuffix applies the HasSuffix predicate on the "url" field.
 func URLHasSuffix(v string) predicate.Menu {
 	return predicate.Menu(sql.FieldHasSuffix(FieldURL, v))
+}
+
+// URLIsNil applies the IsNil predicate on the "url" field.
+func URLIsNil() predicate.Menu {
+	return predicate.Menu(sql.FieldIsNull(FieldURL))
+}
+
+// URLNotNil applies the NotNil predicate on the "url" field.
+func URLNotNil() predicate.Menu {
+	return predicate.Menu(sql.FieldNotNull(FieldURL))
 }
 
 // URLEqualFold applies the EqualFold predicate on the "url" field.

@@ -135,6 +135,12 @@ func (_u *SmsLogUpdate) SetNillableMobile(v *string) *SmsLogUpdate {
 	return _u
 }
 
+// ClearMobile clears the value of the "mobile" field.
+func (_u *SmsLogUpdate) ClearMobile() *SmsLogUpdate {
+	_u.mutation.ClearMobile()
+	return _u
+}
+
 // SetBizID sets the "biz_id" field.
 func (_u *SmsLogUpdate) SetBizID(v string) *SmsLogUpdate {
 	_u.mutation.SetBizID(v)
@@ -146,6 +152,12 @@ func (_u *SmsLogUpdate) SetNillableBizID(v *string) *SmsLogUpdate {
 	if v != nil {
 		_u.SetBizID(*v)
 	}
+	return _u
+}
+
+// ClearBizID clears the value of the "biz_id" field.
+func (_u *SmsLogUpdate) ClearBizID() *SmsLogUpdate {
+	_u.mutation.ClearBizID()
 	return _u
 }
 
@@ -163,6 +175,12 @@ func (_u *SmsLogUpdate) SetNillableCode(v *string) *SmsLogUpdate {
 	return _u
 }
 
+// ClearCode clears the value of the "code" field.
+func (_u *SmsLogUpdate) ClearCode() *SmsLogUpdate {
+	_u.mutation.ClearCode()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *SmsLogUpdate) SetContent(v string) *SmsLogUpdate {
 	_u.mutation.SetContent(v)
@@ -174,6 +192,12 @@ func (_u *SmsLogUpdate) SetNillableContent(v *string) *SmsLogUpdate {
 	if v != nil {
 		_u.SetContent(*v)
 	}
+	return _u
+}
+
+// ClearContent clears the value of the "content" field.
+func (_u *SmsLogUpdate) ClearContent() *SmsLogUpdate {
+	_u.mutation.ClearContent()
 	return _u
 }
 
@@ -215,6 +239,12 @@ func (_u *SmsLogUpdate) SetNillableTemplate(v *string) *SmsLogUpdate {
 	if v != nil {
 		_u.SetTemplate(*v)
 	}
+	return _u
+}
+
+// ClearTemplate clears the value of the "template" field.
+func (_u *SmsLogUpdate) ClearTemplate() *SmsLogUpdate {
+	_u.mutation.ClearTemplate()
 	return _u
 }
 
@@ -307,14 +337,26 @@ func (_u *SmsLogUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(smslog.FieldMobile, field.TypeString, value)
 	}
+	if _u.mutation.MobileCleared() {
+		_spec.ClearField(smslog.FieldMobile, field.TypeString)
+	}
 	if value, ok := _u.mutation.BizID(); ok {
 		_spec.SetField(smslog.FieldBizID, field.TypeString, value)
+	}
+	if _u.mutation.BizIDCleared() {
+		_spec.ClearField(smslog.FieldBizID, field.TypeString)
 	}
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(smslog.FieldCode, field.TypeString, value)
 	}
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(smslog.FieldCode, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(smslog.FieldContent, field.TypeString, value)
+	}
+	if _u.mutation.ContentCleared() {
+		_spec.ClearField(smslog.FieldContent, field.TypeString)
 	}
 	if value, ok := _u.mutation.NotifyType(); ok {
 		_spec.SetField(smslog.FieldNotifyType, field.TypeInt64, value)
@@ -327,6 +369,9 @@ func (_u *SmsLogUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if value, ok := _u.mutation.Template(); ok {
 		_spec.SetField(smslog.FieldTemplate, field.TypeString, value)
+	}
+	if _u.mutation.TemplateCleared() {
+		_spec.ClearField(smslog.FieldTemplate, field.TypeString)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -455,6 +500,12 @@ func (_u *SmsLogUpdateOne) SetNillableMobile(v *string) *SmsLogUpdateOne {
 	return _u
 }
 
+// ClearMobile clears the value of the "mobile" field.
+func (_u *SmsLogUpdateOne) ClearMobile() *SmsLogUpdateOne {
+	_u.mutation.ClearMobile()
+	return _u
+}
+
 // SetBizID sets the "biz_id" field.
 func (_u *SmsLogUpdateOne) SetBizID(v string) *SmsLogUpdateOne {
 	_u.mutation.SetBizID(v)
@@ -466,6 +517,12 @@ func (_u *SmsLogUpdateOne) SetNillableBizID(v *string) *SmsLogUpdateOne {
 	if v != nil {
 		_u.SetBizID(*v)
 	}
+	return _u
+}
+
+// ClearBizID clears the value of the "biz_id" field.
+func (_u *SmsLogUpdateOne) ClearBizID() *SmsLogUpdateOne {
+	_u.mutation.ClearBizID()
 	return _u
 }
 
@@ -483,6 +540,12 @@ func (_u *SmsLogUpdateOne) SetNillableCode(v *string) *SmsLogUpdateOne {
 	return _u
 }
 
+// ClearCode clears the value of the "code" field.
+func (_u *SmsLogUpdateOne) ClearCode() *SmsLogUpdateOne {
+	_u.mutation.ClearCode()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *SmsLogUpdateOne) SetContent(v string) *SmsLogUpdateOne {
 	_u.mutation.SetContent(v)
@@ -494,6 +557,12 @@ func (_u *SmsLogUpdateOne) SetNillableContent(v *string) *SmsLogUpdateOne {
 	if v != nil {
 		_u.SetContent(*v)
 	}
+	return _u
+}
+
+// ClearContent clears the value of the "content" field.
+func (_u *SmsLogUpdateOne) ClearContent() *SmsLogUpdateOne {
+	_u.mutation.ClearContent()
 	return _u
 }
 
@@ -535,6 +604,12 @@ func (_u *SmsLogUpdateOne) SetNillableTemplate(v *string) *SmsLogUpdateOne {
 	if v != nil {
 		_u.SetTemplate(*v)
 	}
+	return _u
+}
+
+// ClearTemplate clears the value of the "template" field.
+func (_u *SmsLogUpdateOne) ClearTemplate() *SmsLogUpdateOne {
+	_u.mutation.ClearTemplate()
 	return _u
 }
 
@@ -657,14 +732,26 @@ func (_u *SmsLogUpdateOne) sqlSave(ctx context.Context) (_node *SmsLog, err erro
 	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(smslog.FieldMobile, field.TypeString, value)
 	}
+	if _u.mutation.MobileCleared() {
+		_spec.ClearField(smslog.FieldMobile, field.TypeString)
+	}
 	if value, ok := _u.mutation.BizID(); ok {
 		_spec.SetField(smslog.FieldBizID, field.TypeString, value)
+	}
+	if _u.mutation.BizIDCleared() {
+		_spec.ClearField(smslog.FieldBizID, field.TypeString)
 	}
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(smslog.FieldCode, field.TypeString, value)
 	}
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(smslog.FieldCode, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(smslog.FieldContent, field.TypeString, value)
+	}
+	if _u.mutation.ContentCleared() {
+		_spec.ClearField(smslog.FieldContent, field.TypeString)
 	}
 	if value, ok := _u.mutation.NotifyType(); ok {
 		_spec.SetField(smslog.FieldNotifyType, field.TypeInt64, value)
@@ -677,6 +764,9 @@ func (_u *SmsLogUpdateOne) sqlSave(ctx context.Context) (_node *SmsLog, err erro
 	}
 	if value, ok := _u.mutation.Template(); ok {
 		_spec.SetField(smslog.FieldTemplate, field.TypeString, value)
+	}
+	if _u.mutation.TemplateCleared() {
+		_spec.ClearField(smslog.FieldTemplate, field.TypeString)
 	}
 	_node = &SmsLog{config: _u.config}
 	_spec.Assign = _node.assignValues

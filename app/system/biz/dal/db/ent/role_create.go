@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/menu"
@@ -98,9 +97,25 @@ func (_c *RoleCreate) SetName(v string) *RoleCreate {
 	return _c
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableName(v *string) *RoleCreate {
+	if v != nil {
+		_c.SetName(*v)
+	}
+	return _c
+}
+
 // SetValue sets the "value" field.
 func (_c *RoleCreate) SetValue(v string) *RoleCreate {
 	_c.mutation.SetValue(v)
+	return _c
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableValue(v *string) *RoleCreate {
+	if v != nil {
+		_c.SetValue(*v)
+	}
 	return _c
 }
 
@@ -263,24 +278,6 @@ func (_c *RoleCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *RoleCreate) check() error {
-	if _, ok := _c.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Role.name"`)}
-	}
-	if _, ok := _c.mutation.Value(); !ok {
-		return &ValidationError{Name: "value", err: errors.New(`ent: missing required field "Role.value"`)}
-	}
-	if _, ok := _c.mutation.DefaultRouter(); !ok {
-		return &ValidationError{Name: "default_router", err: errors.New(`ent: missing required field "Role.default_router"`)}
-	}
-	if _, ok := _c.mutation.Remark(); !ok {
-		return &ValidationError{Name: "remark", err: errors.New(`ent: missing required field "Role.remark"`)}
-	}
-	if _, ok := _c.mutation.OrderNo(); !ok {
-		return &ValidationError{Name: "order_no", err: errors.New(`ent: missing required field "Role.order_no"`)}
-	}
-	if _, ok := _c.mutation.Apis(); !ok {
-		return &ValidationError{Name: "apis", err: errors.New(`ent: missing required field "Role.apis"`)}
-	}
 	return nil
 }
 

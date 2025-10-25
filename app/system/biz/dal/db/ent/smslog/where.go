@@ -414,6 +414,16 @@ func MobileHasSuffix(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldHasSuffix(FieldMobile, v))
 }
 
+// MobileIsNil applies the IsNil predicate on the "mobile" field.
+func MobileIsNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldIsNull(FieldMobile))
+}
+
+// MobileNotNil applies the NotNil predicate on the "mobile" field.
+func MobileNotNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldNotNull(FieldMobile))
+}
+
 // MobileEqualFold applies the EqualFold predicate on the "mobile" field.
 func MobileEqualFold(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldEqualFold(FieldMobile, v))
@@ -477,6 +487,16 @@ func BizIDHasPrefix(v string) predicate.SmsLog {
 // BizIDHasSuffix applies the HasSuffix predicate on the "biz_id" field.
 func BizIDHasSuffix(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldHasSuffix(FieldBizID, v))
+}
+
+// BizIDIsNil applies the IsNil predicate on the "biz_id" field.
+func BizIDIsNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldIsNull(FieldBizID))
+}
+
+// BizIDNotNil applies the NotNil predicate on the "biz_id" field.
+func BizIDNotNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldNotNull(FieldBizID))
 }
 
 // BizIDEqualFold applies the EqualFold predicate on the "biz_id" field.
@@ -544,6 +564,16 @@ func CodeHasSuffix(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldHasSuffix(FieldCode, v))
 }
 
+// CodeIsNil applies the IsNil predicate on the "code" field.
+func CodeIsNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldIsNull(FieldCode))
+}
+
+// CodeNotNil applies the NotNil predicate on the "code" field.
+func CodeNotNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldNotNull(FieldCode))
+}
+
 // CodeEqualFold applies the EqualFold predicate on the "code" field.
 func CodeEqualFold(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldEqualFold(FieldCode, v))
@@ -607,6 +637,16 @@ func ContentHasPrefix(v string) predicate.SmsLog {
 // ContentHasSuffix applies the HasSuffix predicate on the "content" field.
 func ContentHasSuffix(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldHasSuffix(FieldContent, v))
+}
+
+// ContentIsNil applies the IsNil predicate on the "content" field.
+func ContentIsNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldIsNull(FieldContent))
+}
+
+// ContentNotNil applies the NotNil predicate on the "content" field.
+func ContentNotNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldNotNull(FieldContent))
 }
 
 // ContentEqualFold applies the EqualFold predicate on the "content" field.
@@ -722,6 +762,16 @@ func TemplateHasPrefix(v string) predicate.SmsLog {
 // TemplateHasSuffix applies the HasSuffix predicate on the "template" field.
 func TemplateHasSuffix(v string) predicate.SmsLog {
 	return predicate.SmsLog(sql.FieldHasSuffix(FieldTemplate, v))
+}
+
+// TemplateIsNil applies the IsNil predicate on the "template" field.
+func TemplateIsNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldIsNull(FieldTemplate))
+}
+
+// TemplateNotNil applies the NotNil predicate on the "template" field.
+func TemplateNotNil() predicate.SmsLog {
+	return predicate.SmsLog(sql.FieldNotNull(FieldTemplate))
 }
 
 // TemplateEqualFold applies the EqualFold predicate on the "template" field.

@@ -3,14 +3,16 @@
 package system
 
 import (
+	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
 	system "gen/hertz_gen/system"
+	base2 "gen/kitex_gen/base"
+	system2 "gen/kitex_gen/system"
 
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // CreateApi .
@@ -23,10 +25,19 @@ func CreateApi(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
+		Title:       req.GetTitle(),
+		Path:        req.GetPath(),
+		Description: req.GetDescription(),
+		Method:      req.GetMethod(),
+		Group:       req.GetGroup(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // UpdateApi .
@@ -39,10 +50,20 @@ func UpdateApi(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
+		Id:          req.GetID(),
+		Title:       req.GetTitle(),
+		Path:        req.GetPath(),
+		Description: req.GetDescription(),
+		Method:      req.GetMethod(),
+		Group:       req.GetGroup(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteApi .
@@ -55,10 +76,13 @@ func DeleteApi(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.DeleteApi(ctx, &base2.IdReq{Id: req.GetID()})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // ApiList .
@@ -71,10 +95,21 @@ func ApiList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.ApiList(ctx, &system2.ApiListReq{
+		Path:        req.GetPath(),
+		Description: req.GetDescription(),
+		Method:      req.GetMethod(),
+		Group:       req.GetGroup(),
+		Page:        req.GetPage(),
+		PageSize:    req.GetPageSize(),
+		Keyword:     req.GetKeyword(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // ApiTree .
@@ -87,10 +122,21 @@ func ApiTree(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.ApiTree(ctx, &system2.ApiListReq{
+		Path:        req.GetPath(),
+		Description: req.GetDescription(),
+		Method:      req.GetMethod(),
+		Group:       req.GetGroup(),
+		Page:        req.GetPage(),
+		PageSize:    req.GetPageSize(),
+		Keyword:     req.GetKeyword(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // LogList .
@@ -103,10 +149,22 @@ func LogList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.LogList(ctx, &system2.LogListReq{
+		Page:       req.GetPage(),
+		PageSize:   req.GetPageSize(),
+		Type:       req.GetType(),
+		Method:     req.GetMethod(),
+		Api:        req.GetAPI(),
+		Success:    req.GetSuccess(),
+		Operatorsr: req.GetOperatorsr(),
+		Identity:   req.GetIdentity(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteLog .
@@ -119,8 +177,14 @@ func DeleteLog(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.SystemClient.DeleteLog(ctx, &system2.DeleteLogReq{
+		StartAt: req.GetStartAt(),
+		EndAt:   req.GetEndAt(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

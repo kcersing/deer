@@ -384,6 +384,16 @@ func TypeHasSuffix(v string) predicate.Logs {
 	return predicate.Logs(sql.FieldHasSuffix(FieldType, v))
 }
 
+// TypeIsNil applies the IsNil predicate on the "type" field.
+func TypeIsNil() predicate.Logs {
+	return predicate.Logs(sql.FieldIsNull(FieldType))
+}
+
+// TypeNotNil applies the NotNil predicate on the "type" field.
+func TypeNotNil() predicate.Logs {
+	return predicate.Logs(sql.FieldNotNull(FieldType))
+}
+
 // TypeEqualFold applies the EqualFold predicate on the "type" field.
 func TypeEqualFold(v string) predicate.Logs {
 	return predicate.Logs(sql.FieldEqualFold(FieldType, v))
@@ -447,6 +457,16 @@ func MethodHasPrefix(v string) predicate.Logs {
 // MethodHasSuffix applies the HasSuffix predicate on the "method" field.
 func MethodHasSuffix(v string) predicate.Logs {
 	return predicate.Logs(sql.FieldHasSuffix(FieldMethod, v))
+}
+
+// MethodIsNil applies the IsNil predicate on the "method" field.
+func MethodIsNil() predicate.Logs {
+	return predicate.Logs(sql.FieldIsNull(FieldMethod))
+}
+
+// MethodNotNil applies the NotNil predicate on the "method" field.
+func MethodNotNil() predicate.Logs {
+	return predicate.Logs(sql.FieldNotNull(FieldMethod))
 }
 
 // MethodEqualFold applies the EqualFold predicate on the "method" field.
@@ -514,6 +534,16 @@ func APIHasSuffix(v string) predicate.Logs {
 	return predicate.Logs(sql.FieldHasSuffix(FieldAPI, v))
 }
 
+// APIIsNil applies the IsNil predicate on the "api" field.
+func APIIsNil() predicate.Logs {
+	return predicate.Logs(sql.FieldIsNull(FieldAPI))
+}
+
+// APINotNil applies the NotNil predicate on the "api" field.
+func APINotNil() predicate.Logs {
+	return predicate.Logs(sql.FieldNotNull(FieldAPI))
+}
+
 // APIEqualFold applies the EqualFold predicate on the "api" field.
 func APIEqualFold(v string) predicate.Logs {
 	return predicate.Logs(sql.FieldEqualFold(FieldAPI, v))
@@ -532,6 +562,16 @@ func SuccessEQ(v bool) predicate.Logs {
 // SuccessNEQ applies the NEQ predicate on the "success" field.
 func SuccessNEQ(v bool) predicate.Logs {
 	return predicate.Logs(sql.FieldNEQ(FieldSuccess, v))
+}
+
+// SuccessIsNil applies the IsNil predicate on the "success" field.
+func SuccessIsNil() predicate.Logs {
+	return predicate.Logs(sql.FieldIsNull(FieldSuccess))
+}
+
+// SuccessNotNil applies the NotNil predicate on the "success" field.
+func SuccessNotNil() predicate.Logs {
+	return predicate.Logs(sql.FieldNotNull(FieldSuccess))
 }
 
 // ReqContentEQ applies the EQ predicate on the "req_content" field.

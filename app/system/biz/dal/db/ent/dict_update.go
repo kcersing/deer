@@ -136,6 +136,12 @@ func (_u *DictUpdate) SetNillableTitle(v *string) *DictUpdate {
 	return _u
 }
 
+// ClearTitle clears the value of the "title" field.
+func (_u *DictUpdate) ClearTitle() *DictUpdate {
+	_u.mutation.ClearTitle()
+	return _u
+}
+
 // SetName sets the "name" field.
 func (_u *DictUpdate) SetName(v string) *DictUpdate {
 	_u.mutation.SetName(v)
@@ -150,6 +156,12 @@ func (_u *DictUpdate) SetNillableName(v *string) *DictUpdate {
 	return _u
 }
 
+// ClearName clears the value of the "name" field.
+func (_u *DictUpdate) ClearName() *DictUpdate {
+	_u.mutation.ClearName()
+	return _u
+}
+
 // SetDescription sets the "description" field.
 func (_u *DictUpdate) SetDescription(v string) *DictUpdate {
 	_u.mutation.SetDescription(v)
@@ -161,6 +173,12 @@ func (_u *DictUpdate) SetNillableDescription(v *string) *DictUpdate {
 	if v != nil {
 		_u.SetDescription(*v)
 	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *DictUpdate) ClearDescription() *DictUpdate {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -289,11 +307,20 @@ func (_u *DictUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(dict.FieldTitle, field.TypeString, value)
 	}
+	if _u.mutation.TitleCleared() {
+		_spec.ClearField(dict.FieldTitle, field.TypeString)
+	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(dict.FieldName, field.TypeString, value)
 	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(dict.FieldName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(dict.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(dict.FieldDescription, field.TypeString)
 	}
 	if _u.mutation.DicthtCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -467,6 +494,12 @@ func (_u *DictUpdateOne) SetNillableTitle(v *string) *DictUpdateOne {
 	return _u
 }
 
+// ClearTitle clears the value of the "title" field.
+func (_u *DictUpdateOne) ClearTitle() *DictUpdateOne {
+	_u.mutation.ClearTitle()
+	return _u
+}
+
 // SetName sets the "name" field.
 func (_u *DictUpdateOne) SetName(v string) *DictUpdateOne {
 	_u.mutation.SetName(v)
@@ -481,6 +514,12 @@ func (_u *DictUpdateOne) SetNillableName(v *string) *DictUpdateOne {
 	return _u
 }
 
+// ClearName clears the value of the "name" field.
+func (_u *DictUpdateOne) ClearName() *DictUpdateOne {
+	_u.mutation.ClearName()
+	return _u
+}
+
 // SetDescription sets the "description" field.
 func (_u *DictUpdateOne) SetDescription(v string) *DictUpdateOne {
 	_u.mutation.SetDescription(v)
@@ -492,6 +531,12 @@ func (_u *DictUpdateOne) SetNillableDescription(v *string) *DictUpdateOne {
 	if v != nil {
 		_u.SetDescription(*v)
 	}
+	return _u
+}
+
+// ClearDescription clears the value of the "description" field.
+func (_u *DictUpdateOne) ClearDescription() *DictUpdateOne {
+	_u.mutation.ClearDescription()
 	return _u
 }
 
@@ -650,11 +695,20 @@ func (_u *DictUpdateOne) sqlSave(ctx context.Context) (_node *Dict, err error) {
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(dict.FieldTitle, field.TypeString, value)
 	}
+	if _u.mutation.TitleCleared() {
+		_spec.ClearField(dict.FieldTitle, field.TypeString)
+	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(dict.FieldName, field.TypeString, value)
 	}
+	if _u.mutation.NameCleared() {
+		_spec.ClearField(dict.FieldName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(dict.FieldDescription, field.TypeString, value)
+	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(dict.FieldDescription, field.TypeString)
 	}
 	if _u.mutation.DicthtCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -379,6 +379,16 @@ func NoticeCountLTE(v int64) predicate.Sms {
 	return predicate.Sms(sql.FieldLTE(FieldNoticeCount, v))
 }
 
+// NoticeCountIsNil applies the IsNil predicate on the "notice_count" field.
+func NoticeCountIsNil() predicate.Sms {
+	return predicate.Sms(sql.FieldIsNull(FieldNoticeCount))
+}
+
+// NoticeCountNotNil applies the NotNil predicate on the "notice_count" field.
+func NoticeCountNotNil() predicate.Sms {
+	return predicate.Sms(sql.FieldNotNull(FieldNoticeCount))
+}
+
 // UsedNoticeEQ applies the EQ predicate on the "used_notice" field.
 func UsedNoticeEQ(v int64) predicate.Sms {
 	return predicate.Sms(sql.FieldEQ(FieldUsedNotice, v))
@@ -417,6 +427,16 @@ func UsedNoticeLT(v int64) predicate.Sms {
 // UsedNoticeLTE applies the LTE predicate on the "used_notice" field.
 func UsedNoticeLTE(v int64) predicate.Sms {
 	return predicate.Sms(sql.FieldLTE(FieldUsedNotice, v))
+}
+
+// UsedNoticeIsNil applies the IsNil predicate on the "used_notice" field.
+func UsedNoticeIsNil() predicate.Sms {
+	return predicate.Sms(sql.FieldIsNull(FieldUsedNotice))
+}
+
+// UsedNoticeNotNil applies the NotNil predicate on the "used_notice" field.
+func UsedNoticeNotNil() predicate.Sms {
+	return predicate.Sms(sql.FieldNotNull(FieldUsedNotice))
 }
 
 // And groups predicates with the AND operator between them.

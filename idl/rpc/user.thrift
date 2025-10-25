@@ -32,8 +32,8 @@ struct UserListResp {
     255:optional base.BaseResp baseResp={}
 }
 struct CreateUserReq{
-     1:optional string username,
-     2:optional string password,
+     1: string username,
+     2: string password,
 }
 
 struct GetUserListReq{

@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/role"
@@ -83,9 +82,25 @@ func (_c *APICreate) SetPath(v string) *APICreate {
 	return _c
 }
 
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (_c *APICreate) SetNillablePath(v *string) *APICreate {
+	if v != nil {
+		_c.SetPath(*v)
+	}
+	return _c
+}
+
 // SetTitle sets the "title" field.
 func (_c *APICreate) SetTitle(v string) *APICreate {
 	_c.mutation.SetTitle(v)
+	return _c
+}
+
+// SetNillableTitle sets the "title" field if the given value is not nil.
+func (_c *APICreate) SetNillableTitle(v *string) *APICreate {
+	if v != nil {
+		_c.SetTitle(*v)
+	}
 	return _c
 }
 
@@ -95,9 +110,25 @@ func (_c *APICreate) SetDescription(v string) *APICreate {
 	return _c
 }
 
+// SetNillableDescription sets the "description" field if the given value is not nil.
+func (_c *APICreate) SetNillableDescription(v *string) *APICreate {
+	if v != nil {
+		_c.SetDescription(*v)
+	}
+	return _c
+}
+
 // SetAPIGroup sets the "api_group" field.
 func (_c *APICreate) SetAPIGroup(v string) *APICreate {
 	_c.mutation.SetAPIGroup(v)
+	return _c
+}
+
+// SetNillableAPIGroup sets the "api_group" field if the given value is not nil.
+func (_c *APICreate) SetNillableAPIGroup(v *string) *APICreate {
+	if v != nil {
+		_c.SetAPIGroup(*v)
+	}
 	return _c
 }
 
@@ -213,21 +244,6 @@ func (_c *APICreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *APICreate) check() error {
-	if _, ok := _c.mutation.Path(); !ok {
-		return &ValidationError{Name: "path", err: errors.New(`ent: missing required field "API.path"`)}
-	}
-	if _, ok := _c.mutation.Title(); !ok {
-		return &ValidationError{Name: "title", err: errors.New(`ent: missing required field "API.title"`)}
-	}
-	if _, ok := _c.mutation.Description(); !ok {
-		return &ValidationError{Name: "description", err: errors.New(`ent: missing required field "API.description"`)}
-	}
-	if _, ok := _c.mutation.APIGroup(); !ok {
-		return &ValidationError{Name: "api_group", err: errors.New(`ent: missing required field "API.api_group"`)}
-	}
-	if _, ok := _c.mutation.Method(); !ok {
-		return &ValidationError{Name: "method", err: errors.New(`ent: missing required field "API.method"`)}
-	}
 	return nil
 }
 

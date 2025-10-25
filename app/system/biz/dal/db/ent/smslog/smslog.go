@@ -78,6 +78,8 @@ var (
 	DefaultCreatedID int64
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int64
+	// DefaultNotifyType holds the default value on creation for the "notify_type" field.
+	DefaultNotifyType int64
 )
 
 // OrderOption defines the ordering options for the SmsLog queries.

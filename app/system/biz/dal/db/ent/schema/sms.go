@@ -14,8 +14,8 @@ type Sms struct {
 
 func (Sms) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int64("notice_count").Default(0).Comment("通知短信数量"),
-		field.Int64("used_notice").Default(0).Comment("已用通知"),
+		field.Int64("notice_count").Default(0).Comment("通知短信数量").Optional(),
+		field.Int64("used_notice").Default(0).Comment("已用通知").Optional(),
 	}
 }
 

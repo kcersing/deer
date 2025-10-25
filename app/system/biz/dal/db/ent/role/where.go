@@ -410,6 +410,16 @@ func NameHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldName, v))
 }
 
+// NameIsNil applies the IsNil predicate on the "name" field.
+func NameIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldName))
+}
+
+// NameNotNil applies the NotNil predicate on the "name" field.
+func NameNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldName))
+}
+
 // NameEqualFold applies the EqualFold predicate on the "name" field.
 func NameEqualFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldEqualFold(FieldName, v))
@@ -473,6 +483,16 @@ func ValueHasPrefix(v string) predicate.Role {
 // ValueHasSuffix applies the HasSuffix predicate on the "value" field.
 func ValueHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldValue, v))
+}
+
+// ValueIsNil applies the IsNil predicate on the "value" field.
+func ValueIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldValue))
+}
+
+// ValueNotNil applies the NotNil predicate on the "value" field.
+func ValueNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldValue))
 }
 
 // ValueEqualFold applies the EqualFold predicate on the "value" field.
@@ -540,6 +560,16 @@ func DefaultRouterHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldDefaultRouter, v))
 }
 
+// DefaultRouterIsNil applies the IsNil predicate on the "default_router" field.
+func DefaultRouterIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldDefaultRouter))
+}
+
+// DefaultRouterNotNil applies the NotNil predicate on the "default_router" field.
+func DefaultRouterNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldDefaultRouter))
+}
+
 // DefaultRouterEqualFold applies the EqualFold predicate on the "default_router" field.
 func DefaultRouterEqualFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldEqualFold(FieldDefaultRouter, v))
@@ -605,6 +635,16 @@ func RemarkHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldRemark, v))
 }
 
+// RemarkIsNil applies the IsNil predicate on the "remark" field.
+func RemarkIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldRemark))
+}
+
+// RemarkNotNil applies the NotNil predicate on the "remark" field.
+func RemarkNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldRemark))
+}
+
 // RemarkEqualFold applies the EqualFold predicate on the "remark" field.
 func RemarkEqualFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldEqualFold(FieldRemark, v))
@@ -653,6 +693,26 @@ func OrderNoLT(v int64) predicate.Role {
 // OrderNoLTE applies the LTE predicate on the "order_no" field.
 func OrderNoLTE(v int64) predicate.Role {
 	return predicate.Role(sql.FieldLTE(FieldOrderNo, v))
+}
+
+// OrderNoIsNil applies the IsNil predicate on the "order_no" field.
+func OrderNoIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldOrderNo))
+}
+
+// OrderNoNotNil applies the NotNil predicate on the "order_no" field.
+func OrderNoNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldOrderNo))
+}
+
+// ApisIsNil applies the IsNil predicate on the "apis" field.
+func ApisIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldApis))
+}
+
+// ApisNotNil applies the NotNil predicate on the "apis" field.
+func ApisNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldApis))
 }
 
 // HasMenus applies the HasEdge predicate on the "menus" edge.

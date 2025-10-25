@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/messages"
 	"time"
@@ -82,9 +81,25 @@ func (_c *MessagesCreate) SetType(v string) *MessagesCreate {
 	return _c
 }
 
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *MessagesCreate) SetNillableType(v *string) *MessagesCreate {
+	if v != nil {
+		_c.SetType(*v)
+	}
+	return _c
+}
+
 // SetToUserID sets the "to_user_id" field.
 func (_c *MessagesCreate) SetToUserID(v string) *MessagesCreate {
 	_c.mutation.SetToUserID(v)
+	return _c
+}
+
+// SetNillableToUserID sets the "to_user_id" field if the given value is not nil.
+func (_c *MessagesCreate) SetNillableToUserID(v *string) *MessagesCreate {
+	if v != nil {
+		_c.SetToUserID(*v)
+	}
 	return _c
 }
 
@@ -94,9 +109,25 @@ func (_c *MessagesCreate) SetFromUserID(v string) *MessagesCreate {
 	return _c
 }
 
+// SetNillableFromUserID sets the "from_user_id" field if the given value is not nil.
+func (_c *MessagesCreate) SetNillableFromUserID(v *string) *MessagesCreate {
+	if v != nil {
+		_c.SetFromUserID(*v)
+	}
+	return _c
+}
+
 // SetContent sets the "content" field.
 func (_c *MessagesCreate) SetContent(v string) *MessagesCreate {
 	_c.mutation.SetContent(v)
+	return _c
+}
+
+// SetNillableContent sets the "content" field if the given value is not nil.
+func (_c *MessagesCreate) SetNillableContent(v *string) *MessagesCreate {
+	if v != nil {
+		_c.SetContent(*v)
+	}
 	return _c
 }
 
@@ -161,18 +192,6 @@ func (_c *MessagesCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *MessagesCreate) check() error {
-	if _, ok := _c.mutation.GetType(); !ok {
-		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Messages.type"`)}
-	}
-	if _, ok := _c.mutation.ToUserID(); !ok {
-		return &ValidationError{Name: "to_user_id", err: errors.New(`ent: missing required field "Messages.to_user_id"`)}
-	}
-	if _, ok := _c.mutation.FromUserID(); !ok {
-		return &ValidationError{Name: "from_user_id", err: errors.New(`ent: missing required field "Messages.from_user_id"`)}
-	}
-	if _, ok := _c.mutation.Content(); !ok {
-		return &ValidationError{Name: "content", err: errors.New(`ent: missing required field "Messages.content"`)}
-	}
 	return nil
 }
 

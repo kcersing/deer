@@ -3,14 +3,15 @@
 package dict
 
 import (
+	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
 	"context"
-
 	base "gen/hertz_gen/base"
 	dict "gen/hertz_gen/dict"
+	base1 "gen/kitex_gen/base"
+	"gen/kitex_gen/system"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // CreateDict .
@@ -24,9 +25,19 @@ func CreateDict(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateDict(ctx, &system.Dict{
+		Title:       req.GetTitle(),
+		Name:        req.GetName(),
+		Status:      req.GetStatus(),
+		Description: req.GetDescription(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // UpdateDict .
@@ -40,9 +51,20 @@ func UpdateDict(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.UpdateDict(ctx, &system.Dict{
+		Id:          req.GetID(),
+		Title:       req.GetTitle(),
+		Name:        req.GetName(),
+		Status:      req.GetStatus(),
+		Description: req.GetDescription(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteDict .
@@ -56,9 +78,14 @@ func DeleteDict(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DeleteDict(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DictList .
@@ -72,9 +99,19 @@ func DictList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DictList(ctx, &system.DictListReq{
+		Title:    req.GetTitle(),
+		Name:     req.GetName(),
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateDictht .
@@ -88,9 +125,20 @@ func CreateDictht(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateDictht(ctx, &system.Dictht{
+		Title:    req.GetTitle(),
+		Key:      req.GetKey(),
+		Value:    req.GetValue(),
+		Status:   req.GetStatus(),
+		ParentID: req.GetParentID(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // UpdateDictht .
@@ -104,9 +152,21 @@ func UpdateDictht(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateDictht(ctx, &system.Dictht{
+		Id:       req.GetID(),
+		Title:    req.GetTitle(),
+		Key:      req.GetKey(),
+		Value:    req.GetValue(),
+		Status:   req.GetStatus(),
+		ParentID: req.GetParentID(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteDictht .
@@ -120,9 +180,14 @@ func DeleteDictht(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DeleteDictht(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DicthtList .
@@ -136,7 +201,15 @@ func DicthtList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DicthtList(ctx, &system.DicthtListReq{
+		Name:         req.GetName(),
+		DictionaryId: req.GetDictionaryId(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

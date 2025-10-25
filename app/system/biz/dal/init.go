@@ -10,4 +10,5 @@ func Init() {
 	redis.Init()
 	db.InitDB()
 	casbin.InitCasbin()
+
 }

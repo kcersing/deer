@@ -109,6 +109,12 @@ func (_u *APIUpdate) SetNillablePath(v *string) *APIUpdate {
 	return _u
 }
 
+// ClearPath clears the value of the "path" field.
+func (_u *APIUpdate) ClearPath() *APIUpdate {
+	_u.mutation.ClearPath()
+	return _u
+}
+
 // SetTitle sets the "title" field.
 func (_u *APIUpdate) SetTitle(v string) *APIUpdate {
 	_u.mutation.SetTitle(v)
@@ -120,6 +126,12 @@ func (_u *APIUpdate) SetNillableTitle(v *string) *APIUpdate {
 	if v != nil {
 		_u.SetTitle(*v)
 	}
+	return _u
+}
+
+// ClearTitle clears the value of the "title" field.
+func (_u *APIUpdate) ClearTitle() *APIUpdate {
+	_u.mutation.ClearTitle()
 	return _u
 }
 
@@ -137,6 +149,12 @@ func (_u *APIUpdate) SetNillableDescription(v *string) *APIUpdate {
 	return _u
 }
 
+// ClearDescription clears the value of the "description" field.
+func (_u *APIUpdate) ClearDescription() *APIUpdate {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
 // SetAPIGroup sets the "api_group" field.
 func (_u *APIUpdate) SetAPIGroup(v string) *APIUpdate {
 	_u.mutation.SetAPIGroup(v)
@@ -151,6 +169,12 @@ func (_u *APIUpdate) SetNillableAPIGroup(v *string) *APIUpdate {
 	return _u
 }
 
+// ClearAPIGroup clears the value of the "api_group" field.
+func (_u *APIUpdate) ClearAPIGroup() *APIUpdate {
+	_u.mutation.ClearAPIGroup()
+	return _u
+}
+
 // SetMethod sets the "method" field.
 func (_u *APIUpdate) SetMethod(v string) *APIUpdate {
 	_u.mutation.SetMethod(v)
@@ -162,6 +186,12 @@ func (_u *APIUpdate) SetNillableMethod(v *string) *APIUpdate {
 	if v != nil {
 		_u.SetMethod(*v)
 	}
+	return _u
+}
+
+// ClearMethod clears the value of the "method" field.
+func (_u *APIUpdate) ClearMethod() *APIUpdate {
+	_u.mutation.ClearMethod()
 	return _u
 }
 
@@ -308,17 +338,32 @@ func (_u *APIUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(api.FieldPath, field.TypeString, value)
 	}
+	if _u.mutation.PathCleared() {
+		_spec.ClearField(api.FieldPath, field.TypeString)
+	}
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(api.FieldTitle, field.TypeString, value)
+	}
+	if _u.mutation.TitleCleared() {
+		_spec.ClearField(api.FieldTitle, field.TypeString)
 	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(api.FieldDescription, field.TypeString, value)
 	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(api.FieldDescription, field.TypeString)
+	}
 	if value, ok := _u.mutation.APIGroup(); ok {
 		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
 	}
+	if _u.mutation.APIGroupCleared() {
+		_spec.ClearField(api.FieldAPIGroup, field.TypeString)
+	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
+	}
+	if _u.mutation.MethodCleared() {
+		_spec.ClearField(api.FieldMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.Disabled(); ok {
 		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)
@@ -474,6 +519,12 @@ func (_u *APIUpdateOne) SetNillablePath(v *string) *APIUpdateOne {
 	return _u
 }
 
+// ClearPath clears the value of the "path" field.
+func (_u *APIUpdateOne) ClearPath() *APIUpdateOne {
+	_u.mutation.ClearPath()
+	return _u
+}
+
 // SetTitle sets the "title" field.
 func (_u *APIUpdateOne) SetTitle(v string) *APIUpdateOne {
 	_u.mutation.SetTitle(v)
@@ -485,6 +536,12 @@ func (_u *APIUpdateOne) SetNillableTitle(v *string) *APIUpdateOne {
 	if v != nil {
 		_u.SetTitle(*v)
 	}
+	return _u
+}
+
+// ClearTitle clears the value of the "title" field.
+func (_u *APIUpdateOne) ClearTitle() *APIUpdateOne {
+	_u.mutation.ClearTitle()
 	return _u
 }
 
@@ -502,6 +559,12 @@ func (_u *APIUpdateOne) SetNillableDescription(v *string) *APIUpdateOne {
 	return _u
 }
 
+// ClearDescription clears the value of the "description" field.
+func (_u *APIUpdateOne) ClearDescription() *APIUpdateOne {
+	_u.mutation.ClearDescription()
+	return _u
+}
+
 // SetAPIGroup sets the "api_group" field.
 func (_u *APIUpdateOne) SetAPIGroup(v string) *APIUpdateOne {
 	_u.mutation.SetAPIGroup(v)
@@ -516,6 +579,12 @@ func (_u *APIUpdateOne) SetNillableAPIGroup(v *string) *APIUpdateOne {
 	return _u
 }
 
+// ClearAPIGroup clears the value of the "api_group" field.
+func (_u *APIUpdateOne) ClearAPIGroup() *APIUpdateOne {
+	_u.mutation.ClearAPIGroup()
+	return _u
+}
+
 // SetMethod sets the "method" field.
 func (_u *APIUpdateOne) SetMethod(v string) *APIUpdateOne {
 	_u.mutation.SetMethod(v)
@@ -527,6 +596,12 @@ func (_u *APIUpdateOne) SetNillableMethod(v *string) *APIUpdateOne {
 	if v != nil {
 		_u.SetMethod(*v)
 	}
+	return _u
+}
+
+// ClearMethod clears the value of the "method" field.
+func (_u *APIUpdateOne) ClearMethod() *APIUpdateOne {
+	_u.mutation.ClearMethod()
 	return _u
 }
 
@@ -703,17 +778,32 @@ func (_u *APIUpdateOne) sqlSave(ctx context.Context) (_node *API, err error) {
 	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(api.FieldPath, field.TypeString, value)
 	}
+	if _u.mutation.PathCleared() {
+		_spec.ClearField(api.FieldPath, field.TypeString)
+	}
 	if value, ok := _u.mutation.Title(); ok {
 		_spec.SetField(api.FieldTitle, field.TypeString, value)
+	}
+	if _u.mutation.TitleCleared() {
+		_spec.ClearField(api.FieldTitle, field.TypeString)
 	}
 	if value, ok := _u.mutation.Description(); ok {
 		_spec.SetField(api.FieldDescription, field.TypeString, value)
 	}
+	if _u.mutation.DescriptionCleared() {
+		_spec.ClearField(api.FieldDescription, field.TypeString)
+	}
 	if value, ok := _u.mutation.APIGroup(); ok {
 		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
 	}
+	if _u.mutation.APIGroupCleared() {
+		_spec.ClearField(api.FieldAPIGroup, field.TypeString)
+	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
+	}
+	if _u.mutation.MethodCleared() {
+		_spec.ClearField(api.FieldMethod, field.TypeString)
 	}
 	if value, ok := _u.mutation.Disabled(); ok {
 		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)

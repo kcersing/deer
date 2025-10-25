@@ -444,9 +444,22 @@ func (m *APIMutation) OldPath(ctx context.Context) (v string, err error) {
 	return oldValue.Path, nil
 }
 
+// ClearPath clears the value of the "path" field.
+func (m *APIMutation) ClearPath() {
+	m._path = nil
+	m.clearedFields[api.FieldPath] = struct{}{}
+}
+
+// PathCleared returns if the "path" field was cleared in this mutation.
+func (m *APIMutation) PathCleared() bool {
+	_, ok := m.clearedFields[api.FieldPath]
+	return ok
+}
+
 // ResetPath resets all changes to the "path" field.
 func (m *APIMutation) ResetPath() {
 	m._path = nil
+	delete(m.clearedFields, api.FieldPath)
 }
 
 // SetTitle sets the "title" field.
@@ -480,9 +493,22 @@ func (m *APIMutation) OldTitle(ctx context.Context) (v string, err error) {
 	return oldValue.Title, nil
 }
 
+// ClearTitle clears the value of the "title" field.
+func (m *APIMutation) ClearTitle() {
+	m.title = nil
+	m.clearedFields[api.FieldTitle] = struct{}{}
+}
+
+// TitleCleared returns if the "title" field was cleared in this mutation.
+func (m *APIMutation) TitleCleared() bool {
+	_, ok := m.clearedFields[api.FieldTitle]
+	return ok
+}
+
 // ResetTitle resets all changes to the "title" field.
 func (m *APIMutation) ResetTitle() {
 	m.title = nil
+	delete(m.clearedFields, api.FieldTitle)
 }
 
 // SetDescription sets the "description" field.
@@ -516,9 +542,22 @@ func (m *APIMutation) OldDescription(ctx context.Context) (v string, err error) 
 	return oldValue.Description, nil
 }
 
+// ClearDescription clears the value of the "description" field.
+func (m *APIMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[api.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *APIMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[api.FieldDescription]
+	return ok
+}
+
 // ResetDescription resets all changes to the "description" field.
 func (m *APIMutation) ResetDescription() {
 	m.description = nil
+	delete(m.clearedFields, api.FieldDescription)
 }
 
 // SetAPIGroup sets the "api_group" field.
@@ -552,9 +591,22 @@ func (m *APIMutation) OldAPIGroup(ctx context.Context) (v string, err error) {
 	return oldValue.APIGroup, nil
 }
 
+// ClearAPIGroup clears the value of the "api_group" field.
+func (m *APIMutation) ClearAPIGroup() {
+	m.api_group = nil
+	m.clearedFields[api.FieldAPIGroup] = struct{}{}
+}
+
+// APIGroupCleared returns if the "api_group" field was cleared in this mutation.
+func (m *APIMutation) APIGroupCleared() bool {
+	_, ok := m.clearedFields[api.FieldAPIGroup]
+	return ok
+}
+
 // ResetAPIGroup resets all changes to the "api_group" field.
 func (m *APIMutation) ResetAPIGroup() {
 	m.api_group = nil
+	delete(m.clearedFields, api.FieldAPIGroup)
 }
 
 // SetMethod sets the "method" field.
@@ -588,9 +640,22 @@ func (m *APIMutation) OldMethod(ctx context.Context) (v string, err error) {
 	return oldValue.Method, nil
 }
 
+// ClearMethod clears the value of the "method" field.
+func (m *APIMutation) ClearMethod() {
+	m.method = nil
+	m.clearedFields[api.FieldMethod] = struct{}{}
+}
+
+// MethodCleared returns if the "method" field was cleared in this mutation.
+func (m *APIMutation) MethodCleared() bool {
+	_, ok := m.clearedFields[api.FieldMethod]
+	return ok
+}
+
 // ResetMethod resets all changes to the "method" field.
 func (m *APIMutation) ResetMethod() {
 	m.method = nil
+	delete(m.clearedFields, api.FieldMethod)
 }
 
 // SetDisabled sets the "disabled" field.
@@ -999,6 +1064,21 @@ func (m *APIMutation) ClearedFields() []string {
 	if m.FieldCleared(api.FieldCreatedID) {
 		fields = append(fields, api.FieldCreatedID)
 	}
+	if m.FieldCleared(api.FieldPath) {
+		fields = append(fields, api.FieldPath)
+	}
+	if m.FieldCleared(api.FieldTitle) {
+		fields = append(fields, api.FieldTitle)
+	}
+	if m.FieldCleared(api.FieldDescription) {
+		fields = append(fields, api.FieldDescription)
+	}
+	if m.FieldCleared(api.FieldAPIGroup) {
+		fields = append(fields, api.FieldAPIGroup)
+	}
+	if m.FieldCleared(api.FieldMethod) {
+		fields = append(fields, api.FieldMethod)
+	}
 	if m.FieldCleared(api.FieldDisabled) {
 		fields = append(fields, api.FieldDisabled)
 	}
@@ -1027,6 +1107,21 @@ func (m *APIMutation) ClearField(name string) error {
 		return nil
 	case api.FieldCreatedID:
 		m.ClearCreatedID()
+		return nil
+	case api.FieldPath:
+		m.ClearPath()
+		return nil
+	case api.FieldTitle:
+		m.ClearTitle()
+		return nil
+	case api.FieldDescription:
+		m.ClearDescription()
+		return nil
+	case api.FieldAPIGroup:
+		m.ClearAPIGroup()
+		return nil
+	case api.FieldMethod:
+		m.ClearMethod()
 		return nil
 	case api.FieldDisabled:
 		m.ClearDisabled()
@@ -1626,9 +1721,22 @@ func (m *DictMutation) OldTitle(ctx context.Context) (v string, err error) {
 	return oldValue.Title, nil
 }
 
+// ClearTitle clears the value of the "title" field.
+func (m *DictMutation) ClearTitle() {
+	m.title = nil
+	m.clearedFields[dict.FieldTitle] = struct{}{}
+}
+
+// TitleCleared returns if the "title" field was cleared in this mutation.
+func (m *DictMutation) TitleCleared() bool {
+	_, ok := m.clearedFields[dict.FieldTitle]
+	return ok
+}
+
 // ResetTitle resets all changes to the "title" field.
 func (m *DictMutation) ResetTitle() {
 	m.title = nil
+	delete(m.clearedFields, dict.FieldTitle)
 }
 
 // SetName sets the "name" field.
@@ -1662,9 +1770,22 @@ func (m *DictMutation) OldName(ctx context.Context) (v string, err error) {
 	return oldValue.Name, nil
 }
 
+// ClearName clears the value of the "name" field.
+func (m *DictMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[dict.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *DictMutation) NameCleared() bool {
+	_, ok := m.clearedFields[dict.FieldName]
+	return ok
+}
+
 // ResetName resets all changes to the "name" field.
 func (m *DictMutation) ResetName() {
 	m.name = nil
+	delete(m.clearedFields, dict.FieldName)
 }
 
 // SetDescription sets the "description" field.
@@ -1698,9 +1819,22 @@ func (m *DictMutation) OldDescription(ctx context.Context) (v string, err error)
 	return oldValue.Description, nil
 }
 
+// ClearDescription clears the value of the "description" field.
+func (m *DictMutation) ClearDescription() {
+	m.description = nil
+	m.clearedFields[dict.FieldDescription] = struct{}{}
+}
+
+// DescriptionCleared returns if the "description" field was cleared in this mutation.
+func (m *DictMutation) DescriptionCleared() bool {
+	_, ok := m.clearedFields[dict.FieldDescription]
+	return ok
+}
+
 // ResetDescription resets all changes to the "description" field.
 func (m *DictMutation) ResetDescription() {
 	m.description = nil
+	delete(m.clearedFields, dict.FieldDescription)
 }
 
 // AddDicthtIDs adds the "dictht" edge to the Dictht entity by ids.
@@ -2014,6 +2148,15 @@ func (m *DictMutation) ClearedFields() []string {
 	if m.FieldCleared(dict.FieldStatus) {
 		fields = append(fields, dict.FieldStatus)
 	}
+	if m.FieldCleared(dict.FieldTitle) {
+		fields = append(fields, dict.FieldTitle)
+	}
+	if m.FieldCleared(dict.FieldName) {
+		fields = append(fields, dict.FieldName)
+	}
+	if m.FieldCleared(dict.FieldDescription) {
+		fields = append(fields, dict.FieldDescription)
+	}
 	return fields
 }
 
@@ -2042,6 +2185,15 @@ func (m *DictMutation) ClearField(name string) error {
 		return nil
 	case dict.FieldStatus:
 		m.ClearStatus()
+		return nil
+	case dict.FieldTitle:
+		m.ClearTitle()
+		return nil
+	case dict.FieldName:
+		m.ClearName()
+		return nil
+	case dict.FieldDescription:
+		m.ClearDescription()
 		return nil
 	}
 	return fmt.Errorf("unknown Dict nullable field %s", name)
@@ -2631,9 +2783,22 @@ func (m *DicthtMutation) OldTitle(ctx context.Context) (v string, err error) {
 	return oldValue.Title, nil
 }
 
+// ClearTitle clears the value of the "title" field.
+func (m *DicthtMutation) ClearTitle() {
+	m.title = nil
+	m.clearedFields[dictht.FieldTitle] = struct{}{}
+}
+
+// TitleCleared returns if the "title" field was cleared in this mutation.
+func (m *DicthtMutation) TitleCleared() bool {
+	_, ok := m.clearedFields[dictht.FieldTitle]
+	return ok
+}
+
 // ResetTitle resets all changes to the "title" field.
 func (m *DicthtMutation) ResetTitle() {
 	m.title = nil
+	delete(m.clearedFields, dictht.FieldTitle)
 }
 
 // SetKey sets the "key" field.
@@ -2667,9 +2832,22 @@ func (m *DicthtMutation) OldKey(ctx context.Context) (v string, err error) {
 	return oldValue.Key, nil
 }
 
+// ClearKey clears the value of the "key" field.
+func (m *DicthtMutation) ClearKey() {
+	m.key = nil
+	m.clearedFields[dictht.FieldKey] = struct{}{}
+}
+
+// KeyCleared returns if the "key" field was cleared in this mutation.
+func (m *DicthtMutation) KeyCleared() bool {
+	_, ok := m.clearedFields[dictht.FieldKey]
+	return ok
+}
+
 // ResetKey resets all changes to the "key" field.
 func (m *DicthtMutation) ResetKey() {
 	m.key = nil
+	delete(m.clearedFields, dictht.FieldKey)
 }
 
 // SetValue sets the "value" field.
@@ -2703,9 +2881,22 @@ func (m *DicthtMutation) OldValue(ctx context.Context) (v string, err error) {
 	return oldValue.Value, nil
 }
 
+// ClearValue clears the value of the "value" field.
+func (m *DicthtMutation) ClearValue() {
+	m.value = nil
+	m.clearedFields[dictht.FieldValue] = struct{}{}
+}
+
+// ValueCleared returns if the "value" field was cleared in this mutation.
+func (m *DicthtMutation) ValueCleared() bool {
+	_, ok := m.clearedFields[dictht.FieldValue]
+	return ok
+}
+
 // ResetValue resets all changes to the "value" field.
 func (m *DicthtMutation) ResetValue() {
 	m.value = nil
+	delete(m.clearedFields, dictht.FieldValue)
 }
 
 // SetDictID sets the "dict_id" field.
@@ -3055,6 +3246,15 @@ func (m *DicthtMutation) ClearedFields() []string {
 	if m.FieldCleared(dictht.FieldStatus) {
 		fields = append(fields, dictht.FieldStatus)
 	}
+	if m.FieldCleared(dictht.FieldTitle) {
+		fields = append(fields, dictht.FieldTitle)
+	}
+	if m.FieldCleared(dictht.FieldKey) {
+		fields = append(fields, dictht.FieldKey)
+	}
+	if m.FieldCleared(dictht.FieldValue) {
+		fields = append(fields, dictht.FieldValue)
+	}
 	if m.FieldCleared(dictht.FieldDictID) {
 		fields = append(fields, dictht.FieldDictID)
 	}
@@ -3086,6 +3286,15 @@ func (m *DicthtMutation) ClearField(name string) error {
 		return nil
 	case dictht.FieldStatus:
 		m.ClearStatus()
+		return nil
+	case dictht.FieldTitle:
+		m.ClearTitle()
+		return nil
+	case dictht.FieldKey:
+		m.ClearKey()
+		return nil
+	case dictht.FieldValue:
+		m.ClearValue()
 		return nil
 	case dictht.FieldDictID:
 		m.ClearDictID()
@@ -3607,9 +3816,22 @@ func (m *LogsMutation) OldType(ctx context.Context) (v string, err error) {
 	return oldValue.Type, nil
 }
 
+// ClearType clears the value of the "type" field.
+func (m *LogsMutation) ClearType() {
+	m._type = nil
+	m.clearedFields[logs.FieldType] = struct{}{}
+}
+
+// TypeCleared returns if the "type" field was cleared in this mutation.
+func (m *LogsMutation) TypeCleared() bool {
+	_, ok := m.clearedFields[logs.FieldType]
+	return ok
+}
+
 // ResetType resets all changes to the "type" field.
 func (m *LogsMutation) ResetType() {
 	m._type = nil
+	delete(m.clearedFields, logs.FieldType)
 }
 
 // SetMethod sets the "method" field.
@@ -3643,9 +3865,22 @@ func (m *LogsMutation) OldMethod(ctx context.Context) (v string, err error) {
 	return oldValue.Method, nil
 }
 
+// ClearMethod clears the value of the "method" field.
+func (m *LogsMutation) ClearMethod() {
+	m.method = nil
+	m.clearedFields[logs.FieldMethod] = struct{}{}
+}
+
+// MethodCleared returns if the "method" field was cleared in this mutation.
+func (m *LogsMutation) MethodCleared() bool {
+	_, ok := m.clearedFields[logs.FieldMethod]
+	return ok
+}
+
 // ResetMethod resets all changes to the "method" field.
 func (m *LogsMutation) ResetMethod() {
 	m.method = nil
+	delete(m.clearedFields, logs.FieldMethod)
 }
 
 // SetAPI sets the "api" field.
@@ -3679,9 +3914,22 @@ func (m *LogsMutation) OldAPI(ctx context.Context) (v string, err error) {
 	return oldValue.API, nil
 }
 
+// ClearAPI clears the value of the "api" field.
+func (m *LogsMutation) ClearAPI() {
+	m.api = nil
+	m.clearedFields[logs.FieldAPI] = struct{}{}
+}
+
+// APICleared returns if the "api" field was cleared in this mutation.
+func (m *LogsMutation) APICleared() bool {
+	_, ok := m.clearedFields[logs.FieldAPI]
+	return ok
+}
+
 // ResetAPI resets all changes to the "api" field.
 func (m *LogsMutation) ResetAPI() {
 	m.api = nil
+	delete(m.clearedFields, logs.FieldAPI)
 }
 
 // SetSuccess sets the "success" field.
@@ -3715,9 +3963,22 @@ func (m *LogsMutation) OldSuccess(ctx context.Context) (v bool, err error) {
 	return oldValue.Success, nil
 }
 
+// ClearSuccess clears the value of the "success" field.
+func (m *LogsMutation) ClearSuccess() {
+	m.success = nil
+	m.clearedFields[logs.FieldSuccess] = struct{}{}
+}
+
+// SuccessCleared returns if the "success" field was cleared in this mutation.
+func (m *LogsMutation) SuccessCleared() bool {
+	_, ok := m.clearedFields[logs.FieldSuccess]
+	return ok
+}
+
 // ResetSuccess resets all changes to the "success" field.
 func (m *LogsMutation) ResetSuccess() {
 	m.success = nil
+	delete(m.clearedFields, logs.FieldSuccess)
 }
 
 // SetReqContent sets the "req_content" field.
@@ -4469,6 +4730,18 @@ func (m *LogsMutation) ClearedFields() []string {
 	if m.FieldCleared(logs.FieldCreatedID) {
 		fields = append(fields, logs.FieldCreatedID)
 	}
+	if m.FieldCleared(logs.FieldType) {
+		fields = append(fields, logs.FieldType)
+	}
+	if m.FieldCleared(logs.FieldMethod) {
+		fields = append(fields, logs.FieldMethod)
+	}
+	if m.FieldCleared(logs.FieldAPI) {
+		fields = append(fields, logs.FieldAPI)
+	}
+	if m.FieldCleared(logs.FieldSuccess) {
+		fields = append(fields, logs.FieldSuccess)
+	}
 	if m.FieldCleared(logs.FieldReqContent) {
 		fields = append(fields, logs.FieldReqContent)
 	}
@@ -4515,6 +4788,18 @@ func (m *LogsMutation) ClearField(name string) error {
 		return nil
 	case logs.FieldCreatedID:
 		m.ClearCreatedID()
+		return nil
+	case logs.FieldType:
+		m.ClearType()
+		return nil
+	case logs.FieldMethod:
+		m.ClearMethod()
+		return nil
+	case logs.FieldAPI:
+		m.ClearAPI()
+		return nil
+	case logs.FieldSuccess:
+		m.ClearSuccess()
 		return nil
 	case logs.FieldReqContent:
 		m.ClearReqContent()
@@ -5232,9 +5517,22 @@ func (m *MenuMutation) OldName(ctx context.Context) (v string, err error) {
 	return oldValue.Name, nil
 }
 
+// ClearName clears the value of the "name" field.
+func (m *MenuMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[menu.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *MenuMutation) NameCleared() bool {
+	_, ok := m.clearedFields[menu.FieldName]
+	return ok
+}
+
 // ResetName resets all changes to the "name" field.
 func (m *MenuMutation) ResetName() {
 	m.name = nil
+	delete(m.clearedFields, menu.FieldName)
 }
 
 // SetOrderNo sets the "order_no" field.
@@ -5287,10 +5585,24 @@ func (m *MenuMutation) AddedOrderNo() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearOrderNo clears the value of the "order_no" field.
+func (m *MenuMutation) ClearOrderNo() {
+	m.order_no = nil
+	m.addorder_no = nil
+	m.clearedFields[menu.FieldOrderNo] = struct{}{}
+}
+
+// OrderNoCleared returns if the "order_no" field was cleared in this mutation.
+func (m *MenuMutation) OrderNoCleared() bool {
+	_, ok := m.clearedFields[menu.FieldOrderNo]
+	return ok
+}
+
 // ResetOrderNo resets all changes to the "order_no" field.
 func (m *MenuMutation) ResetOrderNo() {
 	m.order_no = nil
 	m.addorder_no = nil
+	delete(m.clearedFields, menu.FieldOrderNo)
 }
 
 // SetDisabled sets the "disabled" field.
@@ -5443,9 +5755,22 @@ func (m *MenuMutation) OldType(ctx context.Context) (v string, err error) {
 	return oldValue.Type, nil
 }
 
+// ClearType clears the value of the "type" field.
+func (m *MenuMutation) ClearType() {
+	m._type = nil
+	m.clearedFields[menu.FieldType] = struct{}{}
+}
+
+// TypeCleared returns if the "type" field was cleared in this mutation.
+func (m *MenuMutation) TypeCleared() bool {
+	_, ok := m.clearedFields[menu.FieldType]
+	return ok
+}
+
 // ResetType resets all changes to the "type" field.
 func (m *MenuMutation) ResetType() {
 	m._type = nil
+	delete(m.clearedFields, menu.FieldType)
 }
 
 // SetLevel sets the "level" field.
@@ -5498,10 +5823,24 @@ func (m *MenuMutation) AddedLevel() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearLevel clears the value of the "level" field.
+func (m *MenuMutation) ClearLevel() {
+	m.level = nil
+	m.addlevel = nil
+	m.clearedFields[menu.FieldLevel] = struct{}{}
+}
+
+// LevelCleared returns if the "level" field was cleared in this mutation.
+func (m *MenuMutation) LevelCleared() bool {
+	_, ok := m.clearedFields[menu.FieldLevel]
+	return ok
+}
+
 // ResetLevel resets all changes to the "level" field.
 func (m *MenuMutation) ResetLevel() {
 	m.level = nil
 	m.addlevel = nil
+	delete(m.clearedFields, menu.FieldLevel)
 }
 
 // SetMenuType sets the "menu_type" field.
@@ -5554,10 +5893,24 @@ func (m *MenuMutation) AddedMenuType() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearMenuType clears the value of the "menu_type" field.
+func (m *MenuMutation) ClearMenuType() {
+	m.menu_type = nil
+	m.addmenu_type = nil
+	m.clearedFields[menu.FieldMenuType] = struct{}{}
+}
+
+// MenuTypeCleared returns if the "menu_type" field was cleared in this mutation.
+func (m *MenuMutation) MenuTypeCleared() bool {
+	_, ok := m.clearedFields[menu.FieldMenuType]
+	return ok
+}
+
 // ResetMenuType resets all changes to the "menu_type" field.
 func (m *MenuMutation) ResetMenuType() {
 	m.menu_type = nil
 	m.addmenu_type = nil
+	delete(m.clearedFields, menu.FieldMenuType)
 }
 
 // SetRedirect sets the "redirect" field.
@@ -5689,9 +6042,22 @@ func (m *MenuMutation) OldTitle(ctx context.Context) (v string, err error) {
 	return oldValue.Title, nil
 }
 
+// ClearTitle clears the value of the "title" field.
+func (m *MenuMutation) ClearTitle() {
+	m.title = nil
+	m.clearedFields[menu.FieldTitle] = struct{}{}
+}
+
+// TitleCleared returns if the "title" field was cleared in this mutation.
+func (m *MenuMutation) TitleCleared() bool {
+	_, ok := m.clearedFields[menu.FieldTitle]
+	return ok
+}
+
 // ResetTitle resets all changes to the "title" field.
 func (m *MenuMutation) ResetTitle() {
 	m.title = nil
+	delete(m.clearedFields, menu.FieldTitle)
 }
 
 // SetIcon sets the "icon" field.
@@ -5725,9 +6091,22 @@ func (m *MenuMutation) OldIcon(ctx context.Context) (v string, err error) {
 	return oldValue.Icon, nil
 }
 
+// ClearIcon clears the value of the "icon" field.
+func (m *MenuMutation) ClearIcon() {
+	m.icon = nil
+	m.clearedFields[menu.FieldIcon] = struct{}{}
+}
+
+// IconCleared returns if the "icon" field was cleared in this mutation.
+func (m *MenuMutation) IconCleared() bool {
+	_, ok := m.clearedFields[menu.FieldIcon]
+	return ok
+}
+
 // ResetIcon resets all changes to the "icon" field.
 func (m *MenuMutation) ResetIcon() {
 	m.icon = nil
+	delete(m.clearedFields, menu.FieldIcon)
 }
 
 // SetHidden sets the "hidden" field.
@@ -5780,10 +6159,24 @@ func (m *MenuMutation) AddedHidden() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearHidden clears the value of the "hidden" field.
+func (m *MenuMutation) ClearHidden() {
+	m.hidden = nil
+	m.addhidden = nil
+	m.clearedFields[menu.FieldHidden] = struct{}{}
+}
+
+// HiddenCleared returns if the "hidden" field was cleared in this mutation.
+func (m *MenuMutation) HiddenCleared() bool {
+	_, ok := m.clearedFields[menu.FieldHidden]
+	return ok
+}
+
 // ResetHidden resets all changes to the "hidden" field.
 func (m *MenuMutation) ResetHidden() {
 	m.hidden = nil
 	m.addhidden = nil
+	delete(m.clearedFields, menu.FieldHidden)
 }
 
 // SetSort sets the "sort" field.
@@ -5836,10 +6229,24 @@ func (m *MenuMutation) AddedSort() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearSort clears the value of the "sort" field.
+func (m *MenuMutation) ClearSort() {
+	m.sort = nil
+	m.addsort = nil
+	m.clearedFields[menu.FieldSort] = struct{}{}
+}
+
+// SortCleared returns if the "sort" field was cleared in this mutation.
+func (m *MenuMutation) SortCleared() bool {
+	_, ok := m.clearedFields[menu.FieldSort]
+	return ok
+}
+
 // ResetSort resets all changes to the "sort" field.
 func (m *MenuMutation) ResetSort() {
 	m.sort = nil
 	m.addsort = nil
+	delete(m.clearedFields, menu.FieldSort)
 }
 
 // SetURL sets the "url" field.
@@ -5873,9 +6280,22 @@ func (m *MenuMutation) OldURL(ctx context.Context) (v string, err error) {
 	return oldValue.URL, nil
 }
 
+// ClearURL clears the value of the "url" field.
+func (m *MenuMutation) ClearURL() {
+	m.url = nil
+	m.clearedFields[menu.FieldURL] = struct{}{}
+}
+
+// URLCleared returns if the "url" field was cleared in this mutation.
+func (m *MenuMutation) URLCleared() bool {
+	_, ok := m.clearedFields[menu.FieldURL]
+	return ok
+}
+
 // ResetURL resets all changes to the "url" field.
 func (m *MenuMutation) ResetURL() {
 	m.url = nil
+	delete(m.clearedFields, menu.FieldURL)
 }
 
 // AddRoleIDs adds the "roles" edge to the Role entity by ids.
@@ -6530,17 +6950,47 @@ func (m *MenuMutation) ClearedFields() []string {
 	if m.FieldCleared(menu.FieldPath) {
 		fields = append(fields, menu.FieldPath)
 	}
+	if m.FieldCleared(menu.FieldName) {
+		fields = append(fields, menu.FieldName)
+	}
+	if m.FieldCleared(menu.FieldOrderNo) {
+		fields = append(fields, menu.FieldOrderNo)
+	}
 	if m.FieldCleared(menu.FieldDisabled) {
 		fields = append(fields, menu.FieldDisabled)
 	}
 	if m.FieldCleared(menu.FieldIgnore) {
 		fields = append(fields, menu.FieldIgnore)
 	}
+	if m.FieldCleared(menu.FieldType) {
+		fields = append(fields, menu.FieldType)
+	}
+	if m.FieldCleared(menu.FieldLevel) {
+		fields = append(fields, menu.FieldLevel)
+	}
+	if m.FieldCleared(menu.FieldMenuType) {
+		fields = append(fields, menu.FieldMenuType)
+	}
 	if m.FieldCleared(menu.FieldRedirect) {
 		fields = append(fields, menu.FieldRedirect)
 	}
 	if m.FieldCleared(menu.FieldComponent) {
 		fields = append(fields, menu.FieldComponent)
+	}
+	if m.FieldCleared(menu.FieldTitle) {
+		fields = append(fields, menu.FieldTitle)
+	}
+	if m.FieldCleared(menu.FieldIcon) {
+		fields = append(fields, menu.FieldIcon)
+	}
+	if m.FieldCleared(menu.FieldHidden) {
+		fields = append(fields, menu.FieldHidden)
+	}
+	if m.FieldCleared(menu.FieldSort) {
+		fields = append(fields, menu.FieldSort)
+	}
+	if m.FieldCleared(menu.FieldURL) {
+		fields = append(fields, menu.FieldURL)
 	}
 	return fields
 }
@@ -6577,17 +7027,47 @@ func (m *MenuMutation) ClearField(name string) error {
 	case menu.FieldPath:
 		m.ClearPath()
 		return nil
+	case menu.FieldName:
+		m.ClearName()
+		return nil
+	case menu.FieldOrderNo:
+		m.ClearOrderNo()
+		return nil
 	case menu.FieldDisabled:
 		m.ClearDisabled()
 		return nil
 	case menu.FieldIgnore:
 		m.ClearIgnore()
 		return nil
+	case menu.FieldType:
+		m.ClearType()
+		return nil
+	case menu.FieldLevel:
+		m.ClearLevel()
+		return nil
+	case menu.FieldMenuType:
+		m.ClearMenuType()
+		return nil
 	case menu.FieldRedirect:
 		m.ClearRedirect()
 		return nil
 	case menu.FieldComponent:
 		m.ClearComponent()
+		return nil
+	case menu.FieldTitle:
+		m.ClearTitle()
+		return nil
+	case menu.FieldIcon:
+		m.ClearIcon()
+		return nil
+	case menu.FieldHidden:
+		m.ClearHidden()
+		return nil
+	case menu.FieldSort:
+		m.ClearSort()
+		return nil
+	case menu.FieldURL:
+		m.ClearURL()
 		return nil
 	}
 	return fmt.Errorf("unknown Menu nullable field %s", name)
@@ -7187,9 +7667,22 @@ func (m *MessagesMutation) OldType(ctx context.Context) (v string, err error) {
 	return oldValue.Type, nil
 }
 
+// ClearType clears the value of the "type" field.
+func (m *MessagesMutation) ClearType() {
+	m._type = nil
+	m.clearedFields[messages.FieldType] = struct{}{}
+}
+
+// TypeCleared returns if the "type" field was cleared in this mutation.
+func (m *MessagesMutation) TypeCleared() bool {
+	_, ok := m.clearedFields[messages.FieldType]
+	return ok
+}
+
 // ResetType resets all changes to the "type" field.
 func (m *MessagesMutation) ResetType() {
 	m._type = nil
+	delete(m.clearedFields, messages.FieldType)
 }
 
 // SetToUserID sets the "to_user_id" field.
@@ -7223,9 +7716,22 @@ func (m *MessagesMutation) OldToUserID(ctx context.Context) (v string, err error
 	return oldValue.ToUserID, nil
 }
 
+// ClearToUserID clears the value of the "to_user_id" field.
+func (m *MessagesMutation) ClearToUserID() {
+	m.to_user_id = nil
+	m.clearedFields[messages.FieldToUserID] = struct{}{}
+}
+
+// ToUserIDCleared returns if the "to_user_id" field was cleared in this mutation.
+func (m *MessagesMutation) ToUserIDCleared() bool {
+	_, ok := m.clearedFields[messages.FieldToUserID]
+	return ok
+}
+
 // ResetToUserID resets all changes to the "to_user_id" field.
 func (m *MessagesMutation) ResetToUserID() {
 	m.to_user_id = nil
+	delete(m.clearedFields, messages.FieldToUserID)
 }
 
 // SetFromUserID sets the "from_user_id" field.
@@ -7259,9 +7765,22 @@ func (m *MessagesMutation) OldFromUserID(ctx context.Context) (v string, err err
 	return oldValue.FromUserID, nil
 }
 
+// ClearFromUserID clears the value of the "from_user_id" field.
+func (m *MessagesMutation) ClearFromUserID() {
+	m.from_user_id = nil
+	m.clearedFields[messages.FieldFromUserID] = struct{}{}
+}
+
+// FromUserIDCleared returns if the "from_user_id" field was cleared in this mutation.
+func (m *MessagesMutation) FromUserIDCleared() bool {
+	_, ok := m.clearedFields[messages.FieldFromUserID]
+	return ok
+}
+
 // ResetFromUserID resets all changes to the "from_user_id" field.
 func (m *MessagesMutation) ResetFromUserID() {
 	m.from_user_id = nil
+	delete(m.clearedFields, messages.FieldFromUserID)
 }
 
 // SetContent sets the "content" field.
@@ -7295,9 +7814,22 @@ func (m *MessagesMutation) OldContent(ctx context.Context) (v string, err error)
 	return oldValue.Content, nil
 }
 
+// ClearContent clears the value of the "content" field.
+func (m *MessagesMutation) ClearContent() {
+	m.content = nil
+	m.clearedFields[messages.FieldContent] = struct{}{}
+}
+
+// ContentCleared returns if the "content" field was cleared in this mutation.
+func (m *MessagesMutation) ContentCleared() bool {
+	_, ok := m.clearedFields[messages.FieldContent]
+	return ok
+}
+
 // ResetContent resets all changes to the "content" field.
 func (m *MessagesMutation) ResetContent() {
 	m.content = nil
+	delete(m.clearedFields, messages.FieldContent)
 }
 
 // Where appends a list predicates to the MessagesMutation builder.
@@ -7542,6 +8074,18 @@ func (m *MessagesMutation) ClearedFields() []string {
 	if m.FieldCleared(messages.FieldCreatedID) {
 		fields = append(fields, messages.FieldCreatedID)
 	}
+	if m.FieldCleared(messages.FieldType) {
+		fields = append(fields, messages.FieldType)
+	}
+	if m.FieldCleared(messages.FieldToUserID) {
+		fields = append(fields, messages.FieldToUserID)
+	}
+	if m.FieldCleared(messages.FieldFromUserID) {
+		fields = append(fields, messages.FieldFromUserID)
+	}
+	if m.FieldCleared(messages.FieldContent) {
+		fields = append(fields, messages.FieldContent)
+	}
 	return fields
 }
 
@@ -7567,6 +8111,18 @@ func (m *MessagesMutation) ClearField(name string) error {
 		return nil
 	case messages.FieldCreatedID:
 		m.ClearCreatedID()
+		return nil
+	case messages.FieldType:
+		m.ClearType()
+		return nil
+	case messages.FieldToUserID:
+		m.ClearToUserID()
+		return nil
+	case messages.FieldFromUserID:
+		m.ClearFromUserID()
+		return nil
+	case messages.FieldContent:
+		m.ClearContent()
 		return nil
 	}
 	return fmt.Errorf("unknown Messages nullable field %s", name)
@@ -8129,9 +8685,22 @@ func (m *RoleMutation) OldName(ctx context.Context) (v string, err error) {
 	return oldValue.Name, nil
 }
 
+// ClearName clears the value of the "name" field.
+func (m *RoleMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[role.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *RoleMutation) NameCleared() bool {
+	_, ok := m.clearedFields[role.FieldName]
+	return ok
+}
+
 // ResetName resets all changes to the "name" field.
 func (m *RoleMutation) ResetName() {
 	m.name = nil
+	delete(m.clearedFields, role.FieldName)
 }
 
 // SetValue sets the "value" field.
@@ -8165,9 +8734,22 @@ func (m *RoleMutation) OldValue(ctx context.Context) (v string, err error) {
 	return oldValue.Value, nil
 }
 
+// ClearValue clears the value of the "value" field.
+func (m *RoleMutation) ClearValue() {
+	m.value = nil
+	m.clearedFields[role.FieldValue] = struct{}{}
+}
+
+// ValueCleared returns if the "value" field was cleared in this mutation.
+func (m *RoleMutation) ValueCleared() bool {
+	_, ok := m.clearedFields[role.FieldValue]
+	return ok
+}
+
 // ResetValue resets all changes to the "value" field.
 func (m *RoleMutation) ResetValue() {
 	m.value = nil
+	delete(m.clearedFields, role.FieldValue)
 }
 
 // SetDefaultRouter sets the "default_router" field.
@@ -8201,9 +8783,22 @@ func (m *RoleMutation) OldDefaultRouter(ctx context.Context) (v string, err erro
 	return oldValue.DefaultRouter, nil
 }
 
+// ClearDefaultRouter clears the value of the "default_router" field.
+func (m *RoleMutation) ClearDefaultRouter() {
+	m.default_router = nil
+	m.clearedFields[role.FieldDefaultRouter] = struct{}{}
+}
+
+// DefaultRouterCleared returns if the "default_router" field was cleared in this mutation.
+func (m *RoleMutation) DefaultRouterCleared() bool {
+	_, ok := m.clearedFields[role.FieldDefaultRouter]
+	return ok
+}
+
 // ResetDefaultRouter resets all changes to the "default_router" field.
 func (m *RoleMutation) ResetDefaultRouter() {
 	m.default_router = nil
+	delete(m.clearedFields, role.FieldDefaultRouter)
 }
 
 // SetRemark sets the "remark" field.
@@ -8237,9 +8832,22 @@ func (m *RoleMutation) OldRemark(ctx context.Context) (v string, err error) {
 	return oldValue.Remark, nil
 }
 
+// ClearRemark clears the value of the "remark" field.
+func (m *RoleMutation) ClearRemark() {
+	m.remark = nil
+	m.clearedFields[role.FieldRemark] = struct{}{}
+}
+
+// RemarkCleared returns if the "remark" field was cleared in this mutation.
+func (m *RoleMutation) RemarkCleared() bool {
+	_, ok := m.clearedFields[role.FieldRemark]
+	return ok
+}
+
 // ResetRemark resets all changes to the "remark" field.
 func (m *RoleMutation) ResetRemark() {
 	m.remark = nil
+	delete(m.clearedFields, role.FieldRemark)
 }
 
 // SetOrderNo sets the "order_no" field.
@@ -8292,10 +8900,24 @@ func (m *RoleMutation) AddedOrderNo() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearOrderNo clears the value of the "order_no" field.
+func (m *RoleMutation) ClearOrderNo() {
+	m.order_no = nil
+	m.addorder_no = nil
+	m.clearedFields[role.FieldOrderNo] = struct{}{}
+}
+
+// OrderNoCleared returns if the "order_no" field was cleared in this mutation.
+func (m *RoleMutation) OrderNoCleared() bool {
+	_, ok := m.clearedFields[role.FieldOrderNo]
+	return ok
+}
+
 // ResetOrderNo resets all changes to the "order_no" field.
 func (m *RoleMutation) ResetOrderNo() {
 	m.order_no = nil
 	m.addorder_no = nil
+	delete(m.clearedFields, role.FieldOrderNo)
 }
 
 // SetApis sets the "apis" field.
@@ -8343,10 +8965,24 @@ func (m *RoleMutation) AppendedApis() ([]int, bool) {
 	return m.appendapis, true
 }
 
+// ClearApis clears the value of the "apis" field.
+func (m *RoleMutation) ClearApis() {
+	m.apis = nil
+	m.appendapis = nil
+	m.clearedFields[role.FieldApis] = struct{}{}
+}
+
+// ApisCleared returns if the "apis" field was cleared in this mutation.
+func (m *RoleMutation) ApisCleared() bool {
+	_, ok := m.clearedFields[role.FieldApis]
+	return ok
+}
+
 // ResetApis resets all changes to the "apis" field.
 func (m *RoleMutation) ResetApis() {
 	m.apis = nil
 	m.appendapis = nil
+	delete(m.clearedFields, role.FieldApis)
 }
 
 // AddMenuIDs adds the "menus" edge to the Menu entity by ids.
@@ -8768,6 +9404,24 @@ func (m *RoleMutation) ClearedFields() []string {
 	if m.FieldCleared(role.FieldStatus) {
 		fields = append(fields, role.FieldStatus)
 	}
+	if m.FieldCleared(role.FieldName) {
+		fields = append(fields, role.FieldName)
+	}
+	if m.FieldCleared(role.FieldValue) {
+		fields = append(fields, role.FieldValue)
+	}
+	if m.FieldCleared(role.FieldDefaultRouter) {
+		fields = append(fields, role.FieldDefaultRouter)
+	}
+	if m.FieldCleared(role.FieldRemark) {
+		fields = append(fields, role.FieldRemark)
+	}
+	if m.FieldCleared(role.FieldOrderNo) {
+		fields = append(fields, role.FieldOrderNo)
+	}
+	if m.FieldCleared(role.FieldApis) {
+		fields = append(fields, role.FieldApis)
+	}
 	return fields
 }
 
@@ -8796,6 +9450,24 @@ func (m *RoleMutation) ClearField(name string) error {
 		return nil
 	case role.FieldStatus:
 		m.ClearStatus()
+		return nil
+	case role.FieldName:
+		m.ClearName()
+		return nil
+	case role.FieldValue:
+		m.ClearValue()
+		return nil
+	case role.FieldDefaultRouter:
+		m.ClearDefaultRouter()
+		return nil
+	case role.FieldRemark:
+		m.ClearRemark()
+		return nil
+	case role.FieldOrderNo:
+		m.ClearOrderNo()
+		return nil
+	case role.FieldApis:
+		m.ClearApis()
 		return nil
 	}
 	return fmt.Errorf("unknown Role nullable field %s", name)
@@ -9438,10 +10110,24 @@ func (m *SmsMutation) AddedNoticeCount() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearNoticeCount clears the value of the "notice_count" field.
+func (m *SmsMutation) ClearNoticeCount() {
+	m.notice_count = nil
+	m.addnotice_count = nil
+	m.clearedFields[sms.FieldNoticeCount] = struct{}{}
+}
+
+// NoticeCountCleared returns if the "notice_count" field was cleared in this mutation.
+func (m *SmsMutation) NoticeCountCleared() bool {
+	_, ok := m.clearedFields[sms.FieldNoticeCount]
+	return ok
+}
+
 // ResetNoticeCount resets all changes to the "notice_count" field.
 func (m *SmsMutation) ResetNoticeCount() {
 	m.notice_count = nil
 	m.addnotice_count = nil
+	delete(m.clearedFields, sms.FieldNoticeCount)
 }
 
 // SetUsedNotice sets the "used_notice" field.
@@ -9494,10 +10180,24 @@ func (m *SmsMutation) AddedUsedNotice() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearUsedNotice clears the value of the "used_notice" field.
+func (m *SmsMutation) ClearUsedNotice() {
+	m.used_notice = nil
+	m.addused_notice = nil
+	m.clearedFields[sms.FieldUsedNotice] = struct{}{}
+}
+
+// UsedNoticeCleared returns if the "used_notice" field was cleared in this mutation.
+func (m *SmsMutation) UsedNoticeCleared() bool {
+	_, ok := m.clearedFields[sms.FieldUsedNotice]
+	return ok
+}
+
 // ResetUsedNotice resets all changes to the "used_notice" field.
 func (m *SmsMutation) ResetUsedNotice() {
 	m.used_notice = nil
 	m.addused_notice = nil
+	delete(m.clearedFields, sms.FieldUsedNotice)
 }
 
 // Where appends a list predicates to the SmsMutation builder.
@@ -9767,6 +10467,12 @@ func (m *SmsMutation) ClearedFields() []string {
 	if m.FieldCleared(sms.FieldStatus) {
 		fields = append(fields, sms.FieldStatus)
 	}
+	if m.FieldCleared(sms.FieldNoticeCount) {
+		fields = append(fields, sms.FieldNoticeCount)
+	}
+	if m.FieldCleared(sms.FieldUsedNotice) {
+		fields = append(fields, sms.FieldUsedNotice)
+	}
 	return fields
 }
 
@@ -9795,6 +10501,12 @@ func (m *SmsMutation) ClearField(name string) error {
 		return nil
 	case sms.FieldStatus:
 		m.ClearStatus()
+		return nil
+	case sms.FieldNoticeCount:
+		m.ClearNoticeCount()
+		return nil
+	case sms.FieldUsedNotice:
+		m.ClearUsedNotice()
 		return nil
 	}
 	return fmt.Errorf("unknown Sms nullable field %s", name)
@@ -10347,9 +11059,22 @@ func (m *SmsLogMutation) OldMobile(ctx context.Context) (v string, err error) {
 	return oldValue.Mobile, nil
 }
 
+// ClearMobile clears the value of the "mobile" field.
+func (m *SmsLogMutation) ClearMobile() {
+	m.mobile = nil
+	m.clearedFields[smslog.FieldMobile] = struct{}{}
+}
+
+// MobileCleared returns if the "mobile" field was cleared in this mutation.
+func (m *SmsLogMutation) MobileCleared() bool {
+	_, ok := m.clearedFields[smslog.FieldMobile]
+	return ok
+}
+
 // ResetMobile resets all changes to the "mobile" field.
 func (m *SmsLogMutation) ResetMobile() {
 	m.mobile = nil
+	delete(m.clearedFields, smslog.FieldMobile)
 }
 
 // SetBizID sets the "biz_id" field.
@@ -10383,9 +11108,22 @@ func (m *SmsLogMutation) OldBizID(ctx context.Context) (v string, err error) {
 	return oldValue.BizID, nil
 }
 
+// ClearBizID clears the value of the "biz_id" field.
+func (m *SmsLogMutation) ClearBizID() {
+	m.biz_id = nil
+	m.clearedFields[smslog.FieldBizID] = struct{}{}
+}
+
+// BizIDCleared returns if the "biz_id" field was cleared in this mutation.
+func (m *SmsLogMutation) BizIDCleared() bool {
+	_, ok := m.clearedFields[smslog.FieldBizID]
+	return ok
+}
+
 // ResetBizID resets all changes to the "biz_id" field.
 func (m *SmsLogMutation) ResetBizID() {
 	m.biz_id = nil
+	delete(m.clearedFields, smslog.FieldBizID)
 }
 
 // SetCode sets the "code" field.
@@ -10419,9 +11157,22 @@ func (m *SmsLogMutation) OldCode(ctx context.Context) (v string, err error) {
 	return oldValue.Code, nil
 }
 
+// ClearCode clears the value of the "code" field.
+func (m *SmsLogMutation) ClearCode() {
+	m.code = nil
+	m.clearedFields[smslog.FieldCode] = struct{}{}
+}
+
+// CodeCleared returns if the "code" field was cleared in this mutation.
+func (m *SmsLogMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[smslog.FieldCode]
+	return ok
+}
+
 // ResetCode resets all changes to the "code" field.
 func (m *SmsLogMutation) ResetCode() {
 	m.code = nil
+	delete(m.clearedFields, smslog.FieldCode)
 }
 
 // SetContent sets the "content" field.
@@ -10455,9 +11206,22 @@ func (m *SmsLogMutation) OldContent(ctx context.Context) (v string, err error) {
 	return oldValue.Content, nil
 }
 
+// ClearContent clears the value of the "content" field.
+func (m *SmsLogMutation) ClearContent() {
+	m.content = nil
+	m.clearedFields[smslog.FieldContent] = struct{}{}
+}
+
+// ContentCleared returns if the "content" field was cleared in this mutation.
+func (m *SmsLogMutation) ContentCleared() bool {
+	_, ok := m.clearedFields[smslog.FieldContent]
+	return ok
+}
+
 // ResetContent resets all changes to the "content" field.
 func (m *SmsLogMutation) ResetContent() {
 	m.content = nil
+	delete(m.clearedFields, smslog.FieldContent)
 }
 
 // SetNotifyType sets the "notify_type" field.
@@ -10561,9 +11325,22 @@ func (m *SmsLogMutation) OldTemplate(ctx context.Context) (v string, err error) 
 	return oldValue.Template, nil
 }
 
+// ClearTemplate clears the value of the "template" field.
+func (m *SmsLogMutation) ClearTemplate() {
+	m.template = nil
+	m.clearedFields[smslog.FieldTemplate] = struct{}{}
+}
+
+// TemplateCleared returns if the "template" field was cleared in this mutation.
+func (m *SmsLogMutation) TemplateCleared() bool {
+	_, ok := m.clearedFields[smslog.FieldTemplate]
+	return ok
+}
+
 // ResetTemplate resets all changes to the "template" field.
 func (m *SmsLogMutation) ResetTemplate() {
 	m.template = nil
+	delete(m.clearedFields, smslog.FieldTemplate)
 }
 
 // Where appends a list predicates to the SmsLogMutation builder.
@@ -10877,8 +11654,23 @@ func (m *SmsLogMutation) ClearedFields() []string {
 	if m.FieldCleared(smslog.FieldStatus) {
 		fields = append(fields, smslog.FieldStatus)
 	}
+	if m.FieldCleared(smslog.FieldMobile) {
+		fields = append(fields, smslog.FieldMobile)
+	}
+	if m.FieldCleared(smslog.FieldBizID) {
+		fields = append(fields, smslog.FieldBizID)
+	}
+	if m.FieldCleared(smslog.FieldCode) {
+		fields = append(fields, smslog.FieldCode)
+	}
+	if m.FieldCleared(smslog.FieldContent) {
+		fields = append(fields, smslog.FieldContent)
+	}
 	if m.FieldCleared(smslog.FieldNotifyType) {
 		fields = append(fields, smslog.FieldNotifyType)
+	}
+	if m.FieldCleared(smslog.FieldTemplate) {
+		fields = append(fields, smslog.FieldTemplate)
 	}
 	return fields
 }
@@ -10909,8 +11701,23 @@ func (m *SmsLogMutation) ClearField(name string) error {
 	case smslog.FieldStatus:
 		m.ClearStatus()
 		return nil
+	case smslog.FieldMobile:
+		m.ClearMobile()
+		return nil
+	case smslog.FieldBizID:
+		m.ClearBizID()
+		return nil
+	case smslog.FieldCode:
+		m.ClearCode()
+		return nil
+	case smslog.FieldContent:
+		m.ClearContent()
+		return nil
 	case smslog.FieldNotifyType:
 		m.ClearNotifyType()
+		return nil
+	case smslog.FieldTemplate:
+		m.ClearTemplate()
 		return nil
 	}
 	return fmt.Errorf("unknown SmsLog nullable field %s", name)

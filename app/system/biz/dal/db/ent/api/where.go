@@ -360,6 +360,16 @@ func PathHasSuffix(v string) predicate.API {
 	return predicate.API(sql.FieldHasSuffix(FieldPath, v))
 }
 
+// PathIsNil applies the IsNil predicate on the "path" field.
+func PathIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldPath))
+}
+
+// PathNotNil applies the NotNil predicate on the "path" field.
+func PathNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldPath))
+}
+
 // PathEqualFold applies the EqualFold predicate on the "path" field.
 func PathEqualFold(v string) predicate.API {
 	return predicate.API(sql.FieldEqualFold(FieldPath, v))
@@ -423,6 +433,16 @@ func TitleHasPrefix(v string) predicate.API {
 // TitleHasSuffix applies the HasSuffix predicate on the "title" field.
 func TitleHasSuffix(v string) predicate.API {
 	return predicate.API(sql.FieldHasSuffix(FieldTitle, v))
+}
+
+// TitleIsNil applies the IsNil predicate on the "title" field.
+func TitleIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldTitle))
+}
+
+// TitleNotNil applies the NotNil predicate on the "title" field.
+func TitleNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldTitle))
 }
 
 // TitleEqualFold applies the EqualFold predicate on the "title" field.
@@ -490,6 +510,16 @@ func DescriptionHasSuffix(v string) predicate.API {
 	return predicate.API(sql.FieldHasSuffix(FieldDescription, v))
 }
 
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldDescription))
+}
+
 // DescriptionEqualFold applies the EqualFold predicate on the "description" field.
 func DescriptionEqualFold(v string) predicate.API {
 	return predicate.API(sql.FieldEqualFold(FieldDescription, v))
@@ -555,6 +585,16 @@ func APIGroupHasSuffix(v string) predicate.API {
 	return predicate.API(sql.FieldHasSuffix(FieldAPIGroup, v))
 }
 
+// APIGroupIsNil applies the IsNil predicate on the "api_group" field.
+func APIGroupIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldAPIGroup))
+}
+
+// APIGroupNotNil applies the NotNil predicate on the "api_group" field.
+func APIGroupNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldAPIGroup))
+}
+
 // APIGroupEqualFold applies the EqualFold predicate on the "api_group" field.
 func APIGroupEqualFold(v string) predicate.API {
 	return predicate.API(sql.FieldEqualFold(FieldAPIGroup, v))
@@ -618,6 +658,16 @@ func MethodHasPrefix(v string) predicate.API {
 // MethodHasSuffix applies the HasSuffix predicate on the "method" field.
 func MethodHasSuffix(v string) predicate.API {
 	return predicate.API(sql.FieldHasSuffix(FieldMethod, v))
+}
+
+// MethodIsNil applies the IsNil predicate on the "method" field.
+func MethodIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldMethod))
+}
+
+// MethodNotNil applies the NotNil predicate on the "method" field.
+func MethodNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldMethod))
 }
 
 // MethodEqualFold applies the EqualFold predicate on the "method" field.

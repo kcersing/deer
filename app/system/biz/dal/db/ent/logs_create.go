@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"system/biz/dal/db/ent/logs"
 	"time"
@@ -82,9 +81,25 @@ func (_c *LogsCreate) SetType(v string) *LogsCreate {
 	return _c
 }
 
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *LogsCreate) SetNillableType(v *string) *LogsCreate {
+	if v != nil {
+		_c.SetType(*v)
+	}
+	return _c
+}
+
 // SetMethod sets the "method" field.
 func (_c *LogsCreate) SetMethod(v string) *LogsCreate {
 	_c.mutation.SetMethod(v)
+	return _c
+}
+
+// SetNillableMethod sets the "method" field if the given value is not nil.
+func (_c *LogsCreate) SetNillableMethod(v *string) *LogsCreate {
+	if v != nil {
+		_c.SetMethod(*v)
+	}
 	return _c
 }
 
@@ -94,9 +109,25 @@ func (_c *LogsCreate) SetAPI(v string) *LogsCreate {
 	return _c
 }
 
+// SetNillableAPI sets the "api" field if the given value is not nil.
+func (_c *LogsCreate) SetNillableAPI(v *string) *LogsCreate {
+	if v != nil {
+		_c.SetAPI(*v)
+	}
+	return _c
+}
+
 // SetSuccess sets the "success" field.
 func (_c *LogsCreate) SetSuccess(v bool) *LogsCreate {
 	_c.mutation.SetSuccess(v)
+	return _c
+}
+
+// SetNillableSuccess sets the "success" field if the given value is not nil.
+func (_c *LogsCreate) SetNillableSuccess(v *bool) *LogsCreate {
+	if v != nil {
+		_c.SetSuccess(*v)
+	}
 	return _c
 }
 
@@ -259,18 +290,6 @@ func (_c *LogsCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *LogsCreate) check() error {
-	if _, ok := _c.mutation.GetType(); !ok {
-		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Logs.type"`)}
-	}
-	if _, ok := _c.mutation.Method(); !ok {
-		return &ValidationError{Name: "method", err: errors.New(`ent: missing required field "Logs.method"`)}
-	}
-	if _, ok := _c.mutation.API(); !ok {
-		return &ValidationError{Name: "api", err: errors.New(`ent: missing required field "Logs.api"`)}
-	}
-	if _, ok := _c.mutation.Success(); !ok {
-		return &ValidationError{Name: "success", err: errors.New(`ent: missing required field "Logs.success"`)}
-	}
 	return nil
 }
 

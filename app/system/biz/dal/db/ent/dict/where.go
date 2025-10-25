@@ -400,6 +400,16 @@ func TitleHasSuffix(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldHasSuffix(FieldTitle, v))
 }
 
+// TitleIsNil applies the IsNil predicate on the "title" field.
+func TitleIsNil() predicate.Dict {
+	return predicate.Dict(sql.FieldIsNull(FieldTitle))
+}
+
+// TitleNotNil applies the NotNil predicate on the "title" field.
+func TitleNotNil() predicate.Dict {
+	return predicate.Dict(sql.FieldNotNull(FieldTitle))
+}
+
 // TitleEqualFold applies the EqualFold predicate on the "title" field.
 func TitleEqualFold(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldEqualFold(FieldTitle, v))
@@ -465,6 +475,16 @@ func NameHasSuffix(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldHasSuffix(FieldName, v))
 }
 
+// NameIsNil applies the IsNil predicate on the "name" field.
+func NameIsNil() predicate.Dict {
+	return predicate.Dict(sql.FieldIsNull(FieldName))
+}
+
+// NameNotNil applies the NotNil predicate on the "name" field.
+func NameNotNil() predicate.Dict {
+	return predicate.Dict(sql.FieldNotNull(FieldName))
+}
+
 // NameEqualFold applies the EqualFold predicate on the "name" field.
 func NameEqualFold(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldEqualFold(FieldName, v))
@@ -528,6 +548,16 @@ func DescriptionHasPrefix(v string) predicate.Dict {
 // DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
 func DescriptionHasSuffix(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldHasSuffix(FieldDescription, v))
+}
+
+// DescriptionIsNil applies the IsNil predicate on the "description" field.
+func DescriptionIsNil() predicate.Dict {
+	return predicate.Dict(sql.FieldIsNull(FieldDescription))
+}
+
+// DescriptionNotNil applies the NotNil predicate on the "description" field.
+func DescriptionNotNil() predicate.Dict {
+	return predicate.Dict(sql.FieldNotNull(FieldDescription))
 }
 
 // DescriptionEqualFold applies the EqualFold predicate on the "description" field.

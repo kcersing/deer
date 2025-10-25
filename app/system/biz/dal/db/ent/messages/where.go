@@ -349,6 +349,16 @@ func TypeHasSuffix(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldHasSuffix(FieldType, v))
 }
 
+// TypeIsNil applies the IsNil predicate on the "type" field.
+func TypeIsNil() predicate.Messages {
+	return predicate.Messages(sql.FieldIsNull(FieldType))
+}
+
+// TypeNotNil applies the NotNil predicate on the "type" field.
+func TypeNotNil() predicate.Messages {
+	return predicate.Messages(sql.FieldNotNull(FieldType))
+}
+
 // TypeEqualFold applies the EqualFold predicate on the "type" field.
 func TypeEqualFold(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldEqualFold(FieldType, v))
@@ -412,6 +422,16 @@ func ToUserIDHasPrefix(v string) predicate.Messages {
 // ToUserIDHasSuffix applies the HasSuffix predicate on the "to_user_id" field.
 func ToUserIDHasSuffix(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldHasSuffix(FieldToUserID, v))
+}
+
+// ToUserIDIsNil applies the IsNil predicate on the "to_user_id" field.
+func ToUserIDIsNil() predicate.Messages {
+	return predicate.Messages(sql.FieldIsNull(FieldToUserID))
+}
+
+// ToUserIDNotNil applies the NotNil predicate on the "to_user_id" field.
+func ToUserIDNotNil() predicate.Messages {
+	return predicate.Messages(sql.FieldNotNull(FieldToUserID))
 }
 
 // ToUserIDEqualFold applies the EqualFold predicate on the "to_user_id" field.
@@ -479,6 +499,16 @@ func FromUserIDHasSuffix(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldHasSuffix(FieldFromUserID, v))
 }
 
+// FromUserIDIsNil applies the IsNil predicate on the "from_user_id" field.
+func FromUserIDIsNil() predicate.Messages {
+	return predicate.Messages(sql.FieldIsNull(FieldFromUserID))
+}
+
+// FromUserIDNotNil applies the NotNil predicate on the "from_user_id" field.
+func FromUserIDNotNil() predicate.Messages {
+	return predicate.Messages(sql.FieldNotNull(FieldFromUserID))
+}
+
 // FromUserIDEqualFold applies the EqualFold predicate on the "from_user_id" field.
 func FromUserIDEqualFold(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldEqualFold(FieldFromUserID, v))
@@ -542,6 +572,16 @@ func ContentHasPrefix(v string) predicate.Messages {
 // ContentHasSuffix applies the HasSuffix predicate on the "content" field.
 func ContentHasSuffix(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldHasSuffix(FieldContent, v))
+}
+
+// ContentIsNil applies the IsNil predicate on the "content" field.
+func ContentIsNil() predicate.Messages {
+	return predicate.Messages(sql.FieldIsNull(FieldContent))
+}
+
+// ContentNotNil applies the NotNil predicate on the "content" field.
+func ContentNotNil() predicate.Messages {
+	return predicate.Messages(sql.FieldNotNull(FieldContent))
 }
 
 // ContentEqualFold applies the EqualFold predicate on the "content" field.

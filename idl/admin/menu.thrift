@@ -22,7 +22,7 @@ struct CreateMenuReq{
     19:optional string type="" (api.raw = "type")
 }
 struct UpdateMenuReq{
-    1:optional i64 id =0(api.raw = "id" )
+    1: optional i64 id=0 (api.raw = "id")
     2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
     3:optional i64 parentId=0 (api.raw = "parentId")
     4:optional i64 level=0 (api.raw = "level")

@@ -3,13 +3,15 @@
 package menu
 
 import (
+	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
 	menu "gen/hertz_gen/menu"
+	base1 "gen/kitex_gen/base"
+	"gen/kitex_gen/system"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // CreateMenu .
@@ -23,9 +25,28 @@ func CreateMenu(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.CreateMenu(ctx, &system.CreateMenuReq{
+		Name:      req.GetName(),
+		ParentId:  req.GetParentId(),
+		Level:     req.GetLevel(),
+		Path:      req.GetPath(),
+		Redirect:  req.GetRedirect(),
+		Component: req.GetComponent(),
+		MenuType:  req.GetMenuType(),
+		Hidden:    req.GetHidden(),
+		Sort:      req.GetSort(),
+		Status:    req.GetStatus(),
+		Url:       req.GetURL(),
+		Title:     req.GetTitle(),
+		Type:      req.GetType(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // UpdateMenu .
@@ -39,9 +60,29 @@ func UpdateMenu(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.UpdateMenu(ctx, &system.UpdateMenuReq{
+		Id:        req.GetID(),
+		Name:      req.GetName(),
+		ParentId:  req.GetParentId(),
+		Level:     req.GetLevel(),
+		Path:      req.GetPath(),
+		Redirect:  req.GetRedirect(),
+		Component: req.GetComponent(),
+		MenuType:  req.GetMenuType(),
+		Hidden:    req.GetHidden(),
+		Sort:      req.GetSort(),
+		Status:    req.GetStatus(),
+		Url:       req.GetURL(),
+		Title:     req.GetTitle(),
+		Type:      req.GetType(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // DeleteMenu .
@@ -55,9 +96,14 @@ func DeleteMenu(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.DeleteMenu(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // GetMenu .
@@ -71,9 +117,14 @@ func GetMenu(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.GetMenu(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // MenuList .
@@ -87,9 +138,17 @@ func MenuList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.MenuList(ctx, &system.MenuListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // MenuTree .
@@ -103,7 +162,15 @@ func MenuTree(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.SystemClient.MenuTree(ctx, &system.MenuListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

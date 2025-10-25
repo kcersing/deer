@@ -66,7 +66,7 @@ struct CreateMenuReq{
     19:optional string type="" (api.raw = "type")
 }
 struct UpdateMenuReq{
-    1:optional i64 id =0(api.raw = "id" )
+    1:optional i64 id=0 (api.raw = "id" )
     2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
     3:optional i64 parentId=0 (api.raw = "parentId")
     4:optional i64 level=0 (api.raw = "level")
@@ -248,13 +248,15 @@ struct Log {
 
     251: optional i64 id = 0 (api.raw = "id")
 }
-struct DeleteLogReq{
-
+struct DeleteLogReq {
+    1:  optional string startAt = "" (api.raw = "startAt")
+    2:  optional string endAt = "" (api.raw = "endAt")
 }
 struct LogListResp{
     1:optional list<Log> data={}
     255:optional base.BaseResp baseResp={}
 }
+
 service SystemService  {
     ApiResp CreateApi(1: CreateApiReq req)
     ApiResp UpdateApi(1: UpdateApiReq req)
