@@ -18,7 +18,7 @@ import (
 
 func Init() {
 	client.Init()
-	mw.InitJwt(casbin.CasbinEnforcer())
+	mw.InitJwt(casbin.CasbinEnforcer)
 	hlog.SetLogger(hertzlogrus.NewLogger())
 	hlog.SetLevel(hlog.LevelInfo)
 	mtl.InitProvider(consts.AdminServiceName)
