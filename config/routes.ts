@@ -56,6 +56,12 @@ export default [
     redirect: '/welcome',
   },
   {
+    name: '菜单',
+    icon: 'table',
+    path: '/menu',
+    component: './menu',
+  },
+  {
     path: '*',
     layout: false,
     component: './404',

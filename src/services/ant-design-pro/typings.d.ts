@@ -61,7 +61,9 @@ declare namespace API {
   }
 
 
+type MenuListResp={
 
+}
 
 
 
