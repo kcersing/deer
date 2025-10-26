@@ -309,6 +309,16 @@ service SystemService  {
     // Delete logs | 删除日志信息
     base.NilResponse DeleteLog(1: DeleteLogReq req)
 
-
+    // 验证权限
+    VerifyRoleAuthResp VerifyRoleAuth(1: VerifyRoleAuthReq req)
 
 }
+
+struct VerifyRoleAuthReq{
+  1: optional string obj="" (api.raw = "obj")
+  2: optional string act =""(api.raw = "act")
+  3: optional i64 roleId =0(api.raw = "roleId")
+}
+struct VerifyRoleAuthResp{
+  255:optional base.BaseResp baseResp={}
+ }

@@ -3923,6 +3923,128 @@ var fieldIDToName_LogListResp = map[int16]string{
 	255: "baseResp",
 }
 
+type VerifyRoleAuthReq struct {
+	Obj    string `thrift:"obj,1,optional" frugal:"1,optional,string" json:"obj,omitempty"`
+	Act    string `thrift:"act,2,optional" frugal:"2,optional,string" json:"act,omitempty"`
+	RoleId int64  `thrift:"roleId,3,optional" frugal:"3,optional,i64" json:"roleId,omitempty"`
+}
+
+func NewVerifyRoleAuthReq() *VerifyRoleAuthReq {
+	return &VerifyRoleAuthReq{
+		Obj:    "",
+		Act:    "",
+		RoleId: 0,
+	}
+}
+
+func (p *VerifyRoleAuthReq) InitDefault() {
+	p.Obj = ""
+	p.Act = ""
+	p.RoleId = 0
+}
+
+var VerifyRoleAuthReq_Obj_DEFAULT string = ""
+
+func (p *VerifyRoleAuthReq) GetObj() (v string) {
+	if !p.IsSetObj() {
+		return VerifyRoleAuthReq_Obj_DEFAULT
+	}
+	return p.Obj
+}
+
+var VerifyRoleAuthReq_Act_DEFAULT string = ""
+
+func (p *VerifyRoleAuthReq) GetAct() (v string) {
+	if !p.IsSetAct() {
+		return VerifyRoleAuthReq_Act_DEFAULT
+	}
+	return p.Act
+}
+
+var VerifyRoleAuthReq_RoleId_DEFAULT int64 = 0
+
+func (p *VerifyRoleAuthReq) GetRoleId() (v int64) {
+	if !p.IsSetRoleId() {
+		return VerifyRoleAuthReq_RoleId_DEFAULT
+	}
+	return p.RoleId
+}
+func (p *VerifyRoleAuthReq) SetObj(val string) {
+	p.Obj = val
+}
+func (p *VerifyRoleAuthReq) SetAct(val string) {
+	p.Act = val
+}
+func (p *VerifyRoleAuthReq) SetRoleId(val int64) {
+	p.RoleId = val
+}
+
+func (p *VerifyRoleAuthReq) IsSetObj() bool {
+	return p.Obj != VerifyRoleAuthReq_Obj_DEFAULT
+}
+
+func (p *VerifyRoleAuthReq) IsSetAct() bool {
+	return p.Act != VerifyRoleAuthReq_Act_DEFAULT
+}
+
+func (p *VerifyRoleAuthReq) IsSetRoleId() bool {
+	return p.RoleId != VerifyRoleAuthReq_RoleId_DEFAULT
+}
+
+func (p *VerifyRoleAuthReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("VerifyRoleAuthReq(%+v)", *p)
+}
+
+var fieldIDToName_VerifyRoleAuthReq = map[int16]string{
+	1: "obj",
+	2: "act",
+	3: "roleId",
+}
+
+type VerifyRoleAuthResp struct {
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewVerifyRoleAuthResp() *VerifyRoleAuthResp {
+	return &VerifyRoleAuthResp{
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *VerifyRoleAuthResp) InitDefault() {
+	p.BaseResp = &base.BaseResp{}
+}
+
+var VerifyRoleAuthResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *VerifyRoleAuthResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return VerifyRoleAuthResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *VerifyRoleAuthResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *VerifyRoleAuthResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *VerifyRoleAuthResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("VerifyRoleAuthResp(%+v)", *p)
+}
+
+var fieldIDToName_VerifyRoleAuthResp = map[int16]string{
+	255: "baseResp",
+}
+
 type SystemService interface {
 	CreateApi(ctx context.Context, req *CreateApiReq) (r *ApiResp, err error)
 
@@ -3983,6 +4105,8 @@ type SystemService interface {
 	LogList(ctx context.Context, req *LogListReq) (r *LogListResp, err error)
 
 	DeleteLog(ctx context.Context, req *DeleteLogReq) (r *base.NilResponse, err error)
+
+	VerifyRoleAuth(ctx context.Context, req *VerifyRoleAuthReq) (r *VerifyRoleAuthResp, err error)
 }
 
 type SystemServiceCreateApiArgs struct {
@@ -6262,5 +6386,81 @@ func (p *SystemServiceDeleteLogResult) String() string {
 }
 
 var fieldIDToName_SystemServiceDeleteLogResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceVerifyRoleAuthArgs struct {
+	Req *VerifyRoleAuthReq `thrift:"req,1" frugal:"1,default,VerifyRoleAuthReq" json:"req"`
+}
+
+func NewSystemServiceVerifyRoleAuthArgs() *SystemServiceVerifyRoleAuthArgs {
+	return &SystemServiceVerifyRoleAuthArgs{}
+}
+
+func (p *SystemServiceVerifyRoleAuthArgs) InitDefault() {
+}
+
+var SystemServiceVerifyRoleAuthArgs_Req_DEFAULT *VerifyRoleAuthReq
+
+func (p *SystemServiceVerifyRoleAuthArgs) GetReq() (v *VerifyRoleAuthReq) {
+	if !p.IsSetReq() {
+		return SystemServiceVerifyRoleAuthArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceVerifyRoleAuthArgs) SetReq(val *VerifyRoleAuthReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceVerifyRoleAuthArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceVerifyRoleAuthArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceVerifyRoleAuthArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceVerifyRoleAuthArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceVerifyRoleAuthResult struct {
+	Success *VerifyRoleAuthResp `thrift:"success,0,optional" frugal:"0,optional,VerifyRoleAuthResp" json:"success,omitempty"`
+}
+
+func NewSystemServiceVerifyRoleAuthResult() *SystemServiceVerifyRoleAuthResult {
+	return &SystemServiceVerifyRoleAuthResult{}
+}
+
+func (p *SystemServiceVerifyRoleAuthResult) InitDefault() {
+}
+
+var SystemServiceVerifyRoleAuthResult_Success_DEFAULT *VerifyRoleAuthResp
+
+func (p *SystemServiceVerifyRoleAuthResult) GetSuccess() (v *VerifyRoleAuthResp) {
+	if !p.IsSetSuccess() {
+		return SystemServiceVerifyRoleAuthResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceVerifyRoleAuthResult) SetSuccess(x interface{}) {
+	p.Success = x.(*VerifyRoleAuthResp)
+}
+
+func (p *SystemServiceVerifyRoleAuthResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceVerifyRoleAuthResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceVerifyRoleAuthResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceVerifyRoleAuthResult = map[int16]string{
 	0: "success",
 }

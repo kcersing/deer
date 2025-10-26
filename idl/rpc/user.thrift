@@ -74,4 +74,5 @@ service UserService  {
     base.NilResponse ChangePassword(1: ChangePasswordReq req)
     base.NilResponse DeleteUser(1: base.IdReq req)
     base.NilResponse SetUserRole(1: SetUserRoleReq  req)
+
 }
