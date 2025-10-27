@@ -219,3 +219,10 @@ func (s *SystemServiceImpl) DeleteLog(ctx context.Context, req *system.DeleteLog
 
 	return resp, err
 }
+
+// VerifyRoleAuth implements the SystemServiceImpl interface.
+func (s *SystemServiceImpl) VerifyRoleAuth(ctx context.Context, req *system.VerifyRoleAuthReq) (resp *system.VerifyRoleAuthResp, err error) {
+	resp, err = service.NewVerifyRoleAuthService(ctx).Run(req)
+
+	return resp, err
+}

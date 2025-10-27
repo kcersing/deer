@@ -73,36 +73,6 @@ func InitJwt(enforcer *casbin.Enforcer) {
 					return true
 				}
 
-				//existToken := rpc.NewToken(ctx, c).IsExistByUserId(int64(id))
-				//if !existToken {
-				//	return false
-				//}
-				// check the role status
-				//roleInfo, err := rpc.NewRole(ctx, c).RoleInfoByID(cast.ToInt64(roleId))
-				//// if the role is not exist or the role is not active, return false
-				//if err != nil {
-				//	hlog.Error(err, "role is not exist")
-				//	return false
-				//}
-
-				//if roleInfo.Status != 1 {
-				//	hlog.Error("role cache is not a valid *ent.Role or the role is not active")
-				//	return false
-				//}
-
-				//sub := roleId
-				//check the permission
-				//pass, err := enforcer.Enforce(sub, obj, act)
-				//if err != nil {
-				//	hlog.Error("casbin err,  role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass, " err: ", err.Error())
-				//	return false
-				//}
-				//if !pass {
-				//	hlog.Info("casbin forbid role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass)
-				//}
-				//hlog.Info("casbin allow role id: ", roleId, " path: ", obj, " method: ", act, " pass: ", pass)
-				//return pass
-
 				return true
 			},
 			PayloadFunc: func(data interface{}) jwt.MapClaims {
