@@ -5,10 +5,11 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
+import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import type { FC } from 'react';
-import { addRule } from '@/services/ant-design-pro/api';
+import {createMenu} from "@/services/ant-design-pro/menu";
+
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -18,13 +19,8 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const { reload } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
-  /**
-   * @en-US International configuration
-   * @zh-CN 国际化配置
-   * */
-  const intl = useIntl();
 
-  const { run, loading } = useRequest(addRule, {
+  const { run, loading } = useRequest(createMenu, {
     manual: true,
     onSuccess: () => {
       messageApi.success('Added successfully');
@@ -39,19 +35,16 @@ const CreateForm: FC<CreateFormProps> = (props) => {
     <>
       {contextHolder}
       <ModalForm
-        title={intl.formatMessage({
-          id: 'pages.searchTable.createForm.newRule',
-          defaultMessage: 'New rule',
-        })}
+        title='新建'
         trigger={
           <Button type="primary" icon={<PlusOutlined />}>
-            <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
+            新建
           </Button>
         }
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          await run({ data: value as API.RuleListItem });
+          await run({ data: value as API.Menu });
 
           return true;
         }}
@@ -60,12 +53,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: (
-                <FormattedMessage
-                  id="pages.searchTable.ruleName"
-                  defaultMessage="Rule name is required"
-                />
-              ),
+              message: '名称为必填项',
             },
           ]}
           width="md"

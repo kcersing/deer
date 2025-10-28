@@ -14,7 +14,7 @@ import {
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
-
+import { getMenuList} from "@/services/ant-design-pro/menu";
 import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
 
 
@@ -87,19 +87,33 @@ export const layout: RunTimeLayoutConfig = ({
       content: initialState?.currentUser?.name,
     },
     //https://pro.ant.design/zh-CN/docs/advanced-menu
-    // menu:{
-    //   // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
-    //   params: {
-    //     userId: initialState?.currentUser?.id,
-    //   },
-    //   request: async (params, defaultMenuData) => {
-    //     // initialState.currentUser 中包含了所有用户信息
-    //     const menuData = await getRoleMenuAll();
-    //     return menuData;
-    //   },
-    // },
+    menu:{
+      locale: true,
+      // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
+      params: {
+        userId: initialState?.currentUser?.id,
+      },
+      request: async (params, defaultMenuData) => {
+        // initialState.currentUser 中包含了所有用户信息
+        // const menuData = await getRoleMenuAll({roleId:initialState.currentUser.id});
+        const menuResp = await getMenuList({});
+        console.log(menuResp.data)
+        return menuResp.data;
+      },
+    },
+
+     menuDataRender:{
+       request: async () => {
+         const menuResp = await getMenuList({});
+         console.log(menuResp.data)
+         
 
 
+
+         return menuResp.data;
+       },
+     },
+    locale:'zh-CN',
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;

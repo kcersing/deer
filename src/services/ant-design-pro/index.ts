@@ -5,8 +5,10 @@
 import * as api from './api';
 import * as login from './login';
 import * as user from './user';
+import * as menu from './menu';
 export default {
   api,
   login,
   user,
+  menu,
 };

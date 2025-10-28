@@ -52,7 +52,7 @@ export async function getUser(body: { id:number }, options?: { [key: string]: an
 
 
 /** 获取用户信息 POST /service/user */
-export async function getRoleMenuAll(body: { id:number }, options?: { [key: string]: any }) {
+export async function getRoleMenuAll(body: { roleId:number }, options?: { [key: string]: any }) {
   return request<API.LoginResp>('/service/user', {
     method: 'POST',
     headers: {

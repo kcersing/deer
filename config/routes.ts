@@ -28,23 +28,23 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin',
-        redirect: '/admin/sub-page',
-      },
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        component: './Admin',
-      },
-    ],
-  },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'crown',
+  //   access: 'canAdmin',
+  //   routes: [
+  //     {
+  //       path: '/admin',
+  //       redirect: '/admin/sub-page',
+  //     },
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       component: './Admin',
+  //     },
+  //   ],
+  // },
   // {
   //   name: 'user.list',
   //   icon: 'table',
@@ -55,12 +55,12 @@ export default [
     path: '/',
     redirect: '/welcome',
   },
-  {
-    name: '菜单',
-    icon: 'table',
-    path: '/menu',
-    component: './menu',
-  },
+  // {
+  //   name: '菜单',
+  //   icon: 'table',
+  //   path: '/menu',
+  //   component: './menu',
+  // },
   {
     path: '*',
     layout: false,
