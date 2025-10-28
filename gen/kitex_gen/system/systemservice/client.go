@@ -16,13 +16,13 @@ type Client interface {
 	UpdateApi(ctx context.Context, req *system.UpdateApiReq, callOptions ...callopt.Option) (r *system.ApiResp, err error)
 	DeleteApi(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	ApiList(ctx context.Context, req *system.ApiListReq, callOptions ...callopt.Option) (r *system.ApiListResp, err error)
-	ApiTree(ctx context.Context, req *system.ApiListReq, callOptions ...callopt.Option) (r *system.ApiListResp, err error)
+	ApiTree(ctx context.Context, req *system.ApiListReq, callOptions ...callopt.Option) (r *system.TreeResp, err error)
 	CreateMenu(ctx context.Context, req *system.CreateMenuReq, callOptions ...callopt.Option) (r *system.MenuResp, err error)
 	UpdateMenu(ctx context.Context, req *system.UpdateMenuReq, callOptions ...callopt.Option) (r *system.MenuResp, err error)
 	DeleteMenu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	GetMenu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuResp, err error)
 	MenuList(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
-	MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
+	MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.TreeResp, err error)
 	CreateRole(ctx context.Context, req *system.CreateRoleReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
 	GetRole(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.RoleResp, err error)
 	GetRoleList(ctx context.Context, req *system.GetRoleListReq, callOptions ...callopt.Option) (r *system.RoleListResp, err error)
@@ -94,7 +94,7 @@ func (p *kSystemServiceClient) ApiList(ctx context.Context, req *system.ApiListR
 	return p.kClient.ApiList(ctx, req)
 }
 
-func (p *kSystemServiceClient) ApiTree(ctx context.Context, req *system.ApiListReq, callOptions ...callopt.Option) (r *system.ApiListResp, err error) {
+func (p *kSystemServiceClient) ApiTree(ctx context.Context, req *system.ApiListReq, callOptions ...callopt.Option) (r *system.TreeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ApiTree(ctx, req)
 }
@@ -124,7 +124,7 @@ func (p *kSystemServiceClient) MenuList(ctx context.Context, req *system.MenuLis
 	return p.kClient.MenuList(ctx, req)
 }
 
-func (p *kSystemServiceClient) MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error) {
+func (p *kSystemServiceClient) MenuTree(ctx context.Context, req *system.MenuListReq, callOptions ...callopt.Option) (r *system.TreeResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.MenuTree(ctx, req)
 }

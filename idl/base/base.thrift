@@ -24,3 +24,10 @@ struct CheckAccountReq {
     2:string password (api.raw = "password")
     3:string captcha (api.raw = "captcha")
 }
+struct Tree  {
+     1:optional	string title ="" (api.raw = "title")
+     2:optional	string value="" (api.raw = "value")
+     3:optional	string key="" (api.raw = "key")
+     4:optional	string method="" (api.raw = "method")
+     5:optional	list<Tree> children={} (api.raw = "children")
+}

@@ -256,20 +256,23 @@ struct LogListResp{
     1:optional list<Log> data={}
     255:optional base.BaseResp baseResp={}
 }
-
+struct TreeResp{
+    1:optional list<base.Tree> data={}
+    255:optional base.BaseResp baseResp={}
+}
 service SystemService  {
     ApiResp CreateApi(1: CreateApiReq req)
     ApiResp UpdateApi(1: UpdateApiReq req)
     base.NilResponse DeleteApi(1: base.IdReq req)
     ApiListResp ApiList(1: ApiListReq req)
-    ApiListResp ApiTree(1: ApiListReq req)
+    TreeResp ApiTree(1: ApiListReq req)
 
     MenuResp CreateMenu(1: CreateMenuReq req)
     MenuResp UpdateMenu(1: UpdateMenuReq req)
     base.NilResponse DeleteMenu(1: base.IdReq req)
     MenuResp GetMenu(1: base.IdReq req)
     MenuListResp MenuList(1: MenuListReq req)
-    MenuListResp MenuTree(1: MenuListReq req)
+    TreeResp MenuTree(1: MenuListReq req)
 
     RoleResp CreateRole(1: CreateRoleReq req)
     RoleResp GetRole(1: base.IdReq req)

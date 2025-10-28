@@ -13,7 +13,7 @@ func NewApiTreeService(ctx context.Context) *ApiTreeService {
 }
 
 // Run create note info
-func (s *ApiTreeService) Run(req *system.ApiListReq) (resp *system.ApiListResp, err error) {
+func (s *ApiTreeService) Run(req *system.ApiListReq) (resp *system.TreeResp, err error) {
 	// Finish your business logic.
 
 	return

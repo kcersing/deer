@@ -13,12 +13,11 @@ import (
 	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"github.com/hertz-contrib/pprof"
-	"system/biz/dal/casbin"
 )
 
 func Init() {
 	client.Init()
-	mw.InitJwt(casbin.CasbinEnforcer)
+	mw.InitJwt()
 	hlog.SetLogger(hertzlogrus.NewLogger())
 	hlog.SetLevel(hlog.LevelInfo)
 	mtl.InitProvider(consts.AdminServiceName)

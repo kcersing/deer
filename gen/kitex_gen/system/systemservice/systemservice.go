@@ -905,7 +905,7 @@ func (p *kClient) ApiList(ctx context.Context, req *system.ApiListReq) (r *syste
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) ApiTree(ctx context.Context, req *system.ApiListReq) (r *system.ApiListResp, err error) {
+func (p *kClient) ApiTree(ctx context.Context, req *system.ApiListReq) (r *system.TreeResp, err error) {
 	var _args system.SystemServiceApiTreeArgs
 	_args.Req = req
 	var _result system.SystemServiceApiTreeResult
@@ -965,7 +965,7 @@ func (p *kClient) MenuList(ctx context.Context, req *system.MenuListReq) (r *sys
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) MenuTree(ctx context.Context, req *system.MenuListReq) (r *system.MenuListResp, err error) {
+func (p *kClient) MenuTree(ctx context.Context, req *system.MenuListReq) (r *system.TreeResp, err error) {
 	var _args system.SystemServiceMenuTreeArgs
 	_args.Req = req
 	var _result system.SystemServiceMenuTreeResult

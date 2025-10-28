@@ -36,3 +36,6 @@ func (p *NilResponse) IsValid() error {
 func (p *CheckAccountReq) IsValid() error {
 	return nil
 }
+func (p *Tree) IsValid() error {
+	return nil
+}

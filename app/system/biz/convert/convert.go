@@ -1,7 +1,9 @@
 package convert
 
 import (
+	"gen/kitex_gen/base"
 	"gen/kitex_gen/system"
+	"strconv"
 	"system/biz/dal/db/ent"
 	"time"
 )
@@ -101,10 +103,27 @@ func FindMenuChildren(data []*ent.Menu, parentID int64) []*system.Menu {
 	var result []*system.Menu
 	for _, v := range data {
 		// discard the parent menu, only find the children menu
-
 		if v.ParentID == parentID && v.ID != parentID {
 			m := EntToMenu(v)
 			m.Children = FindMenuChildren(data, v.ID)
+			result = append(result, m)
+		}
+	}
+	return result
+}
+
+func FindMenuTreeChildren(data []*ent.Menu, parentID int64) []*base.Tree {
+	if data == nil {
+		return nil
+	}
+	var result []*base.Tree
+	for _, v := range data {
+		if v.ParentID == parentID && v.ID != parentID {
+			var m = new(base.Tree)
+			m.Title = v.Name
+			m.Value = strconv.FormatInt(v.ID, 10)
+			m.Key = strconv.FormatInt(v.ID, 10)
+			m.Children = FindMenuTreeChildren(data, v.ID)
 			result = append(result, m)
 		}
 	}

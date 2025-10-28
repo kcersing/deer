@@ -7,7 +7,6 @@ import (
 	"common/pkg/utils"
 	"context"
 	"gen/kitex_gen/base"
-	"github.com/casbin/casbin/v2"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	jwtv4 "github.com/golang-jwt/jwt/v4"
@@ -24,7 +23,7 @@ type jwtLogin struct {
 
 var JwtMiddleware *jwt.HertzJWTMiddleware
 
-func InitJwt(enforcer *casbin.Enforcer) {
+func InitJwt() {
 	hlog.Info("Jwt")
 	JwtMiddleware, _ = jwt.New(
 		&jwt.HertzJWTMiddleware{
@@ -72,6 +71,15 @@ func InitJwt(enforcer *casbin.Enforcer) {
 					hlog.Infof("authorizator data: %v", v)
 					return true
 				}
+
+				//ok, err := client.SystemClient.VerifyRoleAuth(ctx, &system.VerifyRoleAuthReq{
+				//	Obj:    obj,
+				//	Act:    act,
+				//	RoleId: data["id"].(float64),
+				//})
+				//if err != nil {
+				//	return false
+				//}
 
 				return true
 			},

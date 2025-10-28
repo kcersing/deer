@@ -12,6 +12,7 @@ import (
 	base1 "gen/kitex_gen/base"
 	"gen/kitex_gen/system"
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 // CreateMenu .
@@ -45,7 +46,7 @@ func CreateMenu(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -81,7 +82,7 @@ func UpdateMenu(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -123,7 +124,7 @@ func GetMenu(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -147,7 +148,7 @@ func MenuList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -162,15 +163,12 @@ func MenuTree(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.SystemClient.MenuTree(ctx, &system.MenuListReq{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
-	})
-
+	resp, err := client.SystemClient.MenuTree(ctx, nil)
+	hlog.Info(resp)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }

@@ -22,15 +22,15 @@ func (s *MenuListService) Run(req *system.MenuListReq) (resp *system.MenuListRes
 		predicates []predicate.Menu
 		dataResp   []*system.Menu
 	)
-	apis, err := db.Client.Menu.Query().Where(predicates...).
-		Offset(int(req.Page-1) * int(req.PageSize)).
-		Limit(int(req.PageSize)).All(s.ctx)
+	all, err := db.Client.Menu.Query().Where(predicates...).
+		All(s.ctx)
 	if err != nil {
 		return resp, err
 	}
-	for _, v := range apis {
-		dataResp = append(dataResp, convert.EntToMenu(v))
+
+	dataResp = convert.FindMenuChildren(all, 1)
+	resp = &system.MenuListResp{
+		Data: dataResp,
 	}
-	resp.Data = dataResp
 	return
 }

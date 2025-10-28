@@ -26,7 +26,7 @@ func initSystemRpc() {
 		c, err := systemservice.NewClient(
 			consts.SystemRpcServiceName,
 			client.WithResolver(r), // resolver
-			client.WithMuxConnection(1),
+			//client.WithMuxConnection(1),
 			client.WithRPCTimeout(3*time.Second),              // rpc timeout
 			client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
 			client.WithFailureRetry(retry.NewFailurePolicy()), // retry

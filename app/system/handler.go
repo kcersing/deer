@@ -39,7 +39,7 @@ func (s *SystemServiceImpl) ApiList(ctx context.Context, req *system.ApiListReq)
 }
 
 // ApiTree implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) ApiTree(ctx context.Context, req *system.ApiListReq) (resp *system.ApiListResp, err error) {
+func (s *SystemServiceImpl) ApiTree(ctx context.Context, req *system.ApiListReq) (resp *system.TreeResp, err error) {
 	resp, err = service.NewApiTreeService(ctx).Run(req)
 
 	return resp, err
@@ -81,7 +81,7 @@ func (s *SystemServiceImpl) MenuList(ctx context.Context, req *system.MenuListRe
 }
 
 // MenuTree implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) MenuTree(ctx context.Context, req *system.MenuListReq) (resp *system.MenuListResp, err error) {
+func (s *SystemServiceImpl) MenuTree(ctx context.Context, req *system.MenuListReq) (resp *system.TreeResp, err error) {
 	resp, err = service.NewMenuTreeService(ctx).Run(req)
 
 	return resp, err

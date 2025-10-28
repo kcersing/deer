@@ -294,3 +294,124 @@ var fieldIDToName_CheckAccountReq = map[int16]string{
 	2: "password",
 	3: "captcha",
 }
+
+type Tree struct {
+	Title    string  `thrift:"title,1,optional" frugal:"1,optional,string" json:"title,omitempty"`
+	Value    string  `thrift:"value,2,optional" frugal:"2,optional,string" json:"value,omitempty"`
+	Key      string  `thrift:"key,3,optional" frugal:"3,optional,string" json:"key,omitempty"`
+	Method   string  `thrift:"method,4,optional" frugal:"4,optional,string" json:"method,omitempty"`
+	Children []*Tree `thrift:"children,5,optional" frugal:"5,optional,list<Tree>" json:"children,omitempty"`
+}
+
+func NewTree() *Tree {
+	return &Tree{
+		Title:    "",
+		Value:    "",
+		Key:      "",
+		Method:   "",
+		Children: []*Tree{},
+	}
+}
+
+func (p *Tree) InitDefault() {
+	p.Title = ""
+	p.Value = ""
+	p.Key = ""
+	p.Method = ""
+	p.Children = []*Tree{}
+}
+
+var Tree_Title_DEFAULT string = ""
+
+func (p *Tree) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return Tree_Title_DEFAULT
+	}
+	return p.Title
+}
+
+var Tree_Value_DEFAULT string = ""
+
+func (p *Tree) GetValue() (v string) {
+	if !p.IsSetValue() {
+		return Tree_Value_DEFAULT
+	}
+	return p.Value
+}
+
+var Tree_Key_DEFAULT string = ""
+
+func (p *Tree) GetKey() (v string) {
+	if !p.IsSetKey() {
+		return Tree_Key_DEFAULT
+	}
+	return p.Key
+}
+
+var Tree_Method_DEFAULT string = ""
+
+func (p *Tree) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return Tree_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var Tree_Children_DEFAULT []*Tree = []*Tree{}
+
+func (p *Tree) GetChildren() (v []*Tree) {
+	if !p.IsSetChildren() {
+		return Tree_Children_DEFAULT
+	}
+	return p.Children
+}
+func (p *Tree) SetTitle(val string) {
+	p.Title = val
+}
+func (p *Tree) SetValue(val string) {
+	p.Value = val
+}
+func (p *Tree) SetKey(val string) {
+	p.Key = val
+}
+func (p *Tree) SetMethod(val string) {
+	p.Method = val
+}
+func (p *Tree) SetChildren(val []*Tree) {
+	p.Children = val
+}
+
+func (p *Tree) IsSetTitle() bool {
+	return p.Title != Tree_Title_DEFAULT
+}
+
+func (p *Tree) IsSetValue() bool {
+	return p.Value != Tree_Value_DEFAULT
+}
+
+func (p *Tree) IsSetKey() bool {
+	return p.Key != Tree_Key_DEFAULT
+}
+
+func (p *Tree) IsSetMethod() bool {
+	return p.Method != Tree_Method_DEFAULT
+}
+
+func (p *Tree) IsSetChildren() bool {
+	return p.Children != nil
+}
+
+func (p *Tree) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Tree(%+v)", *p)
+}
+
+var fieldIDToName_Tree = map[int16]string{
+	1: "title",
+	2: "value",
+	3: "key",
+	4: "method",
+	5: "children",
+}

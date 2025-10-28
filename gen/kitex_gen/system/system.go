@@ -3923,6 +3923,67 @@ var fieldIDToName_LogListResp = map[int16]string{
 	255: "baseResp",
 }
 
+type TreeResp struct {
+	Data     []*base.Tree   `thrift:"data,1,optional" frugal:"1,optional,list<base.Tree>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewTreeResp() *TreeResp {
+	return &TreeResp{
+		Data:     []*base.Tree{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *TreeResp) InitDefault() {
+	p.Data = []*base.Tree{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var TreeResp_Data_DEFAULT []*base.Tree = []*base.Tree{}
+
+func (p *TreeResp) GetData() (v []*base.Tree) {
+	if !p.IsSetData() {
+		return TreeResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var TreeResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *TreeResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return TreeResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *TreeResp) SetData(val []*base.Tree) {
+	p.Data = val
+}
+func (p *TreeResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *TreeResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *TreeResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *TreeResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("TreeResp(%+v)", *p)
+}
+
+var fieldIDToName_TreeResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
 type VerifyRoleAuthReq struct {
 	Obj    string `thrift:"obj,1,optional" frugal:"1,optional,string" json:"obj,omitempty"`
 	Act    string `thrift:"act,2,optional" frugal:"2,optional,string" json:"act,omitempty"`
@@ -4054,7 +4115,7 @@ type SystemService interface {
 
 	ApiList(ctx context.Context, req *ApiListReq) (r *ApiListResp, err error)
 
-	ApiTree(ctx context.Context, req *ApiListReq) (r *ApiListResp, err error)
+	ApiTree(ctx context.Context, req *ApiListReq) (r *TreeResp, err error)
 
 	CreateMenu(ctx context.Context, req *CreateMenuReq) (r *MenuResp, err error)
 
@@ -4066,7 +4127,7 @@ type SystemService interface {
 
 	MenuList(ctx context.Context, req *MenuListReq) (r *MenuListResp, err error)
 
-	MenuTree(ctx context.Context, req *MenuListReq) (r *MenuListResp, err error)
+	MenuTree(ctx context.Context, req *MenuListReq) (r *TreeResp, err error)
 
 	CreateRole(ctx context.Context, req *CreateRoleReq) (r *RoleResp, err error)
 
@@ -4452,7 +4513,7 @@ var fieldIDToName_SystemServiceApiTreeArgs = map[int16]string{
 }
 
 type SystemServiceApiTreeResult struct {
-	Success *ApiListResp `thrift:"success,0,optional" frugal:"0,optional,ApiListResp" json:"success,omitempty"`
+	Success *TreeResp `thrift:"success,0,optional" frugal:"0,optional,TreeResp" json:"success,omitempty"`
 }
 
 func NewSystemServiceApiTreeResult() *SystemServiceApiTreeResult {
@@ -4462,16 +4523,16 @@ func NewSystemServiceApiTreeResult() *SystemServiceApiTreeResult {
 func (p *SystemServiceApiTreeResult) InitDefault() {
 }
 
-var SystemServiceApiTreeResult_Success_DEFAULT *ApiListResp
+var SystemServiceApiTreeResult_Success_DEFAULT *TreeResp
 
-func (p *SystemServiceApiTreeResult) GetSuccess() (v *ApiListResp) {
+func (p *SystemServiceApiTreeResult) GetSuccess() (v *TreeResp) {
 	if !p.IsSetSuccess() {
 		return SystemServiceApiTreeResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceApiTreeResult) SetSuccess(x interface{}) {
-	p.Success = x.(*ApiListResp)
+	p.Success = x.(*TreeResp)
 }
 
 func (p *SystemServiceApiTreeResult) IsSetSuccess() bool {
@@ -4908,7 +4969,7 @@ var fieldIDToName_SystemServiceMenuTreeArgs = map[int16]string{
 }
 
 type SystemServiceMenuTreeResult struct {
-	Success *MenuListResp `thrift:"success,0,optional" frugal:"0,optional,MenuListResp" json:"success,omitempty"`
+	Success *TreeResp `thrift:"success,0,optional" frugal:"0,optional,TreeResp" json:"success,omitempty"`
 }
 
 func NewSystemServiceMenuTreeResult() *SystemServiceMenuTreeResult {
@@ -4918,16 +4979,16 @@ func NewSystemServiceMenuTreeResult() *SystemServiceMenuTreeResult {
 func (p *SystemServiceMenuTreeResult) InitDefault() {
 }
 
-var SystemServiceMenuTreeResult_Success_DEFAULT *MenuListResp
+var SystemServiceMenuTreeResult_Success_DEFAULT *TreeResp
 
-func (p *SystemServiceMenuTreeResult) GetSuccess() (v *MenuListResp) {
+func (p *SystemServiceMenuTreeResult) GetSuccess() (v *TreeResp) {
 	if !p.IsSetSuccess() {
 		return SystemServiceMenuTreeResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceMenuTreeResult) SetSuccess(x interface{}) {
-	p.Success = x.(*MenuListResp)
+	p.Success = x.(*TreeResp)
 }
 
 func (p *SystemServiceMenuTreeResult) IsSetSuccess() bool {
