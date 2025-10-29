@@ -40,7 +40,7 @@ export default defineConfig({
    * @doc https://umijs.org/docs/guides/routes
    */
   // umi routes: https://umijs.org/docs/routing
-  routes,
+  // routes:routes,
   /**
    * @name 主题的配置
    * @description 虽然叫主题，但是其实只是 less 的变量设置
@@ -53,7 +53,7 @@ export default defineConfig({
    * @description 如果对国际化没有要求，打开之后能减少js的包大小
    * @doc https://umijs.org/docs/api/config#ignoremomentlocale
    */
-  ignoreMomentLocale: true,
+  ignoreMomentLocale: false,
   /**
    * @name 代理配置
    * @description 可以让你的本地服务器代理到你的服务器上，这样你就可以访问服务器的数据了
@@ -85,7 +85,7 @@ export default defineConfig({
    */
   title: 'Ant Design Pro',
   layout: {
-    locale: true,
+    locale: false,
     ...defaultSettings,
   },
   /**

@@ -1,9 +1,11 @@
-import { LinkOutlined } from '@ant-design/icons';
+import { LinkOutlined,PlusCircleFilled, SearchOutlined,HeartOutlined, SmileOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
-import { SettingDrawer } from '@ant-design/pro-components';
+
+import { SettingDrawer ,ProBreadcrumb} from '@ant-design/pro-components';
 import type { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
-import React from 'react';
+import React, { useState, useReducer, useEffect, useRef, memo, useCallback } from 'react';
+import { Input, Space } from 'antd';
 import {
   AvatarDropdown,
   AvatarName,
@@ -16,8 +18,10 @@ import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 import { getMenuList} from "@/services/ant-design-pro/menu";
 import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
+import type { MenuDataItem } from '@ant-design/pro-components';
 
-
+import * as allIcons from '@ant-design/icons';
+//https://www.iconfont.cn/collections/detail?cid=9402
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -29,7 +33,23 @@ export async function getInitialState(): Promise<{
   currentUser?: API.User;
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.User | undefined>;
+  menuList?: MenuDataItem;
 }> {
+
+  const menuList = async () => {
+    try {
+      const msg = await getMenuList({});
+      console.log(msg)
+      // if(msg.code !==0){
+      //   history.push(loginPath);
+      // }
+      return msg.data;
+    } catch (_error) {
+      // history.push(loginPath);
+    }
+    return undefined;
+  };
+
   const fetchUserInfo = async () => {
     try {
       const msg = await getUser(
@@ -66,16 +86,72 @@ export async function getInitialState(): Promise<{
   };
 }
 
+const IconMap = (icon:string, iconType = 'Outlined')=>{
+  let fixIconName = icon.slice(0, 1).toLocaleUpperCase() + icon.slice(1) + iconType;
+  let icont = React.createElement(allIcons[fixIconName] || allIcons[icon]);
+  console.log(icont)
+   return icont
+};
+
+const loopMenuItem = (menus: any[]): MenuDataItem[] =>
+  menus.map(({ icon, component,children, ...item }) => ({
+    ...item,
+    component: component,
+    routes: children && loopMenuItem(children),
+    icon: icon && IconMap(icon),
+    children: children && loopMenuItem(children),
+}));
+
+const filterByMenuData = (
+  data: MenuDataItem[],
+  keyWord: '',
+): MenuDataItem[] =>
+  data.map((item) => {
+      if (item.name?.includes(keyWord)) {
+        return { ...item };
+      }
+      const children = filterByMenuData(item.children || [], keyWord);
+      if (children.length > 0) {
+        return { ...item, children };
+      }
+       return undefined;
+    })
+    .filter((item) => item) as MenuDataItem[];
+
+
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({
   initialState,
   setInitialState,
 }) => {
+
+  const [keyWord, setKeyWord] = useState('');
+  const [loadMenuData, setLoadMenuData] = useState<MenuDataItem[]>([]);
+  const loadMenu = async () => {
+    try {
+      const [menuData] = await Promise.all([
+        getMenuList({}),
+      ]);
+      setLoadMenuData(menuData.data || []);
+    } catch (error: any) {
+      console.error('加载菜单数据失败', error);
+    }
+  };
+  //
+  useEffect(() => {
+    loadMenu();
+  }, [initialState?.currentUser?.id]);
+    console.log(loopMenuItem(loadMenuData))
   return {
     actionsRender: () => [
       <Question key="doc" />,
       <SelectLang key="SelectLang" />,
     ],
+
+    headerContentRender:() => [
+      <ProBreadcrumb />,
+  ],
+
     avatarProps: {
       src: initialState?.currentUser?.avatar,
       title: <AvatarName />,
@@ -88,32 +164,55 @@ export const layout: RunTimeLayoutConfig = ({
     },
     //https://pro.ant.design/zh-CN/docs/advanced-menu
     menu:{
-      locale: true,
-      // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
-      params: {
-        userId: initialState?.currentUser?.id,
-      },
-      request: async (params, defaultMenuData) => {
-        // initialState.currentUser 中包含了所有用户信息
-        // const menuData = await getRoleMenuAll({roleId:initialState.currentUser.id});
-        const menuResp = await getMenuList({});
-        console.log(menuResp.data)
-        return menuResp.data;
-      },
+      locale: false,
+      // request:loopMenuItem(loadMenuData),
+    },
+    menuExtraRender:({ collapsed }) =>
+      !collapsed && (
+        <Space
+          style={{
+            marginBlockStart: 16,
+          }}
+          align="center"
+        >
+          <Input
+            style={{
+              borderRadius: 4,
+              backgroundColor: 'rgba(0,0,0,0.03)',
+            }}
+            prefix={
+              <SearchOutlined
+                style={{
+                  color: 'rgba(0, 0, 0, 0.15)',
+                }}
+              />
+            }
+            placeholder="搜索方案"
+            variant="borderless"
+            onPressEnter={(e) => {
+              setKeyWord((e.target as HTMLInputElement).value);
+            }}
+          />
+          <PlusCircleFilled
+            style={{
+              color: 'var(--ant-primary-color)',
+              fontSize: 24,
+            }}
+          />
+        </Space>
+      ),
+
+     postMenuData:(menus) => filterByMenuData(menus || [], keyWord || ''),
+
+    menuDataRender: () => {
+      if (loadMenuData) {
+        return loopMenuItem(loadMenuData);
+      }
+      return [];
     },
 
-     menuDataRender:{
-       request: async () => {
-         const menuResp = await getMenuList({});
-         console.log(menuResp.data)
-         
 
-
-
-         return menuResp.data;
-       },
-     },
-    locale:'zh-CN',
+    locale:"zh-CN",
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
@@ -122,6 +221,7 @@ export const layout: RunTimeLayoutConfig = ({
         history.push(loginPath);
       }
     },
+
     bgLayoutImgList: [
       {
         src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
@@ -144,10 +244,10 @@ export const layout: RunTimeLayoutConfig = ({
     ],
     links: isDev
       ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
+          // <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+          //   <LinkOutlined />
+          //   <span>OpenAPI 文档</span>
+          // </Link>,
         ]
       : [],
     menuHeaderRender: undefined,
