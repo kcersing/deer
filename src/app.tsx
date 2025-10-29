@@ -33,23 +33,8 @@ export async function getInitialState(): Promise<{
   currentUser?: API.User;
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.User | undefined>;
-  menuList?: MenuDataItem;
+
 }> {
-
-  const menuList = async () => {
-    try {
-      const msg = await getMenuList({});
-      console.log(msg)
-      // if(msg.code !==0){
-      //   history.push(loginPath);
-      // }
-      return msg.data;
-    } catch (_error) {
-      // history.push(loginPath);
-    }
-    return undefined;
-  };
-
   const fetchUserInfo = async () => {
     try {
       const msg = await getUser(
@@ -73,6 +58,7 @@ export async function getInitialState(): Promise<{
       location.pathname,
     )
   ) {
+
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -128,6 +114,9 @@ export const layout: RunTimeLayoutConfig = ({
   const [keyWord, setKeyWord] = useState('');
   const [loadMenuData, setLoadMenuData] = useState<MenuDataItem[]>([]);
   const loadMenu = async () => {
+    if ( ! initialState.currentUser.id >0 ){
+      return []
+    }
     try {
       const [menuData] = await Promise.all([
         getMenuList({}),
