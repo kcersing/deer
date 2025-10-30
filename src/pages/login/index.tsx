@@ -20,7 +20,7 @@ import { flushSync } from 'react-dom';
 import { Footer } from '@/components';
 import { login } from '@/services/ant-design-pro/user';
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import Settings from '../../../../config/defaultSettings';
+import Settings from '../../../config/defaultSettings';
 
 const useStyles = createStyles(({ token }) => {
   return {
