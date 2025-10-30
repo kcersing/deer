@@ -42,6 +42,7 @@ func EntToLog(e *ent.Logs) *system.Log {
 func EntToMenu(e *ent.Menu) *system.Menu {
 	return &system.Menu{
 		Id:        e.ID,
+		Icon:      e.Icon,
 		Name:      e.Name,
 		ParentId:  e.ParentID,
 		Level:     e.Level,

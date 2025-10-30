@@ -113,6 +113,7 @@ struct Menu{
     16:optional string updatedAt="" (api.raw = "updatedAt")
     17:optional string title="" (api.raw = "title" )
     19:optional string type="" (api.raw = "type")
+    20:optional string icon="" (api.raw = "icon")
 }
 struct MenuResp{
    1:optional Menu data={}

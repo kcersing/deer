@@ -1556,6 +1556,7 @@ type Menu struct {
 	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
 	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
 	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
+	Icon      string  `thrift:"icon,20,optional" frugal:"20,optional,string" json:"icon,omitempty"`
 }
 
 func NewMenu() *Menu {
@@ -1577,6 +1578,7 @@ func NewMenu() *Menu {
 		UpdatedAt: "",
 		Title:     "",
 		Type:      "",
+		Icon:      "",
 	}
 }
 
@@ -1598,6 +1600,7 @@ func (p *Menu) InitDefault() {
 	p.UpdatedAt = ""
 	p.Title = ""
 	p.Type = ""
+	p.Icon = ""
 }
 
 var Menu_Id_DEFAULT int64 = 0
@@ -1752,6 +1755,15 @@ func (p *Menu) GetType() (v string) {
 	}
 	return p.Type
 }
+
+var Menu_Icon_DEFAULT string = ""
+
+func (p *Menu) GetIcon() (v string) {
+	if !p.IsSetIcon() {
+		return Menu_Icon_DEFAULT
+	}
+	return p.Icon
+}
 func (p *Menu) SetId(val int64) {
 	p.Id = val
 }
@@ -1802,6 +1814,9 @@ func (p *Menu) SetTitle(val string) {
 }
 func (p *Menu) SetType(val string) {
 	p.Type = val
+}
+func (p *Menu) SetIcon(val string) {
+	p.Icon = val
 }
 
 func (p *Menu) IsSetId() bool {
@@ -1872,6 +1887,10 @@ func (p *Menu) IsSetType() bool {
 	return p.Type != Menu_Type_DEFAULT
 }
 
+func (p *Menu) IsSetIcon() bool {
+	return p.Icon != Menu_Icon_DEFAULT
+}
+
 func (p *Menu) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1897,6 +1916,7 @@ var fieldIDToName_Menu = map[int16]string{
 	16: "updatedAt",
 	17: "title",
 	19: "type",
+	20: "icon",
 }
 
 type MenuResp struct {
