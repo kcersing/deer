@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 import { Avatar, Card, Dropdown, List, Tooltip } from 'antd';
-import numeral from 'numeral';
+// import numeral from 'numeral';
 import React from 'react';
 import type { ListItemDataType } from '../../data.d';
 import { queryFakeList } from '../../service';
@@ -116,7 +116,7 @@ const Applications: React.FC = () => {
             <div>
               <CardInfo
                 activeUser={formatWan(item.activeUser)}
-                newUser={numeral(item.newUser).format('0,0')}
+                // newUser={numeral(item.newUser).format('0,0')}
               />
             </div>
           </Card>

@@ -5,7 +5,7 @@ import { SettingDrawer ,ProBreadcrumb} from '@ant-design/pro-components';
 import type { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import React, { useState, useReducer, useEffect, useRef, memo, useCallback } from 'react';
-import { Input, Space } from 'antd';
+import { Input, Space,Menu } from 'antd';
 import {
   AvatarDropdown,
   AvatarName,
@@ -21,6 +21,8 @@ import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
 import type { MenuDataItem } from '@ant-design/pro-components';
 
 import * as allIcons from '@ant-design/icons';
+
+import { useLocation } from 'umi';
 //https://www.iconfont.cn/collections/detail?cid=9402
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -67,24 +69,15 @@ export async function getInitialState(): Promise<{
     };
   }
   return {
-    fetchUserInfo,
     settings: defaultSettings as Partial<LayoutSettings>,
   };
 }
-
-const IconMap = (icon:string, iconType = 'Outlined')=>{
-  let fixIconName = icon.slice(0, 1).toLocaleUpperCase() + icon.slice(1) + iconType;
-  let icont = React.createElement(allIcons[fixIconName] || allIcons[icon]);
-  console.log(icont)
-   return icont
-};
 
 const loopMenuItem = (menus: any[]): MenuDataItem[] =>
   menus.map(({ icon, component,children, ...item }) => ({
     ...item,
     component: component,
-    routes: children && loopMenuItem(children),
-    icon: icon && IconMap(icon),
+    icon: icon && React.createElement(allIcons[icon]),
     children: children && loopMenuItem(children),
 }));
 
@@ -111,35 +104,13 @@ export const layout: RunTimeLayoutConfig = ({
   setInitialState,
 }) => {
 
-  const [keyWord, setKeyWord] = useState('');
-  const [loadMenuData, setLoadMenuData] = useState<MenuDataItem[]>([]);
-  const loadMenu = async () => {
-    if ( ! initialState.currentUser.id >0 ){
-      return []
-    }
-    try {
-      const [menuData] = await Promise.all([
-        getMenuList({}),
-      ]);
-      setLoadMenuData(menuData.data || []);
-    } catch (error: any) {
-      console.error('加载菜单数据失败', error);
-    }
-  };
-  //
-  useEffect(() => {
-    loadMenu();
-  }, [initialState?.currentUser?.id]);
-    console.log(loopMenuItem(loadMenuData))
   return {
-    actionsRender: () => [
-      <Question key="doc" />,
-      <SelectLang key="SelectLang" />,
-    ],
-
-    headerContentRender:() => [
-      <ProBreadcrumb />,
-  ],
+    actionsRender: () => {
+    return   <Question key="doc" />
+  },
+    headerContentRender:() => {
+      return   <ProBreadcrumb />
+    },
 
     avatarProps: {
       src: initialState?.currentUser?.avatar,
@@ -154,55 +125,24 @@ export const layout: RunTimeLayoutConfig = ({
     //https://pro.ant.design/zh-CN/docs/advanced-menu
     menu:{
       locale: false,
-      // request:loopMenuItem(loadMenuData),
+      params: {
+        id: initialState?.currentUser?.id,
+      },
+      request: async (params, defaultMenuData) => {
+      console.log(params,defaultMenuData)
+        if(params.id == undefined || params.id == 0){
+          return defaultMenuData
+        }
+        // initialState.currentUser 中包含了所有用户信息
+        const loadMenuData = await getMenuList({});
+        return loopMenuItem(loadMenuData.data || []);
+      },
+
     },
-    menuExtraRender:({ collapsed }) =>
-      !collapsed && (
-        <Space
-          style={{
-            marginBlockStart: 16,
-          }}
-          align="center"
-        >
-          <Input
-            style={{
-              borderRadius: 4,
-              backgroundColor: 'rgba(0,0,0,0.03)',
-            }}
-            prefix={
-              <SearchOutlined
-                style={{
-                  color: 'rgba(0, 0, 0, 0.15)',
-                }}
-              />
-            }
-            placeholder="搜索方案"
-            variant="borderless"
-            onPressEnter={(e) => {
-              setKeyWord((e.target as HTMLInputElement).value);
-            }}
-          />
-          <PlusCircleFilled
-            style={{
-              color: 'var(--ant-primary-color)',
-              fontSize: 24,
-            }}
-          />
-        </Space>
-      ),
-
-     postMenuData:(menus) => filterByMenuData(menus || [], keyWord || ''),
-
-    menuDataRender: () => {
-      if (loadMenuData) {
-        return loopMenuItem(loadMenuData);
-      }
-      return [];
+    footerRender: () =>{
+      return  <Footer />
     },
-
-
-    locale:"zh-CN",
-    footerRender: () => <Footer />,
+    menuHeaderRender: undefined,
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
@@ -239,7 +179,7 @@ export const layout: RunTimeLayoutConfig = ({
           // </Link>,
         ]
       : [],
-    menuHeaderRender: undefined,
+
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态

@@ -97,6 +97,7 @@ type Menu={
   children?: Menu[];
   title?: string;
   type?: string;
+  icon?: string;
 }
 
 

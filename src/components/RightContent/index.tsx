@@ -1,22 +1,23 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { SelectLang as UmiSelectLang } from '@umijs/max';
-
+import { useLocation } from 'umi';
 export type SiderTheme = 'light' | 'dark';
 
 export const SelectLang: React.FC = () => {
-  return (
-    <UmiSelectLang
-      style={{
-        padding: 4,
-      }}
-    />
+  return ( <></>
+    // <UmiSelectLang
+    //   style={{
+    //     padding: 4,
+    //   }}
+    // />
   );
 };
 
 export const Question: React.FC = () => {
+
   return (
     <a
-      href="https://pro.ant.design/docs/getting-started"
+      href="http://www.kkksy.com"
       target="_blank"
       rel="noreferrer"
       style={{

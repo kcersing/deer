@@ -40,7 +40,7 @@ export default defineConfig({
    * @doc https://umijs.org/docs/guides/routes
    */
   // umi routes: https://umijs.org/docs/routing
-  // routes:routes,
+  //  routes,
   /**
    * @name 主题的配置
    * @description 虽然叫主题，但是其实只是 less 的变量设置
@@ -83,7 +83,8 @@ export default defineConfig({
    * @name layout 插件
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'Ant Design Pro',
+  title: 'DEER',
+  locale: false,
   layout: {
     locale: false,
     ...defaultSettings,
@@ -101,13 +102,9 @@ export default defineConfig({
    * @name 国际化插件
    * @doc https://umijs.org/docs/max/i18n
    */
-  locale: {
-    // default zh-CN
-    default: 'zh-CN',
-    antd: true,
-    // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: true,
-  },
+  // locale: {
+  //   default: 'zh-CN',
+  // },
   /**
    * @name antd 插件
    * @description 内置了 babel import 插件

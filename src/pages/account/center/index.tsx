@@ -23,13 +23,14 @@ import Articles from './components/Articles';
 import Projects from './components/Projects';
 import type { CurrentUser, TagType, tabKeyType } from './data.d';
 import { queryCurrent } from './service';
+import {getUser} from "@/services/ant-design-pro/user";
 
 const operationTabList = [
   {
     key: 'articles',
     tab: (
       <span>
-        文章{' '}
+        会员{' '}
         <span
           style={{
             fontSize: 14,
@@ -44,7 +45,7 @@ const operationTabList = [
     key: 'applications',
     tab: (
       <span>
-        应用{' '}
+        订单{' '}
         <span
           style={{
             fontSize: 14,
@@ -145,7 +146,7 @@ const Center: React.FC = () => {
 
   //  获取用户信息
   const { data: currentUser, loading } = useRequest(() => {
-    return queryCurrent();
+    return getUser({id:0});
   });
 
   //  渲染用户信息
