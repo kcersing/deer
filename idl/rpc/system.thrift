@@ -54,16 +54,13 @@ struct CreateMenuReq{
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
     8:optional i64 menuType=0 (api.raw = "menuType")
-    9:optional i64 hidden=0 (api.raw = "hidden")
-    10:optional i64 sort=0 (api.raw = "sort")
-
-    12:optional i64 status=1 (api.raw = "status")
-    13:optional string url="" (api.raw = "url")
-//    14:optional list<Menu> children=[]  (api.raw = "children")
+    9:optional i64 orderNo=0 (api.raw = "orderNo")
+    10:optional i64 ignore=0 (api.raw = "ignore")
+    11:optional string icon="" (api.raw = "icon")
+    12:optional i64 status=0 (api.raw = "status")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
-    17:optional string title="" (api.raw = "title" )
-    19:optional string type="" (api.raw = "type")
+
 }
 struct UpdateMenuReq{
     1:optional i64 id=0 (api.raw = "id" )
@@ -74,16 +71,12 @@ struct UpdateMenuReq{
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
     8:optional i64 menuType=0 (api.raw = "menuType")
-    9:optional i64 hidden=0 (api.raw = "hidden")
-    10:optional i64 sort=0 (api.raw = "sort")
-
-    12:optional i64 status=1 (api.raw = "status")
-    13:optional string url="" (api.raw = "url")
-//    14:optional list<Menu> children=[]  (api.raw = "children")
+    9:optional i64 orderNo=0 (api.raw = "orderNo")
+    10:optional i64 ignore=0 (api.raw = "ignore")
+    11:optional string icon="" (api.raw = "icon")
+    12:optional i64 status=0 (api.raw = "status")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
-    17:optional string title="" (api.raw = "title" )
-    19:optional string type="" (api.raw = "type")
 }
 struct MenuListReq{
     1:  optional i64 page=1 (api.raw = "page")
@@ -103,16 +96,14 @@ struct Menu{
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
     8:optional i64 menuType=0 (api.raw = "menuType")
-    9:optional i64 hidden=0 (api.raw = "hidden")
-    10:optional i64 sort=0 (api.raw = "sort")
 
-    12:optional i64 status=1 (api.raw = "status")
-    13:optional string url="" (api.raw = "url")
+
+    12:optional i64 status=0 (api.raw = "status")
+
     14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
-    17:optional string title="" (api.raw = "title" )
-    19:optional string type="" (api.raw = "type")
+
     20:optional string icon="" (api.raw = "icon")
 }
 struct MenuResp{
@@ -171,7 +162,7 @@ struct Dict {
     1:  i64 id=0 (api.raw = "id" )
     2:  string title="" (api.raw = "title" )
     3:  string name="" (api.raw = "name" )
-    5:  i64 status=1 (api.raw = "status" )
+    5:  i64 status=0 (api.raw = "status" )
     6:  string description="" (api.raw = "description" )
     7:  string createdAt="" (api.raw = "createdAt" )
     8:  string updatedAt="" (api.raw = "updatedAt" )
@@ -183,7 +174,7 @@ struct Dictht {
     2:  string title="" (api.raw = "title" )
     3:  string key="" (api.raw = "key" )
     4:  string value="" (api.raw = "value" )
-    5:  i64 status=1 (api.raw = "status" )
+    5:  i64 status=0 (api.raw = "status" )
     6:  string createdAt="" (api.raw = "createdAt" )
     7:  string updatedAt="" (api.raw = "updatedAt" )
     8:  i64 parentID (api.raw = "parentID" )

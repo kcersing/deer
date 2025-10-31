@@ -50,15 +50,9 @@ func EntToMenu(e *ent.Menu) *system.Menu {
 		Redirect:  e.Redirect,
 		Component: e.Component,
 		MenuType:  e.MenuType,
-		Hidden:    e.Hidden,
-		Sort:      e.Sort,
 		Status:    e.Status,
-		Url:       e.URL,
-		//Children:  nil,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
-		Title:     e.Title,
-		Type:      e.Type,
 	}
 }
 

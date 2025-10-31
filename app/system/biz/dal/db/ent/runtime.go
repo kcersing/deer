@@ -162,29 +162,17 @@ func init() {
 	// menu.DefaultStatus holds the default value on creation for the status field.
 	menu.DefaultStatus = menuDescStatus.Default.(int64)
 	// menuDescPath is the schema descriptor for path field.
-	menuDescPath := menuFields[1].Descriptor()
+	menuDescPath := menuFields[0].Descriptor()
 	// menu.DefaultPath holds the default value on creation for the path field.
 	menu.DefaultPath = menuDescPath.Default.(string)
-	// menuDescOrderNo is the schema descriptor for order_no field.
-	menuDescOrderNo := menuFields[3].Descriptor()
-	// menu.DefaultOrderNo holds the default value on creation for the order_no field.
-	menu.DefaultOrderNo = menuDescOrderNo.Default.(int64)
-	// menuDescDisabled is the schema descriptor for disabled field.
-	menuDescDisabled := menuFields[4].Descriptor()
-	// menu.DefaultDisabled holds the default value on creation for the disabled field.
-	menu.DefaultDisabled = menuDescDisabled.Default.(int64)
-	// menuDescIgnore is the schema descriptor for ignore field.
-	menuDescIgnore := menuFields[5].Descriptor()
-	// menu.DefaultIgnore holds the default value on creation for the ignore field.
-	menu.DefaultIgnore = menuDescIgnore.Default.(bool)
-	// menuDescRedirect is the schema descriptor for redirect field.
-	menuDescRedirect := menuFields[9].Descriptor()
-	// menu.DefaultRedirect holds the default value on creation for the redirect field.
-	menu.DefaultRedirect = menuDescRedirect.Default.(string)
 	// menuDescComponent is the schema descriptor for component field.
-	menuDescComponent := menuFields[10].Descriptor()
+	menuDescComponent := menuFields[2].Descriptor()
 	// menu.DefaultComponent holds the default value on creation for the component field.
 	menu.DefaultComponent = menuDescComponent.Default.(string)
+	// menuDescRedirect is the schema descriptor for redirect field.
+	menuDescRedirect := menuFields[3].Descriptor()
+	// menu.DefaultRedirect holds the default value on creation for the redirect field.
+	menu.DefaultRedirect = menuDescRedirect.Default.(string)
 	messagesMixin := schema.Messages{}.Mixin()
 	messagesMixinFields0 := messagesMixin[0].Fields()
 	_ = messagesMixinFields0

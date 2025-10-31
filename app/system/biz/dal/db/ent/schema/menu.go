@@ -13,38 +13,23 @@ type Menu struct {
 	ent.Schema
 }
 
+// path,component,routes,redirect,wrappers,name,icon
 func (Menu) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int64("parent_id").Optional().Comment("parent menu ID | 父菜单ID"),
 		field.String("path").Optional().Default("").Comment("index path | 菜单路由路径"),
 		field.String("name").Comment("index name | 菜单名称").Optional(),
-		field.Int64("order_no").Default(0).Comment("sorting numbers | 排序编号").Optional(),
-		field.Int64("disabled").Optional().Default(0).Comment("disable status | 是否停用"),
-		field.Bool("ignore").Optional().Default(false).Comment("当前路由是否渲染菜单项，为 true 的话不会在菜单中显示，但可通过路由地址访问"),
-
-		field.String("type").Comment("type | 菜单类别").Optional(),
-
-		field.Int64("level").Comment("menu level | 菜单层级").Optional(),
-		field.Int64("menu_type").Comment("menu type | 菜单类型 0 目录 1 菜单 2 按钮").Optional(),
-		field.String("redirect").Optional().Default("").Comment("redirect path | 跳转路径 （外链）"),
 		field.String("component").Optional().Default("").Comment("the path of vue file | 组件路径"),
-		//// meta
-		field.String("title").Comment("menu name | 菜单显示标题").Optional(),
+		field.String("redirect").Optional().Default("").Comment("redirect path | 跳转路径 （外链）"),
 		field.String("icon").Comment("menu icon | 菜单图标").Optional(),
-		field.Int64("hidden").Comment("hidden ").Optional(),
-		field.Int64("sort").Comment("sort").Optional(),
-		field.String("url").Comment("url").Optional(),
-		//field.Bool("hide_menu").Optional().Default(false).Comment("hide menu | 是否隐藏菜单"),
-		//field.Bool("hide_breadcrumb").Optional().Default(false).Comment("hide the breadcrumb | 隐藏面包屑"),
-		//field.String("current_active_menu").Optional().Default("").Comment("set the active menu | 激活菜单"),
-		//field.Bool("ignore_keep_alive").Optional().Default(false).Comment("do not keep alive the tab | 取消页面缓存"),
-		//field.Bool("hide_tab").Optional().Default(false).Comment("hide the tab header | 隐藏页头"),
-		//field.String("frame_src").Optional().Default("").Comment("show iframe | 内嵌 iframe"),
-		//field.Bool("carry_param").Optional().Default(false).Comment("the route carries parameters or not | 携带参数"),
-		//field.Bool("hide_children_in_menu").Optional().Default(false).Comment("hide children menu or not | 隐藏所有子菜单"),
-		//field.Bool("affix").Optional().Default(false).Comment("affix tab | Tab 固定"),
-		//field.Int64("dynamic_level").Optional().Default(20).Comment("the maximum number of pages the router can open | 能打开的子TAB数"),
-		//field.String("real_path").Optional().Default("").Comment("the real path of the route without dynamic part | 菜单路由不包含参数部分"),
+
+		field.Int64("parent_id").Optional().Comment("parent menu ID | 父菜单ID"),
+
+		field.Int64("order_no").Comment("sorting numbers | 排序编号").Optional(),
+
+		field.Int64("ignore").Optional().Comment("当前路由是否渲染菜单项，为 1 的话不会在菜单中显示，但可通过路由地址访问"),
+
+		field.Int64("menu_type").Comment("menu type | 菜单类型 0 目录 1 菜单 2 按钮").Optional(),
+		field.Int64("level").Comment("menu level | 菜单层级").Optional(),
 	}
 }
 

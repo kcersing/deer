@@ -90,20 +90,6 @@ func (_c *MenuCreate) SetNillableStatus(v *int64) *MenuCreate {
 	return _c
 }
 
-// SetParentID sets the "parent_id" field.
-func (_c *MenuCreate) SetParentID(v int64) *MenuCreate {
-	_c.mutation.SetParentID(v)
-	return _c
-}
-
-// SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableParentID(v *int64) *MenuCreate {
-	if v != nil {
-		_c.SetParentID(*v)
-	}
-	return _c
-}
-
 // SetPath sets the "path" field.
 func (_c *MenuCreate) SetPath(v string) *MenuCreate {
 	_c.mutation.SetPath(v)
@@ -132,86 +118,16 @@ func (_c *MenuCreate) SetNillableName(v *string) *MenuCreate {
 	return _c
 }
 
-// SetOrderNo sets the "order_no" field.
-func (_c *MenuCreate) SetOrderNo(v int64) *MenuCreate {
-	_c.mutation.SetOrderNo(v)
+// SetComponent sets the "component" field.
+func (_c *MenuCreate) SetComponent(v string) *MenuCreate {
+	_c.mutation.SetComponent(v)
 	return _c
 }
 
-// SetNillableOrderNo sets the "order_no" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableOrderNo(v *int64) *MenuCreate {
+// SetNillableComponent sets the "component" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableComponent(v *string) *MenuCreate {
 	if v != nil {
-		_c.SetOrderNo(*v)
-	}
-	return _c
-}
-
-// SetDisabled sets the "disabled" field.
-func (_c *MenuCreate) SetDisabled(v int64) *MenuCreate {
-	_c.mutation.SetDisabled(v)
-	return _c
-}
-
-// SetNillableDisabled sets the "disabled" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableDisabled(v *int64) *MenuCreate {
-	if v != nil {
-		_c.SetDisabled(*v)
-	}
-	return _c
-}
-
-// SetIgnore sets the "ignore" field.
-func (_c *MenuCreate) SetIgnore(v bool) *MenuCreate {
-	_c.mutation.SetIgnore(v)
-	return _c
-}
-
-// SetNillableIgnore sets the "ignore" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableIgnore(v *bool) *MenuCreate {
-	if v != nil {
-		_c.SetIgnore(*v)
-	}
-	return _c
-}
-
-// SetType sets the "type" field.
-func (_c *MenuCreate) SetType(v string) *MenuCreate {
-	_c.mutation.SetType(v)
-	return _c
-}
-
-// SetNillableType sets the "type" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableType(v *string) *MenuCreate {
-	if v != nil {
-		_c.SetType(*v)
-	}
-	return _c
-}
-
-// SetLevel sets the "level" field.
-func (_c *MenuCreate) SetLevel(v int64) *MenuCreate {
-	_c.mutation.SetLevel(v)
-	return _c
-}
-
-// SetNillableLevel sets the "level" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableLevel(v *int64) *MenuCreate {
-	if v != nil {
-		_c.SetLevel(*v)
-	}
-	return _c
-}
-
-// SetMenuType sets the "menu_type" field.
-func (_c *MenuCreate) SetMenuType(v int64) *MenuCreate {
-	_c.mutation.SetMenuType(v)
-	return _c
-}
-
-// SetNillableMenuType sets the "menu_type" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableMenuType(v *int64) *MenuCreate {
-	if v != nil {
-		_c.SetMenuType(*v)
+		_c.SetComponent(*v)
 	}
 	return _c
 }
@@ -230,34 +146,6 @@ func (_c *MenuCreate) SetNillableRedirect(v *string) *MenuCreate {
 	return _c
 }
 
-// SetComponent sets the "component" field.
-func (_c *MenuCreate) SetComponent(v string) *MenuCreate {
-	_c.mutation.SetComponent(v)
-	return _c
-}
-
-// SetNillableComponent sets the "component" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableComponent(v *string) *MenuCreate {
-	if v != nil {
-		_c.SetComponent(*v)
-	}
-	return _c
-}
-
-// SetTitle sets the "title" field.
-func (_c *MenuCreate) SetTitle(v string) *MenuCreate {
-	_c.mutation.SetTitle(v)
-	return _c
-}
-
-// SetNillableTitle sets the "title" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableTitle(v *string) *MenuCreate {
-	if v != nil {
-		_c.SetTitle(*v)
-	}
-	return _c
-}
-
 // SetIcon sets the "icon" field.
 func (_c *MenuCreate) SetIcon(v string) *MenuCreate {
 	_c.mutation.SetIcon(v)
@@ -272,44 +160,72 @@ func (_c *MenuCreate) SetNillableIcon(v *string) *MenuCreate {
 	return _c
 }
 
-// SetHidden sets the "hidden" field.
-func (_c *MenuCreate) SetHidden(v int64) *MenuCreate {
-	_c.mutation.SetHidden(v)
+// SetParentID sets the "parent_id" field.
+func (_c *MenuCreate) SetParentID(v int64) *MenuCreate {
+	_c.mutation.SetParentID(v)
 	return _c
 }
 
-// SetNillableHidden sets the "hidden" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableHidden(v *int64) *MenuCreate {
+// SetNillableParentID sets the "parent_id" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableParentID(v *int64) *MenuCreate {
 	if v != nil {
-		_c.SetHidden(*v)
+		_c.SetParentID(*v)
 	}
 	return _c
 }
 
-// SetSort sets the "sort" field.
-func (_c *MenuCreate) SetSort(v int64) *MenuCreate {
-	_c.mutation.SetSort(v)
+// SetOrderNo sets the "order_no" field.
+func (_c *MenuCreate) SetOrderNo(v int64) *MenuCreate {
+	_c.mutation.SetOrderNo(v)
 	return _c
 }
 
-// SetNillableSort sets the "sort" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableSort(v *int64) *MenuCreate {
+// SetNillableOrderNo sets the "order_no" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableOrderNo(v *int64) *MenuCreate {
 	if v != nil {
-		_c.SetSort(*v)
+		_c.SetOrderNo(*v)
 	}
 	return _c
 }
 
-// SetURL sets the "url" field.
-func (_c *MenuCreate) SetURL(v string) *MenuCreate {
-	_c.mutation.SetURL(v)
+// SetIgnore sets the "ignore" field.
+func (_c *MenuCreate) SetIgnore(v int64) *MenuCreate {
+	_c.mutation.SetIgnore(v)
 	return _c
 }
 
-// SetNillableURL sets the "url" field if the given value is not nil.
-func (_c *MenuCreate) SetNillableURL(v *string) *MenuCreate {
+// SetNillableIgnore sets the "ignore" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableIgnore(v *int64) *MenuCreate {
 	if v != nil {
-		_c.SetURL(*v)
+		_c.SetIgnore(*v)
+	}
+	return _c
+}
+
+// SetMenuType sets the "menu_type" field.
+func (_c *MenuCreate) SetMenuType(v int64) *MenuCreate {
+	_c.mutation.SetMenuType(v)
+	return _c
+}
+
+// SetNillableMenuType sets the "menu_type" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableMenuType(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetMenuType(*v)
+	}
+	return _c
+}
+
+// SetLevel sets the "level" field.
+func (_c *MenuCreate) SetLevel(v int64) *MenuCreate {
+	_c.mutation.SetLevel(v)
+	return _c
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (_c *MenuCreate) SetNillableLevel(v *int64) *MenuCreate {
+	if v != nil {
+		_c.SetLevel(*v)
 	}
 	return _c
 }
@@ -414,25 +330,13 @@ func (_c *MenuCreate) defaults() {
 		v := menu.DefaultPath
 		_c.mutation.SetPath(v)
 	}
-	if _, ok := _c.mutation.OrderNo(); !ok {
-		v := menu.DefaultOrderNo
-		_c.mutation.SetOrderNo(v)
-	}
-	if _, ok := _c.mutation.Disabled(); !ok {
-		v := menu.DefaultDisabled
-		_c.mutation.SetDisabled(v)
-	}
-	if _, ok := _c.mutation.Ignore(); !ok {
-		v := menu.DefaultIgnore
-		_c.mutation.SetIgnore(v)
+	if _, ok := _c.mutation.Component(); !ok {
+		v := menu.DefaultComponent
+		_c.mutation.SetComponent(v)
 	}
 	if _, ok := _c.mutation.Redirect(); !ok {
 		v := menu.DefaultRedirect
 		_c.mutation.SetRedirect(v)
-	}
-	if _, ok := _c.mutation.Component(); !ok {
-		v := menu.DefaultComponent
-		_c.mutation.SetComponent(v)
 	}
 }
 
@@ -498,57 +402,33 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 		_spec.SetField(menu.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := _c.mutation.OrderNo(); ok {
-		_spec.SetField(menu.FieldOrderNo, field.TypeInt64, value)
-		_node.OrderNo = value
-	}
-	if value, ok := _c.mutation.Disabled(); ok {
-		_spec.SetField(menu.FieldDisabled, field.TypeInt64, value)
-		_node.Disabled = value
-	}
-	if value, ok := _c.mutation.Ignore(); ok {
-		_spec.SetField(menu.FieldIgnore, field.TypeBool, value)
-		_node.Ignore = value
-	}
-	if value, ok := _c.mutation.GetType(); ok {
-		_spec.SetField(menu.FieldType, field.TypeString, value)
-		_node.Type = value
-	}
-	if value, ok := _c.mutation.Level(); ok {
-		_spec.SetField(menu.FieldLevel, field.TypeInt64, value)
-		_node.Level = value
-	}
-	if value, ok := _c.mutation.MenuType(); ok {
-		_spec.SetField(menu.FieldMenuType, field.TypeInt64, value)
-		_node.MenuType = value
+	if value, ok := _c.mutation.Component(); ok {
+		_spec.SetField(menu.FieldComponent, field.TypeString, value)
+		_node.Component = value
 	}
 	if value, ok := _c.mutation.Redirect(); ok {
 		_spec.SetField(menu.FieldRedirect, field.TypeString, value)
 		_node.Redirect = value
 	}
-	if value, ok := _c.mutation.Component(); ok {
-		_spec.SetField(menu.FieldComponent, field.TypeString, value)
-		_node.Component = value
-	}
-	if value, ok := _c.mutation.Title(); ok {
-		_spec.SetField(menu.FieldTitle, field.TypeString, value)
-		_node.Title = value
-	}
 	if value, ok := _c.mutation.Icon(); ok {
 		_spec.SetField(menu.FieldIcon, field.TypeString, value)
 		_node.Icon = value
 	}
-	if value, ok := _c.mutation.Hidden(); ok {
-		_spec.SetField(menu.FieldHidden, field.TypeInt64, value)
-		_node.Hidden = value
+	if value, ok := _c.mutation.OrderNo(); ok {
+		_spec.SetField(menu.FieldOrderNo, field.TypeInt64, value)
+		_node.OrderNo = value
 	}
-	if value, ok := _c.mutation.Sort(); ok {
-		_spec.SetField(menu.FieldSort, field.TypeInt64, value)
-		_node.Sort = value
+	if value, ok := _c.mutation.Ignore(); ok {
+		_spec.SetField(menu.FieldIgnore, field.TypeInt64, value)
+		_node.Ignore = value
 	}
-	if value, ok := _c.mutation.URL(); ok {
-		_spec.SetField(menu.FieldURL, field.TypeString, value)
-		_node.URL = value
+	if value, ok := _c.mutation.MenuType(); ok {
+		_spec.SetField(menu.FieldMenuType, field.TypeInt64, value)
+		_node.MenuType = value
+	}
+	if value, ok := _c.mutation.Level(); ok {
+		_spec.SetField(menu.FieldLevel, field.TypeInt64, value)
+		_node.Level = value
 	}
 	if nodes := _c.mutation.RolesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

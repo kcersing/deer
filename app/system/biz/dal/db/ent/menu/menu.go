@@ -24,38 +24,26 @@ const (
 	FieldCreatedID = "created_id"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
-	// FieldParentID holds the string denoting the parent_id field in the database.
-	FieldParentID = "parent_id"
 	// FieldPath holds the string denoting the path field in the database.
 	FieldPath = "path"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldOrderNo holds the string denoting the order_no field in the database.
-	FieldOrderNo = "order_no"
-	// FieldDisabled holds the string denoting the disabled field in the database.
-	FieldDisabled = "disabled"
-	// FieldIgnore holds the string denoting the ignore field in the database.
-	FieldIgnore = "ignore"
-	// FieldType holds the string denoting the type field in the database.
-	FieldType = "type"
-	// FieldLevel holds the string denoting the level field in the database.
-	FieldLevel = "level"
-	// FieldMenuType holds the string denoting the menu_type field in the database.
-	FieldMenuType = "menu_type"
-	// FieldRedirect holds the string denoting the redirect field in the database.
-	FieldRedirect = "redirect"
 	// FieldComponent holds the string denoting the component field in the database.
 	FieldComponent = "component"
-	// FieldTitle holds the string denoting the title field in the database.
-	FieldTitle = "title"
+	// FieldRedirect holds the string denoting the redirect field in the database.
+	FieldRedirect = "redirect"
 	// FieldIcon holds the string denoting the icon field in the database.
 	FieldIcon = "icon"
-	// FieldHidden holds the string denoting the hidden field in the database.
-	FieldHidden = "hidden"
-	// FieldSort holds the string denoting the sort field in the database.
-	FieldSort = "sort"
-	// FieldURL holds the string denoting the url field in the database.
-	FieldURL = "url"
+	// FieldParentID holds the string denoting the parent_id field in the database.
+	FieldParentID = "parent_id"
+	// FieldOrderNo holds the string denoting the order_no field in the database.
+	FieldOrderNo = "order_no"
+	// FieldIgnore holds the string denoting the ignore field in the database.
+	FieldIgnore = "ignore"
+	// FieldMenuType holds the string denoting the menu_type field in the database.
+	FieldMenuType = "menu_type"
+	// FieldLevel holds the string denoting the level field in the database.
+	FieldLevel = "level"
 	// EdgeRoles holds the string denoting the roles edge name in mutations.
 	EdgeRoles = "roles"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
@@ -87,22 +75,16 @@ var Columns = []string{
 	FieldDelete,
 	FieldCreatedID,
 	FieldStatus,
-	FieldParentID,
 	FieldPath,
 	FieldName,
-	FieldOrderNo,
-	FieldDisabled,
-	FieldIgnore,
-	FieldType,
-	FieldLevel,
-	FieldMenuType,
-	FieldRedirect,
 	FieldComponent,
-	FieldTitle,
+	FieldRedirect,
 	FieldIcon,
-	FieldHidden,
-	FieldSort,
-	FieldURL,
+	FieldParentID,
+	FieldOrderNo,
+	FieldIgnore,
+	FieldMenuType,
+	FieldLevel,
 }
 
 var (
@@ -136,16 +118,10 @@ var (
 	DefaultStatus int64
 	// DefaultPath holds the default value on creation for the "path" field.
 	DefaultPath string
-	// DefaultOrderNo holds the default value on creation for the "order_no" field.
-	DefaultOrderNo int64
-	// DefaultDisabled holds the default value on creation for the "disabled" field.
-	DefaultDisabled int64
-	// DefaultIgnore holds the default value on creation for the "ignore" field.
-	DefaultIgnore bool
-	// DefaultRedirect holds the default value on creation for the "redirect" field.
-	DefaultRedirect string
 	// DefaultComponent holds the default value on creation for the "component" field.
 	DefaultComponent string
+	// DefaultRedirect holds the default value on creation for the "redirect" field.
+	DefaultRedirect string
 )
 
 // OrderOption defines the ordering options for the Menu queries.
@@ -181,11 +157,6 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldStatus, opts...).ToFunc()
 }
 
-// ByParentID orders the results by the parent_id field.
-func ByParentID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldParentID, opts...).ToFunc()
-}
-
 // ByPath orders the results by the path field.
 func ByPath(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPath, opts...).ToFunc()
@@ -196,34 +167,9 @@ func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
-// ByOrderNo orders the results by the order_no field.
-func ByOrderNo(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldOrderNo, opts...).ToFunc()
-}
-
-// ByDisabled orders the results by the disabled field.
-func ByDisabled(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDisabled, opts...).ToFunc()
-}
-
-// ByIgnore orders the results by the ignore field.
-func ByIgnore(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIgnore, opts...).ToFunc()
-}
-
-// ByType orders the results by the type field.
-func ByType(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldType, opts...).ToFunc()
-}
-
-// ByLevel orders the results by the level field.
-func ByLevel(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLevel, opts...).ToFunc()
-}
-
-// ByMenuType orders the results by the menu_type field.
-func ByMenuType(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldMenuType, opts...).ToFunc()
+// ByComponent orders the results by the component field.
+func ByComponent(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldComponent, opts...).ToFunc()
 }
 
 // ByRedirect orders the results by the redirect field.
@@ -231,34 +177,34 @@ func ByRedirect(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRedirect, opts...).ToFunc()
 }
 
-// ByComponent orders the results by the component field.
-func ByComponent(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldComponent, opts...).ToFunc()
-}
-
-// ByTitle orders the results by the title field.
-func ByTitle(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTitle, opts...).ToFunc()
-}
-
 // ByIcon orders the results by the icon field.
 func ByIcon(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIcon, opts...).ToFunc()
 }
 
-// ByHidden orders the results by the hidden field.
-func ByHidden(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldHidden, opts...).ToFunc()
+// ByParentID orders the results by the parent_id field.
+func ByParentID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldParentID, opts...).ToFunc()
 }
 
-// BySort orders the results by the sort field.
-func BySort(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldSort, opts...).ToFunc()
+// ByOrderNo orders the results by the order_no field.
+func ByOrderNo(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldOrderNo, opts...).ToFunc()
 }
 
-// ByURL orders the results by the url field.
-func ByURL(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldURL, opts...).ToFunc()
+// ByIgnore orders the results by the ignore field.
+func ByIgnore(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldIgnore, opts...).ToFunc()
+}
+
+// ByMenuType orders the results by the menu_type field.
+func ByMenuType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMenuType, opts...).ToFunc()
+}
+
+// ByLevel orders the results by the level field.
+func ByLevel(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLevel, opts...).ToFunc()
 }
 
 // ByRolesCount orders the results by roles count.

@@ -13,7 +13,7 @@ struct CreateMenuReq{
     9:optional i64 hidden=0 (api.raw = "hidden")
     10:optional i64 sort=0 (api.raw = "sort")
 
-    12:optional i64 status=1 (api.raw = "status")
+    12:optional i64 status=0 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
 
     15:optional string createdAt="" (api.raw = "createdAt")
@@ -33,7 +33,7 @@ struct UpdateMenuReq{
     9:optional i64 hidden=0 (api.raw = "hidden")
     10:optional i64 sort=0 (api.raw = "sort")
 
-    12:optional i64 status=1 (api.raw = "status")
+    12:optional i64 status=0 (api.raw = "status")
     13:optional string url="" (api.raw = "url")
 
     15:optional string createdAt="" (api.raw = "createdAt")

@@ -23,19 +23,13 @@ func (s *UpdateMenuService) Run(req *system.UpdateMenuReq) (resp *system.MenuRes
 		SetParentID(req.GetParentId()).
 		SetPath(req.GetPath()).
 		SetName(req.GetName()).
-		//SetOrderNo(req.GetOrderNo()).
-		//SetDisabled(req.GetDisabled()).
-		//SetIgnore(req.GetIgnore()).
-		SetType(req.GetType()).
+		SetOrderNo(req.GetOrderNo()).
+		SetIgnore(req.GetIgnore()).
 		SetLevel(req.GetLevel()).
 		SetMenuType(req.GetMenuType()).
 		SetRedirect(req.GetRedirect()).
 		SetComponent(req.GetComponent()).
-		SetTitle(req.GetTitle()).
-		//SetIcon(req.Icon).
-		SetHidden(req.GetHidden()).
-		SetSort(req.GetSort()).
-		SetURL(req.GetUrl()).
+		SetIcon(req.Icon).
 		SetStatus(req.GetStatus()).
 		Save(s.ctx)
 	if err != nil {

@@ -742,14 +742,12 @@ type CreateMenuReq struct {
 	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
 	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
 	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    int64  `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
-	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	OrderNo   int64  `thrift:"orderNo,9,optional" frugal:"9,optional,i64" json:"orderNo,omitempty"`
+	Ignore    int64  `thrift:"ignore,10,optional" frugal:"10,optional,i64" json:"ignore,omitempty"`
+	Icon      string `thrift:"icon,11,optional" frugal:"11,optional,string" json:"icon,omitempty"`
 	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
 	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Title     string `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
-	Type      string `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
 }
 
 func NewCreateMenuReq() *CreateMenuReq {
@@ -761,14 +759,12 @@ func NewCreateMenuReq() *CreateMenuReq {
 		Redirect:  "",
 		Component: "",
 		MenuType:  0,
-		Hidden:    0,
-		Sort:      0,
-		Status:    1,
-		Url:       "",
+		OrderNo:   0,
+		Ignore:    0,
+		Icon:      "",
+		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
-		Title:     "",
-		Type:      "",
 	}
 }
 
@@ -780,14 +776,12 @@ func (p *CreateMenuReq) InitDefault() {
 	p.Redirect = ""
 	p.Component = ""
 	p.MenuType = 0
-	p.Hidden = 0
-	p.Sort = 0
-	p.Status = 1
-	p.Url = ""
+	p.OrderNo = 0
+	p.Ignore = 0
+	p.Icon = ""
+	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
-	p.Title = ""
-	p.Type = ""
 }
 
 var CreateMenuReq_Name_DEFAULT string = ""
@@ -853,40 +847,40 @@ func (p *CreateMenuReq) GetMenuType() (v int64) {
 	return p.MenuType
 }
 
-var CreateMenuReq_Hidden_DEFAULT int64 = 0
+var CreateMenuReq_OrderNo_DEFAULT int64 = 0
 
-func (p *CreateMenuReq) GetHidden() (v int64) {
-	if !p.IsSetHidden() {
-		return CreateMenuReq_Hidden_DEFAULT
+func (p *CreateMenuReq) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return CreateMenuReq_OrderNo_DEFAULT
 	}
-	return p.Hidden
+	return p.OrderNo
 }
 
-var CreateMenuReq_Sort_DEFAULT int64 = 0
+var CreateMenuReq_Ignore_DEFAULT int64 = 0
 
-func (p *CreateMenuReq) GetSort() (v int64) {
-	if !p.IsSetSort() {
-		return CreateMenuReq_Sort_DEFAULT
+func (p *CreateMenuReq) GetIgnore() (v int64) {
+	if !p.IsSetIgnore() {
+		return CreateMenuReq_Ignore_DEFAULT
 	}
-	return p.Sort
+	return p.Ignore
 }
 
-var CreateMenuReq_Status_DEFAULT int64 = 1
+var CreateMenuReq_Icon_DEFAULT string = ""
+
+func (p *CreateMenuReq) GetIcon() (v string) {
+	if !p.IsSetIcon() {
+		return CreateMenuReq_Icon_DEFAULT
+	}
+	return p.Icon
+}
+
+var CreateMenuReq_Status_DEFAULT int64 = 0
 
 func (p *CreateMenuReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return CreateMenuReq_Status_DEFAULT
 	}
 	return p.Status
-}
-
-var CreateMenuReq_Url_DEFAULT string = ""
-
-func (p *CreateMenuReq) GetUrl() (v string) {
-	if !p.IsSetUrl() {
-		return CreateMenuReq_Url_DEFAULT
-	}
-	return p.Url
 }
 
 var CreateMenuReq_CreatedAt_DEFAULT string = ""
@@ -905,24 +899,6 @@ func (p *CreateMenuReq) GetUpdatedAt() (v string) {
 		return CreateMenuReq_UpdatedAt_DEFAULT
 	}
 	return p.UpdatedAt
-}
-
-var CreateMenuReq_Title_DEFAULT string = ""
-
-func (p *CreateMenuReq) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return CreateMenuReq_Title_DEFAULT
-	}
-	return p.Title
-}
-
-var CreateMenuReq_Type_DEFAULT string = ""
-
-func (p *CreateMenuReq) GetType() (v string) {
-	if !p.IsSetType() {
-		return CreateMenuReq_Type_DEFAULT
-	}
-	return p.Type
 }
 func (p *CreateMenuReq) SetName(val string) {
 	p.Name = val
@@ -945,29 +921,23 @@ func (p *CreateMenuReq) SetComponent(val string) {
 func (p *CreateMenuReq) SetMenuType(val int64) {
 	p.MenuType = val
 }
-func (p *CreateMenuReq) SetHidden(val int64) {
-	p.Hidden = val
+func (p *CreateMenuReq) SetOrderNo(val int64) {
+	p.OrderNo = val
 }
-func (p *CreateMenuReq) SetSort(val int64) {
-	p.Sort = val
+func (p *CreateMenuReq) SetIgnore(val int64) {
+	p.Ignore = val
+}
+func (p *CreateMenuReq) SetIcon(val string) {
+	p.Icon = val
 }
 func (p *CreateMenuReq) SetStatus(val int64) {
 	p.Status = val
-}
-func (p *CreateMenuReq) SetUrl(val string) {
-	p.Url = val
 }
 func (p *CreateMenuReq) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
 func (p *CreateMenuReq) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
-}
-func (p *CreateMenuReq) SetTitle(val string) {
-	p.Title = val
-}
-func (p *CreateMenuReq) SetType(val string) {
-	p.Type = val
 }
 
 func (p *CreateMenuReq) IsSetName() bool {
@@ -998,20 +968,20 @@ func (p *CreateMenuReq) IsSetMenuType() bool {
 	return p.MenuType != CreateMenuReq_MenuType_DEFAULT
 }
 
-func (p *CreateMenuReq) IsSetHidden() bool {
-	return p.Hidden != CreateMenuReq_Hidden_DEFAULT
+func (p *CreateMenuReq) IsSetOrderNo() bool {
+	return p.OrderNo != CreateMenuReq_OrderNo_DEFAULT
 }
 
-func (p *CreateMenuReq) IsSetSort() bool {
-	return p.Sort != CreateMenuReq_Sort_DEFAULT
+func (p *CreateMenuReq) IsSetIgnore() bool {
+	return p.Ignore != CreateMenuReq_Ignore_DEFAULT
+}
+
+func (p *CreateMenuReq) IsSetIcon() bool {
+	return p.Icon != CreateMenuReq_Icon_DEFAULT
 }
 
 func (p *CreateMenuReq) IsSetStatus() bool {
 	return p.Status != CreateMenuReq_Status_DEFAULT
-}
-
-func (p *CreateMenuReq) IsSetUrl() bool {
-	return p.Url != CreateMenuReq_Url_DEFAULT
 }
 
 func (p *CreateMenuReq) IsSetCreatedAt() bool {
@@ -1020,14 +990,6 @@ func (p *CreateMenuReq) IsSetCreatedAt() bool {
 
 func (p *CreateMenuReq) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != CreateMenuReq_UpdatedAt_DEFAULT
-}
-
-func (p *CreateMenuReq) IsSetTitle() bool {
-	return p.Title != CreateMenuReq_Title_DEFAULT
-}
-
-func (p *CreateMenuReq) IsSetType() bool {
-	return p.Type != CreateMenuReq_Type_DEFAULT
 }
 
 func (p *CreateMenuReq) String() string {
@@ -1045,14 +1007,12 @@ var fieldIDToName_CreateMenuReq = map[int16]string{
 	6:  "redirect",
 	7:  "component",
 	8:  "menuType",
-	9:  "hidden",
-	10: "sort",
+	9:  "orderNo",
+	10: "ignore",
+	11: "icon",
 	12: "status",
-	13: "url",
 	15: "createdAt",
 	16: "updatedAt",
-	17: "title",
-	19: "type",
 }
 
 type UpdateMenuReq struct {
@@ -1064,14 +1024,12 @@ type UpdateMenuReq struct {
 	Redirect  string `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
 	Component string `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
 	MenuType  int64  `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    int64  `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
-	Sort      int64  `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
+	OrderNo   int64  `thrift:"orderNo,9,optional" frugal:"9,optional,i64" json:"orderNo,omitempty"`
+	Ignore    int64  `thrift:"ignore,10,optional" frugal:"10,optional,i64" json:"ignore,omitempty"`
+	Icon      string `thrift:"icon,11,optional" frugal:"11,optional,string" json:"icon,omitempty"`
 	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
 	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Title     string `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
-	Type      string `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
 }
 
 func NewUpdateMenuReq() *UpdateMenuReq {
@@ -1084,14 +1042,12 @@ func NewUpdateMenuReq() *UpdateMenuReq {
 		Redirect:  "",
 		Component: "",
 		MenuType:  0,
-		Hidden:    0,
-		Sort:      0,
-		Status:    1,
-		Url:       "",
+		OrderNo:   0,
+		Ignore:    0,
+		Icon:      "",
+		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
-		Title:     "",
-		Type:      "",
 	}
 }
 
@@ -1104,14 +1060,12 @@ func (p *UpdateMenuReq) InitDefault() {
 	p.Redirect = ""
 	p.Component = ""
 	p.MenuType = 0
-	p.Hidden = 0
-	p.Sort = 0
-	p.Status = 1
-	p.Url = ""
+	p.OrderNo = 0
+	p.Ignore = 0
+	p.Icon = ""
+	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
-	p.Title = ""
-	p.Type = ""
 }
 
 var UpdateMenuReq_Id_DEFAULT int64 = 0
@@ -1186,40 +1140,40 @@ func (p *UpdateMenuReq) GetMenuType() (v int64) {
 	return p.MenuType
 }
 
-var UpdateMenuReq_Hidden_DEFAULT int64 = 0
+var UpdateMenuReq_OrderNo_DEFAULT int64 = 0
 
-func (p *UpdateMenuReq) GetHidden() (v int64) {
-	if !p.IsSetHidden() {
-		return UpdateMenuReq_Hidden_DEFAULT
+func (p *UpdateMenuReq) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return UpdateMenuReq_OrderNo_DEFAULT
 	}
-	return p.Hidden
+	return p.OrderNo
 }
 
-var UpdateMenuReq_Sort_DEFAULT int64 = 0
+var UpdateMenuReq_Ignore_DEFAULT int64 = 0
 
-func (p *UpdateMenuReq) GetSort() (v int64) {
-	if !p.IsSetSort() {
-		return UpdateMenuReq_Sort_DEFAULT
+func (p *UpdateMenuReq) GetIgnore() (v int64) {
+	if !p.IsSetIgnore() {
+		return UpdateMenuReq_Ignore_DEFAULT
 	}
-	return p.Sort
+	return p.Ignore
 }
 
-var UpdateMenuReq_Status_DEFAULT int64 = 1
+var UpdateMenuReq_Icon_DEFAULT string = ""
+
+func (p *UpdateMenuReq) GetIcon() (v string) {
+	if !p.IsSetIcon() {
+		return UpdateMenuReq_Icon_DEFAULT
+	}
+	return p.Icon
+}
+
+var UpdateMenuReq_Status_DEFAULT int64 = 0
 
 func (p *UpdateMenuReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return UpdateMenuReq_Status_DEFAULT
 	}
 	return p.Status
-}
-
-var UpdateMenuReq_Url_DEFAULT string = ""
-
-func (p *UpdateMenuReq) GetUrl() (v string) {
-	if !p.IsSetUrl() {
-		return UpdateMenuReq_Url_DEFAULT
-	}
-	return p.Url
 }
 
 var UpdateMenuReq_CreatedAt_DEFAULT string = ""
@@ -1238,24 +1192,6 @@ func (p *UpdateMenuReq) GetUpdatedAt() (v string) {
 		return UpdateMenuReq_UpdatedAt_DEFAULT
 	}
 	return p.UpdatedAt
-}
-
-var UpdateMenuReq_Title_DEFAULT string = ""
-
-func (p *UpdateMenuReq) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return UpdateMenuReq_Title_DEFAULT
-	}
-	return p.Title
-}
-
-var UpdateMenuReq_Type_DEFAULT string = ""
-
-func (p *UpdateMenuReq) GetType() (v string) {
-	if !p.IsSetType() {
-		return UpdateMenuReq_Type_DEFAULT
-	}
-	return p.Type
 }
 func (p *UpdateMenuReq) SetId(val int64) {
 	p.Id = val
@@ -1281,29 +1217,23 @@ func (p *UpdateMenuReq) SetComponent(val string) {
 func (p *UpdateMenuReq) SetMenuType(val int64) {
 	p.MenuType = val
 }
-func (p *UpdateMenuReq) SetHidden(val int64) {
-	p.Hidden = val
+func (p *UpdateMenuReq) SetOrderNo(val int64) {
+	p.OrderNo = val
 }
-func (p *UpdateMenuReq) SetSort(val int64) {
-	p.Sort = val
+func (p *UpdateMenuReq) SetIgnore(val int64) {
+	p.Ignore = val
+}
+func (p *UpdateMenuReq) SetIcon(val string) {
+	p.Icon = val
 }
 func (p *UpdateMenuReq) SetStatus(val int64) {
 	p.Status = val
-}
-func (p *UpdateMenuReq) SetUrl(val string) {
-	p.Url = val
 }
 func (p *UpdateMenuReq) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
 func (p *UpdateMenuReq) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
-}
-func (p *UpdateMenuReq) SetTitle(val string) {
-	p.Title = val
-}
-func (p *UpdateMenuReq) SetType(val string) {
-	p.Type = val
 }
 
 func (p *UpdateMenuReq) IsSetId() bool {
@@ -1338,20 +1268,20 @@ func (p *UpdateMenuReq) IsSetMenuType() bool {
 	return p.MenuType != UpdateMenuReq_MenuType_DEFAULT
 }
 
-func (p *UpdateMenuReq) IsSetHidden() bool {
-	return p.Hidden != UpdateMenuReq_Hidden_DEFAULT
+func (p *UpdateMenuReq) IsSetOrderNo() bool {
+	return p.OrderNo != UpdateMenuReq_OrderNo_DEFAULT
 }
 
-func (p *UpdateMenuReq) IsSetSort() bool {
-	return p.Sort != UpdateMenuReq_Sort_DEFAULT
+func (p *UpdateMenuReq) IsSetIgnore() bool {
+	return p.Ignore != UpdateMenuReq_Ignore_DEFAULT
+}
+
+func (p *UpdateMenuReq) IsSetIcon() bool {
+	return p.Icon != UpdateMenuReq_Icon_DEFAULT
 }
 
 func (p *UpdateMenuReq) IsSetStatus() bool {
 	return p.Status != UpdateMenuReq_Status_DEFAULT
-}
-
-func (p *UpdateMenuReq) IsSetUrl() bool {
-	return p.Url != UpdateMenuReq_Url_DEFAULT
 }
 
 func (p *UpdateMenuReq) IsSetCreatedAt() bool {
@@ -1360,14 +1290,6 @@ func (p *UpdateMenuReq) IsSetCreatedAt() bool {
 
 func (p *UpdateMenuReq) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != UpdateMenuReq_UpdatedAt_DEFAULT
-}
-
-func (p *UpdateMenuReq) IsSetTitle() bool {
-	return p.Title != UpdateMenuReq_Title_DEFAULT
-}
-
-func (p *UpdateMenuReq) IsSetType() bool {
-	return p.Type != UpdateMenuReq_Type_DEFAULT
 }
 
 func (p *UpdateMenuReq) String() string {
@@ -1386,14 +1308,12 @@ var fieldIDToName_UpdateMenuReq = map[int16]string{
 	6:  "redirect",
 	7:  "component",
 	8:  "menuType",
-	9:  "hidden",
-	10: "sort",
+	9:  "orderNo",
+	10: "ignore",
+	11: "icon",
 	12: "status",
-	13: "url",
 	15: "createdAt",
 	16: "updatedAt",
-	17: "title",
-	19: "type",
 }
 
 type MenuListReq struct {
@@ -1547,15 +1467,10 @@ type Menu struct {
 	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
 	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
 	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Hidden    int64   `thrift:"hidden,9,optional" frugal:"9,optional,i64" json:"hidden,omitempty"`
-	Sort      int64   `thrift:"sort,10,optional" frugal:"10,optional,i64" json:"sort,omitempty"`
 	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Url       string  `thrift:"url,13,optional" frugal:"13,optional,string" json:"url,omitempty"`
 	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
 	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Title     string  `thrift:"title,17,optional" frugal:"17,optional,string" json:"title,omitempty"`
-	Type      string  `thrift:"type,19,optional" frugal:"19,optional,string" json:"type,omitempty"`
 	Icon      string  `thrift:"icon,20,optional" frugal:"20,optional,string" json:"icon,omitempty"`
 }
 
@@ -1569,15 +1484,10 @@ func NewMenu() *Menu {
 		Redirect:  "",
 		Component: "",
 		MenuType:  0,
-		Hidden:    0,
-		Sort:      0,
-		Status:    1,
-		Url:       "",
+		Status:    0,
 		Children:  []*Menu{},
 		CreatedAt: "",
 		UpdatedAt: "",
-		Title:     "",
-		Type:      "",
 		Icon:      "",
 	}
 }
@@ -1591,15 +1501,10 @@ func (p *Menu) InitDefault() {
 	p.Redirect = ""
 	p.Component = ""
 	p.MenuType = 0
-	p.Hidden = 0
-	p.Sort = 0
-	p.Status = 1
-	p.Url = ""
+	p.Status = 0
 	p.Children = []*Menu{}
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
-	p.Title = ""
-	p.Type = ""
 	p.Icon = ""
 }
 
@@ -1675,40 +1580,13 @@ func (p *Menu) GetMenuType() (v int64) {
 	return p.MenuType
 }
 
-var Menu_Hidden_DEFAULT int64 = 0
-
-func (p *Menu) GetHidden() (v int64) {
-	if !p.IsSetHidden() {
-		return Menu_Hidden_DEFAULT
-	}
-	return p.Hidden
-}
-
-var Menu_Sort_DEFAULT int64 = 0
-
-func (p *Menu) GetSort() (v int64) {
-	if !p.IsSetSort() {
-		return Menu_Sort_DEFAULT
-	}
-	return p.Sort
-}
-
-var Menu_Status_DEFAULT int64 = 1
+var Menu_Status_DEFAULT int64 = 0
 
 func (p *Menu) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return Menu_Status_DEFAULT
 	}
 	return p.Status
-}
-
-var Menu_Url_DEFAULT string = ""
-
-func (p *Menu) GetUrl() (v string) {
-	if !p.IsSetUrl() {
-		return Menu_Url_DEFAULT
-	}
-	return p.Url
 }
 
 var Menu_Children_DEFAULT []*Menu = []*Menu{}
@@ -1736,24 +1614,6 @@ func (p *Menu) GetUpdatedAt() (v string) {
 		return Menu_UpdatedAt_DEFAULT
 	}
 	return p.UpdatedAt
-}
-
-var Menu_Title_DEFAULT string = ""
-
-func (p *Menu) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return Menu_Title_DEFAULT
-	}
-	return p.Title
-}
-
-var Menu_Type_DEFAULT string = ""
-
-func (p *Menu) GetType() (v string) {
-	if !p.IsSetType() {
-		return Menu_Type_DEFAULT
-	}
-	return p.Type
 }
 
 var Menu_Icon_DEFAULT string = ""
@@ -1788,17 +1648,8 @@ func (p *Menu) SetComponent(val string) {
 func (p *Menu) SetMenuType(val int64) {
 	p.MenuType = val
 }
-func (p *Menu) SetHidden(val int64) {
-	p.Hidden = val
-}
-func (p *Menu) SetSort(val int64) {
-	p.Sort = val
-}
 func (p *Menu) SetStatus(val int64) {
 	p.Status = val
-}
-func (p *Menu) SetUrl(val string) {
-	p.Url = val
 }
 func (p *Menu) SetChildren(val []*Menu) {
 	p.Children = val
@@ -1808,12 +1659,6 @@ func (p *Menu) SetCreatedAt(val string) {
 }
 func (p *Menu) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
-}
-func (p *Menu) SetTitle(val string) {
-	p.Title = val
-}
-func (p *Menu) SetType(val string) {
-	p.Type = val
 }
 func (p *Menu) SetIcon(val string) {
 	p.Icon = val
@@ -1851,20 +1696,8 @@ func (p *Menu) IsSetMenuType() bool {
 	return p.MenuType != Menu_MenuType_DEFAULT
 }
 
-func (p *Menu) IsSetHidden() bool {
-	return p.Hidden != Menu_Hidden_DEFAULT
-}
-
-func (p *Menu) IsSetSort() bool {
-	return p.Sort != Menu_Sort_DEFAULT
-}
-
 func (p *Menu) IsSetStatus() bool {
 	return p.Status != Menu_Status_DEFAULT
-}
-
-func (p *Menu) IsSetUrl() bool {
-	return p.Url != Menu_Url_DEFAULT
 }
 
 func (p *Menu) IsSetChildren() bool {
@@ -1877,14 +1710,6 @@ func (p *Menu) IsSetCreatedAt() bool {
 
 func (p *Menu) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != Menu_UpdatedAt_DEFAULT
-}
-
-func (p *Menu) IsSetTitle() bool {
-	return p.Title != Menu_Title_DEFAULT
-}
-
-func (p *Menu) IsSetType() bool {
-	return p.Type != Menu_Type_DEFAULT
 }
 
 func (p *Menu) IsSetIcon() bool {
@@ -1907,15 +1732,10 @@ var fieldIDToName_Menu = map[int16]string{
 	6:  "redirect",
 	7:  "component",
 	8:  "menuType",
-	9:  "hidden",
-	10: "sort",
 	12: "status",
-	13: "url",
 	14: "children",
 	15: "createdAt",
 	16: "updatedAt",
-	17: "title",
-	19: "type",
 	20: "icon",
 }
 
@@ -2743,7 +2563,7 @@ func NewDict() *Dict {
 		Id:          0,
 		Title:       "",
 		Name:        "",
-		Status:      1,
+		Status:      0,
 		Description: "",
 		CreatedAt:   "",
 		UpdatedAt:   "",
@@ -2754,7 +2574,7 @@ func (p *Dict) InitDefault() {
 	p.Id = 0
 	p.Title = ""
 	p.Name = ""
-	p.Status = 1
+	p.Status = 0
 	p.Description = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
@@ -2843,7 +2663,7 @@ func NewDictht() *Dictht {
 		Title:     "",
 		Key:       "",
 		Value:     "",
-		Status:    1,
+		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
 	}
@@ -2854,7 +2674,7 @@ func (p *Dictht) InitDefault() {
 	p.Title = ""
 	p.Key = ""
 	p.Value = ""
-	p.Status = 1
+	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 }
