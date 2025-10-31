@@ -1,31 +1,65 @@
-import { LinkOutlined,PlusCircleFilled, SearchOutlined,HeartOutlined, SmileOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 
 import { SettingDrawer ,ProBreadcrumb} from '@ant-design/pro-components';
 import type { RequestConfig, RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import React, { useState, useReducer, useEffect, useRef, memo, useCallback } from 'react';
-import { Input, Space,Menu } from 'antd';
 import {
   AvatarDropdown,
   AvatarName,
   Footer,
   Question,
-  SelectLang,
 } from '@/components';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 import { getMenuList} from "@/services/ant-design-pro/menu";
 import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
-import type { MenuDataItem } from '@ant-design/pro-components';
+import { matchRoutes } from 'umi';
+import { loopMenuItem} from "@/utils";
+import Login from '@/pages/login';
 
-import * as allIcons from '@ant-design/icons';
-
-import { useLocation } from 'umi';
-//https://www.iconfont.cn/collections/detail?cid=9402
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/login';
+
+let extraRoutes: any[] = [];
+
+
+
+
+
+
+
+export function onRouteChange({ location, clientRoutes, routes, action, basename, isFirst }: any) {
+  // const access = useAccess();
+  const isLogin = sessionStorage.getItem('token');
+
+  const route = matchRoutes(clientRoutes, location.pathname)?.pop()?.route;
+  if (route) {
+    document.title = route.title || '';
+  }
+
+  // 未登录跳转登录页
+  if (!isLogin && isLogin == '' && location.pathname !== loginPath) {
+    history.push(loginPath);
+  }
+
+  // // 检查页面权限（示例）
+  // if (!access.canRead(location.pathname)) {
+  //   history.push('/403');
+  // }
+}
+
+
+export function patchClientRoutes({ routes }) {
+  console.log(routes)
+  routes.unshift(  {
+    path: '/login',
+    layout: false,
+    element: <Login />,
+  });
+}
+
 
 /**
  * @see https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -35,15 +69,10 @@ export async function getInitialState(): Promise<{
   currentUser?: API.User;
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.User | undefined>;
-
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await getUser(
-        {id:0}
-        // {skipErrorHandler: true,}
-      );
-      console.log(msg)
+      const msg = await getUser({});
       if(msg.code !==0){
         history.push(loginPath);
       }
@@ -60,7 +89,6 @@ export async function getInitialState(): Promise<{
       location.pathname,
     )
   ) {
-
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -69,34 +97,10 @@ export async function getInitialState(): Promise<{
     };
   }
   return {
+    fetchUserInfo,
     settings: defaultSettings as Partial<LayoutSettings>,
   };
 }
-
-const loopMenuItem = (menus: any[]): MenuDataItem[] =>
-  menus.map(({ icon, component,children, ...item }) => ({
-    ...item,
-    component: component,
-    icon: icon && React.createElement(allIcons[icon]),
-    children: children && loopMenuItem(children),
-}));
-
-const filterByMenuData = (
-  data: MenuDataItem[],
-  keyWord: '',
-): MenuDataItem[] =>
-  data.map((item) => {
-      if (item.name?.includes(keyWord)) {
-        return { ...item };
-      }
-      const children = filterByMenuData(item.children || [], keyWord);
-      if (children.length > 0) {
-        return { ...item, children };
-      }
-       return undefined;
-    })
-    .filter((item) => item) as MenuDataItem[];
-
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({
@@ -129,12 +133,13 @@ export const layout: RunTimeLayoutConfig = ({
         id: initialState?.currentUser?.id,
       },
       request: async (params, defaultMenuData) => {
-      console.log(params,defaultMenuData)
+
         if(params.id == undefined || params.id == 0){
           return defaultMenuData
         }
         // initialState.currentUser 中包含了所有用户信息
         const loadMenuData = await getMenuList({});
+        let Item = loopMenuItem(loadMenuData.data || [])
         return loopMenuItem(loadMenuData.data || []);
       },
 
