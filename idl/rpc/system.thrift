@@ -255,13 +255,13 @@ struct TreeResp{
 service SystemService  {
     ApiResp CreateApi(1: CreateApiReq req)
     ApiResp UpdateApi(1: UpdateApiReq req)
-    base.NilResponse DeleteApi(1: base.IdReq req)
+    base.BaseResp DeleteApi(1: base.IdReq req)
     ApiListResp ApiList(1: ApiListReq req)
     TreeResp ApiTree(1: ApiListReq req)
 
     MenuResp CreateMenu(1: CreateMenuReq req)
     MenuResp UpdateMenu(1: UpdateMenuReq req)
-    base.NilResponse DeleteMenu(1: base.IdReq req)
+    base.BaseResp DeleteMenu(1: base.IdReq req)
     MenuResp GetMenu(1: base.IdReq req)
     MenuListResp MenuList(1: MenuListReq req)
     TreeResp MenuTree(1: MenuListReq req)
@@ -271,11 +271,11 @@ service SystemService  {
     RoleListResp GetRoleList(1: GetRoleListReq req)
     RoleResp UpdateRole(1: UpdateRoleReq req)
 
-    base.NilResponse DeleteRole(1: base.IdReq req)
+    base.BaseResp DeleteRole(1: base.IdReq req)
     // 创建菜单权限
-    base.NilResponse CreateRoleMenu(1: CreateMenuAuthReq req)
+    base.BaseResp CreateRoleMenu(1: CreateMenuAuthReq req)
     // 创建API权限
-    base.NilResponse CreateRoleApi(1: CreateMenuAuthReq req)
+    base.BaseResp CreateRoleApi(1: CreateMenuAuthReq req)
     // 获取角色API列表
     ApiListResp GetRoleApi(1: base.IdReq req)
     //获取角色菜单列表
@@ -286,7 +286,7 @@ service SystemService  {
     // 更新字典信息
     DictResp UpdateDict(1: Dict req)
     // 删除字典信息
-    base.NilResponse DeleteDict(1: base.IdReq req)
+    base.BaseResp DeleteDict(1: base.IdReq req)
     // 获取字典列表
     DictListResp DictList(1: DictListReq req)
     // 创建字典键值信息
@@ -294,7 +294,7 @@ service SystemService  {
     // 更新字典键值信息
     DictResp UpdateDictht(1: Dictht req)
     // 删除字典键值信息
-    base.NilResponse DeleteDictht(1: base.IdReq req)
+    base.BaseResp DeleteDictht(1: base.IdReq req)
     // 根据字典名获取字典键值列表
     DicthtListResp DicthtList(1: DicthtListReq req)
 
@@ -302,7 +302,7 @@ service SystemService  {
     LogListResp LogList(1: LogListReq req)
 
     // Delete logs | 删除日志信息
-    base.NilResponse DeleteLog(1: DeleteLogReq req)
+    base.BaseResp DeleteLog(1: DeleteLogReq req)
 
     // 验证权限
     VerifyRoleAuthResp VerifyRoleAuth(1: VerifyRoleAuthReq req)
