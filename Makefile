@@ -52,3 +52,6 @@ order:
 product:
 	cd app/product
 	go run app/product/*.go
+
+
+	#cwgo server --type RPC --module deer --server_name order –pass "-use deer/kitex_gen" --idl /../../idl/order.thrift

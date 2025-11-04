@@ -1,4 +1,4 @@
-go 1.25.0
+go 1.25.3
 
 use (
 	./gen
@@ -7,6 +7,7 @@ use (
 	./app/admin
 	./app/user
 	./app/member
+	./app/crm
 	./app/order
 	./app/product
 	./app/test

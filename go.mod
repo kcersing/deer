@@ -1,3 +1,3 @@
-module gen
+module deer
 
-go 1.25.0
+go 1.25.3

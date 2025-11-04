@@ -1,0 +1,19 @@
+package service
+
+import (
+	"context"
+)
+
+type CreateFollowUpPlanService struct {
+	ctx context.Context
+} // NewCreateFollowUpPlanService new CreateFollowUpPlanService
+func NewCreateFollowUpPlanService(ctx context.Context) *CreateFollowUpPlanService {
+	return &CreateFollowUpPlanService{ctx: ctx}
+}
+
+// Run create note info
+func (s *CreateFollowUpPlanService) Run(req *crm.CreateFollowUpPlanReq) (resp *crm.FollowUpPlanResp, err error) {
+	// Finish your business logic.
+
+	return
+}

@@ -5,7 +5,7 @@ include "../base/base.thrift"
 struct Item {
     1:optional i64 productId=0 (api.raw = "productId")
     2:optional i64 quantity=1 (api.raw = "quantity")
-    3:optional double price=0 (api.raw = "price")
+    3:optional i64 price=0 (api.raw = "price")
     4:optional string name="" (api.raw = "name")
 }
 struct Order {
@@ -14,7 +14,7 @@ struct Order {
 
     3:optional list<Item> items={} (api.raw = "items")
     4:optional string sn="" (api.raw = "sn")
-    5:optional double totalAmount=0 (api.raw = "totalAmount")
+    5:optional i64 totalAmount=0 (api.raw = "totalAmount")
     6:optional string status="" (api.raw = "status")
     7:optional string nature="" (api.raw = "nature")
     8:optional string createdAt="" (api.raw = "createdAt")
@@ -32,14 +32,14 @@ struct OrderRefund {
     1:optional string refundAt="" (api.raw = "refundAt")
     2:optional string refundReason="" (api.raw = "refundReason")
     3:optional i64 createdId=0 (api.raw = "createdId")
-    4:optional double refundAmount=0 (api.raw = "refundAmount")
+    4:optional i64 refundAmount=0 (api.raw = "refundAmount")
 }
 
 
 
 struct OrderPay {
-  1:optional double  remission=0 (api.raw = "remission")
-  2:optional double  pay=0 (api.raw = "pay")
+  1:optional i64  remission=0 (api.raw = "remission")
+  2:optional i64  pay=0 (api.raw = "pay")
   3:optional string  reason="" (api.raw = "reason")
   4:optional string  payAt="" (api.raw = "payAt")
   5:optional string  payWay="" (api.raw = "payWay")
@@ -70,7 +70,7 @@ struct GetOrderListResp {
 struct RefundOrderReq {
     1:optional i64 id=0 (api.raw = "id")
     2:optional string reason="" (api.raw = "reason")
-    3:optional double amount=0 (api.raw = "amount")
+    3:optional i64 amount=0 (api.raw = "amount")
     4:optional i64 createdId=0 (api.raw = "createdId")
 }
 
@@ -93,7 +93,7 @@ struct CreateOrderReq {
     1:optional i64 memberId=0 (api.raw = "memberId")
     2:optional i64 createdId=0 (api.raw = "createdId")
     3:optional Item items={} (api.raw = "items")
-    4:optional double totalAmount=0 (api.raw = "totalAmount")
+    4:optional i64 totalAmount=0 (api.raw = "totalAmount")
 }
 
 struct PaymentReq {

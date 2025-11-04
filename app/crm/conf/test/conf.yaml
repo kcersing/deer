@@ -1,0 +1,18 @@
+Kitex:
+  Service: "crm"
+  Address: ":9103"
+  LogLevel: "debug"
+  LogFileName: "log/kitex.log"
+  LogMaxSize: 10
+  LogMaxBackups: 3
+  LogMaxAge: 50
+
+
+Redis:
+  Address: "127.0.0.1:6379"
+  Username: ""
+  Password: ""
+  DB: 1
+
+MySQL:
+  DSN: "root:root@tcp(127.0.0.1:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"

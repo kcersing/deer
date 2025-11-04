@@ -18,6 +18,10 @@ struct IdReq {
 struct NilResponse {
 
 }
+struct List{
+     1:optional	i64 id =0 (api.raw = "id")
+     2:optional	string title ="" (api.raw = "title")
+}
 
 struct CheckAccountReq {
     1:string username (api.raw = "username")

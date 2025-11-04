@@ -22,9 +22,9 @@ struct FollowUpPlan {
 }
 
 //跟进记录
-struct GenFollowUpRecord {
+struct FollowUpRecord {
      1:optional i64 id=0,
-     2:optional i64 content="", //跟进记录内容 线索筛选，需求挖掘、跟进方案制定、成交转化、后续服务
+     2:optional string content="", //跟进记录内容 线索筛选，需求挖掘、跟进方案制定、成交转化、后续服务
      3:optional i64 followUpId=0, //跟进计划
      4:optional i64 method=0, //跟进方式
      5:optional i64 status=0, //跟进状态
@@ -44,7 +44,7 @@ struct Opportunities {
      4:optional OperatingPeriod period=0, //阶段
      5:optional string  periodTime="", //阶段变更时间
      6:optional i64 winRate=0, //赢率
-     7:optional i64 content="", // 内容
+     7:optional string content="", // 内容
      8:optional i64 predictionAmount =0, //预测成交金额
      9:optional i64 createdAt=0, //创建时间
      10:optional i64 updatedAt=0, //更新时间
@@ -54,8 +54,6 @@ struct Opportunities {
 //      协作人
 //      输单原因
 //      商品明细
-
-
 
 }
 enum OperatingPeriod {
@@ -94,9 +92,23 @@ struct FollowUpPlanResp{
 }
 struct CreateFollowUpPlanReq{
 
+    2:optional string content="",//计划内容
+    3:optional string time="", //计划时间
+    4:optional i64 memberId=0, //跟进客户
+    6:optional i64 userId=0,// 执行人
+    7:optional i64 status=0, //计划状态 待完成 延期 完成
+    8:optional i64 createdId=0, //计划制定人
+    11:optional i64 division=0, //部门
 }
 struct UpdateFollowUpPlanReq{
     1:optional i64 id=0,
+    2:optional string content="",//计划内容
+    3:optional string time="", //计划时间
+    4:optional i64 memberId=0, //跟进客户
+    6:optional i64 userId=0,// 执行人
+    7:optional i64 status=0, //计划状态 待完成 延期 完成
+    8:optional i64 createdId=0, //计划制定人
+    11:optional i64 division=0, //部门
 }
 struct FollowUpPlanListReq{
     1:optional i64 page=1
@@ -109,23 +121,23 @@ struct FollowUpPlanListResp{
 }
 
 
-struct GenFollowUpRecordResp{
-    1:optional GenFollowUpRecord followUpRecord={},
+struct FollowUpRecordResp{
+    1:optional FollowUpRecord followUpRecord={},
     255:optional base.BaseResp baseResp={}
 }
-struct CreateGenFollowUpRecordReq{
+struct CreateFollowUpRecordReq{
 
 }
-struct UpdateGenFollowUpRecordReq{
+struct UpdateFollowUpRecordReq{
     1:optional i64 id=0,
 }
-struct GenFollowUpRecordListReq{
+struct FollowUpRecordListReq{
     1:optional i64 page=1
     2:optional i64 pageSize=10
     3:optional string keyword=""
 }
-struct GenFollowUpRecordListResp{
-    1:optional list<GenFollowUpRecord> data= []
+struct FollowUpRecordListResp{
+    1:optional list<FollowUpRecord> data= []
     255:optional base.BaseResp baseResp={}
 
 }
@@ -167,11 +179,11 @@ service CrmService  {
       base.BaseResp DeleteFollowUpPlan(1:base.IdReq req)
       FollowUpPlanListResp FollowUpPlanList(1: FollowUpPlanListReq req)
 
-      GenFollowUpRecordResp GetGenFollowUpRecord(1:base.IdReq req)
-      GenFollowUpRecordResp CreateGenFollowUpRecord(1: CreateGenFollowUpRecordReq req)
-      GenFollowUpRecordResp UpdateGenFollowUpRecord(1: UpdateGenFollowUpRecordReq req)
-      base.BaseResp DeleteGenFollowUpRecord(1:base.IdReq req)
-      GenFollowUpRecordListResp GenFollowUpRecordList(1:  GenFollowUpRecordListReq req)
+      FollowUpRecordResp GetFollowUpRecord(1:base.IdReq req)
+      FollowUpRecordResp CreateFollowUpRecord(1: CreateFollowUpRecordReq req)
+      FollowUpRecordResp UpdateFollowUpRecord(1: UpdateFollowUpRecordReq req)
+      base.BaseResp DeleteFollowUpRecord(1:base.IdReq req)
+      FollowUpRecordListResp FollowUpRecordList(1:  FollowUpRecordListReq req)
 
       OpportunitiesResp GetOpportunities(1:base.IdReq req)
       OpportunitiesResp CreateOpportunities(1: CreateOpportunitiesReq req)
