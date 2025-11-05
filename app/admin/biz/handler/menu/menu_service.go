@@ -27,6 +27,7 @@ func CreateMenu(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateMenu(ctx, &system.CreateMenuReq{
+
 		Name:      req.GetName(),
 		ParentId:  req.GetParentId(),
 		Level:     req.GetLevel(),
@@ -34,12 +35,10 @@ func CreateMenu(ctx context.Context, c *app.RequestContext) {
 		Redirect:  req.GetRedirect(),
 		Component: req.GetComponent(),
 		MenuType:  req.GetMenuType(),
-		Hidden:    req.GetHidden(),
-		Sort:      req.GetSort(),
 		Status:    req.GetStatus(),
-		Url:       req.GetURL(),
-		Title:     req.GetTitle(),
-		Type:      req.GetType(),
+		OrderNo:   req.GetOrderNo(),
+		Ignore:    req.GetIgnore(),
+		Icon:      req.GetIcon(),
 	})
 
 	if err != nil {
@@ -70,12 +69,10 @@ func UpdateMenu(ctx context.Context, c *app.RequestContext) {
 		Redirect:  req.GetRedirect(),
 		Component: req.GetComponent(),
 		MenuType:  req.GetMenuType(),
-		Hidden:    req.GetHidden(),
-		Sort:      req.GetSort(),
 		Status:    req.GetStatus(),
-		Url:       req.GetURL(),
-		Title:     req.GetTitle(),
-		Type:      req.GetType(),
+		OrderNo:   req.GetOrderNo(),
+		Ignore:    req.GetIgnore(),
+		Icon:      req.GetIcon(),
 	})
 
 	if err != nil {

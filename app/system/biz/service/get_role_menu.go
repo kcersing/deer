@@ -25,9 +25,9 @@ func (s *GetRoleMenuService) Run(req *base.IdReq) (resp *system.MenuListResp, er
 		Query().
 		Where(role.IDIn(req.GetId())).
 		QueryMenus().
-		Where(menu.DisabledEQ(0)).
+		Where(menu.DeleteEQ(0)).
 		//WithChildren().
-		Order(ent.Asc(menu.FieldSort)).
+		Order(ent.Asc(menu.FieldOrderNo)).
 		All(s.ctx)
 	if err != nil {
 		return nil, err

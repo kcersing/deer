@@ -26,8 +26,8 @@ func (s *GetRoleApiService) Run(req *base.IdReq) (resp *system.ApiListResp, err 
 		Query().
 		Where(role.IDIn(req.GetId())).
 		QueryAPI().
-		Where(api.DisabledEQ(0)).
-		Order(ent.Asc(menu.FieldSort)).
+		Where(api.DeleteEQ(0)).
+		Order(ent.Asc(menu.FieldOrderNo)).
 		All(s.ctx)
 	if err != nil {
 		return nil, err
