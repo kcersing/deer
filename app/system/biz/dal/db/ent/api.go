@@ -30,8 +30,8 @@ type API struct {
 	Path string `json:"path,omitempty"`
 	// API title | API 名称
 	Title string `json:"title,omitempty"`
-	// API description | API 描述
-	Description string `json:"description,omitempty"`
+	// API desc | API 描述
+	Desc string `json:"desc,omitempty"`
 	// API group | API 分组
 	APIGroup string `json:"api_group,omitempty"`
 	// HTTP method | HTTP 请求类型
@@ -69,7 +69,7 @@ func (*API) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case api.FieldID, api.FieldDelete, api.FieldCreatedID, api.FieldDisabled:
 			values[i] = new(sql.NullInt64)
-		case api.FieldPath, api.FieldTitle, api.FieldDescription, api.FieldAPIGroup, api.FieldMethod:
+		case api.FieldPath, api.FieldTitle, api.FieldDesc, api.FieldAPIGroup, api.FieldMethod:
 			values[i] = new(sql.NullString)
 		case api.FieldCreatedAt, api.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -130,11 +130,11 @@ func (_m *API) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Title = value.String
 			}
-		case api.FieldDescription:
+		case api.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field description", values[i])
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
 			} else if value.Valid {
-				_m.Description = value.String
+				_m.Desc = value.String
 			}
 		case api.FieldAPIGroup:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -213,8 +213,8 @@ func (_m *API) String() string {
 	builder.WriteString("title=")
 	builder.WriteString(_m.Title)
 	builder.WriteString(", ")
-	builder.WriteString("description=")
-	builder.WriteString(_m.Description)
+	builder.WriteString("desc=")
+	builder.WriteString(_m.Desc)
 	builder.WriteString(", ")
 	builder.WriteString("api_group=")
 	builder.WriteString(_m.APIGroup)

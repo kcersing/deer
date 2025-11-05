@@ -18,7 +18,7 @@ func (API) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("path").Comment("API path | API 路径").Optional(),
 		field.String("title").Comment("API title | API 名称").Optional(),
-		field.String("description").Comment("API description | API 描述").Optional(),
+		field.String("desc").Comment("API desc | API 描述").Optional(),
 		field.String("api_group").Comment("API group | API 分组").Optional(),
 		field.String("method").Default("POST").Comment("HTTP method | HTTP 请求类型").Optional(),
 		field.Int64("disabled").Optional().Default(0).Comment("disable status | 是否停用").Optional(),

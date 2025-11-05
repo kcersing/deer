@@ -9,17 +9,59 @@ import (
 )
 
 type Product struct {
-	Id int64 `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
+	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Pic         string  `thrift:"pic,3,optional" frugal:"3,optional,string" json:"pic,omitempty"`
+	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
+	StatusName  string  `thrift:"statusName,18,optional" frugal:"18,optional,string" json:"statusName,omitempty"`
+	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
+	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
+	Price       float64 `thrift:"price,6,optional" frugal:"6,optional,double" json:"price,omitempty"`
+	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
+	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
+	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
+	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
 }
 
 func NewProduct() *Product {
 	return &Product{
-		Id: 0,
+		Id:          0,
+		Name:        "",
+		Pic:         "",
+		Desc:        "",
+		Status:      0,
+		StatusName:  "",
+		CreatedId:   0,
+		CreatedName: "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Price:       0.0,
+		Stock:       0,
+		IsSales:     []int64{},
+		SignSalesAt: "",
+		EndSalesAt:  "",
 	}
 }
 
 func (p *Product) InitDefault() {
 	p.Id = 0
+	p.Name = ""
+	p.Pic = ""
+	p.Desc = ""
+	p.Status = 0
+	p.StatusName = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.Price = 0.0
+	p.Stock = 0
+	p.IsSales = []int64{}
+	p.SignSalesAt = ""
+	p.EndSalesAt = ""
 }
 
 var Product_Id_DEFAULT int64 = 0
@@ -30,12 +72,236 @@ func (p *Product) GetId() (v int64) {
 	}
 	return p.Id
 }
+
+var Product_Name_DEFAULT string = ""
+
+func (p *Product) GetName() (v string) {
+	if !p.IsSetName() {
+		return Product_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var Product_Pic_DEFAULT string = ""
+
+func (p *Product) GetPic() (v string) {
+	if !p.IsSetPic() {
+		return Product_Pic_DEFAULT
+	}
+	return p.Pic
+}
+
+var Product_Desc_DEFAULT string = ""
+
+func (p *Product) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Product_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var Product_Status_DEFAULT int64 = 0
+
+func (p *Product) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Product_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var Product_StatusName_DEFAULT string = ""
+
+func (p *Product) GetStatusName() (v string) {
+	if !p.IsSetStatusName() {
+		return Product_StatusName_DEFAULT
+	}
+	return p.StatusName
+}
+
+var Product_CreatedId_DEFAULT int64 = 0
+
+func (p *Product) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Product_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Product_CreatedName_DEFAULT string = ""
+
+func (p *Product) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Product_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
+var Product_CreatedAt_DEFAULT string = ""
+
+func (p *Product) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Product_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var Product_UpdatedAt_DEFAULT string = ""
+
+func (p *Product) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return Product_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var Product_Price_DEFAULT float64 = 0.0
+
+func (p *Product) GetPrice() (v float64) {
+	if !p.IsSetPrice() {
+		return Product_Price_DEFAULT
+	}
+	return p.Price
+}
+
+var Product_Stock_DEFAULT int64 = 0
+
+func (p *Product) GetStock() (v int64) {
+	if !p.IsSetStock() {
+		return Product_Stock_DEFAULT
+	}
+	return p.Stock
+}
+
+var Product_IsSales_DEFAULT []int64 = []int64{}
+
+func (p *Product) GetIsSales() (v []int64) {
+	if !p.IsSetIsSales() {
+		return Product_IsSales_DEFAULT
+	}
+	return p.IsSales
+}
+
+var Product_SignSalesAt_DEFAULT string = ""
+
+func (p *Product) GetSignSalesAt() (v string) {
+	if !p.IsSetSignSalesAt() {
+		return Product_SignSalesAt_DEFAULT
+	}
+	return p.SignSalesAt
+}
+
+var Product_EndSalesAt_DEFAULT string = ""
+
+func (p *Product) GetEndSalesAt() (v string) {
+	if !p.IsSetEndSalesAt() {
+		return Product_EndSalesAt_DEFAULT
+	}
+	return p.EndSalesAt
+}
 func (p *Product) SetId(val int64) {
 	p.Id = val
+}
+func (p *Product) SetName(val string) {
+	p.Name = val
+}
+func (p *Product) SetPic(val string) {
+	p.Pic = val
+}
+func (p *Product) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *Product) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *Product) SetStatusName(val string) {
+	p.StatusName = val
+}
+func (p *Product) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Product) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+func (p *Product) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Product) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *Product) SetPrice(val float64) {
+	p.Price = val
+}
+func (p *Product) SetStock(val int64) {
+	p.Stock = val
+}
+func (p *Product) SetIsSales(val []int64) {
+	p.IsSales = val
+}
+func (p *Product) SetSignSalesAt(val string) {
+	p.SignSalesAt = val
+}
+func (p *Product) SetEndSalesAt(val string) {
+	p.EndSalesAt = val
 }
 
 func (p *Product) IsSetId() bool {
 	return p.Id != Product_Id_DEFAULT
+}
+
+func (p *Product) IsSetName() bool {
+	return p.Name != Product_Name_DEFAULT
+}
+
+func (p *Product) IsSetPic() bool {
+	return p.Pic != Product_Pic_DEFAULT
+}
+
+func (p *Product) IsSetDesc() bool {
+	return p.Desc != Product_Desc_DEFAULT
+}
+
+func (p *Product) IsSetStatus() bool {
+	return p.Status != Product_Status_DEFAULT
+}
+
+func (p *Product) IsSetStatusName() bool {
+	return p.StatusName != Product_StatusName_DEFAULT
+}
+
+func (p *Product) IsSetCreatedId() bool {
+	return p.CreatedId != Product_CreatedId_DEFAULT
+}
+
+func (p *Product) IsSetCreatedName() bool {
+	return p.CreatedName != Product_CreatedName_DEFAULT
+}
+
+func (p *Product) IsSetCreatedAt() bool {
+	return p.CreatedAt != Product_CreatedAt_DEFAULT
+}
+
+func (p *Product) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != Product_UpdatedAt_DEFAULT
+}
+
+func (p *Product) IsSetPrice() bool {
+	return p.Price != Product_Price_DEFAULT
+}
+
+func (p *Product) IsSetStock() bool {
+	return p.Stock != Product_Stock_DEFAULT
+}
+
+func (p *Product) IsSetIsSales() bool {
+	return p.IsSales != nil
+}
+
+func (p *Product) IsSetSignSalesAt() bool {
+	return p.SignSalesAt != Product_SignSalesAt_DEFAULT
+}
+
+func (p *Product) IsSetEndSalesAt() bool {
+	return p.EndSalesAt != Product_EndSalesAt_DEFAULT
 }
 
 func (p *Product) String() string {
@@ -46,7 +312,702 @@ func (p *Product) String() string {
 }
 
 var fieldIDToName_Product = map[int16]string{
-	254: "id",
+	1:  "id",
+	2:  "name",
+	3:  "pic",
+	4:  "desc",
+	8:  "status",
+	18: "statusName",
+	20: "createdId",
+	21: "createdName",
+	16: "createdAt",
+	17: "updatedAt",
+	6:  "price",
+	7:  "stock",
+	10: "isSales",
+	13: "signSalesAt",
+	14: "endSalesAt",
+}
+
+type Property struct {
+	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Pic         string  `thrift:"pic,3,optional" frugal:"3,optional,string" json:"pic,omitempty"`
+	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	Duration    int64   `thrift:"duration,5,optional" frugal:"5,optional,i64" json:"duration,omitempty"`
+	Length      int64   `thrift:"length,6,optional" frugal:"6,optional,i64" json:"length,omitempty"`
+	Count       int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
+	Type        string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
+	ActiveAt    string  `thrift:"activeAt,9,optional" frugal:"9,optional,string" json:"activeAt,omitempty"`
+	ExpiredAt   string  `thrift:"expiredAt,10,optional" frugal:"10,optional,string" json:"expiredAt,omitempty"`
+	TagId       []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
+	CreatedId   int64   `thrift:"createdId,14,optional" frugal:"14,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,15,optional" frugal:"15,optional,string" json:"createdName,omitempty"`
+	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
+}
+
+func NewProperty() *Property {
+	return &Property{
+		Id:          0,
+		Name:        "",
+		Pic:         "",
+		Desc:        "",
+		Duration:    0,
+		Length:      0,
+		Count:       0,
+		Type:        "",
+		ActiveAt:    "",
+		ExpiredAt:   "",
+		TagId:       []int64{},
+		CreatedId:   0,
+		CreatedName: "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+	}
+}
+
+func (p *Property) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.Pic = ""
+	p.Desc = ""
+	p.Duration = 0
+	p.Length = 0
+	p.Count = 0
+	p.Type = ""
+	p.ActiveAt = ""
+	p.ExpiredAt = ""
+	p.TagId = []int64{}
+	p.CreatedId = 0
+	p.CreatedName = ""
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+}
+
+var Property_Id_DEFAULT int64 = 0
+
+func (p *Property) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Property_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var Property_Name_DEFAULT string = ""
+
+func (p *Property) GetName() (v string) {
+	if !p.IsSetName() {
+		return Property_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var Property_Pic_DEFAULT string = ""
+
+func (p *Property) GetPic() (v string) {
+	if !p.IsSetPic() {
+		return Property_Pic_DEFAULT
+	}
+	return p.Pic
+}
+
+var Property_Desc_DEFAULT string = ""
+
+func (p *Property) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Property_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var Property_Duration_DEFAULT int64 = 0
+
+func (p *Property) GetDuration() (v int64) {
+	if !p.IsSetDuration() {
+		return Property_Duration_DEFAULT
+	}
+	return p.Duration
+}
+
+var Property_Length_DEFAULT int64 = 0
+
+func (p *Property) GetLength() (v int64) {
+	if !p.IsSetLength() {
+		return Property_Length_DEFAULT
+	}
+	return p.Length
+}
+
+var Property_Count_DEFAULT int64 = 0
+
+func (p *Property) GetCount() (v int64) {
+	if !p.IsSetCount() {
+		return Property_Count_DEFAULT
+	}
+	return p.Count
+}
+
+var Property_Type_DEFAULT string = ""
+
+func (p *Property) GetType() (v string) {
+	if !p.IsSetType() {
+		return Property_Type_DEFAULT
+	}
+	return p.Type
+}
+
+var Property_ActiveAt_DEFAULT string = ""
+
+func (p *Property) GetActiveAt() (v string) {
+	if !p.IsSetActiveAt() {
+		return Property_ActiveAt_DEFAULT
+	}
+	return p.ActiveAt
+}
+
+var Property_ExpiredAt_DEFAULT string = ""
+
+func (p *Property) GetExpiredAt() (v string) {
+	if !p.IsSetExpiredAt() {
+		return Property_ExpiredAt_DEFAULT
+	}
+	return p.ExpiredAt
+}
+
+var Property_TagId_DEFAULT []int64 = []int64{}
+
+func (p *Property) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return Property_TagId_DEFAULT
+	}
+	return p.TagId
+}
+
+var Property_CreatedId_DEFAULT int64 = 0
+
+func (p *Property) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Property_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Property_CreatedName_DEFAULT string = ""
+
+func (p *Property) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Property_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
+var Property_CreatedAt_DEFAULT string = ""
+
+func (p *Property) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Property_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var Property_UpdatedAt_DEFAULT string = ""
+
+func (p *Property) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return Property_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+func (p *Property) SetId(val int64) {
+	p.Id = val
+}
+func (p *Property) SetName(val string) {
+	p.Name = val
+}
+func (p *Property) SetPic(val string) {
+	p.Pic = val
+}
+func (p *Property) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *Property) SetDuration(val int64) {
+	p.Duration = val
+}
+func (p *Property) SetLength(val int64) {
+	p.Length = val
+}
+func (p *Property) SetCount(val int64) {
+	p.Count = val
+}
+func (p *Property) SetType(val string) {
+	p.Type = val
+}
+func (p *Property) SetActiveAt(val string) {
+	p.ActiveAt = val
+}
+func (p *Property) SetExpiredAt(val string) {
+	p.ExpiredAt = val
+}
+func (p *Property) SetTagId(val []int64) {
+	p.TagId = val
+}
+func (p *Property) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Property) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+func (p *Property) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Property) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+
+func (p *Property) IsSetId() bool {
+	return p.Id != Property_Id_DEFAULT
+}
+
+func (p *Property) IsSetName() bool {
+	return p.Name != Property_Name_DEFAULT
+}
+
+func (p *Property) IsSetPic() bool {
+	return p.Pic != Property_Pic_DEFAULT
+}
+
+func (p *Property) IsSetDesc() bool {
+	return p.Desc != Property_Desc_DEFAULT
+}
+
+func (p *Property) IsSetDuration() bool {
+	return p.Duration != Property_Duration_DEFAULT
+}
+
+func (p *Property) IsSetLength() bool {
+	return p.Length != Property_Length_DEFAULT
+}
+
+func (p *Property) IsSetCount() bool {
+	return p.Count != Property_Count_DEFAULT
+}
+
+func (p *Property) IsSetType() bool {
+	return p.Type != Property_Type_DEFAULT
+}
+
+func (p *Property) IsSetActiveAt() bool {
+	return p.ActiveAt != Property_ActiveAt_DEFAULT
+}
+
+func (p *Property) IsSetExpiredAt() bool {
+	return p.ExpiredAt != Property_ExpiredAt_DEFAULT
+}
+
+func (p *Property) IsSetTagId() bool {
+	return p.TagId != nil
+}
+
+func (p *Property) IsSetCreatedId() bool {
+	return p.CreatedId != Property_CreatedId_DEFAULT
+}
+
+func (p *Property) IsSetCreatedName() bool {
+	return p.CreatedName != Property_CreatedName_DEFAULT
+}
+
+func (p *Property) IsSetCreatedAt() bool {
+	return p.CreatedAt != Property_CreatedAt_DEFAULT
+}
+
+func (p *Property) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != Property_UpdatedAt_DEFAULT
+}
+
+func (p *Property) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Property(%+v)", *p)
+}
+
+var fieldIDToName_Property = map[int16]string{
+	1:  "id",
+	2:  "name",
+	3:  "pic",
+	4:  "desc",
+	5:  "duration",
+	6:  "length",
+	7:  "count",
+	8:  "type",
+	9:  "activeAt",
+	10: "expiredAt",
+	11: "tagId",
+	14: "createdId",
+	15: "createdName",
+	16: "createdAt",
+	17: "updatedAt",
+}
+
+type CreatePropertyReq struct {
+}
+
+func NewCreatePropertyReq() *CreatePropertyReq {
+	return &CreatePropertyReq{}
+}
+
+func (p *CreatePropertyReq) InitDefault() {
+}
+
+func (p *CreatePropertyReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreatePropertyReq(%+v)", *p)
+}
+
+var fieldIDToName_CreatePropertyReq = map[int16]string{}
+
+type UpdatePropertyReq struct {
+}
+
+func NewUpdatePropertyReq() *UpdatePropertyReq {
+	return &UpdatePropertyReq{}
+}
+
+func (p *UpdatePropertyReq) InitDefault() {
+}
+
+func (p *UpdatePropertyReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdatePropertyReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdatePropertyReq = map[int16]string{}
+
+type CreateProductReq struct {
+}
+
+func NewCreateProductReq() *CreateProductReq {
+	return &CreateProductReq{}
+}
+
+func (p *CreateProductReq) InitDefault() {
+}
+
+func (p *CreateProductReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateProductReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateProductReq = map[int16]string{}
+
+type EditProductReq struct {
+}
+
+func NewEditProductReq() *EditProductReq {
+	return &EditProductReq{}
+}
+
+func (p *EditProductReq) InitDefault() {
+}
+
+func (p *EditProductReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("EditProductReq(%+v)", *p)
+}
+
+var fieldIDToName_EditProductReq = map[int16]string{}
+
+type ListReq struct {
+	Page      int64    `thrift:"page,1" frugal:"1,default,i64" json:"page"`
+	PageSize  int64    `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name      string   `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
+	Status    []int64  `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
+	VenueId   []int64  `thrift:"venueId,5,optional" frugal:"5,optional,list<i64>" json:"venueId,omitempty"`
+	CreatedAt []string `thrift:"createdAt,6,optional" frugal:"6,optional,list<string>" json:"createdAt,omitempty"`
+	Type      string   `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
+}
+
+func NewListReq() *ListReq {
+	return &ListReq{
+		Page:      0,
+		PageSize:  10,
+		Name:      "",
+		Status:    []int64{},
+		VenueId:   []int64{},
+		CreatedAt: []string{},
+		Type:      "",
+	}
+}
+
+func (p *ListReq) InitDefault() {
+	p.Page = 0
+	p.PageSize = 10
+	p.Name = ""
+	p.Status = []int64{}
+	p.VenueId = []int64{}
+	p.CreatedAt = []string{}
+	p.Type = ""
+}
+
+func (p *ListReq) GetPage() (v int64) {
+	return p.Page
+}
+
+func (p *ListReq) GetPageSize() (v int64) {
+	return p.PageSize
+}
+
+var ListReq_Name_DEFAULT string = ""
+
+func (p *ListReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return ListReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var ListReq_Status_DEFAULT []int64 = []int64{}
+
+func (p *ListReq) GetStatus() (v []int64) {
+	if !p.IsSetStatus() {
+		return ListReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var ListReq_VenueId_DEFAULT []int64 = []int64{}
+
+func (p *ListReq) GetVenueId() (v []int64) {
+	if !p.IsSetVenueId() {
+		return ListReq_VenueId_DEFAULT
+	}
+	return p.VenueId
+}
+
+var ListReq_CreatedAt_DEFAULT []string = []string{}
+
+func (p *ListReq) GetCreatedAt() (v []string) {
+	if !p.IsSetCreatedAt() {
+		return ListReq_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var ListReq_Type_DEFAULT string = ""
+
+func (p *ListReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return ListReq_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *ListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *ListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *ListReq) SetName(val string) {
+	p.Name = val
+}
+func (p *ListReq) SetStatus(val []int64) {
+	p.Status = val
+}
+func (p *ListReq) SetVenueId(val []int64) {
+	p.VenueId = val
+}
+func (p *ListReq) SetCreatedAt(val []string) {
+	p.CreatedAt = val
+}
+func (p *ListReq) SetType(val string) {
+	p.Type = val
+}
+
+func (p *ListReq) IsSetName() bool {
+	return p.Name != ListReq_Name_DEFAULT
+}
+
+func (p *ListReq) IsSetStatus() bool {
+	return p.Status != nil
+}
+
+func (p *ListReq) IsSetVenueId() bool {
+	return p.VenueId != nil
+}
+
+func (p *ListReq) IsSetCreatedAt() bool {
+	return p.CreatedAt != nil
+}
+
+func (p *ListReq) IsSetType() bool {
+	return p.Type != ListReq_Type_DEFAULT
+}
+
+func (p *ListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ListReq(%+v)", *p)
+}
+
+var fieldIDToName_ListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+	3: "name",
+	4: "status",
+	5: "venueId",
+	6: "createdAt",
+	7: "type",
+}
+
+type PropertyListReq struct {
+	Page      int64    `thrift:"page,1" frugal:"1,default,i64" json:"page"`
+	PageSize  int64    `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name      *string  `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
+	Status    []int64  `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
+	VenueId   []int64  `thrift:"venueId,5,optional" frugal:"5,optional,list<i64>" json:"venueId,omitempty"`
+	CreatedAt []string `thrift:"createdAt,6,optional" frugal:"6,optional,list<string>" json:"createdAt,omitempty"`
+	Type      string   `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
+}
+
+func NewPropertyListReq() *PropertyListReq {
+	return &PropertyListReq{
+		Page:      0,
+		PageSize:  10,
+		Status:    []int64{},
+		VenueId:   []int64{},
+		CreatedAt: []string{},
+		Type:      "",
+	}
+}
+
+func (p *PropertyListReq) InitDefault() {
+	p.Page = 0
+	p.PageSize = 10
+	p.Status = []int64{}
+	p.VenueId = []int64{}
+	p.CreatedAt = []string{}
+	p.Type = ""
+}
+
+func (p *PropertyListReq) GetPage() (v int64) {
+	return p.Page
+}
+
+func (p *PropertyListReq) GetPageSize() (v int64) {
+	return p.PageSize
+}
+
+var PropertyListReq_Name_DEFAULT string
+
+func (p *PropertyListReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return PropertyListReq_Name_DEFAULT
+	}
+	return *p.Name
+}
+
+var PropertyListReq_Status_DEFAULT []int64 = []int64{}
+
+func (p *PropertyListReq) GetStatus() (v []int64) {
+	if !p.IsSetStatus() {
+		return PropertyListReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var PropertyListReq_VenueId_DEFAULT []int64 = []int64{}
+
+func (p *PropertyListReq) GetVenueId() (v []int64) {
+	if !p.IsSetVenueId() {
+		return PropertyListReq_VenueId_DEFAULT
+	}
+	return p.VenueId
+}
+
+var PropertyListReq_CreatedAt_DEFAULT []string = []string{}
+
+func (p *PropertyListReq) GetCreatedAt() (v []string) {
+	if !p.IsSetCreatedAt() {
+		return PropertyListReq_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var PropertyListReq_Type_DEFAULT string = ""
+
+func (p *PropertyListReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return PropertyListReq_Type_DEFAULT
+	}
+	return p.Type
+}
+func (p *PropertyListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *PropertyListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *PropertyListReq) SetName(val *string) {
+	p.Name = val
+}
+func (p *PropertyListReq) SetStatus(val []int64) {
+	p.Status = val
+}
+func (p *PropertyListReq) SetVenueId(val []int64) {
+	p.VenueId = val
+}
+func (p *PropertyListReq) SetCreatedAt(val []string) {
+	p.CreatedAt = val
+}
+func (p *PropertyListReq) SetType(val string) {
+	p.Type = val
+}
+
+func (p *PropertyListReq) IsSetName() bool {
+	return p.Name != nil
+}
+
+func (p *PropertyListReq) IsSetStatus() bool {
+	return p.Status != nil
+}
+
+func (p *PropertyListReq) IsSetVenueId() bool {
+	return p.VenueId != nil
+}
+
+func (p *PropertyListReq) IsSetCreatedAt() bool {
+	return p.CreatedAt != nil
+}
+
+func (p *PropertyListReq) IsSetType() bool {
+	return p.Type != PropertyListReq_Type_DEFAULT
+}
+
+func (p *PropertyListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PropertyListReq(%+v)", *p)
+}
+
+var fieldIDToName_PropertyListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+	3: "name",
+	4: "status",
+	5: "venueId",
+	6: "createdAt",
+	7: "type",
 }
 
 type ProductResp struct {
@@ -110,82 +1071,1317 @@ var fieldIDToName_ProductResp = map[int16]string{
 	255: "baseResp",
 }
 
+type PropertyResp struct {
+	Data     *Property      `thrift:"data,1,optional" frugal:"1,optional,Property" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewPropertyResp() *PropertyResp {
+	return &PropertyResp{
+		Data:     &Property{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *PropertyResp) InitDefault() {
+	p.Data = &Property{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var PropertyResp_Data_DEFAULT *Property = &Property{}
+
+func (p *PropertyResp) GetData() (v *Property) {
+	if !p.IsSetData() {
+		return PropertyResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var PropertyResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *PropertyResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return PropertyResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *PropertyResp) SetData(val *Property) {
+	p.Data = val
+}
+func (p *PropertyResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *PropertyResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *PropertyResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *PropertyResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PropertyResp(%+v)", *p)
+}
+
+var fieldIDToName_PropertyResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type ProductListResp struct {
+	Data     []*Product     `thrift:"data,1,optional" frugal:"1,optional,list<Product>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewProductListResp() *ProductListResp {
+	return &ProductListResp{
+		Data:     []*Product{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *ProductListResp) InitDefault() {
+	p.Data = []*Product{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var ProductListResp_Data_DEFAULT []*Product = []*Product{}
+
+func (p *ProductListResp) GetData() (v []*Product) {
+	if !p.IsSetData() {
+		return ProductListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var ProductListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *ProductListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return ProductListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *ProductListResp) SetData(val []*Product) {
+	p.Data = val
+}
+func (p *ProductListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *ProductListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *ProductListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *ProductListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductListResp(%+v)", *p)
+}
+
+var fieldIDToName_ProductListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type PropertyListResp struct {
+	Data     []*Property    `thrift:"data,1,optional" frugal:"1,optional,list<Property>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewPropertyListResp() *PropertyListResp {
+	return &PropertyListResp{
+		Data:     []*Property{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *PropertyListResp) InitDefault() {
+	p.Data = []*Property{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var PropertyListResp_Data_DEFAULT []*Property = []*Property{}
+
+func (p *PropertyListResp) GetData() (v []*Property) {
+	if !p.IsSetData() {
+		return PropertyListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var PropertyListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *PropertyListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return PropertyListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *PropertyListResp) SetData(val []*Property) {
+	p.Data = val
+}
+func (p *PropertyListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *PropertyListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *PropertyListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *PropertyListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PropertyListResp(%+v)", *p)
+}
+
+var fieldIDToName_PropertyListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type SearchProductReq struct {
+}
+
+func NewSearchProductReq() *SearchProductReq {
+	return &SearchProductReq{}
+}
+
+func (p *SearchProductReq) InitDefault() {
+}
+
+func (p *SearchProductReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SearchProductReq(%+v)", *p)
+}
+
+var fieldIDToName_SearchProductReq = map[int16]string{}
+
+type DecrStockReq struct {
+}
+
+func NewDecrStockReq() *DecrStockReq {
+	return &DecrStockReq{}
+}
+
+func (p *DecrStockReq) InitDefault() {
+}
+
+func (p *DecrStockReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DecrStockReq(%+v)", *p)
+}
+
+var fieldIDToName_DecrStockReq = map[int16]string{}
+
 type ProductService interface {
-	GetProductInfo(ctx context.Context, req *base.IdReq) (r *ProductResp, err error)
+	CreateProduct(ctx context.Context, req *CreateProductReq) (r *ProductResp, err error)
+
+	UpdateProduct(ctx context.Context, req *EditProductReq) (r *ProductResp, err error)
+
+	DeleteProduct(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	OnlineProduct(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	OfflineProduct(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	GetProduct(ctx context.Context, req *base.IdReq) (r *ProductResp, err error)
+
+	SearchProduct(ctx context.Context, req *SearchProductReq) (r *ProductListResp, err error)
+
+	ProductList(ctx context.Context, req *ListReq) (r *ProductListResp, err error)
+
+	DecrStock(ctx context.Context, req *DecrStockReq) (r *base.NilResponse, err error)
+
+	DecrStockRevert(ctx context.Context, req *DecrStockReq) (r *base.NilResponse, err error)
+
+	CreateProperty(ctx context.Context, req *CreatePropertyReq) (r *PropertyResp, err error)
+
+	UpdateProperty(ctx context.Context, req *UpdatePropertyReq) (r *PropertyResp, err error)
+
+	DeleteProperty(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	PropertyList(ctx context.Context, req *PropertyListReq) (r *PropertyListResp, err error)
 }
 
-type ProductServiceGetProductInfoArgs struct {
-	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+type ProductServiceCreateProductArgs struct {
+	Req *CreateProductReq `thrift:"req,1" frugal:"1,default,CreateProductReq" json:"req"`
 }
 
-func NewProductServiceGetProductInfoArgs() *ProductServiceGetProductInfoArgs {
-	return &ProductServiceGetProductInfoArgs{}
+func NewProductServiceCreateProductArgs() *ProductServiceCreateProductArgs {
+	return &ProductServiceCreateProductArgs{}
 }
 
-func (p *ProductServiceGetProductInfoArgs) InitDefault() {
+func (p *ProductServiceCreateProductArgs) InitDefault() {
 }
 
-var ProductServiceGetProductInfoArgs_Req_DEFAULT *base.IdReq
+var ProductServiceCreateProductArgs_Req_DEFAULT *CreateProductReq
 
-func (p *ProductServiceGetProductInfoArgs) GetReq() (v *base.IdReq) {
+func (p *ProductServiceCreateProductArgs) GetReq() (v *CreateProductReq) {
 	if !p.IsSetReq() {
-		return ProductServiceGetProductInfoArgs_Req_DEFAULT
+		return ProductServiceCreateProductArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *ProductServiceGetProductInfoArgs) SetReq(val *base.IdReq) {
+func (p *ProductServiceCreateProductArgs) SetReq(val *CreateProductReq) {
 	p.Req = val
 }
 
-func (p *ProductServiceGetProductInfoArgs) IsSetReq() bool {
+func (p *ProductServiceCreateProductArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *ProductServiceGetProductInfoArgs) String() string {
+func (p *ProductServiceCreateProductArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ProductServiceGetProductInfoArgs(%+v)", *p)
+	return fmt.Sprintf("ProductServiceCreateProductArgs(%+v)", *p)
 }
 
-var fieldIDToName_ProductServiceGetProductInfoArgs = map[int16]string{
+var fieldIDToName_ProductServiceCreateProductArgs = map[int16]string{
 	1: "req",
 }
 
-type ProductServiceGetProductInfoResult struct {
+type ProductServiceCreateProductResult struct {
 	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
 }
 
-func NewProductServiceGetProductInfoResult() *ProductServiceGetProductInfoResult {
-	return &ProductServiceGetProductInfoResult{}
+func NewProductServiceCreateProductResult() *ProductServiceCreateProductResult {
+	return &ProductServiceCreateProductResult{}
 }
 
-func (p *ProductServiceGetProductInfoResult) InitDefault() {
+func (p *ProductServiceCreateProductResult) InitDefault() {
 }
 
-var ProductServiceGetProductInfoResult_Success_DEFAULT *ProductResp
+var ProductServiceCreateProductResult_Success_DEFAULT *ProductResp
 
-func (p *ProductServiceGetProductInfoResult) GetSuccess() (v *ProductResp) {
+func (p *ProductServiceCreateProductResult) GetSuccess() (v *ProductResp) {
 	if !p.IsSetSuccess() {
-		return ProductServiceGetProductInfoResult_Success_DEFAULT
+		return ProductServiceCreateProductResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *ProductServiceGetProductInfoResult) SetSuccess(x interface{}) {
+func (p *ProductServiceCreateProductResult) SetSuccess(x interface{}) {
 	p.Success = x.(*ProductResp)
 }
 
-func (p *ProductServiceGetProductInfoResult) IsSetSuccess() bool {
+func (p *ProductServiceCreateProductResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *ProductServiceGetProductInfoResult) String() string {
+func (p *ProductServiceCreateProductResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ProductServiceGetProductInfoResult(%+v)", *p)
+	return fmt.Sprintf("ProductServiceCreateProductResult(%+v)", *p)
 }
 
-var fieldIDToName_ProductServiceGetProductInfoResult = map[int16]string{
+var fieldIDToName_ProductServiceCreateProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceUpdateProductArgs struct {
+	Req *EditProductReq `thrift:"req,1" frugal:"1,default,EditProductReq" json:"req"`
+}
+
+func NewProductServiceUpdateProductArgs() *ProductServiceUpdateProductArgs {
+	return &ProductServiceUpdateProductArgs{}
+}
+
+func (p *ProductServiceUpdateProductArgs) InitDefault() {
+}
+
+var ProductServiceUpdateProductArgs_Req_DEFAULT *EditProductReq
+
+func (p *ProductServiceUpdateProductArgs) GetReq() (v *EditProductReq) {
+	if !p.IsSetReq() {
+		return ProductServiceUpdateProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceUpdateProductArgs) SetReq(val *EditProductReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceUpdateProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceUpdateProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceUpdateProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceUpdateProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceUpdateProductResult struct {
+	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
+}
+
+func NewProductServiceUpdateProductResult() *ProductServiceUpdateProductResult {
+	return &ProductServiceUpdateProductResult{}
+}
+
+func (p *ProductServiceUpdateProductResult) InitDefault() {
+}
+
+var ProductServiceUpdateProductResult_Success_DEFAULT *ProductResp
+
+func (p *ProductServiceUpdateProductResult) GetSuccess() (v *ProductResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceUpdateProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceUpdateProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductResp)
+}
+
+func (p *ProductServiceUpdateProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceUpdateProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceUpdateProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceUpdateProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceDeleteProductArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewProductServiceDeleteProductArgs() *ProductServiceDeleteProductArgs {
+	return &ProductServiceDeleteProductArgs{}
+}
+
+func (p *ProductServiceDeleteProductArgs) InitDefault() {
+}
+
+var ProductServiceDeleteProductArgs_Req_DEFAULT *base.IdReq
+
+func (p *ProductServiceDeleteProductArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return ProductServiceDeleteProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceDeleteProductArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceDeleteProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceDeleteProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDeleteProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDeleteProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceDeleteProductResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceDeleteProductResult() *ProductServiceDeleteProductResult {
+	return &ProductServiceDeleteProductResult{}
+}
+
+func (p *ProductServiceDeleteProductResult) InitDefault() {
+}
+
+var ProductServiceDeleteProductResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceDeleteProductResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceDeleteProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceDeleteProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceDeleteProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceDeleteProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDeleteProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDeleteProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceOnlineProductArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewProductServiceOnlineProductArgs() *ProductServiceOnlineProductArgs {
+	return &ProductServiceOnlineProductArgs{}
+}
+
+func (p *ProductServiceOnlineProductArgs) InitDefault() {
+}
+
+var ProductServiceOnlineProductArgs_Req_DEFAULT *base.IdReq
+
+func (p *ProductServiceOnlineProductArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return ProductServiceOnlineProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceOnlineProductArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceOnlineProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceOnlineProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceOnlineProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceOnlineProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceOnlineProductResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceOnlineProductResult() *ProductServiceOnlineProductResult {
+	return &ProductServiceOnlineProductResult{}
+}
+
+func (p *ProductServiceOnlineProductResult) InitDefault() {
+}
+
+var ProductServiceOnlineProductResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceOnlineProductResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceOnlineProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceOnlineProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceOnlineProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceOnlineProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceOnlineProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceOnlineProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceOfflineProductArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewProductServiceOfflineProductArgs() *ProductServiceOfflineProductArgs {
+	return &ProductServiceOfflineProductArgs{}
+}
+
+func (p *ProductServiceOfflineProductArgs) InitDefault() {
+}
+
+var ProductServiceOfflineProductArgs_Req_DEFAULT *base.IdReq
+
+func (p *ProductServiceOfflineProductArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return ProductServiceOfflineProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceOfflineProductArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceOfflineProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceOfflineProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceOfflineProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceOfflineProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceOfflineProductResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceOfflineProductResult() *ProductServiceOfflineProductResult {
+	return &ProductServiceOfflineProductResult{}
+}
+
+func (p *ProductServiceOfflineProductResult) InitDefault() {
+}
+
+var ProductServiceOfflineProductResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceOfflineProductResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceOfflineProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceOfflineProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceOfflineProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceOfflineProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceOfflineProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceOfflineProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceGetProductArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewProductServiceGetProductArgs() *ProductServiceGetProductArgs {
+	return &ProductServiceGetProductArgs{}
+}
+
+func (p *ProductServiceGetProductArgs) InitDefault() {
+}
+
+var ProductServiceGetProductArgs_Req_DEFAULT *base.IdReq
+
+func (p *ProductServiceGetProductArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return ProductServiceGetProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceGetProductArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceGetProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceGetProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceGetProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceGetProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceGetProductResult struct {
+	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
+}
+
+func NewProductServiceGetProductResult() *ProductServiceGetProductResult {
+	return &ProductServiceGetProductResult{}
+}
+
+func (p *ProductServiceGetProductResult) InitDefault() {
+}
+
+var ProductServiceGetProductResult_Success_DEFAULT *ProductResp
+
+func (p *ProductServiceGetProductResult) GetSuccess() (v *ProductResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceGetProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceGetProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductResp)
+}
+
+func (p *ProductServiceGetProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceGetProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceGetProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceGetProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceSearchProductArgs struct {
+	Req *SearchProductReq `thrift:"req,1" frugal:"1,default,SearchProductReq" json:"req"`
+}
+
+func NewProductServiceSearchProductArgs() *ProductServiceSearchProductArgs {
+	return &ProductServiceSearchProductArgs{}
+}
+
+func (p *ProductServiceSearchProductArgs) InitDefault() {
+}
+
+var ProductServiceSearchProductArgs_Req_DEFAULT *SearchProductReq
+
+func (p *ProductServiceSearchProductArgs) GetReq() (v *SearchProductReq) {
+	if !p.IsSetReq() {
+		return ProductServiceSearchProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceSearchProductArgs) SetReq(val *SearchProductReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceSearchProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceSearchProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceSearchProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceSearchProductArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceSearchProductResult struct {
+	Success *ProductListResp `thrift:"success,0,optional" frugal:"0,optional,ProductListResp" json:"success,omitempty"`
+}
+
+func NewProductServiceSearchProductResult() *ProductServiceSearchProductResult {
+	return &ProductServiceSearchProductResult{}
+}
+
+func (p *ProductServiceSearchProductResult) InitDefault() {
+}
+
+var ProductServiceSearchProductResult_Success_DEFAULT *ProductListResp
+
+func (p *ProductServiceSearchProductResult) GetSuccess() (v *ProductListResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceSearchProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceSearchProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductListResp)
+}
+
+func (p *ProductServiceSearchProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceSearchProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceSearchProductResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceSearchProductResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceProductListArgs struct {
+	Req *ListReq `thrift:"req,1" frugal:"1,default,ListReq" json:"req"`
+}
+
+func NewProductServiceProductListArgs() *ProductServiceProductListArgs {
+	return &ProductServiceProductListArgs{}
+}
+
+func (p *ProductServiceProductListArgs) InitDefault() {
+}
+
+var ProductServiceProductListArgs_Req_DEFAULT *ListReq
+
+func (p *ProductServiceProductListArgs) GetReq() (v *ListReq) {
+	if !p.IsSetReq() {
+		return ProductServiceProductListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceProductListArgs) SetReq(val *ListReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceProductListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceProductListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceProductListArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceProductListArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceProductListResult struct {
+	Success *ProductListResp `thrift:"success,0,optional" frugal:"0,optional,ProductListResp" json:"success,omitempty"`
+}
+
+func NewProductServiceProductListResult() *ProductServiceProductListResult {
+	return &ProductServiceProductListResult{}
+}
+
+func (p *ProductServiceProductListResult) InitDefault() {
+}
+
+var ProductServiceProductListResult_Success_DEFAULT *ProductListResp
+
+func (p *ProductServiceProductListResult) GetSuccess() (v *ProductListResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceProductListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceProductListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductListResp)
+}
+
+func (p *ProductServiceProductListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceProductListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceProductListResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceProductListResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceDecrStockArgs struct {
+	Req *DecrStockReq `thrift:"req,1" frugal:"1,default,DecrStockReq" json:"req"`
+}
+
+func NewProductServiceDecrStockArgs() *ProductServiceDecrStockArgs {
+	return &ProductServiceDecrStockArgs{}
+}
+
+func (p *ProductServiceDecrStockArgs) InitDefault() {
+}
+
+var ProductServiceDecrStockArgs_Req_DEFAULT *DecrStockReq
+
+func (p *ProductServiceDecrStockArgs) GetReq() (v *DecrStockReq) {
+	if !p.IsSetReq() {
+		return ProductServiceDecrStockArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceDecrStockArgs) SetReq(val *DecrStockReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceDecrStockArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceDecrStockArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDecrStockArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDecrStockArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceDecrStockResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceDecrStockResult() *ProductServiceDecrStockResult {
+	return &ProductServiceDecrStockResult{}
+}
+
+func (p *ProductServiceDecrStockResult) InitDefault() {
+}
+
+var ProductServiceDecrStockResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceDecrStockResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceDecrStockResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceDecrStockResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceDecrStockResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceDecrStockResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDecrStockResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDecrStockResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceDecrStockRevertArgs struct {
+	Req *DecrStockReq `thrift:"req,1" frugal:"1,default,DecrStockReq" json:"req"`
+}
+
+func NewProductServiceDecrStockRevertArgs() *ProductServiceDecrStockRevertArgs {
+	return &ProductServiceDecrStockRevertArgs{}
+}
+
+func (p *ProductServiceDecrStockRevertArgs) InitDefault() {
+}
+
+var ProductServiceDecrStockRevertArgs_Req_DEFAULT *DecrStockReq
+
+func (p *ProductServiceDecrStockRevertArgs) GetReq() (v *DecrStockReq) {
+	if !p.IsSetReq() {
+		return ProductServiceDecrStockRevertArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceDecrStockRevertArgs) SetReq(val *DecrStockReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceDecrStockRevertArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceDecrStockRevertArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDecrStockRevertArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDecrStockRevertArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceDecrStockRevertResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceDecrStockRevertResult() *ProductServiceDecrStockRevertResult {
+	return &ProductServiceDecrStockRevertResult{}
+}
+
+func (p *ProductServiceDecrStockRevertResult) InitDefault() {
+}
+
+var ProductServiceDecrStockRevertResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceDecrStockRevertResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceDecrStockRevertResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceDecrStockRevertResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceDecrStockRevertResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceDecrStockRevertResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDecrStockRevertResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDecrStockRevertResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceCreatePropertyArgs struct {
+	Req *CreatePropertyReq `thrift:"req,1" frugal:"1,default,CreatePropertyReq" json:"req"`
+}
+
+func NewProductServiceCreatePropertyArgs() *ProductServiceCreatePropertyArgs {
+	return &ProductServiceCreatePropertyArgs{}
+}
+
+func (p *ProductServiceCreatePropertyArgs) InitDefault() {
+}
+
+var ProductServiceCreatePropertyArgs_Req_DEFAULT *CreatePropertyReq
+
+func (p *ProductServiceCreatePropertyArgs) GetReq() (v *CreatePropertyReq) {
+	if !p.IsSetReq() {
+		return ProductServiceCreatePropertyArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceCreatePropertyArgs) SetReq(val *CreatePropertyReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceCreatePropertyArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceCreatePropertyArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceCreatePropertyArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceCreatePropertyArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceCreatePropertyResult struct {
+	Success *PropertyResp `thrift:"success,0,optional" frugal:"0,optional,PropertyResp" json:"success,omitempty"`
+}
+
+func NewProductServiceCreatePropertyResult() *ProductServiceCreatePropertyResult {
+	return &ProductServiceCreatePropertyResult{}
+}
+
+func (p *ProductServiceCreatePropertyResult) InitDefault() {
+}
+
+var ProductServiceCreatePropertyResult_Success_DEFAULT *PropertyResp
+
+func (p *ProductServiceCreatePropertyResult) GetSuccess() (v *PropertyResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceCreatePropertyResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceCreatePropertyResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PropertyResp)
+}
+
+func (p *ProductServiceCreatePropertyResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceCreatePropertyResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceCreatePropertyResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceCreatePropertyResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceUpdatePropertyArgs struct {
+	Req *UpdatePropertyReq `thrift:"req,1" frugal:"1,default,UpdatePropertyReq" json:"req"`
+}
+
+func NewProductServiceUpdatePropertyArgs() *ProductServiceUpdatePropertyArgs {
+	return &ProductServiceUpdatePropertyArgs{}
+}
+
+func (p *ProductServiceUpdatePropertyArgs) InitDefault() {
+}
+
+var ProductServiceUpdatePropertyArgs_Req_DEFAULT *UpdatePropertyReq
+
+func (p *ProductServiceUpdatePropertyArgs) GetReq() (v *UpdatePropertyReq) {
+	if !p.IsSetReq() {
+		return ProductServiceUpdatePropertyArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceUpdatePropertyArgs) SetReq(val *UpdatePropertyReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceUpdatePropertyArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceUpdatePropertyArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceUpdatePropertyArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceUpdatePropertyArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceUpdatePropertyResult struct {
+	Success *PropertyResp `thrift:"success,0,optional" frugal:"0,optional,PropertyResp" json:"success,omitempty"`
+}
+
+func NewProductServiceUpdatePropertyResult() *ProductServiceUpdatePropertyResult {
+	return &ProductServiceUpdatePropertyResult{}
+}
+
+func (p *ProductServiceUpdatePropertyResult) InitDefault() {
+}
+
+var ProductServiceUpdatePropertyResult_Success_DEFAULT *PropertyResp
+
+func (p *ProductServiceUpdatePropertyResult) GetSuccess() (v *PropertyResp) {
+	if !p.IsSetSuccess() {
+		return ProductServiceUpdatePropertyResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceUpdatePropertyResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PropertyResp)
+}
+
+func (p *ProductServiceUpdatePropertyResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceUpdatePropertyResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceUpdatePropertyResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceUpdatePropertyResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServiceDeletePropertyArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewProductServiceDeletePropertyArgs() *ProductServiceDeletePropertyArgs {
+	return &ProductServiceDeletePropertyArgs{}
+}
+
+func (p *ProductServiceDeletePropertyArgs) InitDefault() {
+}
+
+var ProductServiceDeletePropertyArgs_Req_DEFAULT *base.IdReq
+
+func (p *ProductServiceDeletePropertyArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return ProductServiceDeletePropertyArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServiceDeletePropertyArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *ProductServiceDeletePropertyArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServiceDeletePropertyArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDeletePropertyArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDeletePropertyArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServiceDeletePropertyResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewProductServiceDeletePropertyResult() *ProductServiceDeletePropertyResult {
+	return &ProductServiceDeletePropertyResult{}
+}
+
+func (p *ProductServiceDeletePropertyResult) InitDefault() {
+}
+
+var ProductServiceDeletePropertyResult_Success_DEFAULT *base.NilResponse
+
+func (p *ProductServiceDeletePropertyResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return ProductServiceDeletePropertyResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServiceDeletePropertyResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *ProductServiceDeletePropertyResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServiceDeletePropertyResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServiceDeletePropertyResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServiceDeletePropertyResult = map[int16]string{
+	0: "success",
+}
+
+type ProductServicePropertyListArgs struct {
+	Req *PropertyListReq `thrift:"req,1" frugal:"1,default,PropertyListReq" json:"req"`
+}
+
+func NewProductServicePropertyListArgs() *ProductServicePropertyListArgs {
+	return &ProductServicePropertyListArgs{}
+}
+
+func (p *ProductServicePropertyListArgs) InitDefault() {
+}
+
+var ProductServicePropertyListArgs_Req_DEFAULT *PropertyListReq
+
+func (p *ProductServicePropertyListArgs) GetReq() (v *PropertyListReq) {
+	if !p.IsSetReq() {
+		return ProductServicePropertyListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *ProductServicePropertyListArgs) SetReq(val *PropertyListReq) {
+	p.Req = val
+}
+
+func (p *ProductServicePropertyListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *ProductServicePropertyListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServicePropertyListArgs(%+v)", *p)
+}
+
+var fieldIDToName_ProductServicePropertyListArgs = map[int16]string{
+	1: "req",
+}
+
+type ProductServicePropertyListResult struct {
+	Success *PropertyListResp `thrift:"success,0,optional" frugal:"0,optional,PropertyListResp" json:"success,omitempty"`
+}
+
+func NewProductServicePropertyListResult() *ProductServicePropertyListResult {
+	return &ProductServicePropertyListResult{}
+}
+
+func (p *ProductServicePropertyListResult) InitDefault() {
+}
+
+var ProductServicePropertyListResult_Success_DEFAULT *PropertyListResp
+
+func (p *ProductServicePropertyListResult) GetSuccess() (v *PropertyListResp) {
+	if !p.IsSetSuccess() {
+		return ProductServicePropertyListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *ProductServicePropertyListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PropertyListResp)
+}
+
+func (p *ProductServicePropertyListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *ProductServicePropertyListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductServicePropertyListResult(%+v)", *p)
+}
+
+var fieldIDToName_ProductServicePropertyListResult = map[int16]string{
 	0: "success",
 }

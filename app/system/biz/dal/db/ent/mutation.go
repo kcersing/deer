@@ -57,7 +57,7 @@ type APIMutation struct {
 	addcreated_id *int64
 	_path         *string
 	title         *string
-	description   *string
+	desc          *string
 	api_group     *string
 	method        *string
 	disabled      *int64
@@ -511,53 +511,53 @@ func (m *APIMutation) ResetTitle() {
 	delete(m.clearedFields, api.FieldTitle)
 }
 
-// SetDescription sets the "description" field.
-func (m *APIMutation) SetDescription(s string) {
-	m.description = &s
+// SetDesc sets the "desc" field.
+func (m *APIMutation) SetDesc(s string) {
+	m.desc = &s
 }
 
-// Description returns the value of the "description" field in the mutation.
-func (m *APIMutation) Description() (r string, exists bool) {
-	v := m.description
+// Desc returns the value of the "desc" field in the mutation.
+func (m *APIMutation) Desc() (r string, exists bool) {
+	v := m.desc
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDescription returns the old "description" field's value of the API entity.
+// OldDesc returns the old "desc" field's value of the API entity.
 // If the API object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *APIMutation) OldDescription(ctx context.Context) (v string, err error) {
+func (m *APIMutation) OldDesc(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+		return v, errors.New("OldDesc is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDescription requires an ID field in the mutation")
+		return v, errors.New("OldDesc requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
 	}
-	return oldValue.Description, nil
+	return oldValue.Desc, nil
 }
 
-// ClearDescription clears the value of the "description" field.
-func (m *APIMutation) ClearDescription() {
-	m.description = nil
-	m.clearedFields[api.FieldDescription] = struct{}{}
+// ClearDesc clears the value of the "desc" field.
+func (m *APIMutation) ClearDesc() {
+	m.desc = nil
+	m.clearedFields[api.FieldDesc] = struct{}{}
 }
 
-// DescriptionCleared returns if the "description" field was cleared in this mutation.
-func (m *APIMutation) DescriptionCleared() bool {
-	_, ok := m.clearedFields[api.FieldDescription]
+// DescCleared returns if the "desc" field was cleared in this mutation.
+func (m *APIMutation) DescCleared() bool {
+	_, ok := m.clearedFields[api.FieldDesc]
 	return ok
 }
 
-// ResetDescription resets all changes to the "description" field.
-func (m *APIMutation) ResetDescription() {
-	m.description = nil
-	delete(m.clearedFields, api.FieldDescription)
+// ResetDesc resets all changes to the "desc" field.
+func (m *APIMutation) ResetDesc() {
+	m.desc = nil
+	delete(m.clearedFields, api.FieldDesc)
 }
 
 // SetAPIGroup sets the "api_group" field.
@@ -835,8 +835,8 @@ func (m *APIMutation) Fields() []string {
 	if m.title != nil {
 		fields = append(fields, api.FieldTitle)
 	}
-	if m.description != nil {
-		fields = append(fields, api.FieldDescription)
+	if m.desc != nil {
+		fields = append(fields, api.FieldDesc)
 	}
 	if m.api_group != nil {
 		fields = append(fields, api.FieldAPIGroup)
@@ -867,8 +867,8 @@ func (m *APIMutation) Field(name string) (ent.Value, bool) {
 		return m.Path()
 	case api.FieldTitle:
 		return m.Title()
-	case api.FieldDescription:
-		return m.Description()
+	case api.FieldDesc:
+		return m.Desc()
 	case api.FieldAPIGroup:
 		return m.APIGroup()
 	case api.FieldMethod:
@@ -896,8 +896,8 @@ func (m *APIMutation) OldField(ctx context.Context, name string) (ent.Value, err
 		return m.OldPath(ctx)
 	case api.FieldTitle:
 		return m.OldTitle(ctx)
-	case api.FieldDescription:
-		return m.OldDescription(ctx)
+	case api.FieldDesc:
+		return m.OldDesc(ctx)
 	case api.FieldAPIGroup:
 		return m.OldAPIGroup(ctx)
 	case api.FieldMethod:
@@ -955,12 +955,12 @@ func (m *APIMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTitle(v)
 		return nil
-	case api.FieldDescription:
+	case api.FieldDesc:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDescription(v)
+		m.SetDesc(v)
 		return nil
 	case api.FieldAPIGroup:
 		v, ok := value.(string)
@@ -1070,8 +1070,8 @@ func (m *APIMutation) ClearedFields() []string {
 	if m.FieldCleared(api.FieldTitle) {
 		fields = append(fields, api.FieldTitle)
 	}
-	if m.FieldCleared(api.FieldDescription) {
-		fields = append(fields, api.FieldDescription)
+	if m.FieldCleared(api.FieldDesc) {
+		fields = append(fields, api.FieldDesc)
 	}
 	if m.FieldCleared(api.FieldAPIGroup) {
 		fields = append(fields, api.FieldAPIGroup)
@@ -1114,8 +1114,8 @@ func (m *APIMutation) ClearField(name string) error {
 	case api.FieldTitle:
 		m.ClearTitle()
 		return nil
-	case api.FieldDescription:
-		m.ClearDescription()
+	case api.FieldDesc:
+		m.ClearDesc()
 		return nil
 	case api.FieldAPIGroup:
 		m.ClearAPIGroup()
@@ -1152,8 +1152,8 @@ func (m *APIMutation) ResetField(name string) error {
 	case api.FieldTitle:
 		m.ResetTitle()
 		return nil
-	case api.FieldDescription:
-		m.ResetDescription()
+	case api.FieldDesc:
+		m.ResetDesc()
 		return nil
 	case api.FieldAPIGroup:
 		m.ResetAPIGroup()
@@ -1268,7 +1268,7 @@ type DictMutation struct {
 	addstatus     *int64
 	title         *string
 	name          *string
-	description   *string
+	desc          *string
 	clearedFields map[string]struct{}
 	dictht        map[int64]struct{}
 	removeddictht map[int64]struct{}
@@ -1788,53 +1788,53 @@ func (m *DictMutation) ResetName() {
 	delete(m.clearedFields, dict.FieldName)
 }
 
-// SetDescription sets the "description" field.
-func (m *DictMutation) SetDescription(s string) {
-	m.description = &s
+// SetDesc sets the "desc" field.
+func (m *DictMutation) SetDesc(s string) {
+	m.desc = &s
 }
 
-// Description returns the value of the "description" field in the mutation.
-func (m *DictMutation) Description() (r string, exists bool) {
-	v := m.description
+// Desc returns the value of the "desc" field in the mutation.
+func (m *DictMutation) Desc() (r string, exists bool) {
+	v := m.desc
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDescription returns the old "description" field's value of the Dict entity.
+// OldDesc returns the old "desc" field's value of the Dict entity.
 // If the Dict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *DictMutation) OldDescription(ctx context.Context) (v string, err error) {
+func (m *DictMutation) OldDesc(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDescription is only allowed on UpdateOne operations")
+		return v, errors.New("OldDesc is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDescription requires an ID field in the mutation")
+		return v, errors.New("OldDesc requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDescription: %w", err)
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
 	}
-	return oldValue.Description, nil
+	return oldValue.Desc, nil
 }
 
-// ClearDescription clears the value of the "description" field.
-func (m *DictMutation) ClearDescription() {
-	m.description = nil
-	m.clearedFields[dict.FieldDescription] = struct{}{}
+// ClearDesc clears the value of the "desc" field.
+func (m *DictMutation) ClearDesc() {
+	m.desc = nil
+	m.clearedFields[dict.FieldDesc] = struct{}{}
 }
 
-// DescriptionCleared returns if the "description" field was cleared in this mutation.
-func (m *DictMutation) DescriptionCleared() bool {
-	_, ok := m.clearedFields[dict.FieldDescription]
+// DescCleared returns if the "desc" field was cleared in this mutation.
+func (m *DictMutation) DescCleared() bool {
+	_, ok := m.clearedFields[dict.FieldDesc]
 	return ok
 }
 
-// ResetDescription resets all changes to the "description" field.
-func (m *DictMutation) ResetDescription() {
-	m.description = nil
-	delete(m.clearedFields, dict.FieldDescription)
+// ResetDesc resets all changes to the "desc" field.
+func (m *DictMutation) ResetDesc() {
+	m.desc = nil
+	delete(m.clearedFields, dict.FieldDesc)
 }
 
 // AddDicthtIDs adds the "dictht" edge to the Dictht entity by ids.
@@ -1947,8 +1947,8 @@ func (m *DictMutation) Fields() []string {
 	if m.name != nil {
 		fields = append(fields, dict.FieldName)
 	}
-	if m.description != nil {
-		fields = append(fields, dict.FieldDescription)
+	if m.desc != nil {
+		fields = append(fields, dict.FieldDesc)
 	}
 	return fields
 }
@@ -1972,8 +1972,8 @@ func (m *DictMutation) Field(name string) (ent.Value, bool) {
 		return m.Title()
 	case dict.FieldName:
 		return m.Name()
-	case dict.FieldDescription:
-		return m.Description()
+	case dict.FieldDesc:
+		return m.Desc()
 	}
 	return nil, false
 }
@@ -1997,8 +1997,8 @@ func (m *DictMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldTitle(ctx)
 	case dict.FieldName:
 		return m.OldName(ctx)
-	case dict.FieldDescription:
-		return m.OldDescription(ctx)
+	case dict.FieldDesc:
+		return m.OldDesc(ctx)
 	}
 	return nil, fmt.Errorf("unknown Dict field %s", name)
 }
@@ -2057,12 +2057,12 @@ func (m *DictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetName(v)
 		return nil
-	case dict.FieldDescription:
+	case dict.FieldDesc:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDescription(v)
+		m.SetDesc(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Dict field %s", name)
@@ -2154,8 +2154,8 @@ func (m *DictMutation) ClearedFields() []string {
 	if m.FieldCleared(dict.FieldName) {
 		fields = append(fields, dict.FieldName)
 	}
-	if m.FieldCleared(dict.FieldDescription) {
-		fields = append(fields, dict.FieldDescription)
+	if m.FieldCleared(dict.FieldDesc) {
+		fields = append(fields, dict.FieldDesc)
 	}
 	return fields
 }
@@ -2192,8 +2192,8 @@ func (m *DictMutation) ClearField(name string) error {
 	case dict.FieldName:
 		m.ClearName()
 		return nil
-	case dict.FieldDescription:
-		m.ClearDescription()
+	case dict.FieldDesc:
+		m.ClearDesc()
 		return nil
 	}
 	return fmt.Errorf("unknown Dict nullable field %s", name)
@@ -2224,8 +2224,8 @@ func (m *DictMutation) ResetField(name string) error {
 	case dict.FieldName:
 		m.ResetName()
 		return nil
-	case dict.FieldDescription:
-		m.ResetDescription()
+	case dict.FieldDesc:
+		m.ResetDesc()
 		return nil
 	}
 	return fmt.Errorf("unknown Dict field %s", name)

@@ -162,23 +162,23 @@ func (_u *DictUpdate) ClearName() *DictUpdate {
 	return _u
 }
 
-// SetDescription sets the "description" field.
-func (_u *DictUpdate) SetDescription(v string) *DictUpdate {
-	_u.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_u *DictUpdate) SetDesc(v string) *DictUpdate {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *DictUpdate) SetNillableDescription(v *string) *DictUpdate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *DictUpdate) SetNillableDesc(v *string) *DictUpdate {
 	if v != nil {
-		_u.SetDescription(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDescription clears the value of the "description" field.
-func (_u *DictUpdate) ClearDescription() *DictUpdate {
-	_u.mutation.ClearDescription()
+// ClearDesc clears the value of the "desc" field.
+func (_u *DictUpdate) ClearDesc() *DictUpdate {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -316,11 +316,11 @@ func (_u *DictUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(dict.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(dict.FieldDescription, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(dict.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(dict.FieldDescription, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(dict.FieldDesc, field.TypeString)
 	}
 	if _u.mutation.DicthtCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -520,23 +520,23 @@ func (_u *DictUpdateOne) ClearName() *DictUpdateOne {
 	return _u
 }
 
-// SetDescription sets the "description" field.
-func (_u *DictUpdateOne) SetDescription(v string) *DictUpdateOne {
-	_u.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_u *DictUpdateOne) SetDesc(v string) *DictUpdateOne {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *DictUpdateOne) SetNillableDescription(v *string) *DictUpdateOne {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *DictUpdateOne) SetNillableDesc(v *string) *DictUpdateOne {
 	if v != nil {
-		_u.SetDescription(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDescription clears the value of the "description" field.
-func (_u *DictUpdateOne) ClearDescription() *DictUpdateOne {
-	_u.mutation.ClearDescription()
+// ClearDesc clears the value of the "desc" field.
+func (_u *DictUpdateOne) ClearDesc() *DictUpdateOne {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -704,11 +704,11 @@ func (_u *DictUpdateOne) sqlSave(ctx context.Context) (_node *Dict, err error) {
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(dict.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(dict.FieldDescription, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(dict.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(dict.FieldDescription, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(dict.FieldDesc, field.TypeString)
 	}
 	if _u.mutation.DicthtCleared() {
 		edge := &sqlgraph.EdgeSpec{

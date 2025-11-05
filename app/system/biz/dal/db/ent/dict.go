@@ -32,8 +32,8 @@ type Dict struct {
 	Title string `json:"title,omitempty"`
 	// the name of dictionary for search | 字典搜索名称
 	Name string `json:"name,omitempty"`
-	// the description of dictionary | 字典描述
-	Description string `json:"description,omitempty"`
+	// the desc of dictionary | 字典描述
+	Desc string `json:"desc,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the DictQuery when eager-loading is set.
 	Edges        DictEdges `json:"edges"`
@@ -65,7 +65,7 @@ func (*Dict) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case dict.FieldID, dict.FieldDelete, dict.FieldCreatedID, dict.FieldStatus:
 			values[i] = new(sql.NullInt64)
-		case dict.FieldTitle, dict.FieldName, dict.FieldDescription:
+		case dict.FieldTitle, dict.FieldName, dict.FieldDesc:
 			values[i] = new(sql.NullString)
 		case dict.FieldCreatedAt, dict.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -132,11 +132,11 @@ func (_m *Dict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Name = value.String
 			}
-		case dict.FieldDescription:
+		case dict.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field description", values[i])
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
 			} else if value.Valid {
-				_m.Description = value.String
+				_m.Desc = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -200,8 +200,8 @@ func (_m *Dict) String() string {
 	builder.WriteString("name=")
 	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
-	builder.WriteString("description=")
-	builder.WriteString(_m.Description)
+	builder.WriteString("desc=")
+	builder.WriteString(_m.Desc)
 	builder.WriteByte(')')
 	return builder.String()
 }

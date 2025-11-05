@@ -26,8 +26,8 @@ const (
 	FieldPath = "path"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
-	// FieldDescription holds the string denoting the description field in the database.
-	FieldDescription = "description"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// FieldAPIGroup holds the string denoting the api_group field in the database.
 	FieldAPIGroup = "api_group"
 	// FieldMethod holds the string denoting the method field in the database.
@@ -54,7 +54,7 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldPath,
 	FieldTitle,
-	FieldDescription,
+	FieldDesc,
 	FieldAPIGroup,
 	FieldMethod,
 	FieldDisabled,
@@ -131,9 +131,9 @@ func ByTitle(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTitle, opts...).ToFunc()
 }
 
-// ByDescription orders the results by the description field.
-func ByDescription(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+// ByDesc orders the results by the desc field.
+func ByDesc(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDesc, opts...).ToFunc()
 }
 
 // ByAPIGroup orders the results by the api_group field.

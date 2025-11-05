@@ -18,7 +18,7 @@ func (Dict) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("title").Comment("the title shown in the ui | 展示名称 （建议配合i18n）").Optional(),
 		field.String("name").Unique().Comment("the name of dictionary for search | 字典搜索名称").Optional(),
-		field.String("description").Comment("the description of dictionary | 字典描述").Optional(),
+		field.String("desc").Comment("the desc of dictionary | 字典描述").Optional(),
 	}
 }
 

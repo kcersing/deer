@@ -248,6 +248,67 @@ func (p *NilResponse) String() string {
 
 var fieldIDToName_NilResponse = map[int16]string{}
 
+type List struct {
+	Id    int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Title string `thrift:"title,2,optional" frugal:"2,optional,string" json:"title,omitempty"`
+}
+
+func NewList() *List {
+	return &List{
+		Id:    0,
+		Title: "",
+	}
+}
+
+func (p *List) InitDefault() {
+	p.Id = 0
+	p.Title = ""
+}
+
+var List_Id_DEFAULT int64 = 0
+
+func (p *List) GetId() (v int64) {
+	if !p.IsSetId() {
+		return List_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var List_Title_DEFAULT string = ""
+
+func (p *List) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return List_Title_DEFAULT
+	}
+	return p.Title
+}
+func (p *List) SetId(val int64) {
+	p.Id = val
+}
+func (p *List) SetTitle(val string) {
+	p.Title = val
+}
+
+func (p *List) IsSetId() bool {
+	return p.Id != List_Id_DEFAULT
+}
+
+func (p *List) IsSetTitle() bool {
+	return p.Title != List_Title_DEFAULT
+}
+
+func (p *List) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("List(%+v)", *p)
+}
+
+var fieldIDToName_List = map[int16]string{
+	1: "id",
+	2: "title",
+}
+
 type CheckAccountReq struct {
 	Username string `thrift:"username,1" frugal:"1,default,string" json:"username"`
 	Password string `thrift:"password,2" frugal:"2,default,string" json:"password"`

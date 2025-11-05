@@ -239,7 +239,7 @@ func (p *Api) FastReadField5(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return offset, nil
 }
 
@@ -359,9 +359,9 @@ func (p *Api) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *Api) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Description)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
@@ -431,9 +431,9 @@ func (p *Api) field4Length() int {
 
 func (p *Api) field5Length() int {
 	l := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Description)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
@@ -940,7 +940,7 @@ func (p *ApiListReq) FastReadField4(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return offset, nil
 }
 
@@ -1059,9 +1059,9 @@ func (p *ApiListReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *ApiListReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Description)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
@@ -1122,9 +1122,9 @@ func (p *ApiListReq) field3Length() int {
 
 func (p *ApiListReq) field4Length() int {
 	l := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Description)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
@@ -1303,7 +1303,7 @@ func (p *CreateApiReq) FastReadField5(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return offset, nil
 }
 
@@ -1390,9 +1390,9 @@ func (p *CreateApiReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *CreateApiReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Description)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
@@ -1435,9 +1435,9 @@ func (p *CreateApiReq) field4Length() int {
 
 func (p *CreateApiReq) field5Length() int {
 	l := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Description)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
@@ -1626,7 +1626,7 @@ func (p *UpdateApiReq) FastReadField5(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return offset, nil
 }
 
@@ -1724,9 +1724,9 @@ func (p *UpdateApiReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *UpdateApiReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Description)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
@@ -1778,9 +1778,9 @@ func (p *UpdateApiReq) field4Length() int {
 
 func (p *UpdateApiReq) field5Length() int {
 	l := 0
-	if p.IsSetDescription() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Description)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
@@ -6579,7 +6579,7 @@ func (p *Dict) FastReadField6(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return offset, nil
 }
 
@@ -6676,7 +6676,7 @@ func (p *Dict) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 func (p *Dict) fastWriteField6(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 6)
-	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Description)
+	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	return offset
 }
 
@@ -6725,7 +6725,7 @@ func (p *Dict) field5Length() int {
 func (p *Dict) field6Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
-	l += thrift.Binary.StringLengthNocopy(p.Description)
+	l += thrift.Binary.StringLengthNocopy(p.Desc)
 	return l
 }
 

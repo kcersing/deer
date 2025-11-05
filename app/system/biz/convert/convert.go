@@ -10,14 +10,14 @@ import (
 
 func EntToApi(e *ent.API) *system.Api {
 	return &system.Api{
-		Id:          e.ID,
-		CreatedAt:   e.CreatedAt.Format(time.DateOnly),
-		UpdatedAt:   e.UpdatedAt.Format(time.DateOnly),
-		Path:        e.Path,
-		Description: e.Description,
-		Group:       e.APIGroup,
-		Method:      e.Method,
-		Title:       e.Title,
+		Id:        e.ID,
+		CreatedAt: e.CreatedAt.Format(time.DateOnly),
+		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
+		Path:      e.Path,
+		Desc:      e.Desc,
+		Group:     e.APIGroup,
+		Method:    e.Method,
+		Title:     e.Title,
 	}
 }
 func EntToLog(e *ent.Logs) *system.Log {
@@ -69,13 +69,13 @@ func EntToRole(e *ent.Role) *system.Role {
 
 func EntToDict(e *ent.Dict) *system.Dict {
 	return &system.Dict{
-		Id:          0,
-		Title:       "",
-		Name:        "",
-		Status:      0,
-		Description: "",
-		CreatedAt:   "",
-		UpdatedAt:   "",
+		Id:        0,
+		Title:     "",
+		Name:      "",
+		Status:    0,
+		Desc:      "",
+		CreatedAt: "",
+		UpdatedAt: "",
 	}
 }
 func EntToDictht(e *ent.Dictht) *system.Dictht {

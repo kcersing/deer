@@ -6,7 +6,7 @@ struct Api{
     2: optional string createdAt="" (api.raw = "createdAt")
     3: optional string updatedAt="" (api.raw = "updatedAt")
     4: optional string path="" (api.raw = "path")
-    5: optional string description="" (api.raw = "description")
+    5: optional string desc="" (api.raw = "desc")
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
@@ -21,7 +21,7 @@ struct ApiListResp{
 }
 struct ApiListReq{
     3:optional string path = "" (api.raw = "path")
-    4:optional string description = "" (api.raw = "description")
+    4:optional string desc = "" (api.raw = "desc")
     5:optional string method  = ""(api.raw = "method")
     6:optional string group  = ""(api.raw = "group")
 
@@ -32,7 +32,7 @@ struct ApiListReq{
 }
 struct CreateApiReq{
     4: optional string path="" (api.raw = "path")
-    5: optional string description="" (api.raw = "description")
+    5: optional string desc="" (api.raw = "desc")
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
@@ -41,7 +41,7 @@ struct CreateApiReq{
 struct UpdateApiReq{
     1: optional i64 id=0 (api.raw = "id")
     4: optional string path="" (api.raw = "path")
-    5: optional string description="" (api.raw = "description")
+    5: optional string desc="" (api.raw = "desc")
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
@@ -163,7 +163,7 @@ struct Dict {
     2:  string title="" (api.raw = "title" )
     3:  string name="" (api.raw = "name" )
     5:  i64 status=0 (api.raw = "status" )
-    6:  string description="" (api.raw = "description" )
+    6:  string desc="" (api.raw = "desc" )
     7:  string createdAt="" (api.raw = "createdAt" )
     8:  string updatedAt="" (api.raw = "updatedAt" )
 }

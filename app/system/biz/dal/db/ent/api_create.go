@@ -104,16 +104,16 @@ func (_c *APICreate) SetNillableTitle(v *string) *APICreate {
 	return _c
 }
 
-// SetDescription sets the "description" field.
-func (_c *APICreate) SetDescription(v string) *APICreate {
-	_c.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_c *APICreate) SetDesc(v string) *APICreate {
+	_c.mutation.SetDesc(v)
 	return _c
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_c *APICreate) SetNillableDescription(v *string) *APICreate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_c *APICreate) SetNillableDesc(v *string) *APICreate {
 	if v != nil {
-		_c.SetDescription(*v)
+		_c.SetDesc(*v)
 	}
 	return _c
 }
@@ -300,9 +300,9 @@ func (_c *APICreate) createSpec() (*API, *sqlgraph.CreateSpec) {
 		_spec.SetField(api.FieldTitle, field.TypeString, value)
 		_node.Title = value
 	}
-	if value, ok := _c.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
-		_node.Description = value
+	if value, ok := _c.mutation.Desc(); ok {
+		_spec.SetField(api.FieldDesc, field.TypeString, value)
+		_node.Desc = value
 	}
 	if value, ok := _c.mutation.APIGroup(); ok {
 		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)

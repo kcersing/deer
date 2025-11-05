@@ -85,9 +85,9 @@ func Title(v string) predicate.API {
 	return predicate.API(sql.FieldEQ(FieldTitle, v))
 }
 
-// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
-func Description(v string) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldDescription, v))
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldDesc, v))
 }
 
 // APIGroup applies equality check predicate on the "api_group" field. It's identical to APIGroupEQ.
@@ -455,79 +455,79 @@ func TitleContainsFold(v string) predicate.API {
 	return predicate.API(sql.FieldContainsFold(FieldTitle, v))
 }
 
-// DescriptionEQ applies the EQ predicate on the "description" field.
-func DescriptionEQ(v string) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldDescription, v))
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldDesc, v))
 }
 
-// DescriptionNEQ applies the NEQ predicate on the "description" field.
-func DescriptionNEQ(v string) predicate.API {
-	return predicate.API(sql.FieldNEQ(FieldDescription, v))
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.API {
+	return predicate.API(sql.FieldNEQ(FieldDesc, v))
 }
 
-// DescriptionIn applies the In predicate on the "description" field.
-func DescriptionIn(vs ...string) predicate.API {
-	return predicate.API(sql.FieldIn(FieldDescription, vs...))
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.API {
+	return predicate.API(sql.FieldIn(FieldDesc, vs...))
 }
 
-// DescriptionNotIn applies the NotIn predicate on the "description" field.
-func DescriptionNotIn(vs ...string) predicate.API {
-	return predicate.API(sql.FieldNotIn(FieldDescription, vs...))
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.API {
+	return predicate.API(sql.FieldNotIn(FieldDesc, vs...))
 }
 
-// DescriptionGT applies the GT predicate on the "description" field.
-func DescriptionGT(v string) predicate.API {
-	return predicate.API(sql.FieldGT(FieldDescription, v))
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.API {
+	return predicate.API(sql.FieldGT(FieldDesc, v))
 }
 
-// DescriptionGTE applies the GTE predicate on the "description" field.
-func DescriptionGTE(v string) predicate.API {
-	return predicate.API(sql.FieldGTE(FieldDescription, v))
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.API {
+	return predicate.API(sql.FieldGTE(FieldDesc, v))
 }
 
-// DescriptionLT applies the LT predicate on the "description" field.
-func DescriptionLT(v string) predicate.API {
-	return predicate.API(sql.FieldLT(FieldDescription, v))
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.API {
+	return predicate.API(sql.FieldLT(FieldDesc, v))
 }
 
-// DescriptionLTE applies the LTE predicate on the "description" field.
-func DescriptionLTE(v string) predicate.API {
-	return predicate.API(sql.FieldLTE(FieldDescription, v))
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.API {
+	return predicate.API(sql.FieldLTE(FieldDesc, v))
 }
 
-// DescriptionContains applies the Contains predicate on the "description" field.
-func DescriptionContains(v string) predicate.API {
-	return predicate.API(sql.FieldContains(FieldDescription, v))
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.API {
+	return predicate.API(sql.FieldContains(FieldDesc, v))
 }
 
-// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
-func DescriptionHasPrefix(v string) predicate.API {
-	return predicate.API(sql.FieldHasPrefix(FieldDescription, v))
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.API {
+	return predicate.API(sql.FieldHasPrefix(FieldDesc, v))
 }
 
-// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
-func DescriptionHasSuffix(v string) predicate.API {
-	return predicate.API(sql.FieldHasSuffix(FieldDescription, v))
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.API {
+	return predicate.API(sql.FieldHasSuffix(FieldDesc, v))
 }
 
-// DescriptionIsNil applies the IsNil predicate on the "description" field.
-func DescriptionIsNil() predicate.API {
-	return predicate.API(sql.FieldIsNull(FieldDescription))
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldDesc))
 }
 
-// DescriptionNotNil applies the NotNil predicate on the "description" field.
-func DescriptionNotNil() predicate.API {
-	return predicate.API(sql.FieldNotNull(FieldDescription))
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldDesc))
 }
 
-// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
-func DescriptionEqualFold(v string) predicate.API {
-	return predicate.API(sql.FieldEqualFold(FieldDescription, v))
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.API {
+	return predicate.API(sql.FieldEqualFold(FieldDesc, v))
 }
 
-// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
-func DescriptionContainsFold(v string) predicate.API {
-	return predicate.API(sql.FieldContainsFold(FieldDescription, v))
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.API {
+	return predicate.API(sql.FieldContainsFold(FieldDesc, v))
 }
 
 // APIGroupEQ applies the EQ predicate on the "api_group" field.

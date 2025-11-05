@@ -18,7 +18,7 @@ struct DeleteLogReq {
 
 struct CreateApiReq{
     4: optional string path="" (api.raw = "path")
-    5: optional string description="" (api.raw = "description")
+    5: optional string desc="" (api.raw = "desc")
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
@@ -27,14 +27,14 @@ struct CreateApiReq{
 struct UpdateApiReq{
     1: optional i64 id=0 (api.raw = "id")
     4: optional string path="" (api.raw = "path")
-    5: optional string description="" (api.raw = "description")
+    5: optional string desc="" (api.raw = "desc")
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
 }
 struct ApiListReq{
     3:optional string path = "" (api.raw = "path")
-    4:optional string description = "" (api.raw = "description")
+    4:optional string desc = "" (api.raw = "desc")
     5:optional string method  = ""(api.raw = "method")
     6:optional string group  = ""(api.raw = "group")
 

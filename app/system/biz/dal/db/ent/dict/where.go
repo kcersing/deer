@@ -90,9 +90,9 @@ func Name(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldEQ(FieldName, v))
 }
 
-// Description applies equality check predicate on the "description" field. It's identical to DescriptionEQ.
-func Description(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEQ(FieldDescription, v))
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEQ(FieldDesc, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -495,79 +495,79 @@ func NameContainsFold(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldContainsFold(FieldName, v))
 }
 
-// DescriptionEQ applies the EQ predicate on the "description" field.
-func DescriptionEQ(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEQ(FieldDescription, v))
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEQ(FieldDesc, v))
 }
 
-// DescriptionNEQ applies the NEQ predicate on the "description" field.
-func DescriptionNEQ(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldNEQ(FieldDescription, v))
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldNEQ(FieldDesc, v))
 }
 
-// DescriptionIn applies the In predicate on the "description" field.
-func DescriptionIn(vs ...string) predicate.Dict {
-	return predicate.Dict(sql.FieldIn(FieldDescription, vs...))
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.Dict {
+	return predicate.Dict(sql.FieldIn(FieldDesc, vs...))
 }
 
-// DescriptionNotIn applies the NotIn predicate on the "description" field.
-func DescriptionNotIn(vs ...string) predicate.Dict {
-	return predicate.Dict(sql.FieldNotIn(FieldDescription, vs...))
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.Dict {
+	return predicate.Dict(sql.FieldNotIn(FieldDesc, vs...))
 }
 
-// DescriptionGT applies the GT predicate on the "description" field.
-func DescriptionGT(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldGT(FieldDescription, v))
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldGT(FieldDesc, v))
 }
 
-// DescriptionGTE applies the GTE predicate on the "description" field.
-func DescriptionGTE(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldGTE(FieldDescription, v))
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldGTE(FieldDesc, v))
 }
 
-// DescriptionLT applies the LT predicate on the "description" field.
-func DescriptionLT(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldLT(FieldDescription, v))
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldLT(FieldDesc, v))
 }
 
-// DescriptionLTE applies the LTE predicate on the "description" field.
-func DescriptionLTE(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldLTE(FieldDescription, v))
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldLTE(FieldDesc, v))
 }
 
-// DescriptionContains applies the Contains predicate on the "description" field.
-func DescriptionContains(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldContains(FieldDescription, v))
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldContains(FieldDesc, v))
 }
 
-// DescriptionHasPrefix applies the HasPrefix predicate on the "description" field.
-func DescriptionHasPrefix(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldHasPrefix(FieldDescription, v))
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldHasPrefix(FieldDesc, v))
 }
 
-// DescriptionHasSuffix applies the HasSuffix predicate on the "description" field.
-func DescriptionHasSuffix(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldHasSuffix(FieldDescription, v))
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldHasSuffix(FieldDesc, v))
 }
 
-// DescriptionIsNil applies the IsNil predicate on the "description" field.
-func DescriptionIsNil() predicate.Dict {
-	return predicate.Dict(sql.FieldIsNull(FieldDescription))
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.Dict {
+	return predicate.Dict(sql.FieldIsNull(FieldDesc))
 }
 
-// DescriptionNotNil applies the NotNil predicate on the "description" field.
-func DescriptionNotNil() predicate.Dict {
-	return predicate.Dict(sql.FieldNotNull(FieldDescription))
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.Dict {
+	return predicate.Dict(sql.FieldNotNull(FieldDesc))
 }
 
-// DescriptionEqualFold applies the EqualFold predicate on the "description" field.
-func DescriptionEqualFold(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEqualFold(FieldDescription, v))
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEqualFold(FieldDesc, v))
 }
 
-// DescriptionContainsFold applies the ContainsFold predicate on the "description" field.
-func DescriptionContainsFold(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldContainsFold(FieldDescription, v))
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldContainsFold(FieldDesc, v))
 }
 
 // HasDictht applies the HasEdge predicate on the "dictht" edge.

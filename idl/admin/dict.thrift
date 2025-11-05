@@ -6,7 +6,7 @@ struct Dict {
     2:  string title="" (api.raw = "title" )
     3:  string name="" (api.raw = "name" )
     5:  i64 status=0 (api.raw = "status" )
-    6:  string description="" (api.raw = "description" )
+    6:  string desc="" (api.raw = "desc" )
     7:  string createdAt="" (api.raw = "createdAt" )
     8:  string updatedAt="" (api.raw = "updatedAt" )
 }

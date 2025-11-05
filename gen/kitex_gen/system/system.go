@@ -9,26 +9,26 @@ import (
 )
 
 type Api struct {
-	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	CreatedAt   string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt   string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
-	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Description string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
-	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	CreatedAt string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
+	Path      string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group     string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method    string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title     string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
 }
 
 func NewApi() *Api {
 	return &Api{
-		Id:          0,
-		CreatedAt:   "",
-		UpdatedAt:   "",
-		Path:        "",
-		Description: "",
-		Group:       "",
-		Method:      "",
-		Title:       "",
+		Id:        0,
+		CreatedAt: "",
+		UpdatedAt: "",
+		Path:      "",
+		Desc:      "",
+		Group:     "",
+		Method:    "",
+		Title:     "",
 	}
 }
 
@@ -37,7 +37,7 @@ func (p *Api) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
@@ -79,13 +79,13 @@ func (p *Api) GetPath() (v string) {
 	return p.Path
 }
 
-var Api_Description_DEFAULT string = ""
+var Api_Desc_DEFAULT string = ""
 
-func (p *Api) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return Api_Description_DEFAULT
+func (p *Api) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Api_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var Api_Group_DEFAULT string = ""
@@ -126,8 +126,8 @@ func (p *Api) SetUpdatedAt(val string) {
 func (p *Api) SetPath(val string) {
 	p.Path = val
 }
-func (p *Api) SetDescription(val string) {
-	p.Description = val
+func (p *Api) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *Api) SetGroup(val string) {
 	p.Group = val
@@ -155,8 +155,8 @@ func (p *Api) IsSetPath() bool {
 	return p.Path != Api_Path_DEFAULT
 }
 
-func (p *Api) IsSetDescription() bool {
-	return p.Description != Api_Description_DEFAULT
+func (p *Api) IsSetDesc() bool {
+	return p.Desc != Api_Desc_DEFAULT
 }
 
 func (p *Api) IsSetGroup() bool {
@@ -183,7 +183,7 @@ var fieldIDToName_Api = map[int16]string{
 	2: "createdAt",
 	3: "updatedAt",
 	4: "path",
-	5: "description",
+	5: "desc",
 	6: "group",
 	7: "method",
 	8: "title",
@@ -312,30 +312,30 @@ var fieldIDToName_ApiListResp = map[int16]string{
 }
 
 type ApiListReq struct {
-	Path        string `thrift:"path,3,optional" frugal:"3,optional,string" json:"path,omitempty"`
-	Description string `thrift:"description,4,optional" frugal:"4,optional,string" json:"description,omitempty"`
-	Method      string `thrift:"method,5,optional" frugal:"5,optional,string" json:"method,omitempty"`
-	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Page        int64  `thrift:"page,251,optional" frugal:"251,optional,i64" json:"page,omitempty"`
-	PageSize    int64  `thrift:"pageSize,252,optional" frugal:"252,optional,i64" json:"pageSize,omitempty"`
-	Keyword     string `thrift:"keyword,253,optional" frugal:"253,optional,string" json:"keyword,omitempty"`
+	Path     string `thrift:"path,3,optional" frugal:"3,optional,string" json:"path,omitempty"`
+	Desc     string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	Method   string `thrift:"method,5,optional" frugal:"5,optional,string" json:"method,omitempty"`
+	Group    string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Page     int64  `thrift:"page,251,optional" frugal:"251,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,252,optional" frugal:"252,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string `thrift:"keyword,253,optional" frugal:"253,optional,string" json:"keyword,omitempty"`
 }
 
 func NewApiListReq() *ApiListReq {
 	return &ApiListReq{
-		Path:        "",
-		Description: "",
-		Method:      "",
-		Group:       "",
-		Page:        1,
-		PageSize:    10,
-		Keyword:     "",
+		Path:     "",
+		Desc:     "",
+		Method:   "",
+		Group:    "",
+		Page:     1,
+		PageSize: 10,
+		Keyword:  "",
 	}
 }
 
 func (p *ApiListReq) InitDefault() {
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Method = ""
 	p.Group = ""
 	p.Page = 1
@@ -352,13 +352,13 @@ func (p *ApiListReq) GetPath() (v string) {
 	return p.Path
 }
 
-var ApiListReq_Description_DEFAULT string = ""
+var ApiListReq_Desc_DEFAULT string = ""
 
-func (p *ApiListReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return ApiListReq_Description_DEFAULT
+func (p *ApiListReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return ApiListReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var ApiListReq_Method_DEFAULT string = ""
@@ -408,8 +408,8 @@ func (p *ApiListReq) GetKeyword() (v string) {
 func (p *ApiListReq) SetPath(val string) {
 	p.Path = val
 }
-func (p *ApiListReq) SetDescription(val string) {
-	p.Description = val
+func (p *ApiListReq) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *ApiListReq) SetMethod(val string) {
 	p.Method = val
@@ -431,8 +431,8 @@ func (p *ApiListReq) IsSetPath() bool {
 	return p.Path != ApiListReq_Path_DEFAULT
 }
 
-func (p *ApiListReq) IsSetDescription() bool {
-	return p.Description != ApiListReq_Description_DEFAULT
+func (p *ApiListReq) IsSetDesc() bool {
+	return p.Desc != ApiListReq_Desc_DEFAULT
 }
 
 func (p *ApiListReq) IsSetMethod() bool {
@@ -464,7 +464,7 @@ func (p *ApiListReq) String() string {
 
 var fieldIDToName_ApiListReq = map[int16]string{
 	3:   "path",
-	4:   "description",
+	4:   "desc",
 	5:   "method",
 	6:   "group",
 	251: "page",
@@ -473,26 +473,26 @@ var fieldIDToName_ApiListReq = map[int16]string{
 }
 
 type CreateApiReq struct {
-	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Description string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
-	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Path   string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc   string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group  string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title  string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
 }
 
 func NewCreateApiReq() *CreateApiReq {
 	return &CreateApiReq{
-		Path:        "",
-		Description: "",
-		Group:       "",
-		Method:      "",
-		Title:       "",
+		Path:   "",
+		Desc:   "",
+		Group:  "",
+		Method: "",
+		Title:  "",
 	}
 }
 
 func (p *CreateApiReq) InitDefault() {
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
@@ -507,13 +507,13 @@ func (p *CreateApiReq) GetPath() (v string) {
 	return p.Path
 }
 
-var CreateApiReq_Description_DEFAULT string = ""
+var CreateApiReq_Desc_DEFAULT string = ""
 
-func (p *CreateApiReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return CreateApiReq_Description_DEFAULT
+func (p *CreateApiReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreateApiReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var CreateApiReq_Group_DEFAULT string = ""
@@ -545,8 +545,8 @@ func (p *CreateApiReq) GetTitle() (v string) {
 func (p *CreateApiReq) SetPath(val string) {
 	p.Path = val
 }
-func (p *CreateApiReq) SetDescription(val string) {
-	p.Description = val
+func (p *CreateApiReq) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *CreateApiReq) SetGroup(val string) {
 	p.Group = val
@@ -562,8 +562,8 @@ func (p *CreateApiReq) IsSetPath() bool {
 	return p.Path != CreateApiReq_Path_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetDescription() bool {
-	return p.Description != CreateApiReq_Description_DEFAULT
+func (p *CreateApiReq) IsSetDesc() bool {
+	return p.Desc != CreateApiReq_Desc_DEFAULT
 }
 
 func (p *CreateApiReq) IsSetGroup() bool {
@@ -587,36 +587,36 @@ func (p *CreateApiReq) String() string {
 
 var fieldIDToName_CreateApiReq = map[int16]string{
 	4: "path",
-	5: "description",
+	5: "desc",
 	6: "group",
 	7: "method",
 	8: "title",
 }
 
 type UpdateApiReq struct {
-	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Description string `thrift:"description,5,optional" frugal:"5,optional,string" json:"description,omitempty"`
-	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Id     int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Path   string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc   string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group  string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title  string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
 }
 
 func NewUpdateApiReq() *UpdateApiReq {
 	return &UpdateApiReq{
-		Id:          0,
-		Path:        "",
-		Description: "",
-		Group:       "",
-		Method:      "",
-		Title:       "",
+		Id:     0,
+		Path:   "",
+		Desc:   "",
+		Group:  "",
+		Method: "",
+		Title:  "",
 	}
 }
 
 func (p *UpdateApiReq) InitDefault() {
 	p.Id = 0
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
@@ -640,13 +640,13 @@ func (p *UpdateApiReq) GetPath() (v string) {
 	return p.Path
 }
 
-var UpdateApiReq_Description_DEFAULT string = ""
+var UpdateApiReq_Desc_DEFAULT string = ""
 
-func (p *UpdateApiReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return UpdateApiReq_Description_DEFAULT
+func (p *UpdateApiReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateApiReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var UpdateApiReq_Group_DEFAULT string = ""
@@ -681,8 +681,8 @@ func (p *UpdateApiReq) SetId(val int64) {
 func (p *UpdateApiReq) SetPath(val string) {
 	p.Path = val
 }
-func (p *UpdateApiReq) SetDescription(val string) {
-	p.Description = val
+func (p *UpdateApiReq) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *UpdateApiReq) SetGroup(val string) {
 	p.Group = val
@@ -702,8 +702,8 @@ func (p *UpdateApiReq) IsSetPath() bool {
 	return p.Path != UpdateApiReq_Path_DEFAULT
 }
 
-func (p *UpdateApiReq) IsSetDescription() bool {
-	return p.Description != UpdateApiReq_Description_DEFAULT
+func (p *UpdateApiReq) IsSetDesc() bool {
+	return p.Desc != UpdateApiReq_Desc_DEFAULT
 }
 
 func (p *UpdateApiReq) IsSetGroup() bool {
@@ -728,7 +728,7 @@ func (p *UpdateApiReq) String() string {
 var fieldIDToName_UpdateApiReq = map[int16]string{
 	1: "id",
 	4: "path",
-	5: "description",
+	5: "desc",
 	6: "group",
 	7: "method",
 	8: "title",
@@ -2549,24 +2549,24 @@ var fieldIDToName_CreateMenuAuthReq = map[int16]string{
 }
 
 type Dict struct {
-	Id          int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Title       string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Name        string `thrift:"name,3" frugal:"3,default,string" json:"name"`
-	Status      int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
-	Description string `thrift:"description,6" frugal:"6,default,string" json:"description"`
-	CreatedAt   string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
-	UpdatedAt   string `thrift:"updatedAt,8" frugal:"8,default,string" json:"updatedAt"`
+	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
+	Name      string `thrift:"name,3" frugal:"3,default,string" json:"name"`
+	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
+	Desc      string `thrift:"desc,6" frugal:"6,default,string" json:"desc"`
+	CreatedAt string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
+	UpdatedAt string `thrift:"updatedAt,8" frugal:"8,default,string" json:"updatedAt"`
 }
 
 func NewDict() *Dict {
 	return &Dict{
-		Id:          0,
-		Title:       "",
-		Name:        "",
-		Status:      0,
-		Description: "",
-		CreatedAt:   "",
-		UpdatedAt:   "",
+		Id:        0,
+		Title:     "",
+		Name:      "",
+		Status:    0,
+		Desc:      "",
+		CreatedAt: "",
+		UpdatedAt: "",
 	}
 }
 
@@ -2575,7 +2575,7 @@ func (p *Dict) InitDefault() {
 	p.Title = ""
 	p.Name = ""
 	p.Status = 0
-	p.Description = ""
+	p.Desc = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 }
@@ -2596,8 +2596,8 @@ func (p *Dict) GetStatus() (v int64) {
 	return p.Status
 }
 
-func (p *Dict) GetDescription() (v string) {
-	return p.Description
+func (p *Dict) GetDesc() (v string) {
+	return p.Desc
 }
 
 func (p *Dict) GetCreatedAt() (v string) {
@@ -2619,8 +2619,8 @@ func (p *Dict) SetName(val string) {
 func (p *Dict) SetStatus(val int64) {
 	p.Status = val
 }
-func (p *Dict) SetDescription(val string) {
-	p.Description = val
+func (p *Dict) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *Dict) SetCreatedAt(val string) {
 	p.CreatedAt = val
@@ -2641,7 +2641,7 @@ var fieldIDToName_Dict = map[int16]string{
 	2: "title",
 	3: "name",
 	5: "status",
-	6: "description",
+	6: "desc",
 	7: "createdAt",
 	8: "updatedAt",
 }

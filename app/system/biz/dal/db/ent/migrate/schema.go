@@ -18,7 +18,7 @@ var (
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "API path | API 路径"},
 		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "API title | API 名称"},
-		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "API description | API 描述"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "API desc | API 描述"},
 		{Name: "api_group", Type: field.TypeString, Nullable: true, Comment: "API group | API 分组"},
 		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "HTTP method | HTTP 请求类型", Default: "POST"},
 		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
@@ -46,7 +46,7 @@ var (
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
 		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "the name of dictionary for search | 字典搜索名称"},
-		{Name: "description", Type: field.TypeString, Nullable: true, Comment: "the description of dictionary | 字典描述"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "the desc of dictionary | 字典描述"},
 	}
 	// SysDictTable holds the schema information for the "sys_dict" table.
 	SysDictTable = &schema.Table{

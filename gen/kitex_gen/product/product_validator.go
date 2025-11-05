@@ -24,6 +24,27 @@ var (
 func (p *Product) IsValid() error {
 	return nil
 }
+func (p *Property) IsValid() error {
+	return nil
+}
+func (p *CreatePropertyReq) IsValid() error {
+	return nil
+}
+func (p *UpdatePropertyReq) IsValid() error {
+	return nil
+}
+func (p *CreateProductReq) IsValid() error {
+	return nil
+}
+func (p *EditProductReq) IsValid() error {
+	return nil
+}
+func (p *ListReq) IsValid() error {
+	return nil
+}
+func (p *PropertyListReq) IsValid() error {
+	return nil
+}
 func (p *ProductResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {
@@ -35,5 +56,40 @@ func (p *ProductResp) IsValid() error {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
 		}
 	}
+	return nil
+}
+func (p *PropertyResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *ProductListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *PropertyListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *SearchProductReq) IsValid() error {
+	return nil
+}
+func (p *DecrStockReq) IsValid() error {
 	return nil
 }

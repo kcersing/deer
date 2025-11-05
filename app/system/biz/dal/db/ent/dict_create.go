@@ -118,16 +118,16 @@ func (_c *DictCreate) SetNillableName(v *string) *DictCreate {
 	return _c
 }
 
-// SetDescription sets the "description" field.
-func (_c *DictCreate) SetDescription(v string) *DictCreate {
-	_c.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_c *DictCreate) SetDesc(v string) *DictCreate {
+	_c.mutation.SetDesc(v)
 	return _c
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_c *DictCreate) SetNillableDescription(v *string) *DictCreate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_c *DictCreate) SetNillableDesc(v *string) *DictCreate {
 	if v != nil {
-		_c.SetDescription(*v)
+		_c.SetDesc(*v)
 	}
 	return _c
 }
@@ -272,9 +272,9 @@ func (_c *DictCreate) createSpec() (*Dict, *sqlgraph.CreateSpec) {
 		_spec.SetField(dict.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := _c.mutation.Description(); ok {
-		_spec.SetField(dict.FieldDescription, field.TypeString, value)
-		_node.Description = value
+	if value, ok := _c.mutation.Desc(); ok {
+		_spec.SetField(dict.FieldDesc, field.TypeString, value)
+		_node.Desc = value
 	}
 	if nodes := _c.mutation.DicthtIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

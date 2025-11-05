@@ -28,8 +28,8 @@ const (
 	FieldTitle = "title"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldDescription holds the string denoting the description field in the database.
-	FieldDescription = "description"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// EdgeDictht holds the string denoting the dictht edge name in mutations.
 	EdgeDictht = "dictht"
 	// Table holds the table name of the dict in the database.
@@ -53,7 +53,7 @@ var Columns = []string{
 	FieldStatus,
 	FieldTitle,
 	FieldName,
-	FieldDescription,
+	FieldDesc,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -124,9 +124,9 @@ func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
-// ByDescription orders the results by the description field.
-func ByDescription(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDescription, opts...).ToFunc()
+// ByDesc orders the results by the desc field.
+func ByDesc(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDesc, opts...).ToFunc()
 }
 
 // ByDicthtCount orders the results by dictht count.

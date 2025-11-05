@@ -135,23 +135,23 @@ func (_u *APIUpdate) ClearTitle() *APIUpdate {
 	return _u
 }
 
-// SetDescription sets the "description" field.
-func (_u *APIUpdate) SetDescription(v string) *APIUpdate {
-	_u.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_u *APIUpdate) SetDesc(v string) *APIUpdate {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *APIUpdate) SetNillableDescription(v *string) *APIUpdate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableDesc(v *string) *APIUpdate {
 	if v != nil {
-		_u.SetDescription(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDescription clears the value of the "description" field.
-func (_u *APIUpdate) ClearDescription() *APIUpdate {
-	_u.mutation.ClearDescription()
+// ClearDesc clears the value of the "desc" field.
+func (_u *APIUpdate) ClearDesc() *APIUpdate {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -347,11 +347,11 @@ func (_u *APIUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(api.FieldTitle, field.TypeString)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(api.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(api.FieldDescription, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(api.FieldDesc, field.TypeString)
 	}
 	if value, ok := _u.mutation.APIGroup(); ok {
 		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
@@ -545,23 +545,23 @@ func (_u *APIUpdateOne) ClearTitle() *APIUpdateOne {
 	return _u
 }
 
-// SetDescription sets the "description" field.
-func (_u *APIUpdateOne) SetDescription(v string) *APIUpdateOne {
-	_u.mutation.SetDescription(v)
+// SetDesc sets the "desc" field.
+func (_u *APIUpdateOne) SetDesc(v string) *APIUpdateOne {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDescription sets the "description" field if the given value is not nil.
-func (_u *APIUpdateOne) SetNillableDescription(v *string) *APIUpdateOne {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableDesc(v *string) *APIUpdateOne {
 	if v != nil {
-		_u.SetDescription(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDescription clears the value of the "description" field.
-func (_u *APIUpdateOne) ClearDescription() *APIUpdateOne {
-	_u.mutation.ClearDescription()
+// ClearDesc clears the value of the "desc" field.
+func (_u *APIUpdateOne) ClearDesc() *APIUpdateOne {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -787,11 +787,11 @@ func (_u *APIUpdateOne) sqlSave(ctx context.Context) (_node *API, err error) {
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(api.FieldTitle, field.TypeString)
 	}
-	if value, ok := _u.mutation.Description(); ok {
-		_spec.SetField(api.FieldDescription, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(api.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DescriptionCleared() {
-		_spec.ClearField(api.FieldDescription, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(api.FieldDesc, field.TypeString)
 	}
 	if value, ok := _u.mutation.APIGroup(); ok {
 		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)

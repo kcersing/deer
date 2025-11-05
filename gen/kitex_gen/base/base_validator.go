@@ -33,6 +33,9 @@ func (p *IdReq) IsValid() error {
 func (p *NilResponse) IsValid() error {
 	return nil
 }
+func (p *List) IsValid() error {
+	return nil
+}
 func (p *CheckAccountReq) IsValid() error {
 	return nil
 }
