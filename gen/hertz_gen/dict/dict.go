@@ -11,24 +11,24 @@ import (
 
 // 字典信息
 type Dict struct {
-	ID          int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
-	Title       string `thrift:"title,2" form:"title" json:"title" query:"title"`
-	Name        string `thrift:"name,3" form:"name" json:"name" query:"name"`
-	Status      int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
-	Description string `thrift:"description,6" form:"description" json:"description" query:"description"`
-	CreatedAt   string `thrift:"createdAt,7" form:"createdAt" json:"createdAt" query:"createdAt"`
-	UpdatedAt   string `thrift:"updatedAt,8" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
+	ID        int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
+	Title     string `thrift:"title,2" form:"title" json:"title" query:"title"`
+	Name      string `thrift:"name,3" form:"name" json:"name" query:"name"`
+	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
+	Desc      string `thrift:"desc,6" form:"desc" json:"desc" query:"desc"`
+	CreatedAt string `thrift:"createdAt,7" form:"createdAt" json:"createdAt" query:"createdAt"`
+	UpdatedAt string `thrift:"updatedAt,8" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
 }
 
 func NewDict() *Dict {
 	return &Dict{
-		ID:          0,
-		Title:       "",
-		Name:        "",
-		Status:      1,
-		Description: "",
-		CreatedAt:   "",
-		UpdatedAt:   "",
+		ID:        0,
+		Title:     "",
+		Name:      "",
+		Status:    0,
+		Desc:      "",
+		CreatedAt: "",
+		UpdatedAt: "",
 	}
 }
 
@@ -36,8 +36,8 @@ func (p *Dict) InitDefault() {
 	p.ID = 0
 	p.Title = ""
 	p.Name = ""
-	p.Status = 1
-	p.Description = ""
+	p.Status = 0
+	p.Desc = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 }
@@ -58,8 +58,8 @@ func (p *Dict) GetStatus() (v int64) {
 	return p.Status
 }
 
-func (p *Dict) GetDescription() (v string) {
-	return p.Description
+func (p *Dict) GetDesc() (v string) {
+	return p.Desc
 }
 
 func (p *Dict) GetCreatedAt() (v string) {
@@ -75,7 +75,7 @@ var fieldIDToName_Dict = map[int16]string{
 	2: "title",
 	3: "name",
 	5: "status",
-	6: "description",
+	6: "desc",
 	7: "createdAt",
 	8: "updatedAt",
 }
@@ -236,7 +236,7 @@ func (p *Dict) ReadField6(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return nil
 }
 func (p *Dict) ReadField7(iprot thrift.TProtocol) error {
@@ -383,10 +383,10 @@ WriteFieldEndError:
 }
 
 func (p *Dict) writeField6(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("description", thrift.STRING, 6); err != nil {
+	if err = oprot.WriteFieldBegin("desc", thrift.STRING, 6); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Description); err != nil {
+	if err := oprot.WriteString(p.Desc); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -459,7 +459,7 @@ func NewDictht() *Dictht {
 		Title:     "",
 		Key:       "",
 		Value:     "",
-		Status:    1,
+		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
 	}
@@ -470,7 +470,7 @@ func (p *Dictht) InitDefault() {
 	p.Title = ""
 	p.Key = ""
 	p.Value = ""
-	p.Status = 1
+	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 }

@@ -28,7 +28,7 @@ func (s *CreateDictService) Run(req *system.Dict) (resp *system.DictResp, err er
 	_, err = db.Client.Dict.Create().
 		SetTitle(req.GetTitle()).
 		SetName(req.GetName()).
-		SetDescription(req.GetDescription()).
+		SetDesc(req.GetDesc()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

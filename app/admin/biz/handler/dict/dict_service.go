@@ -26,10 +26,10 @@ func CreateDict(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateDict(ctx, &system.Dict{
-		Title:       req.GetTitle(),
-		Name:        req.GetName(),
-		Status:      req.GetStatus(),
-		Description: req.GetDescription(),
+		Title:  req.GetTitle(),
+		Name:   req.GetName(),
+		Status: req.GetStatus(),
+		Desc:   req.GetDesc(),
 	})
 
 	if err != nil {
@@ -52,11 +52,11 @@ func UpdateDict(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.UpdateDict(ctx, &system.Dict{
-		Id:          req.GetID(),
-		Title:       req.GetTitle(),
-		Name:        req.GetName(),
-		Status:      req.GetStatus(),
-		Description: req.GetDescription(),
+		Id:     req.GetID(),
+		Title:  req.GetTitle(),
+		Name:   req.GetName(),
+		Status: req.GetStatus(),
+		Desc:   req.GetDesc(),
 	})
 
 	if err != nil {

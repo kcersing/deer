@@ -21,7 +21,7 @@ func (s *UpdateApiService) Run(req *system.UpdateApiReq) (resp *system.ApiResp, 
 	_, err = db.Client.API.Update().
 		Where(api.IDEQ(req.GetId())).
 		SetTitle(req.GetTitle()).
-		SetDescription(req.GetDescription()).
+		SetDesc(req.GetDesc()).
 		SetMethod(req.GetMethod()).
 		SetPath(req.GetPath()).
 		SetAPIGroup(req.GetGroup()).

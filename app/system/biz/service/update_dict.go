@@ -27,7 +27,7 @@ func (s *UpdateDictService) Run(req *system.Dict) (resp *system.DictResp, err er
 		SetTitle(req.Title).
 		SetName(req.Name).
 		SetStatus(req.Status).
-		SetDescription(req.Description).
+		SetDesc(req.Desc).
 		Save(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "update Dictionary failed")

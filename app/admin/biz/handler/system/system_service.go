@@ -26,11 +26,11 @@ func CreateApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
-		Title:       req.GetTitle(),
-		Path:        req.GetPath(),
-		Description: req.GetDescription(),
-		Method:      req.GetMethod(),
-		Group:       req.GetGroup(),
+		Title:  req.GetTitle(),
+		Path:   req.GetPath(),
+		Desc:   req.GetDesc(),
+		Method: req.GetMethod(),
+		Group:  req.GetGroup(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -51,12 +51,12 @@ func UpdateApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
-		Id:          req.GetID(),
-		Title:       req.GetTitle(),
-		Path:        req.GetPath(),
-		Description: req.GetDescription(),
-		Method:      req.GetMethod(),
-		Group:       req.GetGroup(),
+		Id:     req.GetID(),
+		Title:  req.GetTitle(),
+		Path:   req.GetPath(),
+		Desc:   req.GetDesc(),
+		Method: req.GetMethod(),
+		Group:  req.GetGroup(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -96,13 +96,13 @@ func ApiList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.ApiList(ctx, &system2.ApiListReq{
-		Path:        req.GetPath(),
-		Description: req.GetDescription(),
-		Method:      req.GetMethod(),
-		Group:       req.GetGroup(),
-		Page:        req.GetPage(),
-		PageSize:    req.GetPageSize(),
-		Keyword:     req.GetKeyword(),
+		Path:     req.GetPath(),
+		Desc:     req.GetDesc(),
+		Method:   req.GetMethod(),
+		Group:    req.GetGroup(),
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -123,13 +123,13 @@ func ApiTree(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.ApiTree(ctx, &system2.ApiListReq{
-		Path:        req.GetPath(),
-		Description: req.GetDescription(),
-		Method:      req.GetMethod(),
-		Group:       req.GetGroup(),
-		Page:        req.GetPage(),
-		PageSize:    req.GetPageSize(),
-		Keyword:     req.GetKeyword(),
+		Path:     req.GetPath(),
+		Desc:     req.GetDesc(),
+		Method:   req.GetMethod(),
+		Group:    req.GetGroup(),
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")

@@ -18,7 +18,7 @@ func NewCreateApiService(ctx context.Context) *CreateApiService {
 func (s *CreateApiService) Run(req *system.CreateApiReq) (resp *system.ApiResp, err error) {
 	save, err := db.Client.API.Create().
 		SetTitle(req.GetTitle()).
-		SetDescription(req.GetDescription()).
+		SetDesc(req.GetDesc()).
 		SetMethod(req.GetMethod()).
 		SetPath(req.GetPath()).
 		SetAPIGroup(req.GetGroup()).

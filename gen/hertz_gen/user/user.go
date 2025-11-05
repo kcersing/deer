@@ -40,7 +40,7 @@ func NewUser() *User {
 		Avatar:    "",
 		Mobile:    "",
 		Name:      "",
-		Status:    1,
+		Status:    0,
 		Level:     0,
 		Gender:    0,
 		Birthday:  "",
@@ -61,7 +61,7 @@ func (p *User) InitDefault() {
 	p.Avatar = ""
 	p.Mobile = ""
 	p.Name = ""
-	p.Status = 1
+	p.Status = 0
 	p.Level = 0
 	p.Gender = 0
 	p.Birthday = ""
@@ -128,7 +128,7 @@ func (p *User) GetName() (v string) {
 	return p.Name
 }
 
-var User_Status_DEFAULT int64 = 1
+var User_Status_DEFAULT int64 = 0
 
 func (p *User) GetStatus() (v int64) {
 	if !p.IsSetStatus() {

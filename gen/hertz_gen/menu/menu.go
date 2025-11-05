@@ -38,7 +38,7 @@ func NewCreateMenuReq() *CreateMenuReq {
 		MenuType:  0,
 		Hidden:    0,
 		Sort:      0,
-		Status:    1,
+		Status:    0,
 		URL:       "",
 		CreatedAt: "",
 		UpdatedAt: "",
@@ -57,7 +57,7 @@ func (p *CreateMenuReq) InitDefault() {
 	p.MenuType = 0
 	p.Hidden = 0
 	p.Sort = 0
-	p.Status = 1
+	p.Status = 0
 	p.URL = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
@@ -146,7 +146,7 @@ func (p *CreateMenuReq) GetSort() (v int64) {
 	return p.Sort
 }
 
-var CreateMenuReq_Status_DEFAULT int64 = 1
+var CreateMenuReq_Status_DEFAULT int64 = 0
 
 func (p *CreateMenuReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
@@ -1020,7 +1020,7 @@ func NewUpdateMenuReq() *UpdateMenuReq {
 		MenuType:  0,
 		Hidden:    0,
 		Sort:      0,
-		Status:    1,
+		Status:    0,
 		URL:       "",
 		CreatedAt: "",
 		UpdatedAt: "",
@@ -1040,7 +1040,7 @@ func (p *UpdateMenuReq) InitDefault() {
 	p.MenuType = 0
 	p.Hidden = 0
 	p.Sort = 0
-	p.Status = 1
+	p.Status = 0
 	p.URL = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
@@ -1138,7 +1138,7 @@ func (p *UpdateMenuReq) GetSort() (v int64) {
 	return p.Sort
 }
 
-var UpdateMenuReq_Status_DEFAULT int64 = 1
+var UpdateMenuReq_Status_DEFAULT int64 = 0
 
 func (p *UpdateMenuReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {

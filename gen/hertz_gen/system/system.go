@@ -791,26 +791,26 @@ func (p *DeleteLogReq) String() string {
 }
 
 type CreateApiReq struct {
-	Path        string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
-	Description string `thrift:"description,5,optional" form:"description" json:"description,omitempty" query:"description"`
-	Group       string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
-	Method      string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
-	Title       string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
+	Path   string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
+	Desc   string `thrift:"desc,5,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	Group  string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
+	Method string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
+	Title  string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
 }
 
 func NewCreateApiReq() *CreateApiReq {
 	return &CreateApiReq{
-		Path:        "",
-		Description: "",
-		Group:       "",
-		Method:      "",
-		Title:       "",
+		Path:   "",
+		Desc:   "",
+		Group:  "",
+		Method: "",
+		Title:  "",
 	}
 }
 
 func (p *CreateApiReq) InitDefault() {
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
@@ -825,13 +825,13 @@ func (p *CreateApiReq) GetPath() (v string) {
 	return p.Path
 }
 
-var CreateApiReq_Description_DEFAULT string = ""
+var CreateApiReq_Desc_DEFAULT string = ""
 
-func (p *CreateApiReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return CreateApiReq_Description_DEFAULT
+func (p *CreateApiReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreateApiReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var CreateApiReq_Group_DEFAULT string = ""
@@ -863,7 +863,7 @@ func (p *CreateApiReq) GetTitle() (v string) {
 
 var fieldIDToName_CreateApiReq = map[int16]string{
 	4: "path",
-	5: "description",
+	5: "desc",
 	6: "group",
 	7: "method",
 	8: "title",
@@ -873,8 +873,8 @@ func (p *CreateApiReq) IsSetPath() bool {
 	return p.Path != CreateApiReq_Path_DEFAULT
 }
 
-func (p *CreateApiReq) IsSetDescription() bool {
-	return p.Description != CreateApiReq_Description_DEFAULT
+func (p *CreateApiReq) IsSetDesc() bool {
+	return p.Desc != CreateApiReq_Desc_DEFAULT
 }
 
 func (p *CreateApiReq) IsSetGroup() bool {
@@ -996,7 +996,7 @@ func (p *CreateApiReq) ReadField5(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return nil
 }
 func (p *CreateApiReq) ReadField6(iprot thrift.TProtocol) error {
@@ -1097,11 +1097,11 @@ WriteFieldEndError:
 }
 
 func (p *CreateApiReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDescription() {
-		if err = oprot.WriteFieldBegin("description", thrift.STRING, 5); err != nil {
+	if p.IsSetDesc() {
+		if err = oprot.WriteFieldBegin("desc", thrift.STRING, 5); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Description); err != nil {
+		if err := oprot.WriteString(p.Desc); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1181,29 +1181,29 @@ func (p *CreateApiReq) String() string {
 }
 
 type UpdateApiReq struct {
-	ID          int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Path        string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
-	Description string `thrift:"description,5,optional" form:"description" json:"description,omitempty" query:"description"`
-	Group       string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
-	Method      string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
-	Title       string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
+	ID     int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Path   string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
+	Desc   string `thrift:"desc,5,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	Group  string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
+	Method string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
+	Title  string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
 }
 
 func NewUpdateApiReq() *UpdateApiReq {
 	return &UpdateApiReq{
-		ID:          0,
-		Path:        "",
-		Description: "",
-		Group:       "",
-		Method:      "",
-		Title:       "",
+		ID:     0,
+		Path:   "",
+		Desc:   "",
+		Group:  "",
+		Method: "",
+		Title:  "",
 	}
 }
 
 func (p *UpdateApiReq) InitDefault() {
 	p.ID = 0
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
@@ -1227,13 +1227,13 @@ func (p *UpdateApiReq) GetPath() (v string) {
 	return p.Path
 }
 
-var UpdateApiReq_Description_DEFAULT string = ""
+var UpdateApiReq_Desc_DEFAULT string = ""
 
-func (p *UpdateApiReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return UpdateApiReq_Description_DEFAULT
+func (p *UpdateApiReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateApiReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var UpdateApiReq_Group_DEFAULT string = ""
@@ -1266,7 +1266,7 @@ func (p *UpdateApiReq) GetTitle() (v string) {
 var fieldIDToName_UpdateApiReq = map[int16]string{
 	1: "id",
 	4: "path",
-	5: "description",
+	5: "desc",
 	6: "group",
 	7: "method",
 	8: "title",
@@ -1280,8 +1280,8 @@ func (p *UpdateApiReq) IsSetPath() bool {
 	return p.Path != UpdateApiReq_Path_DEFAULT
 }
 
-func (p *UpdateApiReq) IsSetDescription() bool {
-	return p.Description != UpdateApiReq_Description_DEFAULT
+func (p *UpdateApiReq) IsSetDesc() bool {
+	return p.Desc != UpdateApiReq_Desc_DEFAULT
 }
 
 func (p *UpdateApiReq) IsSetGroup() bool {
@@ -1422,7 +1422,7 @@ func (p *UpdateApiReq) ReadField5(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return nil
 }
 func (p *UpdateApiReq) ReadField6(iprot thrift.TProtocol) error {
@@ -1546,11 +1546,11 @@ WriteFieldEndError:
 }
 
 func (p *UpdateApiReq) writeField5(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDescription() {
-		if err = oprot.WriteFieldBegin("description", thrift.STRING, 5); err != nil {
+	if p.IsSetDesc() {
+		if err = oprot.WriteFieldBegin("desc", thrift.STRING, 5); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Description); err != nil {
+		if err := oprot.WriteString(p.Desc); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1630,30 +1630,30 @@ func (p *UpdateApiReq) String() string {
 }
 
 type ApiListReq struct {
-	Path        string `thrift:"path,3,optional" form:"path" json:"path,omitempty" query:"path"`
-	Description string `thrift:"description,4,optional" form:"description" json:"description,omitempty" query:"description"`
-	Method      string `thrift:"method,5,optional" form:"method" json:"method,omitempty" query:"method"`
-	Group       string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
-	Page        int64  `thrift:"page,251,optional" form:"page" json:"page,omitempty" query:"page"`
-	PageSize    int64  `thrift:"pageSize,252,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
-	Keyword     string `thrift:"keyword,253,optional" form:"keyword" json:"keyword,omitempty" query:"keyword"`
+	Path     string `thrift:"path,3,optional" form:"path" json:"path,omitempty" query:"path"`
+	Desc     string `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	Method   string `thrift:"method,5,optional" form:"method" json:"method,omitempty" query:"method"`
+	Group    string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
+	Page     int64  `thrift:"page,251,optional" form:"page" json:"page,omitempty" query:"page"`
+	PageSize int64  `thrift:"pageSize,252,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
+	Keyword  string `thrift:"keyword,253,optional" form:"keyword" json:"keyword,omitempty" query:"keyword"`
 }
 
 func NewApiListReq() *ApiListReq {
 	return &ApiListReq{
-		Path:        "",
-		Description: "",
-		Method:      "",
-		Group:       "",
-		Page:        1,
-		PageSize:    10,
-		Keyword:     "",
+		Path:     "",
+		Desc:     "",
+		Method:   "",
+		Group:    "",
+		Page:     1,
+		PageSize: 10,
+		Keyword:  "",
 	}
 }
 
 func (p *ApiListReq) InitDefault() {
 	p.Path = ""
-	p.Description = ""
+	p.Desc = ""
 	p.Method = ""
 	p.Group = ""
 	p.Page = 1
@@ -1670,13 +1670,13 @@ func (p *ApiListReq) GetPath() (v string) {
 	return p.Path
 }
 
-var ApiListReq_Description_DEFAULT string = ""
+var ApiListReq_Desc_DEFAULT string = ""
 
-func (p *ApiListReq) GetDescription() (v string) {
-	if !p.IsSetDescription() {
-		return ApiListReq_Description_DEFAULT
+func (p *ApiListReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return ApiListReq_Desc_DEFAULT
 	}
-	return p.Description
+	return p.Desc
 }
 
 var ApiListReq_Method_DEFAULT string = ""
@@ -1726,7 +1726,7 @@ func (p *ApiListReq) GetKeyword() (v string) {
 
 var fieldIDToName_ApiListReq = map[int16]string{
 	3:   "path",
-	4:   "description",
+	4:   "desc",
 	5:   "method",
 	6:   "group",
 	251: "page",
@@ -1738,8 +1738,8 @@ func (p *ApiListReq) IsSetPath() bool {
 	return p.Path != ApiListReq_Path_DEFAULT
 }
 
-func (p *ApiListReq) IsSetDescription() bool {
-	return p.Description != ApiListReq_Description_DEFAULT
+func (p *ApiListReq) IsSetDesc() bool {
+	return p.Desc != ApiListReq_Desc_DEFAULT
 }
 
 func (p *ApiListReq) IsSetMethod() bool {
@@ -1885,7 +1885,7 @@ func (p *ApiListReq) ReadField4(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Description = _field
+	p.Desc = _field
 	return nil
 }
 func (p *ApiListReq) ReadField5(iprot thrift.TProtocol) error {
@@ -2016,11 +2016,11 @@ WriteFieldEndError:
 }
 
 func (p *ApiListReq) writeField4(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDescription() {
-		if err = oprot.WriteFieldBegin("description", thrift.STRING, 4); err != nil {
+	if p.IsSetDesc() {
+		if err = oprot.WriteFieldBegin("desc", thrift.STRING, 4); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Description); err != nil {
+		if err := oprot.WriteString(p.Desc); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
