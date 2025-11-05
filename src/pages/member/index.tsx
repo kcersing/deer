@@ -9,7 +9,7 @@ import {
   ProDescriptions,
   ProTable,
 } from '@ant-design/pro-components';
-import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
+import {  useRequest } from '@umijs/max';
 import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
