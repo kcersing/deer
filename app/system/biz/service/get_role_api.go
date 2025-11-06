@@ -35,6 +35,8 @@ func (s *GetRoleApiService) Run(req *base.IdReq) (resp *system.ApiListResp, err 
 	for _, v := range all {
 		dataResp = append(dataResp, convert.EntToApi(v))
 	}
-	resp.Data = dataResp
+	resp = &system.ApiListResp{
+		Data: dataResp,
+	}
 	return
 }

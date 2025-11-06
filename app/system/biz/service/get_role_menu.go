@@ -32,6 +32,8 @@ func (s *GetRoleMenuService) Run(req *base.IdReq) (resp *system.MenuListResp, er
 	if err != nil {
 		return nil, err
 	}
-	resp.Data = convert.FindMenuChildren(menus, 1)
+	resp = &system.MenuListResp{
+		Data: convert.FindMenuChildren(menus, 1),
+	}
 	return
 }

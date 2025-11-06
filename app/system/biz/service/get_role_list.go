@@ -31,6 +31,8 @@ func (s *GetRoleListService) Run(req *system.GetRoleListReq) (resp *system.RoleL
 	for _, v := range apis {
 		dataResp = append(dataResp, convert.EntToRole(v))
 	}
-	resp.Data = dataResp
+	resp = &system.RoleListResp{
+		Data: dataResp,
+	}
 	return
 }

@@ -20,7 +20,7 @@ struct Dictht {
     5:  i64 status=0 (api.raw = "status" )
     6:  string createdAt="" (api.raw = "createdAt" )
     7:  string updatedAt="" (api.raw = "updatedAt" )
-    8:  i64 parentID (api.raw = "parentID" )
+    8:  i64 dictId (api.raw = "dictId" )
 }
 // 字典列表请求数据
 struct DictListReq {
@@ -37,22 +37,21 @@ struct DicthtListReq{
 }
 
 
-
 service DictService {
     // 创建字典信息
       base.NilResponse CreateDict(1: Dict req) (api.post = "/service/dict/create")
       // 更新字典信息
       base.NilResponse UpdateDict(1: Dict req) (api.post = "/service/dict/update")
       // 删除字典信息
-      base.NilResponse DeleteDict(1: base.IdReq req) (api.post =  "/service/dict")
+      base.NilResponse DeleteDict(1: base.IdReq req) (api.post =  "/service/dict/delete")
       // 获取字典列表
-      base.NilResponse DictList(1: DictListReq req) (api.get = "/service/dict/list")
+      base.NilResponse DictList(1: DictListReq req) (api.post = "/service/dict/list")
       // 创建字典键值信息
       base.NilResponse CreateDictht(1: Dictht req) (api.post = "/service/dict/dictht/create")
       // 更新字典键值信息
       base.NilResponse UpdateDictht(1: Dictht req) (api.post = "/service/dict/dictht/update")
       // 删除字典键值信息
-      base.NilResponse DeleteDictht(1: base.IdReq req) (api.get = "/service/dict/dictht")
+      base.NilResponse DeleteDictht(1: base.IdReq req) (api.post = "/service/dict/dictht/delete")
       // 根据字典名获取字典键值列表
       base.NilResponse DicthtList(1: DicthtListReq req) (api.post = "/service/dict/dictht/list")
 

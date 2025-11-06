@@ -177,7 +177,7 @@ struct Dictht {
     5:  i64 status=0 (api.raw = "status" )
     6:  string createdAt="" (api.raw = "createdAt" )
     7:  string updatedAt="" (api.raw = "updatedAt" )
-    8:  i64 parentID (api.raw = "parentID" )
+    8:  i64 dictId (api.raw = "dictId" )
 }
 // 字典列表请求数据
 struct DictListReq {
@@ -290,9 +290,9 @@ service SystemService  {
     // 获取字典列表
     DictListResp DictList(1: DictListReq req)
     // 创建字典键值信息
-    DictResp CreateDictht(1: Dictht req)
+    DicthtResp CreateDictht(1: Dictht req)
     // 更新字典键值信息
-    DictResp UpdateDictht(1: Dictht req)
+    DicthtResp UpdateDictht(1: Dictht req)
     // 删除字典键值信息
     base.NilResponse DeleteDictht(1: base.IdReq req)
     // 根据字典名获取字典键值列表

@@ -450,7 +450,7 @@ type Dictht struct {
 	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
 	CreatedAt string `thrift:"createdAt,6" form:"createdAt" json:"createdAt" query:"createdAt"`
 	UpdatedAt string `thrift:"updatedAt,7" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
-	ParentID  int64  `thrift:"parentID,8" form:"parentID" json:"parentID" query:"parentID"`
+	DictId    int64  `thrift:"dictId,8" form:"dictId" json:"dictId" query:"dictId"`
 }
 
 func NewDictht() *Dictht {
@@ -503,8 +503,8 @@ func (p *Dictht) GetUpdatedAt() (v string) {
 	return p.UpdatedAt
 }
 
-func (p *Dictht) GetParentID() (v int64) {
-	return p.ParentID
+func (p *Dictht) GetDictId() (v int64) {
+	return p.DictId
 }
 
 var fieldIDToName_Dictht = map[int16]string{
@@ -515,7 +515,7 @@ var fieldIDToName_Dictht = map[int16]string{
 	5: "status",
 	6: "createdAt",
 	7: "updatedAt",
-	8: "parentID",
+	8: "dictId",
 }
 
 func (p *Dictht) Read(iprot thrift.TProtocol) (err error) {
@@ -715,7 +715,7 @@ func (p *Dictht) ReadField8(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.ParentID = _field
+	p.DictId = _field
 	return nil
 }
 
@@ -895,10 +895,10 @@ WriteFieldEndError:
 }
 
 func (p *Dictht) writeField8(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("parentID", thrift.I64, 8); err != nil {
+	if err = oprot.WriteFieldBegin("dictId", thrift.I64, 8); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteI64(p.ParentID); err != nil {
+	if err := oprot.WriteI64(p.DictId); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {

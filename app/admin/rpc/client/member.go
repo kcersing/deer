@@ -37,7 +37,7 @@ func initMemberRpc() {
 			client.WithMiddleware(mw.CommonMiddleware),
 			client.WithInstanceMW(mw.ClientsMiddleware),
 			client.WithSuite(tracing.NewClientSuite()),
-			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "facade"}),
+			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
 			panic(err)

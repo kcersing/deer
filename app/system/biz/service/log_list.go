@@ -31,7 +31,8 @@ func (s *LogListService) Run(req *system.LogListReq) (resp *system.LogListResp, 
 	for _, v := range apis {
 		dataResp = append(dataResp, convert.EntToLog(v))
 	}
-	resp.Data = dataResp
-
+	resp = &system.LogListResp{
+		Data: dataResp,
+	}
 	return
 }

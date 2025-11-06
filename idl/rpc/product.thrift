@@ -31,7 +31,7 @@ struct Product {
     13: optional string signSalesAt = "" (api.raw = "signSalesAt")
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
 }
-struct Property {
+struct Item {
     1:optional i64 id =0
     /**名称 */
     2:optional string name="" (api.raw = "name")
@@ -64,7 +64,7 @@ struct Property {
 
 
 
-struct CreatePropertyReq {
+struct CreateItemReq {
 
     1:optional i64 id =0
    /**名称 */
@@ -90,7 +90,7 @@ struct CreatePropertyReq {
 
 }
 
-struct UpdatePropertyReq {
+struct UpdateItemReq {
 
    /**名称 */
     2:optional string name="" (api.raw = "name")
@@ -173,7 +173,7 @@ struct ListReq {
     6: optional list<string> createdAt=0  (api.raw = "createdAt")
     7: optional string type ="" (api.raw = "type")
 }
-struct PropertyListReq{
+struct ItemListReq{
     1: i64 page=0 (api.raw = "page")
     2: i64 pageSize=10 (api.raw = "pageSize")
     3: optional string name (api.raw = "name")
@@ -187,16 +187,16 @@ struct ProductResp{
     1:optional Product data= {}
     255:optional base.BaseResp baseResp={}
 }
-struct PropertyResp{
-    1:optional Property data= {}
+struct ItemResp{
+    1:optional Item data= {}
     255:optional base.BaseResp baseResp={}
 }
 struct ProductListResp{
     1:optional list<Product> data= []
     255:optional base.BaseResp baseResp={}
 }
-struct PropertyListResp{
-    1:optional list<Property> data= []
+struct ItemListResp{
+    1:optional list<Item> data= []
     255:optional base.BaseResp baseResp={}
 }
 struct SearchProductReq{
@@ -221,13 +221,13 @@ service ProductService  {
 
 
     // 添加属性
-    PropertyResp CreateProperty(1: CreatePropertyReq req)
+    ItemResp CreateItem(1: CreateItemReq req)
     // 编辑属性
-    PropertyResp UpdateProperty(1: UpdatePropertyReq req)
+    ItemResp UpdateItem(1: UpdateItemReq req)
     // 删除属性
-    base.NilResponse DeleteProperty(1: base.IdReq req)
+    base.NilResponse DeleteItem(1: base.IdReq req)
     // 商品列表
-    PropertyListResp PropertyList(1: PropertyListReq req)
+    ItemListResp ItemList(1: ItemListReq req)
 
 
 }

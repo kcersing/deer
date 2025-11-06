@@ -179,14 +179,14 @@ func (s *SystemServiceImpl) DictList(ctx context.Context, req *system.DictListRe
 }
 
 // CreateDictht implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) CreateDictht(ctx context.Context, req *system.Dictht) (resp *system.DictResp, err error) {
+func (s *SystemServiceImpl) CreateDictht(ctx context.Context, req *system.Dictht) (resp *system.DicthtResp, err error) {
 	resp, err = service.NewCreateDicthtService(ctx).Run(req)
 
 	return resp, err
 }
 
 // UpdateDictht implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) UpdateDictht(ctx context.Context, req *system.Dictht) (resp *system.DictResp, err error) {
+func (s *SystemServiceImpl) UpdateDictht(ctx context.Context, req *system.Dictht) (resp *system.DicthtResp, err error) {
 	resp, err = service.NewUpdateDicthtService(ctx).Run(req)
 
 	return resp, err

@@ -69,25 +69,25 @@ func EntToRole(e *ent.Role) *system.Role {
 
 func EntToDict(e *ent.Dict) *system.Dict {
 	return &system.Dict{
-		Id:        0,
-		Title:     "",
-		Name:      "",
-		Status:    0,
-		Desc:      "",
-		CreatedAt: "",
-		UpdatedAt: "",
+		Id:        e.ID,
+		Title:     e.Title,
+		Name:      e.Name,
+		Status:    e.Status,
+		Desc:      e.Desc,
+		CreatedAt: e.CreatedAt.Format(time.DateOnly),
+		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
 	}
 }
 func EntToDictht(e *ent.Dictht) *system.Dictht {
 	return &system.Dictht{
-		Id:        0,
-		Title:     "",
-		Key:       "",
-		Value:     "",
-		Status:    0,
-		CreatedAt: "",
-		UpdatedAt: "",
-		ParentID:  0,
+		Id:        e.ID,
+		Title:     e.Title,
+		Key:       e.Key,
+		Value:     e.Value,
+		Status:    e.Status,
+		CreatedAt: e.CreatedAt.Format(time.DateOnly),
+		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
+		DictId:    e.DictID,
 	}
 }
 

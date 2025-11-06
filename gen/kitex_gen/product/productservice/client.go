@@ -22,10 +22,10 @@ type Client interface {
 	ProductList(ctx context.Context, req *product.ListReq, callOptions ...callopt.Option) (r *product.ProductListResp, err error)
 	DecrStock(ctx context.Context, req *product.DecrStockReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DecrStockRevert(ctx context.Context, req *product.DecrStockReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
-	CreateProperty(ctx context.Context, req *product.CreatePropertyReq, callOptions ...callopt.Option) (r *product.PropertyResp, err error)
-	UpdateProperty(ctx context.Context, req *product.UpdatePropertyReq, callOptions ...callopt.Option) (r *product.PropertyResp, err error)
-	DeleteProperty(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
-	PropertyList(ctx context.Context, req *product.PropertyListReq, callOptions ...callopt.Option) (r *product.PropertyListResp, err error)
+	CreateItem(ctx context.Context, req *product.CreateItemReq, callOptions ...callopt.Option) (r *product.ItemResp, err error)
+	UpdateItem(ctx context.Context, req *product.UpdateItemReq, callOptions ...callopt.Option) (r *product.ItemResp, err error)
+	DeleteItem(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	ItemList(ctx context.Context, req *product.ItemListReq, callOptions ...callopt.Option) (r *product.ItemListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -107,22 +107,22 @@ func (p *kProductServiceClient) DecrStockRevert(ctx context.Context, req *produc
 	return p.kClient.DecrStockRevert(ctx, req)
 }
 
-func (p *kProductServiceClient) CreateProperty(ctx context.Context, req *product.CreatePropertyReq, callOptions ...callopt.Option) (r *product.PropertyResp, err error) {
+func (p *kProductServiceClient) CreateItem(ctx context.Context, req *product.CreateItemReq, callOptions ...callopt.Option) (r *product.ItemResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.CreateProperty(ctx, req)
+	return p.kClient.CreateItem(ctx, req)
 }
 
-func (p *kProductServiceClient) UpdateProperty(ctx context.Context, req *product.UpdatePropertyReq, callOptions ...callopt.Option) (r *product.PropertyResp, err error) {
+func (p *kProductServiceClient) UpdateItem(ctx context.Context, req *product.UpdateItemReq, callOptions ...callopt.Option) (r *product.ItemResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.UpdateProperty(ctx, req)
+	return p.kClient.UpdateItem(ctx, req)
 }
 
-func (p *kProductServiceClient) DeleteProperty(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+func (p *kProductServiceClient) DeleteItem(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.DeleteProperty(ctx, req)
+	return p.kClient.DeleteItem(ctx, req)
 }
 
-func (p *kProductServiceClient) PropertyList(ctx context.Context, req *product.PropertyListReq, callOptions ...callopt.Option) (r *product.PropertyListResp, err error) {
+func (p *kProductServiceClient) ItemList(ctx context.Context, req *product.ItemListReq, callOptions ...callopt.Option) (r *product.ItemListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.PropertyList(ctx, req)
+	return p.kClient.ItemList(ctx, req)
 }

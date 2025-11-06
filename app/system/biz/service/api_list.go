@@ -31,6 +31,8 @@ func (s *ApiListService) Run(req *system.ApiListReq) (resp *system.ApiListResp, 
 	for _, v := range apis {
 		dataResp = append(dataResp, convert.EntToApi(v))
 	}
-	resp.Data = dataResp
+	resp = &system.ApiListResp{
+		Data: dataResp,
+	}
 	return
 }

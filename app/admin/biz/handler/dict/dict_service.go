@@ -68,7 +68,7 @@ func UpdateDict(ctx context.Context, c *app.RequestContext) {
 }
 
 // DeleteDict .
-// @router /service/dict [POST]
+// @router /service/dict/delete [POST]
 func DeleteDict(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req base.IdReq
@@ -89,7 +89,7 @@ func DeleteDict(ctx context.Context, c *app.RequestContext) {
 }
 
 // DictList .
-// @router /service/dict/list [GET]
+// @router /service/dict/list [POST]
 func DictList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req dict.DictListReq
@@ -110,7 +110,7 @@ func DictList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -170,7 +170,7 @@ func UpdateDictht(ctx context.Context, c *app.RequestContext) {
 }
 
 // DeleteDictht .
-// @router /service/dict/dictht [GET]
+// @router /service/dict/dictht/delete [POST]
 func DeleteDictht(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req base.IdReq
@@ -191,7 +191,7 @@ func DeleteDictht(ctx context.Context, c *app.RequestContext) {
 }
 
 // DicthtList .
-// @router /service/dict/dictht/list [POST]
+// @router /service/dict/dictht/POST [POST]
 func DicthtList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req dict.DicthtListReq
@@ -210,6 +210,6 @@ func DicthtList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }

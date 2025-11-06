@@ -34,7 +34,9 @@ func (s *UpdateApiService) Run(req *system.UpdateApiReq) (resp *system.ApiResp, 
 	if err != nil {
 		return nil, err
 	}
-	resp.Data = convert.EntToApi(only)
+	resp = &system.ApiResp{
+		Data: convert.EntToApi(only),
+	}
 
 	return
 }

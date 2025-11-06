@@ -6,12 +6,12 @@ import (
 	"testing"
 )
 
-func TestPropertyList_Run(t *testing.T) {
+func TestUpdateItem_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewPropertyListService(ctx)
+	s := NewUpdateItemService(ctx)
 	// init req and assert value
 
-	req := &product.PropertyListReq{}
+	req := &product.UpdateItemReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

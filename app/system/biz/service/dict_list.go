@@ -22,15 +22,17 @@ func (s *DictListService) Run(req *system.DictListReq) (resp *system.DictListRes
 		predicates []predicate.Dict
 		dataResp   []*system.Dict
 	)
-	apis, err := db.Client.Dict.Query().Where(predicates...).
+	all, err := db.Client.Dict.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Limit(int(req.PageSize)).All(s.ctx)
 	if err != nil {
 		return resp, err
 	}
-	for _, v := range apis {
+	for _, v := range all {
 		dataResp = append(dataResp, convert.EntToDict(v))
 	}
-	resp.Data = dataResp
+	resp = &system.DictListResp{
+		Data: dataResp,
+	}
 	return
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
+	"system/biz/convert"
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent"
 	"system/biz/dal/db/ent/dictht"
@@ -17,7 +18,7 @@ func NewUpdateDicthtService(ctx context.Context) *UpdateDicthtService {
 }
 
 // Run create note info
-func (s *UpdateDicthtService) Run(req *system.Dictht) (resp *system.DictResp, err error) {
+func (s *UpdateDicthtService) Run(req *system.Dictht) (resp *system.DicthtResp, err error) {
 	// Finish your business logic.
 
 	_, err = db.Client.Dictht.Query().
@@ -28,7 +29,7 @@ func (s *UpdateDicthtService) Run(req *system.Dictht) (resp *system.DictResp, er
 		return nil, errors.Wrap(err, "query DictionaryDetail failed")
 	}
 	// update dictionary detail
-	_, err = db.Client.Dictht.UpdateOneID(req.GetId()).
+	save, err := db.Client.Dictht.UpdateOneID(req.GetId()).
 		SetTitle(req.Title).
 		SetKey(req.Key).
 		SetValue(req.Value).
@@ -37,6 +38,8 @@ func (s *UpdateDicthtService) Run(req *system.Dictht) (resp *system.DictResp, er
 	if err != nil {
 		return nil, errors.Wrap(err, "update DictionaryDetail failed")
 	}
-
+	resp = &system.DicthtResp{
+		Data: convert.EntToDictht(save),
+	}
 	return
 }

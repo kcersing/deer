@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	system "gen/kitex_gen/system"
+	"system/biz/convert"
 
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent/dict"
@@ -25,13 +26,16 @@ func (s *CreateDictService) Run(req *system.Dict) (resp *system.DictResp, err er
 		return nil, errors.New("dict name already exists")
 	}
 	// create dictionary
-	_, err = db.Client.Dict.Create().
+	save, err := db.Client.Dict.Create().
 		SetTitle(req.GetTitle()).
 		SetName(req.GetName()).
 		SetDesc(req.GetDesc()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err
+	}
+	resp = &system.DictResp{
+		Data: convert.EntToDict(save),
 	}
 	return
 }

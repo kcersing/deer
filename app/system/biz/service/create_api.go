@@ -26,6 +26,8 @@ func (s *CreateApiService) Run(req *system.CreateApiReq) (resp *system.ApiResp, 
 	if err != nil {
 		return nil, err
 	}
-	resp.Data = convert.EntToApi(save)
+	resp = &system.ApiResp{
+		Data: convert.EntToApi(save),
+	}
 	return
 }

@@ -35,7 +35,9 @@ func (s *UpdateMenuService) Run(req *system.UpdateMenuReq) (resp *system.MenuRes
 	if err != nil {
 		return nil, errors.Wrap(err, "create menu failed")
 	}
-	resp.Data = convert.EntToMenu(save)
+	resp = &system.MenuResp{
+		Data: convert.EntToMenu(save),
+	}
 	return
 
 }

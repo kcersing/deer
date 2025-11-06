@@ -19,21 +19,19 @@ func Register(r *server.Hertz) {
 	root := r.Group("/", rootMw()...)
 	{
 		_service := root.Group("/service", _serviceMw()...)
-		_service.POST("/dict", append(_deletedictMw(), dict.DeleteDict)...)
-		_dict := _service.Group("/dict", _dictMw()...)
-		_dict.GET("/dictht", append(_deletedicthtMw(), dict.DeleteDictht)...)
-		_dictht := _dict.Group("/dictht", _dicthtMw()...)
-		_dictht.POST("/list", append(_dicthtlistMw(), dict.DicthtList)...)
-		_dict.GET("/list", append(_dictlistMw(), dict.DictList)...)
 		{
-			_dictht0 := _dict.Group("/dictht", _dictht0Mw()...)
-			_dictht0.POST("/create", append(_createdicthtMw(), dict.CreateDictht)...)
-			_dictht0.POST("/update", append(_updatedicthtMw(), dict.UpdateDictht)...)
-		}
-		{
-			_dict0 := _service.Group("/dict", _dict0Mw()...)
-			_dict0.POST("/create", append(_createdictMw(), dict.CreateDict)...)
-			_dict0.POST("/update", append(_updatedictMw(), dict.UpdateDict)...)
+			_dict := _service.Group("/dict", _dictMw()...)
+			_dict.POST("/create", append(_createdictMw(), dict.CreateDict)...)
+			_dict.POST("/delete", append(_deletedictMw(), dict.DeleteDict)...)
+			_dict.POST("/list", append(_dictlistMw(), dict.DictList)...)
+			_dict.POST("/update", append(_updatedictMw(), dict.UpdateDict)...)
+			{
+				_dictht := _dict.Group("/dictht", _dicthtMw()...)
+				_dictht.POST("/create", append(_createdicthtMw(), dict.CreateDictht)...)
+				_dictht.POST("/delete", append(_deletedicthtMw(), dict.DeleteDictht)...)
+				_dictht.POST("/list", append(_dicthtlistMw(), dict.DicthtList)...)
+				_dictht.POST("/update", append(_updatedicthtMw(), dict.UpdateDictht)...)
+			}
 		}
 	}
 }

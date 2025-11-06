@@ -23,6 +23,8 @@ func (s *GetRoleService) Run(req *base.IdReq) (resp *system.RoleResp, err error)
 	if err != nil {
 		return nil, err
 	}
-	resp.Data = convert.EntToRole(only)
+	resp = &system.RoleResp{
+		Data: convert.EntToRole(only),
+	}
 	return
 }

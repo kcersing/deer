@@ -80,30 +80,30 @@ func (s *ProductServiceImpl) DecrStockRevert(ctx context.Context, req *product.D
 	return resp, err
 }
 
-// CreateProperty implements the ProductServiceImpl interface.
-func (s *ProductServiceImpl) CreateProperty(ctx context.Context, req *product.CreatePropertyReq) (resp *product.PropertyResp, err error) {
-	resp, err = service.NewCreatePropertyService(ctx).Run(req)
+// CreateItem implements the ProductServiceImpl interface.
+func (s *ProductServiceImpl) CreateItem(ctx context.Context, req *product.CreateItemReq) (resp *product.ItemResp, err error) {
+	resp, err = service.NewCreateItemService(ctx).Run(req)
 
 	return resp, err
 }
 
-// UpdateProperty implements the ProductServiceImpl interface.
-func (s *ProductServiceImpl) UpdateProperty(ctx context.Context, req *product.UpdatePropertyReq) (resp *product.PropertyResp, err error) {
-	resp, err = service.NewUpdatePropertyService(ctx).Run(req)
+// UpdateItem implements the ProductServiceImpl interface.
+func (s *ProductServiceImpl) UpdateItem(ctx context.Context, req *product.UpdateItemReq) (resp *product.ItemResp, err error) {
+	resp, err = service.NewUpdateItemService(ctx).Run(req)
 
 	return resp, err
 }
 
-// DeleteProperty implements the ProductServiceImpl interface.
-func (s *ProductServiceImpl) DeleteProperty(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
-	resp, err = service.NewDeletePropertyService(ctx).Run(req)
+// DeleteItem implements the ProductServiceImpl interface.
+func (s *ProductServiceImpl) DeleteItem(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewDeleteItemService(ctx).Run(req)
 
 	return resp, err
 }
 
-// PropertyList implements the ProductServiceImpl interface.
-func (s *ProductServiceImpl) PropertyList(ctx context.Context, req *product.PropertyListReq) (resp *product.PropertyListResp, err error) {
-	resp, err = service.NewPropertyListService(ctx).Run(req)
+// ItemList implements the ProductServiceImpl interface.
+func (s *ProductServiceImpl) ItemList(ctx context.Context, req *product.ItemListReq) (resp *product.ItemListResp, err error) {
+	resp, err = service.NewItemListService(ctx).Run(req)
 
 	return resp, err
 }

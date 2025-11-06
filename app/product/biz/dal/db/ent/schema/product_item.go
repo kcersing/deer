@@ -10,11 +10,11 @@ import (
 	"product/biz/dal/db/ent/schema/mixins"
 )
 
-type ProductProperty struct {
+type ProductItem struct {
 	ent.Schema
 }
 
-func (ProductProperty) Fields() []ent.Field {
+func (ProductItem) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").Comment("名称").Optional(),
 		field.String("pic").Default("").Comment("主图").Optional(),
@@ -30,28 +30,28 @@ func (ProductProperty) Fields() []ent.Field {
 	}
 }
 
-func (ProductProperty) Mixin() []ent.Mixin {
+func (ProductItem) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
 	}
 }
 
-func (ProductProperty) Edges() []ent.Edge {
+func (ProductItem) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("product", Product.Type).Ref("propertys"),
+		edge.From("product", Product.Type).Ref("Items"),
 	}
 }
 
-func (ProductProperty) Indexes() []ent.Index {
+func (ProductItem) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
 		index.Fields("name"),
 	}
 }
 
-func (ProductProperty) Annotations() []schema.Annotation {
+func (ProductItem) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "product_property"},
+		entsql.Annotation{Table: "product_item"},
 		entsql.WithComments(true),
 	}
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
+	"system/biz/convert"
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent/dict"
 )
@@ -23,7 +24,7 @@ func (s *UpdateDictService) Run(req *system.Dict) (resp *system.DictResp, err er
 		return nil, errors.New("The dictionary try to update is not exists")
 	}
 	// update dictionary
-	_, err = db.Client.Dict.UpdateOneID(req.GetId()).
+	save, err := db.Client.Dict.UpdateOneID(req.GetId()).
 		SetTitle(req.Title).
 		SetName(req.Name).
 		SetStatus(req.Status).
@@ -31,6 +32,9 @@ func (s *UpdateDictService) Run(req *system.Dict) (resp *system.DictResp, err er
 		Save(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "update Dictionary failed")
+	}
+	resp = &system.DictResp{
+		Data: convert.EntToDict(save),
 	}
 	return
 }

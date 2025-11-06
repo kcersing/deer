@@ -84,31 +84,31 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"CreateProperty": kitex.NewMethodInfo(
-		createPropertyHandler,
-		newProductServiceCreatePropertyArgs,
-		newProductServiceCreatePropertyResult,
+	"CreateItem": kitex.NewMethodInfo(
+		createItemHandler,
+		newProductServiceCreateItemArgs,
+		newProductServiceCreateItemResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"UpdateProperty": kitex.NewMethodInfo(
-		updatePropertyHandler,
-		newProductServiceUpdatePropertyArgs,
-		newProductServiceUpdatePropertyResult,
+	"UpdateItem": kitex.NewMethodInfo(
+		updateItemHandler,
+		newProductServiceUpdateItemArgs,
+		newProductServiceUpdateItemResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"DeleteProperty": kitex.NewMethodInfo(
-		deletePropertyHandler,
-		newProductServiceDeletePropertyArgs,
-		newProductServiceDeletePropertyResult,
+	"DeleteItem": kitex.NewMethodInfo(
+		deleteItemHandler,
+		newProductServiceDeleteItemArgs,
+		newProductServiceDeleteItemResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"PropertyList": kitex.NewMethodInfo(
-		propertyListHandler,
-		newProductServicePropertyListArgs,
-		newProductServicePropertyListResult,
+	"ItemList": kitex.NewMethodInfo(
+		itemListHandler,
+		newProductServiceItemListArgs,
+		newProductServiceItemListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -358,76 +358,76 @@ func newProductServiceDecrStockRevertResult() interface{} {
 	return product.NewProductServiceDecrStockRevertResult()
 }
 
-func createPropertyHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*product.ProductServiceCreatePropertyArgs)
-	realResult := result.(*product.ProductServiceCreatePropertyResult)
-	success, err := handler.(product.ProductService).CreateProperty(ctx, realArg.Req)
+func createItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*product.ProductServiceCreateItemArgs)
+	realResult := result.(*product.ProductServiceCreateItemResult)
+	success, err := handler.(product.ProductService).CreateItem(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newProductServiceCreatePropertyArgs() interface{} {
-	return product.NewProductServiceCreatePropertyArgs()
+func newProductServiceCreateItemArgs() interface{} {
+	return product.NewProductServiceCreateItemArgs()
 }
 
-func newProductServiceCreatePropertyResult() interface{} {
-	return product.NewProductServiceCreatePropertyResult()
+func newProductServiceCreateItemResult() interface{} {
+	return product.NewProductServiceCreateItemResult()
 }
 
-func updatePropertyHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*product.ProductServiceUpdatePropertyArgs)
-	realResult := result.(*product.ProductServiceUpdatePropertyResult)
-	success, err := handler.(product.ProductService).UpdateProperty(ctx, realArg.Req)
+func updateItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*product.ProductServiceUpdateItemArgs)
+	realResult := result.(*product.ProductServiceUpdateItemResult)
+	success, err := handler.(product.ProductService).UpdateItem(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newProductServiceUpdatePropertyArgs() interface{} {
-	return product.NewProductServiceUpdatePropertyArgs()
+func newProductServiceUpdateItemArgs() interface{} {
+	return product.NewProductServiceUpdateItemArgs()
 }
 
-func newProductServiceUpdatePropertyResult() interface{} {
-	return product.NewProductServiceUpdatePropertyResult()
+func newProductServiceUpdateItemResult() interface{} {
+	return product.NewProductServiceUpdateItemResult()
 }
 
-func deletePropertyHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*product.ProductServiceDeletePropertyArgs)
-	realResult := result.(*product.ProductServiceDeletePropertyResult)
-	success, err := handler.(product.ProductService).DeleteProperty(ctx, realArg.Req)
+func deleteItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*product.ProductServiceDeleteItemArgs)
+	realResult := result.(*product.ProductServiceDeleteItemResult)
+	success, err := handler.(product.ProductService).DeleteItem(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newProductServiceDeletePropertyArgs() interface{} {
-	return product.NewProductServiceDeletePropertyArgs()
+func newProductServiceDeleteItemArgs() interface{} {
+	return product.NewProductServiceDeleteItemArgs()
 }
 
-func newProductServiceDeletePropertyResult() interface{} {
-	return product.NewProductServiceDeletePropertyResult()
+func newProductServiceDeleteItemResult() interface{} {
+	return product.NewProductServiceDeleteItemResult()
 }
 
-func propertyListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*product.ProductServicePropertyListArgs)
-	realResult := result.(*product.ProductServicePropertyListResult)
-	success, err := handler.(product.ProductService).PropertyList(ctx, realArg.Req)
+func itemListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*product.ProductServiceItemListArgs)
+	realResult := result.(*product.ProductServiceItemListResult)
+	success, err := handler.(product.ProductService).ItemList(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newProductServicePropertyListArgs() interface{} {
-	return product.NewProductServicePropertyListArgs()
+func newProductServiceItemListArgs() interface{} {
+	return product.NewProductServiceItemListArgs()
 }
 
-func newProductServicePropertyListResult() interface{} {
-	return product.NewProductServicePropertyListResult()
+func newProductServiceItemListResult() interface{} {
+	return product.NewProductServiceItemListResult()
 }
 
 type kClient struct {
@@ -540,41 +540,41 @@ func (p *kClient) DecrStockRevert(ctx context.Context, req *product.DecrStockReq
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateProperty(ctx context.Context, req *product.CreatePropertyReq) (r *product.PropertyResp, err error) {
-	var _args product.ProductServiceCreatePropertyArgs
+func (p *kClient) CreateItem(ctx context.Context, req *product.CreateItemReq) (r *product.ItemResp, err error) {
+	var _args product.ProductServiceCreateItemArgs
 	_args.Req = req
-	var _result product.ProductServiceCreatePropertyResult
-	if err = p.c.Call(ctx, "CreateProperty", &_args, &_result); err != nil {
+	var _result product.ProductServiceCreateItemResult
+	if err = p.c.Call(ctx, "CreateItem", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateProperty(ctx context.Context, req *product.UpdatePropertyReq) (r *product.PropertyResp, err error) {
-	var _args product.ProductServiceUpdatePropertyArgs
+func (p *kClient) UpdateItem(ctx context.Context, req *product.UpdateItemReq) (r *product.ItemResp, err error) {
+	var _args product.ProductServiceUpdateItemArgs
 	_args.Req = req
-	var _result product.ProductServiceUpdatePropertyResult
-	if err = p.c.Call(ctx, "UpdateProperty", &_args, &_result); err != nil {
+	var _result product.ProductServiceUpdateItemResult
+	if err = p.c.Call(ctx, "UpdateItem", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) DeleteProperty(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
-	var _args product.ProductServiceDeletePropertyArgs
+func (p *kClient) DeleteItem(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args product.ProductServiceDeleteItemArgs
 	_args.Req = req
-	var _result product.ProductServiceDeletePropertyResult
-	if err = p.c.Call(ctx, "DeleteProperty", &_args, &_result); err != nil {
+	var _result product.ProductServiceDeleteItemResult
+	if err = p.c.Call(ctx, "DeleteItem", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) PropertyList(ctx context.Context, req *product.PropertyListReq) (r *product.PropertyListResp, err error) {
-	var _args product.ProductServicePropertyListArgs
+func (p *kClient) ItemList(ctx context.Context, req *product.ItemListReq) (r *product.ItemListResp, err error) {
+	var _args product.ProductServiceItemListArgs
 	_args.Req = req
-	var _result product.ProductServicePropertyListResult
-	if err = p.c.Call(ctx, "PropertyList", &_args, &_result); err != nil {
+	var _result product.ProductServiceItemListResult
+	if err = p.c.Call(ctx, "ItemList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

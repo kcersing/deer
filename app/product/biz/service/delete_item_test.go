@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func TestDeleteProperty_Run(t *testing.T) {
+func TestDeleteItem_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewDeletePropertyService(ctx)
+	s := NewDeleteItemService(ctx)
 	// init req and assert value
 
 	req := &base.IdReq{}

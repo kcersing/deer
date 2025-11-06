@@ -24,7 +24,9 @@ func (s *GetMenuService) Run(req *base.IdReq) (resp *system.MenuResp, err error)
 	if err != nil {
 		return nil, err
 	}
-	resp.Data = convert.EntToMenu(only)
+	resp = &system.MenuResp{
+		Data: convert.EntToMenu(only),
+	}
 
 	return
 }

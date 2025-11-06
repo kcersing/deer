@@ -2654,7 +2654,7 @@ type Dictht struct {
 	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
 	CreatedAt string `thrift:"createdAt,6" frugal:"6,default,string" json:"createdAt"`
 	UpdatedAt string `thrift:"updatedAt,7" frugal:"7,default,string" json:"updatedAt"`
-	ParentID  int64  `thrift:"parentID,8" frugal:"8,default,i64" json:"parentID"`
+	DictId    int64  `thrift:"dictId,8" frugal:"8,default,i64" json:"dictId"`
 }
 
 func NewDictht() *Dictht {
@@ -2707,8 +2707,8 @@ func (p *Dictht) GetUpdatedAt() (v string) {
 	return p.UpdatedAt
 }
 
-func (p *Dictht) GetParentID() (v int64) {
-	return p.ParentID
+func (p *Dictht) GetDictId() (v int64) {
+	return p.DictId
 }
 func (p *Dictht) SetId(val int64) {
 	p.Id = val
@@ -2731,8 +2731,8 @@ func (p *Dictht) SetCreatedAt(val string) {
 func (p *Dictht) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
-func (p *Dictht) SetParentID(val int64) {
-	p.ParentID = val
+func (p *Dictht) SetDictId(val int64) {
+	p.DictId = val
 }
 
 func (p *Dictht) String() string {
@@ -2750,7 +2750,7 @@ var fieldIDToName_Dictht = map[int16]string{
 	5: "status",
 	6: "createdAt",
 	7: "updatedAt",
-	8: "parentID",
+	8: "dictId",
 }
 
 type DictListReq struct {
@@ -3995,9 +3995,9 @@ type SystemService interface {
 
 	DictList(ctx context.Context, req *DictListReq) (r *DictListResp, err error)
 
-	CreateDictht(ctx context.Context, req *Dictht) (r *DictResp, err error)
+	CreateDictht(ctx context.Context, req *Dictht) (r *DicthtResp, err error)
 
-	UpdateDictht(ctx context.Context, req *Dictht) (r *DictResp, err error)
+	UpdateDictht(ctx context.Context, req *Dictht) (r *DicthtResp, err error)
 
 	DeleteDictht(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
@@ -5873,7 +5873,7 @@ var fieldIDToName_SystemServiceCreateDicthtArgs = map[int16]string{
 }
 
 type SystemServiceCreateDicthtResult struct {
-	Success *DictResp `thrift:"success,0,optional" frugal:"0,optional,DictResp" json:"success,omitempty"`
+	Success *DicthtResp `thrift:"success,0,optional" frugal:"0,optional,DicthtResp" json:"success,omitempty"`
 }
 
 func NewSystemServiceCreateDicthtResult() *SystemServiceCreateDicthtResult {
@@ -5883,16 +5883,16 @@ func NewSystemServiceCreateDicthtResult() *SystemServiceCreateDicthtResult {
 func (p *SystemServiceCreateDicthtResult) InitDefault() {
 }
 
-var SystemServiceCreateDicthtResult_Success_DEFAULT *DictResp
+var SystemServiceCreateDicthtResult_Success_DEFAULT *DicthtResp
 
-func (p *SystemServiceCreateDicthtResult) GetSuccess() (v *DictResp) {
+func (p *SystemServiceCreateDicthtResult) GetSuccess() (v *DicthtResp) {
 	if !p.IsSetSuccess() {
 		return SystemServiceCreateDicthtResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceCreateDicthtResult) SetSuccess(x interface{}) {
-	p.Success = x.(*DictResp)
+	p.Success = x.(*DicthtResp)
 }
 
 func (p *SystemServiceCreateDicthtResult) IsSetSuccess() bool {
@@ -5949,7 +5949,7 @@ var fieldIDToName_SystemServiceUpdateDicthtArgs = map[int16]string{
 }
 
 type SystemServiceUpdateDicthtResult struct {
-	Success *DictResp `thrift:"success,0,optional" frugal:"0,optional,DictResp" json:"success,omitempty"`
+	Success *DicthtResp `thrift:"success,0,optional" frugal:"0,optional,DicthtResp" json:"success,omitempty"`
 }
 
 func NewSystemServiceUpdateDicthtResult() *SystemServiceUpdateDicthtResult {
@@ -5959,16 +5959,16 @@ func NewSystemServiceUpdateDicthtResult() *SystemServiceUpdateDicthtResult {
 func (p *SystemServiceUpdateDicthtResult) InitDefault() {
 }
 
-var SystemServiceUpdateDicthtResult_Success_DEFAULT *DictResp
+var SystemServiceUpdateDicthtResult_Success_DEFAULT *DicthtResp
 
-func (p *SystemServiceUpdateDicthtResult) GetSuccess() (v *DictResp) {
+func (p *SystemServiceUpdateDicthtResult) GetSuccess() (v *DicthtResp) {
 	if !p.IsSetSuccess() {
 		return SystemServiceUpdateDicthtResult_Success_DEFAULT
 	}
 	return p.Success
 }
 func (p *SystemServiceUpdateDicthtResult) SetSuccess(x interface{}) {
-	p.Success = x.(*DictResp)
+	p.Success = x.(*DicthtResp)
 }
 
 func (p *SystemServiceUpdateDicthtResult) IsSetSuccess() bool {

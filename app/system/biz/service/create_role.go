@@ -30,6 +30,8 @@ func (s *CreateRoleService) Run(req *system.CreateRoleReq) (resp *system.RoleRes
 		err = errors.Wrap(err, "create Role failed")
 		return nil, err
 	}
-	resp.Data = convert.EntToRole(save)
+	resp = &system.RoleResp{
+		Data: convert.EntToRole(save),
+	}
 	return
 }

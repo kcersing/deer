@@ -6998,7 +6998,7 @@ func (p *Dictht) FastReadField8(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.ParentID = _field
+	p.DictId = _field
 	return offset, nil
 }
 
@@ -7090,7 +7090,7 @@ func (p *Dictht) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
 func (p *Dictht) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 8)
-	offset += thrift.Binary.WriteI64(buf[offset:], p.ParentID)
+	offset += thrift.Binary.WriteI64(buf[offset:], p.DictId)
 	return offset
 }
 
@@ -15043,7 +15043,7 @@ SkipFieldError:
 
 func (p *SystemServiceCreateDicthtResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := NewDictResp()
+	_field := NewDicthtResp()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -15241,7 +15241,7 @@ SkipFieldError:
 
 func (p *SystemServiceUpdateDicthtResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
-	_field := NewDictResp()
+	_field := NewDicthtResp()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {

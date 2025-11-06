@@ -5,6 +5,7 @@ import (
 	"fmt"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
+	"system/biz/convert"
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent/dict"
 	"system/biz/dal/db/ent/dictht"
@@ -18,11 +19,11 @@ func NewCreateDicthtService(ctx context.Context) *CreateDicthtService {
 }
 
 // Run create note info
-func (s *CreateDicthtService) Run(req *system.Dictht) (resp *system.DictResp, err error) {
+func (s *CreateDicthtService) Run(req *system.Dictht) (resp *system.DicthtResp, err error) {
 	// Finish your business logic.
 	exist, err := db.Client.Dictht.Query().
 		Where(dictht.Key(req.GetTitle())).
-		Where(dictht.HasDictWith(dict.ID(req.GetParentID()))).
+		Where(dictht.HasDictWith(dict.ID(req.GetDictId()))).
 		Exist(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "查询字典详细信息失败")
@@ -32,27 +33,30 @@ func (s *CreateDicthtService) Run(req *system.Dictht) (resp *system.DictResp, er
 	}
 
 	// find dictionary by id
-	dict, err := db.Client.Dict.Query().Where(dict.ID(req.GetParentID())).Only(s.ctx)
+	dict, err := db.Client.Dict.Query().Where(dict.ID(req.GetDictId())).Only(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "查询字典信息失败")
 	}
 	if dict == nil {
-		return nil, errors.New(fmt.Sprintf("找不到词典，请检查词典ID, %d", req.ParentID))
+		return nil, errors.New(fmt.Sprintf("找不到词典，请检查词典ID, %d", req.GetDictId))
 	}
 
 	// create dictionary detail
-	save := db.Client.Dictht.Create().
+	save, err := db.Client.Dictht.Create().
 		SetDict(dict). // set parent dictionary
 		SetTitle(req.GetTitle()).
 		SetKey(req.GetKey()).
-		SetValue(req.GetValue())
+		SetValue(req.GetValue()).
+		Save(s.ctx)
 
 	//save.SetCreatedID(userToken.ID)
 
-	_, err = save.Save(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "创建字典信息失败")
 	}
 
+	resp = &system.DicthtResp{
+		Data: convert.EntToDictht(save),
+	}
 	return
 }

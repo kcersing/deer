@@ -22,13 +22,15 @@ func (s *DicthtListService) Run(req *system.DicthtListReq) (resp *system.DicthtL
 		predicates []predicate.Dictht
 		dataResp   []*system.Dictht
 	)
-	apis, err := db.Client.Dictht.Query().Where(predicates...).All(s.ctx)
+	all, err := db.Client.Dictht.Query().Where(predicates...).All(s.ctx)
 	if err != nil {
 		return resp, err
 	}
-	for _, v := range apis {
+	for _, v := range all {
 		dataResp = append(dataResp, convert.EntToDictht(v))
 	}
-	resp.Data = dataResp
+	resp = &system.DicthtListResp{
+		Data: dataResp,
+	}
 	return
 }
