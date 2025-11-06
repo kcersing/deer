@@ -100,7 +100,15 @@ type Menu={
   icon?: string;
 }
 
-
+type Dict={
+  id?: number;
+  desc?: string;
+  name?: string;
+  status?: number;
+  title?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 
 
