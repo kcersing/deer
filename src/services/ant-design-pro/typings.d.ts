@@ -22,32 +22,28 @@ declare namespace API {
   }
 
 
-  type CreateUserReq = {
+  type CreateUserReq = {}
+  type GetUserListReq = {}
 
-  }
-  type GetUserListReq = {
-
-  }
-
-  type BaseResp ={
+  type BaseResp = {
     code?: number;
     message?: string;
     time?: string;
     total?: number;
   }
 
-  export type LoginResp= {
+  export type LoginResp = {
     expire?: string;
     token?: string;
     status?: number;
     type?: string;
   };
-  type UserResp ={
-    data?:User;
+  type UserResp = {
+    data?: User;
     baseResp?: BaseResp;
   }
-  type UserListResp ={
-    data?:User[];
+  type UserListResp = {
+    data?: User[];
     baseResp?: BaseResp;
   }
 
@@ -61,16 +57,16 @@ declare namespace API {
   }
 
 
-type MenuListResp={
-    data?:Menu[];
+  type MenuListResp = {
+    data?: Menu[];
     baseResp?: BaseResp;
   }
-  type TreeResp={
-    data?:Tree[];
+  type TreeResp = {
+    data?: Tree[];
     baseResp?: BaseResp;
   }
 
-  type Tree={
+  type Tree = {
     title?: string;
     value?: string;
     key?: string;
@@ -79,137 +75,55 @@ type MenuListResp={
 
   }
 
-
-
-type Menu={
-  id?: number;
-  name?: string;
-  parentId?: number;
-  level?: number;
-  path?: string;
-  redirect?: string;
-  component?: string;
-  menuType?: number;
-  hidden?: number;
-  sort?: number;
-  status?: number;
-  url?: string;
-  children?: Menu[];
-  title?: string;
-  type?: string;
-  icon?: string;
-}
-
-type Dict={
-  id?: number;
-  desc?: string;
-  name?: string;
-  status?: number;
-  title?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  type Menu = {
+    id?: number;
+    name?: string;
+    parentId?: number;
+    level?: number;
+    path?: string;
+    redirect?: string;
+    component?: string;
+    menuType?: number;
+    hidden?: number;
+    sort?: number;
+    status?: number;
+    url?: string;
+    children?: Menu[];
+    title?: string;
+    type?: string;
+    icon?: string;
+  }
+
+  type Dictht = {
+    id?: number;
+    dictId?: number;
+    key?: string;
+    value?: string;
+    status?: number;
+    title?: string;
+    createdAt?: string;
+    updatedAt?: string;
+  }
+
+  type DicthtList = {
+    data?: Dictht[];
+    /** 列表的内容总数 */
+    total?: number;
+  }
+  type Dict = {
+    id?: number;
+    desc?: string;
+    name?: string;
+    status?: number;
+    title?: string;
+    createdAt?: string;
+    updatedAt?: string;
+  }
+  type DictList = {
+    data?: Dict[];
+    /** 列表的内容总数 */
+    total?: number;
+  }
 
 
   type LoginResult = {

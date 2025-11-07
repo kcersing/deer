@@ -1,45 +1,114 @@
-import type {
-  ActionType,
-  ProColumns,
-  ProDescriptionsItemProps,
-} from '@ant-design/pro-components';
-import {
-  FooterToolbar,
-  PageContainer,
-  ProDescriptions,
-  ProTable,
-} from '@ant-design/pro-components';
-import {  useRequest } from '@umijs/max';
-import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import { ProCard, ProTable } from '@ant-design/pro-components';
+import type { BadgeProps } from 'antd';
+import { Badge, Button } from 'antd';
+import React, {useEffect, useRef, useState} from 'react';
+import UpdateForm from "@/pages/system/dict/list/components/UpdateForm";
+import {getDicthtList, getDictList} from "@/services/ant-design-pro/dict";
+import {getUser} from "@/services/ant-design-pro/user";
+import {history} from "@@/core/history";
 
-import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
-import {deleteDict, getDictList} from "@/services/ant-design-pro/dict";
+type DicthtListProps = {
+  id?: number;
+};
 
-const TableList: React.FC = () => {
+const DicthtList: React.FC<DicthtListProps> = (props) => {
+  const { id  } = props;
+  const [tableListDataSource, setTableListDataSource] = useState<Dictht[]>([]);
+  console.log(id )
+
+  const columns: ProColumns<API.Dictht>[] = [
+
+    {
+      title: "标题",
+      dataIndex: 'title',
+      sorter: true,
+      hideInForm: true,
+    },
+    {
+      title: "key",
+      dataIndex: 'key',
+      sorter: true,
+      hideInForm: true,
+    },
+    {
+      title: "value",
+      dataIndex: 'value',
+      sorter: true,
+      hideInForm: true,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      hideInForm: true,
+      valueEnum: {
+        0:{
+          text: '禁用',
+          status: 'Error',
+        },
+        1: {
+          text: '正常',
+          status: 'Success',
+        },
+
+      },
+    },
+    {
+      title: '操作',
+      key: 'option',
+      width: 80,
+      valueType: 'option',
+      render: () => [<a key="a">预警</a>],
+    },
+  ];
+
+  const fetchDicthtList = async () => {
+    try {
+      console.log(id)
+      const msg = await getDicthtList({pid:id});
+      setTableListDataSource(msg.data);
+
+    } catch (_error) {
+
+    }
+  }
+
+  useEffect(() => {
+   fetchDicthtList();
+  }, [id]);
+
+  return (
+    <ProTable
+      columns={columns}
+      dataSource={tableListDataSource}
+      // pagination={{
+      //   pageSize: 3,
+      //   showSizeChanger: false,
+      // }}
+      rowKey="id"
+      search={false}
+    />
+  );
+};
+
+
+type DictListProps = {
+  id?: number;
+  onChange: (id: number) => void;
+};
+
+
+const DictList: React.FC<DictListProps> = (props) => {
+  const { onChange } = props;
+
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<API.Dict>();
   const [selectedRowsState, setSelectedRows] = useState<API.Dict[]>([]);
 
-  const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteDict, {
-    manual: true,
-    onSuccess: () => {
-      setSelectedRows([]);
-      actionRef.current?.reloadAndRest?.();
-
-      messageApi.success('删除成功，即将刷新');
-    },
-    onError: () => {
-      messageApi.error('删除失败，请重试');
-    },
-  });
-
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<API.Dict>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -59,24 +128,19 @@ const TableList: React.FC = () => {
     {
       title: "标题",
       dataIndex: 'title',
-      sorter: true,
-      hideInForm: true,
+
+
     },
-
-
     {
       title: "概略",
       dataIndex: 'desc',
-      sorter: true,
-      hideInForm: true,
+
+
       valueType: 'textarea',
     },
-
-
     {
       title: '状态',
       dataIndex: 'status',
-      hideInForm: true,
       valueEnum: {
         0:{
           text: '禁用',
@@ -106,128 +170,68 @@ const TableList: React.FC = () => {
     },
   ];
 
-  /**
-   *  Delete node
-   * @zh-CN 删除节点
-   *
-   * @param selectedRows
-   */
-  const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
-      if (!selectedRows?.length) {
-        messageApi.warning('请选择删除项');
-
-        return;
-      }
-
-      // await delRun({
-      //   data: {
-      //     key: selectedRows.map((row) => row.key),
-      //   },
-      // });
-    },
-    [delRun, messageApi.warning],
-  );
-
   return (
-    <PageContainer>
-      {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
-        headerTitle='菜单列表'
-        actionRef={actionRef}
-        rowKey="id"
-        pagination={false}
-        search={{
-          labelWidth: 120,
-        }}
-        toolBarRender={() => [
-          <CreateForm key="create" reload={actionRef.current?.reload} />,
-        ]}
-        request={getDictList}
-        columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
+    <ProTable<API.Dict>
+      columns={columns}
+      // request={(params, sorter, filter) => {
+      //   // 表单搜索项会从 params 传入，传递给后端接口。
+      //   console.log(params, sorter, filter);
+      //   return Promise.resolve({
+      //     data: getDicthtList,
+      //     success: true,
+      //   });
+      // }}
+      request={getDictList}
+      rowKey="id"
+      toolbar={{
+        search: {
+          onSearch: (value) => {
+            alert(value);
           },
-        }}
-      />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              被选中{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              项
-            </div>
-          }
-        >
-          <Button
-            loading={loading}
-            onClick={() => {
-              handleRemove(selectedRowsState);
-            }}
-          >
-            批量删除
-          </Button>
-          {/*<Button type="primary">*/}
-          {/*  批量更新*/}
-          {/*</Button>*/}
-        </FooterToolbar>
-      )}
-
-      <Drawer
-        width={600}
-        open={showDetail}
-        onClose={() => {
-          setCurrentRow(undefined);
-          setShowDetail(false);
-        }}
-        closable={false}
-      >
-
-
-
-
-
-        {currentRow?.name && (
-          <ProDescriptions<API.Dict>
-            column={2}
-            title={currentRow?.name}
-            request={async () => ({
-              data: currentRow || {},
-            })}
-            params={{
-              id: currentRow?.name,
-            }}
-            columns={columns as ProDescriptionsItemProps<API.Dict>[]}
-          />
-        )}
-      </Drawer>
-    </PageContainer>
+        },
+        actions: [
+          <Button key="list" type="primary">
+            新建
+          </Button>,
+        ],
+      }}
+      // options={false}
+      // pagination={false}
+      search={false}
+      onRow={(record) => {
+        return {
+          onClick: () => {
+            if (record.id) {
+              console.log(record.id)
+              onChange(record.id);
+            }
+          },
+        };
+      }}
+    />
   );
 };
 
+const Pro: React.FC = () => {
+  const [id, setId] = useState(0);
+  return (
+    <ProCard split="vertical">
+      <ProCard colSpan="40%" ghost>
+        <DictList  onChange={(cId) =>setId(cId) }  id={id} />
+      </ProCard>
+      <ProCard title={name}>
+        <DicthtList  id={id}  />
+      </ProCard>
+    </ProCard>
+  );
+};
 
-// const [dictData, setDictData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [dictData] = await Promise.all([
-//       getDictTree(),
-//     ]);
-//     setDictData(dictData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(dictData);
+const Pages = () => {
+  return (
+    <>
+      <Pro />
+    </>
+  );
+};
 
-export default TableList;
+export default Pages;

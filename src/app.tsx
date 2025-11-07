@@ -52,7 +52,6 @@ export function onRouteChange({ location, clientRoutes, routes, action, basename
 
 
 export function patchClientRoutes({ routes }) {
-  console.log(routes)
   routes.unshift(  {
     path: '/login',
     layout: false,
