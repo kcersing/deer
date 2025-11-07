@@ -5,6 +5,7 @@ import (
 	"context"
 	User "gen/kitex_gen/user"
 	"time"
+	"user/biz/convert"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
 )
@@ -28,8 +29,7 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
-	_, err = db.Client.User.Update().
-		Where(user.IDEQ(req.GetId())).
+	save, err := db.Client.User.UpdateOneID(req.GetId()).
 		SetAvatar(req.GetAvatar()).
 		SetMobile(req.GetMobile()).
 		SetName(req.GetName()).
@@ -41,6 +41,9 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 		Save(s.ctx)
 	if err != nil {
 		return nil, err
+	}
+	resp = &User.UserResp{
+		Data: convert.EntToUser(save),
 	}
 	return
 }

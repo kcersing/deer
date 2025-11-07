@@ -4,6 +4,7 @@ import (
 	"common/pkg/errno"
 	"context"
 	Member "gen/kitex_gen/member"
+	"member/biz/convert"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent/member"
 	"time"
@@ -28,8 +29,7 @@ func (s *UpdateMemberService) Run(req *Member.UpdateMemberReq) (resp *Member.Mem
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
-	_, err = db.Client.Member.Update().
-		Where(member.IDEQ(req.GetId())).
+	_, err = db.Client.Member.UpdateOneID(req.GetId())).
 		SetAvatar(req.GetAvatar()).
 		SetMobile(req.GetMobile()).
 		SetName(req.GetName()).
@@ -41,6 +41,9 @@ func (s *UpdateMemberService) Run(req *Member.UpdateMemberReq) (resp *Member.Mem
 		Save(s.ctx)
 	if err != nil {
 		return nil, err
+	}
+	resp = &Member.MemberResp{
+		Data: convert.EntToMember(only),
 	}
 	return
 }

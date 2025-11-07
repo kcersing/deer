@@ -33,5 +33,10 @@ func (s *CreateUserService) Run(req *User.CreateUserReq) (resp *User.UserResp, e
 	if err != nil {
 		return nil, err
 	}
+	resp = &User.UserResp{
+		Data: &User.User{
+			Username: req.GetUsername(),
+		},
+	}
 	return
 }
