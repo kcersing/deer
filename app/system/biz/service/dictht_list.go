@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	Base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
@@ -20,7 +21,7 @@ func (s *DicthtListService) Run(req *system.DicthtListReq) (resp *system.DicthtL
 	// Finish your business logic.
 	var (
 		predicates []predicate.Dictht
-		dataResp   []*system.Dictht
+		dataResp   []*Base.Dictht
 	)
 	all, err := db.Client.Dictht.Query().Where(predicates...).All(s.ctx)
 	if err != nil {

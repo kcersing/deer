@@ -1,21 +1,6 @@
 namespace go role
 include "../base/base.thrift"
-struct Role {
-    1:optional i64 id=0 (api.raw = "id")
-    2:optional string name="" (api.raw = "name")
-    3:optional string value=""(api.raw = "value")
-    4:optional string defaultRouter=""(api.raw = "defaultRouter")
-    5:optional string remark=""(api.raw = "remark")
-    6:optional list<i64> apis= [](api.raw = "apis")
-}
-struct RoleResp {
-    1:optional Role data={}
-    255:optional base.BaseResp baseResp={}
-}
-struct RoleListResp {
-    1:optional list<Role> data= []
-    255:optional base.BaseResp baseResp={}
-}
+
 struct CreateRoleReq{
     1:optional i64 id=0(api.raw = "id")
     2:optional string name=""(api.raw = "name")

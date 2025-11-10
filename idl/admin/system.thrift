@@ -1,5 +1,6 @@
 namespace go system
 include "../base/base.thrift"
+
 //日志列表请求数据
 struct LogListReq {
     1: optional i64 page=0 (api.raw = "page")

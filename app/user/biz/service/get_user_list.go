@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
 	"user/biz/convert"
 	"user/biz/dal/db"
@@ -21,7 +22,7 @@ func NewGetUserListService(ctx context.Context) *GetUserListService {
 func (s *GetUserListService) Run(req *User.GetUserListReq) (resp *User.UserListResp, err error) {
 
 	var (
-		userResp []*User.User
+		userResp []*Base.User
 	)
 
 	var predicates []predicate.User

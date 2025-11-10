@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	Base "gen/kitex_gen/base"
 	"gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
@@ -20,7 +21,7 @@ func (s *ApiListService) Run(req *system.ApiListReq) (resp *system.ApiListResp, 
 	// Finish your business logic.
 	var (
 		predicates []predicate.API
-		dataResp   []*system.Api
+		dataResp   []*Base.Api
 	)
 	apis, err := db.Client.API.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).

@@ -11,7 +11,7 @@ func TestDeleteLog_Run(t *testing.T) {
 	s := NewDeleteLogService(ctx)
 	// init req and assert value
 
-	req := &system.DeleteLog{}
+	req := &system.DeleteLogReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

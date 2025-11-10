@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gen/kitex_gen/base"
 	"gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
@@ -20,7 +21,7 @@ func (s *MenuListService) Run(req *system.MenuListReq) (resp *system.MenuListRes
 	// Finish your business logic.
 	var (
 		predicates []predicate.Menu
-		dataResp   []*system.Menu
+		dataResp   []*base.Menu
 	)
 	all, err := db.Client.Menu.Query().Where(predicates...).
 		All(s.ctx)

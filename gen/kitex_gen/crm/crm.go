@@ -4,802 +4,30 @@ package crm
 
 import (
 	"context"
-	"database/sql"
-	"database/sql/driver"
 	"fmt"
 	"gen/kitex_gen/base"
 )
 
-type OperatingPeriod int64
-
-const (
-	OperatingPeriod_IdentifyCustomerNeeds        OperatingPeriod = 0
-	OperatingPeriod_ValidateCustomerRequirements OperatingPeriod = 1
-	OperatingPeriod_ProposalAndQuotation         OperatingPeriod = 2
-	OperatingPeriod_BusinessNegotiation          OperatingPeriod = 3
-	OperatingPeriod_Invalid                      OperatingPeriod = 4
-	OperatingPeriod_LoseTheDeal                  OperatingPeriod = 5
-	OperatingPeriod_WinTheDeal                   OperatingPeriod = 6
-)
-
-func (p OperatingPeriod) String() string {
-	switch p {
-	case OperatingPeriod_IdentifyCustomerNeeds:
-		return "IdentifyCustomerNeeds"
-	case OperatingPeriod_ValidateCustomerRequirements:
-		return "ValidateCustomerRequirements"
-	case OperatingPeriod_ProposalAndQuotation:
-		return "ProposalAndQuotation"
-	case OperatingPeriod_BusinessNegotiation:
-		return "BusinessNegotiation"
-	case OperatingPeriod_Invalid:
-		return "Invalid"
-	case OperatingPeriod_LoseTheDeal:
-		return "LoseTheDeal"
-	case OperatingPeriod_WinTheDeal:
-		return "WinTheDeal"
-	}
-	return "<UNSET>"
-}
-
-func OperatingPeriodFromString(s string) (OperatingPeriod, error) {
-	switch s {
-	case "IdentifyCustomerNeeds":
-		return OperatingPeriod_IdentifyCustomerNeeds, nil
-	case "ValidateCustomerRequirements":
-		return OperatingPeriod_ValidateCustomerRequirements, nil
-	case "ProposalAndQuotation":
-		return OperatingPeriod_ProposalAndQuotation, nil
-	case "BusinessNegotiation":
-		return OperatingPeriod_BusinessNegotiation, nil
-	case "Invalid":
-		return OperatingPeriod_Invalid, nil
-	case "LoseTheDeal":
-		return OperatingPeriod_LoseTheDeal, nil
-	case "WinTheDeal":
-		return OperatingPeriod_WinTheDeal, nil
-	}
-	return OperatingPeriod(0), fmt.Errorf("not a valid OperatingPeriod string")
-}
-
-func OperatingPeriodPtr(v OperatingPeriod) *OperatingPeriod { return &v }
-func (p *OperatingPeriod) Scan(value interface{}) (err error) {
-	var result sql.NullInt64
-	err = result.Scan(value)
-	*p = OperatingPeriod(result.Int64)
-	return
-}
-
-func (p *OperatingPeriod) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
-
-type FollowUpPlan struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Content   string `thrift:"content,2,optional" frugal:"2,optional,string" json:"content,omitempty"`
-	Time      string `thrift:"time,3,optional" frugal:"3,optional,string" json:"time,omitempty"`
-	MemberId  int64  `thrift:"memberId,4,optional" frugal:"4,optional,i64" json:"memberId,omitempty"`
-	UserId    int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
-	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	CreatedId int64  `thrift:"createdId,8,optional" frugal:"8,optional,i64" json:"createdId,omitempty"`
-	CreatedAt int64  `thrift:"createdAt,9,optional" frugal:"9,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt int64  `thrift:"updatedAt,10,optional" frugal:"10,optional,i64" json:"updatedAt,omitempty"`
-	Division  int64  `thrift:"division,11,optional" frugal:"11,optional,i64" json:"division,omitempty"`
-}
-
-func NewFollowUpPlan() *FollowUpPlan {
-	return &FollowUpPlan{
-		Id:        0,
-		Content:   "",
-		Time:      "",
-		MemberId:  0,
-		UserId:    0,
-		Status:    0,
-		CreatedId: 0,
-		CreatedAt: 0,
-		UpdatedAt: 0,
-		Division:  0,
-	}
-}
-
-func (p *FollowUpPlan) InitDefault() {
-	p.Id = 0
-	p.Content = ""
-	p.Time = ""
-	p.MemberId = 0
-	p.UserId = 0
-	p.Status = 0
-	p.CreatedId = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
-	p.Division = 0
-}
-
-var FollowUpPlan_Id_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetId() (v int64) {
-	if !p.IsSetId() {
-		return FollowUpPlan_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var FollowUpPlan_Content_DEFAULT string = ""
-
-func (p *FollowUpPlan) GetContent() (v string) {
-	if !p.IsSetContent() {
-		return FollowUpPlan_Content_DEFAULT
-	}
-	return p.Content
-}
-
-var FollowUpPlan_Time_DEFAULT string = ""
-
-func (p *FollowUpPlan) GetTime() (v string) {
-	if !p.IsSetTime() {
-		return FollowUpPlan_Time_DEFAULT
-	}
-	return p.Time
-}
-
-var FollowUpPlan_MemberId_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetMemberId() (v int64) {
-	if !p.IsSetMemberId() {
-		return FollowUpPlan_MemberId_DEFAULT
-	}
-	return p.MemberId
-}
-
-var FollowUpPlan_UserId_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetUserId() (v int64) {
-	if !p.IsSetUserId() {
-		return FollowUpPlan_UserId_DEFAULT
-	}
-	return p.UserId
-}
-
-var FollowUpPlan_Status_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return FollowUpPlan_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var FollowUpPlan_CreatedId_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return FollowUpPlan_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-
-var FollowUpPlan_CreatedAt_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetCreatedAt() (v int64) {
-	if !p.IsSetCreatedAt() {
-		return FollowUpPlan_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var FollowUpPlan_UpdatedAt_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetUpdatedAt() (v int64) {
-	if !p.IsSetUpdatedAt() {
-		return FollowUpPlan_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var FollowUpPlan_Division_DEFAULT int64 = 0
-
-func (p *FollowUpPlan) GetDivision() (v int64) {
-	if !p.IsSetDivision() {
-		return FollowUpPlan_Division_DEFAULT
-	}
-	return p.Division
-}
-func (p *FollowUpPlan) SetId(val int64) {
-	p.Id = val
-}
-func (p *FollowUpPlan) SetContent(val string) {
-	p.Content = val
-}
-func (p *FollowUpPlan) SetTime(val string) {
-	p.Time = val
-}
-func (p *FollowUpPlan) SetMemberId(val int64) {
-	p.MemberId = val
-}
-func (p *FollowUpPlan) SetUserId(val int64) {
-	p.UserId = val
-}
-func (p *FollowUpPlan) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *FollowUpPlan) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-func (p *FollowUpPlan) SetCreatedAt(val int64) {
-	p.CreatedAt = val
-}
-func (p *FollowUpPlan) SetUpdatedAt(val int64) {
-	p.UpdatedAt = val
-}
-func (p *FollowUpPlan) SetDivision(val int64) {
-	p.Division = val
-}
-
-func (p *FollowUpPlan) IsSetId() bool {
-	return p.Id != FollowUpPlan_Id_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetContent() bool {
-	return p.Content != FollowUpPlan_Content_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetTime() bool {
-	return p.Time != FollowUpPlan_Time_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetMemberId() bool {
-	return p.MemberId != FollowUpPlan_MemberId_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetUserId() bool {
-	return p.UserId != FollowUpPlan_UserId_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetStatus() bool {
-	return p.Status != FollowUpPlan_Status_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetCreatedId() bool {
-	return p.CreatedId != FollowUpPlan_CreatedId_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetCreatedAt() bool {
-	return p.CreatedAt != FollowUpPlan_CreatedAt_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != FollowUpPlan_UpdatedAt_DEFAULT
-}
-
-func (p *FollowUpPlan) IsSetDivision() bool {
-	return p.Division != FollowUpPlan_Division_DEFAULT
-}
-
-func (p *FollowUpPlan) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("FollowUpPlan(%+v)", *p)
-}
-
-var fieldIDToName_FollowUpPlan = map[int16]string{
-	1:  "id",
-	2:  "content",
-	3:  "time",
-	4:  "memberId",
-	6:  "userId",
-	7:  "status",
-	8:  "createdId",
-	9:  "createdAt",
-	10: "updatedAt",
-	11: "division",
-}
-
-type FollowUpRecord struct {
-	Id              int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Content         string `thrift:"content,2,optional" frugal:"2,optional,string" json:"content,omitempty"`
-	FollowUpId      int64  `thrift:"followUpId,3,optional" frugal:"3,optional,i64" json:"followUpId,omitempty"`
-	Method          int64  `thrift:"method,4,optional" frugal:"4,optional,i64" json:"method,omitempty"`
-	Status          int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
-	UserId          int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
-	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
-	CreatedAt       int64  `thrift:"createdAt,8,optional" frugal:"8,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt       int64  `thrift:"updatedAt,9,optional" frugal:"9,optional,i64" json:"updatedAt,omitempty"`
-	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
-	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
-}
-
-func NewFollowUpRecord() *FollowUpRecord {
-	return &FollowUpRecord{
-		Id:              0,
-		Content:         "",
-		FollowUpId:      0,
-		Method:          0,
-		Status:          0,
-		UserId:          0,
-		Division:        0,
-		CreatedAt:       0,
-		UpdatedAt:       0,
-		Record:          "",
-		OpportunitiesId: 0,
-	}
-}
-
-func (p *FollowUpRecord) InitDefault() {
-	p.Id = 0
-	p.Content = ""
-	p.FollowUpId = 0
-	p.Method = 0
-	p.Status = 0
-	p.UserId = 0
-	p.Division = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
-	p.Record = ""
-	p.OpportunitiesId = 0
-}
-
-var FollowUpRecord_Id_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetId() (v int64) {
-	if !p.IsSetId() {
-		return FollowUpRecord_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var FollowUpRecord_Content_DEFAULT string = ""
-
-func (p *FollowUpRecord) GetContent() (v string) {
-	if !p.IsSetContent() {
-		return FollowUpRecord_Content_DEFAULT
-	}
-	return p.Content
-}
-
-var FollowUpRecord_FollowUpId_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetFollowUpId() (v int64) {
-	if !p.IsSetFollowUpId() {
-		return FollowUpRecord_FollowUpId_DEFAULT
-	}
-	return p.FollowUpId
-}
-
-var FollowUpRecord_Method_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetMethod() (v int64) {
-	if !p.IsSetMethod() {
-		return FollowUpRecord_Method_DEFAULT
-	}
-	return p.Method
-}
-
-var FollowUpRecord_Status_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return FollowUpRecord_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var FollowUpRecord_UserId_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetUserId() (v int64) {
-	if !p.IsSetUserId() {
-		return FollowUpRecord_UserId_DEFAULT
-	}
-	return p.UserId
-}
-
-var FollowUpRecord_Division_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetDivision() (v int64) {
-	if !p.IsSetDivision() {
-		return FollowUpRecord_Division_DEFAULT
-	}
-	return p.Division
-}
-
-var FollowUpRecord_CreatedAt_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetCreatedAt() (v int64) {
-	if !p.IsSetCreatedAt() {
-		return FollowUpRecord_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var FollowUpRecord_UpdatedAt_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetUpdatedAt() (v int64) {
-	if !p.IsSetUpdatedAt() {
-		return FollowUpRecord_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var FollowUpRecord_Record_DEFAULT string = ""
-
-func (p *FollowUpRecord) GetRecord() (v string) {
-	if !p.IsSetRecord() {
-		return FollowUpRecord_Record_DEFAULT
-	}
-	return p.Record
-}
-
-var FollowUpRecord_OpportunitiesId_DEFAULT int64 = 0
-
-func (p *FollowUpRecord) GetOpportunitiesId() (v int64) {
-	if !p.IsSetOpportunitiesId() {
-		return FollowUpRecord_OpportunitiesId_DEFAULT
-	}
-	return p.OpportunitiesId
-}
-func (p *FollowUpRecord) SetId(val int64) {
-	p.Id = val
-}
-func (p *FollowUpRecord) SetContent(val string) {
-	p.Content = val
-}
-func (p *FollowUpRecord) SetFollowUpId(val int64) {
-	p.FollowUpId = val
-}
-func (p *FollowUpRecord) SetMethod(val int64) {
-	p.Method = val
-}
-func (p *FollowUpRecord) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *FollowUpRecord) SetUserId(val int64) {
-	p.UserId = val
-}
-func (p *FollowUpRecord) SetDivision(val int64) {
-	p.Division = val
-}
-func (p *FollowUpRecord) SetCreatedAt(val int64) {
-	p.CreatedAt = val
-}
-func (p *FollowUpRecord) SetUpdatedAt(val int64) {
-	p.UpdatedAt = val
-}
-func (p *FollowUpRecord) SetRecord(val string) {
-	p.Record = val
-}
-func (p *FollowUpRecord) SetOpportunitiesId(val int64) {
-	p.OpportunitiesId = val
-}
-
-func (p *FollowUpRecord) IsSetId() bool {
-	return p.Id != FollowUpRecord_Id_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetContent() bool {
-	return p.Content != FollowUpRecord_Content_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetFollowUpId() bool {
-	return p.FollowUpId != FollowUpRecord_FollowUpId_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetMethod() bool {
-	return p.Method != FollowUpRecord_Method_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetStatus() bool {
-	return p.Status != FollowUpRecord_Status_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetUserId() bool {
-	return p.UserId != FollowUpRecord_UserId_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetDivision() bool {
-	return p.Division != FollowUpRecord_Division_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetCreatedAt() bool {
-	return p.CreatedAt != FollowUpRecord_CreatedAt_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != FollowUpRecord_UpdatedAt_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetRecord() bool {
-	return p.Record != FollowUpRecord_Record_DEFAULT
-}
-
-func (p *FollowUpRecord) IsSetOpportunitiesId() bool {
-	return p.OpportunitiesId != FollowUpRecord_OpportunitiesId_DEFAULT
-}
-
-func (p *FollowUpRecord) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("FollowUpRecord(%+v)", *p)
-}
-
-var fieldIDToName_FollowUpRecord = map[int16]string{
-	1:  "id",
-	2:  "content",
-	3:  "followUpId",
-	4:  "method",
-	5:  "status",
-	6:  "userId",
-	7:  "division",
-	8:  "createdAt",
-	9:  "updatedAt",
-	10: "record",
-	11: "opportunitiesId",
-}
-
-type Opportunities struct {
-	Id               int64           `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	MemberId         int64           `thrift:"memberId,2,optional" frugal:"2,optional,i64" json:"memberId,omitempty"`
-	UserId           int64           `thrift:"userId,3,optional" frugal:"3,optional,i64" json:"userId,omitempty"`
-	Period           OperatingPeriod `thrift:"period,4,optional" frugal:"4,optional,OperatingPeriod" json:"period,omitempty"`
-	PeriodTime       string          `thrift:"periodTime,5,optional" frugal:"5,optional,string" json:"periodTime,omitempty"`
-	WinRate          int64           `thrift:"winRate,6,optional" frugal:"6,optional,i64" json:"winRate,omitempty"`
-	Content          string          `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
-	PredictionAmount int64           `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
-	CreatedAt        int64           `thrift:"createdAt,9,optional" frugal:"9,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt        int64           `thrift:"updatedAt,10,optional" frugal:"10,optional,i64" json:"updatedAt,omitempty"`
-	Title            string          `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
-}
-
-func NewOpportunities() *Opportunities {
-	return &Opportunities{
-		Id:               0,
-		MemberId:         0,
-		UserId:           0,
-		Period:           0,
-		PeriodTime:       "",
-		WinRate:          0,
-		Content:          "",
-		PredictionAmount: 0,
-		CreatedAt:        0,
-		UpdatedAt:        0,
-		Title:            "",
-	}
-}
-
-func (p *Opportunities) InitDefault() {
-	p.Id = 0
-	p.MemberId = 0
-	p.UserId = 0
-	p.Period = 0
-	p.PeriodTime = ""
-	p.WinRate = 0
-	p.Content = ""
-	p.PredictionAmount = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
-	p.Title = ""
-}
-
-var Opportunities_Id_DEFAULT int64 = 0
-
-func (p *Opportunities) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Opportunities_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Opportunities_MemberId_DEFAULT int64 = 0
-
-func (p *Opportunities) GetMemberId() (v int64) {
-	if !p.IsSetMemberId() {
-		return Opportunities_MemberId_DEFAULT
-	}
-	return p.MemberId
-}
-
-var Opportunities_UserId_DEFAULT int64 = 0
-
-func (p *Opportunities) GetUserId() (v int64) {
-	if !p.IsSetUserId() {
-		return Opportunities_UserId_DEFAULT
-	}
-	return p.UserId
-}
-
-var Opportunities_Period_DEFAULT OperatingPeriod = 0
-
-func (p *Opportunities) GetPeriod() (v OperatingPeriod) {
-	if !p.IsSetPeriod() {
-		return Opportunities_Period_DEFAULT
-	}
-	return p.Period
-}
-
-var Opportunities_PeriodTime_DEFAULT string = ""
-
-func (p *Opportunities) GetPeriodTime() (v string) {
-	if !p.IsSetPeriodTime() {
-		return Opportunities_PeriodTime_DEFAULT
-	}
-	return p.PeriodTime
-}
-
-var Opportunities_WinRate_DEFAULT int64 = 0
-
-func (p *Opportunities) GetWinRate() (v int64) {
-	if !p.IsSetWinRate() {
-		return Opportunities_WinRate_DEFAULT
-	}
-	return p.WinRate
-}
-
-var Opportunities_Content_DEFAULT string = ""
-
-func (p *Opportunities) GetContent() (v string) {
-	if !p.IsSetContent() {
-		return Opportunities_Content_DEFAULT
-	}
-	return p.Content
-}
-
-var Opportunities_PredictionAmount_DEFAULT int64 = 0
-
-func (p *Opportunities) GetPredictionAmount() (v int64) {
-	if !p.IsSetPredictionAmount() {
-		return Opportunities_PredictionAmount_DEFAULT
-	}
-	return p.PredictionAmount
-}
-
-var Opportunities_CreatedAt_DEFAULT int64 = 0
-
-func (p *Opportunities) GetCreatedAt() (v int64) {
-	if !p.IsSetCreatedAt() {
-		return Opportunities_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Opportunities_UpdatedAt_DEFAULT int64 = 0
-
-func (p *Opportunities) GetUpdatedAt() (v int64) {
-	if !p.IsSetUpdatedAt() {
-		return Opportunities_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Opportunities_Title_DEFAULT string = ""
-
-func (p *Opportunities) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return Opportunities_Title_DEFAULT
-	}
-	return p.Title
-}
-func (p *Opportunities) SetId(val int64) {
-	p.Id = val
-}
-func (p *Opportunities) SetMemberId(val int64) {
-	p.MemberId = val
-}
-func (p *Opportunities) SetUserId(val int64) {
-	p.UserId = val
-}
-func (p *Opportunities) SetPeriod(val OperatingPeriod) {
-	p.Period = val
-}
-func (p *Opportunities) SetPeriodTime(val string) {
-	p.PeriodTime = val
-}
-func (p *Opportunities) SetWinRate(val int64) {
-	p.WinRate = val
-}
-func (p *Opportunities) SetContent(val string) {
-	p.Content = val
-}
-func (p *Opportunities) SetPredictionAmount(val int64) {
-	p.PredictionAmount = val
-}
-func (p *Opportunities) SetCreatedAt(val int64) {
-	p.CreatedAt = val
-}
-func (p *Opportunities) SetUpdatedAt(val int64) {
-	p.UpdatedAt = val
-}
-func (p *Opportunities) SetTitle(val string) {
-	p.Title = val
-}
-
-func (p *Opportunities) IsSetId() bool {
-	return p.Id != Opportunities_Id_DEFAULT
-}
-
-func (p *Opportunities) IsSetMemberId() bool {
-	return p.MemberId != Opportunities_MemberId_DEFAULT
-}
-
-func (p *Opportunities) IsSetUserId() bool {
-	return p.UserId != Opportunities_UserId_DEFAULT
-}
-
-func (p *Opportunities) IsSetPeriod() bool {
-	return p.Period != Opportunities_Period_DEFAULT
-}
-
-func (p *Opportunities) IsSetPeriodTime() bool {
-	return p.PeriodTime != Opportunities_PeriodTime_DEFAULT
-}
-
-func (p *Opportunities) IsSetWinRate() bool {
-	return p.WinRate != Opportunities_WinRate_DEFAULT
-}
-
-func (p *Opportunities) IsSetContent() bool {
-	return p.Content != Opportunities_Content_DEFAULT
-}
-
-func (p *Opportunities) IsSetPredictionAmount() bool {
-	return p.PredictionAmount != Opportunities_PredictionAmount_DEFAULT
-}
-
-func (p *Opportunities) IsSetCreatedAt() bool {
-	return p.CreatedAt != Opportunities_CreatedAt_DEFAULT
-}
-
-func (p *Opportunities) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Opportunities_UpdatedAt_DEFAULT
-}
-
-func (p *Opportunities) IsSetTitle() bool {
-	return p.Title != Opportunities_Title_DEFAULT
-}
-
-func (p *Opportunities) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Opportunities(%+v)", *p)
-}
-
-var fieldIDToName_Opportunities = map[int16]string{
-	1:  "id",
-	2:  "memberId",
-	3:  "userId",
-	4:  "period",
-	5:  "periodTime",
-	6:  "winRate",
-	7:  "content",
-	8:  "predictionAmount",
-	9:  "createdAt",
-	10: "updatedAt",
-	11: "title",
-}
-
 type FollowUpPlanResp struct {
-	FollowUpPlan *FollowUpPlan  `thrift:"followUpPlan,1,optional" frugal:"1,optional,FollowUpPlan" json:"followUpPlan,omitempty"`
-	BaseResp     *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	FollowUpPlan *base.FollowUpPlan `thrift:"followUpPlan,1,optional" frugal:"1,optional,base.FollowUpPlan" json:"followUpPlan,omitempty"`
+	BaseResp     *base.BaseResp     `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpPlanResp() *FollowUpPlanResp {
 	return &FollowUpPlanResp{
-		FollowUpPlan: &FollowUpPlan{},
+		FollowUpPlan: &base.FollowUpPlan{},
 		BaseResp:     &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpPlanResp) InitDefault() {
-	p.FollowUpPlan = &FollowUpPlan{}
+	p.FollowUpPlan = &base.FollowUpPlan{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpPlanResp_FollowUpPlan_DEFAULT *FollowUpPlan = &FollowUpPlan{}
+var FollowUpPlanResp_FollowUpPlan_DEFAULT *base.FollowUpPlan = &base.FollowUpPlan{}
 
-func (p *FollowUpPlanResp) GetFollowUpPlan() (v *FollowUpPlan) {
+func (p *FollowUpPlanResp) GetFollowUpPlan() (v *base.FollowUpPlan) {
 	if !p.IsSetFollowUpPlan() {
 		return FollowUpPlanResp_FollowUpPlan_DEFAULT
 	}
@@ -814,7 +42,7 @@ func (p *FollowUpPlanResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpPlanResp) SetFollowUpPlan(val *FollowUpPlan) {
+func (p *FollowUpPlanResp) SetFollowUpPlan(val *base.FollowUpPlan) {
 	p.FollowUpPlan = val
 }
 func (p *FollowUpPlanResp) SetBaseResp(val *base.BaseResp) {
@@ -1265,25 +493,25 @@ var fieldIDToName_FollowUpPlanListReq = map[int16]string{
 }
 
 type FollowUpPlanListResp struct {
-	Data     []*FollowUpPlan `thrift:"data,1,optional" frugal:"1,optional,list<FollowUpPlan>" json:"data,omitempty"`
-	BaseResp *base.BaseResp  `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     []*base.FollowUpPlan `thrift:"data,1,optional" frugal:"1,optional,list<base.FollowUpPlan>" json:"data,omitempty"`
+	BaseResp *base.BaseResp       `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpPlanListResp() *FollowUpPlanListResp {
 	return &FollowUpPlanListResp{
-		Data:     []*FollowUpPlan{},
+		Data:     []*base.FollowUpPlan{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpPlanListResp) InitDefault() {
-	p.Data = []*FollowUpPlan{}
+	p.Data = []*base.FollowUpPlan{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpPlanListResp_Data_DEFAULT []*FollowUpPlan = []*FollowUpPlan{}
+var FollowUpPlanListResp_Data_DEFAULT []*base.FollowUpPlan = []*base.FollowUpPlan{}
 
-func (p *FollowUpPlanListResp) GetData() (v []*FollowUpPlan) {
+func (p *FollowUpPlanListResp) GetData() (v []*base.FollowUpPlan) {
 	if !p.IsSetData() {
 		return FollowUpPlanListResp_Data_DEFAULT
 	}
@@ -1298,7 +526,7 @@ func (p *FollowUpPlanListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpPlanListResp) SetData(val []*FollowUpPlan) {
+func (p *FollowUpPlanListResp) SetData(val []*base.FollowUpPlan) {
 	p.Data = val
 }
 func (p *FollowUpPlanListResp) SetBaseResp(val *base.BaseResp) {
@@ -1326,25 +554,25 @@ var fieldIDToName_FollowUpPlanListResp = map[int16]string{
 }
 
 type FollowUpRecordResp struct {
-	FollowUpRecord *FollowUpRecord `thrift:"followUpRecord,1,optional" frugal:"1,optional,FollowUpRecord" json:"followUpRecord,omitempty"`
-	BaseResp       *base.BaseResp  `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	FollowUpRecord *base.FollowUpRecord `thrift:"followUpRecord,1,optional" frugal:"1,optional,base.FollowUpRecord" json:"followUpRecord,omitempty"`
+	BaseResp       *base.BaseResp       `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpRecordResp() *FollowUpRecordResp {
 	return &FollowUpRecordResp{
-		FollowUpRecord: &FollowUpRecord{},
+		FollowUpRecord: &base.FollowUpRecord{},
 		BaseResp:       &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpRecordResp) InitDefault() {
-	p.FollowUpRecord = &FollowUpRecord{}
+	p.FollowUpRecord = &base.FollowUpRecord{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpRecordResp_FollowUpRecord_DEFAULT *FollowUpRecord = &FollowUpRecord{}
+var FollowUpRecordResp_FollowUpRecord_DEFAULT *base.FollowUpRecord = &base.FollowUpRecord{}
 
-func (p *FollowUpRecordResp) GetFollowUpRecord() (v *FollowUpRecord) {
+func (p *FollowUpRecordResp) GetFollowUpRecord() (v *base.FollowUpRecord) {
 	if !p.IsSetFollowUpRecord() {
 		return FollowUpRecordResp_FollowUpRecord_DEFAULT
 	}
@@ -1359,7 +587,7 @@ func (p *FollowUpRecordResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpRecordResp) SetFollowUpRecord(val *FollowUpRecord) {
+func (p *FollowUpRecordResp) SetFollowUpRecord(val *base.FollowUpRecord) {
 	p.FollowUpRecord = val
 }
 func (p *FollowUpRecordResp) SetBaseResp(val *base.BaseResp) {
@@ -1528,25 +756,25 @@ var fieldIDToName_FollowUpRecordListReq = map[int16]string{
 }
 
 type FollowUpRecordListResp struct {
-	Data     []*FollowUpRecord `thrift:"data,1,optional" frugal:"1,optional,list<FollowUpRecord>" json:"data,omitempty"`
-	BaseResp *base.BaseResp    `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     []*base.FollowUpRecord `thrift:"data,1,optional" frugal:"1,optional,list<base.FollowUpRecord>" json:"data,omitempty"`
+	BaseResp *base.BaseResp         `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpRecordListResp() *FollowUpRecordListResp {
 	return &FollowUpRecordListResp{
-		Data:     []*FollowUpRecord{},
+		Data:     []*base.FollowUpRecord{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpRecordListResp) InitDefault() {
-	p.Data = []*FollowUpRecord{}
+	p.Data = []*base.FollowUpRecord{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpRecordListResp_Data_DEFAULT []*FollowUpRecord = []*FollowUpRecord{}
+var FollowUpRecordListResp_Data_DEFAULT []*base.FollowUpRecord = []*base.FollowUpRecord{}
 
-func (p *FollowUpRecordListResp) GetData() (v []*FollowUpRecord) {
+func (p *FollowUpRecordListResp) GetData() (v []*base.FollowUpRecord) {
 	if !p.IsSetData() {
 		return FollowUpRecordListResp_Data_DEFAULT
 	}
@@ -1561,7 +789,7 @@ func (p *FollowUpRecordListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpRecordListResp) SetData(val []*FollowUpRecord) {
+func (p *FollowUpRecordListResp) SetData(val []*base.FollowUpRecord) {
 	p.Data = val
 }
 func (p *FollowUpRecordListResp) SetBaseResp(val *base.BaseResp) {
@@ -1589,25 +817,25 @@ var fieldIDToName_FollowUpRecordListResp = map[int16]string{
 }
 
 type OpportunitiesResp struct {
-	Opportunities *Opportunities `thrift:"opportunities,1,optional" frugal:"1,optional,Opportunities" json:"opportunities,omitempty"`
-	BaseResp      *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Opportunities *base.Opportunities `thrift:"opportunities,1,optional" frugal:"1,optional,base.Opportunities" json:"opportunities,omitempty"`
+	BaseResp      *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewOpportunitiesResp() *OpportunitiesResp {
 	return &OpportunitiesResp{
-		Opportunities: &Opportunities{},
+		Opportunities: &base.Opportunities{},
 		BaseResp:      &base.BaseResp{},
 	}
 }
 
 func (p *OpportunitiesResp) InitDefault() {
-	p.Opportunities = &Opportunities{}
+	p.Opportunities = &base.Opportunities{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var OpportunitiesResp_Opportunities_DEFAULT *Opportunities = &Opportunities{}
+var OpportunitiesResp_Opportunities_DEFAULT *base.Opportunities = &base.Opportunities{}
 
-func (p *OpportunitiesResp) GetOpportunities() (v *Opportunities) {
+func (p *OpportunitiesResp) GetOpportunities() (v *base.Opportunities) {
 	if !p.IsSetOpportunities() {
 		return OpportunitiesResp_Opportunities_DEFAULT
 	}
@@ -1622,7 +850,7 @@ func (p *OpportunitiesResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *OpportunitiesResp) SetOpportunities(val *Opportunities) {
+func (p *OpportunitiesResp) SetOpportunities(val *base.Opportunities) {
 	p.Opportunities = val
 }
 func (p *OpportunitiesResp) SetBaseResp(val *base.BaseResp) {
@@ -1650,10 +878,10 @@ var fieldIDToName_OpportunitiesResp = map[int16]string{
 }
 
 type CreateOpportunitiesReq struct {
-	MemberId int64           `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	UserId   int64           `thrift:"userId,2,optional" frugal:"2,optional,i64" json:"userId,omitempty"`
-	Period   OperatingPeriod `thrift:"period,3,optional" frugal:"3,optional,OperatingPeriod" json:"period,omitempty"`
-	WinRate  int64           `thrift:"winRate,5,optional" frugal:"5,optional,i64" json:"winRate,omitempty"`
+	MemberId int64                `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	UserId   int64                `thrift:"userId,2,optional" frugal:"2,optional,i64" json:"userId,omitempty"`
+	Period   base.OperatingPeriod `thrift:"period,3,optional" frugal:"3,optional,OperatingPeriod" json:"period,omitempty"`
+	WinRate  int64                `thrift:"winRate,5,optional" frugal:"5,optional,i64" json:"winRate,omitempty"`
 }
 
 func NewCreateOpportunitiesReq() *CreateOpportunitiesReq {
@@ -1690,9 +918,9 @@ func (p *CreateOpportunitiesReq) GetUserId() (v int64) {
 	return p.UserId
 }
 
-var CreateOpportunitiesReq_Period_DEFAULT OperatingPeriod = 0
+var CreateOpportunitiesReq_Period_DEFAULT base.OperatingPeriod = 0
 
-func (p *CreateOpportunitiesReq) GetPeriod() (v OperatingPeriod) {
+func (p *CreateOpportunitiesReq) GetPeriod() (v base.OperatingPeriod) {
 	if !p.IsSetPeriod() {
 		return CreateOpportunitiesReq_Period_DEFAULT
 	}
@@ -1713,7 +941,7 @@ func (p *CreateOpportunitiesReq) SetMemberId(val int64) {
 func (p *CreateOpportunitiesReq) SetUserId(val int64) {
 	p.UserId = val
 }
-func (p *CreateOpportunitiesReq) SetPeriod(val OperatingPeriod) {
+func (p *CreateOpportunitiesReq) SetPeriod(val base.OperatingPeriod) {
 	p.Period = val
 }
 func (p *CreateOpportunitiesReq) SetWinRate(val int64) {
@@ -1873,25 +1101,25 @@ var fieldIDToName_OpportunitiesListReq = map[int16]string{
 }
 
 type OpportunitiesListResp struct {
-	Data     []*Opportunities `thrift:"data,1,optional" frugal:"1,optional,list<Opportunities>" json:"data,omitempty"`
-	BaseResp *base.BaseResp   `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     []*base.Opportunities `thrift:"data,1,optional" frugal:"1,optional,list<base.Opportunities>" json:"data,omitempty"`
+	BaseResp *base.BaseResp        `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewOpportunitiesListResp() *OpportunitiesListResp {
 	return &OpportunitiesListResp{
-		Data:     []*Opportunities{},
+		Data:     []*base.Opportunities{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *OpportunitiesListResp) InitDefault() {
-	p.Data = []*Opportunities{}
+	p.Data = []*base.Opportunities{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var OpportunitiesListResp_Data_DEFAULT []*Opportunities = []*Opportunities{}
+var OpportunitiesListResp_Data_DEFAULT []*base.Opportunities = []*base.Opportunities{}
 
-func (p *OpportunitiesListResp) GetData() (v []*Opportunities) {
+func (p *OpportunitiesListResp) GetData() (v []*base.Opportunities) {
 	if !p.IsSetData() {
 		return OpportunitiesListResp_Data_DEFAULT
 	}
@@ -1906,7 +1134,7 @@ func (p *OpportunitiesListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *OpportunitiesListResp) SetData(val []*Opportunities) {
+func (p *OpportunitiesListResp) SetData(val []*base.Opportunities) {
 	p.Data = val
 }
 func (p *OpportunitiesListResp) SetBaseResp(val *base.BaseResp) {

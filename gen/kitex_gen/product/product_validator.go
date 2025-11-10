@@ -21,12 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *Product) IsValid() error {
-	return nil
-}
-func (p *Item) IsValid() error {
-	return nil
-}
 func (p *CreateItemReq) IsValid() error {
 	return nil
 }

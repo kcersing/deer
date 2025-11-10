@@ -1,4 +1,3 @@
-
 namespace go base
 
 struct BaseResp {

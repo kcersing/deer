@@ -3,6 +3,7 @@ package service
 import (
 	"common/pkg/errno"
 	"context"
+	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
@@ -34,7 +35,7 @@ func (s *CreateUserService) Run(req *User.CreateUserReq) (resp *User.UserResp, e
 		return nil, err
 	}
 	resp = &User.UserResp{
-		Data: &User.User{
+		Data: &Base.User{
 			Username: req.GetUsername(),
 		},
 	}

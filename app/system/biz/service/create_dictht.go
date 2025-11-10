@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	Base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
 	"system/biz/convert"
@@ -19,7 +20,7 @@ func NewCreateDicthtService(ctx context.Context) *CreateDicthtService {
 }
 
 // Run create note info
-func (s *CreateDicthtService) Run(req *system.Dictht) (resp *system.DicthtResp, err error) {
+func (s *CreateDicthtService) Run(req *Base.Dictht) (resp *system.DicthtResp, err error) {
 	// Finish your business logic.
 	exist, err := db.Client.Dictht.Query().
 		Where(dictht.Key(req.GetTitle())).

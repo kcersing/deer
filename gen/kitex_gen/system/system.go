@@ -8,207 +8,26 @@ import (
 	"gen/kitex_gen/base"
 )
 
-type Api struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	CreatedAt string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
-	Path      string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
-	Group     string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method    string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title     string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
-}
-
-func NewApi() *Api {
-	return &Api{
-		Id:        0,
-		CreatedAt: "",
-		UpdatedAt: "",
-		Path:      "",
-		Desc:      "",
-		Group:     "",
-		Method:    "",
-		Title:     "",
-	}
-}
-
-func (p *Api) InitDefault() {
-	p.Id = 0
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.Path = ""
-	p.Desc = ""
-	p.Group = ""
-	p.Method = ""
-	p.Title = ""
-}
-
-var Api_Id_DEFAULT int64 = 0
-
-func (p *Api) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Api_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Api_CreatedAt_DEFAULT string = ""
-
-func (p *Api) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Api_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Api_UpdatedAt_DEFAULT string = ""
-
-func (p *Api) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Api_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Api_Path_DEFAULT string = ""
-
-func (p *Api) GetPath() (v string) {
-	if !p.IsSetPath() {
-		return Api_Path_DEFAULT
-	}
-	return p.Path
-}
-
-var Api_Desc_DEFAULT string = ""
-
-func (p *Api) GetDesc() (v string) {
-	if !p.IsSetDesc() {
-		return Api_Desc_DEFAULT
-	}
-	return p.Desc
-}
-
-var Api_Group_DEFAULT string = ""
-
-func (p *Api) GetGroup() (v string) {
-	if !p.IsSetGroup() {
-		return Api_Group_DEFAULT
-	}
-	return p.Group
-}
-
-var Api_Method_DEFAULT string = ""
-
-func (p *Api) GetMethod() (v string) {
-	if !p.IsSetMethod() {
-		return Api_Method_DEFAULT
-	}
-	return p.Method
-}
-
-var Api_Title_DEFAULT string = ""
-
-func (p *Api) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return Api_Title_DEFAULT
-	}
-	return p.Title
-}
-func (p *Api) SetId(val int64) {
-	p.Id = val
-}
-func (p *Api) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Api) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Api) SetPath(val string) {
-	p.Path = val
-}
-func (p *Api) SetDesc(val string) {
-	p.Desc = val
-}
-func (p *Api) SetGroup(val string) {
-	p.Group = val
-}
-func (p *Api) SetMethod(val string) {
-	p.Method = val
-}
-func (p *Api) SetTitle(val string) {
-	p.Title = val
-}
-
-func (p *Api) IsSetId() bool {
-	return p.Id != Api_Id_DEFAULT
-}
-
-func (p *Api) IsSetCreatedAt() bool {
-	return p.CreatedAt != Api_CreatedAt_DEFAULT
-}
-
-func (p *Api) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Api_UpdatedAt_DEFAULT
-}
-
-func (p *Api) IsSetPath() bool {
-	return p.Path != Api_Path_DEFAULT
-}
-
-func (p *Api) IsSetDesc() bool {
-	return p.Desc != Api_Desc_DEFAULT
-}
-
-func (p *Api) IsSetGroup() bool {
-	return p.Group != Api_Group_DEFAULT
-}
-
-func (p *Api) IsSetMethod() bool {
-	return p.Method != Api_Method_DEFAULT
-}
-
-func (p *Api) IsSetTitle() bool {
-	return p.Title != Api_Title_DEFAULT
-}
-
-func (p *Api) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Api(%+v)", *p)
-}
-
-var fieldIDToName_Api = map[int16]string{
-	1: "id",
-	2: "createdAt",
-	3: "updatedAt",
-	4: "path",
-	5: "desc",
-	6: "group",
-	7: "method",
-	8: "title",
-}
-
 type ApiResp struct {
-	Data     *Api           `thrift:"data,1,optional" frugal:"1,optional,Api" json:"data,omitempty"`
+	Data     *base.Api      `thrift:"data,1,optional" frugal:"1,optional,base.Api" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewApiResp() *ApiResp {
 	return &ApiResp{
-		Data:     &Api{},
+		Data:     &base.Api{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ApiResp) InitDefault() {
-	p.Data = &Api{}
+	p.Data = &base.Api{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ApiResp_Data_DEFAULT *Api = &Api{}
+var ApiResp_Data_DEFAULT *base.Api = &base.Api{}
 
-func (p *ApiResp) GetData() (v *Api) {
+func (p *ApiResp) GetData() (v *base.Api) {
 	if !p.IsSetData() {
 		return ApiResp_Data_DEFAULT
 	}
@@ -223,7 +42,7 @@ func (p *ApiResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ApiResp) SetData(val *Api) {
+func (p *ApiResp) SetData(val *base.Api) {
 	p.Data = val
 }
 func (p *ApiResp) SetBaseResp(val *base.BaseResp) {
@@ -251,25 +70,25 @@ var fieldIDToName_ApiResp = map[int16]string{
 }
 
 type ApiListResp struct {
-	Data     []*Api         `thrift:"data,1,optional" frugal:"1,optional,list<Api>" json:"data,omitempty"`
+	Data     []*base.Api    `thrift:"data,1,optional" frugal:"1,optional,list<base.Api>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewApiListResp() *ApiListResp {
 	return &ApiListResp{
-		Data:     []*Api{},
+		Data:     []*base.Api{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ApiListResp) InitDefault() {
-	p.Data = []*Api{}
+	p.Data = []*base.Api{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ApiListResp_Data_DEFAULT []*Api = []*Api{}
+var ApiListResp_Data_DEFAULT []*base.Api = []*base.Api{}
 
-func (p *ApiListResp) GetData() (v []*Api) {
+func (p *ApiListResp) GetData() (v []*base.Api) {
 	if !p.IsSetData() {
 		return ApiListResp_Data_DEFAULT
 	}
@@ -284,7 +103,7 @@ func (p *ApiListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ApiListResp) SetData(val []*Api) {
+func (p *ApiListResp) SetData(val []*base.Api) {
 	p.Data = val
 }
 func (p *ApiListResp) SetBaseResp(val *base.BaseResp) {
@@ -1378,28 +1197,28 @@ var fieldIDToName_MenuListReq = map[int16]string{
 }
 
 type MenuTree struct {
-	MenuInfo *Menu       `thrift:"menuInfo,1,optional" frugal:"1,optional,Menu" json:"menuInfo,omitempty"`
+	MenuInfo *base.Menu  `thrift:"menuInfo,1,optional" frugal:"1,optional,base.Menu" json:"menuInfo,omitempty"`
 	Children []*MenuTree `thrift:"children,4,optional" frugal:"4,optional,list<MenuTree>" json:"children,omitempty"`
 	Ignore   bool        `thrift:"ignore,5,optional" frugal:"5,optional,bool" json:"ignore,omitempty"`
 }
 
 func NewMenuTree() *MenuTree {
 	return &MenuTree{
-		MenuInfo: &Menu{},
+		MenuInfo: &base.Menu{},
 		Children: []*MenuTree{},
 		Ignore:   false,
 	}
 }
 
 func (p *MenuTree) InitDefault() {
-	p.MenuInfo = &Menu{}
+	p.MenuInfo = &base.Menu{}
 	p.Children = []*MenuTree{}
 	p.Ignore = false
 }
 
-var MenuTree_MenuInfo_DEFAULT *Menu = &Menu{}
+var MenuTree_MenuInfo_DEFAULT *base.Menu = &base.Menu{}
 
-func (p *MenuTree) GetMenuInfo() (v *Menu) {
+func (p *MenuTree) GetMenuInfo() (v *base.Menu) {
 	if !p.IsSetMenuInfo() {
 		return MenuTree_MenuInfo_DEFAULT
 	}
@@ -1423,7 +1242,7 @@ func (p *MenuTree) GetIgnore() (v bool) {
 	}
 	return p.Ignore
 }
-func (p *MenuTree) SetMenuInfo(val *Menu) {
+func (p *MenuTree) SetMenuInfo(val *base.Menu) {
 	p.MenuInfo = val
 }
 func (p *MenuTree) SetChildren(val []*MenuTree) {
@@ -1458,307 +1277,26 @@ var fieldIDToName_MenuTree = map[int16]string{
 	5: "ignore",
 }
 
-type Menu struct {
-	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
-	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
-	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
-	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
-	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
-	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Icon      string  `thrift:"icon,20,optional" frugal:"20,optional,string" json:"icon,omitempty"`
-}
-
-func NewMenu() *Menu {
-	return &Menu{
-		Id:        0,
-		Name:      "",
-		ParentId:  0,
-		Level:     0,
-		Path:      "",
-		Redirect:  "",
-		Component: "",
-		MenuType:  0,
-		Status:    0,
-		Children:  []*Menu{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		Icon:      "",
-	}
-}
-
-func (p *Menu) InitDefault() {
-	p.Id = 0
-	p.Name = ""
-	p.ParentId = 0
-	p.Level = 0
-	p.Path = ""
-	p.Redirect = ""
-	p.Component = ""
-	p.MenuType = 0
-	p.Status = 0
-	p.Children = []*Menu{}
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.Icon = ""
-}
-
-var Menu_Id_DEFAULT int64 = 0
-
-func (p *Menu) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Menu_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Menu_Name_DEFAULT string = ""
-
-func (p *Menu) GetName() (v string) {
-	if !p.IsSetName() {
-		return Menu_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var Menu_ParentId_DEFAULT int64 = 0
-
-func (p *Menu) GetParentId() (v int64) {
-	if !p.IsSetParentId() {
-		return Menu_ParentId_DEFAULT
-	}
-	return p.ParentId
-}
-
-var Menu_Level_DEFAULT int64 = 0
-
-func (p *Menu) GetLevel() (v int64) {
-	if !p.IsSetLevel() {
-		return Menu_Level_DEFAULT
-	}
-	return p.Level
-}
-
-var Menu_Path_DEFAULT string = ""
-
-func (p *Menu) GetPath() (v string) {
-	if !p.IsSetPath() {
-		return Menu_Path_DEFAULT
-	}
-	return p.Path
-}
-
-var Menu_Redirect_DEFAULT string = ""
-
-func (p *Menu) GetRedirect() (v string) {
-	if !p.IsSetRedirect() {
-		return Menu_Redirect_DEFAULT
-	}
-	return p.Redirect
-}
-
-var Menu_Component_DEFAULT string = ""
-
-func (p *Menu) GetComponent() (v string) {
-	if !p.IsSetComponent() {
-		return Menu_Component_DEFAULT
-	}
-	return p.Component
-}
-
-var Menu_MenuType_DEFAULT int64 = 0
-
-func (p *Menu) GetMenuType() (v int64) {
-	if !p.IsSetMenuType() {
-		return Menu_MenuType_DEFAULT
-	}
-	return p.MenuType
-}
-
-var Menu_Status_DEFAULT int64 = 0
-
-func (p *Menu) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return Menu_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var Menu_Children_DEFAULT []*Menu = []*Menu{}
-
-func (p *Menu) GetChildren() (v []*Menu) {
-	if !p.IsSetChildren() {
-		return Menu_Children_DEFAULT
-	}
-	return p.Children
-}
-
-var Menu_CreatedAt_DEFAULT string = ""
-
-func (p *Menu) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Menu_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Menu_UpdatedAt_DEFAULT string = ""
-
-func (p *Menu) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Menu_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Menu_Icon_DEFAULT string = ""
-
-func (p *Menu) GetIcon() (v string) {
-	if !p.IsSetIcon() {
-		return Menu_Icon_DEFAULT
-	}
-	return p.Icon
-}
-func (p *Menu) SetId(val int64) {
-	p.Id = val
-}
-func (p *Menu) SetName(val string) {
-	p.Name = val
-}
-func (p *Menu) SetParentId(val int64) {
-	p.ParentId = val
-}
-func (p *Menu) SetLevel(val int64) {
-	p.Level = val
-}
-func (p *Menu) SetPath(val string) {
-	p.Path = val
-}
-func (p *Menu) SetRedirect(val string) {
-	p.Redirect = val
-}
-func (p *Menu) SetComponent(val string) {
-	p.Component = val
-}
-func (p *Menu) SetMenuType(val int64) {
-	p.MenuType = val
-}
-func (p *Menu) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *Menu) SetChildren(val []*Menu) {
-	p.Children = val
-}
-func (p *Menu) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Menu) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Menu) SetIcon(val string) {
-	p.Icon = val
-}
-
-func (p *Menu) IsSetId() bool {
-	return p.Id != Menu_Id_DEFAULT
-}
-
-func (p *Menu) IsSetName() bool {
-	return p.Name != Menu_Name_DEFAULT
-}
-
-func (p *Menu) IsSetParentId() bool {
-	return p.ParentId != Menu_ParentId_DEFAULT
-}
-
-func (p *Menu) IsSetLevel() bool {
-	return p.Level != Menu_Level_DEFAULT
-}
-
-func (p *Menu) IsSetPath() bool {
-	return p.Path != Menu_Path_DEFAULT
-}
-
-func (p *Menu) IsSetRedirect() bool {
-	return p.Redirect != Menu_Redirect_DEFAULT
-}
-
-func (p *Menu) IsSetComponent() bool {
-	return p.Component != Menu_Component_DEFAULT
-}
-
-func (p *Menu) IsSetMenuType() bool {
-	return p.MenuType != Menu_MenuType_DEFAULT
-}
-
-func (p *Menu) IsSetStatus() bool {
-	return p.Status != Menu_Status_DEFAULT
-}
-
-func (p *Menu) IsSetChildren() bool {
-	return p.Children != nil
-}
-
-func (p *Menu) IsSetCreatedAt() bool {
-	return p.CreatedAt != Menu_CreatedAt_DEFAULT
-}
-
-func (p *Menu) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Menu_UpdatedAt_DEFAULT
-}
-
-func (p *Menu) IsSetIcon() bool {
-	return p.Icon != Menu_Icon_DEFAULT
-}
-
-func (p *Menu) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Menu(%+v)", *p)
-}
-
-var fieldIDToName_Menu = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "parentId",
-	4:  "level",
-	5:  "path",
-	6:  "redirect",
-	7:  "component",
-	8:  "menuType",
-	12: "status",
-	14: "children",
-	15: "createdAt",
-	16: "updatedAt",
-	20: "icon",
-}
-
 type MenuResp struct {
-	Data     *Menu          `thrift:"data,1,optional" frugal:"1,optional,Menu" json:"data,omitempty"`
+	Data     *base.Menu     `thrift:"data,1,optional" frugal:"1,optional,base.Menu" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMenuResp() *MenuResp {
 	return &MenuResp{
-		Data:     &Menu{},
+		Data:     &base.Menu{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *MenuResp) InitDefault() {
-	p.Data = &Menu{}
+	p.Data = &base.Menu{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var MenuResp_Data_DEFAULT *Menu = &Menu{}
+var MenuResp_Data_DEFAULT *base.Menu = &base.Menu{}
 
-func (p *MenuResp) GetData() (v *Menu) {
+func (p *MenuResp) GetData() (v *base.Menu) {
 	if !p.IsSetData() {
 		return MenuResp_Data_DEFAULT
 	}
@@ -1773,7 +1311,7 @@ func (p *MenuResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MenuResp) SetData(val *Menu) {
+func (p *MenuResp) SetData(val *base.Menu) {
 	p.Data = val
 }
 func (p *MenuResp) SetBaseResp(val *base.BaseResp) {
@@ -1801,25 +1339,25 @@ var fieldIDToName_MenuResp = map[int16]string{
 }
 
 type MenuListResp struct {
-	Data     []*Menu        `thrift:"data,1,optional" frugal:"1,optional,list<Menu>" json:"data,omitempty"`
+	Data     []*base.Menu   `thrift:"data,1,optional" frugal:"1,optional,list<base.Menu>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMenuListResp() *MenuListResp {
 	return &MenuListResp{
-		Data:     []*Menu{},
+		Data:     []*base.Menu{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *MenuListResp) InitDefault() {
-	p.Data = []*Menu{}
+	p.Data = []*base.Menu{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var MenuListResp_Data_DEFAULT []*Menu = []*Menu{}
+var MenuListResp_Data_DEFAULT []*base.Menu = []*base.Menu{}
 
-func (p *MenuListResp) GetData() (v []*Menu) {
+func (p *MenuListResp) GetData() (v []*base.Menu) {
 	if !p.IsSetData() {
 		return MenuListResp_Data_DEFAULT
 	}
@@ -1834,7 +1372,7 @@ func (p *MenuListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MenuListResp) SetData(val []*Menu) {
+func (p *MenuListResp) SetData(val []*base.Menu) {
 	p.Data = val
 }
 func (p *MenuListResp) SetBaseResp(val *base.BaseResp) {
@@ -1861,167 +1399,26 @@ var fieldIDToName_MenuListResp = map[int16]string{
 	255: "baseResp",
 }
 
-type Role struct {
-	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name          string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Value         string  `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
-	DefaultRouter string  `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
-	Remark        string  `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
-	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
-}
-
-func NewRole() *Role {
-	return &Role{
-		Id:            0,
-		Name:          "",
-		Value:         "",
-		DefaultRouter: "",
-		Remark:        "",
-		Apis:          []int64{},
-	}
-}
-
-func (p *Role) InitDefault() {
-	p.Id = 0
-	p.Name = ""
-	p.Value = ""
-	p.DefaultRouter = ""
-	p.Remark = ""
-	p.Apis = []int64{}
-}
-
-var Role_Id_DEFAULT int64 = 0
-
-func (p *Role) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Role_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Role_Name_DEFAULT string = ""
-
-func (p *Role) GetName() (v string) {
-	if !p.IsSetName() {
-		return Role_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var Role_Value_DEFAULT string = ""
-
-func (p *Role) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return Role_Value_DEFAULT
-	}
-	return p.Value
-}
-
-var Role_DefaultRouter_DEFAULT string = ""
-
-func (p *Role) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return Role_DefaultRouter_DEFAULT
-	}
-	return p.DefaultRouter
-}
-
-var Role_Remark_DEFAULT string = ""
-
-func (p *Role) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return Role_Remark_DEFAULT
-	}
-	return p.Remark
-}
-
-var Role_Apis_DEFAULT []int64 = []int64{}
-
-func (p *Role) GetApis() (v []int64) {
-	if !p.IsSetApis() {
-		return Role_Apis_DEFAULT
-	}
-	return p.Apis
-}
-func (p *Role) SetId(val int64) {
-	p.Id = val
-}
-func (p *Role) SetName(val string) {
-	p.Name = val
-}
-func (p *Role) SetValue(val string) {
-	p.Value = val
-}
-func (p *Role) SetDefaultRouter(val string) {
-	p.DefaultRouter = val
-}
-func (p *Role) SetRemark(val string) {
-	p.Remark = val
-}
-func (p *Role) SetApis(val []int64) {
-	p.Apis = val
-}
-
-func (p *Role) IsSetId() bool {
-	return p.Id != Role_Id_DEFAULT
-}
-
-func (p *Role) IsSetName() bool {
-	return p.Name != Role_Name_DEFAULT
-}
-
-func (p *Role) IsSetValue() bool {
-	return p.Value != Role_Value_DEFAULT
-}
-
-func (p *Role) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != Role_DefaultRouter_DEFAULT
-}
-
-func (p *Role) IsSetRemark() bool {
-	return p.Remark != Role_Remark_DEFAULT
-}
-
-func (p *Role) IsSetApis() bool {
-	return p.Apis != nil
-}
-
-func (p *Role) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Role(%+v)", *p)
-}
-
-var fieldIDToName_Role = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
-	6: "apis",
-}
-
 type RoleResp struct {
-	Data     *Role          `thrift:"data,1,optional" frugal:"1,optional,Role" json:"data,omitempty"`
+	Data     *base.Role     `thrift:"data,1,optional" frugal:"1,optional,base.Role" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewRoleResp() *RoleResp {
 	return &RoleResp{
-		Data:     &Role{},
+		Data:     &base.Role{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *RoleResp) InitDefault() {
-	p.Data = &Role{}
+	p.Data = &base.Role{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var RoleResp_Data_DEFAULT *Role = &Role{}
+var RoleResp_Data_DEFAULT *base.Role = &base.Role{}
 
-func (p *RoleResp) GetData() (v *Role) {
+func (p *RoleResp) GetData() (v *base.Role) {
 	if !p.IsSetData() {
 		return RoleResp_Data_DEFAULT
 	}
@@ -2036,7 +1433,7 @@ func (p *RoleResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *RoleResp) SetData(val *Role) {
+func (p *RoleResp) SetData(val *base.Role) {
 	p.Data = val
 }
 func (p *RoleResp) SetBaseResp(val *base.BaseResp) {
@@ -2064,25 +1461,25 @@ var fieldIDToName_RoleResp = map[int16]string{
 }
 
 type RoleListResp struct {
-	Data     []*Role        `thrift:"data,1,optional" frugal:"1,optional,list<Role>" json:"data,omitempty"`
+	Data     []*base.Role   `thrift:"data,1,optional" frugal:"1,optional,list<base.Role>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewRoleListResp() *RoleListResp {
 	return &RoleListResp{
-		Data:     []*Role{},
+		Data:     []*base.Role{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *RoleListResp) InitDefault() {
-	p.Data = []*Role{}
+	p.Data = []*base.Role{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var RoleListResp_Data_DEFAULT []*Role = []*Role{}
+var RoleListResp_Data_DEFAULT []*base.Role = []*base.Role{}
 
-func (p *RoleListResp) GetData() (v []*Role) {
+func (p *RoleListResp) GetData() (v []*base.Role) {
 	if !p.IsSetData() {
 		return RoleListResp_Data_DEFAULT
 	}
@@ -2097,7 +1494,7 @@ func (p *RoleListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *RoleListResp) SetData(val []*Role) {
+func (p *RoleListResp) SetData(val []*base.Role) {
 	p.Data = val
 }
 func (p *RoleListResp) SetBaseResp(val *base.BaseResp) {
@@ -2548,211 +1945,6 @@ var fieldIDToName_CreateMenuAuthReq = map[int16]string{
 	2: "Ids",
 }
 
-type Dict struct {
-	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Name      string `thrift:"name,3" frugal:"3,default,string" json:"name"`
-	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
-	Desc      string `thrift:"desc,6" frugal:"6,default,string" json:"desc"`
-	CreatedAt string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,8" frugal:"8,default,string" json:"updatedAt"`
-}
-
-func NewDict() *Dict {
-	return &Dict{
-		Id:        0,
-		Title:     "",
-		Name:      "",
-		Status:    0,
-		Desc:      "",
-		CreatedAt: "",
-		UpdatedAt: "",
-	}
-}
-
-func (p *Dict) InitDefault() {
-	p.Id = 0
-	p.Title = ""
-	p.Name = ""
-	p.Status = 0
-	p.Desc = ""
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-}
-
-func (p *Dict) GetId() (v int64) {
-	return p.Id
-}
-
-func (p *Dict) GetTitle() (v string) {
-	return p.Title
-}
-
-func (p *Dict) GetName() (v string) {
-	return p.Name
-}
-
-func (p *Dict) GetStatus() (v int64) {
-	return p.Status
-}
-
-func (p *Dict) GetDesc() (v string) {
-	return p.Desc
-}
-
-func (p *Dict) GetCreatedAt() (v string) {
-	return p.CreatedAt
-}
-
-func (p *Dict) GetUpdatedAt() (v string) {
-	return p.UpdatedAt
-}
-func (p *Dict) SetId(val int64) {
-	p.Id = val
-}
-func (p *Dict) SetTitle(val string) {
-	p.Title = val
-}
-func (p *Dict) SetName(val string) {
-	p.Name = val
-}
-func (p *Dict) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *Dict) SetDesc(val string) {
-	p.Desc = val
-}
-func (p *Dict) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Dict) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-
-func (p *Dict) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Dict(%+v)", *p)
-}
-
-var fieldIDToName_Dict = map[int16]string{
-	1: "id",
-	2: "title",
-	3: "name",
-	5: "status",
-	6: "desc",
-	7: "createdAt",
-	8: "updatedAt",
-}
-
-type Dictht struct {
-	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Key       string `thrift:"key,3" frugal:"3,default,string" json:"key"`
-	Value     string `thrift:"value,4" frugal:"4,default,string" json:"value"`
-	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
-	CreatedAt string `thrift:"createdAt,6" frugal:"6,default,string" json:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,7" frugal:"7,default,string" json:"updatedAt"`
-	DictId    int64  `thrift:"dictId,8" frugal:"8,default,i64" json:"dictId"`
-}
-
-func NewDictht() *Dictht {
-	return &Dictht{
-		Id:        0,
-		Title:     "",
-		Key:       "",
-		Value:     "",
-		Status:    0,
-		CreatedAt: "",
-		UpdatedAt: "",
-	}
-}
-
-func (p *Dictht) InitDefault() {
-	p.Id = 0
-	p.Title = ""
-	p.Key = ""
-	p.Value = ""
-	p.Status = 0
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-}
-
-func (p *Dictht) GetId() (v int64) {
-	return p.Id
-}
-
-func (p *Dictht) GetTitle() (v string) {
-	return p.Title
-}
-
-func (p *Dictht) GetKey() (v string) {
-	return p.Key
-}
-
-func (p *Dictht) GetValue() (v string) {
-	return p.Value
-}
-
-func (p *Dictht) GetStatus() (v int64) {
-	return p.Status
-}
-
-func (p *Dictht) GetCreatedAt() (v string) {
-	return p.CreatedAt
-}
-
-func (p *Dictht) GetUpdatedAt() (v string) {
-	return p.UpdatedAt
-}
-
-func (p *Dictht) GetDictId() (v int64) {
-	return p.DictId
-}
-func (p *Dictht) SetId(val int64) {
-	p.Id = val
-}
-func (p *Dictht) SetTitle(val string) {
-	p.Title = val
-}
-func (p *Dictht) SetKey(val string) {
-	p.Key = val
-}
-func (p *Dictht) SetValue(val string) {
-	p.Value = val
-}
-func (p *Dictht) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *Dictht) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Dictht) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Dictht) SetDictId(val int64) {
-	p.DictId = val
-}
-
-func (p *Dictht) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Dictht(%+v)", *p)
-}
-
-var fieldIDToName_Dictht = map[int16]string{
-	1: "id",
-	2: "title",
-	3: "key",
-	4: "value",
-	5: "status",
-	6: "createdAt",
-	7: "updatedAt",
-	8: "dictId",
-}
-
 type DictListReq struct {
 	Title    string `thrift:"title,1,optional" frugal:"1,optional,string" json:"title,omitempty"`
 	Name     string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
@@ -2916,25 +2108,25 @@ var fieldIDToName_DicthtListReq = map[int16]string{
 }
 
 type DictResp struct {
-	Data     *Dict          `thrift:"data,1,optional" frugal:"1,optional,Dict" json:"data,omitempty"`
+	Data     *base.Dict     `thrift:"data,1,optional" frugal:"1,optional,base.Dict" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDictResp() *DictResp {
 	return &DictResp{
-		Data:     &Dict{},
+		Data:     &base.Dict{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DictResp) InitDefault() {
-	p.Data = &Dict{}
+	p.Data = &base.Dict{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DictResp_Data_DEFAULT *Dict = &Dict{}
+var DictResp_Data_DEFAULT *base.Dict = &base.Dict{}
 
-func (p *DictResp) GetData() (v *Dict) {
+func (p *DictResp) GetData() (v *base.Dict) {
 	if !p.IsSetData() {
 		return DictResp_Data_DEFAULT
 	}
@@ -2949,7 +2141,7 @@ func (p *DictResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DictResp) SetData(val *Dict) {
+func (p *DictResp) SetData(val *base.Dict) {
 	p.Data = val
 }
 func (p *DictResp) SetBaseResp(val *base.BaseResp) {
@@ -2977,25 +2169,25 @@ var fieldIDToName_DictResp = map[int16]string{
 }
 
 type DicthtResp struct {
-	Data     *Dictht        `thrift:"data,1,optional" frugal:"1,optional,Dictht" json:"data,omitempty"`
+	Data     *base.Dictht   `thrift:"data,1,optional" frugal:"1,optional,base.Dictht" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDicthtResp() *DicthtResp {
 	return &DicthtResp{
-		Data:     &Dictht{},
+		Data:     &base.Dictht{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DicthtResp) InitDefault() {
-	p.Data = &Dictht{}
+	p.Data = &base.Dictht{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DicthtResp_Data_DEFAULT *Dictht = &Dictht{}
+var DicthtResp_Data_DEFAULT *base.Dictht = &base.Dictht{}
 
-func (p *DicthtResp) GetData() (v *Dictht) {
+func (p *DicthtResp) GetData() (v *base.Dictht) {
 	if !p.IsSetData() {
 		return DicthtResp_Data_DEFAULT
 	}
@@ -3010,7 +2202,7 @@ func (p *DicthtResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DicthtResp) SetData(val *Dictht) {
+func (p *DicthtResp) SetData(val *base.Dictht) {
 	p.Data = val
 }
 func (p *DicthtResp) SetBaseResp(val *base.BaseResp) {
@@ -3038,25 +2230,25 @@ var fieldIDToName_DicthtResp = map[int16]string{
 }
 
 type DictListResp struct {
-	Data     []*Dict        `thrift:"data,1,optional" frugal:"1,optional,list<Dict>" json:"data,omitempty"`
+	Data     []*base.Dict   `thrift:"data,1,optional" frugal:"1,optional,list<base.Dict>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDictListResp() *DictListResp {
 	return &DictListResp{
-		Data:     []*Dict{},
+		Data:     []*base.Dict{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DictListResp) InitDefault() {
-	p.Data = []*Dict{}
+	p.Data = []*base.Dict{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DictListResp_Data_DEFAULT []*Dict = []*Dict{}
+var DictListResp_Data_DEFAULT []*base.Dict = []*base.Dict{}
 
-func (p *DictListResp) GetData() (v []*Dict) {
+func (p *DictListResp) GetData() (v []*base.Dict) {
 	if !p.IsSetData() {
 		return DictListResp_Data_DEFAULT
 	}
@@ -3071,7 +2263,7 @@ func (p *DictListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DictListResp) SetData(val []*Dict) {
+func (p *DictListResp) SetData(val []*base.Dict) {
 	p.Data = val
 }
 func (p *DictListResp) SetBaseResp(val *base.BaseResp) {
@@ -3099,25 +2291,25 @@ var fieldIDToName_DictListResp = map[int16]string{
 }
 
 type DicthtListResp struct {
-	Data     []*Dictht      `thrift:"data,1,optional" frugal:"1,optional,list<Dictht>" json:"data,omitempty"`
+	Data     []*base.Dictht `thrift:"data,1,optional" frugal:"1,optional,list<base.Dictht>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewDicthtListResp() *DicthtListResp {
 	return &DicthtListResp{
-		Data:     []*Dictht{},
+		Data:     []*base.Dictht{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *DicthtListResp) InitDefault() {
-	p.Data = []*Dictht{}
+	p.Data = []*base.Dictht{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var DicthtListResp_Data_DEFAULT []*Dictht = []*Dictht{}
+var DicthtListResp_Data_DEFAULT []*base.Dictht = []*base.Dictht{}
 
-func (p *DicthtListResp) GetData() (v []*Dictht) {
+func (p *DicthtListResp) GetData() (v []*base.Dictht) {
 	if !p.IsSetData() {
 		return DicthtListResp_Data_DEFAULT
 	}
@@ -3132,7 +2324,7 @@ func (p *DicthtListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *DicthtListResp) SetData(val []*Dictht) {
+func (p *DicthtListResp) SetData(val []*base.Dictht) {
 	p.Data = val
 }
 func (p *DicthtListResp) SetBaseResp(val *base.BaseResp) {
@@ -3340,307 +2532,6 @@ var fieldIDToName_LogListReq = map[int16]string{
 	8: "identity",
 }
 
-type Log struct {
-	Type        string `thrift:"type,1,optional" frugal:"1,optional,string" json:"type,omitempty"`
-	Method      string `thrift:"method,2,optional" frugal:"2,optional,string" json:"method,omitempty"`
-	Api         string `thrift:"api,3,optional" frugal:"3,optional,string" json:"api,omitempty"`
-	Success     bool   `thrift:"success,4,optional" frugal:"4,optional,bool" json:"success,omitempty"`
-	ReqContent  string `thrift:"reqContent,5,optional" frugal:"5,optional,string" json:"reqContent,omitempty"`
-	RespContent string `thrift:"respContent,6,optional" frugal:"6,optional,string" json:"respContent,omitempty"`
-	Ip          string `thrift:"ip,7,optional" frugal:"7,optional,string" json:"ip,omitempty"`
-	UserAgent   string `thrift:"userAgent,8,optional" frugal:"8,optional,string" json:"userAgent,omitempty"`
-	Operatorsr  string `thrift:"operatorsr,9,optional" frugal:"9,optional,string" json:"operatorsr,omitempty"`
-	Time        int64  `thrift:"time,10,optional" frugal:"10,optional,i64" json:"time,omitempty"`
-	CreatedAt   string `thrift:"createdAt,11,optional" frugal:"11,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt   string `thrift:"updatedAt,12,optional" frugal:"12,optional,string" json:"updatedAt,omitempty"`
-	Identity    int64  `thrift:"identity,13,optional" frugal:"13,optional,i64" json:"identity,omitempty"`
-	Id          int64  `thrift:"id,251,optional" frugal:"251,optional,i64" json:"id,omitempty"`
-}
-
-func NewLog() *Log {
-	return &Log{
-		Type:        "",
-		Method:      "",
-		Api:         "",
-		Success:     true,
-		ReqContent:  "",
-		RespContent: "",
-		Ip:          "",
-		UserAgent:   "",
-		Operatorsr:  "",
-		Time:        0,
-		CreatedAt:   "",
-		UpdatedAt:   "",
-		Identity:    0,
-		Id:          0,
-	}
-}
-
-func (p *Log) InitDefault() {
-	p.Type = ""
-	p.Method = ""
-	p.Api = ""
-	p.Success = true
-	p.ReqContent = ""
-	p.RespContent = ""
-	p.Ip = ""
-	p.UserAgent = ""
-	p.Operatorsr = ""
-	p.Time = 0
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.Identity = 0
-	p.Id = 0
-}
-
-var Log_Type_DEFAULT string = ""
-
-func (p *Log) GetType() (v string) {
-	if !p.IsSetType() {
-		return Log_Type_DEFAULT
-	}
-	return p.Type
-}
-
-var Log_Method_DEFAULT string = ""
-
-func (p *Log) GetMethod() (v string) {
-	if !p.IsSetMethod() {
-		return Log_Method_DEFAULT
-	}
-	return p.Method
-}
-
-var Log_Api_DEFAULT string = ""
-
-func (p *Log) GetApi() (v string) {
-	if !p.IsSetApi() {
-		return Log_Api_DEFAULT
-	}
-	return p.Api
-}
-
-var Log_Success_DEFAULT bool = true
-
-func (p *Log) GetSuccess() (v bool) {
-	if !p.IsSetSuccess() {
-		return Log_Success_DEFAULT
-	}
-	return p.Success
-}
-
-var Log_ReqContent_DEFAULT string = ""
-
-func (p *Log) GetReqContent() (v string) {
-	if !p.IsSetReqContent() {
-		return Log_ReqContent_DEFAULT
-	}
-	return p.ReqContent
-}
-
-var Log_RespContent_DEFAULT string = ""
-
-func (p *Log) GetRespContent() (v string) {
-	if !p.IsSetRespContent() {
-		return Log_RespContent_DEFAULT
-	}
-	return p.RespContent
-}
-
-var Log_Ip_DEFAULT string = ""
-
-func (p *Log) GetIp() (v string) {
-	if !p.IsSetIp() {
-		return Log_Ip_DEFAULT
-	}
-	return p.Ip
-}
-
-var Log_UserAgent_DEFAULT string = ""
-
-func (p *Log) GetUserAgent() (v string) {
-	if !p.IsSetUserAgent() {
-		return Log_UserAgent_DEFAULT
-	}
-	return p.UserAgent
-}
-
-var Log_Operatorsr_DEFAULT string = ""
-
-func (p *Log) GetOperatorsr() (v string) {
-	if !p.IsSetOperatorsr() {
-		return Log_Operatorsr_DEFAULT
-	}
-	return p.Operatorsr
-}
-
-var Log_Time_DEFAULT int64 = 0
-
-func (p *Log) GetTime() (v int64) {
-	if !p.IsSetTime() {
-		return Log_Time_DEFAULT
-	}
-	return p.Time
-}
-
-var Log_CreatedAt_DEFAULT string = ""
-
-func (p *Log) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Log_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Log_UpdatedAt_DEFAULT string = ""
-
-func (p *Log) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Log_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Log_Identity_DEFAULT int64 = 0
-
-func (p *Log) GetIdentity() (v int64) {
-	if !p.IsSetIdentity() {
-		return Log_Identity_DEFAULT
-	}
-	return p.Identity
-}
-
-var Log_Id_DEFAULT int64 = 0
-
-func (p *Log) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Log_Id_DEFAULT
-	}
-	return p.Id
-}
-func (p *Log) SetType(val string) {
-	p.Type = val
-}
-func (p *Log) SetMethod(val string) {
-	p.Method = val
-}
-func (p *Log) SetApi(val string) {
-	p.Api = val
-}
-func (p *Log) SetSuccess(val bool) {
-	p.Success = val
-}
-func (p *Log) SetReqContent(val string) {
-	p.ReqContent = val
-}
-func (p *Log) SetRespContent(val string) {
-	p.RespContent = val
-}
-func (p *Log) SetIp(val string) {
-	p.Ip = val
-}
-func (p *Log) SetUserAgent(val string) {
-	p.UserAgent = val
-}
-func (p *Log) SetOperatorsr(val string) {
-	p.Operatorsr = val
-}
-func (p *Log) SetTime(val int64) {
-	p.Time = val
-}
-func (p *Log) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Log) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Log) SetIdentity(val int64) {
-	p.Identity = val
-}
-func (p *Log) SetId(val int64) {
-	p.Id = val
-}
-
-func (p *Log) IsSetType() bool {
-	return p.Type != Log_Type_DEFAULT
-}
-
-func (p *Log) IsSetMethod() bool {
-	return p.Method != Log_Method_DEFAULT
-}
-
-func (p *Log) IsSetApi() bool {
-	return p.Api != Log_Api_DEFAULT
-}
-
-func (p *Log) IsSetSuccess() bool {
-	return p.Success != Log_Success_DEFAULT
-}
-
-func (p *Log) IsSetReqContent() bool {
-	return p.ReqContent != Log_ReqContent_DEFAULT
-}
-
-func (p *Log) IsSetRespContent() bool {
-	return p.RespContent != Log_RespContent_DEFAULT
-}
-
-func (p *Log) IsSetIp() bool {
-	return p.Ip != Log_Ip_DEFAULT
-}
-
-func (p *Log) IsSetUserAgent() bool {
-	return p.UserAgent != Log_UserAgent_DEFAULT
-}
-
-func (p *Log) IsSetOperatorsr() bool {
-	return p.Operatorsr != Log_Operatorsr_DEFAULT
-}
-
-func (p *Log) IsSetTime() bool {
-	return p.Time != Log_Time_DEFAULT
-}
-
-func (p *Log) IsSetCreatedAt() bool {
-	return p.CreatedAt != Log_CreatedAt_DEFAULT
-}
-
-func (p *Log) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Log_UpdatedAt_DEFAULT
-}
-
-func (p *Log) IsSetIdentity() bool {
-	return p.Identity != Log_Identity_DEFAULT
-}
-
-func (p *Log) IsSetId() bool {
-	return p.Id != Log_Id_DEFAULT
-}
-
-func (p *Log) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Log(%+v)", *p)
-}
-
-var fieldIDToName_Log = map[int16]string{
-	1:   "type",
-	2:   "method",
-	3:   "api",
-	4:   "success",
-	5:   "reqContent",
-	6:   "respContent",
-	7:   "ip",
-	8:   "userAgent",
-	9:   "operatorsr",
-	10:  "time",
-	11:  "createdAt",
-	12:  "updatedAt",
-	13:  "identity",
-	251: "id",
-}
-
 type DeleteLogReq struct {
 	StartAt string `thrift:"startAt,1,optional" frugal:"1,optional,string" json:"startAt,omitempty"`
 	EndAt   string `thrift:"endAt,2,optional" frugal:"2,optional,string" json:"endAt,omitempty"`
@@ -3703,25 +2594,25 @@ var fieldIDToName_DeleteLogReq = map[int16]string{
 }
 
 type LogListResp struct {
-	Data     []*Log         `thrift:"data,1,optional" frugal:"1,optional,list<Log>" json:"data,omitempty"`
+	Data     []*base.Log    `thrift:"data,1,optional" frugal:"1,optional,list<base.Log>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewLogListResp() *LogListResp {
 	return &LogListResp{
-		Data:     []*Log{},
+		Data:     []*base.Log{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *LogListResp) InitDefault() {
-	p.Data = []*Log{}
+	p.Data = []*base.Log{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var LogListResp_Data_DEFAULT []*Log = []*Log{}
+var LogListResp_Data_DEFAULT []*base.Log = []*base.Log{}
 
-func (p *LogListResp) GetData() (v []*Log) {
+func (p *LogListResp) GetData() (v []*base.Log) {
 	if !p.IsSetData() {
 		return LogListResp_Data_DEFAULT
 	}
@@ -3736,7 +2627,7 @@ func (p *LogListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *LogListResp) SetData(val []*Log) {
+func (p *LogListResp) SetData(val []*base.Log) {
 	p.Data = val
 }
 func (p *LogListResp) SetBaseResp(val *base.BaseResp) {
@@ -3987,17 +2878,17 @@ type SystemService interface {
 
 	GetRoleMenu(ctx context.Context, req *base.IdReq) (r *MenuListResp, err error)
 
-	CreateDict(ctx context.Context, req *Dict) (r *DictResp, err error)
+	CreateDict(ctx context.Context, req *base.Dict) (r *DictResp, err error)
 
-	UpdateDict(ctx context.Context, req *Dict) (r *DictResp, err error)
+	UpdateDict(ctx context.Context, req *base.Dict) (r *DictResp, err error)
 
 	DeleteDict(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
 	DictList(ctx context.Context, req *DictListReq) (r *DictListResp, err error)
 
-	CreateDictht(ctx context.Context, req *Dictht) (r *DicthtResp, err error)
+	CreateDictht(ctx context.Context, req *base.Dictht) (r *DicthtResp, err error)
 
-	UpdateDictht(ctx context.Context, req *Dictht) (r *DicthtResp, err error)
+	UpdateDictht(ctx context.Context, req *base.Dictht) (r *DicthtResp, err error)
 
 	DeleteDictht(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
@@ -5531,7 +4422,7 @@ var fieldIDToName_SystemServiceGetRoleMenuResult = map[int16]string{
 }
 
 type SystemServiceCreateDictArgs struct {
-	Req *Dict `thrift:"req,1" frugal:"1,default,Dict" json:"req"`
+	Req *base.Dict `thrift:"req,1" frugal:"1,default,base.Dict" json:"req"`
 }
 
 func NewSystemServiceCreateDictArgs() *SystemServiceCreateDictArgs {
@@ -5541,15 +4432,15 @@ func NewSystemServiceCreateDictArgs() *SystemServiceCreateDictArgs {
 func (p *SystemServiceCreateDictArgs) InitDefault() {
 }
 
-var SystemServiceCreateDictArgs_Req_DEFAULT *Dict
+var SystemServiceCreateDictArgs_Req_DEFAULT *base.Dict
 
-func (p *SystemServiceCreateDictArgs) GetReq() (v *Dict) {
+func (p *SystemServiceCreateDictArgs) GetReq() (v *base.Dict) {
 	if !p.IsSetReq() {
 		return SystemServiceCreateDictArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceCreateDictArgs) SetReq(val *Dict) {
+func (p *SystemServiceCreateDictArgs) SetReq(val *base.Dict) {
 	p.Req = val
 }
 
@@ -5607,7 +4498,7 @@ var fieldIDToName_SystemServiceCreateDictResult = map[int16]string{
 }
 
 type SystemServiceUpdateDictArgs struct {
-	Req *Dict `thrift:"req,1" frugal:"1,default,Dict" json:"req"`
+	Req *base.Dict `thrift:"req,1" frugal:"1,default,base.Dict" json:"req"`
 }
 
 func NewSystemServiceUpdateDictArgs() *SystemServiceUpdateDictArgs {
@@ -5617,15 +4508,15 @@ func NewSystemServiceUpdateDictArgs() *SystemServiceUpdateDictArgs {
 func (p *SystemServiceUpdateDictArgs) InitDefault() {
 }
 
-var SystemServiceUpdateDictArgs_Req_DEFAULT *Dict
+var SystemServiceUpdateDictArgs_Req_DEFAULT *base.Dict
 
-func (p *SystemServiceUpdateDictArgs) GetReq() (v *Dict) {
+func (p *SystemServiceUpdateDictArgs) GetReq() (v *base.Dict) {
 	if !p.IsSetReq() {
 		return SystemServiceUpdateDictArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceUpdateDictArgs) SetReq(val *Dict) {
+func (p *SystemServiceUpdateDictArgs) SetReq(val *base.Dict) {
 	p.Req = val
 }
 
@@ -5835,7 +4726,7 @@ var fieldIDToName_SystemServiceDictListResult = map[int16]string{
 }
 
 type SystemServiceCreateDicthtArgs struct {
-	Req *Dictht `thrift:"req,1" frugal:"1,default,Dictht" json:"req"`
+	Req *base.Dictht `thrift:"req,1" frugal:"1,default,base.Dictht" json:"req"`
 }
 
 func NewSystemServiceCreateDicthtArgs() *SystemServiceCreateDicthtArgs {
@@ -5845,15 +4736,15 @@ func NewSystemServiceCreateDicthtArgs() *SystemServiceCreateDicthtArgs {
 func (p *SystemServiceCreateDicthtArgs) InitDefault() {
 }
 
-var SystemServiceCreateDicthtArgs_Req_DEFAULT *Dictht
+var SystemServiceCreateDicthtArgs_Req_DEFAULT *base.Dictht
 
-func (p *SystemServiceCreateDicthtArgs) GetReq() (v *Dictht) {
+func (p *SystemServiceCreateDicthtArgs) GetReq() (v *base.Dictht) {
 	if !p.IsSetReq() {
 		return SystemServiceCreateDicthtArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceCreateDicthtArgs) SetReq(val *Dictht) {
+func (p *SystemServiceCreateDicthtArgs) SetReq(val *base.Dictht) {
 	p.Req = val
 }
 
@@ -5911,7 +4802,7 @@ var fieldIDToName_SystemServiceCreateDicthtResult = map[int16]string{
 }
 
 type SystemServiceUpdateDicthtArgs struct {
-	Req *Dictht `thrift:"req,1" frugal:"1,default,Dictht" json:"req"`
+	Req *base.Dictht `thrift:"req,1" frugal:"1,default,base.Dictht" json:"req"`
 }
 
 func NewSystemServiceUpdateDicthtArgs() *SystemServiceUpdateDicthtArgs {
@@ -5921,15 +4812,15 @@ func NewSystemServiceUpdateDicthtArgs() *SystemServiceUpdateDicthtArgs {
 func (p *SystemServiceUpdateDicthtArgs) InitDefault() {
 }
 
-var SystemServiceUpdateDicthtArgs_Req_DEFAULT *Dictht
+var SystemServiceUpdateDicthtArgs_Req_DEFAULT *base.Dictht
 
-func (p *SystemServiceUpdateDicthtArgs) GetReq() (v *Dictht) {
+func (p *SystemServiceUpdateDicthtArgs) GetReq() (v *base.Dictht) {
 	if !p.IsSetReq() {
 		return SystemServiceUpdateDicthtArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *SystemServiceUpdateDicthtArgs) SetReq(val *Dictht) {
+func (p *SystemServiceUpdateDicthtArgs) SetReq(val *base.Dictht) {
 	p.Req = val
 }
 

@@ -1,5 +1,10 @@
 MODULE = github.com/kcersing/deer
 
+
+hz_update:
+	hz update -idl ../idl/admin/$(service).thrift
+
+
 .PHONY: kitex_gen_order
 kitex_gen_order:
 	kitex --thrift-plugin validator -module gen ../idl/rpc/system.thrift

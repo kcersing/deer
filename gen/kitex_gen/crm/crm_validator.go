@@ -21,15 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *FollowUpPlan) IsValid() error {
-	return nil
-}
-func (p *FollowUpRecord) IsValid() error {
-	return nil
-}
-func (p *Opportunities) IsValid() error {
-	return nil
-}
 func (p *FollowUpPlanResp) IsValid() error {
 	if p.FollowUpPlan != nil {
 		if err := p.FollowUpPlan.IsValid(); err != nil {

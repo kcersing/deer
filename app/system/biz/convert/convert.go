@@ -2,14 +2,13 @@ package convert
 
 import (
 	"gen/kitex_gen/base"
-	"gen/kitex_gen/system"
 	"strconv"
 	"system/biz/dal/db/ent"
 	"time"
 )
 
-func EntToApi(e *ent.API) *system.Api {
-	return &system.Api{
+func EntToApi(e *ent.API) *base.Api {
+	return &base.Api{
 		Id:        e.ID,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
@@ -20,8 +19,8 @@ func EntToApi(e *ent.API) *system.Api {
 		Title:     e.Title,
 	}
 }
-func EntToLog(e *ent.Logs) *system.Log {
-	return &system.Log{
+func EntToLog(e *ent.Logs) *base.Log {
+	return &base.Log{
 		Type:        e.Type,
 		Method:      e.Method,
 		Api:         e.API,
@@ -39,8 +38,8 @@ func EntToLog(e *ent.Logs) *system.Log {
 	}
 }
 
-func EntToMenu(e *ent.Menu) *system.Menu {
-	return &system.Menu{
+func EntToMenu(e *ent.Menu) *base.Menu {
+	return &base.Menu{
 		Id:        e.ID,
 		Icon:      e.Icon,
 		Name:      e.Name,
@@ -56,8 +55,8 @@ func EntToMenu(e *ent.Menu) *system.Menu {
 	}
 }
 
-func EntToRole(e *ent.Role) *system.Role {
-	return &system.Role{
+func EntToRole(e *ent.Role) *base.Role {
+	return &base.Role{
 		Id:            e.ID,
 		Name:          e.Name,
 		Value:         e.Value,
@@ -67,8 +66,8 @@ func EntToRole(e *ent.Role) *system.Role {
 	}
 }
 
-func EntToDict(e *ent.Dict) *system.Dict {
-	return &system.Dict{
+func EntToDict(e *ent.Dict) *base.Dict {
+	return &base.Dict{
 		Id:        e.ID,
 		Title:     e.Title,
 		Name:      e.Name,
@@ -78,8 +77,8 @@ func EntToDict(e *ent.Dict) *system.Dict {
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
 	}
 }
-func EntToDictht(e *ent.Dictht) *system.Dictht {
-	return &system.Dictht{
+func EntToDictht(e *ent.Dictht) *base.Dictht {
+	return &base.Dictht{
 		Id:        e.ID,
 		Title:     e.Title,
 		Key:       e.Key,
@@ -91,11 +90,11 @@ func EntToDictht(e *ent.Dictht) *system.Dictht {
 	}
 }
 
-func FindMenuChildren(data []*ent.Menu, parentID int64) []*system.Menu {
+func FindMenuChildren(data []*ent.Menu, parentID int64) []*base.Menu {
 	if data == nil {
 		return nil
 	}
-	var result []*system.Menu
+	var result []*base.Menu
 	for _, v := range data {
 		// discard the parent menu, only find the children menu
 		if v.ParentID == parentID && v.ID != parentID {

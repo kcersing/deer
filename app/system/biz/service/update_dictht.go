@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
 	"system/biz/convert"
@@ -18,7 +19,7 @@ func NewUpdateDicthtService(ctx context.Context) *UpdateDicthtService {
 }
 
 // Run create note info
-func (s *UpdateDicthtService) Run(req *system.Dictht) (resp *system.DicthtResp, err error) {
+func (s *UpdateDicthtService) Run(req *base.Dictht) (resp *system.DicthtResp, err error) {
 	// Finish your business logic.
 
 	_, err = db.Client.Dictht.Query().

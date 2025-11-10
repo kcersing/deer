@@ -1,22 +1,13 @@
 namespace go system
 include "../base/base.thrift"
+include "../base/system.thrift"
 
-struct Api{
-    1: optional i64 id=0 (api.raw = "id")
-    2: optional string createdAt="" (api.raw = "createdAt")
-    3: optional string updatedAt="" (api.raw = "updatedAt")
-    4: optional string path="" (api.raw = "path")
-    5: optional string desc="" (api.raw = "desc")
-    6: optional string group="" (api.raw = "group")
-    7: optional string method="" (api.raw = "method")
-    8: optional string title="" (api.raw = "title")
-}
 struct ApiResp{
-   1:optional Api data={}
+   1:optional system.Api data={}
    255:optional base.BaseResp baseResp={}
 }
 struct ApiListResp{
-   1:optional list<Api> data={}
+   1:optional list<system.Api> data={}
    255:optional base.BaseResp baseResp={}
 }
 struct ApiListReq{
@@ -83,51 +74,26 @@ struct MenuListReq{
     2:  optional i64 pageSize=100 (api.raw = "pageSize")
 }
 struct MenuTree {
-    1:optional Menu menuInfo={}
+    1:optional system.Menu menuInfo={}
     4:optional list<MenuTree> children= []
     5:optional bool ignore=false
 }
-struct Menu{
-    1:optional i64 id=0 (api.raw = "id" )
-    2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
-    3:optional i64 parentId=0 (api.raw = "parentId")
-    4:optional i64 level=0 (api.raw = "level")
-    5:optional string path="" (api.raw = "path")
-    6:optional string redirect="" (api.raw = "redirect")
-    7:optional string component="" (api.raw = "component")
-    8:optional i64 menuType=0 (api.raw = "menuType")
 
-
-    12:optional i64 status=0 (api.raw = "status")
-
-    14:optional list<Menu> children=[]  (api.raw = "children")
-    15:optional string createdAt="" (api.raw = "createdAt")
-    16:optional string updatedAt="" (api.raw = "updatedAt")
-
-    20:optional string icon="" (api.raw = "icon")
-}
 struct MenuResp{
-   1:optional Menu data={}
+   1:optional system.Menu data={}
    255:optional base.BaseResp baseResp={}
 }
 struct MenuListResp{
-   1:optional list<Menu> data= []
+   1:optional list<system.Menu> data= []
    255:optional base.BaseResp baseResp={}
 }
-struct Role {
-    1:optional i64 id=0 (api.raw = "id")
-    2:optional string name="" (api.raw = "name")
-    3:optional string value=""(api.raw = "value")
-    4:optional string defaultRouter=""(api.raw = "defaultRouter")
-    5:optional string remark=""(api.raw = "remark")
-    6:optional list<i64> apis= [](api.raw = "apis")
-}
+
 struct RoleResp {
-    1:optional Role data={}
+    1:optional system.Role data={}
     255:optional base.BaseResp baseResp={}
 }
 struct RoleListResp {
-    1:optional list<Role> data= []
+    1:optional list<system.Role> data= []
     255:optional base.BaseResp baseResp={}
 }
 struct CreateRoleReq{
@@ -157,28 +123,7 @@ struct CreateMenuAuthReq{
     2:optional list<i64> Ids = [] (api.raw = "ids")
 }
 
-// 字典信息
-struct Dict {
-    1:  i64 id=0 (api.raw = "id" )
-    2:  string title="" (api.raw = "title" )
-    3:  string name="" (api.raw = "name" )
-    5:  i64 status=0 (api.raw = "status" )
-    6:  string desc="" (api.raw = "desc" )
-    7:  string createdAt="" (api.raw = "createdAt" )
-    8:  string updatedAt="" (api.raw = "updatedAt" )
-}
 
-// 字典键值信息
-struct Dictht {
-    1:  i64 id=0 (api.raw = "id" )
-    2:  string title="" (api.raw = "title" )
-    3:  string key="" (api.raw = "key" )
-    4:  string value="" (api.raw = "value" )
-    5:  i64 status=0 (api.raw = "status" )
-    6:  string createdAt="" (api.raw = "createdAt" )
-    7:  string updatedAt="" (api.raw = "updatedAt" )
-    8:  i64 dictId (api.raw = "dictId" )
-}
 // 字典列表请求数据
 struct DictListReq {
     1:  optional string title  = ""(api.raw = "title" )
@@ -194,19 +139,19 @@ struct DicthtListReq{
 }
 
 struct DictResp{
-    1:optional Dict data={}
+    1:optional system.Dict data={}
     255:optional base.BaseResp baseResp={}
 }
 struct DicthtResp{
-    1:optional Dictht data={}
+    1:optional system.Dictht data={}
     255:optional base.BaseResp baseResp={}
 }
 struct DictListResp{
-    1:optional list<Dict> data={}
+    1:optional list<system.Dict> data={}
     255:optional base.BaseResp baseResp={}
 }
 struct DicthtListResp{
-    1:optional list<Dictht> data={}
+    1:optional list<system.Dictht> data={}
     255:optional base.BaseResp baseResp={}
 }
 
@@ -222,30 +167,13 @@ struct LogListReq {
     8: optional i64 identity =0(api.raw = "identity")
 }
 
-//日志信息
-struct Log {
-    1: optional string type="" (api.raw = "type")
-    2: optional string method =""(api.raw = "method")
-    3: optional string api =""(api.raw = "api")
-    4: optional bool success = true (api.raw = "success")
-    5: optional string reqContent="" (api.raw = "reqContent")
-    6: optional string respContent="" (api.raw = "respContent")
-    7: optional string ip="" (api.raw = "ip")
-    8: optional string userAgent =""(api.raw = "userAgent")
-    9: optional string operatorsr =""(api.raw = "operatorsr")
-    10: optional i64 time=0 (api.raw = "time")
-    11: optional string createdAt =""(api.raw = "createdAt")
-    12: optional string updatedAt =""(api.raw = "updatedAt")
-    13: optional i64 identity =0(api.raw = "identity")
 
-    251: optional i64 id = 0 (api.raw = "id")
-}
 struct DeleteLogReq {
     1:  optional string startAt = "" (api.raw = "startAt")
     2:  optional string endAt = "" (api.raw = "endAt")
 }
 struct LogListResp{
-    1:optional list<Log> data={}
+    1:optional list<system.Log> data={}
     255:optional base.BaseResp baseResp={}
 }
 struct TreeResp{
@@ -282,17 +210,17 @@ service SystemService  {
     MenuListResp GetRoleMenu(1: base.IdReq req)
 
     // 创建字典信息
-    DictResp CreateDict(1: Dict req)
+    DictResp CreateDict(1: system.Dict req)
     // 更新字典信息
-    DictResp UpdateDict(1: Dict req)
+    DictResp UpdateDict(1: system.Dict req)
     // 删除字典信息
     base.NilResponse DeleteDict(1: base.IdReq req)
     // 获取字典列表
     DictListResp DictList(1: DictListReq req)
     // 创建字典键值信息
-    DicthtResp CreateDictht(1: Dictht req)
+    DicthtResp CreateDictht(1: system.Dictht req)
     // 更新字典键值信息
-    DicthtResp UpdateDictht(1: Dictht req)
+    DicthtResp UpdateDictht(1: system.Dictht req)
     // 删除字典键值信息
     base.NilResponse DeleteDictht(1: base.IdReq req)
     // 根据字典名获取字典键值列表

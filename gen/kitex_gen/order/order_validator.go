@@ -21,23 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *Item) IsValid() error {
-	return nil
-}
-func (p *Order) IsValid() error {
-	if p.OrderRefund != nil {
-		if err := p.OrderRefund.IsValid(); err != nil {
-			return fmt.Errorf("field OrderRefund not valid, %w", err)
-		}
-	}
-	return nil
-}
-func (p *OrderRefund) IsValid() error {
-	return nil
-}
-func (p *OrderPay) IsValid() error {
-	return nil
-}
 func (p *GetOrderInfoReq) IsValid() error {
 	return nil
 }

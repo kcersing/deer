@@ -2,16 +2,16 @@ package service
 
 import (
 	"context"
-	system "gen/kitex_gen/system"
+	Base "gen/kitex_gen/base"
 	"testing"
 )
 
 func TestMenu_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewMenuService(ctx)
+	s := NewGetMenuService(ctx)
 	// init req and assert value
 
-	req := &base.IdReq{}
+	req := &Base.IdReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

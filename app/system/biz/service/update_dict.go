@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
 	"github.com/pkg/errors"
 	"system/biz/convert"
@@ -17,7 +18,7 @@ func NewUpdateDictService(ctx context.Context) *UpdateDictService {
 }
 
 // Run create note info
-func (s *UpdateDictService) Run(req *system.Dict) (resp *system.DictResp, err error) {
+func (s *UpdateDictService) Run(req *base.Dict) (resp *system.DictResp, err error) {
 	// Finish your business logic.
 	dictionaryExist, _ := db.Client.Dict.Query().Where(dict.ID(req.GetId())).Exist(s.ctx)
 	if !dictionaryExist {

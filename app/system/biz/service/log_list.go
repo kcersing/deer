@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
@@ -20,7 +21,7 @@ func (s *LogListService) Run(req *system.LogListReq) (resp *system.LogListResp, 
 	// Finish your business logic.
 	var (
 		predicates []predicate.Logs
-		dataResp   []*system.Log
+		dataResp   []*base.Log
 	)
 	apis, err := db.Client.Logs.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).

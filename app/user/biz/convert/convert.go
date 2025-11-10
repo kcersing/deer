@@ -1,13 +1,14 @@
 package convert
 
 import (
-	User "gen/kitex_gen/user"
+	Base "gen/kitex_gen/base"
+
 	"time"
 	"user/biz/dal/db/ent"
 )
 
-func EntToUser(e *ent.User) *User.User {
-	return &User.User{
+func EntToUser(e *ent.User) *Base.User {
+	return &Base.User{
 		Id:       e.ID,
 		Avatar:   e.Avatar,
 		Mobile:   e.Mobile,

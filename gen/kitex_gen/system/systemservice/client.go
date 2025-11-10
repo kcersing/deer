@@ -32,12 +32,12 @@ type Client interface {
 	CreateRoleApi(ctx context.Context, req *system.CreateMenuAuthReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	GetRoleApi(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.ApiListResp, err error)
 	GetRoleMenu(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *system.MenuListResp, err error)
-	CreateDict(ctx context.Context, req *system.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error)
-	UpdateDict(ctx context.Context, req *system.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error)
+	CreateDict(ctx context.Context, req *base.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error)
+	UpdateDict(ctx context.Context, req *base.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error)
 	DeleteDict(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DictList(ctx context.Context, req *system.DictListReq, callOptions ...callopt.Option) (r *system.DictListResp, err error)
-	CreateDictht(ctx context.Context, req *system.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error)
-	UpdateDictht(ctx context.Context, req *system.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error)
+	CreateDictht(ctx context.Context, req *base.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error)
+	UpdateDictht(ctx context.Context, req *base.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error)
 	DeleteDictht(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DicthtList(ctx context.Context, req *system.DicthtListReq, callOptions ...callopt.Option) (r *system.DicthtListResp, err error)
 	LogList(ctx context.Context, req *system.LogListReq, callOptions ...callopt.Option) (r *system.LogListResp, err error)
@@ -174,12 +174,12 @@ func (p *kSystemServiceClient) GetRoleMenu(ctx context.Context, req *base.IdReq,
 	return p.kClient.GetRoleMenu(ctx, req)
 }
 
-func (p *kSystemServiceClient) CreateDict(ctx context.Context, req *system.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error) {
+func (p *kSystemServiceClient) CreateDict(ctx context.Context, req *base.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateDict(ctx, req)
 }
 
-func (p *kSystemServiceClient) UpdateDict(ctx context.Context, req *system.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error) {
+func (p *kSystemServiceClient) UpdateDict(ctx context.Context, req *base.Dict, callOptions ...callopt.Option) (r *system.DictResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateDict(ctx, req)
 }
@@ -194,12 +194,12 @@ func (p *kSystemServiceClient) DictList(ctx context.Context, req *system.DictLis
 	return p.kClient.DictList(ctx, req)
 }
 
-func (p *kSystemServiceClient) CreateDictht(ctx context.Context, req *system.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error) {
+func (p *kSystemServiceClient) CreateDictht(ctx context.Context, req *base.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CreateDictht(ctx, req)
 }
 
-func (p *kSystemServiceClient) UpdateDictht(ctx context.Context, req *system.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error) {
+func (p *kSystemServiceClient) UpdateDictht(ctx context.Context, req *base.Dictht, callOptions ...callopt.Option) (r *system.DicthtResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateDictht(ctx, req)
 }

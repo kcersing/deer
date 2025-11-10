@@ -21,9 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *Member) IsValid() error {
-	return nil
-}
 func (p *CreateMemberReq) IsValid() error {
 	return nil
 }

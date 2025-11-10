@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	Base "gen/kitex_gen/base"
 	"gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
@@ -20,7 +21,7 @@ func (s *DictListService) Run(req *system.DictListReq) (resp *system.DictListRes
 	// Finish your business logic.
 	var (
 		predicates []predicate.Dict
-		dataResp   []*system.Dict
+		dataResp   []*Base.Dict
 	)
 	all, err := db.Client.Dict.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).

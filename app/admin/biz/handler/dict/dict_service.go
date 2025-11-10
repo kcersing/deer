@@ -18,14 +18,14 @@ import (
 // @router /service/dict/create [POST]
 func CreateDict(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req dict.Dict
+	var req base.Dict
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp, err := client.SystemClient.CreateDict(ctx, &system.Dict{
+	resp, err := client.SystemClient.CreateDict(ctx, &base1.Dict{
 		Title:  req.GetTitle(),
 		Name:   req.GetName(),
 		Status: req.GetStatus(),
@@ -44,14 +44,14 @@ func CreateDict(ctx context.Context, c *app.RequestContext) {
 // @router /service/dict/update [POST]
 func UpdateDict(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req dict.Dict
+	var req base.Dict
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp, err := client.SystemClient.UpdateDict(ctx, &system.Dict{
+	resp, err := client.SystemClient.UpdateDict(ctx, &base1.Dict{
 		Id:     req.GetID(),
 		Title:  req.GetTitle(),
 		Name:   req.GetName(),
@@ -118,19 +118,19 @@ func DictList(ctx context.Context, c *app.RequestContext) {
 // @router /service/dict/dictht/create [POST]
 func CreateDictht(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req dict.Dictht
+	var req base.Dictht
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp, err := client.SystemClient.CreateDictht(ctx, &system.Dictht{
-		Title:    req.GetTitle(),
-		Key:      req.GetKey(),
-		Value:    req.GetValue(),
-		Status:   req.GetStatus(),
-		ParentID: req.GetParentID(),
+	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
+		Title:  req.GetTitle(),
+		Key:    req.GetKey(),
+		Value:  req.GetValue(),
+		Status: req.GetStatus(),
+		DictId: req.GetDictId(),
 	})
 
 	if err != nil {
@@ -145,20 +145,20 @@ func CreateDictht(ctx context.Context, c *app.RequestContext) {
 // @router /service/dict/dictht/update [POST]
 func UpdateDictht(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req dict.Dictht
+	var req base.Dictht
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp, err := client.SystemClient.CreateDictht(ctx, &system.Dictht{
-		Id:       req.GetID(),
-		Title:    req.GetTitle(),
-		Key:      req.GetKey(),
-		Value:    req.GetValue(),
-		Status:   req.GetStatus(),
-		ParentID: req.GetParentID(),
+	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
+		Id:     req.GetID(),
+		Title:  req.GetTitle(),
+		Key:    req.GetKey(),
+		Value:  req.GetValue(),
+		Status: req.GetStatus(),
+		DictId: req.GetDictId(),
 	})
 
 	if err != nil {

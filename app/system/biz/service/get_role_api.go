@@ -21,7 +21,7 @@ func NewGetRoleApiService(ctx context.Context) *GetRoleApiService {
 
 // Run create note info
 func (s *GetRoleApiService) Run(req *base.IdReq) (resp *system.ApiListResp, err error) {
-	var dataResp []*system.Api
+	var dataResp []*base.Api
 	all, err := db.Client.Role.
 		Query().
 		Where(role.IDIn(req.GetId())).

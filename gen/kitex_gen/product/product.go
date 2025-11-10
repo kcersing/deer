@@ -8,648 +8,6 @@ import (
 	"gen/kitex_gen/base"
 )
 
-type Product struct {
-	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Pic         string  `thrift:"pic,3,optional" frugal:"3,optional,string" json:"pic,omitempty"`
-	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
-	StatusName  string  `thrift:"statusName,18,optional" frugal:"18,optional,string" json:"statusName,omitempty"`
-	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
-	CreatedName string  `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
-	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
-	Price       float64 `thrift:"price,6,optional" frugal:"6,optional,double" json:"price,omitempty"`
-	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
-	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
-	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
-	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
-}
-
-func NewProduct() *Product {
-	return &Product{
-		Id:          0,
-		Name:        "",
-		Pic:         "",
-		Desc:        "",
-		Status:      0,
-		StatusName:  "",
-		CreatedId:   0,
-		CreatedName: "",
-		CreatedAt:   "",
-		UpdatedAt:   "",
-		Price:       0.0,
-		Stock:       0,
-		IsSales:     []int64{},
-		SignSalesAt: "",
-		EndSalesAt:  "",
-	}
-}
-
-func (p *Product) InitDefault() {
-	p.Id = 0
-	p.Name = ""
-	p.Pic = ""
-	p.Desc = ""
-	p.Status = 0
-	p.StatusName = ""
-	p.CreatedId = 0
-	p.CreatedName = ""
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.Price = 0.0
-	p.Stock = 0
-	p.IsSales = []int64{}
-	p.SignSalesAt = ""
-	p.EndSalesAt = ""
-}
-
-var Product_Id_DEFAULT int64 = 0
-
-func (p *Product) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Product_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Product_Name_DEFAULT string = ""
-
-func (p *Product) GetName() (v string) {
-	if !p.IsSetName() {
-		return Product_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var Product_Pic_DEFAULT string = ""
-
-func (p *Product) GetPic() (v string) {
-	if !p.IsSetPic() {
-		return Product_Pic_DEFAULT
-	}
-	return p.Pic
-}
-
-var Product_Desc_DEFAULT string = ""
-
-func (p *Product) GetDesc() (v string) {
-	if !p.IsSetDesc() {
-		return Product_Desc_DEFAULT
-	}
-	return p.Desc
-}
-
-var Product_Status_DEFAULT int64 = 0
-
-func (p *Product) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return Product_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var Product_StatusName_DEFAULT string = ""
-
-func (p *Product) GetStatusName() (v string) {
-	if !p.IsSetStatusName() {
-		return Product_StatusName_DEFAULT
-	}
-	return p.StatusName
-}
-
-var Product_CreatedId_DEFAULT int64 = 0
-
-func (p *Product) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return Product_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-
-var Product_CreatedName_DEFAULT string = ""
-
-func (p *Product) GetCreatedName() (v string) {
-	if !p.IsSetCreatedName() {
-		return Product_CreatedName_DEFAULT
-	}
-	return p.CreatedName
-}
-
-var Product_CreatedAt_DEFAULT string = ""
-
-func (p *Product) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Product_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Product_UpdatedAt_DEFAULT string = ""
-
-func (p *Product) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Product_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Product_Price_DEFAULT float64 = 0.0
-
-func (p *Product) GetPrice() (v float64) {
-	if !p.IsSetPrice() {
-		return Product_Price_DEFAULT
-	}
-	return p.Price
-}
-
-var Product_Stock_DEFAULT int64 = 0
-
-func (p *Product) GetStock() (v int64) {
-	if !p.IsSetStock() {
-		return Product_Stock_DEFAULT
-	}
-	return p.Stock
-}
-
-var Product_IsSales_DEFAULT []int64 = []int64{}
-
-func (p *Product) GetIsSales() (v []int64) {
-	if !p.IsSetIsSales() {
-		return Product_IsSales_DEFAULT
-	}
-	return p.IsSales
-}
-
-var Product_SignSalesAt_DEFAULT string = ""
-
-func (p *Product) GetSignSalesAt() (v string) {
-	if !p.IsSetSignSalesAt() {
-		return Product_SignSalesAt_DEFAULT
-	}
-	return p.SignSalesAt
-}
-
-var Product_EndSalesAt_DEFAULT string = ""
-
-func (p *Product) GetEndSalesAt() (v string) {
-	if !p.IsSetEndSalesAt() {
-		return Product_EndSalesAt_DEFAULT
-	}
-	return p.EndSalesAt
-}
-func (p *Product) SetId(val int64) {
-	p.Id = val
-}
-func (p *Product) SetName(val string) {
-	p.Name = val
-}
-func (p *Product) SetPic(val string) {
-	p.Pic = val
-}
-func (p *Product) SetDesc(val string) {
-	p.Desc = val
-}
-func (p *Product) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *Product) SetStatusName(val string) {
-	p.StatusName = val
-}
-func (p *Product) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-func (p *Product) SetCreatedName(val string) {
-	p.CreatedName = val
-}
-func (p *Product) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Product) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Product) SetPrice(val float64) {
-	p.Price = val
-}
-func (p *Product) SetStock(val int64) {
-	p.Stock = val
-}
-func (p *Product) SetIsSales(val []int64) {
-	p.IsSales = val
-}
-func (p *Product) SetSignSalesAt(val string) {
-	p.SignSalesAt = val
-}
-func (p *Product) SetEndSalesAt(val string) {
-	p.EndSalesAt = val
-}
-
-func (p *Product) IsSetId() bool {
-	return p.Id != Product_Id_DEFAULT
-}
-
-func (p *Product) IsSetName() bool {
-	return p.Name != Product_Name_DEFAULT
-}
-
-func (p *Product) IsSetPic() bool {
-	return p.Pic != Product_Pic_DEFAULT
-}
-
-func (p *Product) IsSetDesc() bool {
-	return p.Desc != Product_Desc_DEFAULT
-}
-
-func (p *Product) IsSetStatus() bool {
-	return p.Status != Product_Status_DEFAULT
-}
-
-func (p *Product) IsSetStatusName() bool {
-	return p.StatusName != Product_StatusName_DEFAULT
-}
-
-func (p *Product) IsSetCreatedId() bool {
-	return p.CreatedId != Product_CreatedId_DEFAULT
-}
-
-func (p *Product) IsSetCreatedName() bool {
-	return p.CreatedName != Product_CreatedName_DEFAULT
-}
-
-func (p *Product) IsSetCreatedAt() bool {
-	return p.CreatedAt != Product_CreatedAt_DEFAULT
-}
-
-func (p *Product) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Product_UpdatedAt_DEFAULT
-}
-
-func (p *Product) IsSetPrice() bool {
-	return p.Price != Product_Price_DEFAULT
-}
-
-func (p *Product) IsSetStock() bool {
-	return p.Stock != Product_Stock_DEFAULT
-}
-
-func (p *Product) IsSetIsSales() bool {
-	return p.IsSales != nil
-}
-
-func (p *Product) IsSetSignSalesAt() bool {
-	return p.SignSalesAt != Product_SignSalesAt_DEFAULT
-}
-
-func (p *Product) IsSetEndSalesAt() bool {
-	return p.EndSalesAt != Product_EndSalesAt_DEFAULT
-}
-
-func (p *Product) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Product(%+v)", *p)
-}
-
-var fieldIDToName_Product = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "pic",
-	4:  "desc",
-	8:  "status",
-	18: "statusName",
-	20: "createdId",
-	21: "createdName",
-	16: "createdAt",
-	17: "updatedAt",
-	6:  "price",
-	7:  "stock",
-	10: "isSales",
-	13: "signSalesAt",
-	14: "endSalesAt",
-}
-
-type Item struct {
-	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Pic         string  `thrift:"pic,3,optional" frugal:"3,optional,string" json:"pic,omitempty"`
-	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	Duration    int64   `thrift:"duration,5,optional" frugal:"5,optional,i64" json:"duration,omitempty"`
-	Length      int64   `thrift:"length,6,optional" frugal:"6,optional,i64" json:"length,omitempty"`
-	Count       int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
-	Type        string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
-	ActiveAt    string  `thrift:"activeAt,9,optional" frugal:"9,optional,string" json:"activeAt,omitempty"`
-	ExpiredAt   string  `thrift:"expiredAt,10,optional" frugal:"10,optional,string" json:"expiredAt,omitempty"`
-	TagId       []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
-	CreatedId   int64   `thrift:"createdId,14,optional" frugal:"14,optional,i64" json:"createdId,omitempty"`
-	CreatedName string  `thrift:"createdName,15,optional" frugal:"15,optional,string" json:"createdName,omitempty"`
-	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
-}
-
-func NewItem() *Item {
-	return &Item{
-		Id:          0,
-		Name:        "",
-		Pic:         "",
-		Desc:        "",
-		Duration:    0,
-		Length:      0,
-		Count:       0,
-		Type:        "",
-		ActiveAt:    "",
-		ExpiredAt:   "",
-		TagId:       []int64{},
-		CreatedId:   0,
-		CreatedName: "",
-		CreatedAt:   "",
-		UpdatedAt:   "",
-	}
-}
-
-func (p *Item) InitDefault() {
-	p.Id = 0
-	p.Name = ""
-	p.Pic = ""
-	p.Desc = ""
-	p.Duration = 0
-	p.Length = 0
-	p.Count = 0
-	p.Type = ""
-	p.ActiveAt = ""
-	p.ExpiredAt = ""
-	p.TagId = []int64{}
-	p.CreatedId = 0
-	p.CreatedName = ""
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-}
-
-var Item_Id_DEFAULT int64 = 0
-
-func (p *Item) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Item_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Item_Name_DEFAULT string = ""
-
-func (p *Item) GetName() (v string) {
-	if !p.IsSetName() {
-		return Item_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var Item_Pic_DEFAULT string = ""
-
-func (p *Item) GetPic() (v string) {
-	if !p.IsSetPic() {
-		return Item_Pic_DEFAULT
-	}
-	return p.Pic
-}
-
-var Item_Desc_DEFAULT string = ""
-
-func (p *Item) GetDesc() (v string) {
-	if !p.IsSetDesc() {
-		return Item_Desc_DEFAULT
-	}
-	return p.Desc
-}
-
-var Item_Duration_DEFAULT int64 = 0
-
-func (p *Item) GetDuration() (v int64) {
-	if !p.IsSetDuration() {
-		return Item_Duration_DEFAULT
-	}
-	return p.Duration
-}
-
-var Item_Length_DEFAULT int64 = 0
-
-func (p *Item) GetLength() (v int64) {
-	if !p.IsSetLength() {
-		return Item_Length_DEFAULT
-	}
-	return p.Length
-}
-
-var Item_Count_DEFAULT int64 = 0
-
-func (p *Item) GetCount() (v int64) {
-	if !p.IsSetCount() {
-		return Item_Count_DEFAULT
-	}
-	return p.Count
-}
-
-var Item_Type_DEFAULT string = ""
-
-func (p *Item) GetType() (v string) {
-	if !p.IsSetType() {
-		return Item_Type_DEFAULT
-	}
-	return p.Type
-}
-
-var Item_ActiveAt_DEFAULT string = ""
-
-func (p *Item) GetActiveAt() (v string) {
-	if !p.IsSetActiveAt() {
-		return Item_ActiveAt_DEFAULT
-	}
-	return p.ActiveAt
-}
-
-var Item_ExpiredAt_DEFAULT string = ""
-
-func (p *Item) GetExpiredAt() (v string) {
-	if !p.IsSetExpiredAt() {
-		return Item_ExpiredAt_DEFAULT
-	}
-	return p.ExpiredAt
-}
-
-var Item_TagId_DEFAULT []int64 = []int64{}
-
-func (p *Item) GetTagId() (v []int64) {
-	if !p.IsSetTagId() {
-		return Item_TagId_DEFAULT
-	}
-	return p.TagId
-}
-
-var Item_CreatedId_DEFAULT int64 = 0
-
-func (p *Item) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return Item_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-
-var Item_CreatedName_DEFAULT string = ""
-
-func (p *Item) GetCreatedName() (v string) {
-	if !p.IsSetCreatedName() {
-		return Item_CreatedName_DEFAULT
-	}
-	return p.CreatedName
-}
-
-var Item_CreatedAt_DEFAULT string = ""
-
-func (p *Item) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Item_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Item_UpdatedAt_DEFAULT string = ""
-
-func (p *Item) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Item_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-func (p *Item) SetId(val int64) {
-	p.Id = val
-}
-func (p *Item) SetName(val string) {
-	p.Name = val
-}
-func (p *Item) SetPic(val string) {
-	p.Pic = val
-}
-func (p *Item) SetDesc(val string) {
-	p.Desc = val
-}
-func (p *Item) SetDuration(val int64) {
-	p.Duration = val
-}
-func (p *Item) SetLength(val int64) {
-	p.Length = val
-}
-func (p *Item) SetCount(val int64) {
-	p.Count = val
-}
-func (p *Item) SetType(val string) {
-	p.Type = val
-}
-func (p *Item) SetActiveAt(val string) {
-	p.ActiveAt = val
-}
-func (p *Item) SetExpiredAt(val string) {
-	p.ExpiredAt = val
-}
-func (p *Item) SetTagId(val []int64) {
-	p.TagId = val
-}
-func (p *Item) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-func (p *Item) SetCreatedName(val string) {
-	p.CreatedName = val
-}
-func (p *Item) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Item) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-
-func (p *Item) IsSetId() bool {
-	return p.Id != Item_Id_DEFAULT
-}
-
-func (p *Item) IsSetName() bool {
-	return p.Name != Item_Name_DEFAULT
-}
-
-func (p *Item) IsSetPic() bool {
-	return p.Pic != Item_Pic_DEFAULT
-}
-
-func (p *Item) IsSetDesc() bool {
-	return p.Desc != Item_Desc_DEFAULT
-}
-
-func (p *Item) IsSetDuration() bool {
-	return p.Duration != Item_Duration_DEFAULT
-}
-
-func (p *Item) IsSetLength() bool {
-	return p.Length != Item_Length_DEFAULT
-}
-
-func (p *Item) IsSetCount() bool {
-	return p.Count != Item_Count_DEFAULT
-}
-
-func (p *Item) IsSetType() bool {
-	return p.Type != Item_Type_DEFAULT
-}
-
-func (p *Item) IsSetActiveAt() bool {
-	return p.ActiveAt != Item_ActiveAt_DEFAULT
-}
-
-func (p *Item) IsSetExpiredAt() bool {
-	return p.ExpiredAt != Item_ExpiredAt_DEFAULT
-}
-
-func (p *Item) IsSetTagId() bool {
-	return p.TagId != nil
-}
-
-func (p *Item) IsSetCreatedId() bool {
-	return p.CreatedId != Item_CreatedId_DEFAULT
-}
-
-func (p *Item) IsSetCreatedName() bool {
-	return p.CreatedName != Item_CreatedName_DEFAULT
-}
-
-func (p *Item) IsSetCreatedAt() bool {
-	return p.CreatedAt != Item_CreatedAt_DEFAULT
-}
-
-func (p *Item) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Item_UpdatedAt_DEFAULT
-}
-
-func (p *Item) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Item(%+v)", *p)
-}
-
-var fieldIDToName_Item = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "pic",
-	4:  "desc",
-	5:  "duration",
-	6:  "length",
-	7:  "count",
-	8:  "type",
-	9:  "activeAt",
-	10: "expiredAt",
-	11: "tagId",
-	14: "createdId",
-	15: "createdName",
-	16: "createdAt",
-	17: "updatedAt",
-}
-
 type CreateItemReq struct {
 	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
@@ -1819,25 +1177,25 @@ var fieldIDToName_ItemListReq = map[int16]string{
 }
 
 type ProductResp struct {
-	Data     *Product       `thrift:"data,1,optional" frugal:"1,optional,Product" json:"data,omitempty"`
+	Data     *base.Product  `thrift:"data,1,optional" frugal:"1,optional,base.Product" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewProductResp() *ProductResp {
 	return &ProductResp{
-		Data:     &Product{},
+		Data:     &base.Product{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ProductResp) InitDefault() {
-	p.Data = &Product{}
+	p.Data = &base.Product{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ProductResp_Data_DEFAULT *Product = &Product{}
+var ProductResp_Data_DEFAULT *base.Product = &base.Product{}
 
-func (p *ProductResp) GetData() (v *Product) {
+func (p *ProductResp) GetData() (v *base.Product) {
 	if !p.IsSetData() {
 		return ProductResp_Data_DEFAULT
 	}
@@ -1852,7 +1210,7 @@ func (p *ProductResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ProductResp) SetData(val *Product) {
+func (p *ProductResp) SetData(val *base.Product) {
 	p.Data = val
 }
 func (p *ProductResp) SetBaseResp(val *base.BaseResp) {
@@ -1880,25 +1238,25 @@ var fieldIDToName_ProductResp = map[int16]string{
 }
 
 type ItemResp struct {
-	Data     *Item          `thrift:"data,1,optional" frugal:"1,optional,Item" json:"data,omitempty"`
-	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     *base.ProductItem `thrift:"data,1,optional" frugal:"1,optional,base.ProductItem" json:"data,omitempty"`
+	BaseResp *base.BaseResp    `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewItemResp() *ItemResp {
 	return &ItemResp{
-		Data:     &Item{},
+		Data:     &base.ProductItem{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ItemResp) InitDefault() {
-	p.Data = &Item{}
+	p.Data = &base.ProductItem{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ItemResp_Data_DEFAULT *Item = &Item{}
+var ItemResp_Data_DEFAULT *base.ProductItem = &base.ProductItem{}
 
-func (p *ItemResp) GetData() (v *Item) {
+func (p *ItemResp) GetData() (v *base.ProductItem) {
 	if !p.IsSetData() {
 		return ItemResp_Data_DEFAULT
 	}
@@ -1913,7 +1271,7 @@ func (p *ItemResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ItemResp) SetData(val *Item) {
+func (p *ItemResp) SetData(val *base.ProductItem) {
 	p.Data = val
 }
 func (p *ItemResp) SetBaseResp(val *base.BaseResp) {
@@ -1941,25 +1299,25 @@ var fieldIDToName_ItemResp = map[int16]string{
 }
 
 type ProductListResp struct {
-	Data     []*Product     `thrift:"data,1,optional" frugal:"1,optional,list<Product>" json:"data,omitempty"`
-	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     []*base.Product `thrift:"data,1,optional" frugal:"1,optional,list<base.Product>" json:"data,omitempty"`
+	BaseResp *base.BaseResp  `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewProductListResp() *ProductListResp {
 	return &ProductListResp{
-		Data:     []*Product{},
+		Data:     []*base.Product{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ProductListResp) InitDefault() {
-	p.Data = []*Product{}
+	p.Data = []*base.Product{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ProductListResp_Data_DEFAULT []*Product = []*Product{}
+var ProductListResp_Data_DEFAULT []*base.Product = []*base.Product{}
 
-func (p *ProductListResp) GetData() (v []*Product) {
+func (p *ProductListResp) GetData() (v []*base.Product) {
 	if !p.IsSetData() {
 		return ProductListResp_Data_DEFAULT
 	}
@@ -1974,7 +1332,7 @@ func (p *ProductListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ProductListResp) SetData(val []*Product) {
+func (p *ProductListResp) SetData(val []*base.Product) {
 	p.Data = val
 }
 func (p *ProductListResp) SetBaseResp(val *base.BaseResp) {
@@ -2002,25 +1360,25 @@ var fieldIDToName_ProductListResp = map[int16]string{
 }
 
 type ItemListResp struct {
-	Data     []*Item        `thrift:"data,1,optional" frugal:"1,optional,list<Item>" json:"data,omitempty"`
-	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     []*base.ProductItem `thrift:"data,1,optional" frugal:"1,optional,list<base.ProductItem>" json:"data,omitempty"`
+	BaseResp *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewItemListResp() *ItemListResp {
 	return &ItemListResp{
-		Data:     []*Item{},
+		Data:     []*base.ProductItem{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *ItemListResp) InitDefault() {
-	p.Data = []*Item{}
+	p.Data = []*base.ProductItem{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var ItemListResp_Data_DEFAULT []*Item = []*Item{}
+var ItemListResp_Data_DEFAULT []*base.ProductItem = []*base.ProductItem{}
 
-func (p *ItemListResp) GetData() (v []*Item) {
+func (p *ItemListResp) GetData() (v []*base.ProductItem) {
 	if !p.IsSetData() {
 		return ItemListResp_Data_DEFAULT
 	}
@@ -2035,7 +1393,7 @@ func (p *ItemListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *ItemListResp) SetData(val []*Item) {
+func (p *ItemListResp) SetData(val []*base.ProductItem) {
 	p.Data = val
 }
 func (p *ItemListResp) SetBaseResp(val *base.BaseResp) {

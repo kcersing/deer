@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	crm "gen/kitex_gen/crm"
 )
 
 type OpportunitiesListService struct {

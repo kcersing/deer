@@ -21,9 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *Api) IsValid() error {
-	return nil
-}
 func (p *ApiResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {
@@ -71,9 +68,6 @@ func (p *MenuTree) IsValid() error {
 	}
 	return nil
 }
-func (p *Menu) IsValid() error {
-	return nil
-}
 func (p *MenuResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {
@@ -93,9 +87,6 @@ func (p *MenuListResp) IsValid() error {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
 		}
 	}
-	return nil
-}
-func (p *Role) IsValid() error {
 	return nil
 }
 func (p *RoleResp) IsValid() error {
@@ -129,12 +120,6 @@ func (p *UpdateRoleReq) IsValid() error {
 	return nil
 }
 func (p *CreateMenuAuthReq) IsValid() error {
-	return nil
-}
-func (p *Dict) IsValid() error {
-	return nil
-}
-func (p *Dictht) IsValid() error {
 	return nil
 }
 func (p *DictListReq) IsValid() error {
@@ -186,9 +171,6 @@ func (p *DicthtListResp) IsValid() error {
 	return nil
 }
 func (p *LogListReq) IsValid() error {
-	return nil
-}
-func (p *Log) IsValid() error {
 	return nil
 }
 func (p *DeleteLogReq) IsValid() error {

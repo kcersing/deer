@@ -21,9 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *User) IsValid() error {
-	return nil
-}
 func (p *UserResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {

@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	system "gen/kitex_gen/system"
+	base "gen/kitex_gen/base"
 	"testing"
 )
 
@@ -11,7 +11,7 @@ func TestUpdateDict_Run(t *testing.T) {
 	s := NewUpdateDictService(ctx)
 	// init req and assert value
 
-	req := &system.Dict{}
+	req := &base.Dict{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

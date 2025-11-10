@@ -8,327 +8,6 @@ import (
 	"gen/kitex_gen/base"
 )
 
-type Member struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Level     int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
-	Gender    int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	CreatedAt string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
-}
-
-func NewMember() *Member {
-	return &Member{
-		Id:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Level:     0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
-	}
-}
-
-func (p *Member) InitDefault() {
-	p.Id = 0
-	p.Username = ""
-	p.Password = ""
-	p.Avatar = ""
-	p.Mobile = ""
-	p.Name = ""
-	p.Status = 0
-	p.Level = 0
-	p.Gender = 0
-	p.Birthday = ""
-	p.LastAt = ""
-	p.LastIp = ""
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.CreatedId = 0
-}
-
-var Member_Id_DEFAULT int64 = 0
-
-func (p *Member) GetId() (v int64) {
-	if !p.IsSetId() {
-		return Member_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var Member_Username_DEFAULT string = ""
-
-func (p *Member) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return Member_Username_DEFAULT
-	}
-	return p.Username
-}
-
-var Member_Password_DEFAULT string = ""
-
-func (p *Member) GetPassword() (v string) {
-	if !p.IsSetPassword() {
-		return Member_Password_DEFAULT
-	}
-	return p.Password
-}
-
-var Member_Avatar_DEFAULT string = ""
-
-func (p *Member) GetAvatar() (v string) {
-	if !p.IsSetAvatar() {
-		return Member_Avatar_DEFAULT
-	}
-	return p.Avatar
-}
-
-var Member_Mobile_DEFAULT string = ""
-
-func (p *Member) GetMobile() (v string) {
-	if !p.IsSetMobile() {
-		return Member_Mobile_DEFAULT
-	}
-	return p.Mobile
-}
-
-var Member_Name_DEFAULT string = ""
-
-func (p *Member) GetName() (v string) {
-	if !p.IsSetName() {
-		return Member_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var Member_Status_DEFAULT int64 = 0
-
-func (p *Member) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return Member_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var Member_Level_DEFAULT int64 = 0
-
-func (p *Member) GetLevel() (v int64) {
-	if !p.IsSetLevel() {
-		return Member_Level_DEFAULT
-	}
-	return p.Level
-}
-
-var Member_Gender_DEFAULT int64 = 0
-
-func (p *Member) GetGender() (v int64) {
-	if !p.IsSetGender() {
-		return Member_Gender_DEFAULT
-	}
-	return p.Gender
-}
-
-var Member_Birthday_DEFAULT string = ""
-
-func (p *Member) GetBirthday() (v string) {
-	if !p.IsSetBirthday() {
-		return Member_Birthday_DEFAULT
-	}
-	return p.Birthday
-}
-
-var Member_LastAt_DEFAULT string = ""
-
-func (p *Member) GetLastAt() (v string) {
-	if !p.IsSetLastAt() {
-		return Member_LastAt_DEFAULT
-	}
-	return p.LastAt
-}
-
-var Member_LastIp_DEFAULT string = ""
-
-func (p *Member) GetLastIp() (v string) {
-	if !p.IsSetLastIp() {
-		return Member_LastIp_DEFAULT
-	}
-	return p.LastIp
-}
-
-var Member_CreatedAt_DEFAULT string = ""
-
-func (p *Member) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return Member_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var Member_UpdatedAt_DEFAULT string = ""
-
-func (p *Member) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return Member_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var Member_CreatedId_DEFAULT int64 = 0
-
-func (p *Member) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return Member_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-func (p *Member) SetId(val int64) {
-	p.Id = val
-}
-func (p *Member) SetUsername(val string) {
-	p.Username = val
-}
-func (p *Member) SetPassword(val string) {
-	p.Password = val
-}
-func (p *Member) SetAvatar(val string) {
-	p.Avatar = val
-}
-func (p *Member) SetMobile(val string) {
-	p.Mobile = val
-}
-func (p *Member) SetName(val string) {
-	p.Name = val
-}
-func (p *Member) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *Member) SetLevel(val int64) {
-	p.Level = val
-}
-func (p *Member) SetGender(val int64) {
-	p.Gender = val
-}
-func (p *Member) SetBirthday(val string) {
-	p.Birthday = val
-}
-func (p *Member) SetLastAt(val string) {
-	p.LastAt = val
-}
-func (p *Member) SetLastIp(val string) {
-	p.LastIp = val
-}
-func (p *Member) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *Member) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *Member) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-
-func (p *Member) IsSetId() bool {
-	return p.Id != Member_Id_DEFAULT
-}
-
-func (p *Member) IsSetUsername() bool {
-	return p.Username != Member_Username_DEFAULT
-}
-
-func (p *Member) IsSetPassword() bool {
-	return p.Password != Member_Password_DEFAULT
-}
-
-func (p *Member) IsSetAvatar() bool {
-	return p.Avatar != Member_Avatar_DEFAULT
-}
-
-func (p *Member) IsSetMobile() bool {
-	return p.Mobile != Member_Mobile_DEFAULT
-}
-
-func (p *Member) IsSetName() bool {
-	return p.Name != Member_Name_DEFAULT
-}
-
-func (p *Member) IsSetStatus() bool {
-	return p.Status != Member_Status_DEFAULT
-}
-
-func (p *Member) IsSetLevel() bool {
-	return p.Level != Member_Level_DEFAULT
-}
-
-func (p *Member) IsSetGender() bool {
-	return p.Gender != Member_Gender_DEFAULT
-}
-
-func (p *Member) IsSetBirthday() bool {
-	return p.Birthday != Member_Birthday_DEFAULT
-}
-
-func (p *Member) IsSetLastAt() bool {
-	return p.LastAt != Member_LastAt_DEFAULT
-}
-
-func (p *Member) IsSetLastIp() bool {
-	return p.LastIp != Member_LastIp_DEFAULT
-}
-
-func (p *Member) IsSetCreatedAt() bool {
-	return p.CreatedAt != Member_CreatedAt_DEFAULT
-}
-
-func (p *Member) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != Member_UpdatedAt_DEFAULT
-}
-
-func (p *Member) IsSetCreatedId() bool {
-	return p.CreatedId != Member_CreatedId_DEFAULT
-}
-
-func (p *Member) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("Member(%+v)", *p)
-}
-
-var fieldIDToName_Member = map[int16]string{
-	1:   "id",
-	2:   "username",
-	3:   "password",
-	4:   "avatar",
-	5:   "mobile",
-	6:   "name",
-	7:   "status",
-	8:   "level",
-	9:   "gender",
-	10:  "birthday",
-	11:  "lastAt",
-	12:  "lastIp",
-	251: "createdAt",
-	252: "updatedAt",
-	253: "createdId",
-}
-
 type CreateMemberReq struct {
 	Username string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
 	Password string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
@@ -472,25 +151,25 @@ var fieldIDToName_GetMemberListReq = map[int16]string{
 }
 
 type MemberResp struct {
-	Data     *Member        `thrift:"data,1,optional" frugal:"1,optional,Member" json:"data,omitempty"`
+	Data     *base.Member   `thrift:"data,1,optional" frugal:"1,optional,base.Member" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMemberResp() *MemberResp {
 	return &MemberResp{
-		Data:     &Member{},
+		Data:     &base.Member{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *MemberResp) InitDefault() {
-	p.Data = &Member{}
+	p.Data = &base.Member{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var MemberResp_Data_DEFAULT *Member = &Member{}
+var MemberResp_Data_DEFAULT *base.Member = &base.Member{}
 
-func (p *MemberResp) GetData() (v *Member) {
+func (p *MemberResp) GetData() (v *base.Member) {
 	if !p.IsSetData() {
 		return MemberResp_Data_DEFAULT
 	}
@@ -505,7 +184,7 @@ func (p *MemberResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MemberResp) SetData(val *Member) {
+func (p *MemberResp) SetData(val *base.Member) {
 	p.Data = val
 }
 func (p *MemberResp) SetBaseResp(val *base.BaseResp) {
@@ -533,25 +212,25 @@ var fieldIDToName_MemberResp = map[int16]string{
 }
 
 type MemberListResp struct {
-	Data     []*Member      `thrift:"data,1,optional" frugal:"1,optional,list<Member>" json:"data,omitempty"`
+	Data     []*base.Member `thrift:"data,1,optional" frugal:"1,optional,list<base.Member>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewMemberListResp() *MemberListResp {
 	return &MemberListResp{
-		Data:     []*Member{},
+		Data:     []*base.Member{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *MemberListResp) InitDefault() {
-	p.Data = []*Member{}
+	p.Data = []*base.Member{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var MemberListResp_Data_DEFAULT []*Member = []*Member{}
+var MemberListResp_Data_DEFAULT []*base.Member = []*base.Member{}
 
-func (p *MemberListResp) GetData() (v []*Member) {
+func (p *MemberListResp) GetData() (v []*base.Member) {
 	if !p.IsSetData() {
 		return MemberListResp_Data_DEFAULT
 	}
@@ -566,7 +245,7 @@ func (p *MemberListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *MemberListResp) SetData(val []*Member) {
+func (p *MemberListResp) SetData(val []*base.Member) {
 	p.Data = val
 }
 func (p *MemberListResp) SetBaseResp(val *base.BaseResp) {
@@ -594,25 +273,25 @@ var fieldIDToName_MemberListResp = map[int16]string{
 }
 
 type UpdateMemberReq struct {
-	Data     *Member        `thrift:"data,1,optional" frugal:"1,optional,Member" json:"data,omitempty"`
+	Data     *base.Member   `thrift:"data,1,optional" frugal:"1,optional,base.Member" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewUpdateMemberReq() *UpdateMemberReq {
 	return &UpdateMemberReq{
-		Data:     &Member{},
+		Data:     &base.Member{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *UpdateMemberReq) InitDefault() {
-	p.Data = &Member{}
+	p.Data = &base.Member{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var UpdateMemberReq_Data_DEFAULT *Member = &Member{}
+var UpdateMemberReq_Data_DEFAULT *base.Member = &base.Member{}
 
-func (p *UpdateMemberReq) GetData() (v *Member) {
+func (p *UpdateMemberReq) GetData() (v *base.Member) {
 	if !p.IsSetData() {
 		return UpdateMemberReq_Data_DEFAULT
 	}
@@ -627,7 +306,7 @@ func (p *UpdateMemberReq) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UpdateMemberReq) SetData(val *Member) {
+func (p *UpdateMemberReq) SetData(val *base.Member) {
 	p.Data = val
 }
 func (p *UpdateMemberReq) SetBaseResp(val *base.BaseResp) {

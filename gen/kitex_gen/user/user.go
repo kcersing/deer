@@ -6,370 +6,28 @@ import (
 	"context"
 	"fmt"
 	"gen/kitex_gen/base"
-	"gen/kitex_gen/system"
 )
 
-type User struct {
-	Id        int64          `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  string         `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  string         `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    string         `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    string         `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      string         `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    int64          `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender    int64          `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  string         `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    string         `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    string         `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Detail    string         `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
-	Roles     []*system.Role `thrift:"roles,14,optional" frugal:"14,optional,list<system.Role>" json:"roles,omitempty"`
-	CreatedAt string         `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string         `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId int64          `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
-}
-
-func NewUser() *User {
-	return &User{
-		Id:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		Detail:    "",
-		Roles:     []*system.Role{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
-	}
-}
-
-func (p *User) InitDefault() {
-	p.Id = 0
-	p.Username = ""
-	p.Password = ""
-	p.Avatar = ""
-	p.Mobile = ""
-	p.Name = ""
-	p.Status = 0
-	p.Gender = 0
-	p.Birthday = ""
-	p.LastAt = ""
-	p.LastIp = ""
-	p.Detail = ""
-	p.Roles = []*system.Role{}
-	p.CreatedAt = ""
-	p.UpdatedAt = ""
-	p.CreatedId = 0
-}
-
-var User_Id_DEFAULT int64 = 0
-
-func (p *User) GetId() (v int64) {
-	if !p.IsSetId() {
-		return User_Id_DEFAULT
-	}
-	return p.Id
-}
-
-var User_Username_DEFAULT string = ""
-
-func (p *User) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return User_Username_DEFAULT
-	}
-	return p.Username
-}
-
-var User_Password_DEFAULT string = ""
-
-func (p *User) GetPassword() (v string) {
-	if !p.IsSetPassword() {
-		return User_Password_DEFAULT
-	}
-	return p.Password
-}
-
-var User_Avatar_DEFAULT string = ""
-
-func (p *User) GetAvatar() (v string) {
-	if !p.IsSetAvatar() {
-		return User_Avatar_DEFAULT
-	}
-	return p.Avatar
-}
-
-var User_Mobile_DEFAULT string = ""
-
-func (p *User) GetMobile() (v string) {
-	if !p.IsSetMobile() {
-		return User_Mobile_DEFAULT
-	}
-	return p.Mobile
-}
-
-var User_Name_DEFAULT string = ""
-
-func (p *User) GetName() (v string) {
-	if !p.IsSetName() {
-		return User_Name_DEFAULT
-	}
-	return p.Name
-}
-
-var User_Status_DEFAULT int64 = 0
-
-func (p *User) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return User_Status_DEFAULT
-	}
-	return p.Status
-}
-
-var User_Gender_DEFAULT int64 = 0
-
-func (p *User) GetGender() (v int64) {
-	if !p.IsSetGender() {
-		return User_Gender_DEFAULT
-	}
-	return p.Gender
-}
-
-var User_Birthday_DEFAULT string = ""
-
-func (p *User) GetBirthday() (v string) {
-	if !p.IsSetBirthday() {
-		return User_Birthday_DEFAULT
-	}
-	return p.Birthday
-}
-
-var User_LastAt_DEFAULT string = ""
-
-func (p *User) GetLastAt() (v string) {
-	if !p.IsSetLastAt() {
-		return User_LastAt_DEFAULT
-	}
-	return p.LastAt
-}
-
-var User_LastIp_DEFAULT string = ""
-
-func (p *User) GetLastIp() (v string) {
-	if !p.IsSetLastIp() {
-		return User_LastIp_DEFAULT
-	}
-	return p.LastIp
-}
-
-var User_Detail_DEFAULT string = ""
-
-func (p *User) GetDetail() (v string) {
-	if !p.IsSetDetail() {
-		return User_Detail_DEFAULT
-	}
-	return p.Detail
-}
-
-var User_Roles_DEFAULT []*system.Role = []*system.Role{}
-
-func (p *User) GetRoles() (v []*system.Role) {
-	if !p.IsSetRoles() {
-		return User_Roles_DEFAULT
-	}
-	return p.Roles
-}
-
-var User_CreatedAt_DEFAULT string = ""
-
-func (p *User) GetCreatedAt() (v string) {
-	if !p.IsSetCreatedAt() {
-		return User_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var User_UpdatedAt_DEFAULT string = ""
-
-func (p *User) GetUpdatedAt() (v string) {
-	if !p.IsSetUpdatedAt() {
-		return User_UpdatedAt_DEFAULT
-	}
-	return p.UpdatedAt
-}
-
-var User_CreatedId_DEFAULT int64 = 0
-
-func (p *User) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return User_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-func (p *User) SetId(val int64) {
-	p.Id = val
-}
-func (p *User) SetUsername(val string) {
-	p.Username = val
-}
-func (p *User) SetPassword(val string) {
-	p.Password = val
-}
-func (p *User) SetAvatar(val string) {
-	p.Avatar = val
-}
-func (p *User) SetMobile(val string) {
-	p.Mobile = val
-}
-func (p *User) SetName(val string) {
-	p.Name = val
-}
-func (p *User) SetStatus(val int64) {
-	p.Status = val
-}
-func (p *User) SetGender(val int64) {
-	p.Gender = val
-}
-func (p *User) SetBirthday(val string) {
-	p.Birthday = val
-}
-func (p *User) SetLastAt(val string) {
-	p.LastAt = val
-}
-func (p *User) SetLastIp(val string) {
-	p.LastIp = val
-}
-func (p *User) SetDetail(val string) {
-	p.Detail = val
-}
-func (p *User) SetRoles(val []*system.Role) {
-	p.Roles = val
-}
-func (p *User) SetCreatedAt(val string) {
-	p.CreatedAt = val
-}
-func (p *User) SetUpdatedAt(val string) {
-	p.UpdatedAt = val
-}
-func (p *User) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-
-func (p *User) IsSetId() bool {
-	return p.Id != User_Id_DEFAULT
-}
-
-func (p *User) IsSetUsername() bool {
-	return p.Username != User_Username_DEFAULT
-}
-
-func (p *User) IsSetPassword() bool {
-	return p.Password != User_Password_DEFAULT
-}
-
-func (p *User) IsSetAvatar() bool {
-	return p.Avatar != User_Avatar_DEFAULT
-}
-
-func (p *User) IsSetMobile() bool {
-	return p.Mobile != User_Mobile_DEFAULT
-}
-
-func (p *User) IsSetName() bool {
-	return p.Name != User_Name_DEFAULT
-}
-
-func (p *User) IsSetStatus() bool {
-	return p.Status != User_Status_DEFAULT
-}
-
-func (p *User) IsSetGender() bool {
-	return p.Gender != User_Gender_DEFAULT
-}
-
-func (p *User) IsSetBirthday() bool {
-	return p.Birthday != User_Birthday_DEFAULT
-}
-
-func (p *User) IsSetLastAt() bool {
-	return p.LastAt != User_LastAt_DEFAULT
-}
-
-func (p *User) IsSetLastIp() bool {
-	return p.LastIp != User_LastIp_DEFAULT
-}
-
-func (p *User) IsSetDetail() bool {
-	return p.Detail != User_Detail_DEFAULT
-}
-
-func (p *User) IsSetRoles() bool {
-	return p.Roles != nil
-}
-
-func (p *User) IsSetCreatedAt() bool {
-	return p.CreatedAt != User_CreatedAt_DEFAULT
-}
-
-func (p *User) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != User_UpdatedAt_DEFAULT
-}
-
-func (p *User) IsSetCreatedId() bool {
-	return p.CreatedId != User_CreatedId_DEFAULT
-}
-
-func (p *User) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("User(%+v)", *p)
-}
-
-var fieldIDToName_User = map[int16]string{
-	1:   "id",
-	2:   "username",
-	3:   "password",
-	4:   "avatar",
-	5:   "mobile",
-	6:   "name",
-	7:   "status",
-	9:   "gender",
-	10:  "birthday",
-	11:  "lastAt",
-	12:  "lastIp",
-	13:  "detail",
-	14:  "roles",
-	251: "createdAt",
-	252: "updatedAt",
-	253: "createdId",
-}
-
 type UserResp struct {
-	Data     *User          `thrift:"data,1,optional" frugal:"1,optional,User" json:"data,omitempty"`
+	Data     *base.User     `thrift:"data,1,optional" frugal:"1,optional,base.User" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewUserResp() *UserResp {
 	return &UserResp{
-		Data:     &User{},
+		Data:     &base.User{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *UserResp) InitDefault() {
-	p.Data = &User{}
+	p.Data = &base.User{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var UserResp_Data_DEFAULT *User = &User{}
+var UserResp_Data_DEFAULT *base.User = &base.User{}
 
-func (p *UserResp) GetData() (v *User) {
+func (p *UserResp) GetData() (v *base.User) {
 	if !p.IsSetData() {
 		return UserResp_Data_DEFAULT
 	}
@@ -384,7 +42,7 @@ func (p *UserResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UserResp) SetData(val *User) {
+func (p *UserResp) SetData(val *base.User) {
 	p.Data = val
 }
 func (p *UserResp) SetBaseResp(val *base.BaseResp) {
@@ -412,25 +70,25 @@ var fieldIDToName_UserResp = map[int16]string{
 }
 
 type UserListResp struct {
-	Data     []*User        `thrift:"data,1,optional" frugal:"1,optional,list<User>" json:"data,omitempty"`
+	Data     []*base.User   `thrift:"data,1,optional" frugal:"1,optional,list<base.User>" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewUserListResp() *UserListResp {
 	return &UserListResp{
-		Data:     []*User{},
+		Data:     []*base.User{},
 		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *UserListResp) InitDefault() {
-	p.Data = []*User{}
+	p.Data = []*base.User{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var UserListResp_Data_DEFAULT []*User = []*User{}
+var UserListResp_Data_DEFAULT []*base.User = []*base.User{}
 
-func (p *UserListResp) GetData() (v []*User) {
+func (p *UserListResp) GetData() (v []*base.User) {
 	if !p.IsSetData() {
 		return UserListResp_Data_DEFAULT
 	}
@@ -445,7 +103,7 @@ func (p *UserListResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *UserListResp) SetData(val []*User) {
+func (p *UserListResp) SetData(val []*base.User) {
 	p.Data = val
 }
 func (p *UserListResp) SetBaseResp(val *base.BaseResp) {

@@ -151,14 +151,14 @@ func (s *SystemServiceImpl) GetRoleMenu(ctx context.Context, req *base.IdReq) (r
 }
 
 // CreateDict implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) CreateDict(ctx context.Context, req *system.Dict) (resp *system.DictResp, err error) {
+func (s *SystemServiceImpl) CreateDict(ctx context.Context, req *base.Dict) (resp *system.DictResp, err error) {
 	resp, err = service.NewCreateDictService(ctx).Run(req)
 
 	return resp, err
 }
 
 // UpdateDict implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) UpdateDict(ctx context.Context, req *system.Dict) (resp *system.DictResp, err error) {
+func (s *SystemServiceImpl) UpdateDict(ctx context.Context, req *base.Dict) (resp *system.DictResp, err error) {
 	resp, err = service.NewUpdateDictService(ctx).Run(req)
 
 	return resp, err
@@ -179,14 +179,14 @@ func (s *SystemServiceImpl) DictList(ctx context.Context, req *system.DictListRe
 }
 
 // CreateDictht implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) CreateDictht(ctx context.Context, req *system.Dictht) (resp *system.DicthtResp, err error) {
+func (s *SystemServiceImpl) CreateDictht(ctx context.Context, req *base.Dictht) (resp *system.DicthtResp, err error) {
 	resp, err = service.NewCreateDicthtService(ctx).Run(req)
 
 	return resp, err
 }
 
 // UpdateDictht implements the SystemServiceImpl interface.
-func (s *SystemServiceImpl) UpdateDictht(ctx context.Context, req *system.Dictht) (resp *system.DicthtResp, err error) {
+func (s *SystemServiceImpl) UpdateDictht(ctx context.Context, req *base.Dictht) (resp *system.DicthtResp, err error) {
 	resp, err = service.NewUpdateDicthtService(ctx).Run(req)
 
 	return resp, err

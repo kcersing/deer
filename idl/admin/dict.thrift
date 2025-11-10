@@ -1,27 +1,7 @@
 namespace go dict
 include "../base/base.thrift"
-// 字典信息
-struct Dict {
-    1:  i64 id=0 (api.raw = "id" )
-    2:  string title="" (api.raw = "title" )
-    3:  string name="" (api.raw = "name" )
-    5:  i64 status=0 (api.raw = "status" )
-    6:  string desc="" (api.raw = "desc" )
-    7:  string createdAt="" (api.raw = "createdAt" )
-    8:  string updatedAt="" (api.raw = "updatedAt" )
-}
+include "../base/system.thrift"
 
-// 字典键值信息
-struct Dictht {
-    1:  i64 id=0 (api.raw = "id" )
-    2:  string title="" (api.raw = "title" )
-    3:  string key="" (api.raw = "key" )
-    4:  string value="" (api.raw = "value" )
-    5:  i64 status=0 (api.raw = "status" )
-    6:  string createdAt="" (api.raw = "createdAt" )
-    7:  string updatedAt="" (api.raw = "updatedAt" )
-    8:  i64 dictId (api.raw = "dictId" )
-}
 // 字典列表请求数据
 struct DictListReq {
     1:  optional string title  = ""(api.raw = "title" )
@@ -39,17 +19,17 @@ struct DicthtListReq{
 
 service DictService {
     // 创建字典信息
-      base.NilResponse CreateDict(1: Dict req) (api.post = "/service/dict/create")
+      base.NilResponse CreateDict(1: system.Dict req) (api.post = "/service/dict/create")
       // 更新字典信息
-      base.NilResponse UpdateDict(1: Dict req) (api.post = "/service/dict/update")
+      base.NilResponse UpdateDict(1: system.Dict req) (api.post = "/service/dict/update")
       // 删除字典信息
       base.NilResponse DeleteDict(1: base.IdReq req) (api.post =  "/service/dict/delete")
       // 获取字典列表
       base.NilResponse DictList(1: DictListReq req) (api.post = "/service/dict/list")
       // 创建字典键值信息
-      base.NilResponse CreateDictht(1: Dictht req) (api.post = "/service/dict/dictht/create")
+      base.NilResponse CreateDictht(1: system.Dictht req) (api.post = "/service/dict/dictht/create")
       // 更新字典键值信息
-      base.NilResponse UpdateDictht(1: Dictht req) (api.post = "/service/dict/dictht/update")
+      base.NilResponse UpdateDictht(1: system.Dictht req) (api.post = "/service/dict/dictht/update")
       // 删除字典键值信息
       base.NilResponse DeleteDictht(1: base.IdReq req) (api.post = "/service/dict/dictht/delete")
       // 根据字典名获取字典键值列表

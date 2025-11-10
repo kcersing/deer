@@ -22,7 +22,7 @@ func NewGetUserService(ctx context.Context) *GetUserService {
 func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 
 	var (
-		dataResp *User.User
+		dataResp *Base.User
 	)
 
 	eg, ctx := errgroup.WithContext(s.ctx)

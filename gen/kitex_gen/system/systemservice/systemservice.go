@@ -1065,7 +1065,7 @@ func (p *kClient) GetRoleMenu(ctx context.Context, req *base.IdReq) (r *system.M
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateDict(ctx context.Context, req *system.Dict) (r *system.DictResp, err error) {
+func (p *kClient) CreateDict(ctx context.Context, req *base.Dict) (r *system.DictResp, err error) {
 	var _args system.SystemServiceCreateDictArgs
 	_args.Req = req
 	var _result system.SystemServiceCreateDictResult
@@ -1075,7 +1075,7 @@ func (p *kClient) CreateDict(ctx context.Context, req *system.Dict) (r *system.D
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateDict(ctx context.Context, req *system.Dict) (r *system.DictResp, err error) {
+func (p *kClient) UpdateDict(ctx context.Context, req *base.Dict) (r *system.DictResp, err error) {
 	var _args system.SystemServiceUpdateDictArgs
 	_args.Req = req
 	var _result system.SystemServiceUpdateDictResult
@@ -1105,7 +1105,7 @@ func (p *kClient) DictList(ctx context.Context, req *system.DictListReq) (r *sys
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateDictht(ctx context.Context, req *system.Dictht) (r *system.DicthtResp, err error) {
+func (p *kClient) CreateDictht(ctx context.Context, req *base.Dictht) (r *system.DicthtResp, err error) {
 	var _args system.SystemServiceCreateDicthtArgs
 	_args.Req = req
 	var _result system.SystemServiceCreateDicthtResult
@@ -1115,7 +1115,7 @@ func (p *kClient) CreateDictht(ctx context.Context, req *system.Dictht) (r *syst
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateDictht(ctx context.Context, req *system.Dictht) (r *system.DicthtResp, err error) {
+func (p *kClient) UpdateDictht(ctx context.Context, req *base.Dictht) (r *system.DicthtResp, err error) {
 	var _args system.SystemServiceUpdateDicthtArgs
 	_args.Req = req
 	var _result system.SystemServiceUpdateDicthtResult
