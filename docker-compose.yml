@@ -1,4 +1,15 @@
 services:
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/data/redis:/data
+      - ./data/logs/redis:/logs
+    command: redis-server --requirepass freecar
 
   Etcd:
     image: 'bitnami/etcd:latest'
@@ -15,6 +26,16 @@ services:
     image: evildecay/etcdkeeper:latest
     ports:
       - "9100:8080"
+
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
 
 #  elasticsearch:
 #    image: elasticsearch:7.6.2

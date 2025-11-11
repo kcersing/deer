@@ -5,8 +5,8 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/hertz-contrib/websocket"
+	"hardware/biz/dal/mq"
 	"net/http"
-	"system/biz/dal/mq"
 )
 
 var upgrader = websocket.HertzUpgrader{}

@@ -12,6 +12,7 @@ use (
 	./app/product
 	./app/test
 	./app/system
+	./app/hardware
 
 )
 
