@@ -18,11 +18,13 @@ require (
 	github.com/alibabacloud-go/dysmsapi-20170525/v4 v4.1.3
 	github.com/alibabacloud-go/tea v1.3.13
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.7
+	github.com/bytedance/sonic v1.14.1
 	github.com/casbin/casbin/v2 v2.128.0
 	github.com/casbin/ent-adapter v1.1.0
-	github.com/cloudwego/hertz v0.9.0
+	github.com/cloudwego/hertz v0.9.4-0.20241021100040-3477b0309b81
 	github.com/cloudwego/kitex v0.15.1
 	github.com/go-sql-driver/mysql v1.9.3
+	github.com/hertz-contrib/websocket v0.2.0
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/kitex-contrib/obs-opentelemetry v0.2.9
 	github.com/kitex-contrib/registry-etcd v0.3.0
@@ -30,6 +32,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/minio/minio-go/v7 v7.0.95
 	github.com/pkg/errors v0.9.1
+	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/redis/go-redis/v9 v9.14.0
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.21
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
@@ -54,7 +57,6 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/bytedance/go-tagexpr/v2 v2.9.2 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
-	github.com/bytedance/sonic v1.14.1 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/casbin/govaluate v1.3.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect

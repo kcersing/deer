@@ -49,6 +49,8 @@ var (
 	UserAlreadyExistErr = NewErrNo(UserAlreadyExistErrCode, "用户已存在")
 	UserMobileExistErr  = NewErrNo(UserAlreadyExistErrCode, "手机号已存在")
 	TimeFormatErr       = NewErrNo(ParamErrCode, "日期格式错误")
+	RecordNotFound      = NewErrNo(ParamErrCode, "记录不存在")
+	RecordAlreadyExist  = NewErrNo(ParamErrCode, "记录已存在")
 )
 
 // ConvertErr convert error to Errno
