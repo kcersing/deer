@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
+	"system/biz/dal/db/ent/dict"
 	"system/biz/dal/db/ent/predicate"
 )
 
@@ -23,6 +24,17 @@ func (s *DictListService) Run(req *system.DictListReq) (resp *system.DictListRes
 		predicates []predicate.Dict
 		dataResp   []*Base.Dict
 	)
+
+	if req.GetName() != "" {
+		predicates = append(predicates,
+			dict.Or(
+				dict.TitleContains(req.GetName()),
+				dict.NameContains(req.GetName()),
+				dict.DescContains(req.GetName()),
+			),
+		)
+	}
+
 	all, err := db.Client.Dict.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Limit(int(req.PageSize)).All(s.ctx)

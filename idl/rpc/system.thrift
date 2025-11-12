@@ -135,7 +135,7 @@ struct DictListReq {
 //字典名获取字典键值请求数据
 struct DicthtListReq{
     1:  optional string name = "" (api.raw = "name" )
-    2:  optional i64 dictionaryId= 0 (api.raw = "dictionaryId" )
+    2:  optional i64 dictId= 0 (api.raw = "dictId" )
 }
 
 struct DictResp{

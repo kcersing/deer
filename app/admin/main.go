@@ -12,6 +12,7 @@ import (
 	prometheus "github.com/hertz-contrib/monitor-prometheus"
 	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hertz-contrib/obs-opentelemetry/tracing"
+	//hertzSentinel "github.com/hertz-contrib/opensergo/sentinel/adapter"
 	"github.com/hertz-contrib/pprof"
 )
 
@@ -45,6 +46,15 @@ func main() {
 	pprof.Register(h)
 	// use otel mw
 	h.Use(tracing.ServerMiddleware(cfg))
+
+	//h.Use(hertzSentinel.SentinelServerMiddleware(
+	//	// abort with status 429 by default
+	//	hertzSentinel.WithServerBlockFallback(func(c context.Context, ctx *app.RequestContext) {
+	//		ctx.JSON(http.StatusTooManyRequests, nil)
+	//		ctx.Abort()
+	//	}),
+	//))
+
 	register(h)
 	h.Spin()
 }

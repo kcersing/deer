@@ -202,8 +202,8 @@ func DicthtList(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.DicthtList(ctx, &system.DicthtListReq{
-		Name:         req.GetName(),
-		DictionaryId: req.GetDictionaryId(),
+		Name:   req.GetName(),
+		DictId: req.GetDictId(),
 	})
 
 	if err != nil {

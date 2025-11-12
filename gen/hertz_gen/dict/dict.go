@@ -343,20 +343,20 @@ func (p *DictListReq) String() string {
 
 // 字典名获取字典键值请求数据
 type DicthtListReq struct {
-	Name         string `thrift:"name,1,optional" form:"name" json:"name,omitempty" query:"name"`
-	DictionaryId int64  `thrift:"dictionaryId,2,optional" form:"dictionaryId" json:"dictionaryId,omitempty" query:"dictionaryId"`
+	Name   string `thrift:"name,1,optional" form:"name" json:"name,omitempty" query:"name"`
+	DictId int64  `thrift:"dictId,2,optional" form:"dictId" json:"dictId,omitempty" query:"dictId"`
 }
 
 func NewDicthtListReq() *DicthtListReq {
 	return &DicthtListReq{
-		Name:         "",
-		DictionaryId: 0,
+		Name:   "",
+		DictId: 0,
 	}
 }
 
 func (p *DicthtListReq) InitDefault() {
 	p.Name = ""
-	p.DictionaryId = 0
+	p.DictId = 0
 }
 
 var DicthtListReq_Name_DEFAULT string = ""
@@ -368,26 +368,26 @@ func (p *DicthtListReq) GetName() (v string) {
 	return p.Name
 }
 
-var DicthtListReq_DictionaryId_DEFAULT int64 = 0
+var DicthtListReq_DictId_DEFAULT int64 = 0
 
-func (p *DicthtListReq) GetDictionaryId() (v int64) {
-	if !p.IsSetDictionaryId() {
-		return DicthtListReq_DictionaryId_DEFAULT
+func (p *DicthtListReq) GetDictId() (v int64) {
+	if !p.IsSetDictId() {
+		return DicthtListReq_DictId_DEFAULT
 	}
-	return p.DictionaryId
+	return p.DictId
 }
 
 var fieldIDToName_DicthtListReq = map[int16]string{
 	1: "name",
-	2: "dictionaryId",
+	2: "dictId",
 }
 
 func (p *DicthtListReq) IsSetName() bool {
 	return p.Name != DicthtListReq_Name_DEFAULT
 }
 
-func (p *DicthtListReq) IsSetDictionaryId() bool {
-	return p.DictionaryId != DicthtListReq_DictionaryId_DEFAULT
+func (p *DicthtListReq) IsSetDictId() bool {
+	return p.DictId != DicthtListReq_DictId_DEFAULT
 }
 
 func (p *DicthtListReq) Read(iprot thrift.TProtocol) (err error) {
@@ -473,7 +473,7 @@ func (p *DicthtListReq) ReadField2(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.DictionaryId = _field
+	p.DictId = _field
 	return nil
 }
 
@@ -529,11 +529,11 @@ WriteFieldEndError:
 }
 
 func (p *DicthtListReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDictionaryId() {
-		if err = oprot.WriteFieldBegin("dictionaryId", thrift.I64, 2); err != nil {
+	if p.IsSetDictId() {
+		if err = oprot.WriteFieldBegin("dictId", thrift.I64, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(p.DictionaryId); err != nil {
+		if err := oprot.WriteI64(p.DictId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {

@@ -6,6 +6,7 @@ import (
 	system "gen/kitex_gen/system"
 	"system/biz/convert"
 	"system/biz/dal/db"
+	"system/biz/dal/db/ent/dictht"
 	"system/biz/dal/db/ent/predicate"
 )
 
@@ -23,6 +24,20 @@ func (s *DicthtListService) Run(req *system.DicthtListReq) (resp *system.DicthtL
 		predicates []predicate.Dictht
 		dataResp   []*Base.Dictht
 	)
+
+	if req.GetName() != "" {
+		predicates = append(predicates,
+			dictht.Or(
+				dictht.TitleContains(req.GetName()),
+				dictht.ValueContains(req.GetName()),
+				dictht.KeyContains(req.GetName()),
+			),
+		)
+	}
+
+	if req.GetDictId() != 0 {
+		predicates = append(predicates, dictht.DictIDEQ(req.GetDictId()))
+	}
 	all, err := db.Client.Dictht.Query().Where(predicates...).All(s.ctx)
 	if err != nil {
 		return resp, err

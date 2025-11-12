@@ -2047,20 +2047,20 @@ var fieldIDToName_DictListReq = map[int16]string{
 }
 
 type DicthtListReq struct {
-	Name         string `thrift:"name,1,optional" frugal:"1,optional,string" json:"name,omitempty"`
-	DictionaryId int64  `thrift:"dictionaryId,2,optional" frugal:"2,optional,i64" json:"dictionaryId,omitempty"`
+	Name   string `thrift:"name,1,optional" frugal:"1,optional,string" json:"name,omitempty"`
+	DictId int64  `thrift:"dictId,2,optional" frugal:"2,optional,i64" json:"dictId,omitempty"`
 }
 
 func NewDicthtListReq() *DicthtListReq {
 	return &DicthtListReq{
-		Name:         "",
-		DictionaryId: 0,
+		Name:   "",
+		DictId: 0,
 	}
 }
 
 func (p *DicthtListReq) InitDefault() {
 	p.Name = ""
-	p.DictionaryId = 0
+	p.DictId = 0
 }
 
 var DicthtListReq_Name_DEFAULT string = ""
@@ -2072,27 +2072,27 @@ func (p *DicthtListReq) GetName() (v string) {
 	return p.Name
 }
 
-var DicthtListReq_DictionaryId_DEFAULT int64 = 0
+var DicthtListReq_DictId_DEFAULT int64 = 0
 
-func (p *DicthtListReq) GetDictionaryId() (v int64) {
-	if !p.IsSetDictionaryId() {
-		return DicthtListReq_DictionaryId_DEFAULT
+func (p *DicthtListReq) GetDictId() (v int64) {
+	if !p.IsSetDictId() {
+		return DicthtListReq_DictId_DEFAULT
 	}
-	return p.DictionaryId
+	return p.DictId
 }
 func (p *DicthtListReq) SetName(val string) {
 	p.Name = val
 }
-func (p *DicthtListReq) SetDictionaryId(val int64) {
-	p.DictionaryId = val
+func (p *DicthtListReq) SetDictId(val int64) {
+	p.DictId = val
 }
 
 func (p *DicthtListReq) IsSetName() bool {
 	return p.Name != DicthtListReq_Name_DEFAULT
 }
 
-func (p *DicthtListReq) IsSetDictionaryId() bool {
-	return p.DictionaryId != DicthtListReq_DictionaryId_DEFAULT
+func (p *DicthtListReq) IsSetDictId() bool {
+	return p.DictId != DicthtListReq_DictId_DEFAULT
 }
 
 func (p *DicthtListReq) String() string {
@@ -2104,7 +2104,7 @@ func (p *DicthtListReq) String() string {
 
 var fieldIDToName_DicthtListReq = map[int16]string{
 	1: "name",
-	2: "dictionaryId",
+	2: "dictId",
 }
 
 type DictResp struct {

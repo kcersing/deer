@@ -5212,7 +5212,7 @@ func (p *DicthtListReq) FastReadField2(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.DictionaryId = _field
+	p.DictId = _field
 	return offset, nil
 }
 
@@ -5251,9 +5251,9 @@ func (p *DicthtListReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *DicthtListReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDictionaryId() {
+	if p.IsSetDictId() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 2)
-		offset += thrift.Binary.WriteI64(buf[offset:], p.DictionaryId)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.DictId)
 	}
 	return offset
 }
@@ -5269,7 +5269,7 @@ func (p *DicthtListReq) field1Length() int {
 
 func (p *DicthtListReq) field2Length() int {
 	l := 0
-	if p.IsSetDictionaryId() {
+	if p.IsSetDictId() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.I64Length()
 	}
