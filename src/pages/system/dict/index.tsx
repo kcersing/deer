@@ -9,13 +9,17 @@ import {getUser} from "@/services/ant-design-pro/user";
 import {history} from "@@/core/history";
 
 type DicthtListProps = {
-  id?: number;
+  id: number;
 };
 
 const DicthtList: React.FC<DicthtListProps> = (props) => {
   const { id  } = props;
-  const [tableListDataSource, setTableListDataSource] = useState<Dictht[]>([]);
-  console.log(id )
+
+  const [dicthtId, setDicthtId] = useState<number>(0);
+
+  setDicthtId(id)
+
+  const [searchDicthtName, setSearchDicthtName] = useState<string>('');
 
   const columns: ProColumns<API.Dictht>[] = [
 
@@ -62,31 +66,39 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
     },
   ];
 
-  const fetchDicthtList = async () => {
-    try {
-      console.log(id)
-      const msg = await getDicthtList({pid:id});
-      setTableListDataSource(msg.data);
-
-    } catch (_error) {
-
-    }
-  }
-
-  useEffect(() => {
-   fetchDicthtList();
-  }, [id]);
+  // const fetchDicthtList = async () => {
+  //   try {
+  //     console.log(id)
+  //     const msg = await getDicthtList({dictId:id});
+  //     setTableListDataSource(msg.data);
+  //   } catch (_error) {
+  //
+  //   }
+  // }
+  //
+  // useEffect(() => {
+  //  fetchDicthtList();
+  // }, [id]);
 
   return (
     <ProTable
       columns={columns}
-      dataSource={tableListDataSource}
-      // pagination={{
-      //   pageSize: 3,
-      //   showSizeChanger: false,
-      // }}
       rowKey="id"
       search={false}
+      params={{dictId: dicthtId, name: searchDicthtName}}
+      request={getDicthtList}
+      toolbar={{
+        search: {
+          onSearch: (value) => {
+            setSearchDicthtName(value);
+          },
+        },
+        actions: [
+          <Button key="list" type="primary">
+            新建
+          </Button>,
+        ],
+      }}
     />
   );
 };
@@ -100,6 +112,9 @@ type DictListProps = {
 
 const DictList: React.FC<DictListProps> = (props) => {
   const { onChange } = props;
+
+  const [searchDictName, setSearchDictName] = useState<string>('');
+
 
   const actionRef = useRef<ActionType | null>(null);
 
@@ -128,14 +143,10 @@ const DictList: React.FC<DictListProps> = (props) => {
     {
       title: "标题",
       dataIndex: 'title',
-
-
     },
     {
       title: "概略",
       dataIndex: 'desc',
-
-
       valueType: 'textarea',
     },
     {
@@ -170,25 +181,21 @@ const DictList: React.FC<DictListProps> = (props) => {
     },
   ];
 
+
+
   return (
     <ProTable<API.Dict>
       columns={columns}
-      // request={(params, sorter, filter) => {
-      //   // 表单搜索项会从 params 传入，传递给后端接口。
-      //   console.log(params, sorter, filter);
-      //   return Promise.resolve({
-      //     data: getDicthtList,
-      //     success: true,
-      //   });
-      // }}
+      params={{name: searchDictName}}
       request={getDictList}
       rowKey="id"
       toolbar={{
         search: {
           onSearch: (value) => {
-            alert(value);
+            setSearchDictName(value);
           },
         },
+
         actions: [
           <Button key="list" type="primary">
             新建
@@ -219,7 +226,7 @@ const Pro: React.FC = () => {
       <ProCard colSpan="40%" ghost>
         <DictList  onChange={(cId) =>setId(cId) }  id={id} />
       </ProCard>
-      <ProCard title={name}>
+      <ProCard>
         <DicthtList  id={id}  />
       </ProCard>
     </ProCard>

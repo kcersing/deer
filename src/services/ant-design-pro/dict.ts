@@ -2,7 +2,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
-import { headers } from './utils.ts';
+import { headers } from '@/services/ant-design-pro/utils';
 
 
 /** 创建字典信息 PSOT /service/dict/create */
@@ -42,6 +42,9 @@ export async function getDictList(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data:{
+      name:options.name,
+    },
     ...(options || {}),
   });
 }
@@ -76,14 +79,17 @@ export async function DeleteDictht(options?: { [key: string]: any }) {
   });
 }
 /** 根据字典名获取字典键值列表 POST /service/dict/dictht/list */
-export async function getDicthtList(body: { pid:number },options?: { [key: string]: any }) {
+export async function getDicthtList(options?: { [key: string]: any }) {
   console.log(options)
   return request<API.DicthtList>('/service/dict/dictht/list', {
     method: 'POST',
     headers: {
       ...headers,
     },
-    data:body,
+    data:{
+      name:options.name,
+      dictId:options.dictId,
+    },
     ...(options || {}),
   });
 }
