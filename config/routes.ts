@@ -29,6 +29,7 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
+
   // {
   //   path: '/admin',
   //   name: 'admin',

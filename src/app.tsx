@@ -52,11 +52,15 @@ export function onRouteChange({ location, clientRoutes, routes, action, basename
 
 
 export function patchClientRoutes({ routes }) {
-  routes.unshift(  {
+  routes.unshift({
     path: '/login',
     layout: false,
     element: <Login />,
   });
+  // routes.unshift({
+  //     path: '/',
+  //     redirect: '/welcome',
+  //   });
 }
 
 

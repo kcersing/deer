@@ -5,7 +5,7 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { FormattedMessage, useRequest } from '@umijs/max';
+import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC } from 'react';
 import { createMenu } from '@/services/ant-design-pro/menu';
@@ -35,7 +35,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
     <>
       {contextHolder}
       <ModalForm
-       title='新建菜单'
+       title='新建'
         trigger={
           <Button type="primary" icon={<PlusOutlined />}>
             新建
@@ -68,7 +68,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             width="md"
             name="title"
             label="标题"
-            placeholder="请输入标题"
+            placeholder="请输入"
             rules={[
               {
                 required: true,
@@ -80,9 +80,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         <ProForm.Group>
           <ProFormText
             width="md"
-            name="icon"
-            label="图标"
-            placeholder="请输入图标"
+            name="key"
+            label="key"
+            placeholder="请输入"
             rules={[
               {
                 required: true,
@@ -91,30 +91,17 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
           <ProFormText
-            width="md"
-            name="path"
-            label="路由路径"
-            placeholder="请输入路由路径"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-
-          <ProFormText
-            width="md"
-            name="component"
-            label="组件路径"
-            placeholder="请输入组件路径"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
+          width="md"
+          name="value"
+          label="value"
+          placeholder="请输入"
+          rules={[
+            {
+              required: true,
+              message: '不能为空',
+            },
+          ]}
+        />
 
           <ProFormText
             width="md"

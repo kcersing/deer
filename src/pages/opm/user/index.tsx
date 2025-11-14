@@ -16,6 +16,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import {deleteMenu, getMenuList} from "@/services/ant-design-pro/menu";
+import {getUserList} from "@/services/ant-design-pro/user";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
@@ -39,7 +40,7 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<API.User>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -56,43 +57,46 @@ const TableList: React.FC = () => {
         );
       },
     },
+
     {
-      title: "标题",
-      dataIndex: 'title',
+      title: "手机号",
+      dataIndex: 'mobile',
+      sorter: true,
+      hideInForm: true,
+    },
+
+    {
+      title: "账号",
+      dataIndex: 'username',
+      sorter: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
+      title: "性别",
+      dataIndex: 'gender',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "图标",
-      dataIndex: 'icon',
+      title: "部门",
+      dataIndex: '',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "路由路径",
-      dataIndex: 'path',
+      title: "职位",
+      dataIndex: '',
       sorter: true,
       hideInForm: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: 'component',
-      sorter: true,
-      hideInForm: true,
-      valueType: 'textarea',
     },
 
     {
-      title: "跳转路径",
-      dataIndex: 'redirect',
+      title: "角色",
+      dataIndex: '',
       sorter: true,
       hideInForm: true,
-      valueType: 'textarea',
     },
-
-
-
-
     {
       title: '状态',
       dataIndex: 'status',
@@ -109,6 +113,14 @@ const TableList: React.FC = () => {
 
       },
     },
+    {
+      title: "详情",
+      dataIndex: 'detail',
+      sorter: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+
     {
       title: '操作',
       dataIndex: 'option',
@@ -133,7 +145,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: API.User[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -152,8 +164,8 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
-        headerTitle='菜单列表'
+      <ProTable<API.User, API.PageParams>
+        headerTitle='人员列表'
         actionRef={actionRef}
         rowKey="id"
         pagination={false}
@@ -163,7 +175,7 @@ const TableList: React.FC = () => {
         toolBarRender={() => [
           <CreateForm key="create" reload={actionRef.current?.reload} />,
         ]}
-        request={getMenuList}
+        request={getUserList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -205,7 +217,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.Menu>
+          <ProDescriptions<API.User>
             column={2}
             title={currentRow?.name}
             request={async () => ({

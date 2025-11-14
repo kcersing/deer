@@ -28,7 +28,7 @@ export async function logout(options?: { [key: string]: any }) {
 }
 
 /** 创建接口 POST /service/user/create */
-export async function create(body: API.CreateUserReq, options?: { [key: string]: any }) {
+export async function createUser(body: API.CreateUserReq, options?: { [key: string]: any }) {
   return request<API.UserResp>('/service/user/create', {
     method: 'POST',
     headers: {
@@ -67,7 +67,7 @@ export async function getRoleMenuAll(body: { roleId:number }, options?: { [key: 
 
 
 /** 获取user列表 POST /service/user/list*/
-export async function userList(
+export async function getUserList(
   params: {
     // query
     /** 当前的页码 */

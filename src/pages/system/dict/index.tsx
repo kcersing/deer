@@ -3,11 +3,15 @@ import { ProCard, ProTable } from '@ant-design/pro-components';
 import type { BadgeProps } from 'antd';
 import { Badge, Button } from 'antd';
 import React, {useEffect, useRef, useState} from 'react';
-import UpdateForm from "@/pages/system/dict/list/components/UpdateForm";
+import UpdateForm from "@/pages/system/dict/components/UpdateForm";
+
+import UpdateDicthtForm from "@/pages/system/dict/components/UpdateDicthtForm";
+
 import {getDicthtList, getDictList} from "@/services/ant-design-pro/dict";
 import {getUser} from "@/services/ant-design-pro/user";
 import {history} from "@@/core/history";
-
+import CreateForm from "@/pages/system/dict/components/CreateForm";
+import CreateDicthtForm from "@/pages/system/dict/components/CreateDicthtForm";
 type DicthtListProps = {
   id: number;
 };
@@ -17,7 +21,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
 
   const [dicthtId, setDicthtId] = useState<number>(0);
 
-  setDicthtId(id)
+  const actionRef = useRef<ActionType | null>(null);
 
   const [searchDicthtName, setSearchDicthtName] = useState<string>('');
 
@@ -59,10 +63,18 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
     },
     {
       title: '操作',
-      key: 'option',
-      width: 80,
+      dataIndex: 'option',
       valueType: 'option',
-      render: () => [<a key="a">预警</a>],
+      render: (_, record) => [
+        <UpdateDicthtForm
+          trigger={
+            <a>更新</a>
+          }
+          key="config"
+          onOk={actionRef.current?.reload}
+          values={record}
+        />,
+      ],
     },
   ];
 
@@ -76,15 +88,16 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
   //   }
   // }
   //
-  // useEffect(() => {
-  //  fetchDicthtList();
-  // }, [id]);
+  useEffect(() => {
+    setDicthtId(id)
+  }, [id]);
 
   return (
     <ProTable
       columns={columns}
       rowKey="id"
       search={false}
+      actionRef={actionRef}
       params={{dictId: dicthtId, name: searchDicthtName}}
       request={getDicthtList}
       toolbar={{
@@ -94,9 +107,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
           },
         },
         actions: [
-          <Button key="list" type="primary">
-            新建
-          </Button>,
+          <CreateDicthtForm key="create" reload={actionRef.current?.reload} />,
         ],
       }}
     />
@@ -188,6 +199,7 @@ const DictList: React.FC<DictListProps> = (props) => {
       columns={columns}
       params={{name: searchDictName}}
       request={getDictList}
+      actionRef={actionRef}
       rowKey="id"
       toolbar={{
         search: {
@@ -197,9 +209,7 @@ const DictList: React.FC<DictListProps> = (props) => {
         },
 
         actions: [
-          <Button key="list" type="primary">
-            新建
-          </Button>,
+          <CreateForm key="create" reload={actionRef.current?.reload} />,
         ],
       }}
       // options={false}
