@@ -16,10 +16,9 @@ type Dictht struct {
 
 func (Dictht) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("title").Comment("the title shown in the ui | 展示名称 （建议配合i18n）").Optional(),
-		field.String("key").Comment("key | 键").Optional(),
-		field.String("value").Comment("value | 值").Optional(),
-		field.Int64("dict_id").Optional().Comment("Dictionary ID | 字典ID").Optional(),
+		field.String("title").Comment("展示名称").Optional(),
+		field.String("value").Comment("值").Optional(),
+		field.Int64("dict_id").Optional().Comment("字典ID").Optional(),
 	}
 }
 

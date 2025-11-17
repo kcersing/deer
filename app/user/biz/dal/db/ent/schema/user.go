@@ -27,6 +27,17 @@ func (User) Fields() []ent.Field {
 		field.String("name").Optional().Comment("姓名"),
 		field.Int64("gender").Default(3).Comment("性别 | [0:女性;1:男性;3:保密]").Optional(),
 		field.Time("birthday").Comment("出生日期").Optional(),
+
+		field.Int64("department_id").
+			Comment("部门ID").
+			Optional().
+			Nillable(),
+
+		field.Int64("position_id").
+			Comment("职位ID").
+			Optional().
+			Nillable(),
+
 		field.Time("last_at").Comment("最后一次登录时间").Optional(),
 		field.String("last_ip").Comment("最后一次登录ip").Optional(),
 
@@ -57,7 +68,12 @@ func (User) Indexes() []ent.Index {
 
 func (User) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "users"},
+		entsql.Annotation{
+			Table:     "users",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("用户表"),
 	}
 }

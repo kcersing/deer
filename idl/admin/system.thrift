@@ -24,6 +24,7 @@ struct CreateApiReq{
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
 
+
 }
 struct UpdateApiReq{
     1: optional i64 id=0 (api.raw = "id")
@@ -32,6 +33,7 @@ struct UpdateApiReq{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+
 }
 struct ApiListReq{
     3:optional string path = "" (api.raw = "path")

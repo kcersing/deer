@@ -9,7 +9,9 @@ struct Api{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+
 }
+
 struct Menu{
     1:optional i64 id=0 (api.raw = "id" )
     2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
@@ -37,10 +39,11 @@ struct Menu{
 struct Role {
     1:optional i64 id=0 (api.raw = "id")
     2:optional string name="" (api.raw = "name")
-    3:optional string value=""(api.raw = "value")
-    4:optional string defaultRouter=""(api.raw = "defaultRouter")
-    5:optional string remark=""(api.raw = "remark")
+    3:optional string code=""(api.raw = "code")
+    4:optional string desc=""(api.raw = "desc")
+    5:optional i64 order_no=0(api.raw = "order_no")
     6:optional list<i64> apis= [](api.raw = "apis")
+    7:optional list<i64> menus= [](api.raw = "menus")
 }
 
 
