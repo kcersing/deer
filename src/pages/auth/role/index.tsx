@@ -15,18 +15,18 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {deleteMenu, getMenuList} from "@/services/ant-design-pro/menu";
+import {deleteRole, getRoleList} from "@/services/ant-design-pro/role";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Menu>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Menu[]>([]);
+  const [currentRow, setCurrentRow] = useState<API.Role>();
+  const [selectedRowsState, setSelectedRows] = useState<API.Role[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteMenu, {
+  const { run: delRun, loading } = useRequest(deleteRole, {
     manual: true,
     onSuccess: () => {
       setSelectedRows([]);
@@ -39,7 +39,8 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+
+  const columns: ProColumns<API.Role>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -57,42 +58,31 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: "标题",
-      dataIndex: 'title',
+      title: "code",
+      dataIndex: 'code',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "图标",
-      dataIndex: 'icon',
-      sorter: true,
-      hideInForm: true,
+      title: "简介",
+      dataIndex: 'desc',
+      sorter: false,
+      hideInForm:false,
     },
     {
-      title: "路由路径",
-      dataIndex: 'path',
+      title: "apis",
+      dataIndex: 'apis',
       sorter: true,
       hideInForm: true,
+      hideInTable: true,
     },
     {
-      title: "组件路径",
-      dataIndex: 'component',
+      title: "menus",
+      dataIndex: 'menus',
       sorter: true,
       hideInForm: true,
-      valueType: 'textarea',
+      hideInTable: true,
     },
-
-    {
-      title: "跳转路径",
-      dataIndex: 'redirect',
-      sorter: true,
-      hideInForm: true,
-      valueType: 'textarea',
-    },
-
-
-
-
     {
       title: '状态',
       dataIndex: 'status',
@@ -163,7 +153,7 @@ const TableList: React.FC = () => {
         toolBarRender={() => [
           <CreateForm key="create" reload={actionRef.current?.reload} />,
         ]}
-        request={getMenuList}
+        request={getRoleList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -205,7 +195,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.Menu>
+          <ProDescriptions<API.Role>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -214,35 +204,12 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Menu>[]}
+            columns={columns as ProDescriptionsItemProps<API.Role>[]}
           />
         )}
       </Drawer>
     </PageContainer>
   );
 };
-
-
-// const [menuData, setMenuData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [menuData] = await Promise.all([
-//       getMenuTree(),
-//     ]);
-//     setMenuData(menuData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(menuData);
 
 export default TableList;

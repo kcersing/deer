@@ -51,13 +51,17 @@ declare namespace API {
   type Role = {
     id?: number;
     name?: string;
-    value?: string;
-    defaultRouter?: string;
-    remark?: number;
+    code?: string;
+    desc?: number;
+    order_no?: number;
     apis?: number[];
+    menus?: number[];
   }
 
-
+  type RoleListResp = {
+    data?: Role[];
+    baseResp?: BaseResp;
+  }
   type MenuListResp = {
     data?: Menu[];
     baseResp?: BaseResp;
@@ -93,6 +97,17 @@ declare namespace API {
     title?: string;
     type?: string;
     icon?: string;
+  }
+
+
+  type Api = {
+    id?: number;
+    path?: string;
+    title?: string;
+    group?: string;
+    desc?: string;
+    method?: string;
+    status?: number;
   }
 
   type Dictht = {

@@ -54,8 +54,6 @@ const headers = {
 
 export async function updateMenu(options?: { [key: string]: any }) {
 
-  console.log(options)
-  return
   return request<API.TreeResp>('/service/menu/update', {
     method: 'POST',
     headers: {

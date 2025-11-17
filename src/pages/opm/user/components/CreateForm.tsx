@@ -13,10 +13,8 @@ import { Button, message } from 'antd';
 import React, { FC,useState } from 'react';
 
 import {createUser} from "@/services/ant-design-pro/user";
-// 导入 Slate 编辑器工厂。
-import { createEditor } from 'slate'
-// 导入 Slate 组件和 React 插件。
-import { Slate, Editable, withReact } from 'slate-react'
+
+import WangEditor from '@/pages/components/wangeditor'
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -27,7 +25,15 @@ const CreateForm: FC<CreateFormProps> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const [value, setValue] = useState('');
+  const [detail, setDetail] = useState('');
+  const [detailBody, setDetailBody] = useState('');
+
+
+  const optionDetail = (data) => {
+    setDetail(data)
+  };
+
+
   const { run, loading } = useRequest(createUser, {
     manual: true,
     onSuccess: () => {
@@ -38,16 +44,6 @@ const CreateForm: FC<CreateFormProps> = (props) => {
       messageApi.error('提交失败，请重试！');
     },
   });
-
-  const [editor] = useState(() => withReact(createEditor()))
-// 添加初始化值。
-
-
-
-  const initialValue =  [{
-    type: 'paragraph',
-    children: [{ text: 'Default content' }]
-  }];
 
 
   return (
@@ -63,31 +59,11 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
+          value.detail=detail
           await run({ data: value as API.User });
           return true;
         }}
       >
-
-
-        {/*<ProCard style={{ marginBlockStart: 8 }} gutter={8} title="指定宽度px">*/}
-        {/*  <ProCard*/}
-        {/*    colSpan={{*/}
-        {/*      xs: '50px',*/}
-        {/*      sm: '100px',*/}
-        {/*      md: '200px',*/}
-        {/*      lg: '300px',*/}
-        {/*      xl: '400px',*/}
-        {/*    }}*/}
-        {/*    layout="center"*/}
-        {/*    bordered*/}
-        {/*  >*/}
-        {/*    Col*/}
-        {/*  </ProCard>*/}
-        {/*  <ProCard layout="center" bordered>*/}
-        {/*    Auto*/}
-        {/*  </ProCard>*/}
-        {/*</ProCard>*/}
-
 
 
         <ProForm.Group>
@@ -175,9 +151,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
 
         </ProForm.Group>
         <ProForm.Group>
-          <Slate editor={editor} initialValue={initialValue }>
-            <Editable />
-          </Slate>
+          <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>
       </ModalForm>
     </>

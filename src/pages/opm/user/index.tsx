@@ -15,30 +15,17 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {deleteMenu, getMenuList} from "@/services/ant-design-pro/menu";
 import {getUserList} from "@/services/ant-design-pro/user";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Menu>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Menu[]>([]);
+  const [currentRow, setCurrentRow] = useState<API.User>();
+  const [selectedRowsState, setSelectedRows] = useState<API.User[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteMenu, {
-    manual: true,
-    onSuccess: () => {
-      setSelectedRows([]);
-      actionRef.current?.reloadAndRest?.();
-
-      messageApi.success('删除成功，即将刷新');
-    },
-    onError: () => {
-      messageApi.error('删除失败，请重试');
-    },
-  });
 
   const columns: ProColumns<API.User>[] = [
     {
@@ -138,29 +125,6 @@ const TableList: React.FC = () => {
     },
   ];
 
-  /**
-   *  Delete node
-   * @zh-CN 删除节点
-   *
-   * @param selectedRows
-   */
-  const handleRemove = useCallback(
-    async (selectedRows: API.User[]) => {
-      if (!selectedRows?.length) {
-        messageApi.warning('请选择删除项');
-
-        return;
-      }
-
-      // await delRun({
-      //   data: {
-      //     key: selectedRows.map((row) => row.key),
-      //   },
-      // });
-    },
-    [delRun, messageApi.warning],
-  );
-
   return (
     <PageContainer>
       {contextHolder}
@@ -183,29 +147,7 @@ const TableList: React.FC = () => {
           },
         }}
       />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              被选中{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              项
-            </div>
-          }
-        >
-          <Button
-            loading={loading}
-            onClick={() => {
-              handleRemove(selectedRowsState);
-            }}
-          >
-            批量删除
-          </Button>
-          {/*<Button type="primary">*/}
-          {/*  批量更新*/}
-          {/*</Button>*/}
-        </FooterToolbar>
-      )}
+
 
       <Drawer
         width={600}
