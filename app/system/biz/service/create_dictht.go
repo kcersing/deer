@@ -23,7 +23,7 @@ func NewCreateDicthtService(ctx context.Context) *CreateDicthtService {
 func (s *CreateDicthtService) Run(req *Base.Dictht) (resp *system.DicthtResp, err error) {
 	// Finish your business logic.
 	exist, err := db.Client.Dictht.Query().
-		Where(dictht.Key(req.GetTitle())).
+		Where(dictht.Title(req.GetTitle())).
 		Where(dictht.HasDictWith(dict.ID(req.GetDictId()))).
 		Exist(s.ctx)
 	if err != nil {
@@ -46,7 +46,6 @@ func (s *CreateDicthtService) Run(req *Base.Dictht) (resp *system.DicthtResp, er
 	save, err := db.Client.Dictht.Create().
 		SetDict(dict). // set parent dictionary
 		SetTitle(req.GetTitle()).
-		SetKey(req.GetKey()).
 		SetValue(req.GetValue()).
 		Save(s.ctx)
 

@@ -28,25 +28,25 @@ type Menu struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 状态[0:禁用;1:正常]
 	Status int64 `json:"status,omitempty"`
-	// index path | 菜单路由路径
+	// 菜单路由路径
 	Path string `json:"path,omitempty"`
-	// index name | 菜单名称
+	// 菜单名称
 	Name string `json:"name,omitempty"`
-	// the path of vue file | 组件路径
+	//  组件路径
 	Component string `json:"component,omitempty"`
-	// redirect path | 跳转路径 （外链）
+	// 跳转路径 （外链）
 	Redirect string `json:"redirect,omitempty"`
-	// menu icon | 菜单图标
+	// 菜单图标
 	Icon string `json:"icon,omitempty"`
-	// parent menu ID | 父菜单ID
+	// 父菜单ID
 	ParentID int64 `json:"parent_id,omitempty"`
-	// sorting numbers | 排序编号
+	// 排序编号
 	OrderNo int64 `json:"order_no,omitempty"`
 	// 当前路由是否渲染菜单项，为 1 的话不会在菜单中显示，但可通过路由地址访问
 	Ignore int64 `json:"ignore,omitempty"`
-	// menu type | 菜单类型 0 目录 1 菜单 2 按钮
+	// 菜单类型 0 目录 1 菜单 2 按钮
 	MenuType int64 `json:"menu_type,omitempty"`
-	// menu level | 菜单层级
+	// 菜单层级
 	Level int64 `json:"level,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MenuQuery when eager-loading is set.

@@ -58,10 +58,8 @@ type APIMutation struct {
 	_path         *string
 	title         *string
 	desc          *string
-	api_group     *string
+	group         *string
 	method        *string
-	disabled      *int64
-	adddisabled   *int64
 	clearedFields map[string]struct{}
 	roles         map[int64]struct{}
 	removedroles  map[int64]struct{}
@@ -560,53 +558,53 @@ func (m *APIMutation) ResetDesc() {
 	delete(m.clearedFields, api.FieldDesc)
 }
 
-// SetAPIGroup sets the "api_group" field.
-func (m *APIMutation) SetAPIGroup(s string) {
-	m.api_group = &s
+// SetGroup sets the "group" field.
+func (m *APIMutation) SetGroup(s string) {
+	m.group = &s
 }
 
-// APIGroup returns the value of the "api_group" field in the mutation.
-func (m *APIMutation) APIGroup() (r string, exists bool) {
-	v := m.api_group
+// Group returns the value of the "group" field in the mutation.
+func (m *APIMutation) Group() (r string, exists bool) {
+	v := m.group
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldAPIGroup returns the old "api_group" field's value of the API entity.
+// OldGroup returns the old "group" field's value of the API entity.
 // If the API object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *APIMutation) OldAPIGroup(ctx context.Context) (v string, err error) {
+func (m *APIMutation) OldGroup(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldAPIGroup is only allowed on UpdateOne operations")
+		return v, errors.New("OldGroup is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldAPIGroup requires an ID field in the mutation")
+		return v, errors.New("OldGroup requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAPIGroup: %w", err)
+		return v, fmt.Errorf("querying old value for OldGroup: %w", err)
 	}
-	return oldValue.APIGroup, nil
+	return oldValue.Group, nil
 }
 
-// ClearAPIGroup clears the value of the "api_group" field.
-func (m *APIMutation) ClearAPIGroup() {
-	m.api_group = nil
-	m.clearedFields[api.FieldAPIGroup] = struct{}{}
+// ClearGroup clears the value of the "group" field.
+func (m *APIMutation) ClearGroup() {
+	m.group = nil
+	m.clearedFields[api.FieldGroup] = struct{}{}
 }
 
-// APIGroupCleared returns if the "api_group" field was cleared in this mutation.
-func (m *APIMutation) APIGroupCleared() bool {
-	_, ok := m.clearedFields[api.FieldAPIGroup]
+// GroupCleared returns if the "group" field was cleared in this mutation.
+func (m *APIMutation) GroupCleared() bool {
+	_, ok := m.clearedFields[api.FieldGroup]
 	return ok
 }
 
-// ResetAPIGroup resets all changes to the "api_group" field.
-func (m *APIMutation) ResetAPIGroup() {
-	m.api_group = nil
-	delete(m.clearedFields, api.FieldAPIGroup)
+// ResetGroup resets all changes to the "group" field.
+func (m *APIMutation) ResetGroup() {
+	m.group = nil
+	delete(m.clearedFields, api.FieldGroup)
 }
 
 // SetMethod sets the "method" field.
@@ -656,76 +654,6 @@ func (m *APIMutation) MethodCleared() bool {
 func (m *APIMutation) ResetMethod() {
 	m.method = nil
 	delete(m.clearedFields, api.FieldMethod)
-}
-
-// SetDisabled sets the "disabled" field.
-func (m *APIMutation) SetDisabled(i int64) {
-	m.disabled = &i
-	m.adddisabled = nil
-}
-
-// Disabled returns the value of the "disabled" field in the mutation.
-func (m *APIMutation) Disabled() (r int64, exists bool) {
-	v := m.disabled
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldDisabled returns the old "disabled" field's value of the API entity.
-// If the API object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *APIMutation) OldDisabled(ctx context.Context) (v int64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDisabled is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDisabled requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDisabled: %w", err)
-	}
-	return oldValue.Disabled, nil
-}
-
-// AddDisabled adds i to the "disabled" field.
-func (m *APIMutation) AddDisabled(i int64) {
-	if m.adddisabled != nil {
-		*m.adddisabled += i
-	} else {
-		m.adddisabled = &i
-	}
-}
-
-// AddedDisabled returns the value that was added to the "disabled" field in this mutation.
-func (m *APIMutation) AddedDisabled() (r int64, exists bool) {
-	v := m.adddisabled
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ClearDisabled clears the value of the "disabled" field.
-func (m *APIMutation) ClearDisabled() {
-	m.disabled = nil
-	m.adddisabled = nil
-	m.clearedFields[api.FieldDisabled] = struct{}{}
-}
-
-// DisabledCleared returns if the "disabled" field was cleared in this mutation.
-func (m *APIMutation) DisabledCleared() bool {
-	_, ok := m.clearedFields[api.FieldDisabled]
-	return ok
-}
-
-// ResetDisabled resets all changes to the "disabled" field.
-func (m *APIMutation) ResetDisabled() {
-	m.disabled = nil
-	m.adddisabled = nil
-	delete(m.clearedFields, api.FieldDisabled)
 }
 
 // AddRoleIDs adds the "roles" edge to the Role entity by ids.
@@ -816,7 +744,7 @@ func (m *APIMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *APIMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 9)
 	if m.created_at != nil {
 		fields = append(fields, api.FieldCreatedAt)
 	}
@@ -838,14 +766,11 @@ func (m *APIMutation) Fields() []string {
 	if m.desc != nil {
 		fields = append(fields, api.FieldDesc)
 	}
-	if m.api_group != nil {
-		fields = append(fields, api.FieldAPIGroup)
+	if m.group != nil {
+		fields = append(fields, api.FieldGroup)
 	}
 	if m.method != nil {
 		fields = append(fields, api.FieldMethod)
-	}
-	if m.disabled != nil {
-		fields = append(fields, api.FieldDisabled)
 	}
 	return fields
 }
@@ -869,12 +794,10 @@ func (m *APIMutation) Field(name string) (ent.Value, bool) {
 		return m.Title()
 	case api.FieldDesc:
 		return m.Desc()
-	case api.FieldAPIGroup:
-		return m.APIGroup()
+	case api.FieldGroup:
+		return m.Group()
 	case api.FieldMethod:
 		return m.Method()
-	case api.FieldDisabled:
-		return m.Disabled()
 	}
 	return nil, false
 }
@@ -898,12 +821,10 @@ func (m *APIMutation) OldField(ctx context.Context, name string) (ent.Value, err
 		return m.OldTitle(ctx)
 	case api.FieldDesc:
 		return m.OldDesc(ctx)
-	case api.FieldAPIGroup:
-		return m.OldAPIGroup(ctx)
+	case api.FieldGroup:
+		return m.OldGroup(ctx)
 	case api.FieldMethod:
 		return m.OldMethod(ctx)
-	case api.FieldDisabled:
-		return m.OldDisabled(ctx)
 	}
 	return nil, fmt.Errorf("unknown API field %s", name)
 }
@@ -962,12 +883,12 @@ func (m *APIMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDesc(v)
 		return nil
-	case api.FieldAPIGroup:
+	case api.FieldGroup:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetAPIGroup(v)
+		m.SetGroup(v)
 		return nil
 	case api.FieldMethod:
 		v, ok := value.(string)
@@ -975,13 +896,6 @@ func (m *APIMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetMethod(v)
-		return nil
-	case api.FieldDisabled:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetDisabled(v)
 		return nil
 	}
 	return fmt.Errorf("unknown API field %s", name)
@@ -997,9 +911,6 @@ func (m *APIMutation) AddedFields() []string {
 	if m.addcreated_id != nil {
 		fields = append(fields, api.FieldCreatedID)
 	}
-	if m.adddisabled != nil {
-		fields = append(fields, api.FieldDisabled)
-	}
 	return fields
 }
 
@@ -1012,8 +923,6 @@ func (m *APIMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDelete()
 	case api.FieldCreatedID:
 		return m.AddedCreatedID()
-	case api.FieldDisabled:
-		return m.AddedDisabled()
 	}
 	return nil, false
 }
@@ -1036,13 +945,6 @@ func (m *APIMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreatedID(v)
-		return nil
-	case api.FieldDisabled:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddDisabled(v)
 		return nil
 	}
 	return fmt.Errorf("unknown API numeric field %s", name)
@@ -1073,14 +975,11 @@ func (m *APIMutation) ClearedFields() []string {
 	if m.FieldCleared(api.FieldDesc) {
 		fields = append(fields, api.FieldDesc)
 	}
-	if m.FieldCleared(api.FieldAPIGroup) {
-		fields = append(fields, api.FieldAPIGroup)
+	if m.FieldCleared(api.FieldGroup) {
+		fields = append(fields, api.FieldGroup)
 	}
 	if m.FieldCleared(api.FieldMethod) {
 		fields = append(fields, api.FieldMethod)
-	}
-	if m.FieldCleared(api.FieldDisabled) {
-		fields = append(fields, api.FieldDisabled)
 	}
 	return fields
 }
@@ -1117,14 +1016,11 @@ func (m *APIMutation) ClearField(name string) error {
 	case api.FieldDesc:
 		m.ClearDesc()
 		return nil
-	case api.FieldAPIGroup:
-		m.ClearAPIGroup()
+	case api.FieldGroup:
+		m.ClearGroup()
 		return nil
 	case api.FieldMethod:
 		m.ClearMethod()
-		return nil
-	case api.FieldDisabled:
-		m.ClearDisabled()
 		return nil
 	}
 	return fmt.Errorf("unknown API nullable field %s", name)
@@ -1155,14 +1051,11 @@ func (m *APIMutation) ResetField(name string) error {
 	case api.FieldDesc:
 		m.ResetDesc()
 		return nil
-	case api.FieldAPIGroup:
-		m.ResetAPIGroup()
+	case api.FieldGroup:
+		m.ResetGroup()
 		return nil
 	case api.FieldMethod:
 		m.ResetMethod()
-		return nil
-	case api.FieldDisabled:
-		m.ResetDisabled()
 		return nil
 	}
 	return fmt.Errorf("unknown API field %s", name)
@@ -1267,7 +1160,7 @@ type DictMutation struct {
 	status        *int64
 	addstatus     *int64
 	title         *string
-	name          *string
+	code          *string
 	desc          *string
 	clearedFields map[string]struct{}
 	dictht        map[int64]struct{}
@@ -1739,53 +1632,53 @@ func (m *DictMutation) ResetTitle() {
 	delete(m.clearedFields, dict.FieldTitle)
 }
 
-// SetName sets the "name" field.
-func (m *DictMutation) SetName(s string) {
-	m.name = &s
+// SetCode sets the "code" field.
+func (m *DictMutation) SetCode(s string) {
+	m.code = &s
 }
 
-// Name returns the value of the "name" field in the mutation.
-func (m *DictMutation) Name() (r string, exists bool) {
-	v := m.name
+// Code returns the value of the "code" field in the mutation.
+func (m *DictMutation) Code() (r string, exists bool) {
+	v := m.code
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldName returns the old "name" field's value of the Dict entity.
+// OldCode returns the old "code" field's value of the Dict entity.
 // If the Dict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *DictMutation) OldName(ctx context.Context) (v string, err error) {
+func (m *DictMutation) OldCode(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldName is only allowed on UpdateOne operations")
+		return v, errors.New("OldCode is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldName requires an ID field in the mutation")
+		return v, errors.New("OldCode requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldName: %w", err)
+		return v, fmt.Errorf("querying old value for OldCode: %w", err)
 	}
-	return oldValue.Name, nil
+	return oldValue.Code, nil
 }
 
-// ClearName clears the value of the "name" field.
-func (m *DictMutation) ClearName() {
-	m.name = nil
-	m.clearedFields[dict.FieldName] = struct{}{}
+// ClearCode clears the value of the "code" field.
+func (m *DictMutation) ClearCode() {
+	m.code = nil
+	m.clearedFields[dict.FieldCode] = struct{}{}
 }
 
-// NameCleared returns if the "name" field was cleared in this mutation.
-func (m *DictMutation) NameCleared() bool {
-	_, ok := m.clearedFields[dict.FieldName]
+// CodeCleared returns if the "code" field was cleared in this mutation.
+func (m *DictMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[dict.FieldCode]
 	return ok
 }
 
-// ResetName resets all changes to the "name" field.
-func (m *DictMutation) ResetName() {
-	m.name = nil
-	delete(m.clearedFields, dict.FieldName)
+// ResetCode resets all changes to the "code" field.
+func (m *DictMutation) ResetCode() {
+	m.code = nil
+	delete(m.clearedFields, dict.FieldCode)
 }
 
 // SetDesc sets the "desc" field.
@@ -1944,8 +1837,8 @@ func (m *DictMutation) Fields() []string {
 	if m.title != nil {
 		fields = append(fields, dict.FieldTitle)
 	}
-	if m.name != nil {
-		fields = append(fields, dict.FieldName)
+	if m.code != nil {
+		fields = append(fields, dict.FieldCode)
 	}
 	if m.desc != nil {
 		fields = append(fields, dict.FieldDesc)
@@ -1970,8 +1863,8 @@ func (m *DictMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case dict.FieldTitle:
 		return m.Title()
-	case dict.FieldName:
-		return m.Name()
+	case dict.FieldCode:
+		return m.Code()
 	case dict.FieldDesc:
 		return m.Desc()
 	}
@@ -1995,8 +1888,8 @@ func (m *DictMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldStatus(ctx)
 	case dict.FieldTitle:
 		return m.OldTitle(ctx)
-	case dict.FieldName:
-		return m.OldName(ctx)
+	case dict.FieldCode:
+		return m.OldCode(ctx)
 	case dict.FieldDesc:
 		return m.OldDesc(ctx)
 	}
@@ -2050,12 +1943,12 @@ func (m *DictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTitle(v)
 		return nil
-	case dict.FieldName:
+	case dict.FieldCode:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetName(v)
+		m.SetCode(v)
 		return nil
 	case dict.FieldDesc:
 		v, ok := value.(string)
@@ -2151,8 +2044,8 @@ func (m *DictMutation) ClearedFields() []string {
 	if m.FieldCleared(dict.FieldTitle) {
 		fields = append(fields, dict.FieldTitle)
 	}
-	if m.FieldCleared(dict.FieldName) {
-		fields = append(fields, dict.FieldName)
+	if m.FieldCleared(dict.FieldCode) {
+		fields = append(fields, dict.FieldCode)
 	}
 	if m.FieldCleared(dict.FieldDesc) {
 		fields = append(fields, dict.FieldDesc)
@@ -2189,8 +2082,8 @@ func (m *DictMutation) ClearField(name string) error {
 	case dict.FieldTitle:
 		m.ClearTitle()
 		return nil
-	case dict.FieldName:
-		m.ClearName()
+	case dict.FieldCode:
+		m.ClearCode()
 		return nil
 	case dict.FieldDesc:
 		m.ClearDesc()
@@ -2221,8 +2114,8 @@ func (m *DictMutation) ResetField(name string) error {
 	case dict.FieldTitle:
 		m.ResetTitle()
 		return nil
-	case dict.FieldName:
-		m.ResetName()
+	case dict.FieldCode:
+		m.ResetCode()
 		return nil
 	case dict.FieldDesc:
 		m.ResetDesc()
@@ -2330,7 +2223,6 @@ type DicthtMutation struct {
 	status        *int64
 	addstatus     *int64
 	title         *string
-	key           *string
 	value         *string
 	clearedFields map[string]struct{}
 	dict          *int64
@@ -2801,55 +2693,6 @@ func (m *DicthtMutation) ResetTitle() {
 	delete(m.clearedFields, dictht.FieldTitle)
 }
 
-// SetKey sets the "key" field.
-func (m *DicthtMutation) SetKey(s string) {
-	m.key = &s
-}
-
-// Key returns the value of the "key" field in the mutation.
-func (m *DicthtMutation) Key() (r string, exists bool) {
-	v := m.key
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldKey returns the old "key" field's value of the Dictht entity.
-// If the Dictht object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *DicthtMutation) OldKey(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldKey is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldKey requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldKey: %w", err)
-	}
-	return oldValue.Key, nil
-}
-
-// ClearKey clears the value of the "key" field.
-func (m *DicthtMutation) ClearKey() {
-	m.key = nil
-	m.clearedFields[dictht.FieldKey] = struct{}{}
-}
-
-// KeyCleared returns if the "key" field was cleared in this mutation.
-func (m *DicthtMutation) KeyCleared() bool {
-	_, ok := m.clearedFields[dictht.FieldKey]
-	return ok
-}
-
-// ResetKey resets all changes to the "key" field.
-func (m *DicthtMutation) ResetKey() {
-	m.key = nil
-	delete(m.clearedFields, dictht.FieldKey)
-}
-
 // SetValue sets the "value" field.
 func (m *DicthtMutation) SetValue(s string) {
 	m.value = &s
@@ -3009,7 +2852,7 @@ func (m *DicthtMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *DicthtMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 8)
 	if m.created_at != nil {
 		fields = append(fields, dictht.FieldCreatedAt)
 	}
@@ -3027,9 +2870,6 @@ func (m *DicthtMutation) Fields() []string {
 	}
 	if m.title != nil {
 		fields = append(fields, dictht.FieldTitle)
-	}
-	if m.key != nil {
-		fields = append(fields, dictht.FieldKey)
 	}
 	if m.value != nil {
 		fields = append(fields, dictht.FieldValue)
@@ -3057,8 +2897,6 @@ func (m *DicthtMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case dictht.FieldTitle:
 		return m.Title()
-	case dictht.FieldKey:
-		return m.Key()
 	case dictht.FieldValue:
 		return m.Value()
 	case dictht.FieldDictID:
@@ -3084,8 +2922,6 @@ func (m *DicthtMutation) OldField(ctx context.Context, name string) (ent.Value, 
 		return m.OldStatus(ctx)
 	case dictht.FieldTitle:
 		return m.OldTitle(ctx)
-	case dictht.FieldKey:
-		return m.OldKey(ctx)
 	case dictht.FieldValue:
 		return m.OldValue(ctx)
 	case dictht.FieldDictID:
@@ -3140,13 +2976,6 @@ func (m *DicthtMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTitle(v)
-		return nil
-	case dictht.FieldKey:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetKey(v)
 		return nil
 	case dictht.FieldValue:
 		v, ok := value.(string)
@@ -3249,9 +3078,6 @@ func (m *DicthtMutation) ClearedFields() []string {
 	if m.FieldCleared(dictht.FieldTitle) {
 		fields = append(fields, dictht.FieldTitle)
 	}
-	if m.FieldCleared(dictht.FieldKey) {
-		fields = append(fields, dictht.FieldKey)
-	}
 	if m.FieldCleared(dictht.FieldValue) {
 		fields = append(fields, dictht.FieldValue)
 	}
@@ -3290,9 +3116,6 @@ func (m *DicthtMutation) ClearField(name string) error {
 	case dictht.FieldTitle:
 		m.ClearTitle()
 		return nil
-	case dictht.FieldKey:
-		m.ClearKey()
-		return nil
 	case dictht.FieldValue:
 		m.ClearValue()
 		return nil
@@ -3324,9 +3147,6 @@ func (m *DicthtMutation) ResetField(name string) error {
 		return nil
 	case dictht.FieldTitle:
 		m.ResetTitle()
-		return nil
-	case dictht.FieldKey:
-		m.ResetKey()
 		return nil
 	case dictht.FieldValue:
 		m.ResetValue()
@@ -7705,35 +7525,36 @@ func (m *MessagesMutation) ResetEdge(name string) error {
 // RoleMutation represents an operation that mutates the Role nodes in the graph.
 type RoleMutation struct {
 	config
-	op             Op
-	typ            string
-	id             *int64
-	created_at     *time.Time
-	updated_at     *time.Time
-	delete         *int64
-	adddelete      *int64
-	created_id     *int64
-	addcreated_id  *int64
-	status         *int64
-	addstatus      *int64
-	name           *string
-	value          *string
-	default_router *string
-	remark         *string
-	order_no       *int64
-	addorder_no    *int64
-	apis           *[]int
-	appendapis     []int
-	clearedFields  map[string]struct{}
-	menus          map[int64]struct{}
-	removedmenus   map[int64]struct{}
-	clearedmenus   bool
-	api            map[int64]struct{}
-	removedapi     map[int64]struct{}
-	clearedapi     bool
-	done           bool
-	oldValue       func(context.Context) (*Role, error)
-	predicates     []predicate.Role
+	op            Op
+	typ           string
+	id            *int64
+	created_at    *time.Time
+	updated_at    *time.Time
+	delete        *int64
+	adddelete     *int64
+	created_id    *int64
+	addcreated_id *int64
+	status        *int64
+	addstatus     *int64
+	name          *string
+	code          *string
+	desc          *string
+	order_no      *int64
+	addorder_no   *int64
+	menus         *[]int64
+	appendmenus   []int64
+	apis          *[]int64
+	appendapis    []int64
+	clearedFields map[string]struct{}
+	menu          map[int64]struct{}
+	removedmenu   map[int64]struct{}
+	clearedmenu   bool
+	api           map[int64]struct{}
+	removedapi    map[int64]struct{}
+	clearedapi    bool
+	done          bool
+	oldValue      func(context.Context) (*Role, error)
+	predicates    []predicate.Role
 }
 
 var _ ent.Mutation = (*RoleMutation)(nil)
@@ -8197,151 +8018,102 @@ func (m *RoleMutation) ResetName() {
 	delete(m.clearedFields, role.FieldName)
 }
 
-// SetValue sets the "value" field.
-func (m *RoleMutation) SetValue(s string) {
-	m.value = &s
+// SetCode sets the "code" field.
+func (m *RoleMutation) SetCode(s string) {
+	m.code = &s
 }
 
-// Value returns the value of the "value" field in the mutation.
-func (m *RoleMutation) Value() (r string, exists bool) {
-	v := m.value
+// Code returns the value of the "code" field in the mutation.
+func (m *RoleMutation) Code() (r string, exists bool) {
+	v := m.code
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldValue returns the old "value" field's value of the Role entity.
+// OldCode returns the old "code" field's value of the Role entity.
 // If the Role object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RoleMutation) OldValue(ctx context.Context) (v string, err error) {
+func (m *RoleMutation) OldCode(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldValue is only allowed on UpdateOne operations")
+		return v, errors.New("OldCode is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldValue requires an ID field in the mutation")
+		return v, errors.New("OldCode requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldValue: %w", err)
+		return v, fmt.Errorf("querying old value for OldCode: %w", err)
 	}
-	return oldValue.Value, nil
+	return oldValue.Code, nil
 }
 
-// ClearValue clears the value of the "value" field.
-func (m *RoleMutation) ClearValue() {
-	m.value = nil
-	m.clearedFields[role.FieldValue] = struct{}{}
+// ClearCode clears the value of the "code" field.
+func (m *RoleMutation) ClearCode() {
+	m.code = nil
+	m.clearedFields[role.FieldCode] = struct{}{}
 }
 
-// ValueCleared returns if the "value" field was cleared in this mutation.
-func (m *RoleMutation) ValueCleared() bool {
-	_, ok := m.clearedFields[role.FieldValue]
+// CodeCleared returns if the "code" field was cleared in this mutation.
+func (m *RoleMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[role.FieldCode]
 	return ok
 }
 
-// ResetValue resets all changes to the "value" field.
-func (m *RoleMutation) ResetValue() {
-	m.value = nil
-	delete(m.clearedFields, role.FieldValue)
+// ResetCode resets all changes to the "code" field.
+func (m *RoleMutation) ResetCode() {
+	m.code = nil
+	delete(m.clearedFields, role.FieldCode)
 }
 
-// SetDefaultRouter sets the "default_router" field.
-func (m *RoleMutation) SetDefaultRouter(s string) {
-	m.default_router = &s
+// SetDesc sets the "desc" field.
+func (m *RoleMutation) SetDesc(s string) {
+	m.desc = &s
 }
 
-// DefaultRouter returns the value of the "default_router" field in the mutation.
-func (m *RoleMutation) DefaultRouter() (r string, exists bool) {
-	v := m.default_router
+// Desc returns the value of the "desc" field in the mutation.
+func (m *RoleMutation) Desc() (r string, exists bool) {
+	v := m.desc
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDefaultRouter returns the old "default_router" field's value of the Role entity.
+// OldDesc returns the old "desc" field's value of the Role entity.
 // If the Role object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RoleMutation) OldDefaultRouter(ctx context.Context) (v string, err error) {
+func (m *RoleMutation) OldDesc(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDefaultRouter is only allowed on UpdateOne operations")
+		return v, errors.New("OldDesc is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDefaultRouter requires an ID field in the mutation")
+		return v, errors.New("OldDesc requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDefaultRouter: %w", err)
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
 	}
-	return oldValue.DefaultRouter, nil
+	return oldValue.Desc, nil
 }
 
-// ClearDefaultRouter clears the value of the "default_router" field.
-func (m *RoleMutation) ClearDefaultRouter() {
-	m.default_router = nil
-	m.clearedFields[role.FieldDefaultRouter] = struct{}{}
+// ClearDesc clears the value of the "desc" field.
+func (m *RoleMutation) ClearDesc() {
+	m.desc = nil
+	m.clearedFields[role.FieldDesc] = struct{}{}
 }
 
-// DefaultRouterCleared returns if the "default_router" field was cleared in this mutation.
-func (m *RoleMutation) DefaultRouterCleared() bool {
-	_, ok := m.clearedFields[role.FieldDefaultRouter]
+// DescCleared returns if the "desc" field was cleared in this mutation.
+func (m *RoleMutation) DescCleared() bool {
+	_, ok := m.clearedFields[role.FieldDesc]
 	return ok
 }
 
-// ResetDefaultRouter resets all changes to the "default_router" field.
-func (m *RoleMutation) ResetDefaultRouter() {
-	m.default_router = nil
-	delete(m.clearedFields, role.FieldDefaultRouter)
-}
-
-// SetRemark sets the "remark" field.
-func (m *RoleMutation) SetRemark(s string) {
-	m.remark = &s
-}
-
-// Remark returns the value of the "remark" field in the mutation.
-func (m *RoleMutation) Remark() (r string, exists bool) {
-	v := m.remark
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldRemark returns the old "remark" field's value of the Role entity.
-// If the Role object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RoleMutation) OldRemark(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldRemark is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldRemark requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldRemark: %w", err)
-	}
-	return oldValue.Remark, nil
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (m *RoleMutation) ClearRemark() {
-	m.remark = nil
-	m.clearedFields[role.FieldRemark] = struct{}{}
-}
-
-// RemarkCleared returns if the "remark" field was cleared in this mutation.
-func (m *RoleMutation) RemarkCleared() bool {
-	_, ok := m.clearedFields[role.FieldRemark]
-	return ok
-}
-
-// ResetRemark resets all changes to the "remark" field.
-func (m *RoleMutation) ResetRemark() {
-	m.remark = nil
-	delete(m.clearedFields, role.FieldRemark)
+// ResetDesc resets all changes to the "desc" field.
+func (m *RoleMutation) ResetDesc() {
+	m.desc = nil
+	delete(m.clearedFields, role.FieldDesc)
 }
 
 // SetOrderNo sets the "order_no" field.
@@ -8414,14 +8186,79 @@ func (m *RoleMutation) ResetOrderNo() {
 	delete(m.clearedFields, role.FieldOrderNo)
 }
 
+// SetMenus sets the "menus" field.
+func (m *RoleMutation) SetMenus(i []int64) {
+	m.menus = &i
+	m.appendmenus = nil
+}
+
+// Menus returns the value of the "menus" field in the mutation.
+func (m *RoleMutation) Menus() (r []int64, exists bool) {
+	v := m.menus
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMenus returns the old "menus" field's value of the Role entity.
+// If the Role object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *RoleMutation) OldMenus(ctx context.Context) (v []int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMenus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMenus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMenus: %w", err)
+	}
+	return oldValue.Menus, nil
+}
+
+// AppendMenus adds i to the "menus" field.
+func (m *RoleMutation) AppendMenus(i []int64) {
+	m.appendmenus = append(m.appendmenus, i...)
+}
+
+// AppendedMenus returns the list of values that were appended to the "menus" field in this mutation.
+func (m *RoleMutation) AppendedMenus() ([]int64, bool) {
+	if len(m.appendmenus) == 0 {
+		return nil, false
+	}
+	return m.appendmenus, true
+}
+
+// ClearMenus clears the value of the "menus" field.
+func (m *RoleMutation) ClearMenus() {
+	m.menus = nil
+	m.appendmenus = nil
+	m.clearedFields[role.FieldMenus] = struct{}{}
+}
+
+// MenusCleared returns if the "menus" field was cleared in this mutation.
+func (m *RoleMutation) MenusCleared() bool {
+	_, ok := m.clearedFields[role.FieldMenus]
+	return ok
+}
+
+// ResetMenus resets all changes to the "menus" field.
+func (m *RoleMutation) ResetMenus() {
+	m.menus = nil
+	m.appendmenus = nil
+	delete(m.clearedFields, role.FieldMenus)
+}
+
 // SetApis sets the "apis" field.
-func (m *RoleMutation) SetApis(i []int) {
+func (m *RoleMutation) SetApis(i []int64) {
 	m.apis = &i
 	m.appendapis = nil
 }
 
 // Apis returns the value of the "apis" field in the mutation.
-func (m *RoleMutation) Apis() (r []int, exists bool) {
+func (m *RoleMutation) Apis() (r []int64, exists bool) {
 	v := m.apis
 	if v == nil {
 		return
@@ -8432,7 +8269,7 @@ func (m *RoleMutation) Apis() (r []int, exists bool) {
 // OldApis returns the old "apis" field's value of the Role entity.
 // If the Role object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *RoleMutation) OldApis(ctx context.Context) (v []int, err error) {
+func (m *RoleMutation) OldApis(ctx context.Context) (v []int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldApis is only allowed on UpdateOne operations")
 	}
@@ -8447,12 +8284,12 @@ func (m *RoleMutation) OldApis(ctx context.Context) (v []int, err error) {
 }
 
 // AppendApis adds i to the "apis" field.
-func (m *RoleMutation) AppendApis(i []int) {
+func (m *RoleMutation) AppendApis(i []int64) {
 	m.appendapis = append(m.appendapis, i...)
 }
 
 // AppendedApis returns the list of values that were appended to the "apis" field in this mutation.
-func (m *RoleMutation) AppendedApis() ([]int, bool) {
+func (m *RoleMutation) AppendedApis() ([]int64, bool) {
 	if len(m.appendapis) == 0 {
 		return nil, false
 	}
@@ -8479,58 +8316,58 @@ func (m *RoleMutation) ResetApis() {
 	delete(m.clearedFields, role.FieldApis)
 }
 
-// AddMenuIDs adds the "menus" edge to the Menu entity by ids.
+// AddMenuIDs adds the "menu" edge to the Menu entity by ids.
 func (m *RoleMutation) AddMenuIDs(ids ...int64) {
-	if m.menus == nil {
-		m.menus = make(map[int64]struct{})
+	if m.menu == nil {
+		m.menu = make(map[int64]struct{})
 	}
 	for i := range ids {
-		m.menus[ids[i]] = struct{}{}
+		m.menu[ids[i]] = struct{}{}
 	}
 }
 
-// ClearMenus clears the "menus" edge to the Menu entity.
-func (m *RoleMutation) ClearMenus() {
-	m.clearedmenus = true
+// ClearMenu clears the "menu" edge to the Menu entity.
+func (m *RoleMutation) ClearMenu() {
+	m.clearedmenu = true
 }
 
-// MenusCleared reports if the "menus" edge to the Menu entity was cleared.
-func (m *RoleMutation) MenusCleared() bool {
-	return m.clearedmenus
+// MenuCleared reports if the "menu" edge to the Menu entity was cleared.
+func (m *RoleMutation) MenuCleared() bool {
+	return m.clearedmenu
 }
 
-// RemoveMenuIDs removes the "menus" edge to the Menu entity by IDs.
+// RemoveMenuIDs removes the "menu" edge to the Menu entity by IDs.
 func (m *RoleMutation) RemoveMenuIDs(ids ...int64) {
-	if m.removedmenus == nil {
-		m.removedmenus = make(map[int64]struct{})
+	if m.removedmenu == nil {
+		m.removedmenu = make(map[int64]struct{})
 	}
 	for i := range ids {
-		delete(m.menus, ids[i])
-		m.removedmenus[ids[i]] = struct{}{}
+		delete(m.menu, ids[i])
+		m.removedmenu[ids[i]] = struct{}{}
 	}
 }
 
-// RemovedMenus returns the removed IDs of the "menus" edge to the Menu entity.
-func (m *RoleMutation) RemovedMenusIDs() (ids []int64) {
-	for id := range m.removedmenus {
+// RemovedMenu returns the removed IDs of the "menu" edge to the Menu entity.
+func (m *RoleMutation) RemovedMenuIDs() (ids []int64) {
+	for id := range m.removedmenu {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// MenusIDs returns the "menus" edge IDs in the mutation.
-func (m *RoleMutation) MenusIDs() (ids []int64) {
-	for id := range m.menus {
+// MenuIDs returns the "menu" edge IDs in the mutation.
+func (m *RoleMutation) MenuIDs() (ids []int64) {
+	for id := range m.menu {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// ResetMenus resets all changes to the "menus" edge.
-func (m *RoleMutation) ResetMenus() {
-	m.menus = nil
-	m.clearedmenus = false
-	m.removedmenus = nil
+// ResetMenu resets all changes to the "menu" edge.
+func (m *RoleMutation) ResetMenu() {
+	m.menu = nil
+	m.clearedmenu = false
+	m.removedmenu = nil
 }
 
 // AddAPIIDs adds the "api" edge to the API entity by ids.
@@ -8640,17 +8477,17 @@ func (m *RoleMutation) Fields() []string {
 	if m.name != nil {
 		fields = append(fields, role.FieldName)
 	}
-	if m.value != nil {
-		fields = append(fields, role.FieldValue)
+	if m.code != nil {
+		fields = append(fields, role.FieldCode)
 	}
-	if m.default_router != nil {
-		fields = append(fields, role.FieldDefaultRouter)
-	}
-	if m.remark != nil {
-		fields = append(fields, role.FieldRemark)
+	if m.desc != nil {
+		fields = append(fields, role.FieldDesc)
 	}
 	if m.order_no != nil {
 		fields = append(fields, role.FieldOrderNo)
+	}
+	if m.menus != nil {
+		fields = append(fields, role.FieldMenus)
 	}
 	if m.apis != nil {
 		fields = append(fields, role.FieldApis)
@@ -8675,14 +8512,14 @@ func (m *RoleMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case role.FieldName:
 		return m.Name()
-	case role.FieldValue:
-		return m.Value()
-	case role.FieldDefaultRouter:
-		return m.DefaultRouter()
-	case role.FieldRemark:
-		return m.Remark()
+	case role.FieldCode:
+		return m.Code()
+	case role.FieldDesc:
+		return m.Desc()
 	case role.FieldOrderNo:
 		return m.OrderNo()
+	case role.FieldMenus:
+		return m.Menus()
 	case role.FieldApis:
 		return m.Apis()
 	}
@@ -8706,14 +8543,14 @@ func (m *RoleMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldStatus(ctx)
 	case role.FieldName:
 		return m.OldName(ctx)
-	case role.FieldValue:
-		return m.OldValue(ctx)
-	case role.FieldDefaultRouter:
-		return m.OldDefaultRouter(ctx)
-	case role.FieldRemark:
-		return m.OldRemark(ctx)
+	case role.FieldCode:
+		return m.OldCode(ctx)
+	case role.FieldDesc:
+		return m.OldDesc(ctx)
 	case role.FieldOrderNo:
 		return m.OldOrderNo(ctx)
+	case role.FieldMenus:
+		return m.OldMenus(ctx)
 	case role.FieldApis:
 		return m.OldApis(ctx)
 	}
@@ -8767,26 +8604,19 @@ func (m *RoleMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetName(v)
 		return nil
-	case role.FieldValue:
+	case role.FieldCode:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetValue(v)
+		m.SetCode(v)
 		return nil
-	case role.FieldDefaultRouter:
+	case role.FieldDesc:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDefaultRouter(v)
-		return nil
-	case role.FieldRemark:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetRemark(v)
+		m.SetDesc(v)
 		return nil
 	case role.FieldOrderNo:
 		v, ok := value.(int64)
@@ -8795,8 +8625,15 @@ func (m *RoleMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetOrderNo(v)
 		return nil
+	case role.FieldMenus:
+		v, ok := value.([]int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMenus(v)
+		return nil
 	case role.FieldApis:
-		v, ok := value.([]int)
+		v, ok := value.([]int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -8901,17 +8738,17 @@ func (m *RoleMutation) ClearedFields() []string {
 	if m.FieldCleared(role.FieldName) {
 		fields = append(fields, role.FieldName)
 	}
-	if m.FieldCleared(role.FieldValue) {
-		fields = append(fields, role.FieldValue)
+	if m.FieldCleared(role.FieldCode) {
+		fields = append(fields, role.FieldCode)
 	}
-	if m.FieldCleared(role.FieldDefaultRouter) {
-		fields = append(fields, role.FieldDefaultRouter)
-	}
-	if m.FieldCleared(role.FieldRemark) {
-		fields = append(fields, role.FieldRemark)
+	if m.FieldCleared(role.FieldDesc) {
+		fields = append(fields, role.FieldDesc)
 	}
 	if m.FieldCleared(role.FieldOrderNo) {
 		fields = append(fields, role.FieldOrderNo)
+	}
+	if m.FieldCleared(role.FieldMenus) {
+		fields = append(fields, role.FieldMenus)
 	}
 	if m.FieldCleared(role.FieldApis) {
 		fields = append(fields, role.FieldApis)
@@ -8948,17 +8785,17 @@ func (m *RoleMutation) ClearField(name string) error {
 	case role.FieldName:
 		m.ClearName()
 		return nil
-	case role.FieldValue:
-		m.ClearValue()
+	case role.FieldCode:
+		m.ClearCode()
 		return nil
-	case role.FieldDefaultRouter:
-		m.ClearDefaultRouter()
-		return nil
-	case role.FieldRemark:
-		m.ClearRemark()
+	case role.FieldDesc:
+		m.ClearDesc()
 		return nil
 	case role.FieldOrderNo:
 		m.ClearOrderNo()
+		return nil
+	case role.FieldMenus:
+		m.ClearMenus()
 		return nil
 	case role.FieldApis:
 		m.ClearApis()
@@ -8989,17 +8826,17 @@ func (m *RoleMutation) ResetField(name string) error {
 	case role.FieldName:
 		m.ResetName()
 		return nil
-	case role.FieldValue:
-		m.ResetValue()
+	case role.FieldCode:
+		m.ResetCode()
 		return nil
-	case role.FieldDefaultRouter:
-		m.ResetDefaultRouter()
-		return nil
-	case role.FieldRemark:
-		m.ResetRemark()
+	case role.FieldDesc:
+		m.ResetDesc()
 		return nil
 	case role.FieldOrderNo:
 		m.ResetOrderNo()
+		return nil
+	case role.FieldMenus:
+		m.ResetMenus()
 		return nil
 	case role.FieldApis:
 		m.ResetApis()
@@ -9011,8 +8848,8 @@ func (m *RoleMutation) ResetField(name string) error {
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *RoleMutation) AddedEdges() []string {
 	edges := make([]string, 0, 2)
-	if m.menus != nil {
-		edges = append(edges, role.EdgeMenus)
+	if m.menu != nil {
+		edges = append(edges, role.EdgeMenu)
 	}
 	if m.api != nil {
 		edges = append(edges, role.EdgeAPI)
@@ -9024,9 +8861,9 @@ func (m *RoleMutation) AddedEdges() []string {
 // name in this mutation.
 func (m *RoleMutation) AddedIDs(name string) []ent.Value {
 	switch name {
-	case role.EdgeMenus:
-		ids := make([]ent.Value, 0, len(m.menus))
-		for id := range m.menus {
+	case role.EdgeMenu:
+		ids := make([]ent.Value, 0, len(m.menu))
+		for id := range m.menu {
 			ids = append(ids, id)
 		}
 		return ids
@@ -9043,8 +8880,8 @@ func (m *RoleMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *RoleMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 2)
-	if m.removedmenus != nil {
-		edges = append(edges, role.EdgeMenus)
+	if m.removedmenu != nil {
+		edges = append(edges, role.EdgeMenu)
 	}
 	if m.removedapi != nil {
 		edges = append(edges, role.EdgeAPI)
@@ -9056,9 +8893,9 @@ func (m *RoleMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *RoleMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case role.EdgeMenus:
-		ids := make([]ent.Value, 0, len(m.removedmenus))
-		for id := range m.removedmenus {
+	case role.EdgeMenu:
+		ids := make([]ent.Value, 0, len(m.removedmenu))
+		for id := range m.removedmenu {
 			ids = append(ids, id)
 		}
 		return ids
@@ -9075,8 +8912,8 @@ func (m *RoleMutation) RemovedIDs(name string) []ent.Value {
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *RoleMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 2)
-	if m.clearedmenus {
-		edges = append(edges, role.EdgeMenus)
+	if m.clearedmenu {
+		edges = append(edges, role.EdgeMenu)
 	}
 	if m.clearedapi {
 		edges = append(edges, role.EdgeAPI)
@@ -9088,8 +8925,8 @@ func (m *RoleMutation) ClearedEdges() []string {
 // was cleared in this mutation.
 func (m *RoleMutation) EdgeCleared(name string) bool {
 	switch name {
-	case role.EdgeMenus:
-		return m.clearedmenus
+	case role.EdgeMenu:
+		return m.clearedmenu
 	case role.EdgeAPI:
 		return m.clearedapi
 	}
@@ -9108,8 +8945,8 @@ func (m *RoleMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *RoleMutation) ResetEdge(name string) error {
 	switch name {
-	case role.EdgeMenus:
-		m.ResetMenus()
+	case role.EdgeMenu:
+		m.ResetMenu()
 		return nil
 	case role.EdgeAPI:
 		m.ResetAPI()

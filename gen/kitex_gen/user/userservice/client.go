@@ -20,6 +20,16 @@ type Client interface {
 	ChangePassword(ctx context.Context, req *user.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DeleteUser(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	SetUserRole(ctx context.Context, req *user.SetUserRoleReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	CreateDepartments(ctx context.Context, req *user.CreateDepartmentsReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error)
+	DeleteDepartments(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	UpdateDepartments(ctx context.Context, req *user.UpdateDepartmentsReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error)
+	GetDepartments(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error)
+	GetDepartmentsList(ctx context.Context, req *user.GetDepartmentsListReq, callOptions ...callopt.Option) (r *user.DepartmentsListResp, err error)
+	CreatePositions(ctx context.Context, req *user.CreatePositionsReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error)
+	DeletePositions(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	UpdatePositions(ctx context.Context, req *user.UpdatePositionsReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error)
+	GetPositions(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error)
+	GetPositionsList(ctx context.Context, req *user.GetPositionsListReq, callOptions ...callopt.Option) (r *user.PositionsListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -89,4 +99,54 @@ func (p *kUserServiceClient) DeleteUser(ctx context.Context, req *base.IdReq, ca
 func (p *kUserServiceClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SetUserRole(ctx, req)
+}
+
+func (p *kUserServiceClient) CreateDepartments(ctx context.Context, req *user.CreateDepartmentsReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateDepartments(ctx, req)
+}
+
+func (p *kUserServiceClient) DeleteDepartments(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteDepartments(ctx, req)
+}
+
+func (p *kUserServiceClient) UpdateDepartments(ctx context.Context, req *user.UpdateDepartmentsReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateDepartments(ctx, req)
+}
+
+func (p *kUserServiceClient) GetDepartments(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.DepartmentsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetDepartments(ctx, req)
+}
+
+func (p *kUserServiceClient) GetDepartmentsList(ctx context.Context, req *user.GetDepartmentsListReq, callOptions ...callopt.Option) (r *user.DepartmentsListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetDepartmentsList(ctx, req)
+}
+
+func (p *kUserServiceClient) CreatePositions(ctx context.Context, req *user.CreatePositionsReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreatePositions(ctx, req)
+}
+
+func (p *kUserServiceClient) DeletePositions(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeletePositions(ctx, req)
+}
+
+func (p *kUserServiceClient) UpdatePositions(ctx context.Context, req *user.UpdatePositionsReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdatePositions(ctx, req)
+}
+
+func (p *kUserServiceClient) GetPositions(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPositions(ctx, req)
+}
+
+func (p *kUserServiceClient) GetPositionsList(ctx context.Context, req *user.GetPositionsListReq, callOptions ...callopt.Option) (r *user.PositionsListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetPositionsList(ctx, req)
 }

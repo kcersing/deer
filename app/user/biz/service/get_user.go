@@ -1,6 +1,7 @@
 package service
 
 import (
+	"common/pkg/errno"
 	"context"
 	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
@@ -20,6 +21,10 @@ func NewGetUserService(ctx context.Context) *GetUserService {
 
 // Run Get note info
 func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
+
+	if req == nil {
+		return nil, errno.InvalidParameterErr
+	}
 
 	var (
 		dataResp *Base.User

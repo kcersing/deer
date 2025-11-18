@@ -104,16 +104,16 @@ func (_c *DictCreate) SetNillableTitle(v *string) *DictCreate {
 	return _c
 }
 
-// SetName sets the "name" field.
-func (_c *DictCreate) SetName(v string) *DictCreate {
-	_c.mutation.SetName(v)
+// SetCode sets the "code" field.
+func (_c *DictCreate) SetCode(v string) *DictCreate {
+	_c.mutation.SetCode(v)
 	return _c
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_c *DictCreate) SetNillableName(v *string) *DictCreate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_c *DictCreate) SetNillableCode(v *string) *DictCreate {
 	if v != nil {
-		_c.SetName(*v)
+		_c.SetCode(*v)
 	}
 	return _c
 }
@@ -268,9 +268,9 @@ func (_c *DictCreate) createSpec() (*Dict, *sqlgraph.CreateSpec) {
 		_spec.SetField(dict.FieldTitle, field.TypeString, value)
 		_node.Title = value
 	}
-	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(dict.FieldName, field.TypeString, value)
-		_node.Name = value
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(dict.FieldCode, field.TypeString, value)
+		_node.Code = value
 	}
 	if value, ok := _c.mutation.Desc(); ok {
 		_spec.SetField(dict.FieldDesc, field.TypeString, value)

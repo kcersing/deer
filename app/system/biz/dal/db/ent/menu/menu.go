@@ -53,7 +53,7 @@ const (
 	// Table holds the table name of the menu in the database.
 	Table = "sys_menus"
 	// RolesTable is the table that holds the roles relation/edge. The primary key declared below.
-	RolesTable = "role_menus"
+	RolesTable = "role_menu"
 	// RolesInverseTable is the table name for the Role entity.
 	// It exists in this package in order to avoid circular dependency with the "role" package.
 	RolesInverseTable = "sys_roles"

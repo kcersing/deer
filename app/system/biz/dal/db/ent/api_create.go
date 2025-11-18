@@ -118,16 +118,16 @@ func (_c *APICreate) SetNillableDesc(v *string) *APICreate {
 	return _c
 }
 
-// SetAPIGroup sets the "api_group" field.
-func (_c *APICreate) SetAPIGroup(v string) *APICreate {
-	_c.mutation.SetAPIGroup(v)
+// SetGroup sets the "group" field.
+func (_c *APICreate) SetGroup(v string) *APICreate {
+	_c.mutation.SetGroup(v)
 	return _c
 }
 
-// SetNillableAPIGroup sets the "api_group" field if the given value is not nil.
-func (_c *APICreate) SetNillableAPIGroup(v *string) *APICreate {
+// SetNillableGroup sets the "group" field if the given value is not nil.
+func (_c *APICreate) SetNillableGroup(v *string) *APICreate {
 	if v != nil {
-		_c.SetAPIGroup(*v)
+		_c.SetGroup(*v)
 	}
 	return _c
 }
@@ -142,20 +142,6 @@ func (_c *APICreate) SetMethod(v string) *APICreate {
 func (_c *APICreate) SetNillableMethod(v *string) *APICreate {
 	if v != nil {
 		_c.SetMethod(*v)
-	}
-	return _c
-}
-
-// SetDisabled sets the "disabled" field.
-func (_c *APICreate) SetDisabled(v int64) *APICreate {
-	_c.mutation.SetDisabled(v)
-	return _c
-}
-
-// SetNillableDisabled sets the "disabled" field if the given value is not nil.
-func (_c *APICreate) SetNillableDisabled(v *int64) *APICreate {
-	if v != nil {
-		_c.SetDisabled(*v)
 	}
 	return _c
 }
@@ -236,10 +222,6 @@ func (_c *APICreate) defaults() {
 		v := api.DefaultMethod
 		_c.mutation.SetMethod(v)
 	}
-	if _, ok := _c.mutation.Disabled(); !ok {
-		v := api.DefaultDisabled
-		_c.mutation.SetDisabled(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -304,17 +286,13 @@ func (_c *APICreate) createSpec() (*API, *sqlgraph.CreateSpec) {
 		_spec.SetField(api.FieldDesc, field.TypeString, value)
 		_node.Desc = value
 	}
-	if value, ok := _c.mutation.APIGroup(); ok {
-		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
-		_node.APIGroup = value
+	if value, ok := _c.mutation.Group(); ok {
+		_spec.SetField(api.FieldGroup, field.TypeString, value)
+		_node.Group = value
 	}
 	if value, ok := _c.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
 		_node.Method = value
-	}
-	if value, ok := _c.mutation.Disabled(); ok {
-		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)
-		_node.Disabled = value
 	}
 	if nodes := _c.mutation.RolesIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

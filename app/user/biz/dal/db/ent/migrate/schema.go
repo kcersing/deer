@@ -9,6 +9,67 @@ import (
 )
 
 var (
+	// UserDepartmentsColumns holds the columns for the "user_departments" table.
+	UserDepartmentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "部门名称"},
+		{Name: "manager_id", Type: field.TypeInt64, Nullable: true, Comment: "负责人ID"},
+		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "父ID"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "职能描述"},
+	}
+	// UserDepartmentsTable holds the schema information for the "user_departments" table.
+	UserDepartmentsTable = &schema.Table{
+		Name:       "user_departments",
+		Comment:    "部门表",
+		Columns:    UserDepartmentsColumns,
+		PrimaryKey: []*schema.Column{UserDepartmentsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "idx_sys_department_name",
+				Unique:  false,
+				Columns: []*schema.Column{UserDepartmentsColumns[6]},
+			},
+		},
+	}
+	// UserPositionsColumns holds the columns for the "user_positions" table.
+	UserPositionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "职位名称"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "唯一编码"},
+		{Name: "department_id", Type: field.TypeInt64, Comment: "所属部门ID"},
+		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "父ID"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "职能描述"},
+		{Name: "quota", Type: field.TypeInt64, Nullable: true, Comment: "编制人数"},
+	}
+	// UserPositionsTable holds the schema information for the "user_positions" table.
+	UserPositionsTable = &schema.Table{
+		Name:       "user_positions",
+		Comment:    "职位表",
+		Columns:    UserPositionsColumns,
+		PrimaryKey: []*schema.Column{UserPositionsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "idx_sys_position_code",
+				Unique:  true,
+				Columns: []*schema.Column{UserPositionsColumns[7]},
+			},
+			{
+				Name:    "idx_sys_position_name",
+				Unique:  false,
+				Columns: []*schema.Column{UserPositionsColumns[6]},
+			},
+		},
+	}
 	// UsersColumns holds the columns for the "users" table.
 	UsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -24,6 +85,8 @@ var (
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "姓名"},
 		{Name: "gender", Type: field.TypeInt64, Nullable: true, Comment: "性别 | [0:女性;1:男性;3:保密]", Default: 3},
 		{Name: "birthday", Type: field.TypeTime, Nullable: true, Comment: "出生日期"},
+		{Name: "department_id", Type: field.TypeInt64, Nullable: true, Comment: "部门ID"},
+		{Name: "position_id", Type: field.TypeInt64, Nullable: true, Comment: "职位ID"},
 		{Name: "last_at", Type: field.TypeTime, Nullable: true, Comment: "最后一次登录时间"},
 		{Name: "last_ip", Type: field.TypeString, Nullable: true, Comment: "最后一次登录ip"},
 		{Name: "detail", Type: field.TypeString, Nullable: true, Comment: "详情"},
@@ -31,6 +94,7 @@ var (
 	// UsersTable holds the schema information for the "users" table.
 	UsersTable = &schema.Table{
 		Name:       "users",
+		Comment:    "用户表",
 		Columns:    UsersColumns,
 		PrimaryKey: []*schema.Column{UsersColumns[0]},
 		Indexes: []*schema.Index{
@@ -51,6 +115,106 @@ var (
 			},
 		},
 	}
+	// UserLoginLogsColumns holds the columns for the "user_login_logs" table.
+	UserLoginLogsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "login_ip", Type: field.TypeString, Nullable: true, Comment: "登录IP地址"},
+		{Name: "login_mac", Type: field.TypeString, Nullable: true, Comment: "登录MAC地址"},
+		{Name: "login_time", Type: field.TypeTime, Nullable: true, Comment: "登录时间"},
+		{Name: "user_agent", Type: field.TypeString, Nullable: true, Comment: "浏览器的用户代理信息"},
+		{Name: "browser_name", Type: field.TypeString, Nullable: true, Comment: "浏览器名称"},
+		{Name: "browser_version", Type: field.TypeString, Nullable: true, Comment: "浏览器版本"},
+		{Name: "client_id", Type: field.TypeString, Nullable: true, Comment: "客户端ID"},
+		{Name: "client_name", Type: field.TypeString, Nullable: true, Comment: "客户端名称"},
+		{Name: "os_name", Type: field.TypeString, Nullable: true, Comment: "操作系统名称"},
+		{Name: "os_version", Type: field.TypeString, Nullable: true, Comment: "操作系统版本"},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true, Comment: "操作者用户ID"},
+		{Name: "username", Type: field.TypeString, Nullable: true, Comment: "操作者账号名"},
+		{Name: "status_code", Type: field.TypeInt32, Nullable: true, Comment: "状态码"},
+		{Name: "success", Type: field.TypeBool, Nullable: true, Comment: "操作成功"},
+		{Name: "reason", Type: field.TypeString, Nullable: true, Comment: "登录失败原因"},
+		{Name: "location", Type: field.TypeString, Nullable: true, Comment: "登录地理位置"},
+	}
+	// UserLoginLogsTable holds the schema information for the "user_login_logs" table.
+	UserLoginLogsTable = &schema.Table{
+		Name:       "user_login_logs",
+		Comment:    "后台登录日志表",
+		Columns:    UserLoginLogsColumns,
+		PrimaryKey: []*schema.Column{UserLoginLogsColumns[0]},
+	}
+	// UserLoginRestrictionsColumns holds the columns for the "user_login_restrictions" table.
+	UserLoginRestrictionsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "target_id", Type: field.TypeInt64, Nullable: true, Comment: "目标用户ID"},
+		{Name: "value", Type: field.TypeString, Nullable: true, Comment: "限制值（如IP地址、MAC地址或地区代码）"},
+		{Name: "reason", Type: field.TypeString, Nullable: true, Comment: "限制原因"},
+		{Name: "type", Type: field.TypeEnum, Nullable: true, Comment: "限制类型", Enums: []string{"BLACKLIST", "WHITELIST"}, Default: "BLACKLIST"},
+		{Name: "method", Type: field.TypeEnum, Nullable: true, Comment: "限制方式", Enums: []string{"IP", "MAC", "REGION", "TIME", "DEVICE"}, Default: "IP"},
+	}
+	// UserLoginRestrictionsTable holds the schema information for the "user_login_restrictions" table.
+	UserLoginRestrictionsTable = &schema.Table{
+		Name:       "user_login_restrictions",
+		Comment:    "后台登录限制表",
+		Columns:    UserLoginRestrictionsColumns,
+		PrimaryKey: []*schema.Column{UserLoginRestrictionsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "idx_sys_admin_login_restriction_target_type_method",
+				Unique:  true,
+				Columns: []*schema.Column{UserLoginRestrictionsColumns[6], UserLoginRestrictionsColumns[9], UserLoginRestrictionsColumns[10]},
+			},
+		},
+	}
+	// SysAdminOperationLogsColumns holds the columns for the "sys_admin_operation_logs" table.
+	SysAdminOperationLogsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "request_id", Type: field.TypeString, Nullable: true, Comment: "请求ID"},
+		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "请求方法"},
+		{Name: "operation", Type: field.TypeString, Nullable: true, Comment: "操作方法"},
+		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "请求路径"},
+		{Name: "referer", Type: field.TypeString, Nullable: true, Comment: "请求源"},
+		{Name: "request_uri", Type: field.TypeString, Nullable: true, Comment: "请求URI"},
+		{Name: "request_body", Type: field.TypeString, Nullable: true, Comment: "请求体"},
+		{Name: "request_header", Type: field.TypeString, Nullable: true, Comment: "请求头"},
+		{Name: "response", Type: field.TypeString, Nullable: true, Comment: "响应信息"},
+		{Name: "cost_time", Type: field.TypeFloat64, Nullable: true, Comment: "操作耗时"},
+		{Name: "user_id", Type: field.TypeInt64, Nullable: true, Comment: "操作者用户ID"},
+		{Name: "username", Type: field.TypeString, Nullable: true, Comment: "操作者账号名"},
+		{Name: "client_ip", Type: field.TypeString, Nullable: true, Comment: "操作者IP"},
+		{Name: "status_code", Type: field.TypeInt64, Nullable: true, Comment: "状态码"},
+		{Name: "reason", Type: field.TypeString, Nullable: true, Comment: "操作失败原因"},
+		{Name: "success", Type: field.TypeBool, Nullable: true, Comment: "操作成功"},
+		{Name: "location", Type: field.TypeString, Nullable: true, Comment: "操作地理位置"},
+		{Name: "user_agent", Type: field.TypeString, Nullable: true, Comment: "浏览器的用户代理信息"},
+		{Name: "browser_name", Type: field.TypeString, Nullable: true, Comment: "浏览器名称"},
+		{Name: "browser_version", Type: field.TypeString, Nullable: true, Comment: "浏览器版本"},
+		{Name: "client_id", Type: field.TypeString, Nullable: true, Comment: "客户端ID"},
+		{Name: "client_name", Type: field.TypeString, Nullable: true, Comment: "客户端名称"},
+		{Name: "os_name", Type: field.TypeString, Nullable: true, Comment: "操作系统名称"},
+		{Name: "os_version", Type: field.TypeString, Nullable: true, Comment: "操作系统版本"},
+	}
+	// SysAdminOperationLogsTable holds the schema information for the "sys_admin_operation_logs" table.
+	SysAdminOperationLogsTable = &schema.Table{
+		Name:       "sys_admin_operation_logs",
+		Comment:    "后台操作日志表",
+		Columns:    SysAdminOperationLogsColumns,
+		PrimaryKey: []*schema.Column{SysAdminOperationLogsColumns[0]},
+	}
 	// UserRolesColumns holds the columns for the "user_roles" table.
 	UserRolesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
@@ -60,6 +224,7 @@ var (
 	// UserRolesTable holds the schema information for the "user_roles" table.
 	UserRolesTable = &schema.Table{
 		Name:       "user_roles",
+		Comment:    "用户角色表",
 		Columns:    UserRolesColumns,
 		PrimaryKey: []*schema.Column{UserRolesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
@@ -70,20 +235,71 @@ var (
 				OnDelete:   schema.NoAction,
 			},
 		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "idx_sys_user_role_user_id_role_id",
+				Unique:  true,
+				Columns: []*schema.Column{UserRolesColumns[2], UserRolesColumns[1]},
+			},
+			{
+				Name:    "idx_sys_user_role_user_id",
+				Unique:  false,
+				Columns: []*schema.Column{UserRolesColumns[2]},
+			},
+			{
+				Name:    "idx_sys_user_role_role_id",
+				Unique:  false,
+				Columns: []*schema.Column{UserRolesColumns[1]},
+			},
+		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		UserDepartmentsTable,
+		UserPositionsTable,
 		UsersTable,
+		UserLoginLogsTable,
+		UserLoginRestrictionsTable,
+		SysAdminOperationLogsTable,
 		UserRolesTable,
 	}
 )
 
 func init() {
+	UserDepartmentsTable.Annotation = &entsql.Annotation{
+		Table:     "user_departments",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	UserPositionsTable.Annotation = &entsql.Annotation{
+		Table:     "user_positions",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
 	UsersTable.Annotation = &entsql.Annotation{
-		Table: "users",
+		Table:     "users",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	UserLoginLogsTable.Annotation = &entsql.Annotation{
+		Table:     "user_login_logs",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	UserLoginRestrictionsTable.Annotation = &entsql.Annotation{
+		Table:     "user_login_restrictions",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	SysAdminOperationLogsTable.Annotation = &entsql.Annotation{
+		Table:     "sys_admin_operation_logs",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	UserRolesTable.ForeignKeys[0].RefTable = UsersTable
 	UserRolesTable.Annotation = &entsql.Annotation{
-		Table: "user_roles",
+		Table:     "user_roles",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 }

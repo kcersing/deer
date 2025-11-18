@@ -39,7 +39,6 @@ func (e ErrNo) WithMessage(msg string) ErrNo {
 var (
 	Success    = NewErrNo(SuccessCode, "成功")
 	ServiceErr = NewErrNo(ServiceErrCode, "服务器错误")
-	ParamErr   = NewErrNo(ParamErrCode, "参数错误")
 
 	UnauthorizedErr  = NewErrNo(Unauthorized, "无权限")
 	AuthorizeFailErr = NewErrNo(AuthorizeFail, "授权失败")
@@ -49,8 +48,12 @@ var (
 	UserAlreadyExistErr = NewErrNo(UserAlreadyExistErrCode, "用户已存在")
 	UserMobileExistErr  = NewErrNo(UserAlreadyExistErrCode, "手机号已存在")
 	TimeFormatErr       = NewErrNo(ParamErrCode, "日期格式错误")
-	RecordNotFound      = NewErrNo(ParamErrCode, "记录不存在")
-	RecordAlreadyExist  = NewErrNo(ParamErrCode, "记录已存在")
+	NotFound            = NewErrNo(ParamErrCode, "数据不存在")
+	AlreadyExist        = NewErrNo(ParamErrCode, "数据已存在")
+
+	InvalidParameterErr = NewErrNo(ParamErrCode, "无效参数")
+
+	QueryFailed = NewErrNo(ParamErrCode, "查询数据失败")
 )
 
 // ConvertErr convert error to Errno

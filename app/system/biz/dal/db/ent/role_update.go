@@ -144,63 +144,43 @@ func (_u *RoleUpdate) ClearName() *RoleUpdate {
 	return _u
 }
 
-// SetValue sets the "value" field.
-func (_u *RoleUpdate) SetValue(v string) *RoleUpdate {
-	_u.mutation.SetValue(v)
+// SetCode sets the "code" field.
+func (_u *RoleUpdate) SetCode(v string) *RoleUpdate {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillableValue(v *string) *RoleUpdate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableCode(v *string) *RoleUpdate {
 	if v != nil {
-		_u.SetValue(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearValue clears the value of the "value" field.
-func (_u *RoleUpdate) ClearValue() *RoleUpdate {
-	_u.mutation.ClearValue()
+// ClearCode clears the value of the "code" field.
+func (_u *RoleUpdate) ClearCode() *RoleUpdate {
+	_u.mutation.ClearCode()
 	return _u
 }
 
-// SetDefaultRouter sets the "default_router" field.
-func (_u *RoleUpdate) SetDefaultRouter(v string) *RoleUpdate {
-	_u.mutation.SetDefaultRouter(v)
+// SetDesc sets the "desc" field.
+func (_u *RoleUpdate) SetDesc(v string) *RoleUpdate {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDefaultRouter sets the "default_router" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillableDefaultRouter(v *string) *RoleUpdate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *RoleUpdate) SetNillableDesc(v *string) *RoleUpdate {
 	if v != nil {
-		_u.SetDefaultRouter(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDefaultRouter clears the value of the "default_router" field.
-func (_u *RoleUpdate) ClearDefaultRouter() *RoleUpdate {
-	_u.mutation.ClearDefaultRouter()
-	return _u
-}
-
-// SetRemark sets the "remark" field.
-func (_u *RoleUpdate) SetRemark(v string) *RoleUpdate {
-	_u.mutation.SetRemark(v)
-	return _u
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *RoleUpdate) SetNillableRemark(v *string) *RoleUpdate {
-	if v != nil {
-		_u.SetRemark(*v)
-	}
-	return _u
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (_u *RoleUpdate) ClearRemark() *RoleUpdate {
-	_u.mutation.ClearRemark()
+// ClearDesc clears the value of the "desc" field.
+func (_u *RoleUpdate) ClearDesc() *RoleUpdate {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -231,14 +211,32 @@ func (_u *RoleUpdate) ClearOrderNo() *RoleUpdate {
 	return _u
 }
 
+// SetMenus sets the "menus" field.
+func (_u *RoleUpdate) SetMenus(v []int64) *RoleUpdate {
+	_u.mutation.SetMenus(v)
+	return _u
+}
+
+// AppendMenus appends value to the "menus" field.
+func (_u *RoleUpdate) AppendMenus(v []int64) *RoleUpdate {
+	_u.mutation.AppendMenus(v)
+	return _u
+}
+
+// ClearMenus clears the value of the "menus" field.
+func (_u *RoleUpdate) ClearMenus() *RoleUpdate {
+	_u.mutation.ClearMenus()
+	return _u
+}
+
 // SetApis sets the "apis" field.
-func (_u *RoleUpdate) SetApis(v []int) *RoleUpdate {
+func (_u *RoleUpdate) SetApis(v []int64) *RoleUpdate {
 	_u.mutation.SetApis(v)
 	return _u
 }
 
 // AppendApis appends value to the "apis" field.
-func (_u *RoleUpdate) AppendApis(v []int) *RoleUpdate {
+func (_u *RoleUpdate) AppendApis(v []int64) *RoleUpdate {
 	_u.mutation.AppendApis(v)
 	return _u
 }
@@ -249,14 +247,14 @@ func (_u *RoleUpdate) ClearApis() *RoleUpdate {
 	return _u
 }
 
-// AddMenuIDs adds the "menus" edge to the Menu entity by IDs.
+// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
 func (_u *RoleUpdate) AddMenuIDs(ids ...int64) *RoleUpdate {
 	_u.mutation.AddMenuIDs(ids...)
 	return _u
 }
 
-// AddMenus adds the "menus" edges to the Menu entity.
-func (_u *RoleUpdate) AddMenus(v ...*Menu) *RoleUpdate {
+// AddMenu adds the "menu" edges to the Menu entity.
+func (_u *RoleUpdate) AddMenu(v ...*Menu) *RoleUpdate {
 	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
@@ -284,20 +282,20 @@ func (_u *RoleUpdate) Mutation() *RoleMutation {
 	return _u.mutation
 }
 
-// ClearMenus clears all "menus" edges to the Menu entity.
-func (_u *RoleUpdate) ClearMenus() *RoleUpdate {
-	_u.mutation.ClearMenus()
+// ClearMenu clears all "menu" edges to the Menu entity.
+func (_u *RoleUpdate) ClearMenu() *RoleUpdate {
+	_u.mutation.ClearMenu()
 	return _u
 }
 
-// RemoveMenuIDs removes the "menus" edge to Menu entities by IDs.
+// RemoveMenuIDs removes the "menu" edge to Menu entities by IDs.
 func (_u *RoleUpdate) RemoveMenuIDs(ids ...int64) *RoleUpdate {
 	_u.mutation.RemoveMenuIDs(ids...)
 	return _u
 }
 
-// RemoveMenus removes "menus" edges to Menu entities.
-func (_u *RoleUpdate) RemoveMenus(v ...*Menu) *RoleUpdate {
+// RemoveMenu removes "menu" edges to Menu entities.
+func (_u *RoleUpdate) RemoveMenu(v ...*Menu) *RoleUpdate {
 	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
@@ -362,7 +360,20 @@ func (_u *RoleUpdate) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *RoleUpdate) check() error {
+	if v, ok := _u.mutation.Code(); ok {
+		if err := role.CodeValidator(v); err != nil {
+			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -413,23 +424,17 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(role.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.Value(); ok {
-		_spec.SetField(role.FieldValue, field.TypeString, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.ValueCleared() {
-		_spec.ClearField(role.FieldValue, field.TypeString)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(role.FieldCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.DefaultRouter(); ok {
-		_spec.SetField(role.FieldDefaultRouter, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(role.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DefaultRouterCleared() {
-		_spec.ClearField(role.FieldDefaultRouter, field.TypeString)
-	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(role.FieldRemark, field.TypeString, value)
-	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(role.FieldRemark, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(role.FieldDesc, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrderNo(); ok {
 		_spec.SetField(role.FieldOrderNo, field.TypeInt64, value)
@@ -439,6 +444,17 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.OrderNoCleared() {
 		_spec.ClearField(role.FieldOrderNo, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Menus(); ok {
+		_spec.SetField(role.FieldMenus, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedMenus(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, role.FieldMenus, value)
+		})
+	}
+	if _u.mutation.MenusCleared() {
+		_spec.ClearField(role.FieldMenus, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
@@ -451,12 +467,12 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.ApisCleared() {
 		_spec.ClearField(role.FieldApis, field.TypeJSON)
 	}
-	if _u.mutation.MenusCleared() {
+	if _u.mutation.MenuCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
@@ -464,12 +480,12 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.RemovedMenusIDs(); len(nodes) > 0 && !_u.mutation.MenusCleared() {
+	if nodes := _u.mutation.RemovedMenuIDs(); len(nodes) > 0 && !_u.mutation.MenuCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
@@ -480,12 +496,12 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.MenusIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.MenuIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
@@ -674,63 +690,43 @@ func (_u *RoleUpdateOne) ClearName() *RoleUpdateOne {
 	return _u
 }
 
-// SetValue sets the "value" field.
-func (_u *RoleUpdateOne) SetValue(v string) *RoleUpdateOne {
-	_u.mutation.SetValue(v)
+// SetCode sets the "code" field.
+func (_u *RoleUpdateOne) SetCode(v string) *RoleUpdateOne {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillableValue(v *string) *RoleUpdateOne {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableCode(v *string) *RoleUpdateOne {
 	if v != nil {
-		_u.SetValue(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearValue clears the value of the "value" field.
-func (_u *RoleUpdateOne) ClearValue() *RoleUpdateOne {
-	_u.mutation.ClearValue()
+// ClearCode clears the value of the "code" field.
+func (_u *RoleUpdateOne) ClearCode() *RoleUpdateOne {
+	_u.mutation.ClearCode()
 	return _u
 }
 
-// SetDefaultRouter sets the "default_router" field.
-func (_u *RoleUpdateOne) SetDefaultRouter(v string) *RoleUpdateOne {
-	_u.mutation.SetDefaultRouter(v)
+// SetDesc sets the "desc" field.
+func (_u *RoleUpdateOne) SetDesc(v string) *RoleUpdateOne {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDefaultRouter sets the "default_router" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillableDefaultRouter(v *string) *RoleUpdateOne {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *RoleUpdateOne) SetNillableDesc(v *string) *RoleUpdateOne {
 	if v != nil {
-		_u.SetDefaultRouter(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDefaultRouter clears the value of the "default_router" field.
-func (_u *RoleUpdateOne) ClearDefaultRouter() *RoleUpdateOne {
-	_u.mutation.ClearDefaultRouter()
-	return _u
-}
-
-// SetRemark sets the "remark" field.
-func (_u *RoleUpdateOne) SetRemark(v string) *RoleUpdateOne {
-	_u.mutation.SetRemark(v)
-	return _u
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_u *RoleUpdateOne) SetNillableRemark(v *string) *RoleUpdateOne {
-	if v != nil {
-		_u.SetRemark(*v)
-	}
-	return _u
-}
-
-// ClearRemark clears the value of the "remark" field.
-func (_u *RoleUpdateOne) ClearRemark() *RoleUpdateOne {
-	_u.mutation.ClearRemark()
+// ClearDesc clears the value of the "desc" field.
+func (_u *RoleUpdateOne) ClearDesc() *RoleUpdateOne {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -761,14 +757,32 @@ func (_u *RoleUpdateOne) ClearOrderNo() *RoleUpdateOne {
 	return _u
 }
 
+// SetMenus sets the "menus" field.
+func (_u *RoleUpdateOne) SetMenus(v []int64) *RoleUpdateOne {
+	_u.mutation.SetMenus(v)
+	return _u
+}
+
+// AppendMenus appends value to the "menus" field.
+func (_u *RoleUpdateOne) AppendMenus(v []int64) *RoleUpdateOne {
+	_u.mutation.AppendMenus(v)
+	return _u
+}
+
+// ClearMenus clears the value of the "menus" field.
+func (_u *RoleUpdateOne) ClearMenus() *RoleUpdateOne {
+	_u.mutation.ClearMenus()
+	return _u
+}
+
 // SetApis sets the "apis" field.
-func (_u *RoleUpdateOne) SetApis(v []int) *RoleUpdateOne {
+func (_u *RoleUpdateOne) SetApis(v []int64) *RoleUpdateOne {
 	_u.mutation.SetApis(v)
 	return _u
 }
 
 // AppendApis appends value to the "apis" field.
-func (_u *RoleUpdateOne) AppendApis(v []int) *RoleUpdateOne {
+func (_u *RoleUpdateOne) AppendApis(v []int64) *RoleUpdateOne {
 	_u.mutation.AppendApis(v)
 	return _u
 }
@@ -779,14 +793,14 @@ func (_u *RoleUpdateOne) ClearApis() *RoleUpdateOne {
 	return _u
 }
 
-// AddMenuIDs adds the "menus" edge to the Menu entity by IDs.
+// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
 func (_u *RoleUpdateOne) AddMenuIDs(ids ...int64) *RoleUpdateOne {
 	_u.mutation.AddMenuIDs(ids...)
 	return _u
 }
 
-// AddMenus adds the "menus" edges to the Menu entity.
-func (_u *RoleUpdateOne) AddMenus(v ...*Menu) *RoleUpdateOne {
+// AddMenu adds the "menu" edges to the Menu entity.
+func (_u *RoleUpdateOne) AddMenu(v ...*Menu) *RoleUpdateOne {
 	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
@@ -814,20 +828,20 @@ func (_u *RoleUpdateOne) Mutation() *RoleMutation {
 	return _u.mutation
 }
 
-// ClearMenus clears all "menus" edges to the Menu entity.
-func (_u *RoleUpdateOne) ClearMenus() *RoleUpdateOne {
-	_u.mutation.ClearMenus()
+// ClearMenu clears all "menu" edges to the Menu entity.
+func (_u *RoleUpdateOne) ClearMenu() *RoleUpdateOne {
+	_u.mutation.ClearMenu()
 	return _u
 }
 
-// RemoveMenuIDs removes the "menus" edge to Menu entities by IDs.
+// RemoveMenuIDs removes the "menu" edge to Menu entities by IDs.
 func (_u *RoleUpdateOne) RemoveMenuIDs(ids ...int64) *RoleUpdateOne {
 	_u.mutation.RemoveMenuIDs(ids...)
 	return _u
 }
 
-// RemoveMenus removes "menus" edges to Menu entities.
-func (_u *RoleUpdateOne) RemoveMenus(v ...*Menu) *RoleUpdateOne {
+// RemoveMenu removes "menu" edges to Menu entities.
+func (_u *RoleUpdateOne) RemoveMenu(v ...*Menu) *RoleUpdateOne {
 	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
@@ -905,7 +919,20 @@ func (_u *RoleUpdateOne) defaults() {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (_u *RoleUpdateOne) check() error {
+	if v, ok := _u.mutation.Code(); ok {
+		if err := role.CodeValidator(v); err != nil {
+			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -973,23 +1000,17 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if _u.mutation.NameCleared() {
 		_spec.ClearField(role.FieldName, field.TypeString)
 	}
-	if value, ok := _u.mutation.Value(); ok {
-		_spec.SetField(role.FieldValue, field.TypeString, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.ValueCleared() {
-		_spec.ClearField(role.FieldValue, field.TypeString)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(role.FieldCode, field.TypeString)
 	}
-	if value, ok := _u.mutation.DefaultRouter(); ok {
-		_spec.SetField(role.FieldDefaultRouter, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(role.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DefaultRouterCleared() {
-		_spec.ClearField(role.FieldDefaultRouter, field.TypeString)
-	}
-	if value, ok := _u.mutation.Remark(); ok {
-		_spec.SetField(role.FieldRemark, field.TypeString, value)
-	}
-	if _u.mutation.RemarkCleared() {
-		_spec.ClearField(role.FieldRemark, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(role.FieldDesc, field.TypeString)
 	}
 	if value, ok := _u.mutation.OrderNo(); ok {
 		_spec.SetField(role.FieldOrderNo, field.TypeInt64, value)
@@ -999,6 +1020,17 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	}
 	if _u.mutation.OrderNoCleared() {
 		_spec.ClearField(role.FieldOrderNo, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Menus(); ok {
+		_spec.SetField(role.FieldMenus, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedMenus(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, role.FieldMenus, value)
+		})
+	}
+	if _u.mutation.MenusCleared() {
+		_spec.ClearField(role.FieldMenus, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
@@ -1011,12 +1043,12 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if _u.mutation.ApisCleared() {
 		_spec.ClearField(role.FieldApis, field.TypeJSON)
 	}
-	if _u.mutation.MenusCleared() {
+	if _u.mutation.MenuCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
@@ -1024,12 +1056,12 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.RemovedMenusIDs(); len(nodes) > 0 && !_u.mutation.MenusCleared() {
+	if nodes := _u.mutation.RemovedMenuIDs(); len(nodes) > 0 && !_u.mutation.MenuCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
@@ -1040,12 +1072,12 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := _u.mutation.MenusIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.MenuIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),

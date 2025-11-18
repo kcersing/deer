@@ -14,8 +14,37 @@ struct User {
      11:optional string  lastAt="",//最后一次登录时间
      12:optional string  lastIp="",//最后一次登录ip
 
-     13:optional string  detail="",//详情
+     13:optional string  desc="",//详情
      14:optional list<system.Role> roles= [],//角色
+     15:optional i64 departmentsId=0,
+     16:optional i64 positionsId=0,
+
+     251:optional string createdAt="",
+     252:optional string updatedAt="",
+     253:optional i64 createdId=0,
+}
+
+struct Departments {
+     1:optional i64 id=0,
+     2:optional string name="",
+     3:optional string managerId="",
+     4:optional string parentId="",
+     5:optional string desc="",
+     7:optional i64 status=0,
+     251:optional string createdAt="",
+     252:optional string updatedAt="",
+     253:optional i64 createdId=0,
+}
+struct Positions {
+
+     1:optional i64 id=0,
+     2:optional string name="",
+     3:optional string code="",
+     4:optional string departmentId="",
+     5:optional string parentId="",
+     6:optional string desc="",
+     7:optional i64 status=0,
+     9:optional i64 quota=0,
 
      251:optional string createdAt="",
      252:optional string updatedAt="",

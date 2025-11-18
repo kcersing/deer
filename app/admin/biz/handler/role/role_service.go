@@ -27,11 +27,9 @@ func CreateRole(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateRole(ctx, &system.CreateRoleReq{
-		Name:          req.GetName(),
-		Value:         req.GetValue(),
-		DefaultRouter: req.GetDefaultRouter(),
-		Remark:        req.GetRemark(),
-		Apis:          req.GetApis(),
+		Name: req.GetName(),
+		Code: req.GetCode(),
+		Desc: req.GetDesc(),
 	})
 
 	if err != nil {
@@ -102,12 +100,9 @@ func UpdateRole(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.UpdateRole(ctx, &system.UpdateRoleReq{
-		Id:            req.GetID(),
-		Name:          req.GetName(),
-		Value:         req.GetValue(),
-		DefaultRouter: req.GetDefaultRouter(),
-		Remark:        req.GetRemark(),
-		Apis:          req.GetApis(),
+		Id:   req.GetID(),
+		Name: req.GetName(),
+		Desc: req.GetDesc(),
 	})
 
 	if err != nil {

@@ -14,7 +14,7 @@ func EntToApi(e *ent.API) *base.Api {
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
 		Path:      e.Path,
 		Desc:      e.Desc,
-		Group:     e.APIGroup,
+		Group:     e.Group,
 		Method:    e.Method,
 		Title:     e.Title,
 	}
@@ -57,12 +57,10 @@ func EntToMenu(e *ent.Menu) *base.Menu {
 
 func EntToRole(e *ent.Role) *base.Role {
 	return &base.Role{
-		Id:            e.ID,
-		Name:          e.Name,
-		Value:         e.Value,
-		DefaultRouter: e.DefaultRouter,
-		Remark:        e.Remark,
-		//Apis:          e.Apis,
+		Id:   e.ID,
+		Name: e.Name,
+		Code: *e.Code,
+		Desc: e.Desc,
 	}
 }
 
@@ -70,7 +68,6 @@ func EntToDict(e *ent.Dict) *base.Dict {
 	return &base.Dict{
 		Id:        e.ID,
 		Title:     e.Title,
-		Name:      e.Name,
 		Status:    e.Status,
 		Desc:      e.Desc,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
@@ -81,7 +78,6 @@ func EntToDictht(e *ent.Dictht) *base.Dictht {
 	return &base.Dictht{
 		Id:        e.ID,
 		Title:     e.Title,
-		Key:       e.Key,
 		Value:     e.Value,
 		Status:    e.Status,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),

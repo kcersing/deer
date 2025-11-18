@@ -24,7 +24,7 @@ func (s *GetRoleMenuService) Run(req *base.IdReq) (resp *system.MenuListResp, er
 	menus, err := db.Client.Role.
 		Query().
 		Where(role.IDIn(req.GetId())).
-		QueryMenus().
+		QueryMenu().
 		Where(menu.DeleteEQ(0)).
 		//WithChildren().
 		Order(ent.Asc(menu.FieldOrderNo)).

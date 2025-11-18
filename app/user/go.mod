@@ -15,6 +15,7 @@ require (
 	github.com/cloudwego/kitex v0.15.1
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/jackc/pgx/v5 v5.7.6
+	github.com/jinzhu/copier v0.4.0
 	github.com/kitex-contrib/obs-opentelemetry v0.2.9
 	github.com/kitex-contrib/registry-etcd v0.3.0
 	github.com/kr/pretty v0.3.1

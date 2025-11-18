@@ -104,20 +104,6 @@ func (_c *DicthtCreate) SetNillableTitle(v *string) *DicthtCreate {
 	return _c
 }
 
-// SetKey sets the "key" field.
-func (_c *DicthtCreate) SetKey(v string) *DicthtCreate {
-	_c.mutation.SetKey(v)
-	return _c
-}
-
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_c *DicthtCreate) SetNillableKey(v *string) *DicthtCreate {
-	if v != nil {
-		_c.SetKey(*v)
-	}
-	return _c
-}
-
 // SetValue sets the "value" field.
 func (_c *DicthtCreate) SetValue(v string) *DicthtCreate {
 	_c.mutation.SetValue(v)
@@ -271,10 +257,6 @@ func (_c *DicthtCreate) createSpec() (*Dictht, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Title(); ok {
 		_spec.SetField(dictht.FieldTitle, field.TypeString, value)
 		_node.Title = value
-	}
-	if value, ok := _c.mutation.Key(); ok {
-		_spec.SetField(dictht.FieldKey, field.TypeString, value)
-		_node.Key = value
 	}
 	if value, ok := _c.mutation.Value(); ok {
 		_spec.SetField(dictht.FieldValue, field.TypeString, value)

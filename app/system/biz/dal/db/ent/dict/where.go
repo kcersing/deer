@@ -85,9 +85,9 @@ func Title(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldEQ(FieldTitle, v))
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEQ(FieldName, v))
+// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
+func Code(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEQ(FieldCode, v))
 }
 
 // Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
@@ -420,79 +420,79 @@ func TitleContainsFold(v string) predicate.Dict {
 	return predicate.Dict(sql.FieldContainsFold(FieldTitle, v))
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEQ(FieldName, v))
+// CodeEQ applies the EQ predicate on the "code" field.
+func CodeEQ(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEQ(FieldCode, v))
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldNEQ(FieldName, v))
+// CodeNEQ applies the NEQ predicate on the "code" field.
+func CodeNEQ(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldNEQ(FieldCode, v))
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.Dict {
-	return predicate.Dict(sql.FieldIn(FieldName, vs...))
+// CodeIn applies the In predicate on the "code" field.
+func CodeIn(vs ...string) predicate.Dict {
+	return predicate.Dict(sql.FieldIn(FieldCode, vs...))
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.Dict {
-	return predicate.Dict(sql.FieldNotIn(FieldName, vs...))
+// CodeNotIn applies the NotIn predicate on the "code" field.
+func CodeNotIn(vs ...string) predicate.Dict {
+	return predicate.Dict(sql.FieldNotIn(FieldCode, vs...))
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldGT(FieldName, v))
+// CodeGT applies the GT predicate on the "code" field.
+func CodeGT(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldGT(FieldCode, v))
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldGTE(FieldName, v))
+// CodeGTE applies the GTE predicate on the "code" field.
+func CodeGTE(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldGTE(FieldCode, v))
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldLT(FieldName, v))
+// CodeLT applies the LT predicate on the "code" field.
+func CodeLT(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldLT(FieldCode, v))
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldLTE(FieldName, v))
+// CodeLTE applies the LTE predicate on the "code" field.
+func CodeLTE(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldLTE(FieldCode, v))
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldContains(FieldName, v))
+// CodeContains applies the Contains predicate on the "code" field.
+func CodeContains(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldContains(FieldCode, v))
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldHasPrefix(FieldName, v))
+// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
+func CodeHasPrefix(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldHasPrefix(FieldCode, v))
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldHasSuffix(FieldName, v))
+// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
+func CodeHasSuffix(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldHasSuffix(FieldCode, v))
 }
 
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.Dict {
-	return predicate.Dict(sql.FieldIsNull(FieldName))
+// CodeIsNil applies the IsNil predicate on the "code" field.
+func CodeIsNil() predicate.Dict {
+	return predicate.Dict(sql.FieldIsNull(FieldCode))
 }
 
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.Dict {
-	return predicate.Dict(sql.FieldNotNull(FieldName))
+// CodeNotNil applies the NotNil predicate on the "code" field.
+func CodeNotNil() predicate.Dict {
+	return predicate.Dict(sql.FieldNotNull(FieldCode))
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldEqualFold(FieldName, v))
+// CodeEqualFold applies the EqualFold predicate on the "code" field.
+func CodeEqualFold(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldEqualFold(FieldCode, v))
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.Dict {
-	return predicate.Dict(sql.FieldContainsFold(FieldName, v))
+// CodeContainsFold applies the ContainsFold predicate on the "code" field.
+func CodeContainsFold(v string) predicate.Dict {
+	return predicate.Dict(sql.FieldContainsFold(FieldCode, v))
 }
 
 // DescEQ applies the EQ predicate on the "desc" field.

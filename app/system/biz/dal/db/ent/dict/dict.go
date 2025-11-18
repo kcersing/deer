@@ -26,8 +26,8 @@ const (
 	FieldStatus = "status"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldCode holds the string denoting the code field in the database.
+	FieldCode = "code"
 	// FieldDesc holds the string denoting the desc field in the database.
 	FieldDesc = "desc"
 	// EdgeDictht holds the string denoting the dictht edge name in mutations.
@@ -52,7 +52,7 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldStatus,
 	FieldTitle,
-	FieldName,
+	FieldCode,
 	FieldDesc,
 }
 
@@ -119,9 +119,9 @@ func ByTitle(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTitle, opts...).ToFunc()
 }
 
-// ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldName, opts...).ToFunc()
+// ByCode orders the results by the code field.
+func ByCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
 // ByDesc orders the results by the desc field.

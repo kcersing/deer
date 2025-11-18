@@ -4,8 +4,13 @@ package ent
 
 import (
 	"time"
+	"user/biz/dal/db/ent/department"
+	"user/biz/dal/db/ent/position"
 	"user/biz/dal/db/ent/schema"
 	"user/biz/dal/db/ent/user"
+	"user/biz/dal/db/ent/userloginlog"
+	"user/biz/dal/db/ent/userloginrestriction"
+	"user/biz/dal/db/ent/useroperationlog"
 	"user/biz/dal/db/ent/userrole"
 )
 
@@ -13,6 +18,76 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	departmentMixin := schema.Department{}.Mixin()
+	departmentMixinFields0 := departmentMixin[0].Fields()
+	_ = departmentMixinFields0
+	departmentMixinFields1 := departmentMixin[1].Fields()
+	_ = departmentMixinFields1
+	departmentFields := schema.Department{}.Fields()
+	_ = departmentFields
+	// departmentDescCreatedAt is the schema descriptor for created_at field.
+	departmentDescCreatedAt := departmentMixinFields0[1].Descriptor()
+	// department.DefaultCreatedAt holds the default value on creation for the created_at field.
+	department.DefaultCreatedAt = departmentDescCreatedAt.Default.(func() time.Time)
+	// departmentDescUpdatedAt is the schema descriptor for updated_at field.
+	departmentDescUpdatedAt := departmentMixinFields0[2].Descriptor()
+	// department.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	department.DefaultUpdatedAt = departmentDescUpdatedAt.Default.(func() time.Time)
+	// department.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	department.UpdateDefaultUpdatedAt = departmentDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// departmentDescDelete is the schema descriptor for delete field.
+	departmentDescDelete := departmentMixinFields0[3].Descriptor()
+	// department.DefaultDelete holds the default value on creation for the delete field.
+	department.DefaultDelete = departmentDescDelete.Default.(int64)
+	// departmentDescCreatedID is the schema descriptor for created_id field.
+	departmentDescCreatedID := departmentMixinFields0[4].Descriptor()
+	// department.DefaultCreatedID holds the default value on creation for the created_id field.
+	department.DefaultCreatedID = departmentDescCreatedID.Default.(int64)
+	// departmentDescStatus is the schema descriptor for status field.
+	departmentDescStatus := departmentMixinFields1[0].Descriptor()
+	// department.DefaultStatus holds the default value on creation for the status field.
+	department.DefaultStatus = departmentDescStatus.Default.(int64)
+	// departmentDescName is the schema descriptor for name field.
+	departmentDescName := departmentFields[0].Descriptor()
+	// department.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	department.NameValidator = departmentDescName.Validators[0].(func(string) error)
+	positionMixin := schema.Position{}.Mixin()
+	positionMixinFields0 := positionMixin[0].Fields()
+	_ = positionMixinFields0
+	positionMixinFields1 := positionMixin[1].Fields()
+	_ = positionMixinFields1
+	positionFields := schema.Position{}.Fields()
+	_ = positionFields
+	// positionDescCreatedAt is the schema descriptor for created_at field.
+	positionDescCreatedAt := positionMixinFields0[1].Descriptor()
+	// position.DefaultCreatedAt holds the default value on creation for the created_at field.
+	position.DefaultCreatedAt = positionDescCreatedAt.Default.(func() time.Time)
+	// positionDescUpdatedAt is the schema descriptor for updated_at field.
+	positionDescUpdatedAt := positionMixinFields0[2].Descriptor()
+	// position.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	position.DefaultUpdatedAt = positionDescUpdatedAt.Default.(func() time.Time)
+	// position.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	position.UpdateDefaultUpdatedAt = positionDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// positionDescDelete is the schema descriptor for delete field.
+	positionDescDelete := positionMixinFields0[3].Descriptor()
+	// position.DefaultDelete holds the default value on creation for the delete field.
+	position.DefaultDelete = positionDescDelete.Default.(int64)
+	// positionDescCreatedID is the schema descriptor for created_id field.
+	positionDescCreatedID := positionMixinFields0[4].Descriptor()
+	// position.DefaultCreatedID holds the default value on creation for the created_id field.
+	position.DefaultCreatedID = positionDescCreatedID.Default.(int64)
+	// positionDescStatus is the schema descriptor for status field.
+	positionDescStatus := positionMixinFields1[0].Descriptor()
+	// position.DefaultStatus holds the default value on creation for the status field.
+	position.DefaultStatus = positionDescStatus.Default.(int64)
+	// positionDescName is the schema descriptor for name field.
+	positionDescName := positionFields[0].Descriptor()
+	// position.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	position.NameValidator = positionDescName.Validators[0].(func(string) error)
+	// positionDescCode is the schema descriptor for code field.
+	positionDescCode := positionFields[1].Descriptor()
+	// position.CodeValidator is a validator for the "code" field. It is called by the builders before save.
+	position.CodeValidator = positionDescCode.Validators[0].(func(string) error)
 	userMixin := schema.User{}.Mixin()
 	userMixinFields0 := userMixin[0].Fields()
 	_ = userMixinFields0
@@ -46,6 +121,93 @@ func init() {
 	userDescGender := userFields[5].Descriptor()
 	// user.DefaultGender holds the default value on creation for the gender field.
 	user.DefaultGender = userDescGender.Default.(int64)
+	userloginlogMixin := schema.UserLoginLog{}.Mixin()
+	userloginlogMixinFields0 := userloginlogMixin[0].Fields()
+	_ = userloginlogMixinFields0
+	userloginlogMixinFields1 := userloginlogMixin[1].Fields()
+	_ = userloginlogMixinFields1
+	userloginlogFields := schema.UserLoginLog{}.Fields()
+	_ = userloginlogFields
+	// userloginlogDescCreatedAt is the schema descriptor for created_at field.
+	userloginlogDescCreatedAt := userloginlogMixinFields0[1].Descriptor()
+	// userloginlog.DefaultCreatedAt holds the default value on creation for the created_at field.
+	userloginlog.DefaultCreatedAt = userloginlogDescCreatedAt.Default.(func() time.Time)
+	// userloginlogDescUpdatedAt is the schema descriptor for updated_at field.
+	userloginlogDescUpdatedAt := userloginlogMixinFields0[2].Descriptor()
+	// userloginlog.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	userloginlog.DefaultUpdatedAt = userloginlogDescUpdatedAt.Default.(func() time.Time)
+	// userloginlog.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	userloginlog.UpdateDefaultUpdatedAt = userloginlogDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// userloginlogDescDelete is the schema descriptor for delete field.
+	userloginlogDescDelete := userloginlogMixinFields0[3].Descriptor()
+	// userloginlog.DefaultDelete holds the default value on creation for the delete field.
+	userloginlog.DefaultDelete = userloginlogDescDelete.Default.(int64)
+	// userloginlogDescCreatedID is the schema descriptor for created_id field.
+	userloginlogDescCreatedID := userloginlogMixinFields0[4].Descriptor()
+	// userloginlog.DefaultCreatedID holds the default value on creation for the created_id field.
+	userloginlog.DefaultCreatedID = userloginlogDescCreatedID.Default.(int64)
+	// userloginlogDescStatus is the schema descriptor for status field.
+	userloginlogDescStatus := userloginlogMixinFields1[0].Descriptor()
+	// userloginlog.DefaultStatus holds the default value on creation for the status field.
+	userloginlog.DefaultStatus = userloginlogDescStatus.Default.(int64)
+	userloginrestrictionMixin := schema.UserLoginRestriction{}.Mixin()
+	userloginrestrictionMixinFields0 := userloginrestrictionMixin[0].Fields()
+	_ = userloginrestrictionMixinFields0
+	userloginrestrictionMixinFields1 := userloginrestrictionMixin[1].Fields()
+	_ = userloginrestrictionMixinFields1
+	userloginrestrictionFields := schema.UserLoginRestriction{}.Fields()
+	_ = userloginrestrictionFields
+	// userloginrestrictionDescCreatedAt is the schema descriptor for created_at field.
+	userloginrestrictionDescCreatedAt := userloginrestrictionMixinFields0[1].Descriptor()
+	// userloginrestriction.DefaultCreatedAt holds the default value on creation for the created_at field.
+	userloginrestriction.DefaultCreatedAt = userloginrestrictionDescCreatedAt.Default.(func() time.Time)
+	// userloginrestrictionDescUpdatedAt is the schema descriptor for updated_at field.
+	userloginrestrictionDescUpdatedAt := userloginrestrictionMixinFields0[2].Descriptor()
+	// userloginrestriction.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	userloginrestriction.DefaultUpdatedAt = userloginrestrictionDescUpdatedAt.Default.(func() time.Time)
+	// userloginrestriction.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	userloginrestriction.UpdateDefaultUpdatedAt = userloginrestrictionDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// userloginrestrictionDescDelete is the schema descriptor for delete field.
+	userloginrestrictionDescDelete := userloginrestrictionMixinFields0[3].Descriptor()
+	// userloginrestriction.DefaultDelete holds the default value on creation for the delete field.
+	userloginrestriction.DefaultDelete = userloginrestrictionDescDelete.Default.(int64)
+	// userloginrestrictionDescCreatedID is the schema descriptor for created_id field.
+	userloginrestrictionDescCreatedID := userloginrestrictionMixinFields0[4].Descriptor()
+	// userloginrestriction.DefaultCreatedID holds the default value on creation for the created_id field.
+	userloginrestriction.DefaultCreatedID = userloginrestrictionDescCreatedID.Default.(int64)
+	// userloginrestrictionDescStatus is the schema descriptor for status field.
+	userloginrestrictionDescStatus := userloginrestrictionMixinFields1[0].Descriptor()
+	// userloginrestriction.DefaultStatus holds the default value on creation for the status field.
+	userloginrestriction.DefaultStatus = userloginrestrictionDescStatus.Default.(int64)
+	useroperationlogMixin := schema.UserOperationLog{}.Mixin()
+	useroperationlogMixinFields0 := useroperationlogMixin[0].Fields()
+	_ = useroperationlogMixinFields0
+	useroperationlogMixinFields1 := useroperationlogMixin[1].Fields()
+	_ = useroperationlogMixinFields1
+	useroperationlogFields := schema.UserOperationLog{}.Fields()
+	_ = useroperationlogFields
+	// useroperationlogDescCreatedAt is the schema descriptor for created_at field.
+	useroperationlogDescCreatedAt := useroperationlogMixinFields0[1].Descriptor()
+	// useroperationlog.DefaultCreatedAt holds the default value on creation for the created_at field.
+	useroperationlog.DefaultCreatedAt = useroperationlogDescCreatedAt.Default.(func() time.Time)
+	// useroperationlogDescUpdatedAt is the schema descriptor for updated_at field.
+	useroperationlogDescUpdatedAt := useroperationlogMixinFields0[2].Descriptor()
+	// useroperationlog.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	useroperationlog.DefaultUpdatedAt = useroperationlogDescUpdatedAt.Default.(func() time.Time)
+	// useroperationlog.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	useroperationlog.UpdateDefaultUpdatedAt = useroperationlogDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// useroperationlogDescDelete is the schema descriptor for delete field.
+	useroperationlogDescDelete := useroperationlogMixinFields0[3].Descriptor()
+	// useroperationlog.DefaultDelete holds the default value on creation for the delete field.
+	useroperationlog.DefaultDelete = useroperationlogDescDelete.Default.(int64)
+	// useroperationlogDescCreatedID is the schema descriptor for created_id field.
+	useroperationlogDescCreatedID := useroperationlogMixinFields0[4].Descriptor()
+	// useroperationlog.DefaultCreatedID holds the default value on creation for the created_id field.
+	useroperationlog.DefaultCreatedID = useroperationlogDescCreatedID.Default.(int64)
+	// useroperationlogDescStatus is the schema descriptor for status field.
+	useroperationlogDescStatus := useroperationlogMixinFields1[0].Descriptor()
+	// useroperationlog.DefaultStatus holds the default value on creation for the status field.
+	useroperationlog.DefaultStatus = useroperationlogDescStatus.Default.(int64)
 	userroleFields := schema.UserRole{}.Fields()
 	_ = userroleFields
 	// userroleDescRoleID is the schema descriptor for role_id field.

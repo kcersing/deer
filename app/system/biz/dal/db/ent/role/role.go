@@ -26,27 +26,27 @@ const (
 	FieldStatus = "status"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldValue holds the string denoting the value field in the database.
-	FieldValue = "value"
-	// FieldDefaultRouter holds the string denoting the default_router field in the database.
-	FieldDefaultRouter = "default_router"
-	// FieldRemark holds the string denoting the remark field in the database.
-	FieldRemark = "remark"
+	// FieldCode holds the string denoting the code field in the database.
+	FieldCode = "code"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// FieldOrderNo holds the string denoting the order_no field in the database.
 	FieldOrderNo = "order_no"
+	// FieldMenus holds the string denoting the menus field in the database.
+	FieldMenus = "menus"
 	// FieldApis holds the string denoting the apis field in the database.
 	FieldApis = "apis"
-	// EdgeMenus holds the string denoting the menus edge name in mutations.
-	EdgeMenus = "menus"
+	// EdgeMenu holds the string denoting the menu edge name in mutations.
+	EdgeMenu = "menu"
 	// EdgeAPI holds the string denoting the api edge name in mutations.
 	EdgeAPI = "api"
 	// Table holds the table name of the role in the database.
 	Table = "sys_roles"
-	// MenusTable is the table that holds the menus relation/edge. The primary key declared below.
-	MenusTable = "role_menus"
-	// MenusInverseTable is the table name for the Menu entity.
+	// MenuTable is the table that holds the menu relation/edge. The primary key declared below.
+	MenuTable = "role_menu"
+	// MenuInverseTable is the table name for the Menu entity.
 	// It exists in this package in order to avoid circular dependency with the "menu" package.
-	MenusInverseTable = "sys_menus"
+	MenuInverseTable = "sys_menus"
 	// APITable is the table that holds the api relation/edge. The primary key declared below.
 	APITable = "role_api"
 	// APIInverseTable is the table name for the API entity.
@@ -63,17 +63,17 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldStatus,
 	FieldName,
-	FieldValue,
-	FieldDefaultRouter,
-	FieldRemark,
+	FieldCode,
+	FieldDesc,
 	FieldOrderNo,
+	FieldMenus,
 	FieldApis,
 }
 
 var (
-	// MenusPrimaryKey and MenusColumn2 are the table columns denoting the
-	// primary key for the menus relation (M2M).
-	MenusPrimaryKey = []string{"role_id", "menu_id"}
+	// MenuPrimaryKey and MenuColumn2 are the table columns denoting the
+	// primary key for the menu relation (M2M).
+	MenuPrimaryKey = []string{"role_id", "menu_id"}
 	// APIPrimaryKey and APIColumn2 are the table columns denoting the
 	// primary key for the api relation (M2M).
 	APIPrimaryKey = []string{"role_id", "api_id"}
@@ -102,14 +102,12 @@ var (
 	DefaultCreatedID int64
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int64
-	// DefaultDefaultRouter holds the default value on creation for the "default_router" field.
-	DefaultDefaultRouter string
-	// DefaultRemark holds the default value on creation for the "remark" field.
-	DefaultRemark string
+	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
+	CodeValidator func(string) error
+	// DefaultDesc holds the default value on creation for the "desc" field.
+	DefaultDesc string
 	// DefaultOrderNo holds the default value on creation for the "order_no" field.
 	DefaultOrderNo int64
-	// DefaultApis holds the default value on creation for the "apis" field.
-	DefaultApis []int
 )
 
 // OrderOption defines the ordering options for the Role queries.
@@ -150,19 +148,14 @@ func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
-// ByValue orders the results by the value field.
-func ByValue(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldValue, opts...).ToFunc()
+// ByCode orders the results by the code field.
+func ByCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
-// ByDefaultRouter orders the results by the default_router field.
-func ByDefaultRouter(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDefaultRouter, opts...).ToFunc()
-}
-
-// ByRemark orders the results by the remark field.
-func ByRemark(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRemark, opts...).ToFunc()
+// ByDesc orders the results by the desc field.
+func ByDesc(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDesc, opts...).ToFunc()
 }
 
 // ByOrderNo orders the results by the order_no field.
@@ -170,17 +163,17 @@ func ByOrderNo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrderNo, opts...).ToFunc()
 }
 
-// ByMenusCount orders the results by menus count.
-func ByMenusCount(opts ...sql.OrderTermOption) OrderOption {
+// ByMenuCount orders the results by menu count.
+func ByMenuCount(opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newMenusStep(), opts...)
+		sqlgraph.OrderByNeighborsCount(s, newMenuStep(), opts...)
 	}
 }
 
-// ByMenus orders the results by menus terms.
-func ByMenus(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+// ByMenu orders the results by menu terms.
+func ByMenu(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newMenusStep(), append([]sql.OrderTerm{term}, terms...)...)
+		sqlgraph.OrderByNeighborTerms(s, newMenuStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
 
@@ -197,11 +190,11 @@ func ByAPI(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newAPIStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
-func newMenusStep() *sqlgraph.Step {
+func newMenuStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(MenusInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.M2M, false, MenusTable, MenusPrimaryKey...),
+		sqlgraph.To(MenuInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2M, false, MenuTable, MenuPrimaryKey...),
 	)
 }
 func newAPIStep() *sqlgraph.Step {

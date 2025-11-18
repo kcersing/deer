@@ -57,3 +57,63 @@ func (p *ChangePasswordReq) IsValid() error {
 func (p *SetUserRoleReq) IsValid() error {
 	return nil
 }
+func (p *DepartmentsResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *DepartmentsListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *CreateDepartmentsReq) IsValid() error {
+	return nil
+}
+func (p *UpdateDepartmentsReq) IsValid() error {
+	return nil
+}
+func (p *GetDepartmentsListReq) IsValid() error {
+	return nil
+}
+func (p *CreatePositionsReq) IsValid() error {
+	return nil
+}
+func (p *UpdatePositionsReq) IsValid() error {
+	return nil
+}
+func (p *GetPositionsListReq) IsValid() error {
+	return nil
+}
+func (p *PositionsResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *PositionsListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}

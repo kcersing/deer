@@ -1457,32 +1457,35 @@ func (p *Menu) String() string {
 }
 
 type Role struct {
-	ID            int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Name          string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
-	Value         string  `thrift:"value,3,optional" form:"value" json:"value,omitempty" query:"value"`
-	DefaultRouter string  `thrift:"defaultRouter,4,optional" form:"defaultRouter" json:"defaultRouter,omitempty" query:"defaultRouter"`
-	Remark        string  `thrift:"remark,5,optional" form:"remark" json:"remark,omitempty" query:"remark"`
-	Apis          []int64 `thrift:"apis,6,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
+	ID      int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Name    string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
+	Code    string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
+	Desc    string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	OrderNo int64   `thrift:"order_no,5,optional" form:"order_no" json:"order_no,omitempty" query:"order_no"`
+	Apis    []int64 `thrift:"apis,6,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
+	Menus   []int64 `thrift:"menus,7,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
 }
 
 func NewRole() *Role {
 	return &Role{
-		ID:            0,
-		Name:          "",
-		Value:         "",
-		DefaultRouter: "",
-		Remark:        "",
-		Apis:          []int64{},
+		ID:      0,
+		Name:    "",
+		Code:    "",
+		Desc:    "",
+		OrderNo: 0,
+		Apis:    []int64{},
+		Menus:   []int64{},
 	}
 }
 
 func (p *Role) InitDefault() {
 	p.ID = 0
 	p.Name = ""
-	p.Value = ""
-	p.DefaultRouter = ""
-	p.Remark = ""
+	p.Code = ""
+	p.Desc = ""
+	p.OrderNo = 0
 	p.Apis = []int64{}
+	p.Menus = []int64{}
 }
 
 var Role_ID_DEFAULT int64 = 0
@@ -1503,31 +1506,31 @@ func (p *Role) GetName() (v string) {
 	return p.Name
 }
 
-var Role_Value_DEFAULT string = ""
+var Role_Code_DEFAULT string = ""
 
-func (p *Role) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return Role_Value_DEFAULT
+func (p *Role) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return Role_Code_DEFAULT
 	}
-	return p.Value
+	return p.Code
 }
 
-var Role_DefaultRouter_DEFAULT string = ""
+var Role_Desc_DEFAULT string = ""
 
-func (p *Role) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return Role_DefaultRouter_DEFAULT
+func (p *Role) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Role_Desc_DEFAULT
 	}
-	return p.DefaultRouter
+	return p.Desc
 }
 
-var Role_Remark_DEFAULT string = ""
+var Role_OrderNo_DEFAULT int64 = 0
 
-func (p *Role) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return Role_Remark_DEFAULT
+func (p *Role) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return Role_OrderNo_DEFAULT
 	}
-	return p.Remark
+	return p.OrderNo
 }
 
 var Role_Apis_DEFAULT []int64 = []int64{}
@@ -1539,13 +1542,23 @@ func (p *Role) GetApis() (v []int64) {
 	return p.Apis
 }
 
+var Role_Menus_DEFAULT []int64 = []int64{}
+
+func (p *Role) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return Role_Menus_DEFAULT
+	}
+	return p.Menus
+}
+
 var fieldIDToName_Role = map[int16]string{
 	1: "id",
 	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
+	3: "code",
+	4: "desc",
+	5: "order_no",
 	6: "apis",
+	7: "menus",
 }
 
 func (p *Role) IsSetID() bool {
@@ -1556,20 +1569,24 @@ func (p *Role) IsSetName() bool {
 	return p.Name != Role_Name_DEFAULT
 }
 
-func (p *Role) IsSetValue() bool {
-	return p.Value != Role_Value_DEFAULT
+func (p *Role) IsSetCode() bool {
+	return p.Code != Role_Code_DEFAULT
 }
 
-func (p *Role) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != Role_DefaultRouter_DEFAULT
+func (p *Role) IsSetDesc() bool {
+	return p.Desc != Role_Desc_DEFAULT
 }
 
-func (p *Role) IsSetRemark() bool {
-	return p.Remark != Role_Remark_DEFAULT
+func (p *Role) IsSetOrderNo() bool {
+	return p.OrderNo != Role_OrderNo_DEFAULT
 }
 
 func (p *Role) IsSetApis() bool {
 	return p.Apis != nil
+}
+
+func (p *Role) IsSetMenus() bool {
+	return p.Menus != nil
 }
 
 func (p *Role) Read(iprot thrift.TProtocol) (err error) {
@@ -1624,7 +1641,7 @@ func (p *Role) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 5:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField5(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1634,6 +1651,14 @@ func (p *Role) Read(iprot thrift.TProtocol) (err error) {
 		case 6:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField7(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1698,7 +1723,7 @@ func (p *Role) ReadField3(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Value = _field
+	p.Code = _field
 	return nil
 }
 func (p *Role) ReadField4(iprot thrift.TProtocol) error {
@@ -1709,18 +1734,18 @@ func (p *Role) ReadField4(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.DefaultRouter = _field
+	p.Desc = _field
 	return nil
 }
 func (p *Role) ReadField5(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
 	}
-	p.Remark = _field
+	p.OrderNo = _field
 	return nil
 }
 func (p *Role) ReadField6(iprot thrift.TProtocol) error {
@@ -1744,6 +1769,29 @@ func (p *Role) ReadField6(iprot thrift.TProtocol) error {
 		return err
 	}
 	p.Apis = _field
+	return nil
+}
+func (p *Role) ReadField7(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Menus = _field
 	return nil
 }
 
@@ -1775,6 +1823,10 @@ func (p *Role) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField6(oprot); err != nil {
 			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 	}
@@ -1834,11 +1886,11 @@ WriteFieldEndError:
 }
 
 func (p *Role) writeField3(oprot thrift.TProtocol) (err error) {
-	if p.IsSetValue() {
-		if err = oprot.WriteFieldBegin("value", thrift.STRING, 3); err != nil {
+	if p.IsSetCode() {
+		if err = oprot.WriteFieldBegin("code", thrift.STRING, 3); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Value); err != nil {
+		if err := oprot.WriteString(p.Code); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1853,11 +1905,11 @@ WriteFieldEndError:
 }
 
 func (p *Role) writeField4(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDefaultRouter() {
-		if err = oprot.WriteFieldBegin("defaultRouter", thrift.STRING, 4); err != nil {
+	if p.IsSetDesc() {
+		if err = oprot.WriteFieldBegin("desc", thrift.STRING, 4); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.DefaultRouter); err != nil {
+		if err := oprot.WriteString(p.Desc); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1872,11 +1924,11 @@ WriteFieldEndError:
 }
 
 func (p *Role) writeField5(oprot thrift.TProtocol) (err error) {
-	if p.IsSetRemark() {
-		if err = oprot.WriteFieldBegin("remark", thrift.STRING, 5); err != nil {
+	if p.IsSetOrderNo() {
+		if err = oprot.WriteFieldBegin("order_no", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Remark); err != nil {
+		if err := oprot.WriteI64(p.OrderNo); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1917,6 +1969,33 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
+func (p *Role) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetMenus() {
+		if err = oprot.WriteFieldBegin("menus", thrift.LIST, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Menus)); err != nil {
+			return err
+		}
+		for _, v := range p.Menus {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+
 func (p *Role) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1929,7 +2008,7 @@ func (p *Role) String() string {
 type Dict struct {
 	ID        int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
 	Title     string `thrift:"title,2" form:"title" json:"title" query:"title"`
-	Name      string `thrift:"name,3" form:"name" json:"name" query:"name"`
+	Code      string `thrift:"code,3" form:"code" json:"code" query:"code"`
 	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
 	Desc      string `thrift:"desc,6" form:"desc" json:"desc" query:"desc"`
 	CreatedAt string `thrift:"createdAt,7" form:"createdAt" json:"createdAt" query:"createdAt"`
@@ -1940,7 +2019,7 @@ func NewDict() *Dict {
 	return &Dict{
 		ID:        0,
 		Title:     "",
-		Name:      "",
+		Code:      "",
 		Status:    0,
 		Desc:      "",
 		CreatedAt: "",
@@ -1951,7 +2030,7 @@ func NewDict() *Dict {
 func (p *Dict) InitDefault() {
 	p.ID = 0
 	p.Title = ""
-	p.Name = ""
+	p.Code = ""
 	p.Status = 0
 	p.Desc = ""
 	p.CreatedAt = ""
@@ -1966,8 +2045,8 @@ func (p *Dict) GetTitle() (v string) {
 	return p.Title
 }
 
-func (p *Dict) GetName() (v string) {
-	return p.Name
+func (p *Dict) GetCode() (v string) {
+	return p.Code
 }
 
 func (p *Dict) GetStatus() (v int64) {
@@ -1989,7 +2068,7 @@ func (p *Dict) GetUpdatedAt() (v string) {
 var fieldIDToName_Dict = map[int16]string{
 	1: "id",
 	2: "title",
-	3: "name",
+	3: "code",
 	5: "status",
 	6: "desc",
 	7: "createdAt",
@@ -2130,7 +2209,7 @@ func (p *Dict) ReadField3(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Name = _field
+	p.Code = _field
 	return nil
 }
 func (p *Dict) ReadField5(iprot thrift.TProtocol) error {
@@ -2265,10 +2344,10 @@ WriteFieldEndError:
 }
 
 func (p *Dict) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("name", thrift.STRING, 3); err != nil {
+	if err = oprot.WriteFieldBegin("code", thrift.STRING, 3); err != nil {
 		goto WriteFieldBeginError
 	}
-	if err := oprot.WriteString(p.Name); err != nil {
+	if err := oprot.WriteString(p.Code); err != nil {
 		return err
 	}
 	if err = oprot.WriteFieldEnd(); err != nil {
@@ -2361,7 +2440,6 @@ func (p *Dict) String() string {
 type Dictht struct {
 	ID        int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
 	Title     string `thrift:"title,2" form:"title" json:"title" query:"title"`
-	Key       string `thrift:"key,3" form:"key" json:"key" query:"key"`
 	Value     string `thrift:"value,4" form:"value" json:"value" query:"value"`
 	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
 	CreatedAt string `thrift:"createdAt,6" form:"createdAt" json:"createdAt" query:"createdAt"`
@@ -2373,7 +2451,6 @@ func NewDictht() *Dictht {
 	return &Dictht{
 		ID:        0,
 		Title:     "",
-		Key:       "",
 		Value:     "",
 		Status:    0,
 		CreatedAt: "",
@@ -2384,7 +2461,6 @@ func NewDictht() *Dictht {
 func (p *Dictht) InitDefault() {
 	p.ID = 0
 	p.Title = ""
-	p.Key = ""
 	p.Value = ""
 	p.Status = 0
 	p.CreatedAt = ""
@@ -2397,10 +2473,6 @@ func (p *Dictht) GetID() (v int64) {
 
 func (p *Dictht) GetTitle() (v string) {
 	return p.Title
-}
-
-func (p *Dictht) GetKey() (v string) {
-	return p.Key
 }
 
 func (p *Dictht) GetValue() (v string) {
@@ -2426,7 +2498,6 @@ func (p *Dictht) GetDictId() (v int64) {
 var fieldIDToName_Dictht = map[int16]string{
 	1: "id",
 	2: "title",
-	3: "key",
 	4: "value",
 	5: "status",
 	6: "createdAt",
@@ -2464,14 +2535,6 @@ func (p *Dictht) Read(iprot thrift.TProtocol) (err error) {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 3:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2568,17 +2631,6 @@ func (p *Dictht) ReadField2(iprot thrift.TProtocol) error {
 	p.Title = _field
 	return nil
 }
-func (p *Dictht) ReadField3(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.Key = _field
-	return nil
-}
 func (p *Dictht) ReadField4(iprot thrift.TProtocol) error {
 
 	var _field string
@@ -2647,10 +2699,6 @@ func (p *Dictht) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
-			goto WriteFieldError
-		}
-		if err = p.writeField3(oprot); err != nil {
-			fieldId = 3
 			goto WriteFieldError
 		}
 		if err = p.writeField4(oprot); err != nil {
@@ -2723,23 +2771,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
-}
-
-func (p *Dictht) writeField3(oprot thrift.TProtocol) (err error) {
-	if err = oprot.WriteFieldBegin("key", thrift.STRING, 3); err != nil {
-		goto WriteFieldBeginError
-	}
-	if err := oprot.WriteString(p.Key); err != nil {
-		return err
-	}
-	if err = oprot.WriteFieldEnd(); err != nil {
-		goto WriteFieldEndError
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
 func (p *Dictht) writeField4(oprot thrift.TProtocol) (err error) {

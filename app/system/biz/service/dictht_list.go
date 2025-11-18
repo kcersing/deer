@@ -25,12 +25,11 @@ func (s *DicthtListService) Run(req *system.DicthtListReq) (resp *system.DicthtL
 		dataResp   []*Base.Dictht
 	)
 
-	if req.GetName() != "" {
+	if req.GetKey() != "" {
 		predicates = append(predicates,
 			dictht.Or(
-				dictht.TitleContains(req.GetName()),
-				dictht.ValueContains(req.GetName()),
-				dictht.KeyContains(req.GetName()),
+				dictht.TitleContains(req.GetKey()),
+				dictht.ValueContains(req.GetKey()),
 			),
 		)
 	}

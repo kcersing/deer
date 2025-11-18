@@ -98,13 +98,10 @@ struct RoleListResp {
 }
 struct CreateRoleReq{
     1:optional i64 id=0(api.raw = "id")
-
-        2:optional string name="" (api.raw = "name")
-        3:optional string code=""(api.raw = "code")
-        4:optional string desc=""(api.raw = "desc")
-        5:optional i64 order_no=0(api.raw = "order_no")
-
-
+    2:optional string name="" (api.raw = "name")
+    3:optional string code=""(api.raw = "code")
+    4:optional string desc=""(api.raw = "desc")
+    5:optional i64 orderNo=0(api.raw = "orderNo")
 }
 
 struct GetRoleListReq{
@@ -117,7 +114,7 @@ struct UpdateRoleReq {
         2:optional string name="" (api.raw = "name")
         3:optional string code=""(api.raw = "code")
         4:optional string desc=""(api.raw = "desc")
-        5:optional i64 order_no=0(api.raw = "order_no")
+        5:optional i64 orderNo=0(api.raw = "orderNo")
 
 }
 struct CreateMenuAuthReq{
@@ -128,15 +125,14 @@ struct CreateMenuAuthReq{
 
 // 字典列表请求数据
 struct DictListReq {
-    1:  optional string title  = ""(api.raw = "title" )
-    2:  optional string name = "" (api.raw = "name" )
+    1:  optional string key  = ""(api.raw = "key" )
     3:  optional i64 page=1 (api.raw = "page")
     4:  optional i64 pageSize=100 (api.raw = "pageSize")
 }
 
 //字典名获取字典键值请求数据
 struct DicthtListReq{
-    1:  optional string name = "" (api.raw = "name" )
+    1:  optional string key = "" (api.raw = "key" )
     2:  optional i64 dictId= 0 (api.raw = "dictId" )
 }
 

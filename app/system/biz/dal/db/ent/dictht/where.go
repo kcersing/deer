@@ -85,11 +85,6 @@ func Title(v string) predicate.Dictht {
 	return predicate.Dictht(sql.FieldEQ(FieldTitle, v))
 }
 
-// Key applies equality check predicate on the "key" field. It's identical to KeyEQ.
-func Key(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldEQ(FieldKey, v))
-}
-
 // Value applies equality check predicate on the "value" field. It's identical to ValueEQ.
 func Value(v string) predicate.Dictht {
 	return predicate.Dictht(sql.FieldEQ(FieldValue, v))
@@ -423,81 +418,6 @@ func TitleEqualFold(v string) predicate.Dictht {
 // TitleContainsFold applies the ContainsFold predicate on the "title" field.
 func TitleContainsFold(v string) predicate.Dictht {
 	return predicate.Dictht(sql.FieldContainsFold(FieldTitle, v))
-}
-
-// KeyEQ applies the EQ predicate on the "key" field.
-func KeyEQ(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldEQ(FieldKey, v))
-}
-
-// KeyNEQ applies the NEQ predicate on the "key" field.
-func KeyNEQ(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldNEQ(FieldKey, v))
-}
-
-// KeyIn applies the In predicate on the "key" field.
-func KeyIn(vs ...string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldIn(FieldKey, vs...))
-}
-
-// KeyNotIn applies the NotIn predicate on the "key" field.
-func KeyNotIn(vs ...string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldNotIn(FieldKey, vs...))
-}
-
-// KeyGT applies the GT predicate on the "key" field.
-func KeyGT(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldGT(FieldKey, v))
-}
-
-// KeyGTE applies the GTE predicate on the "key" field.
-func KeyGTE(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldGTE(FieldKey, v))
-}
-
-// KeyLT applies the LT predicate on the "key" field.
-func KeyLT(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldLT(FieldKey, v))
-}
-
-// KeyLTE applies the LTE predicate on the "key" field.
-func KeyLTE(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldLTE(FieldKey, v))
-}
-
-// KeyContains applies the Contains predicate on the "key" field.
-func KeyContains(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldContains(FieldKey, v))
-}
-
-// KeyHasPrefix applies the HasPrefix predicate on the "key" field.
-func KeyHasPrefix(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldHasPrefix(FieldKey, v))
-}
-
-// KeyHasSuffix applies the HasSuffix predicate on the "key" field.
-func KeyHasSuffix(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldHasSuffix(FieldKey, v))
-}
-
-// KeyIsNil applies the IsNil predicate on the "key" field.
-func KeyIsNil() predicate.Dictht {
-	return predicate.Dictht(sql.FieldIsNull(FieldKey))
-}
-
-// KeyNotNil applies the NotNil predicate on the "key" field.
-func KeyNotNil() predicate.Dictht {
-	return predicate.Dictht(sql.FieldNotNull(FieldKey))
-}
-
-// KeyEqualFold applies the EqualFold predicate on the "key" field.
-func KeyEqualFold(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldEqualFold(FieldKey, v))
-}
-
-// KeyContainsFold applies the ContainsFold predicate on the "key" field.
-func KeyContainsFold(v string) predicate.Dictht {
-	return predicate.Dictht(sql.FieldContainsFold(FieldKey, v))
 }
 
 // ValueEQ applies the EQ predicate on the "value" field.

@@ -70,6 +70,76 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"CreateDepartments": kitex.NewMethodInfo(
+		createDepartmentsHandler,
+		newUserServiceCreateDepartmentsArgs,
+		newUserServiceCreateDepartmentsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DeleteDepartments": kitex.NewMethodInfo(
+		deleteDepartmentsHandler,
+		newUserServiceDeleteDepartmentsArgs,
+		newUserServiceDeleteDepartmentsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateDepartments": kitex.NewMethodInfo(
+		updateDepartmentsHandler,
+		newUserServiceUpdateDepartmentsArgs,
+		newUserServiceUpdateDepartmentsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetDepartments": kitex.NewMethodInfo(
+		getDepartmentsHandler,
+		newUserServiceGetDepartmentsArgs,
+		newUserServiceGetDepartmentsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetDepartmentsList": kitex.NewMethodInfo(
+		getDepartmentsListHandler,
+		newUserServiceGetDepartmentsListArgs,
+		newUserServiceGetDepartmentsListResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"CreatePositions": kitex.NewMethodInfo(
+		createPositionsHandler,
+		newUserServiceCreatePositionsArgs,
+		newUserServiceCreatePositionsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"DeletePositions": kitex.NewMethodInfo(
+		deletePositionsHandler,
+		newUserServiceDeletePositionsArgs,
+		newUserServiceDeletePositionsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdatePositions": kitex.NewMethodInfo(
+		updatePositionsHandler,
+		newUserServiceUpdatePositionsArgs,
+		newUserServiceUpdatePositionsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetPositions": kitex.NewMethodInfo(
+		getPositionsHandler,
+		newUserServiceGetPositionsArgs,
+		newUserServiceGetPositionsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetPositionsList": kitex.NewMethodInfo(
+		getPositionsListHandler,
+		newUserServiceGetPositionsListArgs,
+		newUserServiceGetPositionsListResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -280,6 +350,186 @@ func newUserServiceSetUserRoleResult() interface{} {
 	return user.NewUserServiceSetUserRoleResult()
 }
 
+func createDepartmentsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceCreateDepartmentsArgs)
+	realResult := result.(*user.UserServiceCreateDepartmentsResult)
+	success, err := handler.(user.UserService).CreateDepartments(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceCreateDepartmentsArgs() interface{} {
+	return user.NewUserServiceCreateDepartmentsArgs()
+}
+
+func newUserServiceCreateDepartmentsResult() interface{} {
+	return user.NewUserServiceCreateDepartmentsResult()
+}
+
+func deleteDepartmentsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceDeleteDepartmentsArgs)
+	realResult := result.(*user.UserServiceDeleteDepartmentsResult)
+	success, err := handler.(user.UserService).DeleteDepartments(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceDeleteDepartmentsArgs() interface{} {
+	return user.NewUserServiceDeleteDepartmentsArgs()
+}
+
+func newUserServiceDeleteDepartmentsResult() interface{} {
+	return user.NewUserServiceDeleteDepartmentsResult()
+}
+
+func updateDepartmentsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceUpdateDepartmentsArgs)
+	realResult := result.(*user.UserServiceUpdateDepartmentsResult)
+	success, err := handler.(user.UserService).UpdateDepartments(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceUpdateDepartmentsArgs() interface{} {
+	return user.NewUserServiceUpdateDepartmentsArgs()
+}
+
+func newUserServiceUpdateDepartmentsResult() interface{} {
+	return user.NewUserServiceUpdateDepartmentsResult()
+}
+
+func getDepartmentsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetDepartmentsArgs)
+	realResult := result.(*user.UserServiceGetDepartmentsResult)
+	success, err := handler.(user.UserService).GetDepartments(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetDepartmentsArgs() interface{} {
+	return user.NewUserServiceGetDepartmentsArgs()
+}
+
+func newUserServiceGetDepartmentsResult() interface{} {
+	return user.NewUserServiceGetDepartmentsResult()
+}
+
+func getDepartmentsListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetDepartmentsListArgs)
+	realResult := result.(*user.UserServiceGetDepartmentsListResult)
+	success, err := handler.(user.UserService).GetDepartmentsList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetDepartmentsListArgs() interface{} {
+	return user.NewUserServiceGetDepartmentsListArgs()
+}
+
+func newUserServiceGetDepartmentsListResult() interface{} {
+	return user.NewUserServiceGetDepartmentsListResult()
+}
+
+func createPositionsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceCreatePositionsArgs)
+	realResult := result.(*user.UserServiceCreatePositionsResult)
+	success, err := handler.(user.UserService).CreatePositions(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceCreatePositionsArgs() interface{} {
+	return user.NewUserServiceCreatePositionsArgs()
+}
+
+func newUserServiceCreatePositionsResult() interface{} {
+	return user.NewUserServiceCreatePositionsResult()
+}
+
+func deletePositionsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceDeletePositionsArgs)
+	realResult := result.(*user.UserServiceDeletePositionsResult)
+	success, err := handler.(user.UserService).DeletePositions(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceDeletePositionsArgs() interface{} {
+	return user.NewUserServiceDeletePositionsArgs()
+}
+
+func newUserServiceDeletePositionsResult() interface{} {
+	return user.NewUserServiceDeletePositionsResult()
+}
+
+func updatePositionsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceUpdatePositionsArgs)
+	realResult := result.(*user.UserServiceUpdatePositionsResult)
+	success, err := handler.(user.UserService).UpdatePositions(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceUpdatePositionsArgs() interface{} {
+	return user.NewUserServiceUpdatePositionsArgs()
+}
+
+func newUserServiceUpdatePositionsResult() interface{} {
+	return user.NewUserServiceUpdatePositionsResult()
+}
+
+func getPositionsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetPositionsArgs)
+	realResult := result.(*user.UserServiceGetPositionsResult)
+	success, err := handler.(user.UserService).GetPositions(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetPositionsArgs() interface{} {
+	return user.NewUserServiceGetPositionsArgs()
+}
+
+func newUserServiceGetPositionsResult() interface{} {
+	return user.NewUserServiceGetPositionsResult()
+}
+
+func getPositionsListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetPositionsListArgs)
+	realResult := result.(*user.UserServiceGetPositionsListResult)
+	success, err := handler.(user.UserService).GetPositionsList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetPositionsListArgs() interface{} {
+	return user.NewUserServiceGetPositionsListArgs()
+}
+
+func newUserServiceGetPositionsListResult() interface{} {
+	return user.NewUserServiceGetPositionsListResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -365,6 +615,106 @@ func (p *kClient) SetUserRole(ctx context.Context, req *user.SetUserRoleReq) (r 
 	_args.Req = req
 	var _result user.UserServiceSetUserRoleResult
 	if err = p.c.Call(ctx, "SetUserRole", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateDepartments(ctx context.Context, req *user.CreateDepartmentsReq) (r *user.DepartmentsResp, err error) {
+	var _args user.UserServiceCreateDepartmentsArgs
+	_args.Req = req
+	var _result user.UserServiceCreateDepartmentsResult
+	if err = p.c.Call(ctx, "CreateDepartments", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteDepartments(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args user.UserServiceDeleteDepartmentsArgs
+	_args.Req = req
+	var _result user.UserServiceDeleteDepartmentsResult
+	if err = p.c.Call(ctx, "DeleteDepartments", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateDepartments(ctx context.Context, req *user.UpdateDepartmentsReq) (r *user.DepartmentsResp, err error) {
+	var _args user.UserServiceUpdateDepartmentsArgs
+	_args.Req = req
+	var _result user.UserServiceUpdateDepartmentsResult
+	if err = p.c.Call(ctx, "UpdateDepartments", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetDepartments(ctx context.Context, req *base.IdReq) (r *user.DepartmentsResp, err error) {
+	var _args user.UserServiceGetDepartmentsArgs
+	_args.Req = req
+	var _result user.UserServiceGetDepartmentsResult
+	if err = p.c.Call(ctx, "GetDepartments", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetDepartmentsList(ctx context.Context, req *user.GetDepartmentsListReq) (r *user.DepartmentsListResp, err error) {
+	var _args user.UserServiceGetDepartmentsListArgs
+	_args.Req = req
+	var _result user.UserServiceGetDepartmentsListResult
+	if err = p.c.Call(ctx, "GetDepartmentsList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreatePositions(ctx context.Context, req *user.CreatePositionsReq) (r *user.PositionsResp, err error) {
+	var _args user.UserServiceCreatePositionsArgs
+	_args.Req = req
+	var _result user.UserServiceCreatePositionsResult
+	if err = p.c.Call(ctx, "CreatePositions", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeletePositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args user.UserServiceDeletePositionsArgs
+	_args.Req = req
+	var _result user.UserServiceDeletePositionsResult
+	if err = p.c.Call(ctx, "DeletePositions", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdatePositions(ctx context.Context, req *user.UpdatePositionsReq) (r *user.PositionsResp, err error) {
+	var _args user.UserServiceUpdatePositionsArgs
+	_args.Req = req
+	var _result user.UserServiceUpdatePositionsResult
+	if err = p.c.Call(ctx, "UpdatePositions", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPositions(ctx context.Context, req *base.IdReq) (r *user.PositionsResp, err error) {
+	var _args user.UserServiceGetPositionsArgs
+	_args.Req = req
+	var _result user.UserServiceGetPositionsResult
+	if err = p.c.Call(ctx, "GetPositions", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetPositionsList(ctx context.Context, req *user.GetPositionsListReq) (r *user.PositionsListResp, err error) {
+	var _args user.UserServiceGetPositionsListArgs
+	_args.Req = req
+	var _result user.UserServiceGetPositionsListResult
+	if err = p.c.Call(ctx, "GetPositionsList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -142,26 +142,6 @@ func (_u *DicthtUpdate) ClearTitle() *DicthtUpdate {
 	return _u
 }
 
-// SetKey sets the "key" field.
-func (_u *DicthtUpdate) SetKey(v string) *DicthtUpdate {
-	_u.mutation.SetKey(v)
-	return _u
-}
-
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_u *DicthtUpdate) SetNillableKey(v *string) *DicthtUpdate {
-	if v != nil {
-		_u.SetKey(*v)
-	}
-	return _u
-}
-
-// ClearKey clears the value of the "key" field.
-func (_u *DicthtUpdate) ClearKey() *DicthtUpdate {
-	_u.mutation.ClearKey()
-	return _u
-}
-
 // SetValue sets the "value" field.
 func (_u *DicthtUpdate) SetValue(v string) *DicthtUpdate {
 	_u.mutation.SetValue(v)
@@ -304,12 +284,6 @@ func (_u *DicthtUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(dictht.FieldTitle, field.TypeString)
-	}
-	if value, ok := _u.mutation.Key(); ok {
-		_spec.SetField(dictht.FieldKey, field.TypeString, value)
-	}
-	if _u.mutation.KeyCleared() {
-		_spec.ClearField(dictht.FieldKey, field.TypeString)
 	}
 	if value, ok := _u.mutation.Value(); ok {
 		_spec.SetField(dictht.FieldValue, field.TypeString, value)
@@ -476,26 +450,6 @@ func (_u *DicthtUpdateOne) SetNillableTitle(v *string) *DicthtUpdateOne {
 // ClearTitle clears the value of the "title" field.
 func (_u *DicthtUpdateOne) ClearTitle() *DicthtUpdateOne {
 	_u.mutation.ClearTitle()
-	return _u
-}
-
-// SetKey sets the "key" field.
-func (_u *DicthtUpdateOne) SetKey(v string) *DicthtUpdateOne {
-	_u.mutation.SetKey(v)
-	return _u
-}
-
-// SetNillableKey sets the "key" field if the given value is not nil.
-func (_u *DicthtUpdateOne) SetNillableKey(v *string) *DicthtUpdateOne {
-	if v != nil {
-		_u.SetKey(*v)
-	}
-	return _u
-}
-
-// ClearKey clears the value of the "key" field.
-func (_u *DicthtUpdateOne) ClearKey() *DicthtUpdateOne {
-	_u.mutation.ClearKey()
 	return _u
 }
 
@@ -671,12 +625,6 @@ func (_u *DicthtUpdateOne) sqlSave(ctx context.Context) (_node *Dictht, err erro
 	}
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(dictht.FieldTitle, field.TypeString)
-	}
-	if value, ok := _u.mutation.Key(); ok {
-		_spec.SetField(dictht.FieldKey, field.TypeString, value)
-	}
-	if _u.mutation.KeyCleared() {
-		_spec.ClearField(dictht.FieldKey, field.TypeString)
 	}
 	if value, ok := _u.mutation.Value(); ok {
 		_spec.SetField(dictht.FieldValue, field.TypeString, value)

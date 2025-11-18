@@ -12,8 +12,18 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// Department is the client for interacting with the Department builders.
+	Department *DepartmentClient
+	// Position is the client for interacting with the Position builders.
+	Position *PositionClient
 	// User is the client for interacting with the User builders.
 	User *UserClient
+	// UserLoginLog is the client for interacting with the UserLoginLog builders.
+	UserLoginLog *UserLoginLogClient
+	// UserLoginRestriction is the client for interacting with the UserLoginRestriction builders.
+	UserLoginRestriction *UserLoginRestrictionClient
+	// UserOperationLog is the client for interacting with the UserOperationLog builders.
+	UserOperationLog *UserOperationLogClient
 	// UserRole is the client for interacting with the UserRole builders.
 	UserRole *UserRoleClient
 
@@ -147,7 +157,12 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.Department = NewDepartmentClient(tx.config)
+	tx.Position = NewPositionClient(tx.config)
 	tx.User = NewUserClient(tx.config)
+	tx.UserLoginLog = NewUserLoginLogClient(tx.config)
+	tx.UserLoginRestriction = NewUserLoginRestrictionClient(tx.config)
+	tx.UserOperationLog = NewUserOperationLogClient(tx.config)
 	tx.UserRole = NewUserRoleClient(tx.config)
 }
 
@@ -158,7 +173,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: User.QueryXXX(), the query will be executed
+// applies a query, for example: Department.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

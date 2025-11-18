@@ -44,7 +44,7 @@ func (Department) Fields() []ent.Field {
 			Optional().
 			Comment("父ID"),
 
-		field.String("description").
+		field.String("desc").
 			Comment("职能描述").
 			Optional().
 			Nillable(),

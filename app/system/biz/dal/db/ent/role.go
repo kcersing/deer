@@ -29,18 +29,18 @@ type Role struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 状态[0:禁用;1:正常]
 	Status int64 `json:"status,omitempty"`
-	// role name | 角色名
+	// 角色名
 	Name string `json:"name,omitempty"`
-	// role value for permission control in front end | 角色值，用于前端权限控制
-	Value string `json:"value,omitempty"`
-	// default menu : dashboard | 默认登录页面
-	DefaultRouter string `json:"default_router,omitempty"`
-	// remark | 备注
-	Remark string `json:"remark,omitempty"`
-	// order number | 排序编号
+	// 角色标识
+	Code *string `json:"code,omitempty"`
+	// 描述
+	Desc string `json:"desc,omitempty"`
+	// 排序编号
 	OrderNo int64 `json:"order_no,omitempty"`
-	// apis
-	Apis []int `json:"apis,omitempty"`
+	// 分配的菜单列表
+	Menus []int64 `json:"menus,omitempty"`
+	// 分配的API列表
+	Apis []int64 `json:"apis,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the RoleQuery when eager-loading is set.
 	Edges        RoleEdges `json:"edges"`
@@ -49,8 +49,8 @@ type Role struct {
 
 // RoleEdges holds the relations/edges for other nodes in the graph.
 type RoleEdges struct {
-	// Menus holds the value of the menus edge.
-	Menus []*Menu `json:"menus,omitempty"`
+	// Menu holds the value of the menu edge.
+	Menu []*Menu `json:"menu,omitempty"`
 	// API holds the value of the api edge.
 	API []*API `json:"api,omitempty"`
 	// loadedTypes holds the information for reporting if a
@@ -58,13 +58,13 @@ type RoleEdges struct {
 	loadedTypes [2]bool
 }
 
-// MenusOrErr returns the Menus value or an error if the edge
+// MenuOrErr returns the Menu value or an error if the edge
 // was not loaded in eager-loading.
-func (e RoleEdges) MenusOrErr() ([]*Menu, error) {
+func (e RoleEdges) MenuOrErr() ([]*Menu, error) {
 	if e.loadedTypes[0] {
-		return e.Menus, nil
+		return e.Menu, nil
 	}
-	return nil, &NotLoadedError{edge: "menus"}
+	return nil, &NotLoadedError{edge: "menu"}
 }
 
 // APIOrErr returns the API value or an error if the edge
@@ -81,11 +81,11 @@ func (*Role) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case role.FieldApis:
+		case role.FieldMenus, role.FieldApis:
 			values[i] = new([]byte)
 		case role.FieldID, role.FieldDelete, role.FieldCreatedID, role.FieldStatus, role.FieldOrderNo:
 			values[i] = new(sql.NullInt64)
-		case role.FieldName, role.FieldValue, role.FieldDefaultRouter, role.FieldRemark:
+		case role.FieldName, role.FieldCode, role.FieldDesc:
 			values[i] = new(sql.NullString)
 		case role.FieldCreatedAt, role.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -146,29 +146,32 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Name = value.String
 			}
-		case role.FieldValue:
+		case role.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field value", values[i])
+				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.Value = value.String
+				_m.Code = new(string)
+				*_m.Code = value.String
 			}
-		case role.FieldDefaultRouter:
+		case role.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field default_router", values[i])
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
 			} else if value.Valid {
-				_m.DefaultRouter = value.String
-			}
-		case role.FieldRemark:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field remark", values[i])
-			} else if value.Valid {
-				_m.Remark = value.String
+				_m.Desc = value.String
 			}
 		case role.FieldOrderNo:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field order_no", values[i])
 			} else if value.Valid {
 				_m.OrderNo = value.Int64
+			}
+		case role.FieldMenus:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field menus", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.Menus); err != nil {
+					return fmt.Errorf("unmarshal field menus: %w", err)
+				}
 			}
 		case role.FieldApis:
 			if value, ok := values[i].(*[]byte); !ok {
@@ -185,15 +188,15 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// GetValue returns the ent.Value that was dynamically selected and assigned to the Role.
+// Value returns the ent.Value that was dynamically selected and assigned to the Role.
 // This includes values selected through modifiers, order, etc.
-func (_m *Role) GetValue(name string) (ent.Value, error) {
+func (_m *Role) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
 }
 
-// QueryMenus queries the "menus" edge of the Role entity.
-func (_m *Role) QueryMenus() *MenuQuery {
-	return NewRoleClient(_m.config).QueryMenus(_m)
+// QueryMenu queries the "menu" edge of the Role entity.
+func (_m *Role) QueryMenu() *MenuQuery {
+	return NewRoleClient(_m.config).QueryMenu(_m)
 }
 
 // QueryAPI queries the "api" edge of the Role entity.
@@ -242,17 +245,19 @@ func (_m *Role) String() string {
 	builder.WriteString("name=")
 	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
-	builder.WriteString("value=")
-	builder.WriteString(_m.Value)
+	if v := _m.Code; v != nil {
+		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("default_router=")
-	builder.WriteString(_m.DefaultRouter)
-	builder.WriteString(", ")
-	builder.WriteString("remark=")
-	builder.WriteString(_m.Remark)
+	builder.WriteString("desc=")
+	builder.WriteString(_m.Desc)
 	builder.WriteString(", ")
 	builder.WriteString("order_no=")
 	builder.WriteString(fmt.Sprintf("%v", _m.OrderNo))
+	builder.WriteString(", ")
+	builder.WriteString("menus=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Menus))
 	builder.WriteString(", ")
 	builder.WriteString("apis=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Apis))

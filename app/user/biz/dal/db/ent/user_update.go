@@ -251,6 +251,60 @@ func (_u *UserUpdate) ClearBirthday() *UserUpdate {
 	return _u
 }
 
+// SetDepartmentID sets the "department_id" field.
+func (_u *UserUpdate) SetDepartmentID(v int64) *UserUpdate {
+	_u.mutation.ResetDepartmentID()
+	_u.mutation.SetDepartmentID(v)
+	return _u
+}
+
+// SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableDepartmentID(v *int64) *UserUpdate {
+	if v != nil {
+		_u.SetDepartmentID(*v)
+	}
+	return _u
+}
+
+// AddDepartmentID adds value to the "department_id" field.
+func (_u *UserUpdate) AddDepartmentID(v int64) *UserUpdate {
+	_u.mutation.AddDepartmentID(v)
+	return _u
+}
+
+// ClearDepartmentID clears the value of the "department_id" field.
+func (_u *UserUpdate) ClearDepartmentID() *UserUpdate {
+	_u.mutation.ClearDepartmentID()
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserUpdate) SetPositionID(v int64) *UserUpdate {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserUpdate) SetNillablePositionID(v *int64) *UserUpdate {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserUpdate) AddPositionID(v int64) *UserUpdate {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *UserUpdate) ClearPositionID() *UserUpdate {
+	_u.mutation.ClearPositionID()
+	return _u
+}
+
 // SetLastAt sets the "last_at" field.
 func (_u *UserUpdate) SetLastAt(v time.Time) *UserUpdate {
 	_u.mutation.SetLastAt(v)
@@ -468,6 +522,24 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.BirthdayCleared() {
 		_spec.ClearField(user.FieldBirthday, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DepartmentID(); ok {
+		_spec.SetField(user.FieldDepartmentID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedDepartmentID(); ok {
+		_spec.AddField(user.FieldDepartmentID, field.TypeInt64, value)
+	}
+	if _u.mutation.DepartmentIDCleared() {
+		_spec.ClearField(user.FieldDepartmentID, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(user.FieldPositionID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(user.FieldPositionID, field.TypeInt64, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(user.FieldPositionID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.LastAt(); ok {
 		_spec.SetField(user.FieldLastAt, field.TypeTime, value)
@@ -774,6 +846,60 @@ func (_u *UserUpdateOne) ClearBirthday() *UserUpdateOne {
 	return _u
 }
 
+// SetDepartmentID sets the "department_id" field.
+func (_u *UserUpdateOne) SetDepartmentID(v int64) *UserUpdateOne {
+	_u.mutation.ResetDepartmentID()
+	_u.mutation.SetDepartmentID(v)
+	return _u
+}
+
+// SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableDepartmentID(v *int64) *UserUpdateOne {
+	if v != nil {
+		_u.SetDepartmentID(*v)
+	}
+	return _u
+}
+
+// AddDepartmentID adds value to the "department_id" field.
+func (_u *UserUpdateOne) AddDepartmentID(v int64) *UserUpdateOne {
+	_u.mutation.AddDepartmentID(v)
+	return _u
+}
+
+// ClearDepartmentID clears the value of the "department_id" field.
+func (_u *UserUpdateOne) ClearDepartmentID() *UserUpdateOne {
+	_u.mutation.ClearDepartmentID()
+	return _u
+}
+
+// SetPositionID sets the "position_id" field.
+func (_u *UserUpdateOne) SetPositionID(v int64) *UserUpdateOne {
+	_u.mutation.ResetPositionID()
+	_u.mutation.SetPositionID(v)
+	return _u
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillablePositionID(v *int64) *UserUpdateOne {
+	if v != nil {
+		_u.SetPositionID(*v)
+	}
+	return _u
+}
+
+// AddPositionID adds value to the "position_id" field.
+func (_u *UserUpdateOne) AddPositionID(v int64) *UserUpdateOne {
+	_u.mutation.AddPositionID(v)
+	return _u
+}
+
+// ClearPositionID clears the value of the "position_id" field.
+func (_u *UserUpdateOne) ClearPositionID() *UserUpdateOne {
+	_u.mutation.ClearPositionID()
+	return _u
+}
+
 // SetLastAt sets the "last_at" field.
 func (_u *UserUpdateOne) SetLastAt(v time.Time) *UserUpdateOne {
 	_u.mutation.SetLastAt(v)
@@ -1021,6 +1147,24 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if _u.mutation.BirthdayCleared() {
 		_spec.ClearField(user.FieldBirthday, field.TypeTime)
+	}
+	if value, ok := _u.mutation.DepartmentID(); ok {
+		_spec.SetField(user.FieldDepartmentID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedDepartmentID(); ok {
+		_spec.AddField(user.FieldDepartmentID, field.TypeInt64, value)
+	}
+	if _u.mutation.DepartmentIDCleared() {
+		_spec.ClearField(user.FieldDepartmentID, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.PositionID(); ok {
+		_spec.SetField(user.FieldPositionID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedPositionID(); ok {
+		_spec.AddField(user.FieldPositionID, field.TypeInt64, value)
+	}
+	if _u.mutation.PositionIDCleared() {
+		_spec.ClearField(user.FieldPositionID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.LastAt(); ok {
 		_spec.SetField(user.FieldLastAt, field.TypeTime, value)

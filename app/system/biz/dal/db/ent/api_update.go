@@ -155,23 +155,23 @@ func (_u *APIUpdate) ClearDesc() *APIUpdate {
 	return _u
 }
 
-// SetAPIGroup sets the "api_group" field.
-func (_u *APIUpdate) SetAPIGroup(v string) *APIUpdate {
-	_u.mutation.SetAPIGroup(v)
+// SetGroup sets the "group" field.
+func (_u *APIUpdate) SetGroup(v string) *APIUpdate {
+	_u.mutation.SetGroup(v)
 	return _u
 }
 
-// SetNillableAPIGroup sets the "api_group" field if the given value is not nil.
-func (_u *APIUpdate) SetNillableAPIGroup(v *string) *APIUpdate {
+// SetNillableGroup sets the "group" field if the given value is not nil.
+func (_u *APIUpdate) SetNillableGroup(v *string) *APIUpdate {
 	if v != nil {
-		_u.SetAPIGroup(*v)
+		_u.SetGroup(*v)
 	}
 	return _u
 }
 
-// ClearAPIGroup clears the value of the "api_group" field.
-func (_u *APIUpdate) ClearAPIGroup() *APIUpdate {
-	_u.mutation.ClearAPIGroup()
+// ClearGroup clears the value of the "group" field.
+func (_u *APIUpdate) ClearGroup() *APIUpdate {
+	_u.mutation.ClearGroup()
 	return _u
 }
 
@@ -192,33 +192,6 @@ func (_u *APIUpdate) SetNillableMethod(v *string) *APIUpdate {
 // ClearMethod clears the value of the "method" field.
 func (_u *APIUpdate) ClearMethod() *APIUpdate {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDisabled sets the "disabled" field.
-func (_u *APIUpdate) SetDisabled(v int64) *APIUpdate {
-	_u.mutation.ResetDisabled()
-	_u.mutation.SetDisabled(v)
-	return _u
-}
-
-// SetNillableDisabled sets the "disabled" field if the given value is not nil.
-func (_u *APIUpdate) SetNillableDisabled(v *int64) *APIUpdate {
-	if v != nil {
-		_u.SetDisabled(*v)
-	}
-	return _u
-}
-
-// AddDisabled adds value to the "disabled" field.
-func (_u *APIUpdate) AddDisabled(v int64) *APIUpdate {
-	_u.mutation.AddDisabled(v)
-	return _u
-}
-
-// ClearDisabled clears the value of the "disabled" field.
-func (_u *APIUpdate) ClearDisabled() *APIUpdate {
-	_u.mutation.ClearDisabled()
 	return _u
 }
 
@@ -353,26 +326,17 @@ func (_u *APIUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.DescCleared() {
 		_spec.ClearField(api.FieldDesc, field.TypeString)
 	}
-	if value, ok := _u.mutation.APIGroup(); ok {
-		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
+	if value, ok := _u.mutation.Group(); ok {
+		_spec.SetField(api.FieldGroup, field.TypeString, value)
 	}
-	if _u.mutation.APIGroupCleared() {
-		_spec.ClearField(api.FieldAPIGroup, field.TypeString)
+	if _u.mutation.GroupCleared() {
+		_spec.ClearField(api.FieldGroup, field.TypeString)
 	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(api.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Disabled(); ok {
-		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedDisabled(); ok {
-		_spec.AddField(api.FieldDisabled, field.TypeInt64, value)
-	}
-	if _u.mutation.DisabledCleared() {
-		_spec.ClearField(api.FieldDisabled, field.TypeInt64)
 	}
 	if _u.mutation.RolesCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -565,23 +529,23 @@ func (_u *APIUpdateOne) ClearDesc() *APIUpdateOne {
 	return _u
 }
 
-// SetAPIGroup sets the "api_group" field.
-func (_u *APIUpdateOne) SetAPIGroup(v string) *APIUpdateOne {
-	_u.mutation.SetAPIGroup(v)
+// SetGroup sets the "group" field.
+func (_u *APIUpdateOne) SetGroup(v string) *APIUpdateOne {
+	_u.mutation.SetGroup(v)
 	return _u
 }
 
-// SetNillableAPIGroup sets the "api_group" field if the given value is not nil.
-func (_u *APIUpdateOne) SetNillableAPIGroup(v *string) *APIUpdateOne {
+// SetNillableGroup sets the "group" field if the given value is not nil.
+func (_u *APIUpdateOne) SetNillableGroup(v *string) *APIUpdateOne {
 	if v != nil {
-		_u.SetAPIGroup(*v)
+		_u.SetGroup(*v)
 	}
 	return _u
 }
 
-// ClearAPIGroup clears the value of the "api_group" field.
-func (_u *APIUpdateOne) ClearAPIGroup() *APIUpdateOne {
-	_u.mutation.ClearAPIGroup()
+// ClearGroup clears the value of the "group" field.
+func (_u *APIUpdateOne) ClearGroup() *APIUpdateOne {
+	_u.mutation.ClearGroup()
 	return _u
 }
 
@@ -602,33 +566,6 @@ func (_u *APIUpdateOne) SetNillableMethod(v *string) *APIUpdateOne {
 // ClearMethod clears the value of the "method" field.
 func (_u *APIUpdateOne) ClearMethod() *APIUpdateOne {
 	_u.mutation.ClearMethod()
-	return _u
-}
-
-// SetDisabled sets the "disabled" field.
-func (_u *APIUpdateOne) SetDisabled(v int64) *APIUpdateOne {
-	_u.mutation.ResetDisabled()
-	_u.mutation.SetDisabled(v)
-	return _u
-}
-
-// SetNillableDisabled sets the "disabled" field if the given value is not nil.
-func (_u *APIUpdateOne) SetNillableDisabled(v *int64) *APIUpdateOne {
-	if v != nil {
-		_u.SetDisabled(*v)
-	}
-	return _u
-}
-
-// AddDisabled adds value to the "disabled" field.
-func (_u *APIUpdateOne) AddDisabled(v int64) *APIUpdateOne {
-	_u.mutation.AddDisabled(v)
-	return _u
-}
-
-// ClearDisabled clears the value of the "disabled" field.
-func (_u *APIUpdateOne) ClearDisabled() *APIUpdateOne {
-	_u.mutation.ClearDisabled()
 	return _u
 }
 
@@ -793,26 +730,17 @@ func (_u *APIUpdateOne) sqlSave(ctx context.Context) (_node *API, err error) {
 	if _u.mutation.DescCleared() {
 		_spec.ClearField(api.FieldDesc, field.TypeString)
 	}
-	if value, ok := _u.mutation.APIGroup(); ok {
-		_spec.SetField(api.FieldAPIGroup, field.TypeString, value)
+	if value, ok := _u.mutation.Group(); ok {
+		_spec.SetField(api.FieldGroup, field.TypeString, value)
 	}
-	if _u.mutation.APIGroupCleared() {
-		_spec.ClearField(api.FieldAPIGroup, field.TypeString)
+	if _u.mutation.GroupCleared() {
+		_spec.ClearField(api.FieldGroup, field.TypeString)
 	}
 	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(api.FieldMethod, field.TypeString, value)
 	}
 	if _u.mutation.MethodCleared() {
 		_spec.ClearField(api.FieldMethod, field.TypeString)
-	}
-	if value, ok := _u.mutation.Disabled(); ok {
-		_spec.SetField(api.FieldDisabled, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedDisabled(); ok {
-		_spec.AddField(api.FieldDisabled, field.TypeInt64, value)
-	}
-	if _u.mutation.DisabledCleared() {
-		_spec.ClearField(api.FieldDisabled, field.TypeInt64)
 	}
 	if _u.mutation.RolesCleared() {
 		edge := &sqlgraph.EdgeSpec{

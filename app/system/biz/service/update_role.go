@@ -6,7 +6,6 @@ import (
 	"github.com/pkg/errors"
 	"system/biz/convert"
 	"system/biz/dal/db"
-	"time"
 )
 
 type UpdateRoleService struct {
@@ -22,12 +21,9 @@ func (s *UpdateRoleService) Run(req *system.UpdateRoleReq) (resp *system.RoleRes
 
 	save, err := db.Client.Role.UpdateOneID(req.GetId()).
 		SetName(req.GetName()).
-		SetValue(req.GetValue()).
-		SetDefaultRouter(req.GetDefaultRouter()).
-		//SetStatus(req.Status).
-		SetRemark(req.GetRemark()).
-		//SetOrderNo(req.OrderNo).
-		SetUpdatedAt(time.Now()).
+		SetCode(req.GetCode()).
+		SetDesc(req.GetDesc()).
+		SetOrderNo(req.OrderNo).
 		Save(s.ctx)
 	if err != nil {
 		err = errors.Wrap(err, "update Role failed")

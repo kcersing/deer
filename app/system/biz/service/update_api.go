@@ -24,7 +24,7 @@ func (s *UpdateApiService) Run(req *system.UpdateApiReq) (resp *system.ApiResp, 
 		SetDesc(req.GetDesc()).
 		SetMethod(req.GetMethod()).
 		SetPath(req.GetPath()).
-		SetAPIGroup(req.GetGroup()).
+		SetGroup(req.GetGroup()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

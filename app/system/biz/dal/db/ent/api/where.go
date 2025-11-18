@@ -90,19 +90,14 @@ func Desc(v string) predicate.API {
 	return predicate.API(sql.FieldEQ(FieldDesc, v))
 }
 
-// APIGroup applies equality check predicate on the "api_group" field. It's identical to APIGroupEQ.
-func APIGroup(v string) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldAPIGroup, v))
+// Group applies equality check predicate on the "group" field. It's identical to GroupEQ.
+func Group(v string) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldGroup, v))
 }
 
 // Method applies equality check predicate on the "method" field. It's identical to MethodEQ.
 func Method(v string) predicate.API {
 	return predicate.API(sql.FieldEQ(FieldMethod, v))
-}
-
-// Disabled applies equality check predicate on the "disabled" field. It's identical to DisabledEQ.
-func Disabled(v int64) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldDisabled, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -530,79 +525,79 @@ func DescContainsFold(v string) predicate.API {
 	return predicate.API(sql.FieldContainsFold(FieldDesc, v))
 }
 
-// APIGroupEQ applies the EQ predicate on the "api_group" field.
-func APIGroupEQ(v string) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldAPIGroup, v))
+// GroupEQ applies the EQ predicate on the "group" field.
+func GroupEQ(v string) predicate.API {
+	return predicate.API(sql.FieldEQ(FieldGroup, v))
 }
 
-// APIGroupNEQ applies the NEQ predicate on the "api_group" field.
-func APIGroupNEQ(v string) predicate.API {
-	return predicate.API(sql.FieldNEQ(FieldAPIGroup, v))
+// GroupNEQ applies the NEQ predicate on the "group" field.
+func GroupNEQ(v string) predicate.API {
+	return predicate.API(sql.FieldNEQ(FieldGroup, v))
 }
 
-// APIGroupIn applies the In predicate on the "api_group" field.
-func APIGroupIn(vs ...string) predicate.API {
-	return predicate.API(sql.FieldIn(FieldAPIGroup, vs...))
+// GroupIn applies the In predicate on the "group" field.
+func GroupIn(vs ...string) predicate.API {
+	return predicate.API(sql.FieldIn(FieldGroup, vs...))
 }
 
-// APIGroupNotIn applies the NotIn predicate on the "api_group" field.
-func APIGroupNotIn(vs ...string) predicate.API {
-	return predicate.API(sql.FieldNotIn(FieldAPIGroup, vs...))
+// GroupNotIn applies the NotIn predicate on the "group" field.
+func GroupNotIn(vs ...string) predicate.API {
+	return predicate.API(sql.FieldNotIn(FieldGroup, vs...))
 }
 
-// APIGroupGT applies the GT predicate on the "api_group" field.
-func APIGroupGT(v string) predicate.API {
-	return predicate.API(sql.FieldGT(FieldAPIGroup, v))
+// GroupGT applies the GT predicate on the "group" field.
+func GroupGT(v string) predicate.API {
+	return predicate.API(sql.FieldGT(FieldGroup, v))
 }
 
-// APIGroupGTE applies the GTE predicate on the "api_group" field.
-func APIGroupGTE(v string) predicate.API {
-	return predicate.API(sql.FieldGTE(FieldAPIGroup, v))
+// GroupGTE applies the GTE predicate on the "group" field.
+func GroupGTE(v string) predicate.API {
+	return predicate.API(sql.FieldGTE(FieldGroup, v))
 }
 
-// APIGroupLT applies the LT predicate on the "api_group" field.
-func APIGroupLT(v string) predicate.API {
-	return predicate.API(sql.FieldLT(FieldAPIGroup, v))
+// GroupLT applies the LT predicate on the "group" field.
+func GroupLT(v string) predicate.API {
+	return predicate.API(sql.FieldLT(FieldGroup, v))
 }
 
-// APIGroupLTE applies the LTE predicate on the "api_group" field.
-func APIGroupLTE(v string) predicate.API {
-	return predicate.API(sql.FieldLTE(FieldAPIGroup, v))
+// GroupLTE applies the LTE predicate on the "group" field.
+func GroupLTE(v string) predicate.API {
+	return predicate.API(sql.FieldLTE(FieldGroup, v))
 }
 
-// APIGroupContains applies the Contains predicate on the "api_group" field.
-func APIGroupContains(v string) predicate.API {
-	return predicate.API(sql.FieldContains(FieldAPIGroup, v))
+// GroupContains applies the Contains predicate on the "group" field.
+func GroupContains(v string) predicate.API {
+	return predicate.API(sql.FieldContains(FieldGroup, v))
 }
 
-// APIGroupHasPrefix applies the HasPrefix predicate on the "api_group" field.
-func APIGroupHasPrefix(v string) predicate.API {
-	return predicate.API(sql.FieldHasPrefix(FieldAPIGroup, v))
+// GroupHasPrefix applies the HasPrefix predicate on the "group" field.
+func GroupHasPrefix(v string) predicate.API {
+	return predicate.API(sql.FieldHasPrefix(FieldGroup, v))
 }
 
-// APIGroupHasSuffix applies the HasSuffix predicate on the "api_group" field.
-func APIGroupHasSuffix(v string) predicate.API {
-	return predicate.API(sql.FieldHasSuffix(FieldAPIGroup, v))
+// GroupHasSuffix applies the HasSuffix predicate on the "group" field.
+func GroupHasSuffix(v string) predicate.API {
+	return predicate.API(sql.FieldHasSuffix(FieldGroup, v))
 }
 
-// APIGroupIsNil applies the IsNil predicate on the "api_group" field.
-func APIGroupIsNil() predicate.API {
-	return predicate.API(sql.FieldIsNull(FieldAPIGroup))
+// GroupIsNil applies the IsNil predicate on the "group" field.
+func GroupIsNil() predicate.API {
+	return predicate.API(sql.FieldIsNull(FieldGroup))
 }
 
-// APIGroupNotNil applies the NotNil predicate on the "api_group" field.
-func APIGroupNotNil() predicate.API {
-	return predicate.API(sql.FieldNotNull(FieldAPIGroup))
+// GroupNotNil applies the NotNil predicate on the "group" field.
+func GroupNotNil() predicate.API {
+	return predicate.API(sql.FieldNotNull(FieldGroup))
 }
 
-// APIGroupEqualFold applies the EqualFold predicate on the "api_group" field.
-func APIGroupEqualFold(v string) predicate.API {
-	return predicate.API(sql.FieldEqualFold(FieldAPIGroup, v))
+// GroupEqualFold applies the EqualFold predicate on the "group" field.
+func GroupEqualFold(v string) predicate.API {
+	return predicate.API(sql.FieldEqualFold(FieldGroup, v))
 }
 
-// APIGroupContainsFold applies the ContainsFold predicate on the "api_group" field.
-func APIGroupContainsFold(v string) predicate.API {
-	return predicate.API(sql.FieldContainsFold(FieldAPIGroup, v))
+// GroupContainsFold applies the ContainsFold predicate on the "group" field.
+func GroupContainsFold(v string) predicate.API {
+	return predicate.API(sql.FieldContainsFold(FieldGroup, v))
 }
 
 // MethodEQ applies the EQ predicate on the "method" field.
@@ -678,56 +673,6 @@ func MethodEqualFold(v string) predicate.API {
 // MethodContainsFold applies the ContainsFold predicate on the "method" field.
 func MethodContainsFold(v string) predicate.API {
 	return predicate.API(sql.FieldContainsFold(FieldMethod, v))
-}
-
-// DisabledEQ applies the EQ predicate on the "disabled" field.
-func DisabledEQ(v int64) predicate.API {
-	return predicate.API(sql.FieldEQ(FieldDisabled, v))
-}
-
-// DisabledNEQ applies the NEQ predicate on the "disabled" field.
-func DisabledNEQ(v int64) predicate.API {
-	return predicate.API(sql.FieldNEQ(FieldDisabled, v))
-}
-
-// DisabledIn applies the In predicate on the "disabled" field.
-func DisabledIn(vs ...int64) predicate.API {
-	return predicate.API(sql.FieldIn(FieldDisabled, vs...))
-}
-
-// DisabledNotIn applies the NotIn predicate on the "disabled" field.
-func DisabledNotIn(vs ...int64) predicate.API {
-	return predicate.API(sql.FieldNotIn(FieldDisabled, vs...))
-}
-
-// DisabledGT applies the GT predicate on the "disabled" field.
-func DisabledGT(v int64) predicate.API {
-	return predicate.API(sql.FieldGT(FieldDisabled, v))
-}
-
-// DisabledGTE applies the GTE predicate on the "disabled" field.
-func DisabledGTE(v int64) predicate.API {
-	return predicate.API(sql.FieldGTE(FieldDisabled, v))
-}
-
-// DisabledLT applies the LT predicate on the "disabled" field.
-func DisabledLT(v int64) predicate.API {
-	return predicate.API(sql.FieldLT(FieldDisabled, v))
-}
-
-// DisabledLTE applies the LTE predicate on the "disabled" field.
-func DisabledLTE(v int64) predicate.API {
-	return predicate.API(sql.FieldLTE(FieldDisabled, v))
-}
-
-// DisabledIsNil applies the IsNil predicate on the "disabled" field.
-func DisabledIsNil() predicate.API {
-	return predicate.API(sql.FieldIsNull(FieldDisabled))
-}
-
-// DisabledNotNil applies the NotNil predicate on the "disabled" field.
-func DisabledNotNil() predicate.API {
-	return predicate.API(sql.FieldNotNull(FieldDisabled))
 }
 
 // HasRoles applies the HasEdge predicate on the "roles" edge.

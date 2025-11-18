@@ -25,12 +25,12 @@ func (s *DictListService) Run(req *system.DictListReq) (resp *system.DictListRes
 		dataResp   []*Base.Dict
 	)
 
-	if req.GetName() != "" {
+	if req.GetKey() != "" {
 		predicates = append(predicates,
 			dict.Or(
-				dict.TitleContains(req.GetName()),
-				dict.NameContains(req.GetName()),
-				dict.DescContains(req.GetName()),
+				dict.TitleContains(req.GetKey()),
+				dict.CodeContains(req.GetKey()),
+				dict.DescContains(req.GetKey()),
 			),
 		)
 	}

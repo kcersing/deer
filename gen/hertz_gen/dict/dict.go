@@ -11,44 +11,32 @@ import (
 
 // 字典列表请求数据
 type DictListReq struct {
-	Title    string `thrift:"title,1,optional" form:"title" json:"title,omitempty" query:"title"`
-	Name     string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
+	Key      string `thrift:"key,1,optional" form:"key" json:"key,omitempty" query:"key"`
 	Page     int64  `thrift:"page,3,optional" form:"page" json:"page,omitempty" query:"page"`
 	PageSize int64  `thrift:"pageSize,4,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
 }
 
 func NewDictListReq() *DictListReq {
 	return &DictListReq{
-		Title:    "",
-		Name:     "",
+		Key:      "",
 		Page:     1,
 		PageSize: 100,
 	}
 }
 
 func (p *DictListReq) InitDefault() {
-	p.Title = ""
-	p.Name = ""
+	p.Key = ""
 	p.Page = 1
 	p.PageSize = 100
 }
 
-var DictListReq_Title_DEFAULT string = ""
+var DictListReq_Key_DEFAULT string = ""
 
-func (p *DictListReq) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return DictListReq_Title_DEFAULT
+func (p *DictListReq) GetKey() (v string) {
+	if !p.IsSetKey() {
+		return DictListReq_Key_DEFAULT
 	}
-	return p.Title
-}
-
-var DictListReq_Name_DEFAULT string = ""
-
-func (p *DictListReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return DictListReq_Name_DEFAULT
-	}
-	return p.Name
+	return p.Key
 }
 
 var DictListReq_Page_DEFAULT int64 = 1
@@ -70,18 +58,13 @@ func (p *DictListReq) GetPageSize() (v int64) {
 }
 
 var fieldIDToName_DictListReq = map[int16]string{
-	1: "title",
-	2: "name",
+	1: "key",
 	3: "page",
 	4: "pageSize",
 }
 
-func (p *DictListReq) IsSetTitle() bool {
-	return p.Title != DictListReq_Title_DEFAULT
-}
-
-func (p *DictListReq) IsSetName() bool {
-	return p.Name != DictListReq_Name_DEFAULT
+func (p *DictListReq) IsSetKey() bool {
+	return p.Key != DictListReq_Key_DEFAULT
 }
 
 func (p *DictListReq) IsSetPage() bool {
@@ -114,14 +97,6 @@ func (p *DictListReq) Read(iprot thrift.TProtocol) (err error) {
 		case 1:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField1(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -180,18 +155,7 @@ func (p *DictListReq) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Title = _field
-	return nil
-}
-func (p *DictListReq) ReadField2(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.Name = _field
+	p.Key = _field
 	return nil
 }
 func (p *DictListReq) ReadField3(iprot thrift.TProtocol) error {
@@ -227,10 +191,6 @@ func (p *DictListReq) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 1
 			goto WriteFieldError
 		}
-		if err = p.writeField2(oprot); err != nil {
-			fieldId = 2
-			goto WriteFieldError
-		}
 		if err = p.writeField3(oprot); err != nil {
 			fieldId = 3
 			goto WriteFieldError
@@ -258,11 +218,11 @@ WriteStructEndError:
 }
 
 func (p *DictListReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if p.IsSetTitle() {
-		if err = oprot.WriteFieldBegin("title", thrift.STRING, 1); err != nil {
+	if p.IsSetKey() {
+		if err = oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Title); err != nil {
+		if err := oprot.WriteString(p.Key); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -274,25 +234,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
-}
-
-func (p *DictListReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetName() {
-		if err = oprot.WriteFieldBegin("name", thrift.STRING, 2); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(p.Name); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
 }
 
 func (p *DictListReq) writeField3(oprot thrift.TProtocol) (err error) {
@@ -343,29 +284,29 @@ func (p *DictListReq) String() string {
 
 // 字典名获取字典键值请求数据
 type DicthtListReq struct {
-	Name   string `thrift:"name,1,optional" form:"name" json:"name,omitempty" query:"name"`
+	Key    string `thrift:"key,1,optional" form:"key" json:"key,omitempty" query:"key"`
 	DictId int64  `thrift:"dictId,2,optional" form:"dictId" json:"dictId,omitempty" query:"dictId"`
 }
 
 func NewDicthtListReq() *DicthtListReq {
 	return &DicthtListReq{
-		Name:   "",
+		Key:    "",
 		DictId: 0,
 	}
 }
 
 func (p *DicthtListReq) InitDefault() {
-	p.Name = ""
+	p.Key = ""
 	p.DictId = 0
 }
 
-var DicthtListReq_Name_DEFAULT string = ""
+var DicthtListReq_Key_DEFAULT string = ""
 
-func (p *DicthtListReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return DicthtListReq_Name_DEFAULT
+func (p *DicthtListReq) GetKey() (v string) {
+	if !p.IsSetKey() {
+		return DicthtListReq_Key_DEFAULT
 	}
-	return p.Name
+	return p.Key
 }
 
 var DicthtListReq_DictId_DEFAULT int64 = 0
@@ -378,12 +319,12 @@ func (p *DicthtListReq) GetDictId() (v int64) {
 }
 
 var fieldIDToName_DicthtListReq = map[int16]string{
-	1: "name",
+	1: "key",
 	2: "dictId",
 }
 
-func (p *DicthtListReq) IsSetName() bool {
-	return p.Name != DicthtListReq_Name_DEFAULT
+func (p *DicthtListReq) IsSetKey() bool {
+	return p.Key != DicthtListReq_Key_DEFAULT
 }
 
 func (p *DicthtListReq) IsSetDictId() bool {
@@ -462,7 +403,7 @@ func (p *DicthtListReq) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Name = _field
+	p.Key = _field
 	return nil
 }
 func (p *DicthtListReq) ReadField2(iprot thrift.TProtocol) error {
@@ -510,11 +451,11 @@ WriteStructEndError:
 }
 
 func (p *DicthtListReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if p.IsSetName() {
-		if err = oprot.WriteFieldBegin("name", thrift.STRING, 1); err != nil {
+	if p.IsSetKey() {
+		if err = oprot.WriteFieldBegin("key", thrift.STRING, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Name); err != nil {
+		if err := oprot.WriteString(p.Key); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {

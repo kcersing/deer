@@ -27,7 +27,7 @@ func CreateDict(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := client.SystemClient.CreateDict(ctx, &base1.Dict{
 		Title:  req.GetTitle(),
-		Name:   req.GetName(),
+		Code:   req.GetCode(),
 		Status: req.GetStatus(),
 		Desc:   req.GetDesc(),
 	})
@@ -54,7 +54,7 @@ func UpdateDict(ctx context.Context, c *app.RequestContext) {
 	resp, err := client.SystemClient.UpdateDict(ctx, &base1.Dict{
 		Id:     req.GetID(),
 		Title:  req.GetTitle(),
-		Name:   req.GetName(),
+		Code:   req.GetCode(),
 		Status: req.GetStatus(),
 		Desc:   req.GetDesc(),
 	})
@@ -100,8 +100,7 @@ func DictList(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.DictList(ctx, &system.DictListReq{
-		Title:    req.GetTitle(),
-		Name:     req.GetName(),
+		Key:      req.GetKey(),
 		Page:     req.GetPage(),
 		PageSize: req.GetPageSize(),
 	})
@@ -127,7 +126,6 @@ func CreateDictht(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
 		Title:  req.GetTitle(),
-		Key:    req.GetKey(),
 		Value:  req.GetValue(),
 		Status: req.GetStatus(),
 		DictId: req.GetDictId(),
@@ -155,7 +153,6 @@ func UpdateDictht(ctx context.Context, c *app.RequestContext) {
 	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
 		Id:     req.GetID(),
 		Title:  req.GetTitle(),
-		Key:    req.GetKey(),
 		Value:  req.GetValue(),
 		Status: req.GetStatus(),
 		DictId: req.GetDictId(),
@@ -202,7 +199,7 @@ func DicthtList(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.DicthtList(ctx, &system.DicthtListReq{
-		Name:   req.GetName(),
+		Key:    req.GetKey(),
 		DictId: req.GetDictId(),
 	})
 

@@ -22,7 +22,7 @@ func (r *Dict) GetDict(c context.Context, id string) (*base.Dict, error) {
 	p, err := r.RedisClient.Get(c, id).Result()
 	if err != nil {
 		if err == redis.Nil {
-			return nil, errno.RecordNotFound
+			return nil, errno.NotFound
 		}
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (r *Dict) SetDict(c context.Context, id string, p *base.Dict) error {
 	_, err := r.RedisClient.Get(c, id).Result()
 	if err != redis.Nil {
 		if err == nil {
-			return errno.RecordAlreadyExist
+			return errno.AlreadyExist
 		} else {
 			return err
 		}

@@ -131,29 +131,193 @@ var fieldIDToName_UserListResp = map[int16]string{
 }
 
 type CreateUserReq struct {
-	Username string `thrift:"username,1" frugal:"1,default,string" json:"username"`
-	Password string `thrift:"password,2" frugal:"2,default,string" json:"password"`
+	Username      string `thrift:"username,1" frugal:"1,default,string" json:"username"`
+	Avatar        string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile        string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name          string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status        int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender        int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday      string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
+	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
 }
 
 func NewCreateUserReq() *CreateUserReq {
-	return &CreateUserReq{}
+	return &CreateUserReq{
+		Avatar:        "",
+		Mobile:        "",
+		Name:          "",
+		Status:        0,
+		Gender:        0,
+		Birthday:      "",
+		Desc:          "",
+		DepartmentsId: 0,
+		PositionsId:   0,
+	}
 }
 
 func (p *CreateUserReq) InitDefault() {
+	p.Avatar = ""
+	p.Mobile = ""
+	p.Name = ""
+	p.Status = 0
+	p.Gender = 0
+	p.Birthday = ""
+	p.Desc = ""
+	p.DepartmentsId = 0
+	p.PositionsId = 0
 }
 
 func (p *CreateUserReq) GetUsername() (v string) {
 	return p.Username
 }
 
-func (p *CreateUserReq) GetPassword() (v string) {
-	return p.Password
+var CreateUserReq_Avatar_DEFAULT string = ""
+
+func (p *CreateUserReq) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return CreateUserReq_Avatar_DEFAULT
+	}
+	return p.Avatar
+}
+
+var CreateUserReq_Mobile_DEFAULT string = ""
+
+func (p *CreateUserReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return CreateUserReq_Mobile_DEFAULT
+	}
+	return p.Mobile
+}
+
+var CreateUserReq_Name_DEFAULT string = ""
+
+func (p *CreateUserReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateUserReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var CreateUserReq_Status_DEFAULT int64 = 0
+
+func (p *CreateUserReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateUserReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateUserReq_Gender_DEFAULT int64 = 0
+
+func (p *CreateUserReq) GetGender() (v int64) {
+	if !p.IsSetGender() {
+		return CreateUserReq_Gender_DEFAULT
+	}
+	return p.Gender
+}
+
+var CreateUserReq_Birthday_DEFAULT string = ""
+
+func (p *CreateUserReq) GetBirthday() (v string) {
+	if !p.IsSetBirthday() {
+		return CreateUserReq_Birthday_DEFAULT
+	}
+	return p.Birthday
+}
+
+var CreateUserReq_Desc_DEFAULT string = ""
+
+func (p *CreateUserReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreateUserReq_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var CreateUserReq_DepartmentsId_DEFAULT int64 = 0
+
+func (p *CreateUserReq) GetDepartmentsId() (v int64) {
+	if !p.IsSetDepartmentsId() {
+		return CreateUserReq_DepartmentsId_DEFAULT
+	}
+	return p.DepartmentsId
+}
+
+var CreateUserReq_PositionsId_DEFAULT int64 = 0
+
+func (p *CreateUserReq) GetPositionsId() (v int64) {
+	if !p.IsSetPositionsId() {
+		return CreateUserReq_PositionsId_DEFAULT
+	}
+	return p.PositionsId
 }
 func (p *CreateUserReq) SetUsername(val string) {
 	p.Username = val
 }
-func (p *CreateUserReq) SetPassword(val string) {
-	p.Password = val
+func (p *CreateUserReq) SetAvatar(val string) {
+	p.Avatar = val
+}
+func (p *CreateUserReq) SetMobile(val string) {
+	p.Mobile = val
+}
+func (p *CreateUserReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreateUserReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreateUserReq) SetGender(val int64) {
+	p.Gender = val
+}
+func (p *CreateUserReq) SetBirthday(val string) {
+	p.Birthday = val
+}
+func (p *CreateUserReq) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *CreateUserReq) SetDepartmentsId(val int64) {
+	p.DepartmentsId = val
+}
+func (p *CreateUserReq) SetPositionsId(val int64) {
+	p.PositionsId = val
+}
+
+func (p *CreateUserReq) IsSetAvatar() bool {
+	return p.Avatar != CreateUserReq_Avatar_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetMobile() bool {
+	return p.Mobile != CreateUserReq_Mobile_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetName() bool {
+	return p.Name != CreateUserReq_Name_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetStatus() bool {
+	return p.Status != CreateUserReq_Status_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetGender() bool {
+	return p.Gender != CreateUserReq_Gender_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetBirthday() bool {
+	return p.Birthday != CreateUserReq_Birthday_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetDesc() bool {
+	return p.Desc != CreateUserReq_Desc_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetDepartmentsId() bool {
+	return p.DepartmentsId != CreateUserReq_DepartmentsId_DEFAULT
+}
+
+func (p *CreateUserReq) IsSetPositionsId() bool {
+	return p.PositionsId != CreateUserReq_PositionsId_DEFAULT
 }
 
 func (p *CreateUserReq) String() string {
@@ -164,8 +328,16 @@ func (p *CreateUserReq) String() string {
 }
 
 var fieldIDToName_CreateUserReq = map[int16]string{
-	1: "username",
-	2: "password",
+	1:  "username",
+	2:  "avatar",
+	3:  "mobile",
+	4:  "name",
+	5:  "status",
+	6:  "gender",
+	7:  "birthday",
+	8:  "desc",
+	9:  "departmentsId",
+	10: "positionsId",
 }
 
 type GetUserListReq struct {
@@ -290,28 +462,30 @@ var fieldIDToName_GetUserListReq = map[int16]string{
 }
 
 type UpdateUserReq struct {
-	Id       int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Avatar   string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
-	Mobile   string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Name     string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	Status   int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
-	Gender   int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
-	Birthday string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
-	Detail   string `thrift:"detail,8,optional" frugal:"8,optional,string" json:"detail,omitempty"`
-	RoleId   int64  `thrift:"roleId,9,optional" frugal:"9,optional,i64" json:"roleId,omitempty"`
+	Id            int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar        string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile        string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name          string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status        int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender        int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday      string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
+	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
 	return &UpdateUserReq{
-		Id:       0,
-		Avatar:   "",
-		Mobile:   "",
-		Name:     "",
-		Status:   0,
-		Gender:   0,
-		Birthday: "",
-		Detail:   "",
-		RoleId:   0,
+		Id:            0,
+		Avatar:        "",
+		Mobile:        "",
+		Name:          "",
+		Status:        0,
+		Gender:        0,
+		Birthday:      "",
+		Desc:          "",
+		DepartmentsId: 0,
+		PositionsId:   0,
 	}
 }
 
@@ -323,8 +497,9 @@ func (p *UpdateUserReq) InitDefault() {
 	p.Status = 0
 	p.Gender = 0
 	p.Birthday = ""
-	p.Detail = ""
-	p.RoleId = 0
+	p.Desc = ""
+	p.DepartmentsId = 0
+	p.PositionsId = 0
 }
 
 var UpdateUserReq_Id_DEFAULT int64 = 0
@@ -390,22 +565,31 @@ func (p *UpdateUserReq) GetBirthday() (v string) {
 	return p.Birthday
 }
 
-var UpdateUserReq_Detail_DEFAULT string = ""
+var UpdateUserReq_Desc_DEFAULT string = ""
 
-func (p *UpdateUserReq) GetDetail() (v string) {
-	if !p.IsSetDetail() {
-		return UpdateUserReq_Detail_DEFAULT
+func (p *UpdateUserReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateUserReq_Desc_DEFAULT
 	}
-	return p.Detail
+	return p.Desc
 }
 
-var UpdateUserReq_RoleId_DEFAULT int64 = 0
+var UpdateUserReq_DepartmentsId_DEFAULT int64 = 0
 
-func (p *UpdateUserReq) GetRoleId() (v int64) {
-	if !p.IsSetRoleId() {
-		return UpdateUserReq_RoleId_DEFAULT
+func (p *UpdateUserReq) GetDepartmentsId() (v int64) {
+	if !p.IsSetDepartmentsId() {
+		return UpdateUserReq_DepartmentsId_DEFAULT
 	}
-	return p.RoleId
+	return p.DepartmentsId
+}
+
+var UpdateUserReq_PositionsId_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetPositionsId() (v int64) {
+	if !p.IsSetPositionsId() {
+		return UpdateUserReq_PositionsId_DEFAULT
+	}
+	return p.PositionsId
 }
 func (p *UpdateUserReq) SetId(val int64) {
 	p.Id = val
@@ -428,11 +612,14 @@ func (p *UpdateUserReq) SetGender(val int64) {
 func (p *UpdateUserReq) SetBirthday(val string) {
 	p.Birthday = val
 }
-func (p *UpdateUserReq) SetDetail(val string) {
-	p.Detail = val
+func (p *UpdateUserReq) SetDesc(val string) {
+	p.Desc = val
 }
-func (p *UpdateUserReq) SetRoleId(val int64) {
-	p.RoleId = val
+func (p *UpdateUserReq) SetDepartmentsId(val int64) {
+	p.DepartmentsId = val
+}
+func (p *UpdateUserReq) SetPositionsId(val int64) {
+	p.PositionsId = val
 }
 
 func (p *UpdateUserReq) IsSetId() bool {
@@ -463,12 +650,16 @@ func (p *UpdateUserReq) IsSetBirthday() bool {
 	return p.Birthday != UpdateUserReq_Birthday_DEFAULT
 }
 
-func (p *UpdateUserReq) IsSetDetail() bool {
-	return p.Detail != UpdateUserReq_Detail_DEFAULT
+func (p *UpdateUserReq) IsSetDesc() bool {
+	return p.Desc != UpdateUserReq_Desc_DEFAULT
 }
 
-func (p *UpdateUserReq) IsSetRoleId() bool {
-	return p.RoleId != UpdateUserReq_RoleId_DEFAULT
+func (p *UpdateUserReq) IsSetDepartmentsId() bool {
+	return p.DepartmentsId != UpdateUserReq_DepartmentsId_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetPositionsId() bool {
+	return p.PositionsId != UpdateUserReq_PositionsId_DEFAULT
 }
 
 func (p *UpdateUserReq) String() string {
@@ -479,15 +670,16 @@ func (p *UpdateUserReq) String() string {
 }
 
 var fieldIDToName_UpdateUserReq = map[int16]string{
-	1: "id",
-	2: "avatar",
-	3: "mobile",
-	4: "name",
-	5: "status",
-	6: "gender",
-	7: "birthday",
-	8: "detail",
-	9: "roleId",
+	1:  "id",
+	2:  "avatar",
+	3:  "mobile",
+	4:  "name",
+	5:  "status",
+	6:  "gender",
+	7:  "birthday",
+	8:  "desc",
+	9:  "departmentsId",
+	10: "positionsId",
 }
 
 type ChangePasswordReq struct {
@@ -612,6 +804,1016 @@ var fieldIDToName_SetUserRoleReq = map[int16]string{
 	2: "roleId",
 }
 
+type DepartmentsResp struct {
+	Data     *base.Departments `thrift:"data,1,optional" frugal:"1,optional,base.Departments" json:"data,omitempty"`
+	BaseResp *base.BaseResp    `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewDepartmentsResp() *DepartmentsResp {
+	return &DepartmentsResp{
+		Data:     &base.Departments{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *DepartmentsResp) InitDefault() {
+	p.Data = &base.Departments{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var DepartmentsResp_Data_DEFAULT *base.Departments = &base.Departments{}
+
+func (p *DepartmentsResp) GetData() (v *base.Departments) {
+	if !p.IsSetData() {
+		return DepartmentsResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var DepartmentsResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *DepartmentsResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return DepartmentsResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *DepartmentsResp) SetData(val *base.Departments) {
+	p.Data = val
+}
+func (p *DepartmentsResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *DepartmentsResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *DepartmentsResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *DepartmentsResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DepartmentsResp(%+v)", *p)
+}
+
+var fieldIDToName_DepartmentsResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type DepartmentsListResp struct {
+	Data     []*base.Departments `thrift:"data,1,optional" frugal:"1,optional,list<base.Departments>" json:"data,omitempty"`
+	BaseResp *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewDepartmentsListResp() *DepartmentsListResp {
+	return &DepartmentsListResp{
+		Data:     []*base.Departments{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *DepartmentsListResp) InitDefault() {
+	p.Data = []*base.Departments{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var DepartmentsListResp_Data_DEFAULT []*base.Departments = []*base.Departments{}
+
+func (p *DepartmentsListResp) GetData() (v []*base.Departments) {
+	if !p.IsSetData() {
+		return DepartmentsListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var DepartmentsListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *DepartmentsListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return DepartmentsListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *DepartmentsListResp) SetData(val []*base.Departments) {
+	p.Data = val
+}
+func (p *DepartmentsListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *DepartmentsListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *DepartmentsListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *DepartmentsListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DepartmentsListResp(%+v)", *p)
+}
+
+var fieldIDToName_DepartmentsListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type CreateDepartmentsReq struct {
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ManagerId string `thrift:"managerId,3,optional" frugal:"3,optional,string" json:"managerId,omitempty"`
+	ParentId  string `thrift:"parentId,4,optional" frugal:"4,optional,string" json:"parentId,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+}
+
+func NewCreateDepartmentsReq() *CreateDepartmentsReq {
+	return &CreateDepartmentsReq{
+		Name:      "",
+		ManagerId: "",
+		ParentId:  "",
+		Desc:      "",
+		Status:    0,
+	}
+}
+
+func (p *CreateDepartmentsReq) InitDefault() {
+	p.Name = ""
+	p.ManagerId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+}
+
+var CreateDepartmentsReq_Name_DEFAULT string = ""
+
+func (p *CreateDepartmentsReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateDepartmentsReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var CreateDepartmentsReq_ManagerId_DEFAULT string = ""
+
+func (p *CreateDepartmentsReq) GetManagerId() (v string) {
+	if !p.IsSetManagerId() {
+		return CreateDepartmentsReq_ManagerId_DEFAULT
+	}
+	return p.ManagerId
+}
+
+var CreateDepartmentsReq_ParentId_DEFAULT string = ""
+
+func (p *CreateDepartmentsReq) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return CreateDepartmentsReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var CreateDepartmentsReq_Desc_DEFAULT string = ""
+
+func (p *CreateDepartmentsReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreateDepartmentsReq_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var CreateDepartmentsReq_Status_DEFAULT int64 = 0
+
+func (p *CreateDepartmentsReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateDepartmentsReq_Status_DEFAULT
+	}
+	return p.Status
+}
+func (p *CreateDepartmentsReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreateDepartmentsReq) SetManagerId(val string) {
+	p.ManagerId = val
+}
+func (p *CreateDepartmentsReq) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *CreateDepartmentsReq) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *CreateDepartmentsReq) SetStatus(val int64) {
+	p.Status = val
+}
+
+func (p *CreateDepartmentsReq) IsSetName() bool {
+	return p.Name != CreateDepartmentsReq_Name_DEFAULT
+}
+
+func (p *CreateDepartmentsReq) IsSetManagerId() bool {
+	return p.ManagerId != CreateDepartmentsReq_ManagerId_DEFAULT
+}
+
+func (p *CreateDepartmentsReq) IsSetParentId() bool {
+	return p.ParentId != CreateDepartmentsReq_ParentId_DEFAULT
+}
+
+func (p *CreateDepartmentsReq) IsSetDesc() bool {
+	return p.Desc != CreateDepartmentsReq_Desc_DEFAULT
+}
+
+func (p *CreateDepartmentsReq) IsSetStatus() bool {
+	return p.Status != CreateDepartmentsReq_Status_DEFAULT
+}
+
+func (p *CreateDepartmentsReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateDepartmentsReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateDepartmentsReq = map[int16]string{
+	2: "name",
+	3: "managerId",
+	4: "parentId",
+	5: "desc",
+	7: "status",
+}
+
+type UpdateDepartmentsReq struct {
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ManagerId string `thrift:"managerId,3,optional" frugal:"3,optional,string" json:"managerId,omitempty"`
+	ParentId  string `thrift:"parentId,4,optional" frugal:"4,optional,string" json:"parentId,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+}
+
+func NewUpdateDepartmentsReq() *UpdateDepartmentsReq {
+	return &UpdateDepartmentsReq{
+		Id:        0,
+		Name:      "",
+		ManagerId: "",
+		ParentId:  "",
+		Desc:      "",
+		Status:    0,
+	}
+}
+
+func (p *UpdateDepartmentsReq) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.ManagerId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+}
+
+var UpdateDepartmentsReq_Id_DEFAULT int64 = 0
+
+func (p *UpdateDepartmentsReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateDepartmentsReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var UpdateDepartmentsReq_Name_DEFAULT string = ""
+
+func (p *UpdateDepartmentsReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdateDepartmentsReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var UpdateDepartmentsReq_ManagerId_DEFAULT string = ""
+
+func (p *UpdateDepartmentsReq) GetManagerId() (v string) {
+	if !p.IsSetManagerId() {
+		return UpdateDepartmentsReq_ManagerId_DEFAULT
+	}
+	return p.ManagerId
+}
+
+var UpdateDepartmentsReq_ParentId_DEFAULT string = ""
+
+func (p *UpdateDepartmentsReq) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return UpdateDepartmentsReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var UpdateDepartmentsReq_Desc_DEFAULT string = ""
+
+func (p *UpdateDepartmentsReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateDepartmentsReq_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var UpdateDepartmentsReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateDepartmentsReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateDepartmentsReq_Status_DEFAULT
+	}
+	return p.Status
+}
+func (p *UpdateDepartmentsReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *UpdateDepartmentsReq) SetName(val string) {
+	p.Name = val
+}
+func (p *UpdateDepartmentsReq) SetManagerId(val string) {
+	p.ManagerId = val
+}
+func (p *UpdateDepartmentsReq) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *UpdateDepartmentsReq) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *UpdateDepartmentsReq) SetStatus(val int64) {
+	p.Status = val
+}
+
+func (p *UpdateDepartmentsReq) IsSetId() bool {
+	return p.Id != UpdateDepartmentsReq_Id_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) IsSetName() bool {
+	return p.Name != UpdateDepartmentsReq_Name_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) IsSetManagerId() bool {
+	return p.ManagerId != UpdateDepartmentsReq_ManagerId_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) IsSetParentId() bool {
+	return p.ParentId != UpdateDepartmentsReq_ParentId_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) IsSetDesc() bool {
+	return p.Desc != UpdateDepartmentsReq_Desc_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) IsSetStatus() bool {
+	return p.Status != UpdateDepartmentsReq_Status_DEFAULT
+}
+
+func (p *UpdateDepartmentsReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateDepartmentsReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateDepartmentsReq = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "managerId",
+	4: "parentId",
+	5: "desc",
+	7: "status",
+}
+
+type GetDepartmentsListReq struct {
+	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+}
+
+func NewGetDepartmentsListReq() *GetDepartmentsListReq {
+	return &GetDepartmentsListReq{
+		Page:     1,
+		PageSize: 10,
+		Keyword:  "",
+	}
+}
+
+func (p *GetDepartmentsListReq) InitDefault() {
+	p.Page = 1
+	p.PageSize = 10
+	p.Keyword = ""
+}
+
+var GetDepartmentsListReq_Page_DEFAULT int64 = 1
+
+func (p *GetDepartmentsListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return GetDepartmentsListReq_Page_DEFAULT
+	}
+	return p.Page
+}
+
+var GetDepartmentsListReq_PageSize_DEFAULT int64 = 10
+
+func (p *GetDepartmentsListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return GetDepartmentsListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
+}
+
+var GetDepartmentsListReq_Keyword_DEFAULT string = ""
+
+func (p *GetDepartmentsListReq) GetKeyword() (v string) {
+	if !p.IsSetKeyword() {
+		return GetDepartmentsListReq_Keyword_DEFAULT
+	}
+	return p.Keyword
+}
+func (p *GetDepartmentsListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *GetDepartmentsListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *GetDepartmentsListReq) SetKeyword(val string) {
+	p.Keyword = val
+}
+
+func (p *GetDepartmentsListReq) IsSetPage() bool {
+	return p.Page != GetDepartmentsListReq_Page_DEFAULT
+}
+
+func (p *GetDepartmentsListReq) IsSetPageSize() bool {
+	return p.PageSize != GetDepartmentsListReq_PageSize_DEFAULT
+}
+
+func (p *GetDepartmentsListReq) IsSetKeyword() bool {
+	return p.Keyword != GetDepartmentsListReq_Keyword_DEFAULT
+}
+
+func (p *GetDepartmentsListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetDepartmentsListReq(%+v)", *p)
+}
+
+var fieldIDToName_GetDepartmentsListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+	3: "keyword",
+}
+
+type CreatePositionsReq struct {
+	Name         string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code         string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	DepartmentId string `thrift:"departmentId,4,optional" frugal:"4,optional,string" json:"departmentId,omitempty"`
+	ParentId     string `thrift:"parentId,5,optional" frugal:"5,optional,string" json:"parentId,omitempty"`
+	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
+	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
+}
+
+func NewCreatePositionsReq() *CreatePositionsReq {
+	return &CreatePositionsReq{
+		Name:         "",
+		Code:         "",
+		DepartmentId: "",
+		ParentId:     "",
+		Desc:         "",
+		Status:       0,
+		Quota:        0,
+	}
+}
+
+func (p *CreatePositionsReq) InitDefault() {
+	p.Name = ""
+	p.Code = ""
+	p.DepartmentId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+	p.Quota = 0
+}
+
+var CreatePositionsReq_Name_DEFAULT string = ""
+
+func (p *CreatePositionsReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreatePositionsReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var CreatePositionsReq_Code_DEFAULT string = ""
+
+func (p *CreatePositionsReq) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return CreatePositionsReq_Code_DEFAULT
+	}
+	return p.Code
+}
+
+var CreatePositionsReq_DepartmentId_DEFAULT string = ""
+
+func (p *CreatePositionsReq) GetDepartmentId() (v string) {
+	if !p.IsSetDepartmentId() {
+		return CreatePositionsReq_DepartmentId_DEFAULT
+	}
+	return p.DepartmentId
+}
+
+var CreatePositionsReq_ParentId_DEFAULT string = ""
+
+func (p *CreatePositionsReq) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return CreatePositionsReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var CreatePositionsReq_Desc_DEFAULT string = ""
+
+func (p *CreatePositionsReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreatePositionsReq_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var CreatePositionsReq_Status_DEFAULT int64 = 0
+
+func (p *CreatePositionsReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreatePositionsReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreatePositionsReq_Quota_DEFAULT int64 = 0
+
+func (p *CreatePositionsReq) GetQuota() (v int64) {
+	if !p.IsSetQuota() {
+		return CreatePositionsReq_Quota_DEFAULT
+	}
+	return p.Quota
+}
+func (p *CreatePositionsReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreatePositionsReq) SetCode(val string) {
+	p.Code = val
+}
+func (p *CreatePositionsReq) SetDepartmentId(val string) {
+	p.DepartmentId = val
+}
+func (p *CreatePositionsReq) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *CreatePositionsReq) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *CreatePositionsReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreatePositionsReq) SetQuota(val int64) {
+	p.Quota = val
+}
+
+func (p *CreatePositionsReq) IsSetName() bool {
+	return p.Name != CreatePositionsReq_Name_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetCode() bool {
+	return p.Code != CreatePositionsReq_Code_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetDepartmentId() bool {
+	return p.DepartmentId != CreatePositionsReq_DepartmentId_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetParentId() bool {
+	return p.ParentId != CreatePositionsReq_ParentId_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetDesc() bool {
+	return p.Desc != CreatePositionsReq_Desc_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetStatus() bool {
+	return p.Status != CreatePositionsReq_Status_DEFAULT
+}
+
+func (p *CreatePositionsReq) IsSetQuota() bool {
+	return p.Quota != CreatePositionsReq_Quota_DEFAULT
+}
+
+func (p *CreatePositionsReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreatePositionsReq(%+v)", *p)
+}
+
+var fieldIDToName_CreatePositionsReq = map[int16]string{
+	2: "name",
+	3: "code",
+	4: "departmentId",
+	5: "parentId",
+	6: "desc",
+	7: "status",
+	9: "quota",
+}
+
+type UpdatePositionsReq struct {
+	Id           int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name         string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code         string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	DepartmentId string `thrift:"departmentId,4,optional" frugal:"4,optional,string" json:"departmentId,omitempty"`
+	ParentId     string `thrift:"parentId,5,optional" frugal:"5,optional,string" json:"parentId,omitempty"`
+	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
+	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
+}
+
+func NewUpdatePositionsReq() *UpdatePositionsReq {
+	return &UpdatePositionsReq{
+		Id:           0,
+		Name:         "",
+		Code:         "",
+		DepartmentId: "",
+		ParentId:     "",
+		Desc:         "",
+		Status:       0,
+		Quota:        0,
+	}
+}
+
+func (p *UpdatePositionsReq) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.Code = ""
+	p.DepartmentId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+	p.Quota = 0
+}
+
+var UpdatePositionsReq_Id_DEFAULT int64 = 0
+
+func (p *UpdatePositionsReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdatePositionsReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var UpdatePositionsReq_Name_DEFAULT string = ""
+
+func (p *UpdatePositionsReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdatePositionsReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var UpdatePositionsReq_Code_DEFAULT string = ""
+
+func (p *UpdatePositionsReq) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return UpdatePositionsReq_Code_DEFAULT
+	}
+	return p.Code
+}
+
+var UpdatePositionsReq_DepartmentId_DEFAULT string = ""
+
+func (p *UpdatePositionsReq) GetDepartmentId() (v string) {
+	if !p.IsSetDepartmentId() {
+		return UpdatePositionsReq_DepartmentId_DEFAULT
+	}
+	return p.DepartmentId
+}
+
+var UpdatePositionsReq_ParentId_DEFAULT string = ""
+
+func (p *UpdatePositionsReq) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return UpdatePositionsReq_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var UpdatePositionsReq_Desc_DEFAULT string = ""
+
+func (p *UpdatePositionsReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdatePositionsReq_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var UpdatePositionsReq_Status_DEFAULT int64 = 0
+
+func (p *UpdatePositionsReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdatePositionsReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var UpdatePositionsReq_Quota_DEFAULT int64 = 0
+
+func (p *UpdatePositionsReq) GetQuota() (v int64) {
+	if !p.IsSetQuota() {
+		return UpdatePositionsReq_Quota_DEFAULT
+	}
+	return p.Quota
+}
+func (p *UpdatePositionsReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *UpdatePositionsReq) SetName(val string) {
+	p.Name = val
+}
+func (p *UpdatePositionsReq) SetCode(val string) {
+	p.Code = val
+}
+func (p *UpdatePositionsReq) SetDepartmentId(val string) {
+	p.DepartmentId = val
+}
+func (p *UpdatePositionsReq) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *UpdatePositionsReq) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *UpdatePositionsReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *UpdatePositionsReq) SetQuota(val int64) {
+	p.Quota = val
+}
+
+func (p *UpdatePositionsReq) IsSetId() bool {
+	return p.Id != UpdatePositionsReq_Id_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetName() bool {
+	return p.Name != UpdatePositionsReq_Name_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetCode() bool {
+	return p.Code != UpdatePositionsReq_Code_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetDepartmentId() bool {
+	return p.DepartmentId != UpdatePositionsReq_DepartmentId_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetParentId() bool {
+	return p.ParentId != UpdatePositionsReq_ParentId_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetDesc() bool {
+	return p.Desc != UpdatePositionsReq_Desc_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetStatus() bool {
+	return p.Status != UpdatePositionsReq_Status_DEFAULT
+}
+
+func (p *UpdatePositionsReq) IsSetQuota() bool {
+	return p.Quota != UpdatePositionsReq_Quota_DEFAULT
+}
+
+func (p *UpdatePositionsReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdatePositionsReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdatePositionsReq = map[int16]string{
+	1: "id",
+	2: "name",
+	3: "code",
+	4: "departmentId",
+	5: "parentId",
+	6: "desc",
+	7: "status",
+	9: "quota",
+}
+
+type GetPositionsListReq struct {
+	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+}
+
+func NewGetPositionsListReq() *GetPositionsListReq {
+	return &GetPositionsListReq{
+		Page:     1,
+		PageSize: 10,
+		Keyword:  "",
+	}
+}
+
+func (p *GetPositionsListReq) InitDefault() {
+	p.Page = 1
+	p.PageSize = 10
+	p.Keyword = ""
+}
+
+var GetPositionsListReq_Page_DEFAULT int64 = 1
+
+func (p *GetPositionsListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return GetPositionsListReq_Page_DEFAULT
+	}
+	return p.Page
+}
+
+var GetPositionsListReq_PageSize_DEFAULT int64 = 10
+
+func (p *GetPositionsListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return GetPositionsListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
+}
+
+var GetPositionsListReq_Keyword_DEFAULT string = ""
+
+func (p *GetPositionsListReq) GetKeyword() (v string) {
+	if !p.IsSetKeyword() {
+		return GetPositionsListReq_Keyword_DEFAULT
+	}
+	return p.Keyword
+}
+func (p *GetPositionsListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *GetPositionsListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *GetPositionsListReq) SetKeyword(val string) {
+	p.Keyword = val
+}
+
+func (p *GetPositionsListReq) IsSetPage() bool {
+	return p.Page != GetPositionsListReq_Page_DEFAULT
+}
+
+func (p *GetPositionsListReq) IsSetPageSize() bool {
+	return p.PageSize != GetPositionsListReq_PageSize_DEFAULT
+}
+
+func (p *GetPositionsListReq) IsSetKeyword() bool {
+	return p.Keyword != GetPositionsListReq_Keyword_DEFAULT
+}
+
+func (p *GetPositionsListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetPositionsListReq(%+v)", *p)
+}
+
+var fieldIDToName_GetPositionsListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+	3: "keyword",
+}
+
+type PositionsResp struct {
+	Data     *base.Positions `thrift:"data,1,optional" frugal:"1,optional,base.Positions" json:"data,omitempty"`
+	BaseResp *base.BaseResp  `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewPositionsResp() *PositionsResp {
+	return &PositionsResp{
+		Data:     &base.Positions{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *PositionsResp) InitDefault() {
+	p.Data = &base.Positions{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var PositionsResp_Data_DEFAULT *base.Positions = &base.Positions{}
+
+func (p *PositionsResp) GetData() (v *base.Positions) {
+	if !p.IsSetData() {
+		return PositionsResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var PositionsResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *PositionsResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return PositionsResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *PositionsResp) SetData(val *base.Positions) {
+	p.Data = val
+}
+func (p *PositionsResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *PositionsResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *PositionsResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *PositionsResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PositionsResp(%+v)", *p)
+}
+
+var fieldIDToName_PositionsResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type PositionsListResp struct {
+	Data     []*base.Positions `thrift:"data,1,optional" frugal:"1,optional,list<base.Positions>" json:"data,omitempty"`
+	BaseResp *base.BaseResp    `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewPositionsListResp() *PositionsListResp {
+	return &PositionsListResp{
+		Data:     []*base.Positions{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *PositionsListResp) InitDefault() {
+	p.Data = []*base.Positions{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var PositionsListResp_Data_DEFAULT []*base.Positions = []*base.Positions{}
+
+func (p *PositionsListResp) GetData() (v []*base.Positions) {
+	if !p.IsSetData() {
+		return PositionsListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var PositionsListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *PositionsListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return PositionsListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *PositionsListResp) SetData(val []*base.Positions) {
+	p.Data = val
+}
+func (p *PositionsListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *PositionsListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *PositionsListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *PositionsListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("PositionsListResp(%+v)", *p)
+}
+
+var fieldIDToName_PositionsListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
 type UserService interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (r *UserResp, err error)
 
@@ -628,6 +1830,26 @@ type UserService interface {
 	DeleteUser(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
 	SetUserRole(ctx context.Context, req *SetUserRoleReq) (r *base.NilResponse, err error)
+
+	CreateDepartments(ctx context.Context, req *CreateDepartmentsReq) (r *DepartmentsResp, err error)
+
+	DeleteDepartments(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	UpdateDepartments(ctx context.Context, req *UpdateDepartmentsReq) (r *DepartmentsResp, err error)
+
+	GetDepartments(ctx context.Context, req *base.IdReq) (r *DepartmentsResp, err error)
+
+	GetDepartmentsList(ctx context.Context, req *GetDepartmentsListReq) (r *DepartmentsListResp, err error)
+
+	CreatePositions(ctx context.Context, req *CreatePositionsReq) (r *PositionsResp, err error)
+
+	DeletePositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	UpdatePositions(ctx context.Context, req *UpdatePositionsReq) (r *PositionsResp, err error)
+
+	GetPositions(ctx context.Context, req *base.IdReq) (r *PositionsResp, err error)
+
+	GetPositionsList(ctx context.Context, req *GetPositionsListReq) (r *PositionsListResp, err error)
 }
 
 type UserServiceCreateUserArgs struct {
@@ -1235,5 +2457,765 @@ func (p *UserServiceSetUserRoleResult) String() string {
 }
 
 var fieldIDToName_UserServiceSetUserRoleResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceCreateDepartmentsArgs struct {
+	Req *CreateDepartmentsReq `thrift:"req,1" frugal:"1,default,CreateDepartmentsReq" json:"req"`
+}
+
+func NewUserServiceCreateDepartmentsArgs() *UserServiceCreateDepartmentsArgs {
+	return &UserServiceCreateDepartmentsArgs{}
+}
+
+func (p *UserServiceCreateDepartmentsArgs) InitDefault() {
+}
+
+var UserServiceCreateDepartmentsArgs_Req_DEFAULT *CreateDepartmentsReq
+
+func (p *UserServiceCreateDepartmentsArgs) GetReq() (v *CreateDepartmentsReq) {
+	if !p.IsSetReq() {
+		return UserServiceCreateDepartmentsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceCreateDepartmentsArgs) SetReq(val *CreateDepartmentsReq) {
+	p.Req = val
+}
+
+func (p *UserServiceCreateDepartmentsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceCreateDepartmentsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceCreateDepartmentsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceCreateDepartmentsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceCreateDepartmentsResult struct {
+	Success *DepartmentsResp `thrift:"success,0,optional" frugal:"0,optional,DepartmentsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceCreateDepartmentsResult() *UserServiceCreateDepartmentsResult {
+	return &UserServiceCreateDepartmentsResult{}
+}
+
+func (p *UserServiceCreateDepartmentsResult) InitDefault() {
+}
+
+var UserServiceCreateDepartmentsResult_Success_DEFAULT *DepartmentsResp
+
+func (p *UserServiceCreateDepartmentsResult) GetSuccess() (v *DepartmentsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceCreateDepartmentsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceCreateDepartmentsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DepartmentsResp)
+}
+
+func (p *UserServiceCreateDepartmentsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceCreateDepartmentsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceCreateDepartmentsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceCreateDepartmentsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceDeleteDepartmentsArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewUserServiceDeleteDepartmentsArgs() *UserServiceDeleteDepartmentsArgs {
+	return &UserServiceDeleteDepartmentsArgs{}
+}
+
+func (p *UserServiceDeleteDepartmentsArgs) InitDefault() {
+}
+
+var UserServiceDeleteDepartmentsArgs_Req_DEFAULT *base.IdReq
+
+func (p *UserServiceDeleteDepartmentsArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return UserServiceDeleteDepartmentsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceDeleteDepartmentsArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *UserServiceDeleteDepartmentsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceDeleteDepartmentsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeleteDepartmentsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeleteDepartmentsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceDeleteDepartmentsResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewUserServiceDeleteDepartmentsResult() *UserServiceDeleteDepartmentsResult {
+	return &UserServiceDeleteDepartmentsResult{}
+}
+
+func (p *UserServiceDeleteDepartmentsResult) InitDefault() {
+}
+
+var UserServiceDeleteDepartmentsResult_Success_DEFAULT *base.NilResponse
+
+func (p *UserServiceDeleteDepartmentsResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return UserServiceDeleteDepartmentsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceDeleteDepartmentsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *UserServiceDeleteDepartmentsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceDeleteDepartmentsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeleteDepartmentsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeleteDepartmentsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceUpdateDepartmentsArgs struct {
+	Req *UpdateDepartmentsReq `thrift:"req,1" frugal:"1,default,UpdateDepartmentsReq" json:"req"`
+}
+
+func NewUserServiceUpdateDepartmentsArgs() *UserServiceUpdateDepartmentsArgs {
+	return &UserServiceUpdateDepartmentsArgs{}
+}
+
+func (p *UserServiceUpdateDepartmentsArgs) InitDefault() {
+}
+
+var UserServiceUpdateDepartmentsArgs_Req_DEFAULT *UpdateDepartmentsReq
+
+func (p *UserServiceUpdateDepartmentsArgs) GetReq() (v *UpdateDepartmentsReq) {
+	if !p.IsSetReq() {
+		return UserServiceUpdateDepartmentsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceUpdateDepartmentsArgs) SetReq(val *UpdateDepartmentsReq) {
+	p.Req = val
+}
+
+func (p *UserServiceUpdateDepartmentsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceUpdateDepartmentsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdateDepartmentsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdateDepartmentsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceUpdateDepartmentsResult struct {
+	Success *DepartmentsResp `thrift:"success,0,optional" frugal:"0,optional,DepartmentsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceUpdateDepartmentsResult() *UserServiceUpdateDepartmentsResult {
+	return &UserServiceUpdateDepartmentsResult{}
+}
+
+func (p *UserServiceUpdateDepartmentsResult) InitDefault() {
+}
+
+var UserServiceUpdateDepartmentsResult_Success_DEFAULT *DepartmentsResp
+
+func (p *UserServiceUpdateDepartmentsResult) GetSuccess() (v *DepartmentsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceUpdateDepartmentsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceUpdateDepartmentsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DepartmentsResp)
+}
+
+func (p *UserServiceUpdateDepartmentsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceUpdateDepartmentsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdateDepartmentsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdateDepartmentsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceGetDepartmentsArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewUserServiceGetDepartmentsArgs() *UserServiceGetDepartmentsArgs {
+	return &UserServiceGetDepartmentsArgs{}
+}
+
+func (p *UserServiceGetDepartmentsArgs) InitDefault() {
+}
+
+var UserServiceGetDepartmentsArgs_Req_DEFAULT *base.IdReq
+
+func (p *UserServiceGetDepartmentsArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return UserServiceGetDepartmentsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceGetDepartmentsArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *UserServiceGetDepartmentsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceGetDepartmentsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetDepartmentsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetDepartmentsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceGetDepartmentsResult struct {
+	Success *DepartmentsResp `thrift:"success,0,optional" frugal:"0,optional,DepartmentsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceGetDepartmentsResult() *UserServiceGetDepartmentsResult {
+	return &UserServiceGetDepartmentsResult{}
+}
+
+func (p *UserServiceGetDepartmentsResult) InitDefault() {
+}
+
+var UserServiceGetDepartmentsResult_Success_DEFAULT *DepartmentsResp
+
+func (p *UserServiceGetDepartmentsResult) GetSuccess() (v *DepartmentsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceGetDepartmentsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceGetDepartmentsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DepartmentsResp)
+}
+
+func (p *UserServiceGetDepartmentsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceGetDepartmentsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetDepartmentsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetDepartmentsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceGetDepartmentsListArgs struct {
+	Req *GetDepartmentsListReq `thrift:"req,1" frugal:"1,default,GetDepartmentsListReq" json:"req"`
+}
+
+func NewUserServiceGetDepartmentsListArgs() *UserServiceGetDepartmentsListArgs {
+	return &UserServiceGetDepartmentsListArgs{}
+}
+
+func (p *UserServiceGetDepartmentsListArgs) InitDefault() {
+}
+
+var UserServiceGetDepartmentsListArgs_Req_DEFAULT *GetDepartmentsListReq
+
+func (p *UserServiceGetDepartmentsListArgs) GetReq() (v *GetDepartmentsListReq) {
+	if !p.IsSetReq() {
+		return UserServiceGetDepartmentsListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceGetDepartmentsListArgs) SetReq(val *GetDepartmentsListReq) {
+	p.Req = val
+}
+
+func (p *UserServiceGetDepartmentsListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceGetDepartmentsListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetDepartmentsListArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetDepartmentsListArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceGetDepartmentsListResult struct {
+	Success *DepartmentsListResp `thrift:"success,0,optional" frugal:"0,optional,DepartmentsListResp" json:"success,omitempty"`
+}
+
+func NewUserServiceGetDepartmentsListResult() *UserServiceGetDepartmentsListResult {
+	return &UserServiceGetDepartmentsListResult{}
+}
+
+func (p *UserServiceGetDepartmentsListResult) InitDefault() {
+}
+
+var UserServiceGetDepartmentsListResult_Success_DEFAULT *DepartmentsListResp
+
+func (p *UserServiceGetDepartmentsListResult) GetSuccess() (v *DepartmentsListResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceGetDepartmentsListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceGetDepartmentsListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*DepartmentsListResp)
+}
+
+func (p *UserServiceGetDepartmentsListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceGetDepartmentsListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetDepartmentsListResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetDepartmentsListResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceCreatePositionsArgs struct {
+	Req *CreatePositionsReq `thrift:"req,1" frugal:"1,default,CreatePositionsReq" json:"req"`
+}
+
+func NewUserServiceCreatePositionsArgs() *UserServiceCreatePositionsArgs {
+	return &UserServiceCreatePositionsArgs{}
+}
+
+func (p *UserServiceCreatePositionsArgs) InitDefault() {
+}
+
+var UserServiceCreatePositionsArgs_Req_DEFAULT *CreatePositionsReq
+
+func (p *UserServiceCreatePositionsArgs) GetReq() (v *CreatePositionsReq) {
+	if !p.IsSetReq() {
+		return UserServiceCreatePositionsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceCreatePositionsArgs) SetReq(val *CreatePositionsReq) {
+	p.Req = val
+}
+
+func (p *UserServiceCreatePositionsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceCreatePositionsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceCreatePositionsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceCreatePositionsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceCreatePositionsResult struct {
+	Success *PositionsResp `thrift:"success,0,optional" frugal:"0,optional,PositionsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceCreatePositionsResult() *UserServiceCreatePositionsResult {
+	return &UserServiceCreatePositionsResult{}
+}
+
+func (p *UserServiceCreatePositionsResult) InitDefault() {
+}
+
+var UserServiceCreatePositionsResult_Success_DEFAULT *PositionsResp
+
+func (p *UserServiceCreatePositionsResult) GetSuccess() (v *PositionsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceCreatePositionsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceCreatePositionsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PositionsResp)
+}
+
+func (p *UserServiceCreatePositionsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceCreatePositionsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceCreatePositionsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceCreatePositionsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceDeletePositionsArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewUserServiceDeletePositionsArgs() *UserServiceDeletePositionsArgs {
+	return &UserServiceDeletePositionsArgs{}
+}
+
+func (p *UserServiceDeletePositionsArgs) InitDefault() {
+}
+
+var UserServiceDeletePositionsArgs_Req_DEFAULT *base.IdReq
+
+func (p *UserServiceDeletePositionsArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return UserServiceDeletePositionsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceDeletePositionsArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *UserServiceDeletePositionsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceDeletePositionsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeletePositionsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeletePositionsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceDeletePositionsResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewUserServiceDeletePositionsResult() *UserServiceDeletePositionsResult {
+	return &UserServiceDeletePositionsResult{}
+}
+
+func (p *UserServiceDeletePositionsResult) InitDefault() {
+}
+
+var UserServiceDeletePositionsResult_Success_DEFAULT *base.NilResponse
+
+func (p *UserServiceDeletePositionsResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return UserServiceDeletePositionsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceDeletePositionsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *UserServiceDeletePositionsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceDeletePositionsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceDeletePositionsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceDeletePositionsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceUpdatePositionsArgs struct {
+	Req *UpdatePositionsReq `thrift:"req,1" frugal:"1,default,UpdatePositionsReq" json:"req"`
+}
+
+func NewUserServiceUpdatePositionsArgs() *UserServiceUpdatePositionsArgs {
+	return &UserServiceUpdatePositionsArgs{}
+}
+
+func (p *UserServiceUpdatePositionsArgs) InitDefault() {
+}
+
+var UserServiceUpdatePositionsArgs_Req_DEFAULT *UpdatePositionsReq
+
+func (p *UserServiceUpdatePositionsArgs) GetReq() (v *UpdatePositionsReq) {
+	if !p.IsSetReq() {
+		return UserServiceUpdatePositionsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceUpdatePositionsArgs) SetReq(val *UpdatePositionsReq) {
+	p.Req = val
+}
+
+func (p *UserServiceUpdatePositionsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceUpdatePositionsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdatePositionsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdatePositionsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceUpdatePositionsResult struct {
+	Success *PositionsResp `thrift:"success,0,optional" frugal:"0,optional,PositionsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceUpdatePositionsResult() *UserServiceUpdatePositionsResult {
+	return &UserServiceUpdatePositionsResult{}
+}
+
+func (p *UserServiceUpdatePositionsResult) InitDefault() {
+}
+
+var UserServiceUpdatePositionsResult_Success_DEFAULT *PositionsResp
+
+func (p *UserServiceUpdatePositionsResult) GetSuccess() (v *PositionsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceUpdatePositionsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceUpdatePositionsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PositionsResp)
+}
+
+func (p *UserServiceUpdatePositionsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceUpdatePositionsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceUpdatePositionsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceUpdatePositionsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceGetPositionsArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewUserServiceGetPositionsArgs() *UserServiceGetPositionsArgs {
+	return &UserServiceGetPositionsArgs{}
+}
+
+func (p *UserServiceGetPositionsArgs) InitDefault() {
+}
+
+var UserServiceGetPositionsArgs_Req_DEFAULT *base.IdReq
+
+func (p *UserServiceGetPositionsArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return UserServiceGetPositionsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceGetPositionsArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *UserServiceGetPositionsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceGetPositionsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetPositionsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetPositionsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceGetPositionsResult struct {
+	Success *PositionsResp `thrift:"success,0,optional" frugal:"0,optional,PositionsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceGetPositionsResult() *UserServiceGetPositionsResult {
+	return &UserServiceGetPositionsResult{}
+}
+
+func (p *UserServiceGetPositionsResult) InitDefault() {
+}
+
+var UserServiceGetPositionsResult_Success_DEFAULT *PositionsResp
+
+func (p *UserServiceGetPositionsResult) GetSuccess() (v *PositionsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceGetPositionsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceGetPositionsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PositionsResp)
+}
+
+func (p *UserServiceGetPositionsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceGetPositionsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetPositionsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetPositionsResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceGetPositionsListArgs struct {
+	Req *GetPositionsListReq `thrift:"req,1" frugal:"1,default,GetPositionsListReq" json:"req"`
+}
+
+func NewUserServiceGetPositionsListArgs() *UserServiceGetPositionsListArgs {
+	return &UserServiceGetPositionsListArgs{}
+}
+
+func (p *UserServiceGetPositionsListArgs) InitDefault() {
+}
+
+var UserServiceGetPositionsListArgs_Req_DEFAULT *GetPositionsListReq
+
+func (p *UserServiceGetPositionsListArgs) GetReq() (v *GetPositionsListReq) {
+	if !p.IsSetReq() {
+		return UserServiceGetPositionsListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceGetPositionsListArgs) SetReq(val *GetPositionsListReq) {
+	p.Req = val
+}
+
+func (p *UserServiceGetPositionsListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceGetPositionsListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetPositionsListArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetPositionsListArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceGetPositionsListResult struct {
+	Success *PositionsListResp `thrift:"success,0,optional" frugal:"0,optional,PositionsListResp" json:"success,omitempty"`
+}
+
+func NewUserServiceGetPositionsListResult() *UserServiceGetPositionsListResult {
+	return &UserServiceGetPositionsListResult{}
+}
+
+func (p *UserServiceGetPositionsListResult) InitDefault() {
+}
+
+var UserServiceGetPositionsListResult_Success_DEFAULT *PositionsListResp
+
+func (p *UserServiceGetPositionsListResult) GetSuccess() (v *PositionsListResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceGetPositionsListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceGetPositionsListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*PositionsListResp)
+}
+
+func (p *UserServiceGetPositionsListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceGetPositionsListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetPositionsListResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetPositionsListResult = map[int16]string{
 	0: "success",
 }

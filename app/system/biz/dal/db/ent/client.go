@@ -1272,15 +1272,15 @@ func (c *RoleClient) GetX(ctx context.Context, id int64) *Role {
 	return obj
 }
 
-// QueryMenus queries the menus edge of a Role.
-func (c *RoleClient) QueryMenus(_m *Role) *MenuQuery {
+// QueryMenu queries the menu edge of a Role.
+func (c *RoleClient) QueryMenu(_m *Role) *MenuQuery {
 	query := (&MenuClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(role.Table, role.FieldID, id),
 			sqlgraph.To(menu.Table, menu.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, role.MenusTable, role.MenusPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2M, false, role.MenuTable, role.MenuPrimaryKey...),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil

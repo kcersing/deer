@@ -13,7 +13,6 @@ type Menu struct {
 	ent.Schema
 }
 
-// path,component,routes,redirect,wrappers,name,icon
 func (Menu) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("path").Optional().Default("").Comment("菜单路由路径"),
@@ -42,7 +41,7 @@ func (Menu) Mixin() []ent.Mixin {
 
 func (Menu) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("roles", Role.Type).Ref("menus"),
+		edge.From("roles", Role.Type).Ref("menu"),
 		edge.To("children", Menu.Type).From("parent").Unique().Field("parent_id"),
 	}
 }

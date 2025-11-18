@@ -20,11 +20,9 @@ func (s *CreateRoleService) Run(req *system.CreateRoleReq) (resp *system.RoleRes
 	// Finish your business logic.
 	save, err := db.Client.Role.Create().
 		SetName(req.Name).
-		SetValue(req.Value).
-		SetDefaultRouter(req.DefaultRouter).
-		SetRemark(req.Remark).
-		//SetOrderNo(req.OrderNo).
-
+		SetCode(req.Code).
+		SetDesc(req.Desc).
+		SetOrderNo(req.OrderNo).
 		Save(s.ctx)
 	if err != nil {
 		err = errors.Wrap(err, "create Role failed")

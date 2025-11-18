@@ -24,3 +24,9 @@ var (
 func (p *User) IsValid() error {
 	return nil
 }
+func (p *Departments) IsValid() error {
+	return nil
+}
+func (p *Positions) IsValid() error {
+	return nil
+}

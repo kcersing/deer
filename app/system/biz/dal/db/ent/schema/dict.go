@@ -37,7 +37,7 @@ func (Dict) Edges() []ent.Edge {
 func (Dict) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("title").Unique(),
-		index.Fields("name").Unique(),
+		index.Fields("code").Unique(),
 	}
 }
 

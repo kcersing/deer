@@ -165,6 +165,34 @@ func (_c *UserCreate) SetNillableBirthday(v *time.Time) *UserCreate {
 	return _c
 }
 
+// SetDepartmentID sets the "department_id" field.
+func (_c *UserCreate) SetDepartmentID(v int64) *UserCreate {
+	_c.mutation.SetDepartmentID(v)
+	return _c
+}
+
+// SetNillableDepartmentID sets the "department_id" field if the given value is not nil.
+func (_c *UserCreate) SetNillableDepartmentID(v *int64) *UserCreate {
+	if v != nil {
+		_c.SetDepartmentID(*v)
+	}
+	return _c
+}
+
+// SetPositionID sets the "position_id" field.
+func (_c *UserCreate) SetPositionID(v int64) *UserCreate {
+	_c.mutation.SetPositionID(v)
+	return _c
+}
+
+// SetNillablePositionID sets the "position_id" field if the given value is not nil.
+func (_c *UserCreate) SetNillablePositionID(v *int64) *UserCreate {
+	if v != nil {
+		_c.SetPositionID(*v)
+	}
+	return _c
+}
+
 // SetLastAt sets the "last_at" field.
 func (_c *UserCreate) SetLastAt(v time.Time) *UserCreate {
 	_c.mutation.SetLastAt(v)
@@ -379,6 +407,14 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Birthday(); ok {
 		_spec.SetField(user.FieldBirthday, field.TypeTime, value)
 		_node.Birthday = value
+	}
+	if value, ok := _c.mutation.DepartmentID(); ok {
+		_spec.SetField(user.FieldDepartmentID, field.TypeInt64, value)
+		_node.DepartmentID = &value
+	}
+	if value, ok := _c.mutation.PositionID(); ok {
+		_spec.SetField(user.FieldPositionID, field.TypeInt64, value)
+		_node.PositionID = &value
 	}
 	if value, ok := _c.mutation.LastAt(); ok {
 		_spec.SetField(user.FieldLastAt, field.TypeTime, value)

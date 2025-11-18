@@ -1522,32 +1522,29 @@ var fieldIDToName_RoleListResp = map[int16]string{
 }
 
 type CreateRoleReq struct {
-	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name          string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Value         string  `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
-	DefaultRouter string  `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
-	Remark        string  `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
-	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+	Id      int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo int64  `thrift:"order_no,5,optional" frugal:"5,optional,i64" json:"order_no,omitempty"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
 	return &CreateRoleReq{
-		Id:            0,
-		Name:          "",
-		Value:         "",
-		DefaultRouter: "",
-		Remark:        "",
-		Apis:          []int64{},
+		Id:      0,
+		Name:    "",
+		Code:    "",
+		Desc:    "",
+		OrderNo: 0,
 	}
 }
 
 func (p *CreateRoleReq) InitDefault() {
 	p.Id = 0
 	p.Name = ""
-	p.Value = ""
-	p.DefaultRouter = ""
-	p.Remark = ""
-	p.Apis = []int64{}
+	p.Code = ""
+	p.Desc = ""
+	p.OrderNo = 0
 }
 
 var CreateRoleReq_Id_DEFAULT int64 = 0
@@ -1568,40 +1565,31 @@ func (p *CreateRoleReq) GetName() (v string) {
 	return p.Name
 }
 
-var CreateRoleReq_Value_DEFAULT string = ""
+var CreateRoleReq_Code_DEFAULT string = ""
 
-func (p *CreateRoleReq) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return CreateRoleReq_Value_DEFAULT
+func (p *CreateRoleReq) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return CreateRoleReq_Code_DEFAULT
 	}
-	return p.Value
+	return p.Code
 }
 
-var CreateRoleReq_DefaultRouter_DEFAULT string = ""
+var CreateRoleReq_Desc_DEFAULT string = ""
 
-func (p *CreateRoleReq) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return CreateRoleReq_DefaultRouter_DEFAULT
+func (p *CreateRoleReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return CreateRoleReq_Desc_DEFAULT
 	}
-	return p.DefaultRouter
+	return p.Desc
 }
 
-var CreateRoleReq_Remark_DEFAULT string = ""
+var CreateRoleReq_OrderNo_DEFAULT int64 = 0
 
-func (p *CreateRoleReq) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return CreateRoleReq_Remark_DEFAULT
+func (p *CreateRoleReq) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return CreateRoleReq_OrderNo_DEFAULT
 	}
-	return p.Remark
-}
-
-var CreateRoleReq_Apis_DEFAULT []int64 = []int64{}
-
-func (p *CreateRoleReq) GetApis() (v []int64) {
-	if !p.IsSetApis() {
-		return CreateRoleReq_Apis_DEFAULT
-	}
-	return p.Apis
+	return p.OrderNo
 }
 func (p *CreateRoleReq) SetId(val int64) {
 	p.Id = val
@@ -1609,17 +1597,14 @@ func (p *CreateRoleReq) SetId(val int64) {
 func (p *CreateRoleReq) SetName(val string) {
 	p.Name = val
 }
-func (p *CreateRoleReq) SetValue(val string) {
-	p.Value = val
+func (p *CreateRoleReq) SetCode(val string) {
+	p.Code = val
 }
-func (p *CreateRoleReq) SetDefaultRouter(val string) {
-	p.DefaultRouter = val
+func (p *CreateRoleReq) SetDesc(val string) {
+	p.Desc = val
 }
-func (p *CreateRoleReq) SetRemark(val string) {
-	p.Remark = val
-}
-func (p *CreateRoleReq) SetApis(val []int64) {
-	p.Apis = val
+func (p *CreateRoleReq) SetOrderNo(val int64) {
+	p.OrderNo = val
 }
 
 func (p *CreateRoleReq) IsSetId() bool {
@@ -1630,20 +1615,16 @@ func (p *CreateRoleReq) IsSetName() bool {
 	return p.Name != CreateRoleReq_Name_DEFAULT
 }
 
-func (p *CreateRoleReq) IsSetValue() bool {
-	return p.Value != CreateRoleReq_Value_DEFAULT
+func (p *CreateRoleReq) IsSetCode() bool {
+	return p.Code != CreateRoleReq_Code_DEFAULT
 }
 
-func (p *CreateRoleReq) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != CreateRoleReq_DefaultRouter_DEFAULT
+func (p *CreateRoleReq) IsSetDesc() bool {
+	return p.Desc != CreateRoleReq_Desc_DEFAULT
 }
 
-func (p *CreateRoleReq) IsSetRemark() bool {
-	return p.Remark != CreateRoleReq_Remark_DEFAULT
-}
-
-func (p *CreateRoleReq) IsSetApis() bool {
-	return p.Apis != nil
+func (p *CreateRoleReq) IsSetOrderNo() bool {
+	return p.OrderNo != CreateRoleReq_OrderNo_DEFAULT
 }
 
 func (p *CreateRoleReq) String() string {
@@ -1656,10 +1637,9 @@ func (p *CreateRoleReq) String() string {
 var fieldIDToName_CreateRoleReq = map[int16]string{
 	1: "id",
 	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
-	6: "apis",
+	3: "code",
+	4: "desc",
+	5: "order_no",
 }
 
 type GetRoleListReq struct {
@@ -1744,32 +1724,29 @@ var fieldIDToName_GetRoleListReq = map[int16]string{
 }
 
 type UpdateRoleReq struct {
-	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name          string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Value         string  `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
-	DefaultRouter string  `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
-	Remark        string  `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
-	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+	Id      int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo int64  `thrift:"order_no,5,optional" frugal:"5,optional,i64" json:"order_no,omitempty"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
 	return &UpdateRoleReq{
-		Id:            0,
-		Name:          "",
-		Value:         "",
-		DefaultRouter: "",
-		Remark:        "",
-		Apis:          []int64{},
+		Id:      0,
+		Name:    "",
+		Code:    "",
+		Desc:    "",
+		OrderNo: 0,
 	}
 }
 
 func (p *UpdateRoleReq) InitDefault() {
 	p.Id = 0
 	p.Name = ""
-	p.Value = ""
-	p.DefaultRouter = ""
-	p.Remark = ""
-	p.Apis = []int64{}
+	p.Code = ""
+	p.Desc = ""
+	p.OrderNo = 0
 }
 
 var UpdateRoleReq_Id_DEFAULT int64 = 0
@@ -1790,40 +1767,31 @@ func (p *UpdateRoleReq) GetName() (v string) {
 	return p.Name
 }
 
-var UpdateRoleReq_Value_DEFAULT string = ""
+var UpdateRoleReq_Code_DEFAULT string = ""
 
-func (p *UpdateRoleReq) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return UpdateRoleReq_Value_DEFAULT
+func (p *UpdateRoleReq) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return UpdateRoleReq_Code_DEFAULT
 	}
-	return p.Value
+	return p.Code
 }
 
-var UpdateRoleReq_DefaultRouter_DEFAULT string = ""
+var UpdateRoleReq_Desc_DEFAULT string = ""
 
-func (p *UpdateRoleReq) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return UpdateRoleReq_DefaultRouter_DEFAULT
+func (p *UpdateRoleReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateRoleReq_Desc_DEFAULT
 	}
-	return p.DefaultRouter
+	return p.Desc
 }
 
-var UpdateRoleReq_Remark_DEFAULT string = ""
+var UpdateRoleReq_OrderNo_DEFAULT int64 = 0
 
-func (p *UpdateRoleReq) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return UpdateRoleReq_Remark_DEFAULT
+func (p *UpdateRoleReq) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return UpdateRoleReq_OrderNo_DEFAULT
 	}
-	return p.Remark
-}
-
-var UpdateRoleReq_Apis_DEFAULT []int64 = []int64{}
-
-func (p *UpdateRoleReq) GetApis() (v []int64) {
-	if !p.IsSetApis() {
-		return UpdateRoleReq_Apis_DEFAULT
-	}
-	return p.Apis
+	return p.OrderNo
 }
 func (p *UpdateRoleReq) SetId(val int64) {
 	p.Id = val
@@ -1831,17 +1799,14 @@ func (p *UpdateRoleReq) SetId(val int64) {
 func (p *UpdateRoleReq) SetName(val string) {
 	p.Name = val
 }
-func (p *UpdateRoleReq) SetValue(val string) {
-	p.Value = val
+func (p *UpdateRoleReq) SetCode(val string) {
+	p.Code = val
 }
-func (p *UpdateRoleReq) SetDefaultRouter(val string) {
-	p.DefaultRouter = val
+func (p *UpdateRoleReq) SetDesc(val string) {
+	p.Desc = val
 }
-func (p *UpdateRoleReq) SetRemark(val string) {
-	p.Remark = val
-}
-func (p *UpdateRoleReq) SetApis(val []int64) {
-	p.Apis = val
+func (p *UpdateRoleReq) SetOrderNo(val int64) {
+	p.OrderNo = val
 }
 
 func (p *UpdateRoleReq) IsSetId() bool {
@@ -1852,20 +1817,16 @@ func (p *UpdateRoleReq) IsSetName() bool {
 	return p.Name != UpdateRoleReq_Name_DEFAULT
 }
 
-func (p *UpdateRoleReq) IsSetValue() bool {
-	return p.Value != UpdateRoleReq_Value_DEFAULT
+func (p *UpdateRoleReq) IsSetCode() bool {
+	return p.Code != UpdateRoleReq_Code_DEFAULT
 }
 
-func (p *UpdateRoleReq) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != UpdateRoleReq_DefaultRouter_DEFAULT
+func (p *UpdateRoleReq) IsSetDesc() bool {
+	return p.Desc != UpdateRoleReq_Desc_DEFAULT
 }
 
-func (p *UpdateRoleReq) IsSetRemark() bool {
-	return p.Remark != UpdateRoleReq_Remark_DEFAULT
-}
-
-func (p *UpdateRoleReq) IsSetApis() bool {
-	return p.Apis != nil
+func (p *UpdateRoleReq) IsSetOrderNo() bool {
+	return p.OrderNo != UpdateRoleReq_OrderNo_DEFAULT
 }
 
 func (p *UpdateRoleReq) String() string {
@@ -1878,10 +1839,9 @@ func (p *UpdateRoleReq) String() string {
 var fieldIDToName_UpdateRoleReq = map[int16]string{
 	1: "id",
 	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
-	6: "apis",
+	3: "code",
+	4: "desc",
+	5: "order_no",
 }
 
 type CreateMenuAuthReq struct {
@@ -1946,44 +1906,32 @@ var fieldIDToName_CreateMenuAuthReq = map[int16]string{
 }
 
 type DictListReq struct {
-	Title    string `thrift:"title,1,optional" frugal:"1,optional,string" json:"title,omitempty"`
-	Name     string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Key      string `thrift:"key,1,optional" frugal:"1,optional,string" json:"key,omitempty"`
 	Page     int64  `thrift:"page,3,optional" frugal:"3,optional,i64" json:"page,omitempty"`
 	PageSize int64  `thrift:"pageSize,4,optional" frugal:"4,optional,i64" json:"pageSize,omitempty"`
 }
 
 func NewDictListReq() *DictListReq {
 	return &DictListReq{
-		Title:    "",
-		Name:     "",
+		Key:      "",
 		Page:     1,
 		PageSize: 100,
 	}
 }
 
 func (p *DictListReq) InitDefault() {
-	p.Title = ""
-	p.Name = ""
+	p.Key = ""
 	p.Page = 1
 	p.PageSize = 100
 }
 
-var DictListReq_Title_DEFAULT string = ""
+var DictListReq_Key_DEFAULT string = ""
 
-func (p *DictListReq) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return DictListReq_Title_DEFAULT
+func (p *DictListReq) GetKey() (v string) {
+	if !p.IsSetKey() {
+		return DictListReq_Key_DEFAULT
 	}
-	return p.Title
-}
-
-var DictListReq_Name_DEFAULT string = ""
-
-func (p *DictListReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return DictListReq_Name_DEFAULT
-	}
-	return p.Name
+	return p.Key
 }
 
 var DictListReq_Page_DEFAULT int64 = 1
@@ -2003,11 +1951,8 @@ func (p *DictListReq) GetPageSize() (v int64) {
 	}
 	return p.PageSize
 }
-func (p *DictListReq) SetTitle(val string) {
-	p.Title = val
-}
-func (p *DictListReq) SetName(val string) {
-	p.Name = val
+func (p *DictListReq) SetKey(val string) {
+	p.Key = val
 }
 func (p *DictListReq) SetPage(val int64) {
 	p.Page = val
@@ -2016,12 +1961,8 @@ func (p *DictListReq) SetPageSize(val int64) {
 	p.PageSize = val
 }
 
-func (p *DictListReq) IsSetTitle() bool {
-	return p.Title != DictListReq_Title_DEFAULT
-}
-
-func (p *DictListReq) IsSetName() bool {
-	return p.Name != DictListReq_Name_DEFAULT
+func (p *DictListReq) IsSetKey() bool {
+	return p.Key != DictListReq_Key_DEFAULT
 }
 
 func (p *DictListReq) IsSetPage() bool {
@@ -2040,36 +1981,35 @@ func (p *DictListReq) String() string {
 }
 
 var fieldIDToName_DictListReq = map[int16]string{
-	1: "title",
-	2: "name",
+	1: "key",
 	3: "page",
 	4: "pageSize",
 }
 
 type DicthtListReq struct {
-	Name   string `thrift:"name,1,optional" frugal:"1,optional,string" json:"name,omitempty"`
+	Key    string `thrift:"key,1,optional" frugal:"1,optional,string" json:"key,omitempty"`
 	DictId int64  `thrift:"dictId,2,optional" frugal:"2,optional,i64" json:"dictId,omitempty"`
 }
 
 func NewDicthtListReq() *DicthtListReq {
 	return &DicthtListReq{
-		Name:   "",
+		Key:    "",
 		DictId: 0,
 	}
 }
 
 func (p *DicthtListReq) InitDefault() {
-	p.Name = ""
+	p.Key = ""
 	p.DictId = 0
 }
 
-var DicthtListReq_Name_DEFAULT string = ""
+var DicthtListReq_Key_DEFAULT string = ""
 
-func (p *DicthtListReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return DicthtListReq_Name_DEFAULT
+func (p *DicthtListReq) GetKey() (v string) {
+	if !p.IsSetKey() {
+		return DicthtListReq_Key_DEFAULT
 	}
-	return p.Name
+	return p.Key
 }
 
 var DicthtListReq_DictId_DEFAULT int64 = 0
@@ -2080,15 +2020,15 @@ func (p *DicthtListReq) GetDictId() (v int64) {
 	}
 	return p.DictId
 }
-func (p *DicthtListReq) SetName(val string) {
-	p.Name = val
+func (p *DicthtListReq) SetKey(val string) {
+	p.Key = val
 }
 func (p *DicthtListReq) SetDictId(val int64) {
 	p.DictId = val
 }
 
-func (p *DicthtListReq) IsSetName() bool {
-	return p.Name != DicthtListReq_Name_DEFAULT
+func (p *DicthtListReq) IsSetKey() bool {
+	return p.Key != DicthtListReq_Key_DEFAULT
 }
 
 func (p *DicthtListReq) IsSetDictId() bool {
@@ -2103,7 +2043,7 @@ func (p *DicthtListReq) String() string {
 }
 
 var fieldIDToName_DicthtListReq = map[int16]string{
-	1: "name",
+	1: "key",
 	2: "dictId",
 }
 

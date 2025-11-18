@@ -32,7 +32,6 @@ func (s *UpdateDicthtService) Run(req *base.Dictht) (resp *system.DicthtResp, er
 	// update dictionary detail
 	save, err := db.Client.Dictht.UpdateOneID(req.GetId()).
 		SetTitle(req.Title).
-		SetKey(req.Key).
 		SetValue(req.Value).
 		SetStatus(req.Status).
 		Save(s.ctx)

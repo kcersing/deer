@@ -41,7 +41,6 @@ func (Dictht) Edges() []ent.Edge {
 func (Dictht) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("title").Unique(),
-		index.Fields("key").Unique(),
 		index.Fields("value").Unique(),
 		index.Fields("dict_id").Unique(),
 	}

@@ -4,15 +4,14 @@ include "../base/system.thrift"
 
 // 字典列表请求数据
 struct DictListReq {
-    1:  optional string title  = ""(api.raw = "title" )
-    2:  optional string name = "" (api.raw = "name" )
+    1:  optional string key  = ""(api.raw = "key" )
     3:  optional i64 page=1 (api.raw = "page")
     4:  optional i64 pageSize=100 (api.raw = "pageSize")
 }
 
 //字典名获取字典键值请求数据
 struct DicthtListReq{
-    1:  optional string name = "" (api.raw = "name" )
+    1:  optional string key = "" (api.raw = "key" )
     2:  optional i64 dictId= 0 (api.raw = "dictId" )
 }
 

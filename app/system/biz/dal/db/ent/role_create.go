@@ -105,44 +105,30 @@ func (_c *RoleCreate) SetNillableName(v *string) *RoleCreate {
 	return _c
 }
 
-// SetValue sets the "value" field.
-func (_c *RoleCreate) SetValue(v string) *RoleCreate {
-	_c.mutation.SetValue(v)
+// SetCode sets the "code" field.
+func (_c *RoleCreate) SetCode(v string) *RoleCreate {
+	_c.mutation.SetCode(v)
 	return _c
 }
 
-// SetNillableValue sets the "value" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableValue(v *string) *RoleCreate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableCode(v *string) *RoleCreate {
 	if v != nil {
-		_c.SetValue(*v)
+		_c.SetCode(*v)
 	}
 	return _c
 }
 
-// SetDefaultRouter sets the "default_router" field.
-func (_c *RoleCreate) SetDefaultRouter(v string) *RoleCreate {
-	_c.mutation.SetDefaultRouter(v)
+// SetDesc sets the "desc" field.
+func (_c *RoleCreate) SetDesc(v string) *RoleCreate {
+	_c.mutation.SetDesc(v)
 	return _c
 }
 
-// SetNillableDefaultRouter sets the "default_router" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableDefaultRouter(v *string) *RoleCreate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_c *RoleCreate) SetNillableDesc(v *string) *RoleCreate {
 	if v != nil {
-		_c.SetDefaultRouter(*v)
-	}
-	return _c
-}
-
-// SetRemark sets the "remark" field.
-func (_c *RoleCreate) SetRemark(v string) *RoleCreate {
-	_c.mutation.SetRemark(v)
-	return _c
-}
-
-// SetNillableRemark sets the "remark" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableRemark(v *string) *RoleCreate {
-	if v != nil {
-		_c.SetRemark(*v)
+		_c.SetDesc(*v)
 	}
 	return _c
 }
@@ -161,8 +147,14 @@ func (_c *RoleCreate) SetNillableOrderNo(v *int64) *RoleCreate {
 	return _c
 }
 
+// SetMenus sets the "menus" field.
+func (_c *RoleCreate) SetMenus(v []int64) *RoleCreate {
+	_c.mutation.SetMenus(v)
+	return _c
+}
+
 // SetApis sets the "apis" field.
-func (_c *RoleCreate) SetApis(v []int) *RoleCreate {
+func (_c *RoleCreate) SetApis(v []int64) *RoleCreate {
 	_c.mutation.SetApis(v)
 	return _c
 }
@@ -173,14 +165,14 @@ func (_c *RoleCreate) SetID(v int64) *RoleCreate {
 	return _c
 }
 
-// AddMenuIDs adds the "menus" edge to the Menu entity by IDs.
+// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
 func (_c *RoleCreate) AddMenuIDs(ids ...int64) *RoleCreate {
 	_c.mutation.AddMenuIDs(ids...)
 	return _c
 }
 
-// AddMenus adds the "menus" edges to the Menu entity.
-func (_c *RoleCreate) AddMenus(v ...*Menu) *RoleCreate {
+// AddMenu adds the "menu" edges to the Menu entity.
+func (_c *RoleCreate) AddMenu(v ...*Menu) *RoleCreate {
 	ids := make([]int64, len(v))
 	for i := range v {
 		ids[i] = v[i].ID
@@ -258,26 +250,23 @@ func (_c *RoleCreate) defaults() {
 		v := role.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
-	if _, ok := _c.mutation.DefaultRouter(); !ok {
-		v := role.DefaultDefaultRouter
-		_c.mutation.SetDefaultRouter(v)
-	}
-	if _, ok := _c.mutation.Remark(); !ok {
-		v := role.DefaultRemark
-		_c.mutation.SetRemark(v)
+	if _, ok := _c.mutation.Desc(); !ok {
+		v := role.DefaultDesc
+		_c.mutation.SetDesc(v)
 	}
 	if _, ok := _c.mutation.OrderNo(); !ok {
 		v := role.DefaultOrderNo
 		_c.mutation.SetOrderNo(v)
 	}
-	if _, ok := _c.mutation.Apis(); !ok {
-		v := role.DefaultApis
-		_c.mutation.SetApis(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *RoleCreate) check() error {
+	if v, ok := _c.mutation.Code(); ok {
+		if err := role.CodeValidator(v); err != nil {
+			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -334,32 +323,32 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 		_spec.SetField(role.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := _c.mutation.Value(); ok {
-		_spec.SetField(role.FieldValue, field.TypeString, value)
-		_node.Value = value
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(role.FieldCode, field.TypeString, value)
+		_node.Code = &value
 	}
-	if value, ok := _c.mutation.DefaultRouter(); ok {
-		_spec.SetField(role.FieldDefaultRouter, field.TypeString, value)
-		_node.DefaultRouter = value
-	}
-	if value, ok := _c.mutation.Remark(); ok {
-		_spec.SetField(role.FieldRemark, field.TypeString, value)
-		_node.Remark = value
+	if value, ok := _c.mutation.Desc(); ok {
+		_spec.SetField(role.FieldDesc, field.TypeString, value)
+		_node.Desc = value
 	}
 	if value, ok := _c.mutation.OrderNo(); ok {
 		_spec.SetField(role.FieldOrderNo, field.TypeInt64, value)
 		_node.OrderNo = value
 	}
+	if value, ok := _c.mutation.Menus(); ok {
+		_spec.SetField(role.FieldMenus, field.TypeJSON, value)
+		_node.Menus = value
+	}
 	if value, ok := _c.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
 		_node.Apis = value
 	}
-	if nodes := _c.mutation.MenusIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.MenuIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: false,
-			Table:   role.MenusTable,
-			Columns: role.MenusPrimaryKey,
+			Table:   role.MenuTable,
+			Columns: role.MenuPrimaryKey,
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),

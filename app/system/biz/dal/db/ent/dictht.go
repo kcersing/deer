@@ -29,13 +29,11 @@ type Dictht struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 状态[0:禁用;1:正常]
 	Status int64 `json:"status,omitempty"`
-	// the title shown in the ui | 展示名称 （建议配合i18n）
+	// 展示名称
 	Title string `json:"title,omitempty"`
-	// key | 键
-	Key string `json:"key,omitempty"`
-	// value | 值
+	// 值
 	Value string `json:"value,omitempty"`
-	// Dictionary ID | 字典ID
+	// 字典ID
 	DictID int64 `json:"dict_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the DicthtQuery when eager-loading is set.
@@ -70,7 +68,7 @@ func (*Dictht) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case dictht.FieldID, dictht.FieldDelete, dictht.FieldCreatedID, dictht.FieldStatus, dictht.FieldDictID:
 			values[i] = new(sql.NullInt64)
-		case dictht.FieldTitle, dictht.FieldKey, dictht.FieldValue:
+		case dictht.FieldTitle, dictht.FieldValue:
 			values[i] = new(sql.NullString)
 		case dictht.FieldCreatedAt, dictht.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -130,12 +128,6 @@ func (_m *Dictht) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field title", values[i])
 			} else if value.Valid {
 				_m.Title = value.String
-			}
-		case dictht.FieldKey:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field key", values[i])
-			} else if value.Valid {
-				_m.Key = value.String
 			}
 		case dictht.FieldValue:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -207,9 +199,6 @@ func (_m *Dictht) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("title=")
 	builder.WriteString(_m.Title)
-	builder.WriteString(", ")
-	builder.WriteString("key=")
-	builder.WriteString(_m.Key)
 	builder.WriteString(", ")
 	builder.WriteString("value=")
 	builder.WriteString(_m.Value)

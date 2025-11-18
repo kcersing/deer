@@ -9,7 +9,6 @@ struct Api{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
-
 }
 
 struct Menu{
@@ -21,38 +20,28 @@ struct Menu{
     6:optional string redirect="" (api.raw = "redirect")
     7:optional string component="" (api.raw = "component")
     8:optional i64 menuType=0 (api.raw = "menuType")
-
-
     12:optional i64 status=0 (api.raw = "status")
-
     14:optional list<Menu> children=[]  (api.raw = "children")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
-
     20:optional string icon="" (api.raw = "icon")
 }
-
-
-
-
 
 struct Role {
     1:optional i64 id=0 (api.raw = "id")
     2:optional string name="" (api.raw = "name")
     3:optional string code=""(api.raw = "code")
     4:optional string desc=""(api.raw = "desc")
-    5:optional i64 order_no=0(api.raw = "order_no")
+    5:optional i64 orderNo=0(api.raw = "orderNo")
     6:optional list<i64> apis= [](api.raw = "apis")
     7:optional list<i64> menus= [](api.raw = "menus")
 }
-
-
 
 // 字典信息
 struct Dict {
     1:  i64 id=0 (api.raw = "id" )
     2:  string title="" (api.raw = "title" )
-    3:  string name="" (api.raw = "name" )
+    3:  string code="" (api.raw = "code" )
     5:  i64 status=0 (api.raw = "status" )
     6:  string desc="" (api.raw = "desc" )
     7:  string createdAt="" (api.raw = "createdAt" )
@@ -63,7 +52,6 @@ struct Dict {
 struct Dictht {
     1:  i64 id=0 (api.raw = "id" )
     2:  string title="" (api.raw = "title" )
-    3:  string key="" (api.raw = "key" )
     4:  string value="" (api.raw = "value" )
     5:  i64 status=0 (api.raw = "status" )
     6:  string createdAt="" (api.raw = "createdAt" )
@@ -86,6 +74,5 @@ struct Log {
     11: optional string createdAt =""(api.raw = "createdAt")
     12: optional string updatedAt =""(api.raw = "updatedAt")
     13: optional i64 identity =0(api.raw = "identity")
-
     251: optional i64 id = 0 (api.raw = "id")
 }

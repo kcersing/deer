@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// User is the model entity for the User schema.
+// 用户表
 type User struct {
 	config `json:"-"`
 	// ID of the ent.
@@ -42,6 +42,10 @@ type User struct {
 	Gender int64 `json:"gender,omitempty"`
 	// 出生日期
 	Birthday time.Time `json:"birthday,omitempty"`
+	// 部门ID
+	DepartmentID *int64 `json:"department_id,omitempty"`
+	// 职位ID
+	PositionID *int64 `json:"position_id,omitempty"`
 	// 最后一次登录时间
 	LastAt time.Time `json:"last_at,omitempty"`
 	// 最后一次登录ip
@@ -77,7 +81,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender:
+		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender, user.FieldDepartmentID, user.FieldPositionID:
 			values[i] = new(sql.NullInt64)
 		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDetail:
 			values[i] = new(sql.NullString)
@@ -176,6 +180,20 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Birthday = value.Time
 			}
+		case user.FieldDepartmentID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field department_id", values[i])
+			} else if value.Valid {
+				_m.DepartmentID = new(int64)
+				*_m.DepartmentID = value.Int64
+			}
+		case user.FieldPositionID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field position_id", values[i])
+			} else if value.Valid {
+				_m.PositionID = new(int64)
+				*_m.PositionID = value.Int64
+			}
 		case user.FieldLastAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field last_at", values[i])
@@ -270,6 +288,16 @@ func (_m *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("birthday=")
 	builder.WriteString(_m.Birthday.Format(time.ANSIC))
+	builder.WriteString(", ")
+	if v := _m.DepartmentID; v != nil {
+		builder.WriteString("department_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.PositionID; v != nil {
+		builder.WriteString("position_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
 	builder.WriteString(", ")
 	builder.WriteString("last_at=")
 	builder.WriteString(_m.LastAt.Format(time.ANSIC))

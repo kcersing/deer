@@ -28,11 +28,11 @@ type Dict struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 状态[0:禁用;1:正常]
 	Status int64 `json:"status,omitempty"`
-	// the title shown in the ui | 展示名称 （建议配合i18n）
+	// 名称
 	Title string `json:"title,omitempty"`
-	// the name of dictionary for search | 字典搜索名称
-	Name string `json:"name,omitempty"`
-	// the desc of dictionary | 字典描述
+	// 字典唯一代码
+	Code string `json:"code,omitempty"`
+	// 字典描述
 	Desc string `json:"desc,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the DictQuery when eager-loading is set.
@@ -65,7 +65,7 @@ func (*Dict) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case dict.FieldID, dict.FieldDelete, dict.FieldCreatedID, dict.FieldStatus:
 			values[i] = new(sql.NullInt64)
-		case dict.FieldTitle, dict.FieldName, dict.FieldDesc:
+		case dict.FieldTitle, dict.FieldCode, dict.FieldDesc:
 			values[i] = new(sql.NullString)
 		case dict.FieldCreatedAt, dict.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -126,11 +126,11 @@ func (_m *Dict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Title = value.String
 			}
-		case dict.FieldName:
+		case dict.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.Name = value.String
+				_m.Code = value.String
 			}
 		case dict.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -197,8 +197,8 @@ func (_m *Dict) String() string {
 	builder.WriteString("title=")
 	builder.WriteString(_m.Title)
 	builder.WriteString(", ")
-	builder.WriteString("name=")
-	builder.WriteString(_m.Name)
+	builder.WriteString("code=")
+	builder.WriteString(_m.Code)
 	builder.WriteString(", ")
 	builder.WriteString("desc=")
 	builder.WriteString(_m.Desc)

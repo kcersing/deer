@@ -47,10 +47,6 @@ func init() {
 	apiDescMethod := apiFields[4].Descriptor()
 	// api.DefaultMethod holds the default value on creation for the method field.
 	api.DefaultMethod = apiDescMethod.Default.(string)
-	// apiDescDisabled is the schema descriptor for disabled field.
-	apiDescDisabled := apiFields[5].Descriptor()
-	// api.DefaultDisabled holds the default value on creation for the disabled field.
-	api.DefaultDisabled = apiDescDisabled.Default.(int64)
 	dictMixin := schema.Dict{}.Mixin()
 	dictMixinFields0 := dictMixin[0].Fields()
 	_ = dictMixinFields0
@@ -225,22 +221,18 @@ func init() {
 	roleDescStatus := roleMixinFields1[0].Descriptor()
 	// role.DefaultStatus holds the default value on creation for the status field.
 	role.DefaultStatus = roleDescStatus.Default.(int64)
-	// roleDescDefaultRouter is the schema descriptor for default_router field.
-	roleDescDefaultRouter := roleFields[2].Descriptor()
-	// role.DefaultDefaultRouter holds the default value on creation for the default_router field.
-	role.DefaultDefaultRouter = roleDescDefaultRouter.Default.(string)
-	// roleDescRemark is the schema descriptor for remark field.
-	roleDescRemark := roleFields[3].Descriptor()
-	// role.DefaultRemark holds the default value on creation for the remark field.
-	role.DefaultRemark = roleDescRemark.Default.(string)
+	// roleDescCode is the schema descriptor for code field.
+	roleDescCode := roleFields[1].Descriptor()
+	// role.CodeValidator is a validator for the "code" field. It is called by the builders before save.
+	role.CodeValidator = roleDescCode.Validators[0].(func(string) error)
+	// roleDescDesc is the schema descriptor for desc field.
+	roleDescDesc := roleFields[2].Descriptor()
+	// role.DefaultDesc holds the default value on creation for the desc field.
+	role.DefaultDesc = roleDescDesc.Default.(string)
 	// roleDescOrderNo is the schema descriptor for order_no field.
-	roleDescOrderNo := roleFields[4].Descriptor()
+	roleDescOrderNo := roleFields[3].Descriptor()
 	// role.DefaultOrderNo holds the default value on creation for the order_no field.
 	role.DefaultOrderNo = roleDescOrderNo.Default.(int64)
-	// roleDescApis is the schema descriptor for apis field.
-	roleDescApis := roleFields[5].Descriptor()
-	// role.DefaultApis holds the default value on creation for the apis field.
-	role.DefaultApis = roleDescApis.Default.([]int)
 	smsMixin := schema.Sms{}.Mixin()
 	smsMixinFields0 := smsMixin[0].Fields()
 	_ = smsMixinFields0

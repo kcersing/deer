@@ -66,3 +66,73 @@ func (s *UserServiceImpl) SetUserRole(ctx context.Context, req *user.SetUserRole
 
 	return resp, err
 }
+
+// CreateDepartments implements the UserServiceImpl interface.
+func (s *UserServiceImpl) CreateDepartments(ctx context.Context, req *user.CreateDepartmentsReq) (resp *user.DepartmentsResp, err error) {
+	resp, err = service.NewCreateDepartmentsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// DeleteDepartments implements the UserServiceImpl interface.
+func (s *UserServiceImpl) DeleteDepartments(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewDeleteDepartmentsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// UpdateDepartments implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UpdateDepartments(ctx context.Context, req *user.UpdateDepartmentsReq) (resp *user.DepartmentsResp, err error) {
+	resp, err = service.NewUpdateDepartmentsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// GetDepartments implements the UserServiceImpl interface.
+func (s *UserServiceImpl) GetDepartments(ctx context.Context, req *base.IdReq) (resp *user.DepartmentsResp, err error) {
+	resp, err = service.NewGetDepartmentsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// GetDepartmentsList implements the UserServiceImpl interface.
+func (s *UserServiceImpl) GetDepartmentsList(ctx context.Context, req *user.GetDepartmentsListReq) (resp *user.DepartmentsListResp, err error) {
+	resp, err = service.NewGetDepartmentsListService(ctx).Run(req)
+
+	return resp, err
+}
+
+// CreatePositions implements the UserServiceImpl interface.
+func (s *UserServiceImpl) CreatePositions(ctx context.Context, req *user.CreatePositionsReq) (resp *user.PositionsResp, err error) {
+	resp, err = service.NewCreatePositionsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// DeletePositions implements the UserServiceImpl interface.
+func (s *UserServiceImpl) DeletePositions(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewDeletePositionsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// UpdatePositions implements the UserServiceImpl interface.
+func (s *UserServiceImpl) UpdatePositions(ctx context.Context, req *user.UpdatePositionsReq) (resp *user.PositionsResp, err error) {
+	resp, err = service.NewUpdatePositionsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// GetPositions implements the UserServiceImpl interface.
+func (s *UserServiceImpl) GetPositions(ctx context.Context, req *base.IdReq) (resp *user.PositionsResp, err error) {
+	resp, err = service.NewGetPositionsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// GetPositionsList implements the UserServiceImpl interface.
+func (s *UserServiceImpl) GetPositionsList(ctx context.Context, req *user.GetPositionsListReq) (resp *user.PositionsListResp, err error) {
+	resp, err = service.NewGetPositionsListService(ctx).Run(req)
+
+	return resp, err
+}

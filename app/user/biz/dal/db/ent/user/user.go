@@ -38,6 +38,10 @@ const (
 	FieldGender = "gender"
 	// FieldBirthday holds the string denoting the birthday field in the database.
 	FieldBirthday = "birthday"
+	// FieldDepartmentID holds the string denoting the department_id field in the database.
+	FieldDepartmentID = "department_id"
+	// FieldPositionID holds the string denoting the position_id field in the database.
+	FieldPositionID = "position_id"
 	// FieldLastAt holds the string denoting the last_at field in the database.
 	FieldLastAt = "last_at"
 	// FieldLastIP holds the string denoting the last_ip field in the database.
@@ -72,6 +76,8 @@ var Columns = []string{
 	FieldName,
 	FieldGender,
 	FieldBirthday,
+	FieldDepartmentID,
+	FieldPositionID,
 	FieldLastAt,
 	FieldLastIP,
 	FieldDetail,
@@ -170,6 +176,16 @@ func ByGender(opts ...sql.OrderTermOption) OrderOption {
 // ByBirthday orders the results by the birthday field.
 func ByBirthday(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldBirthday, opts...).ToFunc()
+}
+
+// ByDepartmentID orders the results by the department_id field.
+func ByDepartmentID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDepartmentID, opts...).ToFunc()
+}
+
+// ByPositionID orders the results by the position_id field.
+func ByPositionID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPositionID, opts...).ToFunc()
 }
 
 // ByLastAt orders the results by the last_at field.

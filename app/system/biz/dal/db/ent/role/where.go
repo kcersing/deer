@@ -85,19 +85,14 @@ func Name(v string) predicate.Role {
 	return predicate.Role(sql.FieldEQ(FieldName, v))
 }
 
-// Value applies equality check predicate on the "value" field. It's identical to ValueEQ.
-func Value(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldValue, v))
+// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
+func Code(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldCode, v))
 }
 
-// DefaultRouter applies equality check predicate on the "default_router" field. It's identical to DefaultRouterEQ.
-func DefaultRouter(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldDefaultRouter, v))
-}
-
-// Remark applies equality check predicate on the "remark" field. It's identical to RemarkEQ.
-func Remark(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldRemark, v))
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDesc, v))
 }
 
 // OrderNo applies equality check predicate on the "order_no" field. It's identical to OrderNoEQ.
@@ -430,229 +425,154 @@ func NameContainsFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldContainsFold(FieldName, v))
 }
 
-// ValueEQ applies the EQ predicate on the "value" field.
-func ValueEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldValue, v))
+// CodeEQ applies the EQ predicate on the "code" field.
+func CodeEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldCode, v))
 }
 
-// ValueNEQ applies the NEQ predicate on the "value" field.
-func ValueNEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldValue, v))
+// CodeNEQ applies the NEQ predicate on the "code" field.
+func CodeNEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldCode, v))
 }
 
-// ValueIn applies the In predicate on the "value" field.
-func ValueIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldIn(FieldValue, vs...))
+// CodeIn applies the In predicate on the "code" field.
+func CodeIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldCode, vs...))
 }
 
-// ValueNotIn applies the NotIn predicate on the "value" field.
-func ValueNotIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldNotIn(FieldValue, vs...))
+// CodeNotIn applies the NotIn predicate on the "code" field.
+func CodeNotIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldCode, vs...))
 }
 
-// ValueGT applies the GT predicate on the "value" field.
-func ValueGT(v string) predicate.Role {
-	return predicate.Role(sql.FieldGT(FieldValue, v))
+// CodeGT applies the GT predicate on the "code" field.
+func CodeGT(v string) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldCode, v))
 }
 
-// ValueGTE applies the GTE predicate on the "value" field.
-func ValueGTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldGTE(FieldValue, v))
+// CodeGTE applies the GTE predicate on the "code" field.
+func CodeGTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldCode, v))
 }
 
-// ValueLT applies the LT predicate on the "value" field.
-func ValueLT(v string) predicate.Role {
-	return predicate.Role(sql.FieldLT(FieldValue, v))
+// CodeLT applies the LT predicate on the "code" field.
+func CodeLT(v string) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldCode, v))
 }
 
-// ValueLTE applies the LTE predicate on the "value" field.
-func ValueLTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldLTE(FieldValue, v))
+// CodeLTE applies the LTE predicate on the "code" field.
+func CodeLTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldCode, v))
 }
 
-// ValueContains applies the Contains predicate on the "value" field.
-func ValueContains(v string) predicate.Role {
-	return predicate.Role(sql.FieldContains(FieldValue, v))
+// CodeContains applies the Contains predicate on the "code" field.
+func CodeContains(v string) predicate.Role {
+	return predicate.Role(sql.FieldContains(FieldCode, v))
 }
 
-// ValueHasPrefix applies the HasPrefix predicate on the "value" field.
-func ValueHasPrefix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasPrefix(FieldValue, v))
+// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
+func CodeHasPrefix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasPrefix(FieldCode, v))
 }
 
-// ValueHasSuffix applies the HasSuffix predicate on the "value" field.
-func ValueHasSuffix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasSuffix(FieldValue, v))
+// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
+func CodeHasSuffix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasSuffix(FieldCode, v))
 }
 
-// ValueIsNil applies the IsNil predicate on the "value" field.
-func ValueIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldValue))
+// CodeIsNil applies the IsNil predicate on the "code" field.
+func CodeIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldCode))
 }
 
-// ValueNotNil applies the NotNil predicate on the "value" field.
-func ValueNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldValue))
+// CodeNotNil applies the NotNil predicate on the "code" field.
+func CodeNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldCode))
 }
 
-// ValueEqualFold applies the EqualFold predicate on the "value" field.
-func ValueEqualFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldEqualFold(FieldValue, v))
+// CodeEqualFold applies the EqualFold predicate on the "code" field.
+func CodeEqualFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldEqualFold(FieldCode, v))
 }
 
-// ValueContainsFold applies the ContainsFold predicate on the "value" field.
-func ValueContainsFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldContainsFold(FieldValue, v))
+// CodeContainsFold applies the ContainsFold predicate on the "code" field.
+func CodeContainsFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldContainsFold(FieldCode, v))
 }
 
-// DefaultRouterEQ applies the EQ predicate on the "default_router" field.
-func DefaultRouterEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldDefaultRouter, v))
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldEQ(FieldDesc, v))
 }
 
-// DefaultRouterNEQ applies the NEQ predicate on the "default_router" field.
-func DefaultRouterNEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldDefaultRouter, v))
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.Role {
+	return predicate.Role(sql.FieldNEQ(FieldDesc, v))
 }
 
-// DefaultRouterIn applies the In predicate on the "default_router" field.
-func DefaultRouterIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldIn(FieldDefaultRouter, vs...))
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldIn(FieldDesc, vs...))
 }
 
-// DefaultRouterNotIn applies the NotIn predicate on the "default_router" field.
-func DefaultRouterNotIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldNotIn(FieldDefaultRouter, vs...))
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.Role {
+	return predicate.Role(sql.FieldNotIn(FieldDesc, vs...))
 }
 
-// DefaultRouterGT applies the GT predicate on the "default_router" field.
-func DefaultRouterGT(v string) predicate.Role {
-	return predicate.Role(sql.FieldGT(FieldDefaultRouter, v))
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.Role {
+	return predicate.Role(sql.FieldGT(FieldDesc, v))
 }
 
-// DefaultRouterGTE applies the GTE predicate on the "default_router" field.
-func DefaultRouterGTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldGTE(FieldDefaultRouter, v))
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldGTE(FieldDesc, v))
 }
 
-// DefaultRouterLT applies the LT predicate on the "default_router" field.
-func DefaultRouterLT(v string) predicate.Role {
-	return predicate.Role(sql.FieldLT(FieldDefaultRouter, v))
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.Role {
+	return predicate.Role(sql.FieldLT(FieldDesc, v))
 }
 
-// DefaultRouterLTE applies the LTE predicate on the "default_router" field.
-func DefaultRouterLTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldLTE(FieldDefaultRouter, v))
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.Role {
+	return predicate.Role(sql.FieldLTE(FieldDesc, v))
 }
 
-// DefaultRouterContains applies the Contains predicate on the "default_router" field.
-func DefaultRouterContains(v string) predicate.Role {
-	return predicate.Role(sql.FieldContains(FieldDefaultRouter, v))
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.Role {
+	return predicate.Role(sql.FieldContains(FieldDesc, v))
 }
 
-// DefaultRouterHasPrefix applies the HasPrefix predicate on the "default_router" field.
-func DefaultRouterHasPrefix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasPrefix(FieldDefaultRouter, v))
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasPrefix(FieldDesc, v))
 }
 
-// DefaultRouterHasSuffix applies the HasSuffix predicate on the "default_router" field.
-func DefaultRouterHasSuffix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasSuffix(FieldDefaultRouter, v))
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.Role {
+	return predicate.Role(sql.FieldHasSuffix(FieldDesc, v))
 }
 
-// DefaultRouterIsNil applies the IsNil predicate on the "default_router" field.
-func DefaultRouterIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldDefaultRouter))
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldDesc))
 }
 
-// DefaultRouterNotNil applies the NotNil predicate on the "default_router" field.
-func DefaultRouterNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldDefaultRouter))
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldDesc))
 }
 
-// DefaultRouterEqualFold applies the EqualFold predicate on the "default_router" field.
-func DefaultRouterEqualFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldEqualFold(FieldDefaultRouter, v))
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldEqualFold(FieldDesc, v))
 }
 
-// DefaultRouterContainsFold applies the ContainsFold predicate on the "default_router" field.
-func DefaultRouterContainsFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldContainsFold(FieldDefaultRouter, v))
-}
-
-// RemarkEQ applies the EQ predicate on the "remark" field.
-func RemarkEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldEQ(FieldRemark, v))
-}
-
-// RemarkNEQ applies the NEQ predicate on the "remark" field.
-func RemarkNEQ(v string) predicate.Role {
-	return predicate.Role(sql.FieldNEQ(FieldRemark, v))
-}
-
-// RemarkIn applies the In predicate on the "remark" field.
-func RemarkIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldIn(FieldRemark, vs...))
-}
-
-// RemarkNotIn applies the NotIn predicate on the "remark" field.
-func RemarkNotIn(vs ...string) predicate.Role {
-	return predicate.Role(sql.FieldNotIn(FieldRemark, vs...))
-}
-
-// RemarkGT applies the GT predicate on the "remark" field.
-func RemarkGT(v string) predicate.Role {
-	return predicate.Role(sql.FieldGT(FieldRemark, v))
-}
-
-// RemarkGTE applies the GTE predicate on the "remark" field.
-func RemarkGTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldGTE(FieldRemark, v))
-}
-
-// RemarkLT applies the LT predicate on the "remark" field.
-func RemarkLT(v string) predicate.Role {
-	return predicate.Role(sql.FieldLT(FieldRemark, v))
-}
-
-// RemarkLTE applies the LTE predicate on the "remark" field.
-func RemarkLTE(v string) predicate.Role {
-	return predicate.Role(sql.FieldLTE(FieldRemark, v))
-}
-
-// RemarkContains applies the Contains predicate on the "remark" field.
-func RemarkContains(v string) predicate.Role {
-	return predicate.Role(sql.FieldContains(FieldRemark, v))
-}
-
-// RemarkHasPrefix applies the HasPrefix predicate on the "remark" field.
-func RemarkHasPrefix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasPrefix(FieldRemark, v))
-}
-
-// RemarkHasSuffix applies the HasSuffix predicate on the "remark" field.
-func RemarkHasSuffix(v string) predicate.Role {
-	return predicate.Role(sql.FieldHasSuffix(FieldRemark, v))
-}
-
-// RemarkIsNil applies the IsNil predicate on the "remark" field.
-func RemarkIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldRemark))
-}
-
-// RemarkNotNil applies the NotNil predicate on the "remark" field.
-func RemarkNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldRemark))
-}
-
-// RemarkEqualFold applies the EqualFold predicate on the "remark" field.
-func RemarkEqualFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldEqualFold(FieldRemark, v))
-}
-
-// RemarkContainsFold applies the ContainsFold predicate on the "remark" field.
-func RemarkContainsFold(v string) predicate.Role {
-	return predicate.Role(sql.FieldContainsFold(FieldRemark, v))
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.Role {
+	return predicate.Role(sql.FieldContainsFold(FieldDesc, v))
 }
 
 // OrderNoEQ applies the EQ predicate on the "order_no" field.
@@ -705,6 +625,16 @@ func OrderNoNotNil() predicate.Role {
 	return predicate.Role(sql.FieldNotNull(FieldOrderNo))
 }
 
+// MenusIsNil applies the IsNil predicate on the "menus" field.
+func MenusIsNil() predicate.Role {
+	return predicate.Role(sql.FieldIsNull(FieldMenus))
+}
+
+// MenusNotNil applies the NotNil predicate on the "menus" field.
+func MenusNotNil() predicate.Role {
+	return predicate.Role(sql.FieldNotNull(FieldMenus))
+}
+
 // ApisIsNil applies the IsNil predicate on the "apis" field.
 func ApisIsNil() predicate.Role {
 	return predicate.Role(sql.FieldIsNull(FieldApis))
@@ -715,21 +645,21 @@ func ApisNotNil() predicate.Role {
 	return predicate.Role(sql.FieldNotNull(FieldApis))
 }
 
-// HasMenus applies the HasEdge predicate on the "menus" edge.
-func HasMenus() predicate.Role {
+// HasMenu applies the HasEdge predicate on the "menu" edge.
+func HasMenu() predicate.Role {
 	return predicate.Role(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, MenusTable, MenusPrimaryKey...),
+			sqlgraph.Edge(sqlgraph.M2M, false, MenuTable, MenuPrimaryKey...),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasMenusWith applies the HasEdge predicate on the "menus" edge with a given conditions (other predicates).
-func HasMenusWith(preds ...predicate.Menu) predicate.Role {
+// HasMenuWith applies the HasEdge predicate on the "menu" edge with a given conditions (other predicates).
+func HasMenuWith(preds ...predicate.Menu) predicate.Role {
 	return predicate.Role(func(s *sql.Selector) {
-		step := newMenusStep()
+		step := newMenuStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

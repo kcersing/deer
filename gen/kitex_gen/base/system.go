@@ -469,32 +469,35 @@ var fieldIDToName_Menu = map[int16]string{
 }
 
 type Role struct {
-	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name          string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Value         string  `thrift:"value,3,optional" frugal:"3,optional,string" json:"value,omitempty"`
-	DefaultRouter string  `thrift:"defaultRouter,4,optional" frugal:"4,optional,string" json:"defaultRouter,omitempty"`
-	Remark        string  `thrift:"remark,5,optional" frugal:"5,optional,string" json:"remark,omitempty"`
-	Apis          []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+	Id      int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name    string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code    string  `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc    string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Apis    []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+	Menus   []int64 `thrift:"menus,7,optional" frugal:"7,optional,list<i64>" json:"menus,omitempty"`
 }
 
 func NewRole() *Role {
 	return &Role{
-		Id:            0,
-		Name:          "",
-		Value:         "",
-		DefaultRouter: "",
-		Remark:        "",
-		Apis:          []int64{},
+		Id:      0,
+		Name:    "",
+		Code:    "",
+		Desc:    "",
+		OrderNo: 0,
+		Apis:    []int64{},
+		Menus:   []int64{},
 	}
 }
 
 func (p *Role) InitDefault() {
 	p.Id = 0
 	p.Name = ""
-	p.Value = ""
-	p.DefaultRouter = ""
-	p.Remark = ""
+	p.Code = ""
+	p.Desc = ""
+	p.OrderNo = 0
 	p.Apis = []int64{}
+	p.Menus = []int64{}
 }
 
 var Role_Id_DEFAULT int64 = 0
@@ -515,31 +518,31 @@ func (p *Role) GetName() (v string) {
 	return p.Name
 }
 
-var Role_Value_DEFAULT string = ""
+var Role_Code_DEFAULT string = ""
 
-func (p *Role) GetValue() (v string) {
-	if !p.IsSetValue() {
-		return Role_Value_DEFAULT
+func (p *Role) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return Role_Code_DEFAULT
 	}
-	return p.Value
+	return p.Code
 }
 
-var Role_DefaultRouter_DEFAULT string = ""
+var Role_Desc_DEFAULT string = ""
 
-func (p *Role) GetDefaultRouter() (v string) {
-	if !p.IsSetDefaultRouter() {
-		return Role_DefaultRouter_DEFAULT
+func (p *Role) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Role_Desc_DEFAULT
 	}
-	return p.DefaultRouter
+	return p.Desc
 }
 
-var Role_Remark_DEFAULT string = ""
+var Role_OrderNo_DEFAULT int64 = 0
 
-func (p *Role) GetRemark() (v string) {
-	if !p.IsSetRemark() {
-		return Role_Remark_DEFAULT
+func (p *Role) GetOrderNo() (v int64) {
+	if !p.IsSetOrderNo() {
+		return Role_OrderNo_DEFAULT
 	}
-	return p.Remark
+	return p.OrderNo
 }
 
 var Role_Apis_DEFAULT []int64 = []int64{}
@@ -550,23 +553,35 @@ func (p *Role) GetApis() (v []int64) {
 	}
 	return p.Apis
 }
+
+var Role_Menus_DEFAULT []int64 = []int64{}
+
+func (p *Role) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return Role_Menus_DEFAULT
+	}
+	return p.Menus
+}
 func (p *Role) SetId(val int64) {
 	p.Id = val
 }
 func (p *Role) SetName(val string) {
 	p.Name = val
 }
-func (p *Role) SetValue(val string) {
-	p.Value = val
+func (p *Role) SetCode(val string) {
+	p.Code = val
 }
-func (p *Role) SetDefaultRouter(val string) {
-	p.DefaultRouter = val
+func (p *Role) SetDesc(val string) {
+	p.Desc = val
 }
-func (p *Role) SetRemark(val string) {
-	p.Remark = val
+func (p *Role) SetOrderNo(val int64) {
+	p.OrderNo = val
 }
 func (p *Role) SetApis(val []int64) {
 	p.Apis = val
+}
+func (p *Role) SetMenus(val []int64) {
+	p.Menus = val
 }
 
 func (p *Role) IsSetId() bool {
@@ -577,20 +592,24 @@ func (p *Role) IsSetName() bool {
 	return p.Name != Role_Name_DEFAULT
 }
 
-func (p *Role) IsSetValue() bool {
-	return p.Value != Role_Value_DEFAULT
+func (p *Role) IsSetCode() bool {
+	return p.Code != Role_Code_DEFAULT
 }
 
-func (p *Role) IsSetDefaultRouter() bool {
-	return p.DefaultRouter != Role_DefaultRouter_DEFAULT
+func (p *Role) IsSetDesc() bool {
+	return p.Desc != Role_Desc_DEFAULT
 }
 
-func (p *Role) IsSetRemark() bool {
-	return p.Remark != Role_Remark_DEFAULT
+func (p *Role) IsSetOrderNo() bool {
+	return p.OrderNo != Role_OrderNo_DEFAULT
 }
 
 func (p *Role) IsSetApis() bool {
 	return p.Apis != nil
+}
+
+func (p *Role) IsSetMenus() bool {
+	return p.Menus != nil
 }
 
 func (p *Role) String() string {
@@ -603,16 +622,17 @@ func (p *Role) String() string {
 var fieldIDToName_Role = map[int16]string{
 	1: "id",
 	2: "name",
-	3: "value",
-	4: "defaultRouter",
-	5: "remark",
+	3: "code",
+	4: "desc",
+	5: "orderNo",
 	6: "apis",
+	7: "menus",
 }
 
 type Dict struct {
 	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
 	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Name      string `thrift:"name,3" frugal:"3,default,string" json:"name"`
+	Code      string `thrift:"code,3" frugal:"3,default,string" json:"code"`
 	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
 	Desc      string `thrift:"desc,6" frugal:"6,default,string" json:"desc"`
 	CreatedAt string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
@@ -623,7 +643,7 @@ func NewDict() *Dict {
 	return &Dict{
 		Id:        0,
 		Title:     "",
-		Name:      "",
+		Code:      "",
 		Status:    0,
 		Desc:      "",
 		CreatedAt: "",
@@ -634,7 +654,7 @@ func NewDict() *Dict {
 func (p *Dict) InitDefault() {
 	p.Id = 0
 	p.Title = ""
-	p.Name = ""
+	p.Code = ""
 	p.Status = 0
 	p.Desc = ""
 	p.CreatedAt = ""
@@ -649,8 +669,8 @@ func (p *Dict) GetTitle() (v string) {
 	return p.Title
 }
 
-func (p *Dict) GetName() (v string) {
-	return p.Name
+func (p *Dict) GetCode() (v string) {
+	return p.Code
 }
 
 func (p *Dict) GetStatus() (v int64) {
@@ -674,8 +694,8 @@ func (p *Dict) SetId(val int64) {
 func (p *Dict) SetTitle(val string) {
 	p.Title = val
 }
-func (p *Dict) SetName(val string) {
-	p.Name = val
+func (p *Dict) SetCode(val string) {
+	p.Code = val
 }
 func (p *Dict) SetStatus(val int64) {
 	p.Status = val
@@ -700,7 +720,7 @@ func (p *Dict) String() string {
 var fieldIDToName_Dict = map[int16]string{
 	1: "id",
 	2: "title",
-	3: "name",
+	3: "code",
 	5: "status",
 	6: "desc",
 	7: "createdAt",
@@ -710,7 +730,6 @@ var fieldIDToName_Dict = map[int16]string{
 type Dictht struct {
 	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
 	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Key       string `thrift:"key,3" frugal:"3,default,string" json:"key"`
 	Value     string `thrift:"value,4" frugal:"4,default,string" json:"value"`
 	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
 	CreatedAt string `thrift:"createdAt,6" frugal:"6,default,string" json:"createdAt"`
@@ -722,7 +741,6 @@ func NewDictht() *Dictht {
 	return &Dictht{
 		Id:        0,
 		Title:     "",
-		Key:       "",
 		Value:     "",
 		Status:    0,
 		CreatedAt: "",
@@ -733,7 +751,6 @@ func NewDictht() *Dictht {
 func (p *Dictht) InitDefault() {
 	p.Id = 0
 	p.Title = ""
-	p.Key = ""
 	p.Value = ""
 	p.Status = 0
 	p.CreatedAt = ""
@@ -746,10 +763,6 @@ func (p *Dictht) GetId() (v int64) {
 
 func (p *Dictht) GetTitle() (v string) {
 	return p.Title
-}
-
-func (p *Dictht) GetKey() (v string) {
-	return p.Key
 }
 
 func (p *Dictht) GetValue() (v string) {
@@ -777,9 +790,6 @@ func (p *Dictht) SetId(val int64) {
 func (p *Dictht) SetTitle(val string) {
 	p.Title = val
 }
-func (p *Dictht) SetKey(val string) {
-	p.Key = val
-}
 func (p *Dictht) SetValue(val string) {
 	p.Value = val
 }
@@ -806,7 +816,6 @@ func (p *Dictht) String() string {
 var fieldIDToName_Dictht = map[int16]string{
 	1: "id",
 	2: "title",
-	3: "key",
 	4: "value",
 	5: "status",
 	6: "createdAt",

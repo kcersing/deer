@@ -16,12 +16,11 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "API path | API 路径"},
-		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "API title | API 名称"},
-		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "API desc | API 描述"},
-		{Name: "api_group", Type: field.TypeString, Nullable: true, Comment: "API group | API 分组"},
-		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "HTTP method | HTTP 请求类型", Default: "POST"},
-		{Name: "disabled", Type: field.TypeInt64, Nullable: true, Comment: "disable status | 是否停用", Default: 0},
+		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "路径"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "API 名称"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "API 描述"},
+		{Name: "group", Type: field.TypeString, Nullable: true, Comment: "API 分组"},
+		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "HTTP 请求类型", Default: "POST"},
 	}
 	// SysApisTable holds the schema information for the "sys_apis" table.
 	SysApisTable = &schema.Table{
@@ -44,9 +43,9 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
-		{Name: "name", Type: field.TypeString, Unique: true, Nullable: true, Comment: "the name of dictionary for search | 字典搜索名称"},
-		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "the desc of dictionary | 字典描述"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "名称"},
+		{Name: "code", Type: field.TypeString, Unique: true, Nullable: true, Comment: "字典唯一代码"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "字典描述"},
 	}
 	// SysDictTable holds the schema information for the "sys_dict" table.
 	SysDictTable = &schema.Table{
@@ -60,7 +59,7 @@ var (
 				Columns: []*schema.Column{SysDictColumns[6]},
 			},
 			{
-				Name:    "dict_name",
+				Name:    "dict_code",
 				Unique:  true,
 				Columns: []*schema.Column{SysDictColumns[7]},
 			},
@@ -74,10 +73,9 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "the title shown in the ui | 展示名称 （建议配合i18n）"},
-		{Name: "key", Type: field.TypeString, Nullable: true, Comment: "key | 键"},
-		{Name: "value", Type: field.TypeString, Nullable: true, Comment: "value | 值"},
-		{Name: "dict_id", Type: field.TypeInt64, Nullable: true, Comment: "Dictionary ID | 字典ID"},
+		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "展示名称"},
+		{Name: "value", Type: field.TypeString, Nullable: true, Comment: "值"},
+		{Name: "dict_id", Type: field.TypeInt64, Nullable: true, Comment: "字典ID"},
 	}
 	// SysDicthtTable holds the schema information for the "sys_dictht" table.
 	SysDicthtTable = &schema.Table{
@@ -87,7 +85,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_dictht_sys_dict_dictht",
-				Columns:    []*schema.Column{SysDicthtColumns[9]},
+				Columns:    []*schema.Column{SysDicthtColumns[8]},
 				RefColumns: []*schema.Column{SysDictColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -99,19 +97,14 @@ var (
 				Columns: []*schema.Column{SysDicthtColumns[6]},
 			},
 			{
-				Name:    "dictht_key",
+				Name:    "dictht_value",
 				Unique:  true,
 				Columns: []*schema.Column{SysDicthtColumns[7]},
 			},
 			{
-				Name:    "dictht_value",
-				Unique:  true,
-				Columns: []*schema.Column{SysDicthtColumns[8]},
-			},
-			{
 				Name:    "dictht_dict_id",
 				Unique:  true,
-				Columns: []*schema.Column{SysDicthtColumns[9]},
+				Columns: []*schema.Column{SysDicthtColumns[8]},
 			},
 		},
 	}
@@ -155,16 +148,16 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "index path | 菜单路由路径", Default: ""},
-		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "index name | 菜单名称"},
-		{Name: "component", Type: field.TypeString, Nullable: true, Comment: "the path of vue file | 组件路径", Default: ""},
-		{Name: "redirect", Type: field.TypeString, Nullable: true, Comment: "redirect path | 跳转路径 （外链）", Default: ""},
-		{Name: "icon", Type: field.TypeString, Nullable: true, Comment: "menu icon | 菜单图标"},
-		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "sorting numbers | 排序编号"},
+		{Name: "path", Type: field.TypeString, Nullable: true, Comment: "菜单路由路径", Default: ""},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "菜单名称"},
+		{Name: "component", Type: field.TypeString, Nullable: true, Comment: " 组件路径", Default: ""},
+		{Name: "redirect", Type: field.TypeString, Nullable: true, Comment: "跳转路径 （外链）", Default: ""},
+		{Name: "icon", Type: field.TypeString, Nullable: true, Comment: "菜单图标"},
+		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "排序编号"},
 		{Name: "ignore", Type: field.TypeInt64, Nullable: true, Comment: "当前路由是否渲染菜单项，为 1 的话不会在菜单中显示，但可通过路由地址访问"},
-		{Name: "menu_type", Type: field.TypeInt64, Nullable: true, Comment: "menu type | 菜单类型 0 目录 1 菜单 2 按钮"},
-		{Name: "level", Type: field.TypeInt64, Nullable: true, Comment: "menu level | 菜单层级"},
-		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "parent menu ID | 父菜单ID"},
+		{Name: "menu_type", Type: field.TypeInt64, Nullable: true, Comment: "菜单类型 0 目录 1 菜单 2 按钮"},
+		{Name: "level", Type: field.TypeInt64, Nullable: true, Comment: "菜单层级"},
+		{Name: "parent_id", Type: field.TypeInt64, Nullable: true, Comment: "父菜单ID"},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
 	SysMenusTable = &schema.Table{
@@ -213,12 +206,12 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "role name | 角色名"},
-		{Name: "value", Type: field.TypeString, Unique: true, Nullable: true, Comment: "role value for permission control in front end | 角色值，用于前端权限控制"},
-		{Name: "default_router", Type: field.TypeString, Nullable: true, Comment: "default menu : dashboard | 默认登录页面", Default: "dashboard"},
-		{Name: "remark", Type: field.TypeString, Nullable: true, Comment: "remark | 备注", Default: ""},
-		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "order number | 排序编号", Default: 0},
-		{Name: "apis", Type: field.TypeJSON, Nullable: true, Comment: "apis"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "角色名"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "角色标识"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "描述", Default: ""},
+		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "排序编号", Default: 0},
+		{Name: "menus", Type: field.TypeJSON, Nullable: true, Comment: "分配的菜单列表"},
+		{Name: "apis", Type: field.TypeJSON, Nullable: true, Comment: "分配的API列表"},
 	}
 	// SysRolesTable holds the schema information for the "sys_roles" table.
 	SysRolesTable = &schema.Table{
@@ -264,26 +257,26 @@ var (
 		Columns:    SysSmsLogColumns,
 		PrimaryKey: []*schema.Column{SysSmsLogColumns[0]},
 	}
-	// RoleMenusColumns holds the columns for the "role_menus" table.
-	RoleMenusColumns = []*schema.Column{
+	// RoleMenuColumns holds the columns for the "role_menu" table.
+	RoleMenuColumns = []*schema.Column{
 		{Name: "role_id", Type: field.TypeInt64},
 		{Name: "menu_id", Type: field.TypeInt64},
 	}
-	// RoleMenusTable holds the schema information for the "role_menus" table.
-	RoleMenusTable = &schema.Table{
-		Name:       "role_menus",
-		Columns:    RoleMenusColumns,
-		PrimaryKey: []*schema.Column{RoleMenusColumns[0], RoleMenusColumns[1]},
+	// RoleMenuTable holds the schema information for the "role_menu" table.
+	RoleMenuTable = &schema.Table{
+		Name:       "role_menu",
+		Columns:    RoleMenuColumns,
+		PrimaryKey: []*schema.Column{RoleMenuColumns[0], RoleMenuColumns[1]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "role_menus_role_id",
-				Columns:    []*schema.Column{RoleMenusColumns[0]},
+				Symbol:     "role_menu_role_id",
+				Columns:    []*schema.Column{RoleMenuColumns[0]},
 				RefColumns: []*schema.Column{SysRolesColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
 			{
-				Symbol:     "role_menus_menu_id",
-				Columns:    []*schema.Column{RoleMenusColumns[1]},
+				Symbol:     "role_menu_menu_id",
+				Columns:    []*schema.Column{RoleMenuColumns[1]},
 				RefColumns: []*schema.Column{SysMenusColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
@@ -325,7 +318,7 @@ var (
 		SysRolesTable,
 		SysSmsTable,
 		SysSmsLogTable,
-		RoleMenusTable,
+		RoleMenuTable,
 		RoleAPITable,
 	}
 )
@@ -360,8 +353,8 @@ func init() {
 	SysSmsLogTable.Annotation = &entsql.Annotation{
 		Table: "sys_sms_log",
 	}
-	RoleMenusTable.ForeignKeys[0].RefTable = SysRolesTable
-	RoleMenusTable.ForeignKeys[1].RefTable = SysMenusTable
+	RoleMenuTable.ForeignKeys[0].RefTable = SysRolesTable
+	RoleMenuTable.ForeignKeys[1].RefTable = SysMenusTable
 	RoleAPITable.ForeignKeys[0].RefTable = SysRolesTable
 	RoleAPITable.ForeignKeys[1].RefTable = SysApisTable
 }

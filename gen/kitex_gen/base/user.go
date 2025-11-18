@@ -7,42 +7,46 @@ import (
 )
 
 type User struct {
-	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  string  `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  string  `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    string  `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      string  `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender    int64   `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  string  `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    string  `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    string  `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Detail    string  `thrift:"detail,13,optional" frugal:"13,optional,string" json:"detail,omitempty"`
-	Roles     []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
-	CreatedAt string  `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string  `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId int64   `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username      string  `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password      string  `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar        string  `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile        string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name          string  `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status        int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Gender        int64   `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday      string  `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt        string  `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp        string  `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Desc          string  `thrift:"desc,13,optional" frugal:"13,optional,string" json:"desc,omitempty"`
+	Roles         []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
+	DepartmentsId int64   `thrift:"departmentsId,15,optional" frugal:"15,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId   int64   `thrift:"positionsId,16,optional" frugal:"16,optional,i64" json:"positionsId,omitempty"`
+	CreatedAt     string  `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt     string  `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId     int64   `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUser() *User {
 	return &User{
-		Id:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		Detail:    "",
-		Roles:     []*Role{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
+		Id:            0,
+		Username:      "",
+		Password:      "",
+		Avatar:        "",
+		Mobile:        "",
+		Name:          "",
+		Status:        0,
+		Gender:        0,
+		Birthday:      "",
+		LastAt:        "",
+		LastIp:        "",
+		Desc:          "",
+		Roles:         []*Role{},
+		DepartmentsId: 0,
+		PositionsId:   0,
+		CreatedAt:     "",
+		UpdatedAt:     "",
+		CreatedId:     0,
 	}
 }
 
@@ -58,8 +62,10 @@ func (p *User) InitDefault() {
 	p.Birthday = ""
 	p.LastAt = ""
 	p.LastIp = ""
-	p.Detail = ""
+	p.Desc = ""
 	p.Roles = []*Role{}
+	p.DepartmentsId = 0
+	p.PositionsId = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
@@ -164,13 +170,13 @@ func (p *User) GetLastIp() (v string) {
 	return p.LastIp
 }
 
-var User_Detail_DEFAULT string = ""
+var User_Desc_DEFAULT string = ""
 
-func (p *User) GetDetail() (v string) {
-	if !p.IsSetDetail() {
-		return User_Detail_DEFAULT
+func (p *User) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return User_Desc_DEFAULT
 	}
-	return p.Detail
+	return p.Desc
 }
 
 var User_Roles_DEFAULT []*Role = []*Role{}
@@ -180,6 +186,24 @@ func (p *User) GetRoles() (v []*Role) {
 		return User_Roles_DEFAULT
 	}
 	return p.Roles
+}
+
+var User_DepartmentsId_DEFAULT int64 = 0
+
+func (p *User) GetDepartmentsId() (v int64) {
+	if !p.IsSetDepartmentsId() {
+		return User_DepartmentsId_DEFAULT
+	}
+	return p.DepartmentsId
+}
+
+var User_PositionsId_DEFAULT int64 = 0
+
+func (p *User) GetPositionsId() (v int64) {
+	if !p.IsSetPositionsId() {
+		return User_PositionsId_DEFAULT
+	}
+	return p.PositionsId
 }
 
 var User_CreatedAt_DEFAULT string = ""
@@ -241,11 +265,17 @@ func (p *User) SetLastAt(val string) {
 func (p *User) SetLastIp(val string) {
 	p.LastIp = val
 }
-func (p *User) SetDetail(val string) {
-	p.Detail = val
+func (p *User) SetDesc(val string) {
+	p.Desc = val
 }
 func (p *User) SetRoles(val []*Role) {
 	p.Roles = val
+}
+func (p *User) SetDepartmentsId(val int64) {
+	p.DepartmentsId = val
+}
+func (p *User) SetPositionsId(val int64) {
+	p.PositionsId = val
 }
 func (p *User) SetCreatedAt(val string) {
 	p.CreatedAt = val
@@ -301,12 +331,20 @@ func (p *User) IsSetLastIp() bool {
 	return p.LastIp != User_LastIp_DEFAULT
 }
 
-func (p *User) IsSetDetail() bool {
-	return p.Detail != User_Detail_DEFAULT
+func (p *User) IsSetDesc() bool {
+	return p.Desc != User_Desc_DEFAULT
 }
 
 func (p *User) IsSetRoles() bool {
 	return p.Roles != nil
+}
+
+func (p *User) IsSetDepartmentsId() bool {
+	return p.DepartmentsId != User_DepartmentsId_DEFAULT
+}
+
+func (p *User) IsSetPositionsId() bool {
+	return p.PositionsId != User_PositionsId_DEFAULT
 }
 
 func (p *User) IsSetCreatedAt() bool {
@@ -340,8 +378,452 @@ var fieldIDToName_User = map[int16]string{
 	10:  "birthday",
 	11:  "lastAt",
 	12:  "lastIp",
-	13:  "detail",
+	13:  "desc",
 	14:  "roles",
+	15:  "departmentsId",
+	16:  "positionsId",
+	251: "createdAt",
+	252: "updatedAt",
+	253: "createdId",
+}
+
+type Departments struct {
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ManagerId string `thrift:"managerId,3,optional" frugal:"3,optional,string" json:"managerId,omitempty"`
+	ParentId  string `thrift:"parentId,4,optional" frugal:"4,optional,string" json:"parentId,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	CreatedAt string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+}
+
+func NewDepartments() *Departments {
+	return &Departments{
+		Id:        0,
+		Name:      "",
+		ManagerId: "",
+		ParentId:  "",
+		Desc:      "",
+		Status:    0,
+		CreatedAt: "",
+		UpdatedAt: "",
+		CreatedId: 0,
+	}
+}
+
+func (p *Departments) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.ManagerId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.CreatedId = 0
+}
+
+var Departments_Id_DEFAULT int64 = 0
+
+func (p *Departments) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Departments_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var Departments_Name_DEFAULT string = ""
+
+func (p *Departments) GetName() (v string) {
+	if !p.IsSetName() {
+		return Departments_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var Departments_ManagerId_DEFAULT string = ""
+
+func (p *Departments) GetManagerId() (v string) {
+	if !p.IsSetManagerId() {
+		return Departments_ManagerId_DEFAULT
+	}
+	return p.ManagerId
+}
+
+var Departments_ParentId_DEFAULT string = ""
+
+func (p *Departments) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return Departments_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var Departments_Desc_DEFAULT string = ""
+
+func (p *Departments) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Departments_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var Departments_Status_DEFAULT int64 = 0
+
+func (p *Departments) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Departments_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var Departments_CreatedAt_DEFAULT string = ""
+
+func (p *Departments) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Departments_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var Departments_UpdatedAt_DEFAULT string = ""
+
+func (p *Departments) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return Departments_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var Departments_CreatedId_DEFAULT int64 = 0
+
+func (p *Departments) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Departments_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *Departments) SetId(val int64) {
+	p.Id = val
+}
+func (p *Departments) SetName(val string) {
+	p.Name = val
+}
+func (p *Departments) SetManagerId(val string) {
+	p.ManagerId = val
+}
+func (p *Departments) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *Departments) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *Departments) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *Departments) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Departments) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *Departments) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+
+func (p *Departments) IsSetId() bool {
+	return p.Id != Departments_Id_DEFAULT
+}
+
+func (p *Departments) IsSetName() bool {
+	return p.Name != Departments_Name_DEFAULT
+}
+
+func (p *Departments) IsSetManagerId() bool {
+	return p.ManagerId != Departments_ManagerId_DEFAULT
+}
+
+func (p *Departments) IsSetParentId() bool {
+	return p.ParentId != Departments_ParentId_DEFAULT
+}
+
+func (p *Departments) IsSetDesc() bool {
+	return p.Desc != Departments_Desc_DEFAULT
+}
+
+func (p *Departments) IsSetStatus() bool {
+	return p.Status != Departments_Status_DEFAULT
+}
+
+func (p *Departments) IsSetCreatedAt() bool {
+	return p.CreatedAt != Departments_CreatedAt_DEFAULT
+}
+
+func (p *Departments) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != Departments_UpdatedAt_DEFAULT
+}
+
+func (p *Departments) IsSetCreatedId() bool {
+	return p.CreatedId != Departments_CreatedId_DEFAULT
+}
+
+func (p *Departments) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Departments(%+v)", *p)
+}
+
+var fieldIDToName_Departments = map[int16]string{
+	1:   "id",
+	2:   "name",
+	3:   "managerId",
+	4:   "parentId",
+	5:   "desc",
+	7:   "status",
+	251: "createdAt",
+	252: "updatedAt",
+	253: "createdId",
+}
+
+type Positions struct {
+	Id           int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name         string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code         string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	DepartmentId string `thrift:"departmentId,4,optional" frugal:"4,optional,string" json:"departmentId,omitempty"`
+	ParentId     string `thrift:"parentId,5,optional" frugal:"5,optional,string" json:"parentId,omitempty"`
+	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
+	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
+	CreatedAt    string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt    string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId    int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+}
+
+func NewPositions() *Positions {
+	return &Positions{
+		Id:           0,
+		Name:         "",
+		Code:         "",
+		DepartmentId: "",
+		ParentId:     "",
+		Desc:         "",
+		Status:       0,
+		Quota:        0,
+		CreatedAt:    "",
+		UpdatedAt:    "",
+		CreatedId:    0,
+	}
+}
+
+func (p *Positions) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.Code = ""
+	p.DepartmentId = ""
+	p.ParentId = ""
+	p.Desc = ""
+	p.Status = 0
+	p.Quota = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.CreatedId = 0
+}
+
+var Positions_Id_DEFAULT int64 = 0
+
+func (p *Positions) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Positions_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var Positions_Name_DEFAULT string = ""
+
+func (p *Positions) GetName() (v string) {
+	if !p.IsSetName() {
+		return Positions_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var Positions_Code_DEFAULT string = ""
+
+func (p *Positions) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return Positions_Code_DEFAULT
+	}
+	return p.Code
+}
+
+var Positions_DepartmentId_DEFAULT string = ""
+
+func (p *Positions) GetDepartmentId() (v string) {
+	if !p.IsSetDepartmentId() {
+		return Positions_DepartmentId_DEFAULT
+	}
+	return p.DepartmentId
+}
+
+var Positions_ParentId_DEFAULT string = ""
+
+func (p *Positions) GetParentId() (v string) {
+	if !p.IsSetParentId() {
+		return Positions_ParentId_DEFAULT
+	}
+	return p.ParentId
+}
+
+var Positions_Desc_DEFAULT string = ""
+
+func (p *Positions) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return Positions_Desc_DEFAULT
+	}
+	return p.Desc
+}
+
+var Positions_Status_DEFAULT int64 = 0
+
+func (p *Positions) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Positions_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var Positions_Quota_DEFAULT int64 = 0
+
+func (p *Positions) GetQuota() (v int64) {
+	if !p.IsSetQuota() {
+		return Positions_Quota_DEFAULT
+	}
+	return p.Quota
+}
+
+var Positions_CreatedAt_DEFAULT string = ""
+
+func (p *Positions) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Positions_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var Positions_UpdatedAt_DEFAULT string = ""
+
+func (p *Positions) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return Positions_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var Positions_CreatedId_DEFAULT int64 = 0
+
+func (p *Positions) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Positions_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *Positions) SetId(val int64) {
+	p.Id = val
+}
+func (p *Positions) SetName(val string) {
+	p.Name = val
+}
+func (p *Positions) SetCode(val string) {
+	p.Code = val
+}
+func (p *Positions) SetDepartmentId(val string) {
+	p.DepartmentId = val
+}
+func (p *Positions) SetParentId(val string) {
+	p.ParentId = val
+}
+func (p *Positions) SetDesc(val string) {
+	p.Desc = val
+}
+func (p *Positions) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *Positions) SetQuota(val int64) {
+	p.Quota = val
+}
+func (p *Positions) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Positions) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *Positions) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+
+func (p *Positions) IsSetId() bool {
+	return p.Id != Positions_Id_DEFAULT
+}
+
+func (p *Positions) IsSetName() bool {
+	return p.Name != Positions_Name_DEFAULT
+}
+
+func (p *Positions) IsSetCode() bool {
+	return p.Code != Positions_Code_DEFAULT
+}
+
+func (p *Positions) IsSetDepartmentId() bool {
+	return p.DepartmentId != Positions_DepartmentId_DEFAULT
+}
+
+func (p *Positions) IsSetParentId() bool {
+	return p.ParentId != Positions_ParentId_DEFAULT
+}
+
+func (p *Positions) IsSetDesc() bool {
+	return p.Desc != Positions_Desc_DEFAULT
+}
+
+func (p *Positions) IsSetStatus() bool {
+	return p.Status != Positions_Status_DEFAULT
+}
+
+func (p *Positions) IsSetQuota() bool {
+	return p.Quota != Positions_Quota_DEFAULT
+}
+
+func (p *Positions) IsSetCreatedAt() bool {
+	return p.CreatedAt != Positions_CreatedAt_DEFAULT
+}
+
+func (p *Positions) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != Positions_UpdatedAt_DEFAULT
+}
+
+func (p *Positions) IsSetCreatedId() bool {
+	return p.CreatedId != Positions_CreatedId_DEFAULT
+}
+
+func (p *Positions) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Positions(%+v)", *p)
+}
+
+var fieldIDToName_Positions = map[int16]string{
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "departmentId",
+	5:   "parentId",
+	6:   "desc",
+	7:   "status",
+	9:   "quota",
 	251: "createdAt",
 	252: "updatedAt",
 	253: "createdId",

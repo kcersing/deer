@@ -50,7 +50,7 @@ func (s *CreateRoleApiService) Run(req *system.CreateMenuAuthReq) (resp *base.Ni
 	}
 
 	jsonBytes, _ := json.Marshal(req.GetIds())
-	var intSlice []int
+	var intSlice []int64
 	err = json.Unmarshal(jsonBytes, &intSlice)
 	if err != nil {
 		return nil, err

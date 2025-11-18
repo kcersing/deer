@@ -8,7 +8,12 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+	"user/biz/dal/db/ent/department"
+	"user/biz/dal/db/ent/position"
 	"user/biz/dal/db/ent/user"
+	"user/biz/dal/db/ent/userloginlog"
+	"user/biz/dal/db/ent/userloginrestriction"
+	"user/biz/dal/db/ent/useroperationlog"
 	"user/biz/dal/db/ent/userrole"
 
 	"entgo.io/ent"
@@ -74,8 +79,13 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table:     user.ValidColumn,
-			userrole.Table: userrole.ValidColumn,
+			department.Table:           department.ValidColumn,
+			position.Table:             position.ValidColumn,
+			user.Table:                 user.ValidColumn,
+			userloginlog.Table:         userloginlog.ValidColumn,
+			userloginrestriction.Table: userloginrestriction.ValidColumn,
+			useroperationlog.Table:     useroperationlog.ValidColumn,
+			userrole.Table:             userrole.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

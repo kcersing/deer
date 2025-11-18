@@ -26,8 +26,6 @@ const (
 	FieldStatus = "status"
 	// FieldTitle holds the string denoting the title field in the database.
 	FieldTitle = "title"
-	// FieldKey holds the string denoting the key field in the database.
-	FieldKey = "key"
 	// FieldValue holds the string denoting the value field in the database.
 	FieldValue = "value"
 	// FieldDictID holds the string denoting the dict_id field in the database.
@@ -54,7 +52,6 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldStatus,
 	FieldTitle,
-	FieldKey,
 	FieldValue,
 	FieldDictID,
 }
@@ -120,11 +117,6 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 // ByTitle orders the results by the title field.
 func ByTitle(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTitle, opts...).ToFunc()
-}
-
-// ByKey orders the results by the key field.
-func ByKey(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldKey, opts...).ToFunc()
 }
 
 // ByValue orders the results by the value field.

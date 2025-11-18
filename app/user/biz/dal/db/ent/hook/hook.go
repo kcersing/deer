@@ -8,6 +8,30 @@ import (
 	"user/biz/dal/db/ent"
 )
 
+// The DepartmentFunc type is an adapter to allow the use of ordinary
+// function as Department mutator.
+type DepartmentFunc func(context.Context, *ent.DepartmentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f DepartmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.DepartmentMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.DepartmentMutation", m)
+}
+
+// The PositionFunc type is an adapter to allow the use of ordinary
+// function as Position mutator.
+type PositionFunc func(context.Context, *ent.PositionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PositionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.PositionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PositionMutation", m)
+}
+
 // The UserFunc type is an adapter to allow the use of ordinary
 // function as User mutator.
 type UserFunc func(context.Context, *ent.UserMutation) (ent.Value, error)
@@ -18,6 +42,42 @@ func (f UserFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error)
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserMutation", m)
+}
+
+// The UserLoginLogFunc type is an adapter to allow the use of ordinary
+// function as UserLoginLog mutator.
+type UserLoginLogFunc func(context.Context, *ent.UserLoginLogMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UserLoginLogFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UserLoginLogMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserLoginLogMutation", m)
+}
+
+// The UserLoginRestrictionFunc type is an adapter to allow the use of ordinary
+// function as UserLoginRestriction mutator.
+type UserLoginRestrictionFunc func(context.Context, *ent.UserLoginRestrictionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UserLoginRestrictionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UserLoginRestrictionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserLoginRestrictionMutation", m)
+}
+
+// The UserOperationLogFunc type is an adapter to allow the use of ordinary
+// function as UserOperationLog mutator.
+type UserOperationLogFunc func(context.Context, *ent.UserOperationLogMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UserOperationLogFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.UserOperationLogMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserOperationLogMutation", m)
 }
 
 // The UserRoleFunc type is an adapter to allow the use of ordinary

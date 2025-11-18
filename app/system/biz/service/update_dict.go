@@ -27,7 +27,7 @@ func (s *UpdateDictService) Run(req *base.Dict) (resp *system.DictResp, err erro
 	// update dictionary
 	save, err := db.Client.Dict.UpdateOneID(req.GetId()).
 		SetTitle(req.Title).
-		SetName(req.Name).
+		SetCode(req.Code).
 		SetStatus(req.Status).
 		SetDesc(req.Desc).
 		Save(s.ctx)

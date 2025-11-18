@@ -22,14 +22,14 @@ func NewCreateDictService(ctx context.Context) *CreateDictService {
 func (s *CreateDictService) Run(req *Base.Dict) (resp *system.DictResp, err error) {
 	// Finish your business logic.
 
-	dictionaryExist, _ := db.Client.Dict.Query().Where(dict.Name(req.GetName())).Exist(s.ctx)
+	dictionaryExist, _ := db.Client.Dict.Query().Where(dict.Code(req.GetCode())).Exist(s.ctx)
 	if dictionaryExist {
 		return nil, errors.New("dict name already exists")
 	}
 	// create dictionary
 	save, err := db.Client.Dict.Create().
 		SetTitle(req.GetTitle()).
-		SetName(req.GetName()).
+		SetCode(req.GetCode()).
 		SetDesc(req.GetDesc()).
 		Save(s.ctx)
 	if err != nil {

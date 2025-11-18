@@ -26,18 +26,16 @@ type API struct {
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
-	// API path | API 路径
+	// 路径
 	Path string `json:"path,omitempty"`
-	// API title | API 名称
+	// API 名称
 	Title string `json:"title,omitempty"`
-	// API desc | API 描述
+	// API 描述
 	Desc string `json:"desc,omitempty"`
-	// API group | API 分组
-	APIGroup string `json:"api_group,omitempty"`
-	// HTTP method | HTTP 请求类型
+	// API 分组
+	Group string `json:"group,omitempty"`
+	// HTTP 请求类型
 	Method string `json:"method,omitempty"`
-	// disable status | 是否停用
-	Disabled int64 `json:"disabled,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the APIQuery when eager-loading is set.
 	Edges        APIEdges `json:"edges"`
@@ -67,9 +65,9 @@ func (*API) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case api.FieldID, api.FieldDelete, api.FieldCreatedID, api.FieldDisabled:
+		case api.FieldID, api.FieldDelete, api.FieldCreatedID:
 			values[i] = new(sql.NullInt64)
-		case api.FieldPath, api.FieldTitle, api.FieldDesc, api.FieldAPIGroup, api.FieldMethod:
+		case api.FieldPath, api.FieldTitle, api.FieldDesc, api.FieldGroup, api.FieldMethod:
 			values[i] = new(sql.NullString)
 		case api.FieldCreatedAt, api.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -136,23 +134,17 @@ func (_m *API) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Desc = value.String
 			}
-		case api.FieldAPIGroup:
+		case api.FieldGroup:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field api_group", values[i])
+				return fmt.Errorf("unexpected type %T for field group", values[i])
 			} else if value.Valid {
-				_m.APIGroup = value.String
+				_m.Group = value.String
 			}
 		case api.FieldMethod:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field method", values[i])
 			} else if value.Valid {
 				_m.Method = value.String
-			}
-		case api.FieldDisabled:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field disabled", values[i])
-			} else if value.Valid {
-				_m.Disabled = value.Int64
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -216,14 +208,11 @@ func (_m *API) String() string {
 	builder.WriteString("desc=")
 	builder.WriteString(_m.Desc)
 	builder.WriteString(", ")
-	builder.WriteString("api_group=")
-	builder.WriteString(_m.APIGroup)
+	builder.WriteString("group=")
+	builder.WriteString(_m.Group)
 	builder.WriteString(", ")
 	builder.WriteString("method=")
 	builder.WriteString(_m.Method)
-	builder.WriteString(", ")
-	builder.WriteString("disabled=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Disabled))
 	builder.WriteByte(')')
 	return builder.String()
 }

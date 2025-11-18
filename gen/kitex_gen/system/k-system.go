@@ -3859,22 +3859,8 @@ func (p *CreateRoleReq) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField5(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 6:
-			if fieldTypeId == thrift.LIST {
-				l, err = p.FastReadField6(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -3942,7 +3928,7 @@ func (p *CreateRoleReq) FastReadField3(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Value = _field
+	p.Code = _field
 	return offset, nil
 }
 
@@ -3956,45 +3942,21 @@ func (p *CreateRoleReq) FastReadField4(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.DefaultRouter = _field
+	p.Desc = _field
 	return offset, nil
 }
 
 func (p *CreateRoleReq) FastReadField5(buf []byte) (int, error) {
 	offset := 0
 
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
 		_field = v
 	}
-	p.Remark = _field
-	return offset, nil
-}
-
-func (p *CreateRoleReq) FastReadField6(buf []byte) (int, error) {
-	offset := 0
-
-	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
-	offset += l
-	if err != nil {
-		return offset, err
-	}
-	_field := make([]int64, 0, size)
-	for i := 0; i < size; i++ {
-		var _elem int64
-		if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
-			return offset, err
-		} else {
-			offset += l
-			_elem = v
-		}
-
-		_field = append(_field, _elem)
-	}
-	p.Apis = _field
+	p.OrderNo = _field
 	return offset, nil
 }
 
@@ -4006,11 +3968,10 @@ func (p *CreateRoleReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
+		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
-		offset += p.fastWriteField5(buf[offset:], w)
-		offset += p.fastWriteField6(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4024,7 +3985,6 @@ func (p *CreateRoleReq) BLength() int {
 		l += p.field3Length()
 		l += p.field4Length()
 		l += p.field5Length()
-		l += p.field6Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4050,43 +4010,27 @@ func (p *CreateRoleReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *CreateRoleReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetValue() {
+	if p.IsSetCode() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 3)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Value)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Code)
 	}
 	return offset
 }
 
 func (p *CreateRoleReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDefaultRouter() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.DefaultRouter)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
 
 func (p *CreateRoleReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetRemark() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Remark)
-	}
-	return offset
-}
-
-func (p *CreateRoleReq) fastWriteField6(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetApis() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 6)
-		listBeginOffset := offset
-		offset += thrift.Binary.ListBeginLength()
-		var length int
-		for _, v := range p.Apis {
-			length++
-			offset += thrift.Binary.WriteI64(buf[offset:], v)
-		}
-		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.I64, length)
+	if p.IsSetOrderNo() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 5)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.OrderNo)
 	}
 	return offset
 }
@@ -4111,38 +4055,27 @@ func (p *CreateRoleReq) field2Length() int {
 
 func (p *CreateRoleReq) field3Length() int {
 	l := 0
-	if p.IsSetValue() {
+	if p.IsSetCode() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Value)
+		l += thrift.Binary.StringLengthNocopy(p.Code)
 	}
 	return l
 }
 
 func (p *CreateRoleReq) field4Length() int {
 	l := 0
-	if p.IsSetDefaultRouter() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.DefaultRouter)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
 
 func (p *CreateRoleReq) field5Length() int {
 	l := 0
-	if p.IsSetRemark() {
+	if p.IsSetOrderNo() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Remark)
-	}
-	return l
-}
-
-func (p *CreateRoleReq) field6Length() int {
-	l := 0
-	if p.IsSetApis() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.ListBeginLength()
-		l +=
-			thrift.Binary.I64Length() * len(p.Apis)
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }
@@ -4420,22 +4353,8 @@ func (p *UpdateRoleReq) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 5:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField5(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 6:
-			if fieldTypeId == thrift.LIST {
-				l, err = p.FastReadField6(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -4503,7 +4422,7 @@ func (p *UpdateRoleReq) FastReadField3(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Value = _field
+	p.Code = _field
 	return offset, nil
 }
 
@@ -4517,45 +4436,21 @@ func (p *UpdateRoleReq) FastReadField4(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.DefaultRouter = _field
+	p.Desc = _field
 	return offset, nil
 }
 
 func (p *UpdateRoleReq) FastReadField5(buf []byte) (int, error) {
 	offset := 0
 
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
 		_field = v
 	}
-	p.Remark = _field
-	return offset, nil
-}
-
-func (p *UpdateRoleReq) FastReadField6(buf []byte) (int, error) {
-	offset := 0
-
-	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
-	offset += l
-	if err != nil {
-		return offset, err
-	}
-	_field := make([]int64, 0, size)
-	for i := 0; i < size; i++ {
-		var _elem int64
-		if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
-			return offset, err
-		} else {
-			offset += l
-			_elem = v
-		}
-
-		_field = append(_field, _elem)
-	}
-	p.Apis = _field
+	p.OrderNo = _field
 	return offset, nil
 }
 
@@ -4567,11 +4462,10 @@ func (p *UpdateRoleReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
+		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
-		offset += p.fastWriteField5(buf[offset:], w)
-		offset += p.fastWriteField6(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4585,7 +4479,6 @@ func (p *UpdateRoleReq) BLength() int {
 		l += p.field3Length()
 		l += p.field4Length()
 		l += p.field5Length()
-		l += p.field6Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4611,43 +4504,27 @@ func (p *UpdateRoleReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *UpdateRoleReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetValue() {
+	if p.IsSetCode() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 3)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Value)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Code)
 	}
 	return offset
 }
 
 func (p *UpdateRoleReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetDefaultRouter() {
+	if p.IsSetDesc() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.DefaultRouter)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Desc)
 	}
 	return offset
 }
 
 func (p *UpdateRoleReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetRemark() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Remark)
-	}
-	return offset
-}
-
-func (p *UpdateRoleReq) fastWriteField6(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetApis() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 6)
-		listBeginOffset := offset
-		offset += thrift.Binary.ListBeginLength()
-		var length int
-		for _, v := range p.Apis {
-			length++
-			offset += thrift.Binary.WriteI64(buf[offset:], v)
-		}
-		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.I64, length)
+	if p.IsSetOrderNo() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 5)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.OrderNo)
 	}
 	return offset
 }
@@ -4672,38 +4549,27 @@ func (p *UpdateRoleReq) field2Length() int {
 
 func (p *UpdateRoleReq) field3Length() int {
 	l := 0
-	if p.IsSetValue() {
+	if p.IsSetCode() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Value)
+		l += thrift.Binary.StringLengthNocopy(p.Code)
 	}
 	return l
 }
 
 func (p *UpdateRoleReq) field4Length() int {
 	l := 0
-	if p.IsSetDefaultRouter() {
+	if p.IsSetDesc() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.DefaultRouter)
+		l += thrift.Binary.StringLengthNocopy(p.Desc)
 	}
 	return l
 }
 
 func (p *UpdateRoleReq) field5Length() int {
 	l := 0
-	if p.IsSetRemark() {
+	if p.IsSetOrderNo() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Remark)
-	}
-	return l
-}
-
-func (p *UpdateRoleReq) field6Length() int {
-	l := 0
-	if p.IsSetApis() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.ListBeginLength()
-		l +=
-			thrift.Binary.I64Length() * len(p.Apis)
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }
@@ -4909,20 +4775,6 @@ func (p *DictListReq) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField2(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
 		case 3:
 			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField3(buf[offset:])
@@ -4979,21 +4831,7 @@ func (p *DictListReq) FastReadField1(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Title = _field
-	return offset, nil
-}
-
-func (p *DictListReq) FastReadField2(buf []byte) (int, error) {
-	offset := 0
-
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = v
-	}
-	p.Name = _field
+	p.Key = _field
 	return offset, nil
 }
 
@@ -5035,7 +4873,6 @@ func (p *DictListReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField1(buf[offset:], w)
-		offset += p.fastWriteField2(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -5045,7 +4882,6 @@ func (p *DictListReq) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
-		l += p.field2Length()
 		l += p.field3Length()
 		l += p.field4Length()
 	}
@@ -5055,18 +4891,9 @@ func (p *DictListReq) BLength() int {
 
 func (p *DictListReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetTitle() {
+	if p.IsSetKey() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Title)
-	}
-	return offset
-}
-
-func (p *DictListReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetName() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Name)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Key)
 	}
 	return offset
 }
@@ -5091,18 +4918,9 @@ func (p *DictListReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *DictListReq) field1Length() int {
 	l := 0
-	if p.IsSetTitle() {
+	if p.IsSetKey() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Title)
-	}
-	return l
-}
-
-func (p *DictListReq) field2Length() int {
-	l := 0
-	if p.IsSetName() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Name)
+		l += thrift.Binary.StringLengthNocopy(p.Key)
 	}
 	return l
 }
@@ -5198,7 +5016,7 @@ func (p *DicthtListReq) FastReadField1(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.Name = _field
+	p.Key = _field
 	return offset, nil
 }
 
@@ -5242,9 +5060,9 @@ func (p *DicthtListReq) BLength() int {
 
 func (p *DicthtListReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetName() {
+	if p.IsSetKey() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 1)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Name)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Key)
 	}
 	return offset
 }
@@ -5260,9 +5078,9 @@ func (p *DicthtListReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *DicthtListReq) field1Length() int {
 	l := 0
-	if p.IsSetName() {
+	if p.IsSetKey() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Name)
+		l += thrift.Binary.StringLengthNocopy(p.Key)
 	}
 	return l
 }

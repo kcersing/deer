@@ -28,12 +28,10 @@ const (
 	FieldTitle = "title"
 	// FieldDesc holds the string denoting the desc field in the database.
 	FieldDesc = "desc"
-	// FieldAPIGroup holds the string denoting the api_group field in the database.
-	FieldAPIGroup = "api_group"
+	// FieldGroup holds the string denoting the group field in the database.
+	FieldGroup = "group"
 	// FieldMethod holds the string denoting the method field in the database.
 	FieldMethod = "method"
-	// FieldDisabled holds the string denoting the disabled field in the database.
-	FieldDisabled = "disabled"
 	// EdgeRoles holds the string denoting the roles edge name in mutations.
 	EdgeRoles = "roles"
 	// Table holds the table name of the api in the database.
@@ -55,9 +53,8 @@ var Columns = []string{
 	FieldPath,
 	FieldTitle,
 	FieldDesc,
-	FieldAPIGroup,
+	FieldGroup,
 	FieldMethod,
-	FieldDisabled,
 }
 
 var (
@@ -89,8 +86,6 @@ var (
 	DefaultCreatedID int64
 	// DefaultMethod holds the default value on creation for the "method" field.
 	DefaultMethod string
-	// DefaultDisabled holds the default value on creation for the "disabled" field.
-	DefaultDisabled int64
 )
 
 // OrderOption defines the ordering options for the API queries.
@@ -136,19 +131,14 @@ func ByDesc(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDesc, opts...).ToFunc()
 }
 
-// ByAPIGroup orders the results by the api_group field.
-func ByAPIGroup(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldAPIGroup, opts...).ToFunc()
+// ByGroup orders the results by the group field.
+func ByGroup(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldGroup, opts...).ToFunc()
 }
 
 // ByMethod orders the results by the method field.
 func ByMethod(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMethod, opts...).ToFunc()
-}
-
-// ByDisabled orders the results by the disabled field.
-func ByDisabled(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDisabled, opts...).ToFunc()
 }
 
 // ByRolesCount orders the results by roles count.

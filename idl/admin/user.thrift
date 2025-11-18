@@ -15,7 +15,7 @@ struct UpdateUserReq {
     5:optional i64 status=0(api.raw = "status"),
     6:optional i64 gender=0(api.raw = "gender"),
     7:optional string birthday=""(api.raw = "birthday"),
-    8:optional string  detail=""(api.raw = "detail"),
+    8:optional string  desc=""(api.raw = "desc"),
     9:optional i64 roleId=0(api.raw = "roleId"),
 }
 struct GetUserListReq{

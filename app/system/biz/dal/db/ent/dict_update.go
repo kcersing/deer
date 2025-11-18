@@ -142,23 +142,23 @@ func (_u *DictUpdate) ClearTitle() *DictUpdate {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *DictUpdate) SetName(v string) *DictUpdate {
-	_u.mutation.SetName(v)
+// SetCode sets the "code" field.
+func (_u *DictUpdate) SetCode(v string) *DictUpdate {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *DictUpdate) SetNillableName(v *string) *DictUpdate {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *DictUpdate) SetNillableCode(v *string) *DictUpdate {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *DictUpdate) ClearName() *DictUpdate {
-	_u.mutation.ClearName()
+// ClearCode clears the value of the "code" field.
+func (_u *DictUpdate) ClearCode() *DictUpdate {
+	_u.mutation.ClearCode()
 	return _u
 }
 
@@ -310,11 +310,11 @@ func (_u *DictUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(dict.FieldTitle, field.TypeString)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(dict.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(dict.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(dict.FieldName, field.TypeString)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(dict.FieldCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.Desc(); ok {
 		_spec.SetField(dict.FieldDesc, field.TypeString, value)
@@ -500,23 +500,23 @@ func (_u *DictUpdateOne) ClearTitle() *DictUpdateOne {
 	return _u
 }
 
-// SetName sets the "name" field.
-func (_u *DictUpdateOne) SetName(v string) *DictUpdateOne {
-	_u.mutation.SetName(v)
+// SetCode sets the "code" field.
+func (_u *DictUpdateOne) SetCode(v string) *DictUpdateOne {
+	_u.mutation.SetCode(v)
 	return _u
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (_u *DictUpdateOne) SetNillableName(v *string) *DictUpdateOne {
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *DictUpdateOne) SetNillableCode(v *string) *DictUpdateOne {
 	if v != nil {
-		_u.SetName(*v)
+		_u.SetCode(*v)
 	}
 	return _u
 }
 
-// ClearName clears the value of the "name" field.
-func (_u *DictUpdateOne) ClearName() *DictUpdateOne {
-	_u.mutation.ClearName()
+// ClearCode clears the value of the "code" field.
+func (_u *DictUpdateOne) ClearCode() *DictUpdateOne {
+	_u.mutation.ClearCode()
 	return _u
 }
 
@@ -698,11 +698,11 @@ func (_u *DictUpdateOne) sqlSave(ctx context.Context) (_node *Dict, err error) {
 	if _u.mutation.TitleCleared() {
 		_spec.ClearField(dict.FieldTitle, field.TypeString)
 	}
-	if value, ok := _u.mutation.Name(); ok {
-		_spec.SetField(dict.FieldName, field.TypeString, value)
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(dict.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.NameCleared() {
-		_spec.ClearField(dict.FieldName, field.TypeString)
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(dict.FieldCode, field.TypeString)
 	}
 	if value, ok := _u.mutation.Desc(); ok {
 		_spec.SetField(dict.FieldDesc, field.TypeString, value)
