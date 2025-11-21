@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"gen/kitex_gen/base"
+	"user/biz/dal/db"
+	"user/biz/dal/db/ent/position"
 )
 
 type DeletePositionsService struct {
@@ -16,5 +18,9 @@ func NewDeletePositionsService(ctx context.Context) *DeletePositionsService {
 func (s *DeletePositionsService) Run(req *base.IdReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
+	_, err = db.Client.Position.Delete().Where(position.IDEQ(req.GetId())).Exec(s.ctx)
+	if err != nil {
+		return nil, err
+	}
 	return
 }

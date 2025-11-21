@@ -218,28 +218,32 @@ func (p *CreateUserReq) String() string {
 }
 
 type UpdateUserReq struct {
-	ID       int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Avatar   string `thrift:"avatar,2,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
-	Mobile   string `thrift:"mobile,3,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
-	Name     string `thrift:"name,4,optional" form:"name" json:"name,omitempty" query:"name"`
-	Status   int64  `thrift:"status,5,optional" form:"status" json:"status,omitempty" query:"status"`
-	Gender   int64  `thrift:"gender,6,optional" form:"gender" json:"gender,omitempty" query:"gender"`
-	Birthday string `thrift:"birthday,7,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
-	Detail   string `thrift:"detail,8,optional" form:"detail" json:"detail,omitempty" query:"detail"`
-	RoleId   int64  `thrift:"roleId,9,optional" form:"roleId" json:"roleId,omitempty" query:"roleId"`
+	ID            int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Avatar        string `thrift:"avatar,2,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
+	Mobile        string `thrift:"mobile,3,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
+	Name          string `thrift:"name,4,optional" form:"name" json:"name,omitempty" query:"name"`
+	Status        int64  `thrift:"status,5,optional" form:"status" json:"status,omitempty" query:"status"`
+	Gender        int64  `thrift:"gender,6,optional" form:"gender" json:"gender,omitempty" query:"gender"`
+	Birthday      string `thrift:"birthday,7,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	Desc          string `thrift:"desc,8,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	RoleId        int64  `thrift:"roleId,9,optional" form:"roleId" json:"roleId,omitempty" query:"roleId"`
+	DepartmentsId int64  `thrift:"departmentsId,10,optional" form:"departmentsId" json:"departmentsId,omitempty" query:"departmentsId"`
+	PositionsId   int64  `thrift:"positionsId,11,optional" form:"positionsId" json:"positionsId,omitempty" query:"positionsId"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
 	return &UpdateUserReq{
-		ID:       0,
-		Avatar:   "",
-		Mobile:   "",
-		Name:     "",
-		Status:   0,
-		Gender:   0,
-		Birthday: "",
-		Detail:   "",
-		RoleId:   0,
+		ID:            0,
+		Avatar:        "",
+		Mobile:        "",
+		Name:          "",
+		Status:        0,
+		Gender:        0,
+		Birthday:      "",
+		Desc:          "",
+		RoleId:        0,
+		DepartmentsId: 0,
+		PositionsId:   0,
 	}
 }
 
@@ -251,8 +255,10 @@ func (p *UpdateUserReq) InitDefault() {
 	p.Status = 0
 	p.Gender = 0
 	p.Birthday = ""
-	p.Detail = ""
+	p.Desc = ""
 	p.RoleId = 0
+	p.DepartmentsId = 0
+	p.PositionsId = 0
 }
 
 var UpdateUserReq_ID_DEFAULT int64 = 0
@@ -318,13 +324,13 @@ func (p *UpdateUserReq) GetBirthday() (v string) {
 	return p.Birthday
 }
 
-var UpdateUserReq_Detail_DEFAULT string = ""
+var UpdateUserReq_Desc_DEFAULT string = ""
 
-func (p *UpdateUserReq) GetDetail() (v string) {
-	if !p.IsSetDetail() {
-		return UpdateUserReq_Detail_DEFAULT
+func (p *UpdateUserReq) GetDesc() (v string) {
+	if !p.IsSetDesc() {
+		return UpdateUserReq_Desc_DEFAULT
 	}
-	return p.Detail
+	return p.Desc
 }
 
 var UpdateUserReq_RoleId_DEFAULT int64 = 0
@@ -336,16 +342,36 @@ func (p *UpdateUserReq) GetRoleId() (v int64) {
 	return p.RoleId
 }
 
+var UpdateUserReq_DepartmentsId_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetDepartmentsId() (v int64) {
+	if !p.IsSetDepartmentsId() {
+		return UpdateUserReq_DepartmentsId_DEFAULT
+	}
+	return p.DepartmentsId
+}
+
+var UpdateUserReq_PositionsId_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetPositionsId() (v int64) {
+	if !p.IsSetPositionsId() {
+		return UpdateUserReq_PositionsId_DEFAULT
+	}
+	return p.PositionsId
+}
+
 var fieldIDToName_UpdateUserReq = map[int16]string{
-	1: "id",
-	2: "avatar",
-	3: "mobile",
-	4: "name",
-	5: "status",
-	6: "gender",
-	7: "birthday",
-	8: "detail",
-	9: "roleId",
+	1:  "id",
+	2:  "avatar",
+	3:  "mobile",
+	4:  "name",
+	5:  "status",
+	6:  "gender",
+	7:  "birthday",
+	8:  "desc",
+	9:  "roleId",
+	10: "departmentsId",
+	11: "positionsId",
 }
 
 func (p *UpdateUserReq) IsSetID() bool {
@@ -376,12 +402,20 @@ func (p *UpdateUserReq) IsSetBirthday() bool {
 	return p.Birthday != UpdateUserReq_Birthday_DEFAULT
 }
 
-func (p *UpdateUserReq) IsSetDetail() bool {
-	return p.Detail != UpdateUserReq_Detail_DEFAULT
+func (p *UpdateUserReq) IsSetDesc() bool {
+	return p.Desc != UpdateUserReq_Desc_DEFAULT
 }
 
 func (p *UpdateUserReq) IsSetRoleId() bool {
 	return p.RoleId != UpdateUserReq_RoleId_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetDepartmentsId() bool {
+	return p.DepartmentsId != UpdateUserReq_DepartmentsId_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetPositionsId() bool {
+	return p.PositionsId != UpdateUserReq_PositionsId_DEFAULT
 }
 
 func (p *UpdateUserReq) Read(iprot thrift.TProtocol) (err error) {
@@ -470,6 +504,22 @@ func (p *UpdateUserReq) Read(iprot thrift.TProtocol) (err error) {
 		case 9:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 10:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 11:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField11(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -589,7 +639,7 @@ func (p *UpdateUserReq) ReadField8(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Detail = _field
+	p.Desc = _field
 	return nil
 }
 func (p *UpdateUserReq) ReadField9(iprot thrift.TProtocol) error {
@@ -601,6 +651,28 @@ func (p *UpdateUserReq) ReadField9(iprot thrift.TProtocol) error {
 		_field = v
 	}
 	p.RoleId = _field
+	return nil
+}
+func (p *UpdateUserReq) ReadField10(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.DepartmentsId = _field
+	return nil
+}
+func (p *UpdateUserReq) ReadField11(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.PositionsId = _field
 	return nil
 }
 
@@ -644,6 +716,14 @@ func (p *UpdateUserReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField9(oprot); err != nil {
 			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField10(oprot); err != nil {
+			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField11(oprot); err != nil {
+			fieldId = 11
 			goto WriteFieldError
 		}
 	}
@@ -798,11 +878,11 @@ WriteFieldEndError:
 }
 
 func (p *UpdateUserReq) writeField8(oprot thrift.TProtocol) (err error) {
-	if p.IsSetDetail() {
-		if err = oprot.WriteFieldBegin("detail", thrift.STRING, 8); err != nil {
+	if p.IsSetDesc() {
+		if err = oprot.WriteFieldBegin("desc", thrift.STRING, 8); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Detail); err != nil {
+		if err := oprot.WriteString(p.Desc); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -833,6 +913,44 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
+}
+
+func (p *UpdateUserReq) writeField10(oprot thrift.TProtocol) (err error) {
+	if p.IsSetDepartmentsId() {
+		if err = oprot.WriteFieldBegin("departmentsId", thrift.I64, 10); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.DepartmentsId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
+}
+
+func (p *UpdateUserReq) writeField11(oprot thrift.TProtocol) (err error) {
+	if p.IsSetPositionsId() {
+		if err = oprot.WriteFieldBegin("positionsId", thrift.I64, 11); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.PositionsId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
 }
 
 func (p *UpdateUserReq) String() string {

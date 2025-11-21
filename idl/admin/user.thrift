@@ -17,6 +17,10 @@ struct UpdateUserReq {
     7:optional string birthday=""(api.raw = "birthday"),
     8:optional string  desc=""(api.raw = "desc"),
     9:optional i64 roleId=0(api.raw = "roleId"),
+    10:optional i64 departmentsId=0(api.raw = "departmentsId"),
+    11:optional i64 positionsId=0(api.raw = "positionsId"),
+
+
 }
 struct GetUserListReq{
       1:optional i64 page=1(api.raw = "page")

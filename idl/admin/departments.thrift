@@ -4,16 +4,16 @@ include "../base/base.thrift"
 
 struct CreateDepartmentsReq{
      2:optional string name=""
-     3:optional string managerId=""
-     4:optional string parentId=""
+     3:optional i64 managerId=0
+     4:optional i64 parentId=0
      5:optional string desc=""
      7:optional i64 status=0
 }
 struct UpdateDepartmentsReq{
      1:optional i64 id=0
      2:optional string name=""
-     3:optional string managerId=""
-     4:optional string parentId=""
+     3:optional i64 managerId=0
+     4:optional i64 parentId=0
      5:optional string desc=""
      7:optional i64 status=0
 }

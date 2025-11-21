@@ -41,7 +41,7 @@ func (User) Fields() []ent.Field {
 		field.Time("last_at").Comment("最后一次登录时间").Optional(),
 		field.String("last_ip").Comment("最后一次登录ip").Optional(),
 
-		field.String("detail").Comment("详情").Optional(),
+		field.String("desc").Comment("详情").Optional(),
 	}
 }
 

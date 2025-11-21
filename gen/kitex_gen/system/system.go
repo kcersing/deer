@@ -1526,7 +1526,7 @@ type CreateRoleReq struct {
 	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
 	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
 	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo int64  `thrift:"order_no,5,optional" frugal:"5,optional,i64" json:"order_no,omitempty"`
+	OrderNo int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
@@ -1639,7 +1639,7 @@ var fieldIDToName_CreateRoleReq = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
-	5: "order_no",
+	5: "orderNo",
 }
 
 type GetRoleListReq struct {
@@ -1728,7 +1728,7 @@ type UpdateRoleReq struct {
 	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
 	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
 	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo int64  `thrift:"order_no,5,optional" frugal:"5,optional,i64" json:"order_no,omitempty"`
+	OrderNo int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
@@ -1841,7 +1841,7 @@ var fieldIDToName_UpdateRoleReq = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
-	5: "order_no",
+	5: "orderNo",
 }
 
 type CreateMenuAuthReq struct {

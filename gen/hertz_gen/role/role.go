@@ -13,7 +13,7 @@ type CreateRoleReq struct {
 	Name    string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
 	Code    string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
 	Desc    string `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64  `thrift:"order_no,5,optional" form:"order_no" json:"order_no,omitempty" query:"order_no"`
+	OrderNo int64  `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
@@ -72,7 +72,7 @@ var fieldIDToName_CreateRoleReq = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
-	5: "order_no",
+	5: "orderNo",
 }
 
 func (p *CreateRoleReq) IsSetName() bool {
@@ -315,7 +315,7 @@ WriteFieldEndError:
 
 func (p *CreateRoleReq) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetOrderNo() {
-		if err = oprot.WriteFieldBegin("order_no", thrift.I64, 5); err != nil {
+		if err = oprot.WriteFieldBegin("orderNo", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteI64(p.OrderNo); err != nil {
@@ -617,7 +617,7 @@ type UpdateRoleReq struct {
 	Name    string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
 	Code    string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
 	Desc    string `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64  `thrift:"order_no,5,optional" form:"order_no" json:"order_no,omitempty" query:"order_no"`
+	OrderNo int64  `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
@@ -688,7 +688,7 @@ var fieldIDToName_UpdateRoleReq = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
-	5: "order_no",
+	5: "orderNo",
 }
 
 func (p *UpdateRoleReq) IsSetID() bool {
@@ -977,7 +977,7 @@ WriteFieldEndError:
 
 func (p *UpdateRoleReq) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetOrderNo() {
-		if err = oprot.WriteFieldBegin("order_no", thrift.I64, 5); err != nil {
+		if err = oprot.WriteFieldBegin("orderNo", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteI64(p.OrderNo); err != nil {

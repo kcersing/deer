@@ -36,7 +36,7 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 		SetStatus(req.GetStatus()).
 		SetGender(req.GetGender()).
 		SetBirthday(birthday).
-		SetDetail(req.GetDetail()).
+		SetDesc(req.GetDesc()).
 		//SetRoleID(req.GetRoleId()).
 		Save(s.ctx)
 	if err != nil {

@@ -29,7 +29,6 @@ func (s *CreateUserService) Run(req *User.CreateUserReq) (resp *User.UserResp, e
 	//}
 	_, err = db.Client.User.Create().
 		SetUsername(req.GetUsername()).
-		SetPassword(req.GetPassword()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

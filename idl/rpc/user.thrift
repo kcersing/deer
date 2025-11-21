@@ -68,16 +68,16 @@ struct DepartmentsListResp {
 
 struct CreateDepartmentsReq{
      2:optional string name="",
-     3:optional string managerId="",
-     4:optional string parentId="",
+     3:optional i64 managerId=0,
+     4:optional i64 parentId=0,
      5:optional string desc="",
      7:optional i64 status=0,
 }
 struct UpdateDepartmentsReq{
      1:optional i64 id=0,
      2:optional string name="",
-     3:optional string managerId="",
-     4:optional string parentId="",
+     3:optional i64 managerId=0,
+     4:optional i64 parentId=0,
      5:optional string desc="",
      7:optional i64 status=0,
 }
@@ -89,8 +89,8 @@ struct GetDepartmentsListReq{
 struct CreatePositionsReq{
      2:optional string name="",
      3:optional string code="",
-     4:optional string departmentId="",
-     5:optional string parentId="",
+     4:optional i64 departmentId=0,
+     5:optional i64 parentId=0,
      6:optional string desc="",
      7:optional i64 status=0,
      9:optional i64 quota=0,
@@ -99,8 +99,8 @@ struct UpdatePositionsReq{
      1:optional i64 id=0,
      2:optional string name="",
      3:optional string code="",
-     4:optional string departmentId="",
-     5:optional string parentId="",
+     4:optional i64 departmentId=0,
+     5:optional i64 parentId=0,
      6:optional string desc="",
      7:optional i64 status=0,
      9:optional i64 quota=0,

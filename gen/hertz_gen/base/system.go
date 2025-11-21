@@ -1461,7 +1461,7 @@ type Role struct {
 	Name    string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
 	Code    string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
 	Desc    string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64   `thrift:"order_no,5,optional" form:"order_no" json:"order_no,omitempty" query:"order_no"`
+	OrderNo int64   `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
 	Apis    []int64 `thrift:"apis,6,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
 	Menus   []int64 `thrift:"menus,7,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
 }
@@ -1556,7 +1556,7 @@ var fieldIDToName_Role = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
-	5: "order_no",
+	5: "orderNo",
 	6: "apis",
 	7: "menus",
 }
@@ -1925,7 +1925,7 @@ WriteFieldEndError:
 
 func (p *Role) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetOrderNo() {
-		if err = oprot.WriteFieldBegin("order_no", thrift.I64, 5); err != nil {
+		if err = oprot.WriteFieldBegin("orderNo", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteI64(p.OrderNo); err != nil {

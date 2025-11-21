@@ -28,7 +28,6 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := client.UserClient.CreateUser(ctx, &user2.CreateUserReq{
 		Username: req.GetUsername(),
-		Password: req.GetPassword(),
 	})
 
 	if err != nil {
@@ -110,15 +109,16 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.UserClient.UpdateUser(ctx, &user2.UpdateUserReq{
-		Id:       req.GetID(),
-		Avatar:   req.GetAvatar(),
-		Mobile:   req.GetMobile(),
-		Name:     req.GetName(),
-		Status:   req.GetStatus(),
-		Gender:   req.GetGender(),
-		Birthday: req.GetBirthday(),
-		Detail:   req.GetDetail(),
-		RoleId:   req.GetRoleId(),
+		Id:            req.GetID(),
+		Avatar:        req.GetAvatar(),
+		Mobile:        req.GetMobile(),
+		Name:          req.GetName(),
+		Status:        req.GetStatus(),
+		Gender:        req.GetGender(),
+		Birthday:      req.GetBirthday(),
+		Desc:          req.GetDesc(),
+		DepartmentsId: req.GetDepartmentsId(),
+		PositionsId:   req.GetPositionsId(),
 	})
 
 	if err != nil {

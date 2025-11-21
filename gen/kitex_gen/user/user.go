@@ -928,8 +928,8 @@ var fieldIDToName_DepartmentsListResp = map[int16]string{
 
 type CreateDepartmentsReq struct {
 	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ManagerId string `thrift:"managerId,3,optional" frugal:"3,optional,string" json:"managerId,omitempty"`
-	ParentId  string `thrift:"parentId,4,optional" frugal:"4,optional,string" json:"parentId,omitempty"`
+	ManagerId int64  `thrift:"managerId,3,optional" frugal:"3,optional,i64" json:"managerId,omitempty"`
+	ParentId  int64  `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
 	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 }
@@ -937,8 +937,8 @@ type CreateDepartmentsReq struct {
 func NewCreateDepartmentsReq() *CreateDepartmentsReq {
 	return &CreateDepartmentsReq{
 		Name:      "",
-		ManagerId: "",
-		ParentId:  "",
+		ManagerId: 0,
+		ParentId:  0,
 		Desc:      "",
 		Status:    0,
 	}
@@ -946,8 +946,8 @@ func NewCreateDepartmentsReq() *CreateDepartmentsReq {
 
 func (p *CreateDepartmentsReq) InitDefault() {
 	p.Name = ""
-	p.ManagerId = ""
-	p.ParentId = ""
+	p.ManagerId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 }
@@ -961,18 +961,18 @@ func (p *CreateDepartmentsReq) GetName() (v string) {
 	return p.Name
 }
 
-var CreateDepartmentsReq_ManagerId_DEFAULT string = ""
+var CreateDepartmentsReq_ManagerId_DEFAULT int64 = 0
 
-func (p *CreateDepartmentsReq) GetManagerId() (v string) {
+func (p *CreateDepartmentsReq) GetManagerId() (v int64) {
 	if !p.IsSetManagerId() {
 		return CreateDepartmentsReq_ManagerId_DEFAULT
 	}
 	return p.ManagerId
 }
 
-var CreateDepartmentsReq_ParentId_DEFAULT string = ""
+var CreateDepartmentsReq_ParentId_DEFAULT int64 = 0
 
-func (p *CreateDepartmentsReq) GetParentId() (v string) {
+func (p *CreateDepartmentsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return CreateDepartmentsReq_ParentId_DEFAULT
 	}
@@ -999,10 +999,10 @@ func (p *CreateDepartmentsReq) GetStatus() (v int64) {
 func (p *CreateDepartmentsReq) SetName(val string) {
 	p.Name = val
 }
-func (p *CreateDepartmentsReq) SetManagerId(val string) {
+func (p *CreateDepartmentsReq) SetManagerId(val int64) {
 	p.ManagerId = val
 }
-func (p *CreateDepartmentsReq) SetParentId(val string) {
+func (p *CreateDepartmentsReq) SetParentId(val int64) {
 	p.ParentId = val
 }
 func (p *CreateDepartmentsReq) SetDesc(val string) {
@@ -1050,8 +1050,8 @@ var fieldIDToName_CreateDepartmentsReq = map[int16]string{
 type UpdateDepartmentsReq struct {
 	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ManagerId string `thrift:"managerId,3,optional" frugal:"3,optional,string" json:"managerId,omitempty"`
-	ParentId  string `thrift:"parentId,4,optional" frugal:"4,optional,string" json:"parentId,omitempty"`
+	ManagerId int64  `thrift:"managerId,3,optional" frugal:"3,optional,i64" json:"managerId,omitempty"`
+	ParentId  int64  `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
 	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 }
@@ -1060,8 +1060,8 @@ func NewUpdateDepartmentsReq() *UpdateDepartmentsReq {
 	return &UpdateDepartmentsReq{
 		Id:        0,
 		Name:      "",
-		ManagerId: "",
-		ParentId:  "",
+		ManagerId: 0,
+		ParentId:  0,
 		Desc:      "",
 		Status:    0,
 	}
@@ -1070,8 +1070,8 @@ func NewUpdateDepartmentsReq() *UpdateDepartmentsReq {
 func (p *UpdateDepartmentsReq) InitDefault() {
 	p.Id = 0
 	p.Name = ""
-	p.ManagerId = ""
-	p.ParentId = ""
+	p.ManagerId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 }
@@ -1094,18 +1094,18 @@ func (p *UpdateDepartmentsReq) GetName() (v string) {
 	return p.Name
 }
 
-var UpdateDepartmentsReq_ManagerId_DEFAULT string = ""
+var UpdateDepartmentsReq_ManagerId_DEFAULT int64 = 0
 
-func (p *UpdateDepartmentsReq) GetManagerId() (v string) {
+func (p *UpdateDepartmentsReq) GetManagerId() (v int64) {
 	if !p.IsSetManagerId() {
 		return UpdateDepartmentsReq_ManagerId_DEFAULT
 	}
 	return p.ManagerId
 }
 
-var UpdateDepartmentsReq_ParentId_DEFAULT string = ""
+var UpdateDepartmentsReq_ParentId_DEFAULT int64 = 0
 
-func (p *UpdateDepartmentsReq) GetParentId() (v string) {
+func (p *UpdateDepartmentsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return UpdateDepartmentsReq_ParentId_DEFAULT
 	}
@@ -1135,10 +1135,10 @@ func (p *UpdateDepartmentsReq) SetId(val int64) {
 func (p *UpdateDepartmentsReq) SetName(val string) {
 	p.Name = val
 }
-func (p *UpdateDepartmentsReq) SetManagerId(val string) {
+func (p *UpdateDepartmentsReq) SetManagerId(val int64) {
 	p.ManagerId = val
 }
-func (p *UpdateDepartmentsReq) SetParentId(val string) {
+func (p *UpdateDepartmentsReq) SetParentId(val int64) {
 	p.ParentId = val
 }
 func (p *UpdateDepartmentsReq) SetDesc(val string) {
@@ -1272,8 +1272,8 @@ var fieldIDToName_GetDepartmentsListReq = map[int16]string{
 type CreatePositionsReq struct {
 	Name         string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
 	Code         string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	DepartmentId string `thrift:"departmentId,4,optional" frugal:"4,optional,string" json:"departmentId,omitempty"`
-	ParentId     string `thrift:"parentId,5,optional" frugal:"5,optional,string" json:"parentId,omitempty"`
+	DepartmentId int64  `thrift:"departmentId,4,optional" frugal:"4,optional,i64" json:"departmentId,omitempty"`
+	ParentId     int64  `thrift:"parentId,5,optional" frugal:"5,optional,i64" json:"parentId,omitempty"`
 	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
 	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
@@ -1283,8 +1283,8 @@ func NewCreatePositionsReq() *CreatePositionsReq {
 	return &CreatePositionsReq{
 		Name:         "",
 		Code:         "",
-		DepartmentId: "",
-		ParentId:     "",
+		DepartmentId: 0,
+		ParentId:     0,
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
@@ -1294,8 +1294,8 @@ func NewCreatePositionsReq() *CreatePositionsReq {
 func (p *CreatePositionsReq) InitDefault() {
 	p.Name = ""
 	p.Code = ""
-	p.DepartmentId = ""
-	p.ParentId = ""
+	p.DepartmentId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
@@ -1319,18 +1319,18 @@ func (p *CreatePositionsReq) GetCode() (v string) {
 	return p.Code
 }
 
-var CreatePositionsReq_DepartmentId_DEFAULT string = ""
+var CreatePositionsReq_DepartmentId_DEFAULT int64 = 0
 
-func (p *CreatePositionsReq) GetDepartmentId() (v string) {
+func (p *CreatePositionsReq) GetDepartmentId() (v int64) {
 	if !p.IsSetDepartmentId() {
 		return CreatePositionsReq_DepartmentId_DEFAULT
 	}
 	return p.DepartmentId
 }
 
-var CreatePositionsReq_ParentId_DEFAULT string = ""
+var CreatePositionsReq_ParentId_DEFAULT int64 = 0
 
-func (p *CreatePositionsReq) GetParentId() (v string) {
+func (p *CreatePositionsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return CreatePositionsReq_ParentId_DEFAULT
 	}
@@ -1369,10 +1369,10 @@ func (p *CreatePositionsReq) SetName(val string) {
 func (p *CreatePositionsReq) SetCode(val string) {
 	p.Code = val
 }
-func (p *CreatePositionsReq) SetDepartmentId(val string) {
+func (p *CreatePositionsReq) SetDepartmentId(val int64) {
 	p.DepartmentId = val
 }
-func (p *CreatePositionsReq) SetParentId(val string) {
+func (p *CreatePositionsReq) SetParentId(val int64) {
 	p.ParentId = val
 }
 func (p *CreatePositionsReq) SetDesc(val string) {
@@ -1434,8 +1434,8 @@ type UpdatePositionsReq struct {
 	Id           int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 	Name         string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
 	Code         string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	DepartmentId string `thrift:"departmentId,4,optional" frugal:"4,optional,string" json:"departmentId,omitempty"`
-	ParentId     string `thrift:"parentId,5,optional" frugal:"5,optional,string" json:"parentId,omitempty"`
+	DepartmentId int64  `thrift:"departmentId,4,optional" frugal:"4,optional,i64" json:"departmentId,omitempty"`
+	ParentId     int64  `thrift:"parentId,5,optional" frugal:"5,optional,i64" json:"parentId,omitempty"`
 	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
 	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
@@ -1446,8 +1446,8 @@ func NewUpdatePositionsReq() *UpdatePositionsReq {
 		Id:           0,
 		Name:         "",
 		Code:         "",
-		DepartmentId: "",
-		ParentId:     "",
+		DepartmentId: 0,
+		ParentId:     0,
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
@@ -1458,8 +1458,8 @@ func (p *UpdatePositionsReq) InitDefault() {
 	p.Id = 0
 	p.Name = ""
 	p.Code = ""
-	p.DepartmentId = ""
-	p.ParentId = ""
+	p.DepartmentId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
@@ -1492,18 +1492,18 @@ func (p *UpdatePositionsReq) GetCode() (v string) {
 	return p.Code
 }
 
-var UpdatePositionsReq_DepartmentId_DEFAULT string = ""
+var UpdatePositionsReq_DepartmentId_DEFAULT int64 = 0
 
-func (p *UpdatePositionsReq) GetDepartmentId() (v string) {
+func (p *UpdatePositionsReq) GetDepartmentId() (v int64) {
 	if !p.IsSetDepartmentId() {
 		return UpdatePositionsReq_DepartmentId_DEFAULT
 	}
 	return p.DepartmentId
 }
 
-var UpdatePositionsReq_ParentId_DEFAULT string = ""
+var UpdatePositionsReq_ParentId_DEFAULT int64 = 0
 
-func (p *UpdatePositionsReq) GetParentId() (v string) {
+func (p *UpdatePositionsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return UpdatePositionsReq_ParentId_DEFAULT
 	}
@@ -1545,10 +1545,10 @@ func (p *UpdatePositionsReq) SetName(val string) {
 func (p *UpdatePositionsReq) SetCode(val string) {
 	p.Code = val
 }
-func (p *UpdatePositionsReq) SetDepartmentId(val string) {
+func (p *UpdatePositionsReq) SetDepartmentId(val int64) {
 	p.DepartmentId = val
 }
-func (p *UpdatePositionsReq) SetParentId(val string) {
+func (p *UpdatePositionsReq) SetParentId(val int64) {
 	p.ParentId = val
 }
 func (p *UpdatePositionsReq) SetDesc(val string) {

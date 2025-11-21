@@ -12,8 +12,8 @@ import (
 type CreatePositionsReq struct {
 	Name         string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
 	Code         string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
-	DepartmentId string `thrift:"departmentId,4,optional" form:"departmentId" json:"departmentId,omitempty" query:"departmentId"`
-	ParentId     string `thrift:"parentId,5,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
+	DepartmentId int64  `thrift:"departmentId,4,optional" form:"departmentId" json:"departmentId,omitempty" query:"departmentId"`
+	ParentId     int64  `thrift:"parentId,5,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
 	Desc         string `thrift:"desc,6,optional" form:"desc" json:"desc,omitempty" query:"desc"`
 	Status       int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
 	Quota        int64  `thrift:"quota,9,optional" form:"quota" json:"quota,omitempty" query:"quota"`
@@ -23,8 +23,8 @@ func NewCreatePositionsReq() *CreatePositionsReq {
 	return &CreatePositionsReq{
 		Name:         "",
 		Code:         "",
-		DepartmentId: "",
-		ParentId:     "",
+		DepartmentId: 0,
+		ParentId:     0,
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
@@ -34,8 +34,8 @@ func NewCreatePositionsReq() *CreatePositionsReq {
 func (p *CreatePositionsReq) InitDefault() {
 	p.Name = ""
 	p.Code = ""
-	p.DepartmentId = ""
-	p.ParentId = ""
+	p.DepartmentId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
@@ -59,18 +59,18 @@ func (p *CreatePositionsReq) GetCode() (v string) {
 	return p.Code
 }
 
-var CreatePositionsReq_DepartmentId_DEFAULT string = ""
+var CreatePositionsReq_DepartmentId_DEFAULT int64 = 0
 
-func (p *CreatePositionsReq) GetDepartmentId() (v string) {
+func (p *CreatePositionsReq) GetDepartmentId() (v int64) {
 	if !p.IsSetDepartmentId() {
 		return CreatePositionsReq_DepartmentId_DEFAULT
 	}
 	return p.DepartmentId
 }
 
-var CreatePositionsReq_ParentId_DEFAULT string = ""
+var CreatePositionsReq_ParentId_DEFAULT int64 = 0
 
-func (p *CreatePositionsReq) GetParentId() (v string) {
+func (p *CreatePositionsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return CreatePositionsReq_ParentId_DEFAULT
 	}
@@ -178,7 +178,7 @@ func (p *CreatePositionsReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 4:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -186,7 +186,7 @@ func (p *CreatePositionsReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 5:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField5(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -270,8 +270,8 @@ func (p *CreatePositionsReq) ReadField3(iprot thrift.TProtocol) error {
 }
 func (p *CreatePositionsReq) ReadField4(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -281,8 +281,8 @@ func (p *CreatePositionsReq) ReadField4(iprot thrift.TProtocol) error {
 }
 func (p *CreatePositionsReq) ReadField5(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -416,10 +416,10 @@ WriteFieldEndError:
 
 func (p *CreatePositionsReq) writeField4(oprot thrift.TProtocol) (err error) {
 	if p.IsSetDepartmentId() {
-		if err = oprot.WriteFieldBegin("departmentId", thrift.STRING, 4); err != nil {
+		if err = oprot.WriteFieldBegin("departmentId", thrift.I64, 4); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.DepartmentId); err != nil {
+		if err := oprot.WriteI64(p.DepartmentId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -435,10 +435,10 @@ WriteFieldEndError:
 
 func (p *CreatePositionsReq) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetParentId() {
-		if err = oprot.WriteFieldBegin("parentId", thrift.STRING, 5); err != nil {
+		if err = oprot.WriteFieldBegin("parentId", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.ParentId); err != nil {
+		if err := oprot.WriteI64(p.ParentId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -521,8 +521,8 @@ type UpdatePositionsReq struct {
 	ID           int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
 	Name         string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
 	Code         string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
-	DepartmentId string `thrift:"departmentId,4,optional" form:"departmentId" json:"departmentId,omitempty" query:"departmentId"`
-	ParentId     string `thrift:"parentId,5,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
+	DepartmentId int64  `thrift:"departmentId,4,optional" form:"departmentId" json:"departmentId,omitempty" query:"departmentId"`
+	ParentId     int64  `thrift:"parentId,5,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
 	Desc         string `thrift:"desc,6,optional" form:"desc" json:"desc,omitempty" query:"desc"`
 	Status       int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
 	Quota        int64  `thrift:"quota,9,optional" form:"quota" json:"quota,omitempty" query:"quota"`
@@ -533,8 +533,8 @@ func NewUpdatePositionsReq() *UpdatePositionsReq {
 		ID:           0,
 		Name:         "",
 		Code:         "",
-		DepartmentId: "",
-		ParentId:     "",
+		DepartmentId: 0,
+		ParentId:     0,
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
@@ -545,8 +545,8 @@ func (p *UpdatePositionsReq) InitDefault() {
 	p.ID = 0
 	p.Name = ""
 	p.Code = ""
-	p.DepartmentId = ""
-	p.ParentId = ""
+	p.DepartmentId = 0
+	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
@@ -579,18 +579,18 @@ func (p *UpdatePositionsReq) GetCode() (v string) {
 	return p.Code
 }
 
-var UpdatePositionsReq_DepartmentId_DEFAULT string = ""
+var UpdatePositionsReq_DepartmentId_DEFAULT int64 = 0
 
-func (p *UpdatePositionsReq) GetDepartmentId() (v string) {
+func (p *UpdatePositionsReq) GetDepartmentId() (v int64) {
 	if !p.IsSetDepartmentId() {
 		return UpdatePositionsReq_DepartmentId_DEFAULT
 	}
 	return p.DepartmentId
 }
 
-var UpdatePositionsReq_ParentId_DEFAULT string = ""
+var UpdatePositionsReq_ParentId_DEFAULT int64 = 0
 
-func (p *UpdatePositionsReq) GetParentId() (v string) {
+func (p *UpdatePositionsReq) GetParentId() (v int64) {
 	if !p.IsSetParentId() {
 		return UpdatePositionsReq_ParentId_DEFAULT
 	}
@@ -711,7 +711,7 @@ func (p *UpdatePositionsReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 4:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -719,7 +719,7 @@ func (p *UpdatePositionsReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 5:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField5(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -814,8 +814,8 @@ func (p *UpdatePositionsReq) ReadField3(iprot thrift.TProtocol) error {
 }
 func (p *UpdatePositionsReq) ReadField4(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -825,8 +825,8 @@ func (p *UpdatePositionsReq) ReadField4(iprot thrift.TProtocol) error {
 }
 func (p *UpdatePositionsReq) ReadField5(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -983,10 +983,10 @@ WriteFieldEndError:
 
 func (p *UpdatePositionsReq) writeField4(oprot thrift.TProtocol) (err error) {
 	if p.IsSetDepartmentId() {
-		if err = oprot.WriteFieldBegin("departmentId", thrift.STRING, 4); err != nil {
+		if err = oprot.WriteFieldBegin("departmentId", thrift.I64, 4); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.DepartmentId); err != nil {
+		if err := oprot.WriteI64(p.DepartmentId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1002,10 +1002,10 @@ WriteFieldEndError:
 
 func (p *UpdatePositionsReq) writeField5(oprot thrift.TProtocol) (err error) {
 	if p.IsSetParentId() {
-		if err = oprot.WriteFieldBegin("parentId", thrift.STRING, 5); err != nil {
+		if err = oprot.WriteFieldBegin("parentId", thrift.I64, 5); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.ParentId); err != nil {
+		if err := oprot.WriteI64(p.ParentId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
