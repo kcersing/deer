@@ -32,9 +32,9 @@ func NewEventBus() *EventBus {
 }
 
 // Publish 发布事件
-func (eb *EventBus) Publish(topic string, event Event) {
+func (eb *EventBus) Publish(topic string, payload any) {
 
-	events := Event{Topic: topic, Payload: event}
+	event := Event{Topic: topic, Payload: payload}
 
 	// 将事件分发到内存通道
 	finalHandler := func(e Event) {
@@ -44,7 +44,7 @@ func (eb *EventBus) Publish(topic string, event Event) {
 		//go func() {
 		for _, subscriber := range subscribers {
 			select {
-			case subscriber <- event:
+			case subscriber <- e:
 			default:
 				fmt.Printf("警告: 主题 %s 的一个订阅者通道已满，丢弃事件。\n", topic)
 			}
@@ -57,7 +57,7 @@ func (eb *EventBus) Publish(topic string, event Event) {
 		chain = eb.middlewares[i](chain)
 	}
 	// 执行整个链
-	chain(events)
+	chain(event)
 }
 
 // Subscribe 订阅事件
