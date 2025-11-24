@@ -15,9 +15,9 @@ type Middleware func(next Handler) Handler
 func LoggingPlugin() Middleware {
 	return func(next Handler) Handler {
 		return func(event Event) {
-			klog.Warnf("[日志插件] 收到事件: %s\n", event.Topic)
+			klog.Infof("[日志插件] 收到事件: Topic=%s \n", event.Topic)
 			next(event) // 继续执行下一个中间件或最终处理函数
-			klog.Warnf("[日志插件] 事件处理完毕: %s\n", event.Topic)
+			klog.Infof("[日志插件] 事件处理完毕: %s \n", event.Topic)
 			next(event)
 		}
 	}
