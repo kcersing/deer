@@ -1,97 +1,46 @@
 package eventbus
 
 import (
-	"fmt"
-	"sync"
+	"context"
+	"time"
 )
 
 // Event 事件
 type Event struct {
-	Topic   string
-	Payload any // 事件负载
+	Id        string
+	Topic     string // 主题
+	Payload   any    // 事件负载
+	Source    string
+	Version   int64
+	Timestamp time.Time
+	Priority  int64
 }
 
-// EventChan 事件通道
-type (
-	EventChan chan Event
-)
+// EventHandler 是订阅者处理函数类型
+type EventHandler func(ctx context.Context, event *Event)
 
-// EventBus 事件总线
-type EventBus struct {
-	mu          sync.RWMutex
-	subscribers map[string][]EventChan
-	middlewares []Middleware
+type Handler interface {
+	Handle(ctx context.Context, event *Event) error
 }
 
-// NewEventBus 创建事件总线
-func NewEventBus() *EventBus {
-	return &EventBus{
-		subscribers: make(map[string][]EventChan),
-		middlewares: []Middleware{},
+func (h EventHandler) Handle(ctx context.Context, event *Event) error {
+	return h.Handle(ctx, event)
+}
+
+func NewEvent(topic string, payload any) *Event {
+	return &Event{
+		Id:        "",
+		Topic:     topic,
+		Payload:   payload,
+		Version:   0,
+		Timestamp: time.Time{},
+		Priority:  0,
 	}
 }
 
-// Publish 发布事件
-func (eb *EventBus) Publish(topic string, payload any) {
-
-	event := Event{Topic: topic, Payload: payload}
-
-	// 将事件分发到内存通道
-	finalHandler := func(e Event) {
-		eb.mu.RLock()
-		subscribers := append([]EventChan{}, eb.subscribers[topic]...)
-		defer eb.mu.RUnlock()
-		//go func() {
-		for _, subscriber := range subscribers {
-			select {
-			case subscriber <- e:
-			default:
-				fmt.Printf("警告: 主题 %s 的一个订阅者通道已满，丢弃事件。\n", topic)
-			}
-		}
-		//}()
-	}
-	// 从最后一个中间件开始，向前构建执行链（责任链模式）
-	chain := finalHandler
-	for i := len(eb.middlewares) - 1; i >= 0; i-- {
-		chain = eb.middlewares[i](chain)
-	}
-	// 执行整个链
-	chain(event)
+func (e *Event) SetSource(source string) {
+	e.Source = source
 }
-
-// Subscribe 订阅事件
-func (eb *EventBus) Subscribe(topic string) EventChan {
-	eb.mu.Lock()
-	defer eb.mu.Unlock()
-
-	ch := make(EventChan, 100)
-	eb.subscribers[topic] = append(eb.subscribers[topic], ch)
-	fmt.Printf("已订阅主题: %s\n", topic)
-	return ch
-}
-
-// Unsubscribe 取消订阅
-func (eb *EventBus) Unsubscribe(topic string, ch EventChan) {
-	eb.mu.Lock()
-	defer eb.mu.Unlock()
-	if subscribers, ok := eb.subscribers[topic]; ok {
-		for i, subscriber := range subscribers {
-			if ch == subscriber {
-				eb.subscribers[topic] = append(subscribers[:i], subscribers[i+1:]...)
-				close(ch)
-				fmt.Printf("已取消订阅主题: %s\n", topic)
-
-				return
-			}
-		}
-	}
-
-}
-
-// Use 添加中间件
-func (eb *EventBus) Use(m Middleware) {
-	eb.mu.Lock()
-	defer eb.mu.Unlock()
-	eb.middlewares = append(eb.middlewares, m)
+func (e *Event) SetPriority(priority int64) {
+	e.Priority = priority
 }

@@ -3,9 +3,10 @@ package eventbus
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/cloudwego/hertz/pkg/common/json"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"time"
 )
 
 type RabbitMQEventBus struct {
