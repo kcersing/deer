@@ -2,6 +2,7 @@ package eventbus
 
 import (
 	"context"
+	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )
@@ -13,11 +14,10 @@ type Middleware func(next Handler) Handler
 // LoggingPlugin 日志记录
 func LoggingPlugin() Middleware {
 	return func(next Handler) Handler {
-		return EventHandler(func(ctx context.Context, event *Event) {
-			klog.Infof("[日志插件] 收到事件: Topic=%s \n", event.Topic)
+		return EventHandlerFunc(func(ctx context.Context, event *Event) {
+			start := time.Now()
 			next.Handle(ctx, event) // 继续执行下一个中间件或最终处理函数
-			klog.Infof("[日志插件] 事件处理完毕: %s \n", event.Topic)
-
+			klog.Infof("[日志插件] Done: Topic=%s cost=%v", event.Topic, time.Since(start))
 		})
 	}
 }
@@ -25,7 +25,7 @@ func LoggingPlugin() Middleware {
 // FilterPlugin 消息过滤
 func FilterPlugin(filterTopic string) Middleware {
 	return func(next Handler) Handler {
-		return EventHandler(func(ctx context.Context, event *Event) {
+		return EventHandlerFunc(func(ctx context.Context, event *Event) {
 			// 只有当主题不是我们想过滤的主题时才继续
 			if event.Topic == filterTopic {
 				klog.Warnf("[过滤插件] 过滤掉主题为 '%s' 的事件\n", filterTopic)
@@ -39,7 +39,7 @@ func FilterPlugin(filterTopic string) Middleware {
 // TransformPlugin 消息转换
 func TransformPlugin() Middleware {
 	return func(next Handler) Handler {
-		return EventHandler(func(ctx context.Context, event *Event) {
+		return EventHandlerFunc(func(ctx context.Context, event *Event) {
 			if event.Topic == "order" {
 				// 假设负载是字符串，我们给它添加一个前缀
 				if originalPayload, ok := event.Payload.(string); ok {

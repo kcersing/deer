@@ -1,7 +1,6 @@
 package eventbus
 
 import (
-	"context"
 	"time"
 )
 
@@ -16,17 +15,6 @@ type Event struct {
 	Priority  int64
 }
 
-// EventHandler 是订阅者处理函数类型
-type EventHandler func(ctx context.Context, event *Event)
-
-type Handler interface {
-	Handle(ctx context.Context, event *Event) error
-}
-
-func (h EventHandler) Handle(ctx context.Context, event *Event) error {
-	return h.Handle(ctx, event)
-}
-
 func NewEvent(topic string, payload any) *Event {
 	return &Event{
 		Id:        "",
@@ -36,11 +24,4 @@ func NewEvent(topic string, payload any) *Event {
 		Timestamp: time.Time{},
 		Priority:  0,
 	}
-}
-
-func (e *Event) SetSource(source string) {
-	e.Source = source
-}
-func (e *Event) SetPriority(priority int64) {
-	e.Priority = priority
 }
