@@ -18,8 +18,8 @@ func TestEventBusMiddleware_Run(t *testing.T) {
 	eb.Use(TransformPlugin()) // 转换（最内层，靠近分发）
 
 	//订阅设置
-	ordersCh := make(chan Event, 10)
-	payCh := make(chan Event, 10)
+	ordersCh := make(EventChan, 10)
+	payCh := make(EventChan, 10)
 	eb.subscribers["order"] = append(eb.subscribers["order"], ordersCh)
 	eb.subscribers["pay"] = append(eb.subscribers["pay"], payCh)
 

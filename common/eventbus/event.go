@@ -2,6 +2,8 @@ package eventbus
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // Event 事件
@@ -17,7 +19,7 @@ type Event struct {
 
 func NewEvent(topic string, payload any) *Event {
 	return &Event{
-		Id:        "",
+		Id:        uuid.New().String(),
 		Topic:     topic,
 		Payload:   payload,
 		Version:   0,

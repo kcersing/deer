@@ -17,7 +17,7 @@ func TestEventBus_Run(t *testing.T) {
 	go func() {
 		defer wg.Done()
 		for event := range subscribe {
-			fmt.Printf("[订阅者 A]订阅主题: %s \n", event.Payload)
+			fmt.Printf("[订阅者 A]订阅主题: %s", event.Payload)
 		}
 		fmt.Println("[订阅者 A] 通道已关闭，停止接收。")
 	}()
@@ -40,16 +40,22 @@ func TestEventBus_Run(t *testing.T) {
 		}
 		fmt.Println("[订阅者 C] 通道已关闭，停止接收。")
 	}()
-	// 定义具体的处理函数，注意第二个参数已经是具体的 *OrderPayload 类型了！
-	orderHandler := func(ctx context.Context, order *OrderPayload, e eventbus.Event) error {
-		// 这里不需要写: order := e.Payload.(*OrderPayload)
-		// 直接使用 IDE 的自动补全
-		fmt.Printf("处理订单: ID=%s 金额=%.2f\n", order.OrderId, order.Amount)
-		return nil
-	}
 
-	// 注册时使用 WrapTyped
-	eb.SubscribeAsync("topic_order", eventbus.WrapTyped(orderHandler), 1)
+	eb.SubscribeAsync("order_created", EventHandlerFunc(func(ctx context.Context, event *Event) error {
+		fmt.Println("收到订单:", event.Payload)
+		return nil
+	}), 1)
+
+	// 定义具体的处理函数，注意第二个参数已经是具体的 *OrderPayload 类型了！
+	//orderHandler := func(ctx context.Context, order *OrderPayload, e eventbus.Event) error {
+	//	// 这里不需要写: order := e.Payload.(*OrderPayload)
+	//	// 直接使用 IDE 的自动补全
+	//	fmt.Printf("处理订单: ID=%s 金额=%.2f\n", order.OrderId, order.Amount)
+	//	return nil
+	//}
+	//
+	//// 注册时使用 WrapTyped
+	//eb.SubscribeAsync("topic_order", eventbus.WrapTyped(orderHandler), 1)
 
 	// 等待所有订阅 goroutine 启动
 	time.Sleep(100 * time.Millisecond)
