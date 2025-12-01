@@ -41,7 +41,7 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<API.RuleListItem>[] = [
     {
-      title: '名称',
+      title: '部门名称',
       dataIndex: 'name',
       render: (dom, entity) => {
         return (
@@ -57,41 +57,17 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: "标题",
-      dataIndex: 'title',
+      title: "职能描述",
+      dataIndex: 'desc',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "图标",
-      dataIndex: 'icon',
+      title: "负责人名称",
+      dataIndex: 'manager',
       sorter: true,
       hideInForm: true,
     },
-    {
-      title: "路由路径",
-      dataIndex: 'path',
-      sorter: true,
-      hideInForm: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: 'component',
-      sorter: true,
-      hideInForm: true,
-      valueType: 'textarea',
-    },
-
-    {
-      title: "跳转路径",
-      dataIndex: 'redirect',
-      sorter: true,
-      hideInForm: true,
-      valueType: 'textarea',
-    },
-
-
-
 
     {
       title: '状态',
