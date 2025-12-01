@@ -23,7 +23,7 @@ func (s *GetPositionsListService) Run(req *user.GetPositionsListReq) (resp *user
 	// Finish your business logic.
 
 	var (
-		userResp []*Base.Positions
+		dataResp []*Base.Positions
 	)
 
 	var predicates []predicate.Position
@@ -31,18 +31,18 @@ func (s *GetPositionsListService) Run(req *user.GetPositionsListReq) (resp *user
 		predicates = append(predicates, position.NameContains(req.GetKeyword()))
 	}
 
-	positions, err := db.Client.Position.Query().Where(predicates...).
+	all, err := db.Client.Position.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(position.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)
-	for _, v := range positions {
 
-		userResp = append(userResp, convert.EntToPosition(v))
-	}
 	if err != nil {
 		return nil, err
 	}
+
+	dataResp = convert.FindPositionChildren(all, 1)
+
 	return &user.PositionsListResp{
-		Data: userResp,
+		Data: dataResp,
 	}, nil
 }

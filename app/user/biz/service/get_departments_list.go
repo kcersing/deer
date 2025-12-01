@@ -34,16 +34,16 @@ func (s *GetDepartmentsListService) Run(req *user.GetDepartmentsListReq) (resp *
 		)
 	}
 
-	users, err := db.Client.Department.Query().Where(predicates...).
+	all, err := db.Client.Department.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(department.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)
-	for _, v := range users {
-		dataResp = append(dataResp, convert.EntToDepartments(v))
-	}
 	if err != nil {
 		return nil, err
 	}
+
+	dataResp = convert.FindDepartmentsChildren(all, 1)
+
 	return &user.DepartmentsListResp{
 		Data: dataResp,
 	}, nil

@@ -1062,6 +1062,20 @@ func (p *Departments) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 8:
+			if fieldTypeId == thrift.LIST {
+				l, err = p.FastReadField8(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		case 251:
 			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField251(buf[offset:])
@@ -1206,6 +1220,31 @@ func (p *Departments) FastReadField7(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *Departments) FastReadField8(buf []byte) (int, error) {
+	offset := 0
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
+		return offset, err
+	}
+	_field := make([]*Departments, 0, size)
+	values := make([]Departments, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
+	}
+	p.Children = _field
+	return offset, nil
+}
+
 func (p *Departments) FastReadField251(buf []byte) (int, error) {
 	offset := 0
 
@@ -1262,6 +1301,7 @@ func (p *Departments) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField253(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
+		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField251(buf[offset:], w)
 		offset += p.fastWriteField252(buf[offset:], w)
 	}
@@ -1278,6 +1318,7 @@ func (p *Departments) BLength() int {
 		l += p.field4Length()
 		l += p.field5Length()
 		l += p.field7Length()
+		l += p.field8Length()
 		l += p.field251Length()
 		l += p.field252Length()
 		l += p.field253Length()
@@ -1336,6 +1377,22 @@ func (p *Departments) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
 	if p.IsSetStatus() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 7)
 		offset += thrift.Binary.WriteI64(buf[offset:], p.Status)
+	}
+	return offset
+}
+
+func (p *Departments) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetChildren() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 8)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Children {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -1417,6 +1474,19 @@ func (p *Departments) field7Length() int {
 	if p.IsSetStatus() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.I64Length()
+	}
+	return l
+}
+
+func (p *Departments) field8Length() int {
+	l := 0
+	if p.IsSetChildren() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Children {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }
@@ -1566,6 +1636,20 @@ func (p *Positions) FastRead(buf []byte) (int, error) {
 		case 9:
 			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 10:
+			if fieldTypeId == thrift.LIST {
+				l, err = p.FastReadField10(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -1749,6 +1833,31 @@ func (p *Positions) FastReadField9(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *Positions) FastReadField10(buf []byte) (int, error) {
+	offset := 0
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
+		return offset, err
+	}
+	_field := make([]*Positions, 0, size)
+	values := make([]Positions, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
+	}
+	p.Children = _field
+	return offset, nil
+}
+
 func (p *Positions) FastReadField251(buf []byte) (int, error) {
 	offset := 0
 
@@ -1807,6 +1916,7 @@ func (p *Positions) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
+		offset += p.fastWriteField10(buf[offset:], w)
 		offset += p.fastWriteField251(buf[offset:], w)
 		offset += p.fastWriteField252(buf[offset:], w)
 	}
@@ -1825,6 +1935,7 @@ func (p *Positions) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field9Length()
+		l += p.field10Length()
 		l += p.field251Length()
 		l += p.field252Length()
 		l += p.field253Length()
@@ -1901,6 +2012,22 @@ func (p *Positions) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
 	if p.IsSetQuota() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 9)
 		offset += thrift.Binary.WriteI64(buf[offset:], p.Quota)
+	}
+	return offset
+}
+
+func (p *Positions) fastWriteField10(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetChildren() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 10)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Children {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -2000,6 +2127,19 @@ func (p *Positions) field9Length() int {
 	if p.IsSetQuota() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.I64Length()
+	}
+	return l
+}
+
+func (p *Positions) field10Length() int {
+	l := 0
+	if p.IsSetChildren() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Children {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }

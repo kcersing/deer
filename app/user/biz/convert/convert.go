@@ -2,10 +2,12 @@ package convert
 
 import (
 	"common/pkg/utils"
+
 	Base "gen/kitex_gen/base"
-	"github.com/jinzhu/copier"
 	"time"
 	"user/biz/dal/db/ent"
+
+	"github.com/jinzhu/copier"
 )
 
 func EntToUser(e *ent.User) *Base.User {
@@ -46,4 +48,35 @@ func EntToPosition(e *ent.Position) *Base.Positions {
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
 	dto.UpdatedAt = e.UpdatedAt.Format(time.DateOnly)
 	return &dto
+}
+func FindDepartmentsChildren(data []*ent.Department, parentID int64) []*Base.Departments {
+	if data == nil {
+		return nil
+	}
+	var result []*Base.Departments
+	for _, v := range data {
+		// discard the parent menu, only find the children menu
+		if v.ParentID == parentID && v.ID != parentID {
+			m := EntToDepartments(v)
+			m.Children = FindDepartmentsChildren(data, v.ID)
+			result = append(result, m)
+		}
+	}
+	return result
+}
+
+func FindPositionChildren(data []*ent.Position, parentID int64) []*Base.Positions {
+	if data == nil {
+		return nil
+	}
+	var result []*Base.Positions
+	for _, v := range data {
+		// discard the parent menu, only find the children menu
+		if v.ParentID == parentID && v.ID != parentID {
+			m := EntToPosition(v)
+			m.Children = FindPositionChildren(data, v.ID)
+			result = append(result, m)
+		}
+	}
+	return result
 }

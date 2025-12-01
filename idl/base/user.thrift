@@ -31,9 +31,11 @@ struct Departments {
      4:optional i64 parentId=0,
      5:optional string desc="",
      7:optional i64 status=0,
+     8:optional list<Departments> children=[]  (api.raw = "children")
      251:optional string createdAt="",
      252:optional string updatedAt="",
      253:optional i64 createdId=0,
+
 }
 struct Positions {
      1:optional i64 id=0,
@@ -44,7 +46,7 @@ struct Positions {
      6:optional string desc="",
      7:optional i64 status=0,
      9:optional i64 quota=0,
-
+     10:optional list<Positions> children=[]  (api.raw = "children")
      251:optional string createdAt="",
      252:optional string updatedAt="",
      253:optional i64 createdId=0,
