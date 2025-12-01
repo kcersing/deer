@@ -135,9 +135,9 @@ func LastIP(v string) predicate.User {
 	return predicate.User(sql.FieldEQ(FieldLastIP, v))
 }
 
-// Detail applies equality check predicate on the "detail" field. It's identical to DetailEQ.
-func Detail(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldDetail, v))
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldDesc, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -1060,79 +1060,79 @@ func LastIPContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldLastIP, v))
 }
 
-// DetailEQ applies the EQ predicate on the "detail" field.
-func DetailEQ(v string) predicate.User {
-	return predicate.User(sql.FieldEQ(FieldDetail, v))
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.User {
+	return predicate.User(sql.FieldEQ(FieldDesc, v))
 }
 
-// DetailNEQ applies the NEQ predicate on the "detail" field.
-func DetailNEQ(v string) predicate.User {
-	return predicate.User(sql.FieldNEQ(FieldDetail, v))
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.User {
+	return predicate.User(sql.FieldNEQ(FieldDesc, v))
 }
 
-// DetailIn applies the In predicate on the "detail" field.
-func DetailIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldIn(FieldDetail, vs...))
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldIn(FieldDesc, vs...))
 }
 
-// DetailNotIn applies the NotIn predicate on the "detail" field.
-func DetailNotIn(vs ...string) predicate.User {
-	return predicate.User(sql.FieldNotIn(FieldDetail, vs...))
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.User {
+	return predicate.User(sql.FieldNotIn(FieldDesc, vs...))
 }
 
-// DetailGT applies the GT predicate on the "detail" field.
-func DetailGT(v string) predicate.User {
-	return predicate.User(sql.FieldGT(FieldDetail, v))
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.User {
+	return predicate.User(sql.FieldGT(FieldDesc, v))
 }
 
-// DetailGTE applies the GTE predicate on the "detail" field.
-func DetailGTE(v string) predicate.User {
-	return predicate.User(sql.FieldGTE(FieldDetail, v))
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.User {
+	return predicate.User(sql.FieldGTE(FieldDesc, v))
 }
 
-// DetailLT applies the LT predicate on the "detail" field.
-func DetailLT(v string) predicate.User {
-	return predicate.User(sql.FieldLT(FieldDetail, v))
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.User {
+	return predicate.User(sql.FieldLT(FieldDesc, v))
 }
 
-// DetailLTE applies the LTE predicate on the "detail" field.
-func DetailLTE(v string) predicate.User {
-	return predicate.User(sql.FieldLTE(FieldDetail, v))
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.User {
+	return predicate.User(sql.FieldLTE(FieldDesc, v))
 }
 
-// DetailContains applies the Contains predicate on the "detail" field.
-func DetailContains(v string) predicate.User {
-	return predicate.User(sql.FieldContains(FieldDetail, v))
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.User {
+	return predicate.User(sql.FieldContains(FieldDesc, v))
 }
 
-// DetailHasPrefix applies the HasPrefix predicate on the "detail" field.
-func DetailHasPrefix(v string) predicate.User {
-	return predicate.User(sql.FieldHasPrefix(FieldDetail, v))
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.User {
+	return predicate.User(sql.FieldHasPrefix(FieldDesc, v))
 }
 
-// DetailHasSuffix applies the HasSuffix predicate on the "detail" field.
-func DetailHasSuffix(v string) predicate.User {
-	return predicate.User(sql.FieldHasSuffix(FieldDetail, v))
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.User {
+	return predicate.User(sql.FieldHasSuffix(FieldDesc, v))
 }
 
-// DetailIsNil applies the IsNil predicate on the "detail" field.
-func DetailIsNil() predicate.User {
-	return predicate.User(sql.FieldIsNull(FieldDetail))
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldDesc))
 }
 
-// DetailNotNil applies the NotNil predicate on the "detail" field.
-func DetailNotNil() predicate.User {
-	return predicate.User(sql.FieldNotNull(FieldDetail))
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldDesc))
 }
 
-// DetailEqualFold applies the EqualFold predicate on the "detail" field.
-func DetailEqualFold(v string) predicate.User {
-	return predicate.User(sql.FieldEqualFold(FieldDetail, v))
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.User {
+	return predicate.User(sql.FieldEqualFold(FieldDesc, v))
 }
 
-// DetailContainsFold applies the ContainsFold predicate on the "detail" field.
-func DetailContainsFold(v string) predicate.User {
-	return predicate.User(sql.FieldContainsFold(FieldDetail, v))
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.User {
+	return predicate.User(sql.FieldContainsFold(FieldDesc, v))
 }
 
 // HasUserRole applies the HasEdge predicate on the "user_role" edge.

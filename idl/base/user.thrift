@@ -36,7 +36,6 @@ struct Departments {
      253:optional i64 createdId=0,
 }
 struct Positions {
-
      1:optional i64 id=0,
      2:optional string name="",
      3:optional string code="",

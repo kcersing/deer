@@ -46,8 +46,8 @@ const (
 	FieldLastAt = "last_at"
 	// FieldLastIP holds the string denoting the last_ip field in the database.
 	FieldLastIP = "last_ip"
-	// FieldDetail holds the string denoting the detail field in the database.
-	FieldDetail = "detail"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// EdgeUserRole holds the string denoting the user_role edge name in mutations.
 	EdgeUserRole = "user_role"
 	// Table holds the table name of the user in the database.
@@ -80,7 +80,7 @@ var Columns = []string{
 	FieldPositionID,
 	FieldLastAt,
 	FieldLastIP,
-	FieldDetail,
+	FieldDesc,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -198,9 +198,9 @@ func ByLastIP(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLastIP, opts...).ToFunc()
 }
 
-// ByDetail orders the results by the detail field.
-func ByDetail(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldDetail, opts...).ToFunc()
+// ByDesc orders the results by the desc field.
+func ByDesc(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDesc, opts...).ToFunc()
 }
 
 // ByUserRoleCount orders the results by user_role count.

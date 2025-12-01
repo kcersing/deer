@@ -345,23 +345,23 @@ func (_u *UserUpdate) ClearLastIP() *UserUpdate {
 	return _u
 }
 
-// SetDetail sets the "detail" field.
-func (_u *UserUpdate) SetDetail(v string) *UserUpdate {
-	_u.mutation.SetDetail(v)
+// SetDesc sets the "desc" field.
+func (_u *UserUpdate) SetDesc(v string) *UserUpdate {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableDetail(v *string) *UserUpdate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableDesc(v *string) *UserUpdate {
 	if v != nil {
-		_u.SetDetail(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDetail clears the value of the "detail" field.
-func (_u *UserUpdate) ClearDetail() *UserUpdate {
-	_u.mutation.ClearDetail()
+// ClearDesc clears the value of the "desc" field.
+func (_u *UserUpdate) ClearDesc() *UserUpdate {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -553,11 +553,11 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.LastIPCleared() {
 		_spec.ClearField(user.FieldLastIP, field.TypeString)
 	}
-	if value, ok := _u.mutation.Detail(); ok {
-		_spec.SetField(user.FieldDetail, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(user.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DetailCleared() {
-		_spec.ClearField(user.FieldDetail, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(user.FieldDesc, field.TypeString)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -940,23 +940,23 @@ func (_u *UserUpdateOne) ClearLastIP() *UserUpdateOne {
 	return _u
 }
 
-// SetDetail sets the "detail" field.
-func (_u *UserUpdateOne) SetDetail(v string) *UserUpdateOne {
-	_u.mutation.SetDetail(v)
+// SetDesc sets the "desc" field.
+func (_u *UserUpdateOne) SetDesc(v string) *UserUpdateOne {
+	_u.mutation.SetDesc(v)
 	return _u
 }
 
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableDetail(v *string) *UserUpdateOne {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableDesc(v *string) *UserUpdateOne {
 	if v != nil {
-		_u.SetDetail(*v)
+		_u.SetDesc(*v)
 	}
 	return _u
 }
 
-// ClearDetail clears the value of the "detail" field.
-func (_u *UserUpdateOne) ClearDetail() *UserUpdateOne {
-	_u.mutation.ClearDetail()
+// ClearDesc clears the value of the "desc" field.
+func (_u *UserUpdateOne) ClearDesc() *UserUpdateOne {
+	_u.mutation.ClearDesc()
 	return _u
 }
 
@@ -1178,11 +1178,11 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	if _u.mutation.LastIPCleared() {
 		_spec.ClearField(user.FieldLastIP, field.TypeString)
 	}
-	if value, ok := _u.mutation.Detail(); ok {
-		_spec.SetField(user.FieldDetail, field.TypeString, value)
+	if value, ok := _u.mutation.Desc(); ok {
+		_spec.SetField(user.FieldDesc, field.TypeString, value)
 	}
-	if _u.mutation.DetailCleared() {
-		_spec.ClearField(user.FieldDetail, field.TypeString)
+	if _u.mutation.DescCleared() {
+		_spec.ClearField(user.FieldDesc, field.TypeString)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{

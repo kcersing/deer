@@ -11,3 +11,8 @@ update_facade:
 	hz update --idl=../../idl/admin/role.thrift -use=deer/hertz_gen/
 	hz update --idl=../../idl/admin/system.thrift -use=deer/hertz_gen/
 
+	hz update --idl=../../idl/admin/departments.thrift -use=deer/hertz_gen/
+	hz update --idl=../../idl/admin/positions.thrift -use=deer/hertz_gen/
+
+
+

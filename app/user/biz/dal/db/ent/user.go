@@ -51,7 +51,7 @@ type User struct {
 	// 最后一次登录ip
 	LastIP string `json:"last_ip,omitempty"`
 	// 详情
-	Detail string `json:"detail,omitempty"`
+	Desc string `json:"desc,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the UserQuery when eager-loading is set.
 	Edges        UserEdges `json:"edges"`
@@ -83,7 +83,7 @@ func (*User) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender, user.FieldDepartmentID, user.FieldPositionID:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDetail:
+		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDesc:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldBirthday, user.FieldLastAt:
 			values[i] = new(sql.NullTime)
@@ -206,11 +206,11 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.LastIP = value.String
 			}
-		case user.FieldDetail:
+		case user.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field detail", values[i])
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
 			} else if value.Valid {
-				_m.Detail = value.String
+				_m.Desc = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -305,8 +305,8 @@ func (_m *User) String() string {
 	builder.WriteString("last_ip=")
 	builder.WriteString(_m.LastIP)
 	builder.WriteString(", ")
-	builder.WriteString("detail=")
-	builder.WriteString(_m.Detail)
+	builder.WriteString("desc=")
+	builder.WriteString(_m.Desc)
 	builder.WriteByte(')')
 	return builder.String()
 }

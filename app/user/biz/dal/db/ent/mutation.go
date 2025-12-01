@@ -2449,7 +2449,7 @@ type UserMutation struct {
 	addposition_id   *int64
 	last_at          *time.Time
 	last_ip          *string
-	detail           *string
+	desc             *string
 	clearedFields    map[string]struct{}
 	user_role        map[int]struct{}
 	removeduser_role map[int]struct{}
@@ -3434,53 +3434,53 @@ func (m *UserMutation) ResetLastIP() {
 	delete(m.clearedFields, user.FieldLastIP)
 }
 
-// SetDetail sets the "detail" field.
-func (m *UserMutation) SetDetail(s string) {
-	m.detail = &s
+// SetDesc sets the "desc" field.
+func (m *UserMutation) SetDesc(s string) {
+	m.desc = &s
 }
 
-// Detail returns the value of the "detail" field in the mutation.
-func (m *UserMutation) Detail() (r string, exists bool) {
-	v := m.detail
+// Desc returns the value of the "desc" field in the mutation.
+func (m *UserMutation) Desc() (r string, exists bool) {
+	v := m.desc
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldDetail returns the old "detail" field's value of the User entity.
+// OldDesc returns the old "desc" field's value of the User entity.
 // If the User object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserMutation) OldDetail(ctx context.Context) (v string, err error) {
+func (m *UserMutation) OldDesc(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldDetail is only allowed on UpdateOne operations")
+		return v, errors.New("OldDesc is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldDetail requires an ID field in the mutation")
+		return v, errors.New("OldDesc requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldDetail: %w", err)
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
 	}
-	return oldValue.Detail, nil
+	return oldValue.Desc, nil
 }
 
-// ClearDetail clears the value of the "detail" field.
-func (m *UserMutation) ClearDetail() {
-	m.detail = nil
-	m.clearedFields[user.FieldDetail] = struct{}{}
+// ClearDesc clears the value of the "desc" field.
+func (m *UserMutation) ClearDesc() {
+	m.desc = nil
+	m.clearedFields[user.FieldDesc] = struct{}{}
 }
 
-// DetailCleared returns if the "detail" field was cleared in this mutation.
-func (m *UserMutation) DetailCleared() bool {
-	_, ok := m.clearedFields[user.FieldDetail]
+// DescCleared returns if the "desc" field was cleared in this mutation.
+func (m *UserMutation) DescCleared() bool {
+	_, ok := m.clearedFields[user.FieldDesc]
 	return ok
 }
 
-// ResetDetail resets all changes to the "detail" field.
-func (m *UserMutation) ResetDetail() {
-	m.detail = nil
-	delete(m.clearedFields, user.FieldDetail)
+// ResetDesc resets all changes to the "desc" field.
+func (m *UserMutation) ResetDesc() {
+	m.desc = nil
+	delete(m.clearedFields, user.FieldDesc)
 }
 
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by ids.
@@ -3620,8 +3620,8 @@ func (m *UserMutation) Fields() []string {
 	if m.last_ip != nil {
 		fields = append(fields, user.FieldLastIP)
 	}
-	if m.detail != nil {
-		fields = append(fields, user.FieldDetail)
+	if m.desc != nil {
+		fields = append(fields, user.FieldDesc)
 	}
 	return fields
 }
@@ -3663,8 +3663,8 @@ func (m *UserMutation) Field(name string) (ent.Value, bool) {
 		return m.LastAt()
 	case user.FieldLastIP:
 		return m.LastIP()
-	case user.FieldDetail:
-		return m.Detail()
+	case user.FieldDesc:
+		return m.Desc()
 	}
 	return nil, false
 }
@@ -3706,8 +3706,8 @@ func (m *UserMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldLastAt(ctx)
 	case user.FieldLastIP:
 		return m.OldLastIP(ctx)
-	case user.FieldDetail:
-		return m.OldDetail(ctx)
+	case user.FieldDesc:
+		return m.OldDesc(ctx)
 	}
 	return nil, fmt.Errorf("unknown User field %s", name)
 }
@@ -3829,12 +3829,12 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetLastIP(v)
 		return nil
-	case user.FieldDetail:
+	case user.FieldDesc:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetDetail(v)
+		m.SetDesc(v)
 		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)
@@ -3980,8 +3980,8 @@ func (m *UserMutation) ClearedFields() []string {
 	if m.FieldCleared(user.FieldLastIP) {
 		fields = append(fields, user.FieldLastIP)
 	}
-	if m.FieldCleared(user.FieldDetail) {
-		fields = append(fields, user.FieldDetail)
+	if m.FieldCleared(user.FieldDesc) {
+		fields = append(fields, user.FieldDesc)
 	}
 	return fields
 }
@@ -4036,8 +4036,8 @@ func (m *UserMutation) ClearField(name string) error {
 	case user.FieldLastIP:
 		m.ClearLastIP()
 		return nil
-	case user.FieldDetail:
-		m.ClearDetail()
+	case user.FieldDesc:
+		m.ClearDesc()
 		return nil
 	}
 	return fmt.Errorf("unknown User nullable field %s", name)
@@ -4095,8 +4095,8 @@ func (m *UserMutation) ResetField(name string) error {
 	case user.FieldLastIP:
 		m.ResetLastIP()
 		return nil
-	case user.FieldDetail:
-		m.ResetDetail()
+	case user.FieldDesc:
+		m.ResetDesc()
 		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)

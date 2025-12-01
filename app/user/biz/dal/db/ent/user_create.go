@@ -221,16 +221,16 @@ func (_c *UserCreate) SetNillableLastIP(v *string) *UserCreate {
 	return _c
 }
 
-// SetDetail sets the "detail" field.
-func (_c *UserCreate) SetDetail(v string) *UserCreate {
-	_c.mutation.SetDetail(v)
+// SetDesc sets the "desc" field.
+func (_c *UserCreate) SetDesc(v string) *UserCreate {
+	_c.mutation.SetDesc(v)
 	return _c
 }
 
-// SetNillableDetail sets the "detail" field if the given value is not nil.
-func (_c *UserCreate) SetNillableDetail(v *string) *UserCreate {
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (_c *UserCreate) SetNillableDesc(v *string) *UserCreate {
 	if v != nil {
-		_c.SetDetail(*v)
+		_c.SetDesc(*v)
 	}
 	return _c
 }
@@ -424,9 +424,9 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec.SetField(user.FieldLastIP, field.TypeString, value)
 		_node.LastIP = value
 	}
-	if value, ok := _c.mutation.Detail(); ok {
-		_spec.SetField(user.FieldDetail, field.TypeString, value)
-		_node.Detail = value
+	if value, ok := _c.mutation.Desc(); ok {
+		_spec.SetField(user.FieldDesc, field.TypeString, value)
+		_node.Desc = value
 	}
 	if nodes := _c.mutation.UserRoleIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
