@@ -23,7 +23,10 @@ import Articles from './components/Articles';
 import Projects from './components/Projects';
 import type { CurrentUser, TagType, tabKeyType } from './data.d';
 import { queryCurrent } from './service';
-import {getUser} from "@/services/ant-design-pro/user";
+
+import { User } from  "@/pages/account/service/data";
+import {getUser} from "@/pages/account/service/service";
+
 
 const operationTabList = [
   {

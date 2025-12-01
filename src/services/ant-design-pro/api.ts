@@ -1,6 +1,7 @@
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
+import {headers} from "@/services/ant-design-pro/utils";
 
 
 
@@ -11,5 +12,4 @@ export async function getNotices(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
-
 

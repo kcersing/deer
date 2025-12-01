@@ -8,7 +8,11 @@ import {
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC } from 'react';
-import { createMenu } from '@/services/ant-design-pro/menu';
+
+import { Dictht,Dict } from  "@/pages/system/dict/service/data";
+import {createDictht}  from "@/pages/system/dict/service/service";
+
+
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -20,7 +24,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const { run, loading } = useRequest(createMenu, {
+  const { run, loading } = useRequest(createDictht, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -44,7 +48,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          await run({ data: value as API.RuleListItem });
+          await run({ data: value as Dictht });
 
           return true;
         }}

@@ -15,14 +15,15 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {deleteApi, getApiList} from "@/services/ant-design-pro/api";
+import { Api } from  "@/pages/auth/api/service/data";
+import {deleteApi, getApiList} from "@/pages/auth/api/service/service";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Api>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Api[]>([]);
+  const [currentRow, setCurrentRow] = useState<Api>();
+  const [selectedRowsState, setSelectedRows] = useState<Api[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -39,7 +40,7 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.Api>[] = [
+  const columns: ProColumns<Api>[] = [
     {
       title: '名称',
       dataIndex: 'title',
@@ -127,7 +128,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: Api[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -146,7 +147,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<Api, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"
@@ -198,17 +199,17 @@ const TableList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.name && (
-          <ProDescriptions<API.Api>
+        {currentRow?.title && (
+          <ProDescriptions<Api>
             column={2}
-            title={currentRow?.name}
+            title={currentRow?.title}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.name,
+              id: currentRow?.title,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Api>[]}
+            columns={columns as ProDescriptionsItemProps<Api>[]}
           />
         )}
       </Drawer>

@@ -1,30 +1,19 @@
 import {
   ProForm,
-  ProFormCascader,
-  ProFormDatePicker,
-  ProFormDateRangePicker,
-  ProFormDigit,
-  ProFormList,
-  ProFormMoney,
-  ProFormTreeSelect,
-  ProFormDateTimePicker,
-  ProFormRadio,
-  ProFormSelect,
   ProFormText,
-  ProFormTextArea,
-  StepsForm,
   ModalForm,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Form, message } from 'antd';
 import React, { cloneElement, useCallback, useState } from 'react';
-import { updateMenu } from '@/services/ant-design-pro/menu';
 
+import { User } from  "@/pages/opm/user/service/data";
+import {updateUser} from "@/pages/opm/user/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
   onOk?: () => void;
-  values: Partial<API.Menu>;
+  values: Partial<User>;
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
@@ -34,7 +23,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run } = useRequest(updateMenu, {
+  const { run } = useRequest(updateUser, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');

@@ -15,14 +15,18 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {deleteRole, getRoleList} from "@/services/ant-design-pro/role";
+
+import { Role } from  "@/pages/auth/role/service/data";
+import {deleteRole, getRoleList} from "@/pages/auth/role/service/service";
+
+
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Role>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Role[]>([]);
+  const [currentRow, setCurrentRow] = useState<Role>();
+  const [selectedRowsState, setSelectedRows] = useState<Role[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -40,7 +44,7 @@ const TableList: React.FC = () => {
   });
 
 
-  const columns: ProColumns<API.Role>[] = [
+  const columns: ProColumns<Role>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -123,7 +127,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: Role[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -142,7 +146,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<Role, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"
@@ -195,7 +199,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.Role>
+          <ProDescriptions<Role>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -204,7 +208,7 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Role>[]}
+            columns={columns as ProDescriptionsItemProps<Role>[]}
           />
         )}
       </Drawer>

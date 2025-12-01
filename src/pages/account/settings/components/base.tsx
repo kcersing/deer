@@ -12,7 +12,10 @@ import { Button, Input, message, Upload } from 'antd';
 import React from 'react';
 import { queryCity, queryCurrent, queryProvince } from '../service';
 import useStyles from './index.style';
-import {getUser} from "@/services/ant-design-pro/user";
+import { User } from  "@/pages/account/service/data";
+import {getUser} from "@/pages/account/service/service";
+
+
 const BaseView: React.FC = () => {
   const { styles } = useStyles();
   // 头像组件 方便以后独立，增加裁剪之类的功能

@@ -15,14 +15,15 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {deleteMenu, getMenuList} from "@/services/ant-design-pro/menu";
+import { Menu } from  "@/pages/auth/menu/service/data";
+import {deleteMenu, getMenuList} from "@/pages/auth/menu/service/service";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Menu>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Menu[]>([]);
+  const [currentRow, setCurrentRow] = useState<Menu>();
+  const [selectedRowsState, setSelectedRows] = useState<Menu[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -39,7 +40,7 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<Menu>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -133,7 +134,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: Menu[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -152,7 +153,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<Menu, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"
@@ -205,7 +206,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.Menu>
+          <ProDescriptions<Menu>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -214,7 +215,7 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Menu>[]}
+            columns={columns as ProDescriptionsItemProps<Menu>[]}
           />
         )}
       </Drawer>

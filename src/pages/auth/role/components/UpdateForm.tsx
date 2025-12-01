@@ -18,13 +18,14 @@ import {
 import { useRequest } from '@umijs/max';
 import { Form, message } from 'antd';
 import React, { cloneElement, useCallback, useState } from 'react';
-import { updateMenu } from '@/services/ant-design-pro/menu';
 
+import { updateRole }from "@/pages/auth/role/service/service";
+import { Role } from  "@/pages/auth/role/service/data";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
   onOk?: () => void;
-  values: Partial<API.Menu>;
+  values: Partial<Role>;
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
@@ -34,7 +35,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run } = useRequest(updateMenu, {
+  const { run } = useRequest(updateRole, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');

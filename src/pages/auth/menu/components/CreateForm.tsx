@@ -5,10 +5,12 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { FormattedMessage, useRequest } from '@umijs/max';
+import { useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC } from 'react';
-import { createMenu } from '@/services/ant-design-pro/menu';
+import {createMenu} from "@/pages/auth/menu/service/service";
+
+import { Menu } from "@/pages/auth/menu/service/data";
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -44,7 +46,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          await run({ data: value as API.RuleListItem });
+          await run({ data: value as Menu });
 
           return true;
         }}

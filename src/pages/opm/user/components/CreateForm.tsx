@@ -3,7 +3,6 @@ import {
   type ActionType,
   ModalForm, ProForm,
   ProFormText,
-  ProFormTextArea,
   ProFormSwitch,
   ProFormDatePicker,
   ProFormUploadButton,ProFormRadio
@@ -12,7 +11,8 @@ import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC,useState } from 'react';
 
-import {createUser} from "@/services/ant-design-pro/user";
+import { User } from  "@/pages/opm/user/service/data";
+import {createUser} from "@/pages/opm/user/service/service";
 
 import WangEditor from '@/pages/components/wangeditor'
 
@@ -29,7 +29,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [detailBody, setDetailBody] = useState('');
 
 
-  const optionDetail = (data) => {
+  const optionDetail = (data: React.SetStateAction<string>) => {
     setDetail(data)
   };
 
@@ -60,7 +60,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.detail=detail
-          await run({ data: value as API.User });
+          await run({ data: value as User });
           return true;
         }}
       >

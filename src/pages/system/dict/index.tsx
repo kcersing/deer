@@ -1,17 +1,16 @@
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import { ProCard, ProTable } from '@ant-design/pro-components';
-import type { BadgeProps } from 'antd';
-import { Badge, Button } from 'antd';
 import React, {useEffect, useRef, useState} from 'react';
-import UpdateForm from "@/pages/system/dict/components/UpdateForm";
 
+import CreateForm from './components/CreateForm';
+import UpdateForm from './components/UpdateForm';
+
+import { Dictht,Dict } from  "@/pages/system/dict/service/data";
+import {getDicthtList, getDictList}  from "@/pages/system/dict/service/service";
+
+import CreateDicthtForm from "@/pages/system/dict/components/CreateDicthtForm";
 import UpdateDicthtForm from "@/pages/system/dict/components/UpdateDicthtForm";
 
-import {getDicthtList, getDictList} from "@/services/ant-design-pro/dict";
-import {getUser} from "@/services/ant-design-pro/user";
-import {history} from "@@/core/history";
-import CreateForm from "@/pages/system/dict/components/CreateForm";
-import CreateDicthtForm from "@/pages/system/dict/components/CreateDicthtForm";
 type DicthtListProps = {
   id: number;
 };
@@ -25,7 +24,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
 
   const [searchDicthtName, setSearchDicthtName] = useState<string>('');
 
-  const columns: ProColumns<API.Dictht>[] = [
+  const columns: ProColumns<Dictht>[] = [
 
     {
       title: "标题",
@@ -130,11 +129,11 @@ const DictList: React.FC<DictListProps> = (props) => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Dict>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Dict[]>([]);
+  const [currentRow, setCurrentRow] = useState<Dict>();
+  const [selectedRowsState, setSelectedRows] = useState<Dict[]>([]);
 
 
-  const columns: ProColumns<API.Dict>[] = [
+  const columns: ProColumns<Dict>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -195,7 +194,7 @@ const DictList: React.FC<DictListProps> = (props) => {
 
 
   return (
-    <ProTable<API.Dict>
+    <ProTable<Dict>
       columns={columns}
       params={{name: searchDictName}}
       request={getDictList}

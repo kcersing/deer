@@ -15,19 +15,22 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import {getUserList} from "@/services/ant-design-pro/user";
+
+import { User } from  "@/pages/opm/user/service/data";
+import {getUserList} from "@/pages/opm/user/service/service";
+
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.User>();
-  const [selectedRowsState, setSelectedRows] = useState<API.User[]>([]);
+  const [currentRow, setCurrentRow] = useState<User>();
+  const [selectedRowsState, setSelectedRows] = useState<User[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const columns: ProColumns<API.User>[] = [
+  const columns: ProColumns<User>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -128,7 +131,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.User, API.PageParams>
+      <ProTable<User, API.PageParams>
         headerTitle='人员列表'
         actionRef={actionRef}
         rowKey="id"
@@ -159,7 +162,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<API.User>
+          <ProDescriptions<User>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -168,7 +171,7 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Menu>[]}
+            columns={columns as ProDescriptionsItemProps<User>[]}
           />
         )}
       </Drawer>
@@ -177,26 +180,5 @@ const TableList: React.FC = () => {
 };
 
 
-// const [menuData, setMenuData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [menuData] = await Promise.all([
-//       getMenuTree(),
-//     ]);
-//     setMenuData(menuData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(menuData);
 
 export default TableList;

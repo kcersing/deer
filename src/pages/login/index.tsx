@@ -18,7 +18,9 @@ import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import { Footer } from '@/components';
-import { login } from '@/services/ant-design-pro/user';
+
+import {login} from "@/pages/opm/user/service/service";
+
 import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 import Settings from '../../../config/defaultSettings';
 

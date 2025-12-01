@@ -5,10 +5,13 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { FormattedMessage, useRequest } from '@umijs/max';
+import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC } from 'react';
-import { createMenu } from '@/services/ant-design-pro/menu';
+
+import { createRole }from "@/pages/auth/role/service/service";
+import { Role } from  "@/pages/auth/role/service/data";
+
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -20,7 +23,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const { run, loading } = useRequest(createMenu, {
+  const { run, loading } = useRequest(createRole, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -44,7 +47,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          await run({ data: value as API.RuleListItem });
+          await run({ data: value as Role });
 
           return true;
         }}

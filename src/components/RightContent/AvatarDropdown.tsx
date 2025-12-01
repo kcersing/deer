@@ -10,8 +10,7 @@ import { createStyles } from 'antd-style';
 import React from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
-import {logout} from "@/services/ant-design-pro/user";
-
+import {logout} from "@/pages/opm/user/service/service";
 export type GlobalHeaderRightProps = {
   menu?: boolean;
   children?: React.ReactNode;

@@ -13,8 +13,8 @@ import {
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
-import { getMenuList} from "@/services/ant-design-pro/menu";
-import {getUser, getRoleMenuAll} from '@/services/ant-design-pro/user';
+import { getMenuList} from "@/pages/auth/menu/service/service";
+import {getUser, getRoleMenuAll} from "@/pages/opm/user/service/service";
 import { matchRoutes } from 'umi';
 import { loopMenuItem} from "@/utils";
 import Login from '@/pages/login';

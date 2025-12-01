@@ -13,20 +13,20 @@ import {  useRequest } from '@umijs/max';
 import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
-import {deleteMenu, getMenuList} from "@/services/ant-design-pro/menu";
+
+import { Log } from  "@/pages/system/log/service/data";
+import {deleteLog,getLogList}  from "@/pages/system/log/service/service";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<API.Menu>();
-  const [selectedRowsState, setSelectedRows] = useState<API.Menu[]>([]);
+  const [currentRow, setCurrentRow] = useState<Log>();
+  const [selectedRowsState, setSelectedRows] = useState<Log[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteMenu, {
+  const { run: delRun, loading } = useRequest(deleteLog, {
     manual: true,
     onSuccess: () => {
       setSelectedRows([]);
@@ -109,21 +109,7 @@ const TableList: React.FC = () => {
 
       },
     },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => [
-        <UpdateForm
-          trigger={
-            <a>更新</a>
-          }
-          key="config"
-          onOk={actionRef.current?.reload}
-          values={record}
-        />,
-      ],
-    },
+
   ];
 
   /**
@@ -160,10 +146,7 @@ const TableList: React.FC = () => {
         search={{
           labelWidth: 120,
         }}
-        toolBarRender={() => [
-          <CreateForm key="create" reload={actionRef.current?.reload} />,
-        ]}
-        request={getMenuList}
+        request={getLogList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -204,17 +187,17 @@ const TableList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.name && (
-          <ProDescriptions<API.Menu>
+        {currentRow?.title && (
+          <ProDescriptions<Log>
             column={2}
-            title={currentRow?.name}
+            title={currentRow?.title}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.name,
+              id: currentRow?.title,
             }}
-            columns={columns as ProDescriptionsItemProps<API.Menu>[]}
+            columns={columns as ProDescriptionsItemProps<Log>[]}
           />
         )}
       </Drawer>
@@ -223,26 +206,5 @@ const TableList: React.FC = () => {
 };
 
 
-// const [menuData, setMenuData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [menuData] = await Promise.all([
-//       getMenuTree(),
-//     ]);
-//     setMenuData(menuData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(menuData);
 
 export default TableList;
