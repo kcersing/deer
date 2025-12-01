@@ -40,7 +40,7 @@ func (s *GetPositionsListService) Run(req *user.GetPositionsListReq) (resp *user
 		return nil, err
 	}
 
-	dataResp = convert.FindPositionChildren(all, 1)
+	dataResp = convert.FindPositionChildren(all, 0)
 
 	return &user.PositionsListResp{
 		Data: dataResp,

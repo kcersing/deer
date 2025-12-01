@@ -42,7 +42,7 @@ func (s *GetDepartmentsListService) Run(req *user.GetDepartmentsListReq) (resp *
 		return nil, err
 	}
 
-	dataResp = convert.FindDepartmentsChildren(all, 1)
+	dataResp = convert.FindDepartmentsChildren(all, 0)
 
 	return &user.DepartmentsListResp{
 		Data: dataResp,
