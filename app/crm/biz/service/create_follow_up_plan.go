@@ -1,7 +1,9 @@
 package service
 
 import (
+	"common/pkg/utils"
 	"context"
+	"crm/biz/convert"
 	"crm/biz/dal/db"
 	"gen/kitex_gen/crm"
 )
@@ -15,14 +17,24 @@ func NewCreateFollowUpPlanService(ctx context.Context) *CreateFollowUpPlanServic
 
 // Run create note info
 func (s *CreateFollowUpPlanService) Run(req *crm.CreateFollowUpPlanReq) (resp *crm.FollowUpPlanResp, err error) {
-	db.Client.FollowUpPlan.Create().
+	time, err := utils.GetStringDateTime(req.GetTime())
+	if err != nil {
+		return nil, err
+	}
+	save, err := db.Client.FollowUpPlan.Create().
 		SetContent(req.GetContent()).
-		SetTime(req.GetTime()).
+		SetTime(time).
 		SetMemberID(req.GetMemberId()).
 		SetUserID(req.GetUserId()).
 		SetStatus(req.GetStatus()).
 		SetCreatedID(req.GetCreatedId()).
 		SetDivision(req.GetDivision()).
 		Save(s.ctx)
+	if err != nil {
+		return nil, err
+	}
+	resp = &crm.FollowUpPlanResp{
+		Data: convert.EntToFollowUpPlan(save),
+	}
 	return
 }

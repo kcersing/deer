@@ -13,8 +13,8 @@ struct FollowUpPlan {
     6:optional i64 userId=0,// 执行人
     7:optional i64 status=0, //计划状态 待完成 延期 完成
     8:optional i64 createdId=0, //计划制定人
-    9:optional i64 createdAt=0, //创建时间
-    10:optional i64 updatedAt=0, //更新时间
+    9:optional string createdAt="", //创建时间
+    10:optional string updatedAt="", //更新时间
     11:optional i64 division=0, //部门
 }
 
@@ -27,8 +27,8 @@ struct FollowUpRecord {
      5:optional i64 status=0, //跟进状态
      6:optional i64 userId=0, //跟进人
      7:optional i64 division=0, //部门
-     8:optional i64 createdAt=0, //创建时间
-     9:optional i64 updatedAt=0, //更新时间
+     8:optional string createdAt="", //创建时间
+     9:optional string updatedAt="", //更新时间
      10:optional string record ="", //跟进记录
      11:optional i64 opportunitiesId=0, //跟进商机
      // 12:optional i64 AAA=0, //跟进主体
@@ -43,8 +43,8 @@ struct Opportunities {
      6:optional i64 winRate=0, //赢率
      7:optional string content="", // 内容
      8:optional i64 predictionAmount =0, //预测成交金额
-     9:optional i64 createdAt=0, //创建时间
-     10:optional i64 updatedAt=0, //更新时间
+     9:optional string createdAt="", //创建时间
+     10:optional string updatedAt="", //更新时间
      11:optional string title ="", //标题
 
 //      预计成交日期

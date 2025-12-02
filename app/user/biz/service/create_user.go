@@ -3,8 +3,8 @@ package service
 import (
 	"common/pkg/errno"
 	"context"
-	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
+	"user/biz/convert"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
 )
@@ -27,16 +27,14 @@ func (s *CreateUserService) Run(req *User.CreateUserReq) (resp *User.UserResp, e
 	//if ok {
 	//	return nil, errno.UserMobileExistErr
 	//}
-	_, err = db.Client.User.Create().
+	save, err := db.Client.User.Create().
 		SetUsername(req.GetUsername()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err
 	}
 	resp = &User.UserResp{
-		Data: &Base.User{
-			Username: req.GetUsername(),
-		},
+		Data: convert.EntToUser(save),
 	}
 	return
 }

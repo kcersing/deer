@@ -9,29 +9,29 @@ import (
 )
 
 type FollowUpPlanResp struct {
-	FollowUpPlan *base.FollowUpPlan `thrift:"followUpPlan,1,optional" frugal:"1,optional,base.FollowUpPlan" json:"followUpPlan,omitempty"`
-	BaseResp     *base.BaseResp     `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     *base.FollowUpPlan `thrift:"data,1,optional" frugal:"1,optional,base.FollowUpPlan" json:"data,omitempty"`
+	BaseResp *base.BaseResp     `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpPlanResp() *FollowUpPlanResp {
 	return &FollowUpPlanResp{
-		FollowUpPlan: &base.FollowUpPlan{},
-		BaseResp:     &base.BaseResp{},
+		Data:     &base.FollowUpPlan{},
+		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpPlanResp) InitDefault() {
-	p.FollowUpPlan = &base.FollowUpPlan{}
+	p.Data = &base.FollowUpPlan{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpPlanResp_FollowUpPlan_DEFAULT *base.FollowUpPlan = &base.FollowUpPlan{}
+var FollowUpPlanResp_Data_DEFAULT *base.FollowUpPlan = &base.FollowUpPlan{}
 
-func (p *FollowUpPlanResp) GetFollowUpPlan() (v *base.FollowUpPlan) {
-	if !p.IsSetFollowUpPlan() {
-		return FollowUpPlanResp_FollowUpPlan_DEFAULT
+func (p *FollowUpPlanResp) GetData() (v *base.FollowUpPlan) {
+	if !p.IsSetData() {
+		return FollowUpPlanResp_Data_DEFAULT
 	}
-	return p.FollowUpPlan
+	return p.Data
 }
 
 var FollowUpPlanResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
@@ -42,15 +42,15 @@ func (p *FollowUpPlanResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpPlanResp) SetFollowUpPlan(val *base.FollowUpPlan) {
-	p.FollowUpPlan = val
+func (p *FollowUpPlanResp) SetData(val *base.FollowUpPlan) {
+	p.Data = val
 }
 func (p *FollowUpPlanResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *FollowUpPlanResp) IsSetFollowUpPlan() bool {
-	return p.FollowUpPlan != nil
+func (p *FollowUpPlanResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *FollowUpPlanResp) IsSetBaseResp() bool {
@@ -65,7 +65,7 @@ func (p *FollowUpPlanResp) String() string {
 }
 
 var fieldIDToName_FollowUpPlanResp = map[int16]string{
-	1:   "followUpPlan",
+	1:   "data",
 	255: "baseResp",
 }
 
@@ -554,29 +554,29 @@ var fieldIDToName_FollowUpPlanListResp = map[int16]string{
 }
 
 type FollowUpRecordResp struct {
-	FollowUpRecord *base.FollowUpRecord `thrift:"followUpRecord,1,optional" frugal:"1,optional,base.FollowUpRecord" json:"followUpRecord,omitempty"`
-	BaseResp       *base.BaseResp       `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     *base.FollowUpRecord `thrift:"data,1,optional" frugal:"1,optional,base.FollowUpRecord" json:"data,omitempty"`
+	BaseResp *base.BaseResp       `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewFollowUpRecordResp() *FollowUpRecordResp {
 	return &FollowUpRecordResp{
-		FollowUpRecord: &base.FollowUpRecord{},
-		BaseResp:       &base.BaseResp{},
+		Data:     &base.FollowUpRecord{},
+		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *FollowUpRecordResp) InitDefault() {
-	p.FollowUpRecord = &base.FollowUpRecord{}
+	p.Data = &base.FollowUpRecord{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var FollowUpRecordResp_FollowUpRecord_DEFAULT *base.FollowUpRecord = &base.FollowUpRecord{}
+var FollowUpRecordResp_Data_DEFAULT *base.FollowUpRecord = &base.FollowUpRecord{}
 
-func (p *FollowUpRecordResp) GetFollowUpRecord() (v *base.FollowUpRecord) {
-	if !p.IsSetFollowUpRecord() {
-		return FollowUpRecordResp_FollowUpRecord_DEFAULT
+func (p *FollowUpRecordResp) GetData() (v *base.FollowUpRecord) {
+	if !p.IsSetData() {
+		return FollowUpRecordResp_Data_DEFAULT
 	}
-	return p.FollowUpRecord
+	return p.Data
 }
 
 var FollowUpRecordResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
@@ -587,15 +587,15 @@ func (p *FollowUpRecordResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *FollowUpRecordResp) SetFollowUpRecord(val *base.FollowUpRecord) {
-	p.FollowUpRecord = val
+func (p *FollowUpRecordResp) SetData(val *base.FollowUpRecord) {
+	p.Data = val
 }
 func (p *FollowUpRecordResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *FollowUpRecordResp) IsSetFollowUpRecord() bool {
-	return p.FollowUpRecord != nil
+func (p *FollowUpRecordResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *FollowUpRecordResp) IsSetBaseResp() bool {
@@ -610,18 +610,171 @@ func (p *FollowUpRecordResp) String() string {
 }
 
 var fieldIDToName_FollowUpRecordResp = map[int16]string{
-	1:   "followUpRecord",
+	1:   "data",
 	255: "baseResp",
 }
 
 type CreateFollowUpRecordReq struct {
+	Content         string `thrift:"content,2,optional" frugal:"2,optional,string" json:"content,omitempty"`
+	FollowUpId      int64  `thrift:"followUpId,3,optional" frugal:"3,optional,i64" json:"followUpId,omitempty"`
+	Method          int64  `thrift:"method,4,optional" frugal:"4,optional,i64" json:"method,omitempty"`
+	Status          int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	UserId          int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
+	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
+	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
+	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
 }
 
 func NewCreateFollowUpRecordReq() *CreateFollowUpRecordReq {
-	return &CreateFollowUpRecordReq{}
+	return &CreateFollowUpRecordReq{
+		Content:         "",
+		FollowUpId:      0,
+		Method:          0,
+		Status:          0,
+		UserId:          0,
+		Division:        0,
+		Record:          "",
+		OpportunitiesId: 0,
+	}
 }
 
 func (p *CreateFollowUpRecordReq) InitDefault() {
+	p.Content = ""
+	p.FollowUpId = 0
+	p.Method = 0
+	p.Status = 0
+	p.UserId = 0
+	p.Division = 0
+	p.Record = ""
+	p.OpportunitiesId = 0
+}
+
+var CreateFollowUpRecordReq_Content_DEFAULT string = ""
+
+func (p *CreateFollowUpRecordReq) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return CreateFollowUpRecordReq_Content_DEFAULT
+	}
+	return p.Content
+}
+
+var CreateFollowUpRecordReq_FollowUpId_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetFollowUpId() (v int64) {
+	if !p.IsSetFollowUpId() {
+		return CreateFollowUpRecordReq_FollowUpId_DEFAULT
+	}
+	return p.FollowUpId
+}
+
+var CreateFollowUpRecordReq_Method_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetMethod() (v int64) {
+	if !p.IsSetMethod() {
+		return CreateFollowUpRecordReq_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var CreateFollowUpRecordReq_Status_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateFollowUpRecordReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateFollowUpRecordReq_UserId_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return CreateFollowUpRecordReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
+
+var CreateFollowUpRecordReq_Division_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetDivision() (v int64) {
+	if !p.IsSetDivision() {
+		return CreateFollowUpRecordReq_Division_DEFAULT
+	}
+	return p.Division
+}
+
+var CreateFollowUpRecordReq_Record_DEFAULT string = ""
+
+func (p *CreateFollowUpRecordReq) GetRecord() (v string) {
+	if !p.IsSetRecord() {
+		return CreateFollowUpRecordReq_Record_DEFAULT
+	}
+	return p.Record
+}
+
+var CreateFollowUpRecordReq_OpportunitiesId_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetOpportunitiesId() (v int64) {
+	if !p.IsSetOpportunitiesId() {
+		return CreateFollowUpRecordReq_OpportunitiesId_DEFAULT
+	}
+	return p.OpportunitiesId
+}
+func (p *CreateFollowUpRecordReq) SetContent(val string) {
+	p.Content = val
+}
+func (p *CreateFollowUpRecordReq) SetFollowUpId(val int64) {
+	p.FollowUpId = val
+}
+func (p *CreateFollowUpRecordReq) SetMethod(val int64) {
+	p.Method = val
+}
+func (p *CreateFollowUpRecordReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreateFollowUpRecordReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *CreateFollowUpRecordReq) SetDivision(val int64) {
+	p.Division = val
+}
+func (p *CreateFollowUpRecordReq) SetRecord(val string) {
+	p.Record = val
+}
+func (p *CreateFollowUpRecordReq) SetOpportunitiesId(val int64) {
+	p.OpportunitiesId = val
+}
+
+func (p *CreateFollowUpRecordReq) IsSetContent() bool {
+	return p.Content != CreateFollowUpRecordReq_Content_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetFollowUpId() bool {
+	return p.FollowUpId != CreateFollowUpRecordReq_FollowUpId_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetMethod() bool {
+	return p.Method != CreateFollowUpRecordReq_Method_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetStatus() bool {
+	return p.Status != CreateFollowUpRecordReq_Status_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetUserId() bool {
+	return p.UserId != CreateFollowUpRecordReq_UserId_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetDivision() bool {
+	return p.Division != CreateFollowUpRecordReq_Division_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetRecord() bool {
+	return p.Record != CreateFollowUpRecordReq_Record_DEFAULT
+}
+
+func (p *CreateFollowUpRecordReq) IsSetOpportunitiesId() bool {
+	return p.OpportunitiesId != CreateFollowUpRecordReq_OpportunitiesId_DEFAULT
 }
 
 func (p *CreateFollowUpRecordReq) String() string {
@@ -631,20 +784,53 @@ func (p *CreateFollowUpRecordReq) String() string {
 	return fmt.Sprintf("CreateFollowUpRecordReq(%+v)", *p)
 }
 
-var fieldIDToName_CreateFollowUpRecordReq = map[int16]string{}
+var fieldIDToName_CreateFollowUpRecordReq = map[int16]string{
+	2:  "content",
+	3:  "followUpId",
+	4:  "method",
+	5:  "status",
+	6:  "userId",
+	7:  "division",
+	10: "record",
+	11: "opportunitiesId",
+}
 
 type UpdateFollowUpRecordReq struct {
-	Id int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Id              int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Content         string `thrift:"content,2,optional" frugal:"2,optional,string" json:"content,omitempty"`
+	FollowUpId      int64  `thrift:"followUpId,3,optional" frugal:"3,optional,i64" json:"followUpId,omitempty"`
+	Method          int64  `thrift:"method,4,optional" frugal:"4,optional,i64" json:"method,omitempty"`
+	Status          int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	UserId          int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
+	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
+	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
+	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
 }
 
 func NewUpdateFollowUpRecordReq() *UpdateFollowUpRecordReq {
 	return &UpdateFollowUpRecordReq{
-		Id: 0,
+		Id:              0,
+		Content:         "",
+		FollowUpId:      0,
+		Method:          0,
+		Status:          0,
+		UserId:          0,
+		Division:        0,
+		Record:          "",
+		OpportunitiesId: 0,
 	}
 }
 
 func (p *UpdateFollowUpRecordReq) InitDefault() {
 	p.Id = 0
+	p.Content = ""
+	p.FollowUpId = 0
+	p.Method = 0
+	p.Status = 0
+	p.UserId = 0
+	p.Division = 0
+	p.Record = ""
+	p.OpportunitiesId = 0
 }
 
 var UpdateFollowUpRecordReq_Id_DEFAULT int64 = 0
@@ -655,12 +841,140 @@ func (p *UpdateFollowUpRecordReq) GetId() (v int64) {
 	}
 	return p.Id
 }
+
+var UpdateFollowUpRecordReq_Content_DEFAULT string = ""
+
+func (p *UpdateFollowUpRecordReq) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return UpdateFollowUpRecordReq_Content_DEFAULT
+	}
+	return p.Content
+}
+
+var UpdateFollowUpRecordReq_FollowUpId_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetFollowUpId() (v int64) {
+	if !p.IsSetFollowUpId() {
+		return UpdateFollowUpRecordReq_FollowUpId_DEFAULT
+	}
+	return p.FollowUpId
+}
+
+var UpdateFollowUpRecordReq_Method_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetMethod() (v int64) {
+	if !p.IsSetMethod() {
+		return UpdateFollowUpRecordReq_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var UpdateFollowUpRecordReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateFollowUpRecordReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var UpdateFollowUpRecordReq_UserId_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return UpdateFollowUpRecordReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
+
+var UpdateFollowUpRecordReq_Division_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetDivision() (v int64) {
+	if !p.IsSetDivision() {
+		return UpdateFollowUpRecordReq_Division_DEFAULT
+	}
+	return p.Division
+}
+
+var UpdateFollowUpRecordReq_Record_DEFAULT string = ""
+
+func (p *UpdateFollowUpRecordReq) GetRecord() (v string) {
+	if !p.IsSetRecord() {
+		return UpdateFollowUpRecordReq_Record_DEFAULT
+	}
+	return p.Record
+}
+
+var UpdateFollowUpRecordReq_OpportunitiesId_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetOpportunitiesId() (v int64) {
+	if !p.IsSetOpportunitiesId() {
+		return UpdateFollowUpRecordReq_OpportunitiesId_DEFAULT
+	}
+	return p.OpportunitiesId
+}
 func (p *UpdateFollowUpRecordReq) SetId(val int64) {
 	p.Id = val
+}
+func (p *UpdateFollowUpRecordReq) SetContent(val string) {
+	p.Content = val
+}
+func (p *UpdateFollowUpRecordReq) SetFollowUpId(val int64) {
+	p.FollowUpId = val
+}
+func (p *UpdateFollowUpRecordReq) SetMethod(val int64) {
+	p.Method = val
+}
+func (p *UpdateFollowUpRecordReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *UpdateFollowUpRecordReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *UpdateFollowUpRecordReq) SetDivision(val int64) {
+	p.Division = val
+}
+func (p *UpdateFollowUpRecordReq) SetRecord(val string) {
+	p.Record = val
+}
+func (p *UpdateFollowUpRecordReq) SetOpportunitiesId(val int64) {
+	p.OpportunitiesId = val
 }
 
 func (p *UpdateFollowUpRecordReq) IsSetId() bool {
 	return p.Id != UpdateFollowUpRecordReq_Id_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetContent() bool {
+	return p.Content != UpdateFollowUpRecordReq_Content_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetFollowUpId() bool {
+	return p.FollowUpId != UpdateFollowUpRecordReq_FollowUpId_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetMethod() bool {
+	return p.Method != UpdateFollowUpRecordReq_Method_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetStatus() bool {
+	return p.Status != UpdateFollowUpRecordReq_Status_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetUserId() bool {
+	return p.UserId != UpdateFollowUpRecordReq_UserId_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetDivision() bool {
+	return p.Division != UpdateFollowUpRecordReq_Division_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetRecord() bool {
+	return p.Record != UpdateFollowUpRecordReq_Record_DEFAULT
+}
+
+func (p *UpdateFollowUpRecordReq) IsSetOpportunitiesId() bool {
+	return p.OpportunitiesId != UpdateFollowUpRecordReq_OpportunitiesId_DEFAULT
 }
 
 func (p *UpdateFollowUpRecordReq) String() string {
@@ -671,7 +985,15 @@ func (p *UpdateFollowUpRecordReq) String() string {
 }
 
 var fieldIDToName_UpdateFollowUpRecordReq = map[int16]string{
-	1: "id",
+	1:  "id",
+	2:  "content",
+	3:  "followUpId",
+	4:  "method",
+	5:  "status",
+	6:  "userId",
+	7:  "division",
+	10: "record",
+	11: "opportunitiesId",
 }
 
 type FollowUpRecordListReq struct {
@@ -817,29 +1139,29 @@ var fieldIDToName_FollowUpRecordListResp = map[int16]string{
 }
 
 type OpportunitiesResp struct {
-	Opportunities *base.Opportunities `thrift:"opportunities,1,optional" frugal:"1,optional,base.Opportunities" json:"opportunities,omitempty"`
-	BaseResp      *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Data     *base.Opportunities `thrift:"data,1,optional" frugal:"1,optional,base.Opportunities" json:"data,omitempty"`
+	BaseResp *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
 }
 
 func NewOpportunitiesResp() *OpportunitiesResp {
 	return &OpportunitiesResp{
-		Opportunities: &base.Opportunities{},
-		BaseResp:      &base.BaseResp{},
+		Data:     &base.Opportunities{},
+		BaseResp: &base.BaseResp{},
 	}
 }
 
 func (p *OpportunitiesResp) InitDefault() {
-	p.Opportunities = &base.Opportunities{}
+	p.Data = &base.Opportunities{}
 	p.BaseResp = &base.BaseResp{}
 }
 
-var OpportunitiesResp_Opportunities_DEFAULT *base.Opportunities = &base.Opportunities{}
+var OpportunitiesResp_Data_DEFAULT *base.Opportunities = &base.Opportunities{}
 
-func (p *OpportunitiesResp) GetOpportunities() (v *base.Opportunities) {
-	if !p.IsSetOpportunities() {
-		return OpportunitiesResp_Opportunities_DEFAULT
+func (p *OpportunitiesResp) GetData() (v *base.Opportunities) {
+	if !p.IsSetData() {
+		return OpportunitiesResp_Data_DEFAULT
 	}
-	return p.Opportunities
+	return p.Data
 }
 
 var OpportunitiesResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
@@ -850,15 +1172,15 @@ func (p *OpportunitiesResp) GetBaseResp() (v *base.BaseResp) {
 	}
 	return p.BaseResp
 }
-func (p *OpportunitiesResp) SetOpportunities(val *base.Opportunities) {
-	p.Opportunities = val
+func (p *OpportunitiesResp) SetData(val *base.Opportunities) {
+	p.Data = val
 }
 func (p *OpportunitiesResp) SetBaseResp(val *base.BaseResp) {
 	p.BaseResp = val
 }
 
-func (p *OpportunitiesResp) IsSetOpportunities() bool {
-	return p.Opportunities != nil
+func (p *OpportunitiesResp) IsSetData() bool {
+	return p.Data != nil
 }
 
 func (p *OpportunitiesResp) IsSetBaseResp() bool {
@@ -873,23 +1195,27 @@ func (p *OpportunitiesResp) String() string {
 }
 
 var fieldIDToName_OpportunitiesResp = map[int16]string{
-	1:   "opportunities",
+	1:   "data",
 	255: "baseResp",
 }
 
 type CreateOpportunitiesReq struct {
-	MemberId int64                `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	UserId   int64                `thrift:"userId,2,optional" frugal:"2,optional,i64" json:"userId,omitempty"`
-	Period   base.OperatingPeriod `thrift:"period,3,optional" frugal:"3,optional,OperatingPeriod" json:"period,omitempty"`
-	WinRate  int64                `thrift:"winRate,5,optional" frugal:"5,optional,i64" json:"winRate,omitempty"`
+	MemberId         int64                `thrift:"memberId,2,optional" frugal:"2,optional,i64" json:"memberId,omitempty"`
+	UserId           int64                `thrift:"userId,3,optional" frugal:"3,optional,i64" json:"userId,omitempty"`
+	Period           base.OperatingPeriod `thrift:"period,4,optional" frugal:"4,optional,OperatingPeriod" json:"period,omitempty"`
+	Content          string               `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
+	PredictionAmount int64                `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
+	Title            string               `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
 }
 
 func NewCreateOpportunitiesReq() *CreateOpportunitiesReq {
 	return &CreateOpportunitiesReq{
-		MemberId: 0,
-		UserId:   0,
-		Period:   0,
-		WinRate:  0,
+		MemberId:         0,
+		UserId:           0,
+		Period:           0,
+		Content:          "",
+		PredictionAmount: 0,
+		Title:            "",
 	}
 }
 
@@ -897,7 +1223,9 @@ func (p *CreateOpportunitiesReq) InitDefault() {
 	p.MemberId = 0
 	p.UserId = 0
 	p.Period = 0
-	p.WinRate = 0
+	p.Content = ""
+	p.PredictionAmount = 0
+	p.Title = ""
 }
 
 var CreateOpportunitiesReq_MemberId_DEFAULT int64 = 0
@@ -927,13 +1255,31 @@ func (p *CreateOpportunitiesReq) GetPeriod() (v base.OperatingPeriod) {
 	return p.Period
 }
 
-var CreateOpportunitiesReq_WinRate_DEFAULT int64 = 0
+var CreateOpportunitiesReq_Content_DEFAULT string = ""
 
-func (p *CreateOpportunitiesReq) GetWinRate() (v int64) {
-	if !p.IsSetWinRate() {
-		return CreateOpportunitiesReq_WinRate_DEFAULT
+func (p *CreateOpportunitiesReq) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return CreateOpportunitiesReq_Content_DEFAULT
 	}
-	return p.WinRate
+	return p.Content
+}
+
+var CreateOpportunitiesReq_PredictionAmount_DEFAULT int64 = 0
+
+func (p *CreateOpportunitiesReq) GetPredictionAmount() (v int64) {
+	if !p.IsSetPredictionAmount() {
+		return CreateOpportunitiesReq_PredictionAmount_DEFAULT
+	}
+	return p.PredictionAmount
+}
+
+var CreateOpportunitiesReq_Title_DEFAULT string = ""
+
+func (p *CreateOpportunitiesReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return CreateOpportunitiesReq_Title_DEFAULT
+	}
+	return p.Title
 }
 func (p *CreateOpportunitiesReq) SetMemberId(val int64) {
 	p.MemberId = val
@@ -944,8 +1290,14 @@ func (p *CreateOpportunitiesReq) SetUserId(val int64) {
 func (p *CreateOpportunitiesReq) SetPeriod(val base.OperatingPeriod) {
 	p.Period = val
 }
-func (p *CreateOpportunitiesReq) SetWinRate(val int64) {
-	p.WinRate = val
+func (p *CreateOpportunitiesReq) SetContent(val string) {
+	p.Content = val
+}
+func (p *CreateOpportunitiesReq) SetPredictionAmount(val int64) {
+	p.PredictionAmount = val
+}
+func (p *CreateOpportunitiesReq) SetTitle(val string) {
+	p.Title = val
 }
 
 func (p *CreateOpportunitiesReq) IsSetMemberId() bool {
@@ -960,8 +1312,16 @@ func (p *CreateOpportunitiesReq) IsSetPeriod() bool {
 	return p.Period != CreateOpportunitiesReq_Period_DEFAULT
 }
 
-func (p *CreateOpportunitiesReq) IsSetWinRate() bool {
-	return p.WinRate != CreateOpportunitiesReq_WinRate_DEFAULT
+func (p *CreateOpportunitiesReq) IsSetContent() bool {
+	return p.Content != CreateOpportunitiesReq_Content_DEFAULT
+}
+
+func (p *CreateOpportunitiesReq) IsSetPredictionAmount() bool {
+	return p.PredictionAmount != CreateOpportunitiesReq_PredictionAmount_DEFAULT
+}
+
+func (p *CreateOpportunitiesReq) IsSetTitle() bool {
+	return p.Title != CreateOpportunitiesReq_Title_DEFAULT
 }
 
 func (p *CreateOpportunitiesReq) String() string {
@@ -972,24 +1332,44 @@ func (p *CreateOpportunitiesReq) String() string {
 }
 
 var fieldIDToName_CreateOpportunitiesReq = map[int16]string{
-	1: "memberId",
-	2: "userId",
-	3: "period",
-	5: "winRate",
+	2:  "memberId",
+	3:  "userId",
+	4:  "period",
+	7:  "content",
+	8:  "predictionAmount",
+	11: "title",
 }
 
 type UpdateOpportunitiesReq struct {
-	Id int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Id               int64                `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	MemberId         int64                `thrift:"memberId,2,optional" frugal:"2,optional,i64" json:"memberId,omitempty"`
+	UserId           int64                `thrift:"userId,3,optional" frugal:"3,optional,i64" json:"userId,omitempty"`
+	Period           base.OperatingPeriod `thrift:"period,4,optional" frugal:"4,optional,OperatingPeriod" json:"period,omitempty"`
+	Content          string               `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
+	PredictionAmount int64                `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
+	Title            string               `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
 }
 
 func NewUpdateOpportunitiesReq() *UpdateOpportunitiesReq {
 	return &UpdateOpportunitiesReq{
-		Id: 0,
+		Id:               0,
+		MemberId:         0,
+		UserId:           0,
+		Period:           0,
+		Content:          "",
+		PredictionAmount: 0,
+		Title:            "",
 	}
 }
 
 func (p *UpdateOpportunitiesReq) InitDefault() {
 	p.Id = 0
+	p.MemberId = 0
+	p.UserId = 0
+	p.Period = 0
+	p.Content = ""
+	p.PredictionAmount = 0
+	p.Title = ""
 }
 
 var UpdateOpportunitiesReq_Id_DEFAULT int64 = 0
@@ -1000,12 +1380,108 @@ func (p *UpdateOpportunitiesReq) GetId() (v int64) {
 	}
 	return p.Id
 }
+
+var UpdateOpportunitiesReq_MemberId_DEFAULT int64 = 0
+
+func (p *UpdateOpportunitiesReq) GetMemberId() (v int64) {
+	if !p.IsSetMemberId() {
+		return UpdateOpportunitiesReq_MemberId_DEFAULT
+	}
+	return p.MemberId
+}
+
+var UpdateOpportunitiesReq_UserId_DEFAULT int64 = 0
+
+func (p *UpdateOpportunitiesReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return UpdateOpportunitiesReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
+
+var UpdateOpportunitiesReq_Period_DEFAULT base.OperatingPeriod = 0
+
+func (p *UpdateOpportunitiesReq) GetPeriod() (v base.OperatingPeriod) {
+	if !p.IsSetPeriod() {
+		return UpdateOpportunitiesReq_Period_DEFAULT
+	}
+	return p.Period
+}
+
+var UpdateOpportunitiesReq_Content_DEFAULT string = ""
+
+func (p *UpdateOpportunitiesReq) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return UpdateOpportunitiesReq_Content_DEFAULT
+	}
+	return p.Content
+}
+
+var UpdateOpportunitiesReq_PredictionAmount_DEFAULT int64 = 0
+
+func (p *UpdateOpportunitiesReq) GetPredictionAmount() (v int64) {
+	if !p.IsSetPredictionAmount() {
+		return UpdateOpportunitiesReq_PredictionAmount_DEFAULT
+	}
+	return p.PredictionAmount
+}
+
+var UpdateOpportunitiesReq_Title_DEFAULT string = ""
+
+func (p *UpdateOpportunitiesReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return UpdateOpportunitiesReq_Title_DEFAULT
+	}
+	return p.Title
+}
 func (p *UpdateOpportunitiesReq) SetId(val int64) {
 	p.Id = val
+}
+func (p *UpdateOpportunitiesReq) SetMemberId(val int64) {
+	p.MemberId = val
+}
+func (p *UpdateOpportunitiesReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *UpdateOpportunitiesReq) SetPeriod(val base.OperatingPeriod) {
+	p.Period = val
+}
+func (p *UpdateOpportunitiesReq) SetContent(val string) {
+	p.Content = val
+}
+func (p *UpdateOpportunitiesReq) SetPredictionAmount(val int64) {
+	p.PredictionAmount = val
+}
+func (p *UpdateOpportunitiesReq) SetTitle(val string) {
+	p.Title = val
 }
 
 func (p *UpdateOpportunitiesReq) IsSetId() bool {
 	return p.Id != UpdateOpportunitiesReq_Id_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetMemberId() bool {
+	return p.MemberId != UpdateOpportunitiesReq_MemberId_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetUserId() bool {
+	return p.UserId != UpdateOpportunitiesReq_UserId_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetPeriod() bool {
+	return p.Period != UpdateOpportunitiesReq_Period_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetContent() bool {
+	return p.Content != UpdateOpportunitiesReq_Content_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetPredictionAmount() bool {
+	return p.PredictionAmount != UpdateOpportunitiesReq_PredictionAmount_DEFAULT
+}
+
+func (p *UpdateOpportunitiesReq) IsSetTitle() bool {
+	return p.Title != UpdateOpportunitiesReq_Title_DEFAULT
 }
 
 func (p *UpdateOpportunitiesReq) String() string {
@@ -1016,7 +1492,13 @@ func (p *UpdateOpportunitiesReq) String() string {
 }
 
 var fieldIDToName_UpdateOpportunitiesReq = map[int16]string{
-	1: "id",
+	1:  "id",
+	2:  "memberId",
+	3:  "userId",
+	4:  "period",
+	7:  "content",
+	8:  "predictionAmount",
+	11: "title",
 }
 
 type OpportunitiesListReq struct {

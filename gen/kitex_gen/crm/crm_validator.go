@@ -22,9 +22,9 @@ var (
 )
 
 func (p *FollowUpPlanResp) IsValid() error {
-	if p.FollowUpPlan != nil {
-		if err := p.FollowUpPlan.IsValid(); err != nil {
-			return fmt.Errorf("field FollowUpPlan not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {
@@ -52,9 +52,9 @@ func (p *FollowUpPlanListResp) IsValid() error {
 	return nil
 }
 func (p *FollowUpRecordResp) IsValid() error {
-	if p.FollowUpRecord != nil {
-		if err := p.FollowUpRecord.IsValid(); err != nil {
-			return fmt.Errorf("field FollowUpRecord not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {
@@ -82,9 +82,9 @@ func (p *FollowUpRecordListResp) IsValid() error {
 	return nil
 }
 func (p *OpportunitiesResp) IsValid() error {
-	if p.Opportunities != nil {
-		if err := p.Opportunities.IsValid(); err != nil {
-			return fmt.Errorf("field Opportunities not valid, %w", err)
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
 		}
 	}
 	if p.BaseResp != nil {

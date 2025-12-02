@@ -83,8 +83,8 @@ type FollowUpPlan struct {
 	UserId    int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 	CreatedId int64  `thrift:"createdId,8,optional" frugal:"8,optional,i64" json:"createdId,omitempty"`
-	CreatedAt int64  `thrift:"createdAt,9,optional" frugal:"9,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt int64  `thrift:"updatedAt,10,optional" frugal:"10,optional,i64" json:"updatedAt,omitempty"`
+	CreatedAt string `thrift:"createdAt,9,optional" frugal:"9,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt string `thrift:"updatedAt,10,optional" frugal:"10,optional,string" json:"updatedAt,omitempty"`
 	Division  int64  `thrift:"division,11,optional" frugal:"11,optional,i64" json:"division,omitempty"`
 }
 
@@ -97,8 +97,8 @@ func NewFollowUpPlan() *FollowUpPlan {
 		UserId:    0,
 		Status:    0,
 		CreatedId: 0,
-		CreatedAt: 0,
-		UpdatedAt: 0,
+		CreatedAt: "",
+		UpdatedAt: "",
 		Division:  0,
 	}
 }
@@ -111,8 +111,8 @@ func (p *FollowUpPlan) InitDefault() {
 	p.UserId = 0
 	p.Status = 0
 	p.CreatedId = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
 	p.Division = 0
 }
 
@@ -179,18 +179,18 @@ func (p *FollowUpPlan) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var FollowUpPlan_CreatedAt_DEFAULT int64 = 0
+var FollowUpPlan_CreatedAt_DEFAULT string = ""
 
-func (p *FollowUpPlan) GetCreatedAt() (v int64) {
+func (p *FollowUpPlan) GetCreatedAt() (v string) {
 	if !p.IsSetCreatedAt() {
 		return FollowUpPlan_CreatedAt_DEFAULT
 	}
 	return p.CreatedAt
 }
 
-var FollowUpPlan_UpdatedAt_DEFAULT int64 = 0
+var FollowUpPlan_UpdatedAt_DEFAULT string = ""
 
-func (p *FollowUpPlan) GetUpdatedAt() (v int64) {
+func (p *FollowUpPlan) GetUpdatedAt() (v string) {
 	if !p.IsSetUpdatedAt() {
 		return FollowUpPlan_UpdatedAt_DEFAULT
 	}
@@ -226,10 +226,10 @@ func (p *FollowUpPlan) SetStatus(val int64) {
 func (p *FollowUpPlan) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *FollowUpPlan) SetCreatedAt(val int64) {
+func (p *FollowUpPlan) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *FollowUpPlan) SetUpdatedAt(val int64) {
+func (p *FollowUpPlan) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
 func (p *FollowUpPlan) SetDivision(val int64) {
@@ -304,8 +304,8 @@ type FollowUpRecord struct {
 	Status          int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
 	UserId          int64  `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
 	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
-	CreatedAt       int64  `thrift:"createdAt,8,optional" frugal:"8,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt       int64  `thrift:"updatedAt,9,optional" frugal:"9,optional,i64" json:"updatedAt,omitempty"`
+	CreatedAt       string `thrift:"createdAt,8,optional" frugal:"8,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt       string `thrift:"updatedAt,9,optional" frugal:"9,optional,string" json:"updatedAt,omitempty"`
 	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
 	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
 }
@@ -319,8 +319,8 @@ func NewFollowUpRecord() *FollowUpRecord {
 		Status:          0,
 		UserId:          0,
 		Division:        0,
-		CreatedAt:       0,
-		UpdatedAt:       0,
+		CreatedAt:       "",
+		UpdatedAt:       "",
 		Record:          "",
 		OpportunitiesId: 0,
 	}
@@ -334,8 +334,8 @@ func (p *FollowUpRecord) InitDefault() {
 	p.Status = 0
 	p.UserId = 0
 	p.Division = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
 	p.Record = ""
 	p.OpportunitiesId = 0
 }
@@ -403,18 +403,18 @@ func (p *FollowUpRecord) GetDivision() (v int64) {
 	return p.Division
 }
 
-var FollowUpRecord_CreatedAt_DEFAULT int64 = 0
+var FollowUpRecord_CreatedAt_DEFAULT string = ""
 
-func (p *FollowUpRecord) GetCreatedAt() (v int64) {
+func (p *FollowUpRecord) GetCreatedAt() (v string) {
 	if !p.IsSetCreatedAt() {
 		return FollowUpRecord_CreatedAt_DEFAULT
 	}
 	return p.CreatedAt
 }
 
-var FollowUpRecord_UpdatedAt_DEFAULT int64 = 0
+var FollowUpRecord_UpdatedAt_DEFAULT string = ""
 
-func (p *FollowUpRecord) GetUpdatedAt() (v int64) {
+func (p *FollowUpRecord) GetUpdatedAt() (v string) {
 	if !p.IsSetUpdatedAt() {
 		return FollowUpRecord_UpdatedAt_DEFAULT
 	}
@@ -459,10 +459,10 @@ func (p *FollowUpRecord) SetUserId(val int64) {
 func (p *FollowUpRecord) SetDivision(val int64) {
 	p.Division = val
 }
-func (p *FollowUpRecord) SetCreatedAt(val int64) {
+func (p *FollowUpRecord) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *FollowUpRecord) SetUpdatedAt(val int64) {
+func (p *FollowUpRecord) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
 func (p *FollowUpRecord) SetRecord(val string) {
@@ -546,8 +546,8 @@ type Opportunities struct {
 	WinRate          int64           `thrift:"winRate,6,optional" frugal:"6,optional,i64" json:"winRate,omitempty"`
 	Content          string          `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
 	PredictionAmount int64           `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
-	CreatedAt        int64           `thrift:"createdAt,9,optional" frugal:"9,optional,i64" json:"createdAt,omitempty"`
-	UpdatedAt        int64           `thrift:"updatedAt,10,optional" frugal:"10,optional,i64" json:"updatedAt,omitempty"`
+	CreatedAt        string          `thrift:"createdAt,9,optional" frugal:"9,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt        string          `thrift:"updatedAt,10,optional" frugal:"10,optional,string" json:"updatedAt,omitempty"`
 	Title            string          `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
 }
 
@@ -561,8 +561,8 @@ func NewOpportunities() *Opportunities {
 		WinRate:          0,
 		Content:          "",
 		PredictionAmount: 0,
-		CreatedAt:        0,
-		UpdatedAt:        0,
+		CreatedAt:        "",
+		UpdatedAt:        "",
 		Title:            "",
 	}
 }
@@ -576,8 +576,8 @@ func (p *Opportunities) InitDefault() {
 	p.WinRate = 0
 	p.Content = ""
 	p.PredictionAmount = 0
-	p.CreatedAt = 0
-	p.UpdatedAt = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
 	p.Title = ""
 }
 
@@ -653,18 +653,18 @@ func (p *Opportunities) GetPredictionAmount() (v int64) {
 	return p.PredictionAmount
 }
 
-var Opportunities_CreatedAt_DEFAULT int64 = 0
+var Opportunities_CreatedAt_DEFAULT string = ""
 
-func (p *Opportunities) GetCreatedAt() (v int64) {
+func (p *Opportunities) GetCreatedAt() (v string) {
 	if !p.IsSetCreatedAt() {
 		return Opportunities_CreatedAt_DEFAULT
 	}
 	return p.CreatedAt
 }
 
-var Opportunities_UpdatedAt_DEFAULT int64 = 0
+var Opportunities_UpdatedAt_DEFAULT string = ""
 
-func (p *Opportunities) GetUpdatedAt() (v int64) {
+func (p *Opportunities) GetUpdatedAt() (v string) {
 	if !p.IsSetUpdatedAt() {
 		return Opportunities_UpdatedAt_DEFAULT
 	}
@@ -703,10 +703,10 @@ func (p *Opportunities) SetContent(val string) {
 func (p *Opportunities) SetPredictionAmount(val int64) {
 	p.PredictionAmount = val
 }
-func (p *Opportunities) SetCreatedAt(val int64) {
+func (p *Opportunities) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *Opportunities) SetUpdatedAt(val int64) {
+func (p *Opportunities) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
 func (p *Opportunities) SetTitle(val string) {

@@ -27,3 +27,4 @@ hertz_gen_facade:
 	hz model --idl=../idl/admin/system.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/departments.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/positions.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/crm.thrift --mod=gen --model_dir=hertz_gen

@@ -3,32 +3,6 @@ include "../base/base.thrift"
 include "../base/crm.thrift"
 
 
-
-//struct ClueResp{
-//    1:optional Clue clue={},
-//    255:optional base.BaseResp baseResp={}
-//}
-//struct CreateClueReq{
-//
-//}
-//struct UpdateClueReq{
-//    1:optional i64 id=0,
-//}
-//struct ClueListReq{
-//    1:optional i64 page=1
-//    2:optional i64 pageSize=10
-//    3:optional string keyword=""
-//}
-//struct ClueListResp{
-//    1:optional list<Clue> data= []
-//    255:optional base.BaseResp baseResp={}
-//}
-
-
-struct FollowUpPlanResp{
-    1:optional crm.FollowUpPlan data={},
-    255:optional base.BaseResp baseResp={}
-}
 struct CreateFollowUpPlanReq{
     2:optional string content="",//计划内容
     3:optional string time="", //计划时间
@@ -53,16 +27,7 @@ struct FollowUpPlanListReq{
     2:optional i64 pageSize=10
     3:optional string keyword=""
 }
-struct FollowUpPlanListResp{
-    1:optional list<crm.FollowUpPlan> data= []
-    255:optional base.BaseResp baseResp={}
-}
 
-
-struct FollowUpRecordResp{
-    1:optional crm.FollowUpRecord data={},
-    255:optional base.BaseResp baseResp={}
-}
 struct CreateFollowUpRecordReq{
      2:optional string content="",
      3:optional i64 followUpId=0,
@@ -89,15 +54,6 @@ struct FollowUpRecordListReq{
     2:optional i64 pageSize=10
     3:optional string keyword=""
 }
-struct FollowUpRecordListResp{
-    1:optional list<crm.FollowUpRecord> data= []
-    255:optional base.BaseResp baseResp={}
-
-}
-struct OpportunitiesResp{
-    1:optional crm.Opportunities data={},
-    255:optional base.BaseResp baseResp={}
-}
 struct CreateOpportunitiesReq{
        2:optional i64 memberId=0,
        3:optional i64 userId=0,
@@ -120,35 +76,22 @@ struct OpportunitiesListReq{
     2:optional i64 pageSize=10
     3:optional string keyword=""
 }
-struct OpportunitiesListResp{
-    1:optional list<crm.Opportunities> data= []
-    255:optional base.BaseResp baseResp={}
-}
+service CrmService {
+     base.NilResponse GetFollowUpPlan(1:base.IdReq req)
+     base.NilResponse CreateFollowUpPlan(1: CreateFollowUpPlanReq req)
+     base.NilResponse UpdateFollowUpPlan(1: UpdateFollowUpPlanReq req)
+     base.NilResponse DeleteFollowUpPlan(1:base.IdReq req)
+     base.NilResponse FollowUpPlanList(1: FollowUpPlanListReq req)
 
-service CrmService  {
-//      ClueResp GetClue(1:base.IdReq req)
-//      ClueResp CreateClue(1: CreateClueReq req)
-//      ClueResp UpdateClue(1: UpdateClueReq req)
-//      base.BaseResp DeleteClue(1:base.IdReq req)
-//      ClueListResp ClueList(1: ClueListReq req)
+     base.NilResponse GetFollowUpRecord(1:base.IdReq req)
+     base.NilResponse CreateFollowUpRecord(1: CreateFollowUpRecordReq req)
+     base.NilResponse UpdateFollowUpRecord(1: UpdateFollowUpRecordReq req)
+     base.NilResponse DeleteFollowUpRecord(1:base.IdReq req)
+     base.NilResponse FollowUpRecordList(1:  FollowUpRecordListReq req)
 
-
-      FollowUpPlanResp GetFollowUpPlan(1:base.IdReq req)
-      FollowUpPlanResp CreateFollowUpPlan(1: CreateFollowUpPlanReq req)
-      FollowUpPlanResp UpdateFollowUpPlan(1: UpdateFollowUpPlanReq req)
-      base.BaseResp DeleteFollowUpPlan(1:base.IdReq req)
-      FollowUpPlanListResp FollowUpPlanList(1: FollowUpPlanListReq req)
-
-      FollowUpRecordResp GetFollowUpRecord(1:base.IdReq req)
-      FollowUpRecordResp CreateFollowUpRecord(1: CreateFollowUpRecordReq req)
-      FollowUpRecordResp UpdateFollowUpRecord(1: UpdateFollowUpRecordReq req)
-      base.BaseResp DeleteFollowUpRecord(1:base.IdReq req)
-      FollowUpRecordListResp FollowUpRecordList(1:  FollowUpRecordListReq req)
-
-      OpportunitiesResp GetOpportunities(1:base.IdReq req)
-      OpportunitiesResp CreateOpportunities(1: CreateOpportunitiesReq req)
-      OpportunitiesResp UpdateOpportunities(1: UpdateOpportunitiesReq req)
-      base.BaseResp DeleteOpportunities(1:base.IdReq req)
-      OpportunitiesListResp OpportunitiesList(1: OpportunitiesListReq req)
-
-}
+     base.NilResponse GetOpportunities(1:base.IdReq req)
+     base.NilResponse CreateOpportunities(1: CreateOpportunitiesReq req)
+     base.NilResponse UpdateOpportunities(1: UpdateOpportunitiesReq req)
+     base.NilResponse DeleteOpportunities(1:base.IdReq req)
+     base.NilResponse OpportunitiesList(1: OpportunitiesListReq req)
+ }

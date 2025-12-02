@@ -21,11 +21,9 @@ func NewGetDepartmentsListService(ctx context.Context) *GetDepartmentsListServic
 // Run create note info
 func (s *GetDepartmentsListService) Run(req *user.GetDepartmentsListReq) (resp *user.DepartmentsListResp, err error) {
 	// Finish your business logic.
-
 	var (
 		dataResp []*Base.Departments
 	)
-
 	var predicates []predicate.Department
 	if req.GetKeyword() != "" {
 		predicates = append(predicates, department.Or(
