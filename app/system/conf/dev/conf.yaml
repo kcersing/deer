@@ -16,6 +16,8 @@ registry:
 
 mysql:
   dsn: "%s:%s@tcp(%s:3306)/user?charset=utf8mb4&parseTime=True&loc=Local"
+PostgreSQL:
+  DSN: "user=root password=kcer913639 host=101.201.55.134 port=5432 dbname=postgres sslmode=disable"
 
 redis:
   address: "127.0.0.1:6379"

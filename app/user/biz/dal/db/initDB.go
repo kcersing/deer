@@ -45,7 +45,7 @@ func OpenPq(databaseUrl string) *entsql.Driver {
 
 // InitDB init DB
 func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
-	drv := OpenMySql(databaseUrl)
+	drv := OpenPq(databaseUrl)
 
 	// 生产环境使用默认mysql驱动，开发环境使用debug驱动
 	var drive dialect.Driver

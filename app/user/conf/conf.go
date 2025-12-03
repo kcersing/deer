@@ -18,16 +18,19 @@ var (
 )
 
 type Config struct {
-	Env   string
-	Kitex Kitex `yaml:"Kitex"`
-	MySQL MySQL `yaml:"MySQL"`
-	Redis Redis `yaml:"Redis"`
+	Env        string
+	Kitex      Kitex      `yaml:"Kitex"`
+	MySQL      MySQL      `yaml:"MySQL"`
+	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
+	Redis      Redis      `yaml:"Redis"`
 }
 
 type MySQL struct {
 	DSN string `yaml:"DSN"`
 }
-
+type PostgreSQL struct {
+	DSN string `mapstructure:"DSN" json:"DSN"`
+}
 type Redis struct {
 	Address  string `yaml:"Address"`
 	Username string `yaml:"Username"`

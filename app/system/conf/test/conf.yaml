@@ -22,6 +22,10 @@ Redis:
 MySQL:
 #  DSN: "%s:%s@tcp(%s:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
   DSN: "root:kcer-913639@tcp(101.201.55.134:3306)/deer_system?charset=utf8mb4&parseTime=True&loc=Local"
+#PostgreSQL:
+#  DSN: "postgresql://root:kcer913639@101.201.55.134:5432/postgres"
+PostgreSQL:
+  DSN: "user=root password=kcer913639 host=101.201.55.134 port=5432 dbname=postgres sslmode=disable"
 
 Casbin:
   ModelText: |

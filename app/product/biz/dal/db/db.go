@@ -12,6 +12,7 @@ var DB *ent.Client
 
 func InitDB() {
 	onceClient.Do(func() {
-		DB = InItDB(conf.GetConf().MySQL.DSN, true)
+		Client = InItDB(conf.GetConf().PostgreSQL.DSN, true)
+
 	})
 }

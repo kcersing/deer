@@ -3,9 +3,9 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: postgres
       POSTGRES_USER: root
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: kcer913639
     ports:
       - "5432:5432"
     volumes:
@@ -38,96 +38,96 @@ services:
     image: evildecay/etcdkeeper:latest
     ports:
       - "9100:8080"
-
-  # RabbitMQ
-  rabbitmq:
-    image: rabbitmq:management
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=root
-      - RABBITMQ_DEFAULT_PASS=123456
-
-  elasticsearch:
-    image: elasticsearch:7.6.2
-    environment:
-      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
-      - "discovery.type=single-node" #以单一节点模式启动
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-
-  # Kibana 可视化搜索和分析工具
-  kibana:
-    image: kibana:7.6.2
-    links:
-      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
-    depends_on:
-      - elasticsearch #kibana在elasticsearch启动之后再启动
-    environment:
-      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
-    ports:
-      - "5601:5601"
-
-
-#  # Collector
-#  otel-collector:
-#    image: otel/opentelemetry-collector-contrib:0.84.0
-#    command: [ "--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}" ]
-#    volumes:
-#      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+#
+#  # RabbitMQ
+#  rabbitmq:
+#    image: rabbitmq:management
 #    ports:
-#      - "1888:1888"   # pprof extension
-#      - "8888"   # Prometheus' metrics exposed by the collector
-#      - "8889:8889"   # Prometheus exporter metrics
-#      - "13133:13133" # health_check extension
-#      - "4317:4317"   # OTLP gRPC receiver
-#      - "55679" # zpages extension
+#      - "15672:15672"
+#      - "5672:5672"
+#    environment:
+#      - RABBITMQ_DEFAULT_USER=root
+#      - RABBITMQ_DEFAULT_PASS=123456
+#
+#  elasticsearch:
+#    image: elasticsearch:7.6.2
+#    environment:
+#      - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
+#      - "discovery.type=single-node" #以单一节点模式启动
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" #设置使用jvm内存大小
+#    ports:
+#      - "9200:9200"
+#      - "9300:9300"
+#
+#  # Kibana 可视化搜索和分析工具
+#  kibana:
+#    image: kibana:7.6.2
+#    links:
+#      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
 #    depends_on:
-#      - jaeger-all-in-one
-
-
-  # Jaeger 链跟踪
-  jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-    ports:
-      - "16686:16686"
-      - "14268"
-      - "14250:14250"
-      - "6831:6831"
-      - "4317"   # OTLP gRPC receiver
-
-
-  # Victoriametrics 时序数据库
-  victoriametrics:
-    container_name: victoriametrics
-    image: victoriametrics/victoria-metrics
-    ports:
-      - "8428:8428"
-      - "8089:8089"
-      - "8089:8089/udp"
-      - "2003:2003"
-      - "2003:2003/udp"
-      - "4242:4242"
-    command:
-      - '--storageDataPath=/storage'
-      - '--graphiteListenAddr=:2003'
-      - '--opentsdbListenAddr=:4242'
-      - '--httpListenAddr=:8428'
-      - '--influxListenAddr=:8089'
-    restart: always
-
-
-  # Grafana 可视化和监控工具
-  grafana:
-    image: grafana/grafana:latest
-    environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
-    ports:
-      - "3000:3000"
+#      - elasticsearch #kibana在elasticsearch启动之后再启动
+#    environment:
+#      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
+#    ports:
+#      - "5601:5601"
+#
+#
+##  # Collector
+##  otel-collector:
+##    image: otel/opentelemetry-collector-contrib:0.84.0
+##    command: [ "--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}" ]
+##    volumes:
+##      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+##    ports:
+##      - "1888:1888"   # pprof extension
+##      - "8888"   # Prometheus' metrics exposed by the collector
+##      - "8889:8889"   # Prometheus exporter metrics
+##      - "13133:13133" # health_check extension
+##      - "4317:4317"   # OTLP gRPC receiver
+##      - "55679" # zpages extension
+##    depends_on:
+##      - jaeger-all-in-one
+#
+#
+#  # Jaeger 链跟踪
+#  jaeger-all-in-one:
+#    image: jaegertracing/all-in-one:latest
+#    environment:
+#      - COLLECTOR_OTLP_ENABLED=true
+#    ports:
+#      - "16686:16686"
+#      - "14268"
+#      - "14250:14250"
+#      - "6831:6831"
+#      - "4317"   # OTLP gRPC receiver
+#
+#
+#  # Victoriametrics 时序数据库
+#  victoriametrics:
+#    container_name: victoriametrics
+#    image: victoriametrics/victoria-metrics
+#    ports:
+#      - "8428:8428"
+#      - "8089:8089"
+#      - "8089:8089/udp"
+#      - "2003:2003"
+#      - "2003:2003/udp"
+#      - "4242:4242"
+#    command:
+#      - '--storageDataPath=/storage'
+#      - '--graphiteListenAddr=:2003'
+#      - '--opentsdbListenAddr=:4242'
+#      - '--httpListenAddr=:8428'
+#      - '--influxListenAddr=:8089'
+#    restart: always
+#
+#
+#  # Grafana 可视化和监控工具
+#  grafana:
+#    image: grafana/grafana:latest
+#    environment:
+#      - GF_AUTH_ANONYMOUS_ENABLED=true
+#      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+#      - GF_AUTH_DISABLE_LOGIN_FORM=true
+#    ports:
+#      - "3000:3000"
