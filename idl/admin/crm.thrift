@@ -77,21 +77,21 @@ struct OpportunitiesListReq{
     3:optional string keyword=""
 }
 service CrmService {
-     base.NilResponse GetFollowUpPlan(1:base.IdReq req)
-     base.NilResponse CreateFollowUpPlan(1: CreateFollowUpPlanReq req)
-     base.NilResponse UpdateFollowUpPlan(1: UpdateFollowUpPlanReq req)
-     base.NilResponse DeleteFollowUpPlan(1:base.IdReq req)
-     base.NilResponse FollowUpPlanList(1: FollowUpPlanListReq req)
+     base.NilResponse GetFollowUpPlan(1:base.IdReq req)(api.post = "/service/follow-up-plan")
+     base.NilResponse CreateFollowUpPlan(1: CreateFollowUpPlanReq req)(api.post = "/service/follow-up-plan/create")
+     base.NilResponse UpdateFollowUpPlan(1: UpdateFollowUpPlanReq req)(api.post = "/service/follow-up-plan/update")
+     base.NilResponse DeleteFollowUpPlan(1:base.IdReq req)(api.post = "/service/follow-up-plan/delete")
+     base.NilResponse FollowUpPlanList(1: FollowUpPlanListReq req)(api.post = "/service/follow-up-plan/list")
 
-     base.NilResponse GetFollowUpRecord(1:base.IdReq req)
-     base.NilResponse CreateFollowUpRecord(1: CreateFollowUpRecordReq req)
-     base.NilResponse UpdateFollowUpRecord(1: UpdateFollowUpRecordReq req)
-     base.NilResponse DeleteFollowUpRecord(1:base.IdReq req)
-     base.NilResponse FollowUpRecordList(1:  FollowUpRecordListReq req)
+     base.NilResponse GetFollowUpRecord(1:base.IdReq req)(api.post = "/service/follow-up-record")
+     base.NilResponse CreateFollowUpRecord(1: CreateFollowUpRecordReq req)(api.post = "/service/follow-up-record/create")
+     base.NilResponse UpdateFollowUpRecord(1: UpdateFollowUpRecordReq req)(api.post = "/service/follow-up-record/update")
+     base.NilResponse DeleteFollowUpRecord(1:base.IdReq req)(api.post = "/service/follow-up-record/delete")
+     base.NilResponse FollowUpRecordList(1:  FollowUpRecordListReq req)(api.post = "/service/follow-up-record/list")
 
-     base.NilResponse GetOpportunities(1:base.IdReq req)
-     base.NilResponse CreateOpportunities(1: CreateOpportunitiesReq req)
-     base.NilResponse UpdateOpportunities(1: UpdateOpportunitiesReq req)
-     base.NilResponse DeleteOpportunities(1:base.IdReq req)
-     base.NilResponse OpportunitiesList(1: OpportunitiesListReq req)
+     base.NilResponse GetOpportunities(1:base.IdReq req)(api.post = "/service/opportunities")
+     base.NilResponse CreateOpportunities(1: CreateOpportunitiesReq req)(api.post = "/service/opportunities/create")
+     base.NilResponse UpdateOpportunities(1: UpdateOpportunitiesReq req)(api.post = "/service/opportunities/update")
+     base.NilResponse DeleteOpportunities(1:base.IdReq req)(api.post = "/service/opportunities/delete")
+     base.NilResponse OpportunitiesList(1: OpportunitiesListReq req)(api.post = "/service/opportunities/list")
  }

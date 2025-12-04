@@ -38,3 +38,5 @@ _testmain.go
 .env
 *.out
 conf.yaml
+*/conf.yaml
+
