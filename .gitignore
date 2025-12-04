@@ -37,7 +37,3 @@ _testmain.go
 /.trae
 .env
 *.out
-app/user/user
-app/admin/admin
-app/system/system
-app/user/user

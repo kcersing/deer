@@ -62,8 +62,10 @@ func GetConf() *Config {
 
 func initConf() {
 	prefix := "conf"
-	confFileRelPath := filepath.Join(prefix, filepath.Join(GetEnv(), "conf.yaml"))
+	confFileRelPath := filepath.Join(prefix, "conf.yaml")
+	klog.Info("===================")
 	klog.Info(confFileRelPath)
+	klog.Info("===================")
 	content, err := ioutil.ReadFile(confFileRelPath)
 	if err != nil {
 		panic(err)
@@ -79,6 +81,9 @@ func initConf() {
 		panic(err)
 	}
 	conf.Env = GetEnv()
+	klog.Info("===================")
+	klog.Info(conf)
+	klog.Info("===================")
 	pretty.Printf("%+v\n", conf)
 }
 
