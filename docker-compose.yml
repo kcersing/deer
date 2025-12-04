@@ -1,15 +1,46 @@
 services:
-  Postgres:
+
+  postgres:
     image: postgres:latest
     restart: always
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: root
       POSTGRES_PASSWORD: kcer913639
+    volumes:
+      - /home/docker/postgresql/latest:/var/lib/postgresql
+      - /home/docker/postgresql/logs:/var/log/postgresql
+      - /home/docker/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - /home/docker/postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
     ports:
       - "5432:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+
+  minio:
+    image: docker.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: Yj123987
+      MINIO_ROOT_PASSWORD: Yj987123
+      TZ: Asia/Shanghai
+      LANG: zh_CN.UTF-8
     volumes:
-      - /home/docker/postgresql/data:/var/lib/postgresql/data
+      - /home/www/minio/data:/data
+      - /home/www/minio/config:/root/.minio
+      - /etc/localtime:/etc/localtime:ro
+    command: server --console-address ':9001' /data
+    privileged: true
+    restart: always
+
+#    profiles:
+#      - dev
+#      - release
 
 #  redis:
 #    image: redis:latest
@@ -23,21 +54,21 @@ services:
 #      - ./data/logs/redis:/logs
 #    command: redis-server --requirepass freecar
 
-  Etcd:
-    image: 'bitnami/etcd:latest'
-    environment:
-      - ALLOW_NONE_AUTHENTICATION=yes
-      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
-    ports:
-      - "2379:2379"
-      - "2380:2380"
-
-  # Etcd 管理工具keeper (视图)
-  Etcd-Keeper:
-    hostname: etcdkeeper
-    image: evildecay/etcdkeeper:latest
-    ports:
-      - "9100:8080"
+#  Etcd:
+#    image: 'bitnami/etcd:latest'
+#    environment:
+#      - ALLOW_NONE_AUTHENTICATION=yes
+#      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+#    ports:
+#      - "2379:2379"
+#      - "2380:2380"
+#
+#  # Etcd 管理工具keeper (视图)
+#  Etcd-Keeper:
+#    hostname: etcdkeeper
+#    image: evildecay/etcdkeeper:latest
+#    ports:
+#      - "9100:8080"
 #
 #  # RabbitMQ
 #  rabbitmq:
