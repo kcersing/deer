@@ -2,7 +2,6 @@ package conf
 
 import (
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"sync"
 
@@ -63,9 +62,6 @@ func GetConf() *Config {
 func initConf() {
 	prefix := "conf"
 	confFileRelPath := filepath.Join(prefix, "conf.yaml")
-	klog.Info("===================")
-	klog.Info(confFileRelPath)
-	klog.Info("===================")
 	content, err := ioutil.ReadFile(confFileRelPath)
 	if err != nil {
 		panic(err)
@@ -80,19 +76,7 @@ func initConf() {
 		klog.Error("validate config error - %v", err)
 		panic(err)
 	}
-	conf.Env = GetEnv()
-	klog.Info("===================")
-	klog.Info(conf)
-	klog.Info("===================")
 	pretty.Printf("%+v\n", conf)
-}
-
-func GetEnv() string {
-	e := os.Getenv("GO_ENV")
-	if len(e) == 0 {
-		return "test"
-	}
-	return e
 }
 
 func LogLevel() klog.Level {

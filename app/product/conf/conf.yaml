@@ -1,0 +1,25 @@
+Kitex:
+  Service: "product"
+  Address: ":9105"
+  LogLevel: "debug"
+  LogFileName: "log/kitex.log"
+  LogMaxSize: 10
+  LogMaxBackups: 3
+  LogMaxAge: 50
+
+  #Captcha:
+  #  KeyLong: 5
+  #  ImgWidth: 240
+  #  ImgHeight: 80
+
+Redis:
+  Address: "127.0.0.1:6379"
+  Username: ""
+  Password: ""
+  DB: 1
+
+MySQL:
+  DSN: "root:kcer-913639@tcp(101.201.55.134:3306)/deer_users?charset=utf8mb4&parseTime=True&loc=Local"
+
+PostgreSQL:
+  DSN: "user=root password=kcer913639 host=101.201.55.134 port=5432 dbname=postgres sslmode=disable"

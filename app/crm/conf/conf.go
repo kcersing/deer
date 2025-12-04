@@ -2,7 +2,6 @@ package conf
 
 import (
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"sync"
 
@@ -62,8 +61,7 @@ func GetConf() *Config {
 
 func initConf() {
 	prefix := "conf"
-	confFileRelPath := filepath.Join(prefix, filepath.Join(GetEnv(), "conf.yaml"))
-	klog.Info(confFileRelPath)
+	confFileRelPath := filepath.Join(prefix, "conf.yaml")
 	content, err := ioutil.ReadFile(confFileRelPath)
 	if err != nil {
 		panic(err)
@@ -78,18 +76,8 @@ func initConf() {
 		klog.Error("validate config error - %v", err)
 		panic(err)
 	}
-	conf.Env = GetEnv()
 	pretty.Printf("%+v\n", conf)
 }
-
-func GetEnv() string {
-	e := os.Getenv("GO_ENV")
-	if len(e) == 0 {
-		return "test"
-	}
-	return e
-}
-
 func LogLevel() klog.Level {
 	level := GetConf().Kitex.LogLevel
 	switch level {

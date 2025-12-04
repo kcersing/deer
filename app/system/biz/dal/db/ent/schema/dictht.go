@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"system/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"system/biz/dal/db/ent/schema/mixins"
 )
 
 type Dictht struct {
@@ -40,9 +41,9 @@ func (Dictht) Edges() []ent.Edge {
 
 func (Dictht) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("title").Unique(),
-		index.Fields("value").Unique(),
-		index.Fields("dict_id").Unique(),
+		index.Fields("title"),
+		index.Fields("value"),
+		index.Fields("dict_id"),
 	}
 }
 

@@ -7,6 +7,8 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
+
 	"system/biz/dal/db/ent/schema/mixins"
 )
 
@@ -35,7 +37,12 @@ func (Role) Fields() []ent.Field {
 			Optional(),
 	}
 }
-
+func (Role) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("name"),
+		index.Fields("code").Unique(),
+	}
+}
 func (Role) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},

@@ -6,6 +6,8 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
+
 	"system/biz/dal/db/ent/schema/mixins"
 )
 
@@ -45,7 +47,11 @@ func (Menu) Edges() []ent.Edge {
 		edge.To("children", Menu.Type).From("parent").Unique().Field("parent_id"),
 	}
 }
-
+func (Menu) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("path").Unique(),
+	}
+}
 func (Menu) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entsql.Annotation{Table: "sys_menus"},

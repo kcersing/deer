@@ -1,12 +1,13 @@
 package schema
 
 import (
+	"system/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"system/biz/dal/db/ent/schema/mixins"
 )
 
 type Logs struct {
@@ -41,7 +42,7 @@ func (Logs) Edges() []ent.Edge {
 
 func (Logs) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("api"),
+		index.Fields("api").Unique(),
 	}
 }
 

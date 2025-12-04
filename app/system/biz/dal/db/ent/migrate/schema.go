@@ -93,17 +93,17 @@ var (
 		Indexes: []*schema.Index{
 			{
 				Name:    "dictht_title",
-				Unique:  true,
+				Unique:  false,
 				Columns: []*schema.Column{SysDicthtColumns[6]},
 			},
 			{
 				Name:    "dictht_value",
-				Unique:  true,
+				Unique:  false,
 				Columns: []*schema.Column{SysDicthtColumns[7]},
 			},
 			{
 				Name:    "dictht_dict_id",
-				Unique:  true,
+				Unique:  false,
 				Columns: []*schema.Column{SysDicthtColumns[8]},
 			},
 		},
@@ -135,7 +135,7 @@ var (
 		Indexes: []*schema.Index{
 			{
 				Name:    "logs_api",
-				Unique:  false,
+				Unique:  true,
 				Columns: []*schema.Column{SysLogsColumns[7]},
 			},
 		},
@@ -170,6 +170,13 @@ var (
 				Columns:    []*schema.Column{SysMenusColumns[15]},
 				RefColumns: []*schema.Column{SysMenusColumns[0]},
 				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "menu_path",
+				Unique:  true,
+				Columns: []*schema.Column{SysMenusColumns[6]},
 			},
 		},
 	}
@@ -218,6 +225,18 @@ var (
 		Name:       "sys_roles",
 		Columns:    SysRolesColumns,
 		PrimaryKey: []*schema.Column{SysRolesColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "role_name",
+				Unique:  false,
+				Columns: []*schema.Column{SysRolesColumns[6]},
+			},
+			{
+				Name:    "role_code",
+				Unique:  true,
+				Columns: []*schema.Column{SysRolesColumns[7]},
+			},
+		},
 	}
 	// SysSmsColumns holds the columns for the "sys_sms" table.
 	SysSmsColumns = []*schema.Column{
