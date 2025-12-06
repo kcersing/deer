@@ -1356,7 +1356,7 @@ func (p *GetPositionsListReq) String() string {
 
 }
 
-type UserService interface {
+type PositionsService interface {
 	CreatePositions(ctx context.Context, req *CreatePositionsReq) (r *base.NilResponse, err error)
 
 	DeletePositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
@@ -1368,106 +1368,106 @@ type UserService interface {
 	GetPositionsList(ctx context.Context, req *GetPositionsListReq) (r *base.NilResponse, err error)
 }
 
-type UserServiceClient struct {
+type PositionsServiceClient struct {
 	c thrift.TClient
 }
 
-func NewUserServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *UserServiceClient {
-	return &UserServiceClient{
+func NewPositionsServiceClientFactory(t thrift.TTransport, f thrift.TProtocolFactory) *PositionsServiceClient {
+	return &PositionsServiceClient{
 		c: thrift.NewTStandardClient(f.GetProtocol(t), f.GetProtocol(t)),
 	}
 }
 
-func NewUserServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *UserServiceClient {
-	return &UserServiceClient{
+func NewPositionsServiceClientProtocol(t thrift.TTransport, iprot thrift.TProtocol, oprot thrift.TProtocol) *PositionsServiceClient {
+	return &PositionsServiceClient{
 		c: thrift.NewTStandardClient(iprot, oprot),
 	}
 }
 
-func NewUserServiceClient(c thrift.TClient) *UserServiceClient {
-	return &UserServiceClient{
+func NewPositionsServiceClient(c thrift.TClient) *PositionsServiceClient {
+	return &PositionsServiceClient{
 		c: c,
 	}
 }
 
-func (p *UserServiceClient) Client_() thrift.TClient {
+func (p *PositionsServiceClient) Client_() thrift.TClient {
 	return p.c
 }
 
-func (p *UserServiceClient) CreatePositions(ctx context.Context, req *CreatePositionsReq) (r *base.NilResponse, err error) {
-	var _args UserServiceCreatePositionsArgs
+func (p *PositionsServiceClient) CreatePositions(ctx context.Context, req *CreatePositionsReq) (r *base.NilResponse, err error) {
+	var _args PositionsServiceCreatePositionsArgs
 	_args.Req = req
-	var _result UserServiceCreatePositionsResult
+	var _result PositionsServiceCreatePositionsResult
 	if err = p.Client_().Call(ctx, "CreatePositions", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *UserServiceClient) DeletePositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
-	var _args UserServiceDeletePositionsArgs
+func (p *PositionsServiceClient) DeletePositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args PositionsServiceDeletePositionsArgs
 	_args.Req = req
-	var _result UserServiceDeletePositionsResult
+	var _result PositionsServiceDeletePositionsResult
 	if err = p.Client_().Call(ctx, "DeletePositions", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *UserServiceClient) UpdatePositions(ctx context.Context, req *UpdatePositionsReq) (r *base.NilResponse, err error) {
-	var _args UserServiceUpdatePositionsArgs
+func (p *PositionsServiceClient) UpdatePositions(ctx context.Context, req *UpdatePositionsReq) (r *base.NilResponse, err error) {
+	var _args PositionsServiceUpdatePositionsArgs
 	_args.Req = req
-	var _result UserServiceUpdatePositionsResult
+	var _result PositionsServiceUpdatePositionsResult
 	if err = p.Client_().Call(ctx, "UpdatePositions", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *UserServiceClient) GetPositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
-	var _args UserServiceGetPositionsArgs
+func (p *PositionsServiceClient) GetPositions(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args PositionsServiceGetPositionsArgs
 	_args.Req = req
-	var _result UserServiceGetPositionsResult
+	var _result PositionsServiceGetPositionsResult
 	if err = p.Client_().Call(ctx, "GetPositions", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
-func (p *UserServiceClient) GetPositionsList(ctx context.Context, req *GetPositionsListReq) (r *base.NilResponse, err error) {
-	var _args UserServiceGetPositionsListArgs
+func (p *PositionsServiceClient) GetPositionsList(ctx context.Context, req *GetPositionsListReq) (r *base.NilResponse, err error) {
+	var _args PositionsServiceGetPositionsListArgs
 	_args.Req = req
-	var _result UserServiceGetPositionsListResult
+	var _result PositionsServiceGetPositionsListResult
 	if err = p.Client_().Call(ctx, "GetPositionsList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
 }
 
-type UserServiceProcessor struct {
+type PositionsServiceProcessor struct {
 	processorMap map[string]thrift.TProcessorFunction
-	handler      UserService
+	handler      PositionsService
 }
 
-func (p *UserServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
+func (p *PositionsServiceProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
 	p.processorMap[key] = processor
 }
 
-func (p *UserServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
+func (p *PositionsServiceProcessor) GetProcessorFunction(key string) (processor thrift.TProcessorFunction, ok bool) {
 	processor, ok = p.processorMap[key]
 	return processor, ok
 }
 
-func (p *UserServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
+func (p *PositionsServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunction {
 	return p.processorMap
 }
 
-func NewUserServiceProcessor(handler UserService) *UserServiceProcessor {
-	self := &UserServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self.AddToProcessorMap("CreatePositions", &userServiceProcessorCreatePositions{handler: handler})
-	self.AddToProcessorMap("DeletePositions", &userServiceProcessorDeletePositions{handler: handler})
-	self.AddToProcessorMap("UpdatePositions", &userServiceProcessorUpdatePositions{handler: handler})
-	self.AddToProcessorMap("GetPositions", &userServiceProcessorGetPositions{handler: handler})
-	self.AddToProcessorMap("GetPositionsList", &userServiceProcessorGetPositionsList{handler: handler})
+func NewPositionsServiceProcessor(handler PositionsService) *PositionsServiceProcessor {
+	self := &PositionsServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self.AddToProcessorMap("CreatePositions", &positionsServiceProcessorCreatePositions{handler: handler})
+	self.AddToProcessorMap("DeletePositions", &positionsServiceProcessorDeletePositions{handler: handler})
+	self.AddToProcessorMap("UpdatePositions", &positionsServiceProcessorUpdatePositions{handler: handler})
+	self.AddToProcessorMap("GetPositions", &positionsServiceProcessorGetPositions{handler: handler})
+	self.AddToProcessorMap("GetPositionsList", &positionsServiceProcessorGetPositionsList{handler: handler})
 	return self
 }
-func (p *UserServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+func (p *PositionsServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
 	name, _, seqId, err := iprot.ReadMessageBegin()
 	if err != nil {
 		return false, err
@@ -1485,12 +1485,12 @@ func (p *UserServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.
 	return false, x
 }
 
-type userServiceProcessorCreatePositions struct {
-	handler UserService
+type positionsServiceProcessorCreatePositions struct {
+	handler PositionsService
 }
 
-func (p *userServiceProcessorCreatePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceCreatePositionsArgs{}
+func (p *positionsServiceProcessorCreatePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := PositionsServiceCreatePositionsArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1503,7 +1503,7 @@ func (p *userServiceProcessorCreatePositions) Process(ctx context.Context, seqId
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceCreatePositionsResult{}
+	result := PositionsServiceCreatePositionsResult{}
 	var retval *base.NilResponse
 	if retval, err2 = p.handler.CreatePositions(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing CreatePositions: "+err2.Error())
@@ -1533,12 +1533,12 @@ func (p *userServiceProcessorCreatePositions) Process(ctx context.Context, seqId
 	return true, err
 }
 
-type userServiceProcessorDeletePositions struct {
-	handler UserService
+type positionsServiceProcessorDeletePositions struct {
+	handler PositionsService
 }
 
-func (p *userServiceProcessorDeletePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceDeletePositionsArgs{}
+func (p *positionsServiceProcessorDeletePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := PositionsServiceDeletePositionsArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1551,7 +1551,7 @@ func (p *userServiceProcessorDeletePositions) Process(ctx context.Context, seqId
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceDeletePositionsResult{}
+	result := PositionsServiceDeletePositionsResult{}
 	var retval *base.NilResponse
 	if retval, err2 = p.handler.DeletePositions(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing DeletePositions: "+err2.Error())
@@ -1581,12 +1581,12 @@ func (p *userServiceProcessorDeletePositions) Process(ctx context.Context, seqId
 	return true, err
 }
 
-type userServiceProcessorUpdatePositions struct {
-	handler UserService
+type positionsServiceProcessorUpdatePositions struct {
+	handler PositionsService
 }
 
-func (p *userServiceProcessorUpdatePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceUpdatePositionsArgs{}
+func (p *positionsServiceProcessorUpdatePositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := PositionsServiceUpdatePositionsArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1599,7 +1599,7 @@ func (p *userServiceProcessorUpdatePositions) Process(ctx context.Context, seqId
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceUpdatePositionsResult{}
+	result := PositionsServiceUpdatePositionsResult{}
 	var retval *base.NilResponse
 	if retval, err2 = p.handler.UpdatePositions(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing UpdatePositions: "+err2.Error())
@@ -1629,12 +1629,12 @@ func (p *userServiceProcessorUpdatePositions) Process(ctx context.Context, seqId
 	return true, err
 }
 
-type userServiceProcessorGetPositions struct {
-	handler UserService
+type positionsServiceProcessorGetPositions struct {
+	handler PositionsService
 }
 
-func (p *userServiceProcessorGetPositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceGetPositionsArgs{}
+func (p *positionsServiceProcessorGetPositions) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := PositionsServiceGetPositionsArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1647,7 +1647,7 @@ func (p *userServiceProcessorGetPositions) Process(ctx context.Context, seqId in
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceGetPositionsResult{}
+	result := PositionsServiceGetPositionsResult{}
 	var retval *base.NilResponse
 	if retval, err2 = p.handler.GetPositions(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing GetPositions: "+err2.Error())
@@ -1677,12 +1677,12 @@ func (p *userServiceProcessorGetPositions) Process(ctx context.Context, seqId in
 	return true, err
 }
 
-type userServiceProcessorGetPositionsList struct {
-	handler UserService
+type positionsServiceProcessorGetPositionsList struct {
+	handler PositionsService
 }
 
-func (p *userServiceProcessorGetPositionsList) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-	args := UserServiceGetPositionsListArgs{}
+func (p *positionsServiceProcessorGetPositionsList) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
+	args := PositionsServiceGetPositionsListArgs{}
 	if err = args.Read(iprot); err != nil {
 		iprot.ReadMessageEnd()
 		x := thrift.NewTApplicationException(thrift.PROTOCOL_ERROR, err.Error())
@@ -1695,7 +1695,7 @@ func (p *userServiceProcessorGetPositionsList) Process(ctx context.Context, seqI
 
 	iprot.ReadMessageEnd()
 	var err2 error
-	result := UserServiceGetPositionsListResult{}
+	result := PositionsServiceGetPositionsListResult{}
 	var retval *base.NilResponse
 	if retval, err2 = p.handler.GetPositionsList(ctx, args.Req); err2 != nil {
 		x := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing GetPositionsList: "+err2.Error())
@@ -1725,35 +1725,35 @@ func (p *userServiceProcessorGetPositionsList) Process(ctx context.Context, seqI
 	return true, err
 }
 
-type UserServiceCreatePositionsArgs struct {
+type PositionsServiceCreatePositionsArgs struct {
 	Req *CreatePositionsReq `thrift:"req,1"`
 }
 
-func NewUserServiceCreatePositionsArgs() *UserServiceCreatePositionsArgs {
-	return &UserServiceCreatePositionsArgs{}
+func NewPositionsServiceCreatePositionsArgs() *PositionsServiceCreatePositionsArgs {
+	return &PositionsServiceCreatePositionsArgs{}
 }
 
-func (p *UserServiceCreatePositionsArgs) InitDefault() {
+func (p *PositionsServiceCreatePositionsArgs) InitDefault() {
 }
 
-var UserServiceCreatePositionsArgs_Req_DEFAULT *CreatePositionsReq
+var PositionsServiceCreatePositionsArgs_Req_DEFAULT *CreatePositionsReq
 
-func (p *UserServiceCreatePositionsArgs) GetReq() (v *CreatePositionsReq) {
+func (p *PositionsServiceCreatePositionsArgs) GetReq() (v *CreatePositionsReq) {
 	if !p.IsSetReq() {
-		return UserServiceCreatePositionsArgs_Req_DEFAULT
+		return PositionsServiceCreatePositionsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-var fieldIDToName_UserServiceCreatePositionsArgs = map[int16]string{
+var fieldIDToName_PositionsServiceCreatePositionsArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *UserServiceCreatePositionsArgs) IsSetReq() bool {
+func (p *PositionsServiceCreatePositionsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UserServiceCreatePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1799,7 +1799,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceCreatePositionsArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceCreatePositionsArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1809,7 +1809,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *PositionsServiceCreatePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewCreatePositionsReq()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1818,7 +1818,7 @@ func (p *UserServiceCreatePositionsArgs) ReadField1(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *UserServiceCreatePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("CreatePositions_args"); err != nil {
 		goto WriteStructBeginError
@@ -1846,7 +1846,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -1863,43 +1863,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsArgs) String() string {
+func (p *PositionsServiceCreatePositionsArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceCreatePositionsArgs(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceCreatePositionsArgs(%+v)", *p)
 
 }
 
-type UserServiceCreatePositionsResult struct {
+type PositionsServiceCreatePositionsResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional"`
 }
 
-func NewUserServiceCreatePositionsResult() *UserServiceCreatePositionsResult {
-	return &UserServiceCreatePositionsResult{}
+func NewPositionsServiceCreatePositionsResult() *PositionsServiceCreatePositionsResult {
+	return &PositionsServiceCreatePositionsResult{}
 }
 
-func (p *UserServiceCreatePositionsResult) InitDefault() {
+func (p *PositionsServiceCreatePositionsResult) InitDefault() {
 }
 
-var UserServiceCreatePositionsResult_Success_DEFAULT *base.NilResponse
+var PositionsServiceCreatePositionsResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceCreatePositionsResult) GetSuccess() (v *base.NilResponse) {
+func (p *PositionsServiceCreatePositionsResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return UserServiceCreatePositionsResult_Success_DEFAULT
+		return PositionsServiceCreatePositionsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceCreatePositionsResult = map[int16]string{
+var fieldIDToName_PositionsServiceCreatePositionsResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceCreatePositionsResult) IsSetSuccess() bool {
+func (p *PositionsServiceCreatePositionsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceCreatePositionsResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -1945,7 +1945,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceCreatePositionsResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceCreatePositionsResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -1955,7 +1955,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *PositionsServiceCreatePositionsResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := base.NewNilResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -1964,7 +1964,7 @@ func (p *UserServiceCreatePositionsResult) ReadField0(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *UserServiceCreatePositionsResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("CreatePositions_result"); err != nil {
 		goto WriteStructBeginError
@@ -1992,7 +1992,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceCreatePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -2011,43 +2011,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceCreatePositionsResult) String() string {
+func (p *PositionsServiceCreatePositionsResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceCreatePositionsResult(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceCreatePositionsResult(%+v)", *p)
 
 }
 
-type UserServiceDeletePositionsArgs struct {
+type PositionsServiceDeletePositionsArgs struct {
 	Req *base.IdReq `thrift:"req,1"`
 }
 
-func NewUserServiceDeletePositionsArgs() *UserServiceDeletePositionsArgs {
-	return &UserServiceDeletePositionsArgs{}
+func NewPositionsServiceDeletePositionsArgs() *PositionsServiceDeletePositionsArgs {
+	return &PositionsServiceDeletePositionsArgs{}
 }
 
-func (p *UserServiceDeletePositionsArgs) InitDefault() {
+func (p *PositionsServiceDeletePositionsArgs) InitDefault() {
 }
 
-var UserServiceDeletePositionsArgs_Req_DEFAULT *base.IdReq
+var PositionsServiceDeletePositionsArgs_Req_DEFAULT *base.IdReq
 
-func (p *UserServiceDeletePositionsArgs) GetReq() (v *base.IdReq) {
+func (p *PositionsServiceDeletePositionsArgs) GetReq() (v *base.IdReq) {
 	if !p.IsSetReq() {
-		return UserServiceDeletePositionsArgs_Req_DEFAULT
+		return PositionsServiceDeletePositionsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-var fieldIDToName_UserServiceDeletePositionsArgs = map[int16]string{
+var fieldIDToName_PositionsServiceDeletePositionsArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *UserServiceDeletePositionsArgs) IsSetReq() bool {
+func (p *PositionsServiceDeletePositionsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UserServiceDeletePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2093,7 +2093,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceDeletePositionsArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceDeletePositionsArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2103,7 +2103,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *PositionsServiceDeletePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := base.NewIdReq()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2112,7 +2112,7 @@ func (p *UserServiceDeletePositionsArgs) ReadField1(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *UserServiceDeletePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("DeletePositions_args"); err != nil {
 		goto WriteStructBeginError
@@ -2140,7 +2140,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2157,43 +2157,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsArgs) String() string {
+func (p *PositionsServiceDeletePositionsArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceDeletePositionsArgs(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceDeletePositionsArgs(%+v)", *p)
 
 }
 
-type UserServiceDeletePositionsResult struct {
+type PositionsServiceDeletePositionsResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional"`
 }
 
-func NewUserServiceDeletePositionsResult() *UserServiceDeletePositionsResult {
-	return &UserServiceDeletePositionsResult{}
+func NewPositionsServiceDeletePositionsResult() *PositionsServiceDeletePositionsResult {
+	return &PositionsServiceDeletePositionsResult{}
 }
 
-func (p *UserServiceDeletePositionsResult) InitDefault() {
+func (p *PositionsServiceDeletePositionsResult) InitDefault() {
 }
 
-var UserServiceDeletePositionsResult_Success_DEFAULT *base.NilResponse
+var PositionsServiceDeletePositionsResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceDeletePositionsResult) GetSuccess() (v *base.NilResponse) {
+func (p *PositionsServiceDeletePositionsResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return UserServiceDeletePositionsResult_Success_DEFAULT
+		return PositionsServiceDeletePositionsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceDeletePositionsResult = map[int16]string{
+var fieldIDToName_PositionsServiceDeletePositionsResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceDeletePositionsResult) IsSetSuccess() bool {
+func (p *PositionsServiceDeletePositionsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceDeletePositionsResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2239,7 +2239,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceDeletePositionsResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceDeletePositionsResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2249,7 +2249,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *PositionsServiceDeletePositionsResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := base.NewNilResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2258,7 +2258,7 @@ func (p *UserServiceDeletePositionsResult) ReadField0(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *UserServiceDeletePositionsResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("DeletePositions_result"); err != nil {
 		goto WriteStructBeginError
@@ -2286,7 +2286,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceDeletePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -2305,43 +2305,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceDeletePositionsResult) String() string {
+func (p *PositionsServiceDeletePositionsResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceDeletePositionsResult(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceDeletePositionsResult(%+v)", *p)
 
 }
 
-type UserServiceUpdatePositionsArgs struct {
+type PositionsServiceUpdatePositionsArgs struct {
 	Req *UpdatePositionsReq `thrift:"req,1"`
 }
 
-func NewUserServiceUpdatePositionsArgs() *UserServiceUpdatePositionsArgs {
-	return &UserServiceUpdatePositionsArgs{}
+func NewPositionsServiceUpdatePositionsArgs() *PositionsServiceUpdatePositionsArgs {
+	return &PositionsServiceUpdatePositionsArgs{}
 }
 
-func (p *UserServiceUpdatePositionsArgs) InitDefault() {
+func (p *PositionsServiceUpdatePositionsArgs) InitDefault() {
 }
 
-var UserServiceUpdatePositionsArgs_Req_DEFAULT *UpdatePositionsReq
+var PositionsServiceUpdatePositionsArgs_Req_DEFAULT *UpdatePositionsReq
 
-func (p *UserServiceUpdatePositionsArgs) GetReq() (v *UpdatePositionsReq) {
+func (p *PositionsServiceUpdatePositionsArgs) GetReq() (v *UpdatePositionsReq) {
 	if !p.IsSetReq() {
-		return UserServiceUpdatePositionsArgs_Req_DEFAULT
+		return PositionsServiceUpdatePositionsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-var fieldIDToName_UserServiceUpdatePositionsArgs = map[int16]string{
+var fieldIDToName_PositionsServiceUpdatePositionsArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *UserServiceUpdatePositionsArgs) IsSetReq() bool {
+func (p *PositionsServiceUpdatePositionsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UserServiceUpdatePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2387,7 +2387,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceUpdatePositionsArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceUpdatePositionsArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2397,7 +2397,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *PositionsServiceUpdatePositionsArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewUpdatePositionsReq()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2406,7 +2406,7 @@ func (p *UserServiceUpdatePositionsArgs) ReadField1(iprot thrift.TProtocol) erro
 	return nil
 }
 
-func (p *UserServiceUpdatePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("UpdatePositions_args"); err != nil {
 		goto WriteStructBeginError
@@ -2434,7 +2434,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2451,43 +2451,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsArgs) String() string {
+func (p *PositionsServiceUpdatePositionsArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceUpdatePositionsArgs(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceUpdatePositionsArgs(%+v)", *p)
 
 }
 
-type UserServiceUpdatePositionsResult struct {
+type PositionsServiceUpdatePositionsResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional"`
 }
 
-func NewUserServiceUpdatePositionsResult() *UserServiceUpdatePositionsResult {
-	return &UserServiceUpdatePositionsResult{}
+func NewPositionsServiceUpdatePositionsResult() *PositionsServiceUpdatePositionsResult {
+	return &PositionsServiceUpdatePositionsResult{}
 }
 
-func (p *UserServiceUpdatePositionsResult) InitDefault() {
+func (p *PositionsServiceUpdatePositionsResult) InitDefault() {
 }
 
-var UserServiceUpdatePositionsResult_Success_DEFAULT *base.NilResponse
+var PositionsServiceUpdatePositionsResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceUpdatePositionsResult) GetSuccess() (v *base.NilResponse) {
+func (p *PositionsServiceUpdatePositionsResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return UserServiceUpdatePositionsResult_Success_DEFAULT
+		return PositionsServiceUpdatePositionsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceUpdatePositionsResult = map[int16]string{
+var fieldIDToName_PositionsServiceUpdatePositionsResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceUpdatePositionsResult) IsSetSuccess() bool {
+func (p *PositionsServiceUpdatePositionsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceUpdatePositionsResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2533,7 +2533,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceUpdatePositionsResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceUpdatePositionsResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2543,7 +2543,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *PositionsServiceUpdatePositionsResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := base.NewNilResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2552,7 +2552,7 @@ func (p *UserServiceUpdatePositionsResult) ReadField0(iprot thrift.TProtocol) er
 	return nil
 }
 
-func (p *UserServiceUpdatePositionsResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("UpdatePositions_result"); err != nil {
 		goto WriteStructBeginError
@@ -2580,7 +2580,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceUpdatePositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -2599,43 +2599,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceUpdatePositionsResult) String() string {
+func (p *PositionsServiceUpdatePositionsResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceUpdatePositionsResult(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceUpdatePositionsResult(%+v)", *p)
 
 }
 
-type UserServiceGetPositionsArgs struct {
+type PositionsServiceGetPositionsArgs struct {
 	Req *base.IdReq `thrift:"req,1"`
 }
 
-func NewUserServiceGetPositionsArgs() *UserServiceGetPositionsArgs {
-	return &UserServiceGetPositionsArgs{}
+func NewPositionsServiceGetPositionsArgs() *PositionsServiceGetPositionsArgs {
+	return &PositionsServiceGetPositionsArgs{}
 }
 
-func (p *UserServiceGetPositionsArgs) InitDefault() {
+func (p *PositionsServiceGetPositionsArgs) InitDefault() {
 }
 
-var UserServiceGetPositionsArgs_Req_DEFAULT *base.IdReq
+var PositionsServiceGetPositionsArgs_Req_DEFAULT *base.IdReq
 
-func (p *UserServiceGetPositionsArgs) GetReq() (v *base.IdReq) {
+func (p *PositionsServiceGetPositionsArgs) GetReq() (v *base.IdReq) {
 	if !p.IsSetReq() {
-		return UserServiceGetPositionsArgs_Req_DEFAULT
+		return PositionsServiceGetPositionsArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-var fieldIDToName_UserServiceGetPositionsArgs = map[int16]string{
+var fieldIDToName_PositionsServiceGetPositionsArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *UserServiceGetPositionsArgs) IsSetReq() bool {
+func (p *PositionsServiceGetPositionsArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UserServiceGetPositionsArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2681,7 +2681,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetPositionsArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceGetPositionsArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2691,7 +2691,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *PositionsServiceGetPositionsArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := base.NewIdReq()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2700,7 +2700,7 @@ func (p *UserServiceGetPositionsArgs) ReadField1(iprot thrift.TProtocol) error {
 	return nil
 }
 
-func (p *UserServiceGetPositionsArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetPositions_args"); err != nil {
 		goto WriteStructBeginError
@@ -2728,7 +2728,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -2745,43 +2745,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsArgs) String() string {
+func (p *PositionsServiceGetPositionsArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetPositionsArgs(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceGetPositionsArgs(%+v)", *p)
 
 }
 
-type UserServiceGetPositionsResult struct {
+type PositionsServiceGetPositionsResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional"`
 }
 
-func NewUserServiceGetPositionsResult() *UserServiceGetPositionsResult {
-	return &UserServiceGetPositionsResult{}
+func NewPositionsServiceGetPositionsResult() *PositionsServiceGetPositionsResult {
+	return &PositionsServiceGetPositionsResult{}
 }
 
-func (p *UserServiceGetPositionsResult) InitDefault() {
+func (p *PositionsServiceGetPositionsResult) InitDefault() {
 }
 
-var UserServiceGetPositionsResult_Success_DEFAULT *base.NilResponse
+var PositionsServiceGetPositionsResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceGetPositionsResult) GetSuccess() (v *base.NilResponse) {
+func (p *PositionsServiceGetPositionsResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return UserServiceGetPositionsResult_Success_DEFAULT
+		return PositionsServiceGetPositionsResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceGetPositionsResult = map[int16]string{
+var fieldIDToName_PositionsServiceGetPositionsResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceGetPositionsResult) IsSetSuccess() bool {
+func (p *PositionsServiceGetPositionsResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceGetPositionsResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2827,7 +2827,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetPositionsResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceGetPositionsResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2837,7 +2837,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *PositionsServiceGetPositionsResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := base.NewNilResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2846,7 +2846,7 @@ func (p *UserServiceGetPositionsResult) ReadField0(iprot thrift.TProtocol) error
 	return nil
 }
 
-func (p *UserServiceGetPositionsResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetPositions_result"); err != nil {
 		goto WriteStructBeginError
@@ -2874,7 +2874,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -2893,43 +2893,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsResult) String() string {
+func (p *PositionsServiceGetPositionsResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetPositionsResult(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceGetPositionsResult(%+v)", *p)
 
 }
 
-type UserServiceGetPositionsListArgs struct {
+type PositionsServiceGetPositionsListArgs struct {
 	Req *GetPositionsListReq `thrift:"req,1"`
 }
 
-func NewUserServiceGetPositionsListArgs() *UserServiceGetPositionsListArgs {
-	return &UserServiceGetPositionsListArgs{}
+func NewPositionsServiceGetPositionsListArgs() *PositionsServiceGetPositionsListArgs {
+	return &PositionsServiceGetPositionsListArgs{}
 }
 
-func (p *UserServiceGetPositionsListArgs) InitDefault() {
+func (p *PositionsServiceGetPositionsListArgs) InitDefault() {
 }
 
-var UserServiceGetPositionsListArgs_Req_DEFAULT *GetPositionsListReq
+var PositionsServiceGetPositionsListArgs_Req_DEFAULT *GetPositionsListReq
 
-func (p *UserServiceGetPositionsListArgs) GetReq() (v *GetPositionsListReq) {
+func (p *PositionsServiceGetPositionsListArgs) GetReq() (v *GetPositionsListReq) {
 	if !p.IsSetReq() {
-		return UserServiceGetPositionsListArgs_Req_DEFAULT
+		return PositionsServiceGetPositionsListArgs_Req_DEFAULT
 	}
 	return p.Req
 }
 
-var fieldIDToName_UserServiceGetPositionsListArgs = map[int16]string{
+var fieldIDToName_PositionsServiceGetPositionsListArgs = map[int16]string{
 	1: "req",
 }
 
-func (p *UserServiceGetPositionsListArgs) IsSetReq() bool {
+func (p *PositionsServiceGetPositionsListArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *UserServiceGetPositionsListArgs) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListArgs) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -2975,7 +2975,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetPositionsListArgs[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceGetPositionsListArgs[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -2985,7 +2985,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListArgs) ReadField1(iprot thrift.TProtocol) error {
+func (p *PositionsServiceGetPositionsListArgs) ReadField1(iprot thrift.TProtocol) error {
 	_field := NewGetPositionsListReq()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -2994,7 +2994,7 @@ func (p *UserServiceGetPositionsListArgs) ReadField1(iprot thrift.TProtocol) err
 	return nil
 }
 
-func (p *UserServiceGetPositionsListArgs) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListArgs) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetPositionsList_args"); err != nil {
 		goto WriteStructBeginError
@@ -3022,7 +3022,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListArgs) writeField1(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListArgs) writeField1(oprot thrift.TProtocol) (err error) {
 	if err = oprot.WriteFieldBegin("req", thrift.STRUCT, 1); err != nil {
 		goto WriteFieldBeginError
 	}
@@ -3039,43 +3039,43 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListArgs) String() string {
+func (p *PositionsServiceGetPositionsListArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetPositionsListArgs(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceGetPositionsListArgs(%+v)", *p)
 
 }
 
-type UserServiceGetPositionsListResult struct {
+type PositionsServiceGetPositionsListResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional"`
 }
 
-func NewUserServiceGetPositionsListResult() *UserServiceGetPositionsListResult {
-	return &UserServiceGetPositionsListResult{}
+func NewPositionsServiceGetPositionsListResult() *PositionsServiceGetPositionsListResult {
+	return &PositionsServiceGetPositionsListResult{}
 }
 
-func (p *UserServiceGetPositionsListResult) InitDefault() {
+func (p *PositionsServiceGetPositionsListResult) InitDefault() {
 }
 
-var UserServiceGetPositionsListResult_Success_DEFAULT *base.NilResponse
+var PositionsServiceGetPositionsListResult_Success_DEFAULT *base.NilResponse
 
-func (p *UserServiceGetPositionsListResult) GetSuccess() (v *base.NilResponse) {
+func (p *PositionsServiceGetPositionsListResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return UserServiceGetPositionsListResult_Success_DEFAULT
+		return PositionsServiceGetPositionsListResult_Success_DEFAULT
 	}
 	return p.Success
 }
 
-var fieldIDToName_UserServiceGetPositionsListResult = map[int16]string{
+var fieldIDToName_PositionsServiceGetPositionsListResult = map[int16]string{
 	0: "success",
 }
 
-func (p *UserServiceGetPositionsListResult) IsSetSuccess() bool {
+func (p *PositionsServiceGetPositionsListResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *UserServiceGetPositionsListResult) Read(iprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListResult) Read(iprot thrift.TProtocol) (err error) {
 
 	var fieldTypeId thrift.TType
 	var fieldId int16
@@ -3121,7 +3121,7 @@ ReadStructBeginError:
 ReadFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_UserServiceGetPositionsListResult[fieldId]), err)
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_PositionsServiceGetPositionsListResult[fieldId]), err)
 SkipFieldError:
 	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 
@@ -3131,7 +3131,7 @@ ReadStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListResult) ReadField0(iprot thrift.TProtocol) error {
+func (p *PositionsServiceGetPositionsListResult) ReadField0(iprot thrift.TProtocol) error {
 	_field := base.NewNilResponse()
 	if err := _field.Read(iprot); err != nil {
 		return err
@@ -3140,7 +3140,7 @@ func (p *UserServiceGetPositionsListResult) ReadField0(iprot thrift.TProtocol) e
 	return nil
 }
 
-func (p *UserServiceGetPositionsListResult) Write(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListResult) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
 	if err = oprot.WriteStructBegin("GetPositionsList_result"); err != nil {
 		goto WriteStructBeginError
@@ -3168,7 +3168,7 @@ WriteStructEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListResult) writeField0(oprot thrift.TProtocol) (err error) {
+func (p *PositionsServiceGetPositionsListResult) writeField0(oprot thrift.TProtocol) (err error) {
 	if p.IsSetSuccess() {
 		if err = oprot.WriteFieldBegin("success", thrift.STRUCT, 0); err != nil {
 			goto WriteFieldBeginError
@@ -3187,10 +3187,10 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 0 end error: ", p), err)
 }
 
-func (p *UserServiceGetPositionsListResult) String() string {
+func (p *PositionsServiceGetPositionsListResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("UserServiceGetPositionsListResult(%+v)", *p)
+	return fmt.Sprintf("PositionsServiceGetPositionsListResult(%+v)", *p)
 
 }

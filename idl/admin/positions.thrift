@@ -25,7 +25,7 @@ struct GetPositionsListReq{
       2:optional i64 pageSize=10
       3:optional string keyword=""
 }
-service UserService  {
+service PositionsService  {
     base.NilResponse CreatePositions(1: CreatePositionsReq req)(api.post = "/service/positions/create")
     base.NilResponse DeletePositions(1: base.IdReq req)(api.post = "/service/positions/delete")
     base.NilResponse UpdatePositions(1: UpdatePositionsReq req)(api.post = "/service/positions/update")

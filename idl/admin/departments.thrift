@@ -22,7 +22,7 @@ struct GetDepartmentsListReq{
       2:optional i64 pageSize=10
       3:optional string keyword=""
 }
-service UserService  {
+service DepartmentsService  {
     base.NilResponse CreateDepartments(1: CreateDepartmentsReq req)(api.post = "/service/departments/create")
     base.NilResponse DeleteDepartments(1: base.IdReq req)(api.post = "/service/departments/delete")
     base.NilResponse UpdateDepartments(1: UpdateDepartmentsReq req)(api.post = "/service/departments/update")

@@ -3,13 +3,17 @@
 package crm
 
 import (
+	crm2 "gen/kitex_gen/crm"
+
+	"gen/hertz_gen/crm"
+
+	"admin/rpc/client"
+	"common/pkg/errno"
 	"common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
-	dict "gen/hertz_gen/dict"
 	base1 "gen/kitex_gen/base"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
 
 // GetFollowUpPlan .
@@ -23,11 +27,8 @@ func GetFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.CrmClient.GetFollowUpPlan(ctx, &base1.Dict{
-		Title:  req.GetTitle(),
-		Code:   req.GetCode(),
-		Status: req.GetStatus(),
-		Desc:   req.GetDesc(),
+	resp, err := client.CrmClient.GetFollowUpPlan(ctx, &base1.IdReq{
+		Id: req.GetID(),
 	})
 
 	if err != nil {
@@ -48,10 +49,22 @@ func CreateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
+	resp, err := client.CrmClient.CreateFollowUpPlan(ctx, &crm2.CreateFollowUpPlanReq{
+		Content:   req.GetContent(),
+		Time:      req.GetTime(),
+		MemberId:  req.GetMemberId(),
+		UserId:    req.GetUserId(),
+		Status:    req.GetStatus(),
+		CreatedId: req.GetCreatedId(),
+		Division:  req.GetDivision(),
+	})
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // UpdateFollowUpPlan .
@@ -65,9 +78,23 @@ func UpdateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.UpdateFollowUpPlan(ctx, &crm2.UpdateFollowUpPlanReq{
+		Id:        req.GetID(),
+		Content:   req.GetContent(),
+		Time:      req.GetTime(),
+		MemberId:  req.GetMemberId(),
+		UserId:    req.GetUserId(),
+		Status:    req.GetStatus(),
+		CreatedId: req.GetCreatedId(),
+		Division:  req.GetDivision(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // DeleteFollowUpPlan .
@@ -81,9 +108,14 @@ func DeleteFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.DeleteFollowUpPlan(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // FollowUpPlanList .
@@ -96,10 +128,18 @@ func FollowUpPlanList(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
+	resp, err := client.CrmClient.FollowUpPlanList(ctx, &crm2.FollowUpPlanListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+	})
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // GetFollowUpRecord .
@@ -113,9 +153,16 @@ func GetFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.GetFollowUpRecord(ctx, &base1.IdReq{
+		Id: req.GetID(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateFollowUpRecord .
@@ -129,9 +176,23 @@ func CreateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.CreateFollowUpRecord(ctx, &crm2.CreateFollowUpRecordReq{
+		Content:         req.GetContent(),
+		FollowUpId:      req.GetFollowUpId(),
+		Method:          req.GetMethod(),
+		Status:          req.GetStatus(),
+		UserId:          req.GetUserId(),
+		Division:        req.GetDivision(),
+		Record:          req.GetRecord(),
+		OpportunitiesId: req.GetOpportunitiesId(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // UpdateFollowUpRecord .
@@ -144,10 +205,24 @@ func UpdateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
+	resp, err := client.CrmClient.UpdateFollowUpRecord(ctx, &crm2.UpdateFollowUpRecordReq{
+		Id:              req.GetID(),
+		Content:         req.GetContent(),
+		FollowUpId:      req.GetFollowUpId(),
+		Method:          req.GetMethod(),
+		Status:          req.GetStatus(),
+		UserId:          req.GetUserId(),
+		Division:        req.GetDivision(),
+		Record:          req.GetRecord(),
+		OpportunitiesId: req.GetOpportunitiesId(),
+	})
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // DeleteFollowUpRecord .
@@ -161,9 +236,14 @@ func DeleteFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.DeleteFollowUpRecord(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // FollowUpRecordList .
@@ -177,9 +257,18 @@ func FollowUpRecordList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.FollowUpRecordList(ctx, &crm2.FollowUpRecordListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // GetOpportunities .
@@ -193,9 +282,16 @@ func GetOpportunities(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.GetOpportunities(ctx, &base1.IdReq{
+		Id: req.GetID(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateOpportunities .
@@ -209,9 +305,21 @@ func CreateOpportunities(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.CreateOpportunities(ctx, &crm2.CreateOpportunitiesReq{
+		MemberId:         req.GetMemberId(),
+		UserId:           req.GetUserId(),
+		Period:           base1.OperatingPeriod(req.GetPeriod()),
+		Content:          req.GetContent(),
+		PredictionAmount: req.GetPredictionAmount(),
+		Title:            req.GetTitle(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // UpdateOpportunities .
@@ -225,9 +333,22 @@ func UpdateOpportunities(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.UpdateOpportunities(ctx, &crm2.UpdateOpportunitiesReq{
+		Id:               req.GetID(),
+		MemberId:         req.GetMemberId(),
+		UserId:           req.GetUserId(),
+		Period:           base1.OperatingPeriod(req.GetPeriod()),
+		Content:          req.GetContent(),
+		PredictionAmount: req.GetPredictionAmount(),
+		Title:            req.GetTitle(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // DeleteOpportunities .
@@ -241,9 +362,14 @@ func DeleteOpportunities(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.DeleteOpportunities(ctx, &base1.IdReq{Id: req.GetID()})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // OpportunitiesList .
@@ -257,7 +383,16 @@ func OpportunitiesList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.OpportunitiesList(ctx, &crm2.OpportunitiesListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
