@@ -3,10 +3,11 @@
 package crm
 
 import (
+	"common/pkg/utils"
 	"context"
-
-	base "admin/biz/model/base"
-	crm "admin/biz/model/crm"
+	base "gen/hertz_gen/base"
+	dict "gen/hertz_gen/dict"
+	base1 "gen/kitex_gen/base"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -18,13 +19,23 @@ func GetFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.CrmClient.GetFollowUpPlan(ctx, &base1.Dict{
+		Title:  req.GetTitle(),
+		Code:   req.GetCode(),
+		Status: req.GetStatus(),
+		Desc:   req.GetDesc(),
+	})
 
-	c.JSON(consts.StatusOK, resp)
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // CreateFollowUpPlan .
@@ -34,7 +45,7 @@ func CreateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	var req crm.CreateFollowUpPlanReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -50,7 +61,7 @@ func UpdateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	var req crm.UpdateFollowUpPlanReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -66,7 +77,7 @@ func DeleteFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -82,7 +93,7 @@ func FollowUpPlanList(ctx context.Context, c *app.RequestContext) {
 	var req crm.FollowUpPlanListReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -98,7 +109,7 @@ func GetFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -114,7 +125,7 @@ func CreateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	var req crm.CreateFollowUpRecordReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -130,7 +141,7 @@ func UpdateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	var req crm.UpdateFollowUpRecordReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -146,7 +157,7 @@ func DeleteFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -162,7 +173,7 @@ func FollowUpRecordList(ctx context.Context, c *app.RequestContext) {
 	var req crm.FollowUpRecordListReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -178,7 +189,7 @@ func GetOpportunities(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -194,7 +205,7 @@ func CreateOpportunities(ctx context.Context, c *app.RequestContext) {
 	var req crm.CreateOpportunitiesReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -210,7 +221,7 @@ func UpdateOpportunities(ctx context.Context, c *app.RequestContext) {
 	var req crm.UpdateOpportunitiesReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -226,7 +237,7 @@ func DeleteOpportunities(ctx context.Context, c *app.RequestContext) {
 	var req base.IdReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
@@ -242,7 +253,7 @@ func OpportunitiesList(ctx context.Context, c *app.RequestContext) {
 	var req crm.OpportunitiesListReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
-		c.String(consts.StatusBadRequest, err.Error())
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 

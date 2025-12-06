@@ -28,7 +28,7 @@ type MySQL struct {
 	DSN string `yaml:"DSN"`
 }
 type PostgreSQL struct {
-	DSN string `mapstructure:"DSN" json:"DSN"`
+	DSN string `yaml:"DSN"`
 }
 type Redis struct {
 	Address  string `yaml:"Address"`

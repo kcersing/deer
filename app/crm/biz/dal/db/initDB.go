@@ -2,9 +2,9 @@ package db
 
 import (
 	"context"
+	"crm/biz/dal/db/ent"
+	"crm/biz/dal/db/ent/migrate"
 	"database/sql"
-	"deer/app/crm/biz/dal/mysql/ent"
-	"deer/app/crm/biz/dal/mysql/ent/migrate"
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
 	"fmt"
@@ -45,12 +45,12 @@ func OpenPq(databaseUrl string) *entsql.Driver {
 
 // InitDB init DB
 func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
-	drv := OpenMySql(databaseUrl)
+	drv := OpenPq(databaseUrl)
 
 	// 生产环境使用默认mysql驱动，开发环境使用debug驱动
 	var drive dialect.Driver
 	if isProd {
-		klog.Info("默认mysql驱动")
+		klog.Info("默认db驱动")
 		drive = drv
 	} else {
 		// Debug driver.

@@ -23,7 +23,7 @@ func newCasbin() (enforcer *casbin.Enforcer, err error) {
 	//adapter, err := entAdapter.NewAdapter("mysql", conf.GetConf().MySQL.DSN)
 
 	adapter, err := entAdapter.NewAdapter("postgres", conf.GetConf().PostgreSQL.DSN)
-	//adapter, err := entAdapter.NewAdapter("postgres", "user=root password=kcer913639 host=101.201.55.134 port=5432 dbname=postgres sslmode=disable")
+	//adapter, err := entAdapter.NewAdapter("postgres", "user=root password=kcer913639 host=101.126.9.226 port=5432 dbname=postgres sslmode=disable")
 	if err != nil {
 		hlog.Error(err)
 		return

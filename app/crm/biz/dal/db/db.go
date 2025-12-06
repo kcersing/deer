@@ -3,8 +3,6 @@ package db
 import (
 	"crm/biz/dal/db/ent"
 	"crm/conf"
-	"fmt"
-	"os"
 	"sync"
 )
 

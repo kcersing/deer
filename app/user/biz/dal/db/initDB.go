@@ -50,7 +50,7 @@ func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
 	// 生产环境使用默认mysql驱动，开发环境使用debug驱动
 	var drive dialect.Driver
 	if isProd {
-		klog.Info("默认mysql驱动")
+		klog.Info("默认db驱动")
 		drive = drv
 	} else {
 		// Debug driver.
