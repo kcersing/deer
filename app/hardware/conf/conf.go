@@ -2,7 +2,6 @@ package conf
 
 import (
 	"io/ioutil"
-	"os"
 	"path/filepath"
 	"sync"
 
@@ -23,14 +22,13 @@ type Config struct {
 	MySQL      MySQL      `yaml:"MySQL"`
 	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
 	Redis      Redis      `yaml:"Redis"`
-	Casbin     CasbinConf `mapstructure:"Casbin" json:"Casbin"`
 }
 
 type MySQL struct {
 	DSN string `yaml:"DSN"`
 }
 type PostgreSQL struct {
-	DSN string `mapstructure:"DSN" json:"DSN"`
+	DSN string `yaml:"DSN"`
 }
 type Redis struct {
 	Address  string `yaml:"Address"`
@@ -54,9 +52,6 @@ type Kitex struct {
 	LogMaxBackups int    `yaml:"LogMaxBackups"`
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 }
-type CasbinConf struct {
-	ModelText string `mapstructure:"ModelText" json:"ModelText"`
-}
 
 // GetConf gets configuration instance
 func GetConf() *Config {
@@ -66,8 +61,7 @@ func GetConf() *Config {
 
 func initConf() {
 	prefix := "conf"
-	confFileRelPath := filepath.Join(prefix, filepath.Join(GetEnv(), "conf.yaml"))
-	klog.Info(confFileRelPath)
+	confFileRelPath := filepath.Join(prefix, "conf.yaml")
 	content, err := ioutil.ReadFile(confFileRelPath)
 	if err != nil {
 		panic(err)
@@ -82,16 +76,7 @@ func initConf() {
 		klog.Error("validate config error - %v", err)
 		panic(err)
 	}
-	conf.Env = GetEnv()
 	pretty.Printf("%+v\n", conf)
-}
-
-func GetEnv() string {
-	e := os.Getenv("GO_ENV")
-	if len(e) == 0 {
-		return "test"
-	}
-	return e
 }
 
 func LogLevel() klog.Level {

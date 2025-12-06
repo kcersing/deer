@@ -2,8 +2,8 @@ package redis
 
 import (
 	"context"
-	"deer/app/order/conf"
 	"github.com/redis/go-redis/v9"
+	"product/conf"
 )
 
 var (
