@@ -49,16 +49,6 @@ func (p *MemberListResp) IsValid() error {
 	return nil
 }
 func (p *UpdateMemberReq) IsValid() error {
-	if p.Data != nil {
-		if err := p.Data.IsValid(); err != nil {
-			return fmt.Errorf("field Data not valid, %w", err)
-		}
-	}
-	if p.BaseResp != nil {
-		if err := p.BaseResp.IsValid(); err != nil {
-			return fmt.Errorf("field BaseResp not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *ChangePasswordReq) IsValid() error {

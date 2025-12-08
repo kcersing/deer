@@ -12,8 +12,15 @@ struct GetMemberListReq{
      3:optional string keyword=""
 }
 struct UpdateMemberReq {
-    1:optional member.Member data={}
-    255:optional base.BaseResp baseResp={}
+  1:optional i64 id=0,
+    4:optional string avatar="",
+    5:optional string mobile="",
+    6:optional string name="",
+    7:optional i64 status=0,
+    8:optional i64 level=0,
+    9:optional i64 gender=0,
+    10:optional string birthday="",
+
 }
 struct ChangePasswordReq {
     1:optional i64 id=0,

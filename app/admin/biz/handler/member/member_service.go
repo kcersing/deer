@@ -3,16 +3,15 @@
 package member
 
 import (
-	member2 "gen/kitex_gen/member"
-
-	"gen/hertz_gen/member"
-
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
+	"gen/hertz_gen/member"
 	base1 "gen/kitex_gen/base"
+	member2 "gen/kitex_gen/member"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -26,7 +25,10 @@ func CreateMember(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	resp, err := client.MemberClient.CreateMember(ctx, nil)
+	resp, err := client.MemberClient.CreateMember(ctx, &member2.CreateMemberReq{
+		Username: req.GetUsername(),
+		Password: req.GetPassword(),
+	})
 
 	if err != nil {
 		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
@@ -55,6 +57,7 @@ func DeleteMember(ctx context.Context, c *app.RequestContext) {
 	}
 	utils.SendResponse(c, errno.Success, resp, 0, "")
 	return
+}
 
 // UpdateMember .
 // @router /service/member/update [POST]
@@ -62,19 +65,28 @@ func UpdateMember(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req member.UpdateMemberReq
 	err = c.BindAndValidate(&req)
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-			return
-		}
-
-		resp, err := client.MemberClient.UpdateMember(ctx, nil)
-
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-			return
-		}
-		utils.SendResponse(c, errno.Success, resp, 0, "")
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
+	}
+
+	resp, err := client.MemberClient.UpdateMember(ctx, &member2.UpdateMemberReq{
+		Id:       req.GetID(),
+		Avatar:   req.GetAvatar(),
+		Mobile:   req.GetMobile(),
+		Name:     req.GetName(),
+		Status:   req.GetStatus(),
+		Level:    req.GetLevel(),
+		Gender:   req.GetGender(),
+		Birthday: req.GetBirthday(),
+	})
+
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // GetMember .
@@ -106,18 +118,22 @@ func GetMemberList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req member.GetMemberListReq
 	err = c.BindAndValidate(&req)
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-			return
-		}
-		resp, err := client.MemberClient.GetMemberList(ctx, nil)
-
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
-			return
-		}
-		utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
+	}
+	resp, err := client.MemberClient.GetMemberList(ctx, &member2.GetMemberListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+		Keyword:  req.GetKeyword(),
+	})
+
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // ChangePassword .
@@ -126,17 +142,20 @@ func ChangePassword(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req member.ChangePasswordReq
 	err = c.BindAndValidate(&req)
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-			return
-		}
-
-		resp, err := client.MemberClient.ChangePassword(ctx, nil)
-
-		if err != nil {
-			utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-			return
-		}
-		utils.SendResponse(c, errno.Success, resp, 0, "")
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
+	}
+
+	resp, err := client.MemberClient.ChangePassword(ctx, &member2.ChangePasswordReq{
+		Id:       req.GetID(),
+		Password: req.GetPassword(),
+	})
+
+	if err != nil {
+		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

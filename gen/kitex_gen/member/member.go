@@ -9,20 +9,23 @@ import (
 )
 
 type CreateMemberReq struct {
-	Username string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
-	Password string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Username  string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
+	Password  string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	CreatedId int64  `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateMemberReq() *CreateMemberReq {
 	return &CreateMemberReq{
-		Username: "",
-		Password: "",
+		Username:  "",
+		Password:  "",
+		CreatedId: 0,
 	}
 }
 
 func (p *CreateMemberReq) InitDefault() {
 	p.Username = ""
 	p.Password = ""
+	p.CreatedId = 0
 }
 
 var CreateMemberReq_Username_DEFAULT string = ""
@@ -42,11 +45,23 @@ func (p *CreateMemberReq) GetPassword() (v string) {
 	}
 	return p.Password
 }
+
+var CreateMemberReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateMemberReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateMemberReq) SetUsername(val string) {
 	p.Username = val
 }
 func (p *CreateMemberReq) SetPassword(val string) {
 	p.Password = val
+}
+func (p *CreateMemberReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateMemberReq) IsSetUsername() bool {
@@ -55,6 +70,10 @@ func (p *CreateMemberReq) IsSetUsername() bool {
 
 func (p *CreateMemberReq) IsSetPassword() bool {
 	return p.Password != CreateMemberReq_Password_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateMemberReq_CreatedId_DEFAULT
 }
 
 func (p *CreateMemberReq) String() string {
@@ -67,6 +86,7 @@ func (p *CreateMemberReq) String() string {
 var fieldIDToName_CreateMemberReq = map[int16]string{
 	1: "username",
 	2: "password",
+	3: "createdId",
 }
 
 type GetMemberListReq struct {
@@ -273,52 +293,185 @@ var fieldIDToName_MemberListResp = map[int16]string{
 }
 
 type UpdateMemberReq struct {
-	Data     *base.Member   `thrift:"data,1,optional" frugal:"1,optional,base.Member" json:"data,omitempty"`
-	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar    string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Level     int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
+	Gender    int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateMemberReq() *UpdateMemberReq {
 	return &UpdateMemberReq{
-		Data:     &base.Member{},
-		BaseResp: &base.BaseResp{},
+		Id:        0,
+		Avatar:    "",
+		Mobile:    "",
+		Name:      "",
+		Status:    0,
+		Level:     0,
+		Gender:    0,
+		Birthday:  "",
+		CreatedId: 0,
 	}
 }
 
 func (p *UpdateMemberReq) InitDefault() {
-	p.Data = &base.Member{}
-	p.BaseResp = &base.BaseResp{}
+	p.Id = 0
+	p.Avatar = ""
+	p.Mobile = ""
+	p.Name = ""
+	p.Status = 0
+	p.Level = 0
+	p.Gender = 0
+	p.Birthday = ""
+	p.CreatedId = 0
 }
 
-var UpdateMemberReq_Data_DEFAULT *base.Member = &base.Member{}
+var UpdateMemberReq_Id_DEFAULT int64 = 0
 
-func (p *UpdateMemberReq) GetData() (v *base.Member) {
-	if !p.IsSetData() {
-		return UpdateMemberReq_Data_DEFAULT
+func (p *UpdateMemberReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return UpdateMemberReq_Id_DEFAULT
 	}
-	return p.Data
+	return p.Id
 }
 
-var UpdateMemberReq_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+var UpdateMemberReq_Avatar_DEFAULT string = ""
 
-func (p *UpdateMemberReq) GetBaseResp() (v *base.BaseResp) {
-	if !p.IsSetBaseResp() {
-		return UpdateMemberReq_BaseResp_DEFAULT
+func (p *UpdateMemberReq) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return UpdateMemberReq_Avatar_DEFAULT
 	}
-	return p.BaseResp
-}
-func (p *UpdateMemberReq) SetData(val *base.Member) {
-	p.Data = val
-}
-func (p *UpdateMemberReq) SetBaseResp(val *base.BaseResp) {
-	p.BaseResp = val
+	return p.Avatar
 }
 
-func (p *UpdateMemberReq) IsSetData() bool {
-	return p.Data != nil
+var UpdateMemberReq_Mobile_DEFAULT string = ""
+
+func (p *UpdateMemberReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return UpdateMemberReq_Mobile_DEFAULT
+	}
+	return p.Mobile
 }
 
-func (p *UpdateMemberReq) IsSetBaseResp() bool {
-	return p.BaseResp != nil
+var UpdateMemberReq_Name_DEFAULT string = ""
+
+func (p *UpdateMemberReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return UpdateMemberReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var UpdateMemberReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateMemberReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateMemberReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var UpdateMemberReq_Level_DEFAULT int64 = 0
+
+func (p *UpdateMemberReq) GetLevel() (v int64) {
+	if !p.IsSetLevel() {
+		return UpdateMemberReq_Level_DEFAULT
+	}
+	return p.Level
+}
+
+var UpdateMemberReq_Gender_DEFAULT int64 = 0
+
+func (p *UpdateMemberReq) GetGender() (v int64) {
+	if !p.IsSetGender() {
+		return UpdateMemberReq_Gender_DEFAULT
+	}
+	return p.Gender
+}
+
+var UpdateMemberReq_Birthday_DEFAULT string = ""
+
+func (p *UpdateMemberReq) GetBirthday() (v string) {
+	if !p.IsSetBirthday() {
+		return UpdateMemberReq_Birthday_DEFAULT
+	}
+	return p.Birthday
+}
+
+var UpdateMemberReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateMemberReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateMemberReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *UpdateMemberReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *UpdateMemberReq) SetAvatar(val string) {
+	p.Avatar = val
+}
+func (p *UpdateMemberReq) SetMobile(val string) {
+	p.Mobile = val
+}
+func (p *UpdateMemberReq) SetName(val string) {
+	p.Name = val
+}
+func (p *UpdateMemberReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *UpdateMemberReq) SetLevel(val int64) {
+	p.Level = val
+}
+func (p *UpdateMemberReq) SetGender(val int64) {
+	p.Gender = val
+}
+func (p *UpdateMemberReq) SetBirthday(val string) {
+	p.Birthday = val
+}
+func (p *UpdateMemberReq) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+
+func (p *UpdateMemberReq) IsSetId() bool {
+	return p.Id != UpdateMemberReq_Id_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetAvatar() bool {
+	return p.Avatar != UpdateMemberReq_Avatar_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetMobile() bool {
+	return p.Mobile != UpdateMemberReq_Mobile_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetName() bool {
+	return p.Name != UpdateMemberReq_Name_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetStatus() bool {
+	return p.Status != UpdateMemberReq_Status_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetLevel() bool {
+	return p.Level != UpdateMemberReq_Level_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetGender() bool {
+	return p.Gender != UpdateMemberReq_Gender_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetBirthday() bool {
+	return p.Birthday != UpdateMemberReq_Birthday_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateMemberReq_CreatedId_DEFAULT
 }
 
 func (p *UpdateMemberReq) String() string {
@@ -329,8 +482,15 @@ func (p *UpdateMemberReq) String() string {
 }
 
 var fieldIDToName_UpdateMemberReq = map[int16]string{
-	1:   "data",
-	255: "baseResp",
+	1:   "id",
+	4:   "avatar",
+	5:   "mobile",
+	6:   "name",
+	7:   "status",
+	8:   "level",
+	9:   "gender",
+	10:  "birthday",
+	253: "createdId",
 }
 
 type ChangePasswordReq struct {
