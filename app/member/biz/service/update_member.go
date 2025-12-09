@@ -7,6 +7,7 @@ import (
 	"member/biz/convert"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent/member"
+	"member/biz/dal/db/ent/memberprofile"
 	"time"
 )
 
@@ -22,26 +23,34 @@ func (s *UpdateMemberService) Run(req *Member.UpdateMemberReq) (resp *Member.Mem
 
 	ok, _ := db.Client.Member.Query().Where(member.MobileEQ(req.GetMobile()), member.IDNEQ(req.GetId())).Exist(s.ctx)
 	if ok {
-		return nil, errno.MemberMobileExistErr
+		return nil, errno.UserMobileExistErr
 	}
 
 	birthday, err := time.Parse(time.DateOnly, req.GetBirthday())
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
-	_, err = db.Client.Member.UpdateOneID(req.GetId())).
+	only, err := db.Client.Member.UpdateOneID(req.GetId()).
 		SetAvatar(req.GetAvatar()).
-		SetMobile(req.GetMobile()).
 		SetName(req.GetName()).
 		SetStatus(req.GetStatus()).
-		SetGender(req.GetGender()).
-		SetBirthday(birthday).
-		SetDetail(req.GetDetail()).
-		//SetRoleID(req.GetRoleId()).
+		//SetGender(req.GetGender()).
+		//SetBirthday(birthday).
+		//SetDetail(req.GetDetail()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err
 	}
+
+	db.Client.MemberProfile.Update().Where(memberprofile.MemberIDEQ(req.GetId())).
+		SetGender(req.GetGender()).
+		SetBirthday(birthday).
+		SetIntention(0).
+		//SetEmail(req.GetEmail()).
+		//SetWecom(req.GetWecom()).
+		//SetSource(req.GetSource()).
+		Save(s.ctx)
+
 	resp = &Member.MemberResp{
 		Data: convert.EntToMember(only),
 	}

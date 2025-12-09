@@ -95,6 +95,26 @@ func (_u *MemberProfileUpdate) ClearCreatedID() *MemberProfileUpdate {
 	return _u
 }
 
+// SetMemberID sets the "member_id" field.
+func (_u *MemberProfileUpdate) SetMemberID(v int64) *MemberProfileUpdate {
+	_u.mutation.SetMemberID(v)
+	return _u
+}
+
+// SetNillableMemberID sets the "member_id" field if the given value is not nil.
+func (_u *MemberProfileUpdate) SetNillableMemberID(v *int64) *MemberProfileUpdate {
+	if v != nil {
+		_u.SetMemberID(*v)
+	}
+	return _u
+}
+
+// ClearMemberID clears the value of the "member_id" field.
+func (_u *MemberProfileUpdate) ClearMemberID() *MemberProfileUpdate {
+	_u.mutation.ClearMemberID()
+	return _u
+}
+
 // SetIntention sets the "intention" field.
 func (_u *MemberProfileUpdate) SetIntention(v int64) *MemberProfileUpdate {
 	_u.mutation.ResetIntention()
@@ -146,26 +166,6 @@ func (_u *MemberProfileUpdate) AddSource(v int64) *MemberProfileUpdate {
 // ClearSource clears the value of the "source" field.
 func (_u *MemberProfileUpdate) ClearSource() *MemberProfileUpdate {
 	_u.mutation.ClearSource()
-	return _u
-}
-
-// SetMemberID sets the "member_id" field.
-func (_u *MemberProfileUpdate) SetMemberID(v int64) *MemberProfileUpdate {
-	_u.mutation.SetMemberID(v)
-	return _u
-}
-
-// SetNillableMemberID sets the "member_id" field if the given value is not nil.
-func (_u *MemberProfileUpdate) SetNillableMemberID(v *int64) *MemberProfileUpdate {
-	if v != nil {
-		_u.SetMemberID(*v)
-	}
-	return _u
-}
-
-// ClearMemberID clears the value of the "member_id" field.
-func (_u *MemberProfileUpdate) ClearMemberID() *MemberProfileUpdate {
-	_u.mutation.ClearMemberID()
 	return _u
 }
 
@@ -566,6 +566,26 @@ func (_u *MemberProfileUpdateOne) ClearCreatedID() *MemberProfileUpdateOne {
 	return _u
 }
 
+// SetMemberID sets the "member_id" field.
+func (_u *MemberProfileUpdateOne) SetMemberID(v int64) *MemberProfileUpdateOne {
+	_u.mutation.SetMemberID(v)
+	return _u
+}
+
+// SetNillableMemberID sets the "member_id" field if the given value is not nil.
+func (_u *MemberProfileUpdateOne) SetNillableMemberID(v *int64) *MemberProfileUpdateOne {
+	if v != nil {
+		_u.SetMemberID(*v)
+	}
+	return _u
+}
+
+// ClearMemberID clears the value of the "member_id" field.
+func (_u *MemberProfileUpdateOne) ClearMemberID() *MemberProfileUpdateOne {
+	_u.mutation.ClearMemberID()
+	return _u
+}
+
 // SetIntention sets the "intention" field.
 func (_u *MemberProfileUpdateOne) SetIntention(v int64) *MemberProfileUpdateOne {
 	_u.mutation.ResetIntention()
@@ -617,26 +637,6 @@ func (_u *MemberProfileUpdateOne) AddSource(v int64) *MemberProfileUpdateOne {
 // ClearSource clears the value of the "source" field.
 func (_u *MemberProfileUpdateOne) ClearSource() *MemberProfileUpdateOne {
 	_u.mutation.ClearSource()
-	return _u
-}
-
-// SetMemberID sets the "member_id" field.
-func (_u *MemberProfileUpdateOne) SetMemberID(v int64) *MemberProfileUpdateOne {
-	_u.mutation.SetMemberID(v)
-	return _u
-}
-
-// SetNillableMemberID sets the "member_id" field if the given value is not nil.
-func (_u *MemberProfileUpdateOne) SetNillableMemberID(v *int64) *MemberProfileUpdateOne {
-	if v != nil {
-		_u.SetMemberID(*v)
-	}
-	return _u
-}
-
-// ClearMemberID clears the value of the "member_id" field.
-func (_u *MemberProfileUpdateOne) ClearMemberID() *MemberProfileUpdateOne {
-	_u.mutation.ClearMemberID()
 	return _u
 }
 

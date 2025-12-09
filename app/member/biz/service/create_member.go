@@ -28,7 +28,7 @@ func (s *CreateMemberService) Run(req *Member.CreateMemberReq) (resp *Member.Mem
 	//	return nil, errno.MemberMobileExistErr
 	//}
 	save, err := db.Client.Member.Create().
-		SetUsername(req.GetMembername()).
+		SetUsername(req.GetUsername()).
 		SetPassword(req.GetPassword()).
 		Save(s.ctx)
 	if err != nil {

@@ -19,6 +19,7 @@ type Member struct {
 	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
 	LastAt    string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
 	LastIp    string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Intention int64  `thrift:"intention,13,optional" frugal:"13,optional,i64" json:"intention,omitempty"`
 	CreatedAt string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
 	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
@@ -38,6 +39,7 @@ func NewMember() *Member {
 		Birthday:  "",
 		LastAt:    "",
 		LastIp:    "",
+		Intention: 0,
 		CreatedAt: "",
 		UpdatedAt: "",
 		CreatedId: 0,
@@ -57,6 +59,7 @@ func (p *Member) InitDefault() {
 	p.Birthday = ""
 	p.LastAt = ""
 	p.LastIp = ""
+	p.Intention = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
@@ -170,6 +173,15 @@ func (p *Member) GetLastIp() (v string) {
 	return p.LastIp
 }
 
+var Member_Intention_DEFAULT int64 = 0
+
+func (p *Member) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return Member_Intention_DEFAULT
+	}
+	return p.Intention
+}
+
 var Member_CreatedAt_DEFAULT string = ""
 
 func (p *Member) GetCreatedAt() (v string) {
@@ -232,6 +244,9 @@ func (p *Member) SetLastAt(val string) {
 func (p *Member) SetLastIp(val string) {
 	p.LastIp = val
 }
+func (p *Member) SetIntention(val int64) {
+	p.Intention = val
+}
 func (p *Member) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
@@ -290,6 +305,10 @@ func (p *Member) IsSetLastIp() bool {
 	return p.LastIp != Member_LastIp_DEFAULT
 }
 
+func (p *Member) IsSetIntention() bool {
+	return p.Intention != Member_Intention_DEFAULT
+}
+
 func (p *Member) IsSetCreatedAt() bool {
 	return p.CreatedAt != Member_CreatedAt_DEFAULT
 }
@@ -322,6 +341,7 @@ var fieldIDToName_Member = map[int16]string{
 	10:  "birthday",
 	11:  "lastAt",
 	12:  "lastIp",
+	13:  "intention",
 	251: "createdAt",
 	252: "updatedAt",
 	253: "createdId",

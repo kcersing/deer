@@ -20,9 +20,9 @@ func NewLoginMemberService(ctx context.Context) *LoginMemberService {
 // Run create note info
 func (s *LoginMemberService) Run(req *Base.CheckAccountReq) (resp *Member.MemberResp, err error) {
 	// Finish your business logic.
-	only, err := db.Client.Member.Query().Where(member.Membername(req.GetMembername())).Only(s.ctx)
+	only, err := db.Client.Member.Query().Where(member.UsernameEQ(req.GetUsername())).Only(s.ctx)
 	if err != nil {
-		return nil, errno.MemberNotExistErr
+		return nil, errno.NotFound
 	}
 	if ok := encrypt.VerifyPassword(req.Password, only.Password); !ok {
 

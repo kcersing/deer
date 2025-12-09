@@ -27,12 +27,12 @@ type MemberProfile struct {
 	Delete int64 `json:"delete,omitempty"`
 	// created
 	CreatedID int64 `json:"created_id,omitempty"`
+	// 会员id
+	MemberID int64 `json:"member_id,omitempty"`
 	// 意向
 	Intention int64 `json:"intention,omitempty"`
 	// 来源
 	Source int64 `json:"source,omitempty"`
-	// 会员id
-	MemberID int64 `json:"member_id,omitempty"`
 	// 性别 | [1:女性;2:男性;3:保密]
 	Gender int64 `json:"gender,omitempty"`
 	// 出生日期
@@ -76,7 +76,7 @@ func (*MemberProfile) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case memberprofile.FieldID, memberprofile.FieldDelete, memberprofile.FieldCreatedID, memberprofile.FieldIntention, memberprofile.FieldSource, memberprofile.FieldMemberID, memberprofile.FieldGender, memberprofile.FieldRelationMid:
+		case memberprofile.FieldID, memberprofile.FieldDelete, memberprofile.FieldCreatedID, memberprofile.FieldMemberID, memberprofile.FieldIntention, memberprofile.FieldSource, memberprofile.FieldGender, memberprofile.FieldRelationMid:
 			values[i] = new(sql.NullInt64)
 		case memberprofile.FieldEmail, memberprofile.FieldWecom, memberprofile.FieldRelationMame:
 			values[i] = new(sql.NullString)
@@ -127,6 +127,12 @@ func (_m *MemberProfile) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.CreatedID = value.Int64
 			}
+		case memberprofile.FieldMemberID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field member_id", values[i])
+			} else if value.Valid {
+				_m.MemberID = value.Int64
+			}
 		case memberprofile.FieldIntention:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field intention", values[i])
@@ -138,12 +144,6 @@ func (_m *MemberProfile) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field source", values[i])
 			} else if value.Valid {
 				_m.Source = value.Int64
-			}
-		case memberprofile.FieldMemberID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field member_id", values[i])
-			} else if value.Valid {
-				_m.MemberID = value.Int64
 			}
 		case memberprofile.FieldGender:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -234,14 +234,14 @@ func (_m *MemberProfile) String() string {
 	builder.WriteString("created_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.CreatedID))
 	builder.WriteString(", ")
+	builder.WriteString("member_id=")
+	builder.WriteString(fmt.Sprintf("%v", _m.MemberID))
+	builder.WriteString(", ")
 	builder.WriteString("intention=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Intention))
 	builder.WriteString(", ")
 	builder.WriteString("source=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Source))
-	builder.WriteString(", ")
-	builder.WriteString("member_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.MemberID))
 	builder.WriteString(", ")
 	builder.WriteString("gender=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Gender))

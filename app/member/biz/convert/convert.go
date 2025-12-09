@@ -1,26 +1,22 @@
 package convert
 
 import (
-	Member "gen/kitex_gen/member"
-	"user/biz/dal/db/ent"
+	"common/pkg/utils"
+	Base "gen/kitex_gen/base"
+	"member/biz/dal/db/ent"
+	"time"
 )
 
-func EntToMember(e *ent.Member) *Member.Member {
-	return &Member.Member{
-		Id:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Level:     0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
-	}
+func EntToMember(e *ent.Member) *Base.Member {
+
+	mapper := utils.NewCopierMapper[Base.Member, ent.Member]()
+	var dto = mapper.ToDTO(e)
+
+	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
+	dto.UpdatedAt = e.UpdatedAt.Format(time.DateOnly)
+	//dto.LastAt = e.LastAt.Format(time.DateOnly)
+	//	Gender:    0,
+	//		Birthday:  "",
+	return dto
+
 }

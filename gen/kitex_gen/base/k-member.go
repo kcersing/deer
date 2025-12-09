@@ -205,6 +205,20 @@ func (p *Member) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 13:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField13(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		case 251:
 			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField251(buf[offset:])
@@ -433,6 +447,20 @@ func (p *Member) FastReadField12(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *Member) FastReadField13(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Intention = _field
+	return offset, nil
+}
+
 func (p *Member) FastReadField251(buf []byte) (int, error) {
 	offset := 0
 
@@ -486,6 +514,7 @@ func (p *Member) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
+		offset += p.fastWriteField13(buf[offset:], w)
 		offset += p.fastWriteField253(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
@@ -517,6 +546,7 @@ func (p *Member) BLength() int {
 		l += p.field10Length()
 		l += p.field11Length()
 		l += p.field12Length()
+		l += p.field13Length()
 		l += p.field251Length()
 		l += p.field252Length()
 		l += p.field253Length()
@@ -629,6 +659,15 @@ func (p *Member) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
 	if p.IsSetLastIp() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 12)
 		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.LastIp)
+	}
+	return offset
+}
+
+func (p *Member) fastWriteField13(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetIntention() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 13)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Intention)
 	}
 	return offset
 }
@@ -764,6 +803,15 @@ func (p *Member) field12Length() int {
 	if p.IsSetLastIp() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.StringLengthNocopy(p.LastIp)
+	}
+	return l
+}
+
+func (p *Member) field13Length() int {
+	l := 0
+	if p.IsSetIntention() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }

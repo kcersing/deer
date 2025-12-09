@@ -75,6 +75,11 @@ func CreatedID(v int64) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldEQ(FieldCreatedID, v))
 }
 
+// MemberID applies equality check predicate on the "member_id" field. It's identical to MemberIDEQ.
+func MemberID(v int64) predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldEQ(FieldMemberID, v))
+}
+
 // Intention applies equality check predicate on the "intention" field. It's identical to IntentionEQ.
 func Intention(v int64) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldEQ(FieldIntention, v))
@@ -83,11 +88,6 @@ func Intention(v int64) predicate.MemberProfile {
 // Source applies equality check predicate on the "source" field. It's identical to SourceEQ.
 func Source(v int64) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldEQ(FieldSource, v))
-}
-
-// MemberID applies equality check predicate on the "member_id" field. It's identical to MemberIDEQ.
-func MemberID(v int64) predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldEQ(FieldMemberID, v))
 }
 
 // Gender applies equality check predicate on the "gender" field. It's identical to GenderEQ.
@@ -320,6 +320,36 @@ func CreatedIDNotNil() predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldNotNull(FieldCreatedID))
 }
 
+// MemberIDEQ applies the EQ predicate on the "member_id" field.
+func MemberIDEQ(v int64) predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldEQ(FieldMemberID, v))
+}
+
+// MemberIDNEQ applies the NEQ predicate on the "member_id" field.
+func MemberIDNEQ(v int64) predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldNEQ(FieldMemberID, v))
+}
+
+// MemberIDIn applies the In predicate on the "member_id" field.
+func MemberIDIn(vs ...int64) predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldIn(FieldMemberID, vs...))
+}
+
+// MemberIDNotIn applies the NotIn predicate on the "member_id" field.
+func MemberIDNotIn(vs ...int64) predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldNotIn(FieldMemberID, vs...))
+}
+
+// MemberIDIsNil applies the IsNil predicate on the "member_id" field.
+func MemberIDIsNil() predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldIsNull(FieldMemberID))
+}
+
+// MemberIDNotNil applies the NotNil predicate on the "member_id" field.
+func MemberIDNotNil() predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldNotNull(FieldMemberID))
+}
+
 // IntentionEQ applies the EQ predicate on the "intention" field.
 func IntentionEQ(v int64) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldEQ(FieldIntention, v))
@@ -418,36 +448,6 @@ func SourceIsNil() predicate.MemberProfile {
 // SourceNotNil applies the NotNil predicate on the "source" field.
 func SourceNotNil() predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldNotNull(FieldSource))
-}
-
-// MemberIDEQ applies the EQ predicate on the "member_id" field.
-func MemberIDEQ(v int64) predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldEQ(FieldMemberID, v))
-}
-
-// MemberIDNEQ applies the NEQ predicate on the "member_id" field.
-func MemberIDNEQ(v int64) predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldNEQ(FieldMemberID, v))
-}
-
-// MemberIDIn applies the In predicate on the "member_id" field.
-func MemberIDIn(vs ...int64) predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldIn(FieldMemberID, vs...))
-}
-
-// MemberIDNotIn applies the NotIn predicate on the "member_id" field.
-func MemberIDNotIn(vs ...int64) predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldNotIn(FieldMemberID, vs...))
-}
-
-// MemberIDIsNil applies the IsNil predicate on the "member_id" field.
-func MemberIDIsNil() predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldIsNull(FieldMemberID))
-}
-
-// MemberIDNotNil applies the NotNil predicate on the "member_id" field.
-func MemberIDNotNil() predicate.MemberProfile {
-	return predicate.MemberProfile(sql.FieldNotNull(FieldMemberID))
 }
 
 // GenderEQ applies the EQ predicate on the "gender" field.

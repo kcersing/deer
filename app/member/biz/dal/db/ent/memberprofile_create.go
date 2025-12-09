@@ -76,6 +76,20 @@ func (_c *MemberProfileCreate) SetNillableCreatedID(v *int64) *MemberProfileCrea
 	return _c
 }
 
+// SetMemberID sets the "member_id" field.
+func (_c *MemberProfileCreate) SetMemberID(v int64) *MemberProfileCreate {
+	_c.mutation.SetMemberID(v)
+	return _c
+}
+
+// SetNillableMemberID sets the "member_id" field if the given value is not nil.
+func (_c *MemberProfileCreate) SetNillableMemberID(v *int64) *MemberProfileCreate {
+	if v != nil {
+		_c.SetMemberID(*v)
+	}
+	return _c
+}
+
 // SetIntention sets the "intention" field.
 func (_c *MemberProfileCreate) SetIntention(v int64) *MemberProfileCreate {
 	_c.mutation.SetIntention(v)
@@ -100,20 +114,6 @@ func (_c *MemberProfileCreate) SetSource(v int64) *MemberProfileCreate {
 func (_c *MemberProfileCreate) SetNillableSource(v *int64) *MemberProfileCreate {
 	if v != nil {
 		_c.SetSource(*v)
-	}
-	return _c
-}
-
-// SetMemberID sets the "member_id" field.
-func (_c *MemberProfileCreate) SetMemberID(v int64) *MemberProfileCreate {
-	_c.mutation.SetMemberID(v)
-	return _c
-}
-
-// SetNillableMemberID sets the "member_id" field if the given value is not nil.
-func (_c *MemberProfileCreate) SetNillableMemberID(v *int64) *MemberProfileCreate {
-	if v != nil {
-		_c.SetMemberID(*v)
 	}
 	return _c
 }
@@ -263,10 +263,6 @@ func (_c *MemberProfileCreate) defaults() {
 	if _, ok := _c.mutation.CreatedID(); !ok {
 		v := memberprofile.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
-	}
-	if _, ok := _c.mutation.Intention(); !ok {
-		v := memberprofile.DefaultIntention
-		_c.mutation.SetIntention(v)
 	}
 	if _, ok := _c.mutation.Source(); !ok {
 		v := memberprofile.DefaultSource

@@ -4,10 +4,12 @@ import (
 	"context"
 	Base "gen/kitex_gen/base"
 	Member "gen/kitex_gen/member"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"golang.org/x/sync/errgroup"
+	"member/biz/convert"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent/member"
+
+	"github.com/cloudwego/kitex/pkg/klog"
+	"golang.org/x/sync/errgroup"
 )
 
 type GetMemberService struct {
@@ -21,7 +23,7 @@ func NewGetMemberService(ctx context.Context) *GetMemberService {
 func (s *GetMemberService) Run(req *Base.IdReq) (resp *Member.MemberResp, err error) {
 
 	var (
-		memberResp *Member.Member
+		memberResp *Base.Member
 	)
 
 	eg, ctx := errgroup.WithContext(s.ctx)
@@ -32,10 +34,7 @@ func (s *GetMemberService) Run(req *Base.IdReq) (resp *Member.MemberResp, err er
 			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
 			return err
 		}
-		memberResp = &Member.Member{
-			Id:   &only.ID,
-			Name: &only.Name,
-		}
+		memberResp = convert.EntToMember(only)
 		return nil
 	})
 	//eg.Go(func() error {
@@ -48,13 +47,12 @@ func (s *GetMemberService) Run(req *Base.IdReq) (resp *Member.MemberResp, err er
 	//	detailsResp = res
 	//	return nil
 	//})
-	if err := eg.Wait(); err != nil {
-		return
+	if err = eg.Wait(); err != nil {
+		return &Member.MemberResp{}, err
 	}
 
 	resp = &Member.MemberResp{
 		Data: memberResp,
 	}
-
 	return
 }

@@ -229,12 +229,8 @@ func init() {
 	memberprofileDescCreatedID := memberprofileMixinFields0[4].Descriptor()
 	// memberprofile.DefaultCreatedID holds the default value on creation for the created_id field.
 	memberprofile.DefaultCreatedID = memberprofileDescCreatedID.Default.(int64)
-	// memberprofileDescIntention is the schema descriptor for intention field.
-	memberprofileDescIntention := memberprofileFields[0].Descriptor()
-	// memberprofile.DefaultIntention holds the default value on creation for the intention field.
-	memberprofile.DefaultIntention = memberprofileDescIntention.Default.(int64)
 	// memberprofileDescSource is the schema descriptor for source field.
-	memberprofileDescSource := memberprofileFields[1].Descriptor()
+	memberprofileDescSource := memberprofileFields[2].Descriptor()
 	// memberprofile.DefaultSource holds the default value on creation for the source field.
 	memberprofile.DefaultSource = memberprofileDescSource.Default.(int64)
 	// memberprofileDescGender is the schema descriptor for gender field.

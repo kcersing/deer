@@ -316,7 +316,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "intention", Type: field.TypeInt64, Nullable: true, Comment: "意向", Default: 0},
+		{Name: "intention", Type: field.TypeInt64, Nullable: true, Comment: "意向"},
 		{Name: "source", Type: field.TypeInt64, Nullable: true, Comment: "来源", Default: 0},
 		{Name: "gender", Type: field.TypeInt64, Nullable: true, Comment: "性别 | [1:女性;2:男性;3:保密]", Default: 3},
 		{Name: "birthday", Type: field.TypeTime, Nullable: true, Comment: "出生日期"},

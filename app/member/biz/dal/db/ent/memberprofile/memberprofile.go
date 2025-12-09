@@ -22,12 +22,12 @@ const (
 	FieldDelete = "delete"
 	// FieldCreatedID holds the string denoting the created_id field in the database.
 	FieldCreatedID = "created_id"
+	// FieldMemberID holds the string denoting the member_id field in the database.
+	FieldMemberID = "member_id"
 	// FieldIntention holds the string denoting the intention field in the database.
 	FieldIntention = "intention"
 	// FieldSource holds the string denoting the source field in the database.
 	FieldSource = "source"
-	// FieldMemberID holds the string denoting the member_id field in the database.
-	FieldMemberID = "member_id"
 	// FieldGender holds the string denoting the gender field in the database.
 	FieldGender = "gender"
 	// FieldBirthday holds the string denoting the birthday field in the database.
@@ -60,9 +60,9 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDelete,
 	FieldCreatedID,
+	FieldMemberID,
 	FieldIntention,
 	FieldSource,
-	FieldMemberID,
 	FieldGender,
 	FieldBirthday,
 	FieldEmail,
@@ -92,8 +92,6 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
-	// DefaultIntention holds the default value on creation for the "intention" field.
-	DefaultIntention int64
 	// DefaultSource holds the default value on creation for the "source" field.
 	DefaultSource int64
 	// DefaultGender holds the default value on creation for the "gender" field.
@@ -130,6 +128,11 @@ func ByCreatedID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedID, opts...).ToFunc()
 }
 
+// ByMemberID orders the results by the member_id field.
+func ByMemberID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMemberID, opts...).ToFunc()
+}
+
 // ByIntention orders the results by the intention field.
 func ByIntention(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIntention, opts...).ToFunc()
@@ -138,11 +141,6 @@ func ByIntention(opts ...sql.OrderTermOption) OrderOption {
 // BySource orders the results by the source field.
 func BySource(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSource, opts...).ToFunc()
-}
-
-// ByMemberID orders the results by the member_id field.
-func ByMemberID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldMemberID, opts...).ToFunc()
 }
 
 // ByGender orders the results by the gender field.

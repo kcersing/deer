@@ -11,8 +11,10 @@ struct Member {
     9:optional i64 gender=0,
     10:optional string birthday="",
 
+
     11:optional string  lastAt=""//最后一次登录时间
     12:optional string  lastIp=""//最后一次登录ip
+    13:optional i64 intention=0,
 
     251:optional string createdAt=""
     252:optional string updatedAt=""

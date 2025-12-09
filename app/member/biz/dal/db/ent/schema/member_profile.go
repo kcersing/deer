@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"member/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"member/biz/dal/db/ent/schema/mixins"
 )
 
 type MemberProfile struct {
@@ -16,11 +17,9 @@ type MemberProfile struct {
 
 func (MemberProfile) Fields() []ent.Field {
 	return []ent.Field{
-
-		field.Int64("intention").Default(0).Comment("意向").Optional(),
-		field.Int64("source").Default(0).Comment("来源").Optional(),
-
 		field.Int64("member_id").Comment("会员id").Optional(),
+		field.Int64("intention").Comment("意向").Optional(),
+		field.Int64("source").Default(0).Comment("来源").Optional(),
 
 		field.Int64("gender").Default(3).Comment("性别 | [1:女性;2:男性;3:保密]").Optional(),
 		field.Time("birthday").Comment("出生日期").Optional(),
