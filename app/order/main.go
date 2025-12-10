@@ -1,37 +1,66 @@
 package main
 
 import (
+	"common/consts"
 	"common/mtl"
 	"common/mw"
 	"common/pkg/utils"
 	order "gen/kitex_gen/order/orderservice"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
-	"github.com/joho/godotenv"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
+	"github.com/kitex-contrib/registry-etcd/retry"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net"
+	"order/biz/dal"
 	"order/conf"
 	"order/rpc"
+	"os"
+	"path"
 	"strings"
+	"time"
 )
+
+func init() {
+	dal.Init()
+}
 
 var serviceName = conf.GetConf().Kitex.Service
 
 func main() {
-	_ = godotenv.Load()
 
+	mtl.InitFlightRecorder()
+	logFilePath := consts.LogFilePath
+	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
+		panic(err)
+	}
+
+	// Set filename to date
+	logFileName := time.Now().Format(time.DateOnly) + ".log"
+	fileName := path.Join(logFilePath, logFileName)
+	if _, err := os.Stat(fileName); err != nil {
+		if _, err := os.Create(fileName); err != nil {
+			log.Println(err.Error())
+			return
+		}
+	}
 	mtl.InitLog(&lumberjack.Logger{
-		Filename:   conf.GetConf().Kitex.LogFileName,
+		Filename:   fileName,
 		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
 		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
 		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
 	}, false)
-	mtl.InitTracing(serviceName)
-	mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
+
+	//mtl.InitTracing(serviceName)
+
+	//mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
+
+	//mtl.InitProvider(serviceName)
 
 	opts := kitexInit()
 
@@ -42,7 +71,7 @@ func main() {
 	err := svr.Run()
 
 	if err != nil {
-		log.Println(err.Error())
+		klog.Fatal(err)
 	}
 }
 func kitexInit() (opts []server.Option) {
@@ -53,22 +82,28 @@ func kitexInit() (opts []server.Option) {
 		localIp := utils.MustGetLocalIPv4()
 		address = localIp + address
 	}
-	addr, err := net.ResolveTCPAddr("tcp", address)
+	addr, err := net.ResolveTCPAddr(consts.TCP, address)
 	if err != nil {
 		panic(err)
 	}
+	retryConfig := retry.NewRetryConfig(
+		retry.WithMaxAttemptTimes(10),
+		retry.WithObserveDelay(20*time.Second),
+		retry.WithRetryDelay(5*time.Second),
+	)
+	r, err := etcd.NewEtcdRegistryWithRetry([]string{consts.EtcdAddress}, retryConfig)
 
-	r, err := etcd.NewEtcdRegistry([]string{conf.GetConf().Etcd.Address})
 	opts = append(opts,
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
+
 		server.WithServiceAddr(addr),
-		server.WithRegistry(r),
 		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
 		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
-		server.WithMuxTransport(),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
+		//server.WithMuxTransport(),
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
-		//server.WithSuite(tracing.NewServerSuite()),
+		server.WithSuite(tracing.NewServerSuite()),
+		server.WithRegistry(r),
 	)
 
 	return

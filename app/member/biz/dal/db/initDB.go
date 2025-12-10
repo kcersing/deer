@@ -3,11 +3,12 @@ package db
 import (
 	"context"
 	"database/sql"
-	"entgo.io/ent/dialect"
-	entsql "entgo.io/ent/dialect/sql"
 	"fmt"
 	"member/biz/dal/db/ent"
 	"member/biz/dal/db/ent/migrate"
+
+	"entgo.io/ent/dialect"
+	entsql "entgo.io/ent/dialect/sql"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 
@@ -44,7 +45,7 @@ func OpenPq(databaseUrl string) *entsql.Driver {
 	return drv
 }
 
-// InitDB init DB
+// InItDB init DB
 func InItDB(databaseUrl string, isProd bool) (DB *ent.Client) {
 	drv := OpenPq(databaseUrl)
 

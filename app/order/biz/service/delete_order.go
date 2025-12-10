@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	base "gen/kitex_gen/base"
+	order "gen/kitex_gen/order"
 )
 
 type DeleteOrderService struct {
@@ -13,7 +14,7 @@ func NewDeleteOrderService(ctx context.Context) *DeleteOrderService {
 }
 
 // Run create note info
-func (s *DeleteOrderService) Run(req *base.IDReq) (resp *base.BaseResp, err error) {
+func (s *DeleteOrderService) Run(req *base.IdReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
 	return

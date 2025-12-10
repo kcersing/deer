@@ -25,7 +25,7 @@ func (s *OrderServiceImpl) GetOrderList(ctx context.Context, req *order.GetOrder
 }
 
 // DeleteOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IdReq) (resp *base.BaseResp, err error) {
+func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewDeleteOrderService(ctx).Run(req)
 
 	return resp, err
@@ -46,14 +46,14 @@ func (s *OrderServiceImpl) Payment(ctx context.Context, req *order.PaymentReq) (
 }
 
 // CancelledOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) CancelledOrder(ctx context.Context, req *order.CreateOrderReq) (resp *base.BaseResp, err error) {
+func (s *OrderServiceImpl) CancelledOrder(ctx context.Context, req *order.CreateOrderReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewCancelledOrderService(ctx).Run(req)
 
 	return resp, err
 }
 
 // RefundOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) RefundOrder(ctx context.Context, req *order.RefundOrderReq) (resp *base.BaseResp, err error) {
+func (s *OrderServiceImpl) RefundOrder(ctx context.Context, req *order.RefundOrderReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewRefundOrderService(ctx).Run(req)
 
 	return resp, err

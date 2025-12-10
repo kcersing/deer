@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	base "gen/kitex_gen/base"
+	order "gen/kitex_gen/order"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func TestDeleteOrder_Run(t *testing.T) {
 	s := NewDeleteOrderService(ctx)
 	// init req and assert value
 
-	req := &base.IDReq{}
+	req := &base.IdReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

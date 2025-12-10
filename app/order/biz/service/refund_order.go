@@ -14,7 +14,7 @@ func NewRefundOrderService(ctx context.Context) *RefundOrderService {
 }
 
 // Run create note info
-func (s *RefundOrderService) Run(req *order.RefundOrderReq) (resp *base.BaseResp, err error) {
+func (s *RefundOrderService) Run(req *order.RefundOrderReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
 	return
