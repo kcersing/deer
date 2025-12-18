@@ -171,7 +171,21 @@ struct LogListReq {
     7: optional string operatorsr ="" (api.raw = "operatorsr")
     8: optional i64 identity =0(api.raw = "identity")
 }
-
+struct CreateLogReq{
+    1: optional string type="" (api.raw = "type")
+    2: optional string method =""(api.raw = "method")
+    3: optional string api =""(api.raw = "api")
+    4: optional bool success = true (api.raw = "success")
+    5: optional string reqContent="" (api.raw = "reqContent")
+    6: optional string respContent="" (api.raw = "respContent")
+    7: optional string ip="" (api.raw = "ip")
+    8: optional string userAgent =""(api.raw = "userAgent")
+    9: optional string operatorsr =""(api.raw = "operatorsr")
+    10: optional i64 time=0 (api.raw = "time")
+    11: optional string createdAt =""(api.raw = "createdAt")
+    12: optional string updatedAt =""(api.raw = "updatedAt")
+    13: optional i64 identity =0(api.raw = "identity")
+}
 
 struct DeleteLogReq {
     1:  optional string startAt = "" (api.raw = "startAt")
@@ -233,6 +247,8 @@ service SystemService  {
 
     // Get logs list | 获取日志列表
     LogListResp LogList(1: LogListReq req)
+
+    base.NilResponse CreateLog(1: CreateLogReq req)
 
     // Delete logs | 删除日志信息
     base.NilResponse DeleteLog(1: DeleteLogReq req)

@@ -41,6 +41,7 @@ type Client interface {
 	DeleteDictht(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DicthtList(ctx context.Context, req *system.DicthtListReq, callOptions ...callopt.Option) (r *system.DicthtListResp, err error)
 	LogList(ctx context.Context, req *system.LogListReq, callOptions ...callopt.Option) (r *system.LogListResp, err error)
+	CreateLog(ctx context.Context, req *system.CreateLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	DeleteLog(ctx context.Context, req *system.DeleteLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	VerifyRoleAuth(ctx context.Context, req *system.VerifyRoleAuthReq, callOptions ...callopt.Option) (r *system.VerifyRoleAuthResp, err error)
 }
@@ -217,6 +218,11 @@ func (p *kSystemServiceClient) DicthtList(ctx context.Context, req *system.Dicth
 func (p *kSystemServiceClient) LogList(ctx context.Context, req *system.LogListReq, callOptions ...callopt.Option) (r *system.LogListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.LogList(ctx, req)
+}
+
+func (p *kSystemServiceClient) CreateLog(ctx context.Context, req *system.CreateLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateLog(ctx, req)
 }
 
 func (p *kSystemServiceClient) DeleteLog(ctx context.Context, req *system.DeleteLogReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {

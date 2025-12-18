@@ -173,6 +173,9 @@ func (p *DicthtListResp) IsValid() error {
 func (p *LogListReq) IsValid() error {
 	return nil
 }
+func (p *CreateLogReq) IsValid() error {
+	return nil
+}
 func (p *DeleteLogReq) IsValid() error {
 	return nil
 }

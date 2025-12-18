@@ -2612,6 +2612,287 @@ var fieldIDToName_LogListReq = map[int16]string{
 	8: "identity",
 }
 
+type CreateLogReq struct {
+	Type        string `thrift:"type,1,optional" frugal:"1,optional,string" json:"type,omitempty"`
+	Method      string `thrift:"method,2,optional" frugal:"2,optional,string" json:"method,omitempty"`
+	Api         string `thrift:"api,3,optional" frugal:"3,optional,string" json:"api,omitempty"`
+	Success     bool   `thrift:"success,4,optional" frugal:"4,optional,bool" json:"success,omitempty"`
+	ReqContent  string `thrift:"reqContent,5,optional" frugal:"5,optional,string" json:"reqContent,omitempty"`
+	RespContent string `thrift:"respContent,6,optional" frugal:"6,optional,string" json:"respContent,omitempty"`
+	Ip          string `thrift:"ip,7,optional" frugal:"7,optional,string" json:"ip,omitempty"`
+	UserAgent   string `thrift:"userAgent,8,optional" frugal:"8,optional,string" json:"userAgent,omitempty"`
+	Operatorsr  string `thrift:"operatorsr,9,optional" frugal:"9,optional,string" json:"operatorsr,omitempty"`
+	Time        int64  `thrift:"time,10,optional" frugal:"10,optional,i64" json:"time,omitempty"`
+	CreatedAt   string `thrift:"createdAt,11,optional" frugal:"11,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string `thrift:"updatedAt,12,optional" frugal:"12,optional,string" json:"updatedAt,omitempty"`
+	Identity    int64  `thrift:"identity,13,optional" frugal:"13,optional,i64" json:"identity,omitempty"`
+}
+
+func NewCreateLogReq() *CreateLogReq {
+	return &CreateLogReq{
+		Type:        "",
+		Method:      "",
+		Api:         "",
+		Success:     true,
+		ReqContent:  "",
+		RespContent: "",
+		Ip:          "",
+		UserAgent:   "",
+		Operatorsr:  "",
+		Time:        0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Identity:    0,
+	}
+}
+
+func (p *CreateLogReq) InitDefault() {
+	p.Type = ""
+	p.Method = ""
+	p.Api = ""
+	p.Success = true
+	p.ReqContent = ""
+	p.RespContent = ""
+	p.Ip = ""
+	p.UserAgent = ""
+	p.Operatorsr = ""
+	p.Time = 0
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.Identity = 0
+}
+
+var CreateLogReq_Type_DEFAULT string = ""
+
+func (p *CreateLogReq) GetType() (v string) {
+	if !p.IsSetType() {
+		return CreateLogReq_Type_DEFAULT
+	}
+	return p.Type
+}
+
+var CreateLogReq_Method_DEFAULT string = ""
+
+func (p *CreateLogReq) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return CreateLogReq_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var CreateLogReq_Api_DEFAULT string = ""
+
+func (p *CreateLogReq) GetApi() (v string) {
+	if !p.IsSetApi() {
+		return CreateLogReq_Api_DEFAULT
+	}
+	return p.Api
+}
+
+var CreateLogReq_Success_DEFAULT bool = true
+
+func (p *CreateLogReq) GetSuccess() (v bool) {
+	if !p.IsSetSuccess() {
+		return CreateLogReq_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var CreateLogReq_ReqContent_DEFAULT string = ""
+
+func (p *CreateLogReq) GetReqContent() (v string) {
+	if !p.IsSetReqContent() {
+		return CreateLogReq_ReqContent_DEFAULT
+	}
+	return p.ReqContent
+}
+
+var CreateLogReq_RespContent_DEFAULT string = ""
+
+func (p *CreateLogReq) GetRespContent() (v string) {
+	if !p.IsSetRespContent() {
+		return CreateLogReq_RespContent_DEFAULT
+	}
+	return p.RespContent
+}
+
+var CreateLogReq_Ip_DEFAULT string = ""
+
+func (p *CreateLogReq) GetIp() (v string) {
+	if !p.IsSetIp() {
+		return CreateLogReq_Ip_DEFAULT
+	}
+	return p.Ip
+}
+
+var CreateLogReq_UserAgent_DEFAULT string = ""
+
+func (p *CreateLogReq) GetUserAgent() (v string) {
+	if !p.IsSetUserAgent() {
+		return CreateLogReq_UserAgent_DEFAULT
+	}
+	return p.UserAgent
+}
+
+var CreateLogReq_Operatorsr_DEFAULT string = ""
+
+func (p *CreateLogReq) GetOperatorsr() (v string) {
+	if !p.IsSetOperatorsr() {
+		return CreateLogReq_Operatorsr_DEFAULT
+	}
+	return p.Operatorsr
+}
+
+var CreateLogReq_Time_DEFAULT int64 = 0
+
+func (p *CreateLogReq) GetTime() (v int64) {
+	if !p.IsSetTime() {
+		return CreateLogReq_Time_DEFAULT
+	}
+	return p.Time
+}
+
+var CreateLogReq_CreatedAt_DEFAULT string = ""
+
+func (p *CreateLogReq) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return CreateLogReq_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var CreateLogReq_UpdatedAt_DEFAULT string = ""
+
+func (p *CreateLogReq) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return CreateLogReq_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var CreateLogReq_Identity_DEFAULT int64 = 0
+
+func (p *CreateLogReq) GetIdentity() (v int64) {
+	if !p.IsSetIdentity() {
+		return CreateLogReq_Identity_DEFAULT
+	}
+	return p.Identity
+}
+func (p *CreateLogReq) SetType(val string) {
+	p.Type = val
+}
+func (p *CreateLogReq) SetMethod(val string) {
+	p.Method = val
+}
+func (p *CreateLogReq) SetApi(val string) {
+	p.Api = val
+}
+func (p *CreateLogReq) SetSuccess(val bool) {
+	p.Success = val
+}
+func (p *CreateLogReq) SetReqContent(val string) {
+	p.ReqContent = val
+}
+func (p *CreateLogReq) SetRespContent(val string) {
+	p.RespContent = val
+}
+func (p *CreateLogReq) SetIp(val string) {
+	p.Ip = val
+}
+func (p *CreateLogReq) SetUserAgent(val string) {
+	p.UserAgent = val
+}
+func (p *CreateLogReq) SetOperatorsr(val string) {
+	p.Operatorsr = val
+}
+func (p *CreateLogReq) SetTime(val int64) {
+	p.Time = val
+}
+func (p *CreateLogReq) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *CreateLogReq) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *CreateLogReq) SetIdentity(val int64) {
+	p.Identity = val
+}
+
+func (p *CreateLogReq) IsSetType() bool {
+	return p.Type != CreateLogReq_Type_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetMethod() bool {
+	return p.Method != CreateLogReq_Method_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetApi() bool {
+	return p.Api != CreateLogReq_Api_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetSuccess() bool {
+	return p.Success != CreateLogReq_Success_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetReqContent() bool {
+	return p.ReqContent != CreateLogReq_ReqContent_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetRespContent() bool {
+	return p.RespContent != CreateLogReq_RespContent_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetIp() bool {
+	return p.Ip != CreateLogReq_Ip_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetUserAgent() bool {
+	return p.UserAgent != CreateLogReq_UserAgent_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetOperatorsr() bool {
+	return p.Operatorsr != CreateLogReq_Operatorsr_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetTime() bool {
+	return p.Time != CreateLogReq_Time_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetCreatedAt() bool {
+	return p.CreatedAt != CreateLogReq_CreatedAt_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != CreateLogReq_UpdatedAt_DEFAULT
+}
+
+func (p *CreateLogReq) IsSetIdentity() bool {
+	return p.Identity != CreateLogReq_Identity_DEFAULT
+}
+
+func (p *CreateLogReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateLogReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateLogReq = map[int16]string{
+	1:  "type",
+	2:  "method",
+	3:  "api",
+	4:  "success",
+	5:  "reqContent",
+	6:  "respContent",
+	7:  "ip",
+	8:  "userAgent",
+	9:  "operatorsr",
+	10: "time",
+	11: "createdAt",
+	12: "updatedAt",
+	13: "identity",
+}
+
 type DeleteLogReq struct {
 	StartAt string `thrift:"startAt,1,optional" frugal:"1,optional,string" json:"startAt,omitempty"`
 	EndAt   string `thrift:"endAt,2,optional" frugal:"2,optional,string" json:"endAt,omitempty"`
@@ -2975,6 +3256,8 @@ type SystemService interface {
 	DicthtList(ctx context.Context, req *DicthtListReq) (r *DicthtListResp, err error)
 
 	LogList(ctx context.Context, req *LogListReq) (r *LogListResp, err error)
+
+	CreateLog(ctx context.Context, req *CreateLogReq) (r *base.NilResponse, err error)
 
 	DeleteLog(ctx context.Context, req *DeleteLogReq) (r *base.NilResponse, err error)
 
@@ -5182,6 +5465,82 @@ func (p *SystemServiceLogListResult) String() string {
 }
 
 var fieldIDToName_SystemServiceLogListResult = map[int16]string{
+	0: "success",
+}
+
+type SystemServiceCreateLogArgs struct {
+	Req *CreateLogReq `thrift:"req,1" frugal:"1,default,CreateLogReq" json:"req"`
+}
+
+func NewSystemServiceCreateLogArgs() *SystemServiceCreateLogArgs {
+	return &SystemServiceCreateLogArgs{}
+}
+
+func (p *SystemServiceCreateLogArgs) InitDefault() {
+}
+
+var SystemServiceCreateLogArgs_Req_DEFAULT *CreateLogReq
+
+func (p *SystemServiceCreateLogArgs) GetReq() (v *CreateLogReq) {
+	if !p.IsSetReq() {
+		return SystemServiceCreateLogArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *SystemServiceCreateLogArgs) SetReq(val *CreateLogReq) {
+	p.Req = val
+}
+
+func (p *SystemServiceCreateLogArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *SystemServiceCreateLogArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateLogArgs(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateLogArgs = map[int16]string{
+	1: "req",
+}
+
+type SystemServiceCreateLogResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewSystemServiceCreateLogResult() *SystemServiceCreateLogResult {
+	return &SystemServiceCreateLogResult{}
+}
+
+func (p *SystemServiceCreateLogResult) InitDefault() {
+}
+
+var SystemServiceCreateLogResult_Success_DEFAULT *base.NilResponse
+
+func (p *SystemServiceCreateLogResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return SystemServiceCreateLogResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *SystemServiceCreateLogResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *SystemServiceCreateLogResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *SystemServiceCreateLogResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SystemServiceCreateLogResult(%+v)", *p)
+}
+
+var fieldIDToName_SystemServiceCreateLogResult = map[int16]string{
 	0: "success",
 }
 

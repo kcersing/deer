@@ -217,6 +217,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"CreateLog": kitex.NewMethodInfo(
+		createLogHandler,
+		newSystemServiceCreateLogArgs,
+		newSystemServiceCreateLogResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"DeleteLog": kitex.NewMethodInfo(
 		deleteLogHandler,
 		newSystemServiceDeleteLogArgs,
@@ -819,6 +826,24 @@ func newSystemServiceLogListResult() interface{} {
 	return system.NewSystemServiceLogListResult()
 }
 
+func createLogHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*system.SystemServiceCreateLogArgs)
+	realResult := result.(*system.SystemServiceCreateLogResult)
+	success, err := handler.(system.SystemService).CreateLog(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newSystemServiceCreateLogArgs() interface{} {
+	return system.NewSystemServiceCreateLogArgs()
+}
+
+func newSystemServiceCreateLogResult() interface{} {
+	return system.NewSystemServiceCreateLogResult()
+}
+
 func deleteLogHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*system.SystemServiceDeleteLogArgs)
 	realResult := result.(*system.SystemServiceDeleteLogResult)
@@ -1150,6 +1175,16 @@ func (p *kClient) LogList(ctx context.Context, req *system.LogListReq) (r *syste
 	_args.Req = req
 	var _result system.SystemServiceLogListResult
 	if err = p.c.Call(ctx, "LogList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateLog(ctx context.Context, req *system.CreateLogReq) (r *base.NilResponse, err error) {
+	var _args system.SystemServiceCreateLogArgs
+	_args.Req = req
+	var _result system.SystemServiceCreateLogResult
+	if err = p.c.Call(ctx, "CreateLog", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
