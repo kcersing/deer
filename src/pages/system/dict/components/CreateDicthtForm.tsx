@@ -3,7 +3,7 @@ import {
   type ActionType,
   ModalForm, ProForm,
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea,ProFormSwitch
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
@@ -12,14 +12,12 @@ import React, { FC } from 'react';
 import { Dictht,Dict } from  "@/pages/system/dict/service/data";
 import {createDictht}  from "@/pages/system/dict/service/service";
 
-
-
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
 
-const CreateForm: FC<CreateFormProps> = (props) => {
-  const { reload } = props;
+const CreateDicthtForm: FC<CreateFormProps> = (props) => {
+  const { reload,dictId } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -35,6 +33,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
     },
   });
 
+
   return (
     <>
       {contextHolder}
@@ -48,25 +47,12 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          await run({ data: value as Dictht });
-
+          value.dictId =dictId;
+           await run({ data: value as Dictht });
           return true;
         }}
       >
         <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="name"
-            label="名称"
-            tooltip="最长为 24 位"
-            placeholder="请输入名称"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
 
           <ProFormText
             width="md"
@@ -83,21 +69,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText
-            width="md"
-            name="key"
-            label="key"
-            placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-          <ProFormText
           width="md"
           name="value"
-          label="value"
+          label="有效值"
           placeholder="请输入"
           rules={[
             {
@@ -107,10 +81,12 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           ]}
         />
 
-          <ProFormText
-            width="md"
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="开启" unCheckedChildren="关闭"
+            defaultChecked
           />
 
         </ProForm.Group>
@@ -119,4 +95,4 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   );
 };
 
-export default CreateForm;
+export default CreateDicthtForm;

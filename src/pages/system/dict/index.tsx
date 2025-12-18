@@ -25,21 +25,21 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
   const [searchDicthtName, setSearchDicthtName] = useState<string>('');
 
   const columns: ProColumns<Dictht>[] = [
-
+    {
+      title: "id",
+      dataIndex: 'id',
+      sorter: true,
+      hideInForm: true,
+    },
     {
       title: "标题",
       dataIndex: 'title',
       sorter: true,
       hideInForm: true,
     },
+
     {
-      title: "key",
-      dataIndex: 'key',
-      sorter: true,
-      hideInForm: true,
-    },
-    {
-      title: "value",
+      title: "有效值",
       dataIndex: 'value',
       sorter: true,
       hideInForm: true,
@@ -97,7 +97,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
       rowKey="id"
       search={false}
       actionRef={actionRef}
-      params={{dictId: dicthtId, name: searchDicthtName}}
+      params={{dictId: dicthtId, key: searchDicthtName}}
       request={getDicthtList}
       toolbar={{
         search: {
@@ -106,7 +106,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
           },
         },
         actions: [
-          <CreateDicthtForm key="create" reload={actionRef.current?.reload} />,
+          <CreateDicthtForm key="create" reload={actionRef.current?.reload} dictId={id} />,
         ],
       }}
     />
@@ -135,8 +135,14 @@ const DictList: React.FC<DictListProps> = (props) => {
 
   const columns: ProColumns<Dict>[] = [
     {
-      title: '名称',
-      dataIndex: 'name',
+      title: "id",
+      dataIndex: 'id',
+      sorter: true,
+      hideInForm: true,
+    },
+    {
+      title: '标识',
+      dataIndex: 'code',
       render: (dom, entity) => {
         return (
           <a
@@ -196,7 +202,7 @@ const DictList: React.FC<DictListProps> = (props) => {
   return (
     <ProTable<Dict>
       columns={columns}
-      params={{name: searchDictName}}
+      params={{key: searchDictName}}
       request={getDictList}
       actionRef={actionRef}
       rowKey="id"
@@ -233,10 +239,10 @@ const Pro: React.FC = () => {
   return (
     <ProCard split="vertical">
       <ProCard colSpan="40%" ghost>
-        <DictList  onChange={(cId) =>setId(cId) }  id={id} />
+        <DictList onChange={(cId) =>setId(cId) }  id={id} />
       </ProCard>
       <ProCard>
-        <DicthtList  id={id}  />
+        <DicthtList id={id}  />
       </ProCard>
     </ProCard>
   );

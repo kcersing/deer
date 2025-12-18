@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   type ActionType,
   ModalForm, ProForm,
-  ProFormText,
+  ProFormText,ProFormSwitch
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
@@ -52,7 +52,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         <ProForm.Group>
           <ProFormText
             width="md"
-            name="name"
+            name="title"
             label="名称"
             tooltip="最长为 24 位"
             placeholder="请输入名称"
@@ -66,9 +66,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
 
           <ProFormText
             width="md"
-            name="title"
-            label="标题"
-            placeholder="请输入标题"
+            name="code"
+            label="标识"
+            placeholder="请输入标识"
             rules={[
               {
                 required: true,
@@ -87,10 +87,12 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             placeholder="请输入"
           />
 
-          <ProFormText
-            width="md"
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="开启" unCheckedChildren="关闭"
+            defaultChecked
           />
 
         </ProForm.Group>

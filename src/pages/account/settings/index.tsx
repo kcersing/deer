@@ -2,7 +2,6 @@ import { GridContent } from '@ant-design/pro-components';
 import { Menu } from 'antd';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import BaseView from './components/base';
-import BindingView from './components/binding';
 import NotificationView from './components/notification';
 import SecurityView from './components/security';
 import useStyles from './style.style';
@@ -17,7 +16,6 @@ const Settings: React.FC = () => {
   const menuMap: Record<string, React.ReactNode> = {
     base: '基本设置',
     security: '安全设置',
-    binding: '账号绑定',
     notification: '新消息通知',
   };
   const [initConfig, setInitConfig] = useState<SettingsState>({
@@ -66,8 +64,6 @@ const Settings: React.FC = () => {
         return <BaseView />;
       case 'security':
         return <SecurityView />;
-      case 'binding':
-        return <BindingView />;
       case 'notification':
         return <NotificationView />;
       default:

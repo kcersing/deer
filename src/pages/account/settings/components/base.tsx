@@ -6,6 +6,7 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
+  ProFormRadio,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Input, message, Upload } from 'antd';
@@ -84,7 +85,7 @@ const BaseView: React.FC = () => {
                   },
                 ]}
               />
-              <ProFormText
+              <ProFormRadio.Group
                 width="md"
                 name="gender"
                 label="性别"
@@ -94,7 +95,22 @@ const BaseView: React.FC = () => {
                     message: '请输入您的性别!',
                   },
                 ]}
+                options={[
+                  {
+                    label: '男',
+                    value: '1',
+                  },
+                  {
+                    label: '女',
+                    value: '2',
+                  },
+                  {
+                    label: '未知',
+                    value: '3',
+                  },
+                ]}
               />
+
               <ProFormText
                 width="md"
                 name="birthday"
@@ -107,7 +123,7 @@ const BaseView: React.FC = () => {
                 ]}
               />
               <ProFormTextArea
-                name="detail"
+                name="desc"
                 label="个人简介"
                 rules={[
                   {

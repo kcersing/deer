@@ -39,7 +39,7 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+  const columns: ProColumns<Log>[] = [
     {
       title: '名称',
       dataIndex: 'name',
@@ -119,7 +119,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: Log[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -138,7 +138,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<Log, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"

@@ -117,19 +117,6 @@ const TagList: React.FC<{
       {(tags || []).concat(newTags).map((item) => (
         <Tag key={item.key}>{item.label}</Tag>
       ))}
-      {inputVisible && (
-        <Input
-          ref={ref}
-          size="small"
-          style={{
-            width: 78,
-          }}
-          value={inputValue}
-          onChange={handleInputChange}
-          onBlur={handleInputConfirm}
-          onPressEnter={handleInputConfirm}
-        />
-      )}
       {!inputVisible && (
         <Tag
           onClick={showInput}
@@ -167,6 +154,7 @@ const Center: React.FC = () => {
             }}
           />
           {title}
+          职位
         </p>
         <p>
           <ClusterOutlined
@@ -175,6 +163,7 @@ const Center: React.FC = () => {
             }}
           />
           {group}
+          部门
         </p>
         <p>
           <HomeOutlined
@@ -182,6 +171,7 @@ const Center: React.FC = () => {
               marginRight: 8,
             }}
           />
+          地址
           {
             (
               geographic || {
@@ -246,7 +236,7 @@ const Center: React.FC = () => {
                   dashed
                 />
                 <div className={styles.team}>
-                  <div className={styles.teamTitle}>团队</div>
+                  <div className={styles.teamTitle}>角色</div>
                   <Row gutter={36}>
                     {currentUser.notice?.map((item) => (
                       <Col key={item.id} lg={24} xl={12}>

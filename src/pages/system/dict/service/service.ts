@@ -6,30 +6,30 @@ import { headers } from '@/services/ant-design-pro/utils';
 import {Dict,DictList,Dictht,DicthtList} from "./data";
 import {BaseResp} from "@/services/typings";
 
-/** 创建字典信息 PSOT /service/dict/create */
+/** 创建字典信息 POST /service/dict/create */
 export async function createDict(options?: { [key: string]: any }) {
   return request<Dict>('/service/dict/create', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
     ...(options || {}),
   });
 }
-/** 更新字典信息 PSOT /service/dict/update */
+/** 更新字典信息 POST /service/dict/update */
 export async function updateDict(options?: { [key: string]: any }) {
   return request<Dict>('/service/dict/update', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
     ...(options || {}),
   });
 }
-/** 删除字典信息 PSOT /service/dict/delete */
+/** 删除字典信息 POST /service/dict/delete */
 export async function deleteDict(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/dict/delete', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
@@ -44,35 +44,35 @@ export async function getDictList(options?: { [key: string]: any }) {
       ...headers,
     },
     data:{
-      name:options.name,
+      key:options.key,
     },
     ...(options || {}),
   });
 }
-/** 创建字典键值信息 PSOT /service/dict/dictht/create */
+/** 创建字典键值信息 POST /service/dict/dictht/create */
 export async function createDictht(options?: { [key: string]: any }) {
   return request<Dictht>('/service/dict/dictht/create', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
     ...(options || {}),
   });
 }
-/** 更新字典键值信息 PSOT /service/dict/dictht/update */
+/** 更新字典键值信息 POST /service/dict/dictht/update */
 export async function updateDictht(options?: { [key: string]: any }) {
   return request<Dictht>('/service/dict/dictht/update', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
     ...(options || {}),
   });
 }
-/** 删除字典键值信息 PSOT /service/dict/dictht/delete */
+/** 删除字典键值信息 POST /service/dict/dictht/delete */
 export async function deleteDictht(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/dict/dictht/delete', {
-    method: 'PSOT',
+    method: 'POST',
     headers: {
       ...headers,
     },
@@ -88,7 +88,7 @@ export async function getDicthtList(options?: { [key: string]: any }) {
       ...headers,
     },
     data:{
-      name:options.name,
+      key:options.key,
       dictId:options.dictId,
     },
     ...(options || {}),

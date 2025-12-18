@@ -9,9 +9,9 @@ import {BaseResp} from "@/services/typings";
 
 
 
-/** 获取日志列表 POST /service/log/list */
+/** 获取日志列表 POST /service/logs/list */
 export async function getLogList(options?: { [key: string]: any }) {
-  return request<LogListResp>('/service/log/list', {
+  return request<LogListResp>('/service/logs/list', {
     method: 'POST',
     headers: {
       ...headers,
@@ -19,10 +19,10 @@ export async function getLogList(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
-/** 删除 PSOT /service/log/delete */
+/** 删除 POST /service/logs/delete */
 export async function deleteLog(req: DeleteLogReq,options?: { [key: string]: any }) {
-  return request<BaseResp>('/service/log/delete', {
-    method: 'PSOT',
+  return request<BaseResp>('/service/logs/delete', {
+    method: 'POST',
     headers: {
       ...headers,
     },

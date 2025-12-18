@@ -1,13 +1,15 @@
 export type Dictht = {
   id?: number;
-  dictId?: number;
-  key?: string;
-  value?: string;
-  status?: number;
   title?: string;
+  value?: string;
+  dictId?: number;
+  status?: number;
   createdAt?: string;
   updatedAt?: string;
+  createdId?: number;
+  createdName?: string;
 }
+
 
 export type DicthtList = {
   data?: Dictht[];
@@ -16,12 +18,14 @@ export type DicthtList = {
 }
 export type Dict = {
   id?: number;
-  desc?: string;
-  name?: string;
-  status?: number;
   title?: string;
+  code?: string;
+  status?: number;
+  desc?: string;
   createdAt?: string;
   updatedAt?: string;
+  createdId?: number;
+  createdName?: string;
 }
 
 export type DictList = {

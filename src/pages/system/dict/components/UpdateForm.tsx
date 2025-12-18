@@ -1,7 +1,19 @@
 import {
   ProForm,
+  ProFormCascader,
+  ProFormDatePicker,
+  ProFormDateRangePicker,
+  ProFormDigit,
+  ProFormList,
+  ProFormMoney,
+  ProFormTreeSelect,
+  ProFormDateTimePicker,
+  ProFormRadio,
+  ProFormSelect,
   ProFormText,
-
+  ProFormTextArea,
+  ProFormSwitch,
+  StepsForm,
   ModalForm,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
@@ -14,7 +26,7 @@ import {updateDict}  from "@/pages/system/dict/service/service";
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
   onOk?: () => void;
-  values: Partial<Dict>;
+  values: Partial<Dictht>;
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
@@ -43,8 +55,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish = useCallback(
+  const onFinish=(e)   => useCallback(
     async (values?: any) => {
+
+      values.status = values.status?1:0;
+      values.id = e.id;
+
       await run({ data: values });
       onCancel();
     },
@@ -56,8 +72,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
       {contextHolder}
       {trigger
         ? cloneElement(trigger, {
-            onClick: onOpen,
-          })
+          onClick: onOpen,
+        })
         : null}
 
       <ModalForm<{
@@ -77,12 +93,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         width="400px"
         open={open}
 
-        onFinish={onFinish}
+        onFinish={onFinish(values)}
       >
         <ProForm.Group>
           <ProFormText
             width="md"
-            name="name"
+            name="title"
             label="名称"
             tooltip="最长为 24 位"
             placeholder="请输入名称"
@@ -90,10 +106,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
           <ProFormText
             width="md"
-            name="title"
-            label="标题"
-            placeholder="请输入标题"
+            name="code"
+            label="标识"
+            disabled
+            placeholder="请输入标识"
           />
+
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText
@@ -103,10 +121,13 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             placeholder="请输入"
           />
 
-          <ProFormText
-            width="md"
+
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="开启" unCheckedChildren="关闭"
+
           />
 
         </ProForm.Group>
