@@ -623,6 +623,7 @@ type CreateFollowUpRecordReq struct {
 	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
 	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
 	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
+	CreatedId       int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateFollowUpRecordReq() *CreateFollowUpRecordReq {
@@ -635,6 +636,7 @@ func NewCreateFollowUpRecordReq() *CreateFollowUpRecordReq {
 		Division:        0,
 		Record:          "",
 		OpportunitiesId: 0,
+		CreatedId:       0,
 	}
 }
 
@@ -647,6 +649,7 @@ func (p *CreateFollowUpRecordReq) InitDefault() {
 	p.Division = 0
 	p.Record = ""
 	p.OpportunitiesId = 0
+	p.CreatedId = 0
 }
 
 var CreateFollowUpRecordReq_Content_DEFAULT string = ""
@@ -720,6 +723,15 @@ func (p *CreateFollowUpRecordReq) GetOpportunitiesId() (v int64) {
 	}
 	return p.OpportunitiesId
 }
+
+var CreateFollowUpRecordReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateFollowUpRecordReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateFollowUpRecordReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateFollowUpRecordReq) SetContent(val string) {
 	p.Content = val
 }
@@ -743,6 +755,9 @@ func (p *CreateFollowUpRecordReq) SetRecord(val string) {
 }
 func (p *CreateFollowUpRecordReq) SetOpportunitiesId(val int64) {
 	p.OpportunitiesId = val
+}
+func (p *CreateFollowUpRecordReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateFollowUpRecordReq) IsSetContent() bool {
@@ -777,6 +792,10 @@ func (p *CreateFollowUpRecordReq) IsSetOpportunitiesId() bool {
 	return p.OpportunitiesId != CreateFollowUpRecordReq_OpportunitiesId_DEFAULT
 }
 
+func (p *CreateFollowUpRecordReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateFollowUpRecordReq_CreatedId_DEFAULT
+}
+
 func (p *CreateFollowUpRecordReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -785,14 +804,15 @@ func (p *CreateFollowUpRecordReq) String() string {
 }
 
 var fieldIDToName_CreateFollowUpRecordReq = map[int16]string{
-	2:  "content",
-	3:  "followUpId",
-	4:  "method",
-	5:  "status",
-	6:  "userId",
-	7:  "division",
-	10: "record",
-	11: "opportunitiesId",
+	2:   "content",
+	3:   "followUpId",
+	4:   "method",
+	5:   "status",
+	6:   "userId",
+	7:   "division",
+	10:  "record",
+	11:  "opportunitiesId",
+	256: "createdId",
 }
 
 type UpdateFollowUpRecordReq struct {
@@ -805,6 +825,7 @@ type UpdateFollowUpRecordReq struct {
 	Division        int64  `thrift:"division,7,optional" frugal:"7,optional,i64" json:"division,omitempty"`
 	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
 	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
+	CreatedId       int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateFollowUpRecordReq() *UpdateFollowUpRecordReq {
@@ -818,6 +839,7 @@ func NewUpdateFollowUpRecordReq() *UpdateFollowUpRecordReq {
 		Division:        0,
 		Record:          "",
 		OpportunitiesId: 0,
+		CreatedId:       0,
 	}
 }
 
@@ -831,6 +853,7 @@ func (p *UpdateFollowUpRecordReq) InitDefault() {
 	p.Division = 0
 	p.Record = ""
 	p.OpportunitiesId = 0
+	p.CreatedId = 0
 }
 
 var UpdateFollowUpRecordReq_Id_DEFAULT int64 = 0
@@ -913,6 +936,15 @@ func (p *UpdateFollowUpRecordReq) GetOpportunitiesId() (v int64) {
 	}
 	return p.OpportunitiesId
 }
+
+var UpdateFollowUpRecordReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateFollowUpRecordReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateFollowUpRecordReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateFollowUpRecordReq) SetId(val int64) {
 	p.Id = val
 }
@@ -939,6 +971,9 @@ func (p *UpdateFollowUpRecordReq) SetRecord(val string) {
 }
 func (p *UpdateFollowUpRecordReq) SetOpportunitiesId(val int64) {
 	p.OpportunitiesId = val
+}
+func (p *UpdateFollowUpRecordReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateFollowUpRecordReq) IsSetId() bool {
@@ -977,6 +1012,10 @@ func (p *UpdateFollowUpRecordReq) IsSetOpportunitiesId() bool {
 	return p.OpportunitiesId != UpdateFollowUpRecordReq_OpportunitiesId_DEFAULT
 }
 
+func (p *UpdateFollowUpRecordReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateFollowUpRecordReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateFollowUpRecordReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -985,15 +1024,16 @@ func (p *UpdateFollowUpRecordReq) String() string {
 }
 
 var fieldIDToName_UpdateFollowUpRecordReq = map[int16]string{
-	1:  "id",
-	2:  "content",
-	3:  "followUpId",
-	4:  "method",
-	5:  "status",
-	6:  "userId",
-	7:  "division",
-	10: "record",
-	11: "opportunitiesId",
+	1:   "id",
+	2:   "content",
+	3:   "followUpId",
+	4:   "method",
+	5:   "status",
+	6:   "userId",
+	7:   "division",
+	10:  "record",
+	11:  "opportunitiesId",
+	256: "createdId",
 }
 
 type FollowUpRecordListReq struct {
@@ -1206,6 +1246,7 @@ type CreateOpportunitiesReq struct {
 	Content          string               `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
 	PredictionAmount int64                `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
 	Title            string               `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
+	CreatedId        int64                `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateOpportunitiesReq() *CreateOpportunitiesReq {
@@ -1216,6 +1257,7 @@ func NewCreateOpportunitiesReq() *CreateOpportunitiesReq {
 		Content:          "",
 		PredictionAmount: 0,
 		Title:            "",
+		CreatedId:        0,
 	}
 }
 
@@ -1226,6 +1268,7 @@ func (p *CreateOpportunitiesReq) InitDefault() {
 	p.Content = ""
 	p.PredictionAmount = 0
 	p.Title = ""
+	p.CreatedId = 0
 }
 
 var CreateOpportunitiesReq_MemberId_DEFAULT int64 = 0
@@ -1281,6 +1324,15 @@ func (p *CreateOpportunitiesReq) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+var CreateOpportunitiesReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateOpportunitiesReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateOpportunitiesReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateOpportunitiesReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -1298,6 +1350,9 @@ func (p *CreateOpportunitiesReq) SetPredictionAmount(val int64) {
 }
 func (p *CreateOpportunitiesReq) SetTitle(val string) {
 	p.Title = val
+}
+func (p *CreateOpportunitiesReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateOpportunitiesReq) IsSetMemberId() bool {
@@ -1324,6 +1379,10 @@ func (p *CreateOpportunitiesReq) IsSetTitle() bool {
 	return p.Title != CreateOpportunitiesReq_Title_DEFAULT
 }
 
+func (p *CreateOpportunitiesReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateOpportunitiesReq_CreatedId_DEFAULT
+}
+
 func (p *CreateOpportunitiesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1332,12 +1391,13 @@ func (p *CreateOpportunitiesReq) String() string {
 }
 
 var fieldIDToName_CreateOpportunitiesReq = map[int16]string{
-	2:  "memberId",
-	3:  "userId",
-	4:  "period",
-	7:  "content",
-	8:  "predictionAmount",
-	11: "title",
+	2:   "memberId",
+	3:   "userId",
+	4:   "period",
+	7:   "content",
+	8:   "predictionAmount",
+	11:  "title",
+	256: "createdId",
 }
 
 type UpdateOpportunitiesReq struct {
@@ -1348,6 +1408,7 @@ type UpdateOpportunitiesReq struct {
 	Content          string               `thrift:"content,7,optional" frugal:"7,optional,string" json:"content,omitempty"`
 	PredictionAmount int64                `thrift:"predictionAmount,8,optional" frugal:"8,optional,i64" json:"predictionAmount,omitempty"`
 	Title            string               `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
+	CreatedId        int64                `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateOpportunitiesReq() *UpdateOpportunitiesReq {
@@ -1359,6 +1420,7 @@ func NewUpdateOpportunitiesReq() *UpdateOpportunitiesReq {
 		Content:          "",
 		PredictionAmount: 0,
 		Title:            "",
+		CreatedId:        0,
 	}
 }
 
@@ -1370,6 +1432,7 @@ func (p *UpdateOpportunitiesReq) InitDefault() {
 	p.Content = ""
 	p.PredictionAmount = 0
 	p.Title = ""
+	p.CreatedId = 0
 }
 
 var UpdateOpportunitiesReq_Id_DEFAULT int64 = 0
@@ -1434,6 +1497,15 @@ func (p *UpdateOpportunitiesReq) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+var UpdateOpportunitiesReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateOpportunitiesReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateOpportunitiesReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateOpportunitiesReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1454,6 +1526,9 @@ func (p *UpdateOpportunitiesReq) SetPredictionAmount(val int64) {
 }
 func (p *UpdateOpportunitiesReq) SetTitle(val string) {
 	p.Title = val
+}
+func (p *UpdateOpportunitiesReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateOpportunitiesReq) IsSetId() bool {
@@ -1484,6 +1559,10 @@ func (p *UpdateOpportunitiesReq) IsSetTitle() bool {
 	return p.Title != UpdateOpportunitiesReq_Title_DEFAULT
 }
 
+func (p *UpdateOpportunitiesReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateOpportunitiesReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateOpportunitiesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1492,13 +1571,14 @@ func (p *UpdateOpportunitiesReq) String() string {
 }
 
 var fieldIDToName_UpdateOpportunitiesReq = map[int16]string{
-	1:  "id",
-	2:  "memberId",
-	3:  "userId",
-	4:  "period",
-	7:  "content",
-	8:  "predictionAmount",
-	11: "title",
+	1:   "id",
+	2:   "memberId",
+	3:   "userId",
+	4:   "period",
+	7:   "content",
+	8:   "predictionAmount",
+	11:  "title",
+	256: "createdId",
 }
 
 type OpportunitiesListReq struct {

@@ -29,6 +29,7 @@ struct Product {
     10: optional list<i64> isSales=0 (api.raw = "isSales")
     13: optional string signSalesAt = "" (api.raw = "signSalesAt")
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
+
 }
 
 struct ProductItem {
@@ -54,8 +55,8 @@ struct ProductItem {
     10:optional string expiredAt="" (api.raw = "expiredAt")
     11: optional list<i64> tagId=0   (api.raw = "tagId")
 
-    14: optional i64 createdId = 0 (api.raw = "createdId")
-    15: optional string createdName = "" (api.raw = "createdName")
+    20: optional i64 createdId = 0 (api.raw = "createdId")
+    21: optional string createdName = "" (api.raw = "createdName")
 
     16: optional string createdAt = ""  (api.raw = "createdAt")
     17: optional string updatedAt = "" (api.raw = "updatedAt")

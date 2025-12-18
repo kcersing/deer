@@ -3,12 +3,14 @@
 package member
 
 import (
+	utils2 "admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
 	"gen/hertz_gen/member"
+
 	base1 "gen/kitex_gen/base"
 	member2 "gen/kitex_gen/member"
 
@@ -26,8 +28,9 @@ func CreateMember(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.MemberClient.CreateMember(ctx, &member2.CreateMemberReq{
-		Username: req.GetUsername(),
-		Password: req.GetPassword(),
+		Username:  req.GetUsername(),
+		Password:  req.GetPassword(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -71,14 +74,15 @@ func UpdateMember(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.MemberClient.UpdateMember(ctx, &member2.UpdateMemberReq{
-		Id:       req.GetID(),
-		Avatar:   req.GetAvatar(),
-		Mobile:   req.GetMobile(),
-		Name:     req.GetName(),
-		Status:   req.GetStatus(),
-		Level:    req.GetLevel(),
-		Gender:   req.GetGender(),
-		Birthday: req.GetBirthday(),
+		Id:        req.GetID(),
+		Avatar:    req.GetAvatar(),
+		Mobile:    req.GetMobile(),
+		Name:      req.GetName(),
+		Status:    req.GetStatus(),
+		Level:     req.GetLevel(),
+		Gender:    req.GetGender(),
+		Birthday:  req.GetBirthday(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

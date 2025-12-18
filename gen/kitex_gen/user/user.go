@@ -141,6 +141,7 @@ type CreateUserReq struct {
 	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
 	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
 	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
+	CreatedId     int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateUserReq() *CreateUserReq {
@@ -154,6 +155,7 @@ func NewCreateUserReq() *CreateUserReq {
 		Desc:          "",
 		DepartmentsId: 0,
 		PositionsId:   0,
+		CreatedId:     0,
 	}
 }
 
@@ -167,6 +169,7 @@ func (p *CreateUserReq) InitDefault() {
 	p.Desc = ""
 	p.DepartmentsId = 0
 	p.PositionsId = 0
+	p.CreatedId = 0
 }
 
 func (p *CreateUserReq) GetUsername() (v string) {
@@ -253,6 +256,15 @@ func (p *CreateUserReq) GetPositionsId() (v int64) {
 	}
 	return p.PositionsId
 }
+
+var CreateUserReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateUserReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateUserReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateUserReq) SetUsername(val string) {
 	p.Username = val
 }
@@ -282,6 +294,9 @@ func (p *CreateUserReq) SetDepartmentsId(val int64) {
 }
 func (p *CreateUserReq) SetPositionsId(val int64) {
 	p.PositionsId = val
+}
+func (p *CreateUserReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateUserReq) IsSetAvatar() bool {
@@ -320,6 +335,10 @@ func (p *CreateUserReq) IsSetPositionsId() bool {
 	return p.PositionsId != CreateUserReq_PositionsId_DEFAULT
 }
 
+func (p *CreateUserReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateUserReq_CreatedId_DEFAULT
+}
+
 func (p *CreateUserReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -328,16 +347,17 @@ func (p *CreateUserReq) String() string {
 }
 
 var fieldIDToName_CreateUserReq = map[int16]string{
-	1:  "username",
-	2:  "avatar",
-	3:  "mobile",
-	4:  "name",
-	5:  "status",
-	6:  "gender",
-	7:  "birthday",
-	8:  "desc",
-	9:  "departmentsId",
-	10: "positionsId",
+	1:   "username",
+	2:   "avatar",
+	3:   "mobile",
+	4:   "name",
+	5:   "status",
+	6:   "gender",
+	7:   "birthday",
+	8:   "desc",
+	9:   "departmentsId",
+	10:  "positionsId",
+	256: "createdId",
 }
 
 type GetUserListReq struct {
@@ -472,6 +492,7 @@ type UpdateUserReq struct {
 	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
 	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
 	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
+	CreatedId     int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
@@ -486,6 +507,7 @@ func NewUpdateUserReq() *UpdateUserReq {
 		Desc:          "",
 		DepartmentsId: 0,
 		PositionsId:   0,
+		CreatedId:     0,
 	}
 }
 
@@ -500,6 +522,7 @@ func (p *UpdateUserReq) InitDefault() {
 	p.Desc = ""
 	p.DepartmentsId = 0
 	p.PositionsId = 0
+	p.CreatedId = 0
 }
 
 var UpdateUserReq_Id_DEFAULT int64 = 0
@@ -591,6 +614,15 @@ func (p *UpdateUserReq) GetPositionsId() (v int64) {
 	}
 	return p.PositionsId
 }
+
+var UpdateUserReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateUserReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateUserReq) SetId(val int64) {
 	p.Id = val
 }
@@ -620,6 +652,9 @@ func (p *UpdateUserReq) SetDepartmentsId(val int64) {
 }
 func (p *UpdateUserReq) SetPositionsId(val int64) {
 	p.PositionsId = val
+}
+func (p *UpdateUserReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateUserReq) IsSetId() bool {
@@ -662,6 +697,10 @@ func (p *UpdateUserReq) IsSetPositionsId() bool {
 	return p.PositionsId != UpdateUserReq_PositionsId_DEFAULT
 }
 
+func (p *UpdateUserReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateUserReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateUserReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -670,16 +709,17 @@ func (p *UpdateUserReq) String() string {
 }
 
 var fieldIDToName_UpdateUserReq = map[int16]string{
-	1:  "id",
-	2:  "avatar",
-	3:  "mobile",
-	4:  "name",
-	5:  "status",
-	6:  "gender",
-	7:  "birthday",
-	8:  "desc",
-	9:  "departmentsId",
-	10: "positionsId",
+	1:   "id",
+	2:   "avatar",
+	3:   "mobile",
+	4:   "name",
+	5:   "status",
+	6:   "gender",
+	7:   "birthday",
+	8:   "desc",
+	9:   "departmentsId",
+	10:  "positionsId",
+	256: "createdId",
 }
 
 type ChangePasswordReq struct {
@@ -744,20 +784,23 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 }
 
 type SetUserRoleReq struct {
-	Id     int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	RoleId int64 `thrift:"roleId,2,optional" frugal:"2,optional,i64" json:"roleId,omitempty"`
+	Id        int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	RoleId    int64 `thrift:"roleId,2,optional" frugal:"2,optional,i64" json:"roleId,omitempty"`
+	CreatedId int64 `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewSetUserRoleReq() *SetUserRoleReq {
 	return &SetUserRoleReq{
-		Id:     0,
-		RoleId: 0,
+		Id:        0,
+		RoleId:    0,
+		CreatedId: 0,
 	}
 }
 
 func (p *SetUserRoleReq) InitDefault() {
 	p.Id = 0
 	p.RoleId = 0
+	p.CreatedId = 0
 }
 
 var SetUserRoleReq_Id_DEFAULT int64 = 0
@@ -777,11 +820,23 @@ func (p *SetUserRoleReq) GetRoleId() (v int64) {
 	}
 	return p.RoleId
 }
+
+var SetUserRoleReq_CreatedId_DEFAULT int64 = 0
+
+func (p *SetUserRoleReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return SetUserRoleReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *SetUserRoleReq) SetId(val int64) {
 	p.Id = val
 }
 func (p *SetUserRoleReq) SetRoleId(val int64) {
 	p.RoleId = val
+}
+func (p *SetUserRoleReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *SetUserRoleReq) IsSetId() bool {
@@ -792,6 +847,10 @@ func (p *SetUserRoleReq) IsSetRoleId() bool {
 	return p.RoleId != SetUserRoleReq_RoleId_DEFAULT
 }
 
+func (p *SetUserRoleReq) IsSetCreatedId() bool {
+	return p.CreatedId != SetUserRoleReq_CreatedId_DEFAULT
+}
+
 func (p *SetUserRoleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -800,8 +859,9 @@ func (p *SetUserRoleReq) String() string {
 }
 
 var fieldIDToName_SetUserRoleReq = map[int16]string{
-	1: "id",
-	2: "roleId",
+	1:   "id",
+	2:   "roleId",
+	256: "createdId",
 }
 
 type DepartmentsResp struct {
@@ -932,6 +992,7 @@ type CreateDepartmentsReq struct {
 	ParentId  int64  `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
 	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateDepartmentsReq() *CreateDepartmentsReq {
@@ -941,6 +1002,7 @@ func NewCreateDepartmentsReq() *CreateDepartmentsReq {
 		ParentId:  0,
 		Desc:      "",
 		Status:    0,
+		CreatedId: 0,
 	}
 }
 
@@ -950,6 +1012,7 @@ func (p *CreateDepartmentsReq) InitDefault() {
 	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
+	p.CreatedId = 0
 }
 
 var CreateDepartmentsReq_Name_DEFAULT string = ""
@@ -996,6 +1059,15 @@ func (p *CreateDepartmentsReq) GetStatus() (v int64) {
 	}
 	return p.Status
 }
+
+var CreateDepartmentsReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateDepartmentsReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateDepartmentsReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateDepartmentsReq) SetName(val string) {
 	p.Name = val
 }
@@ -1010,6 +1082,9 @@ func (p *CreateDepartmentsReq) SetDesc(val string) {
 }
 func (p *CreateDepartmentsReq) SetStatus(val int64) {
 	p.Status = val
+}
+func (p *CreateDepartmentsReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateDepartmentsReq) IsSetName() bool {
@@ -1032,6 +1107,10 @@ func (p *CreateDepartmentsReq) IsSetStatus() bool {
 	return p.Status != CreateDepartmentsReq_Status_DEFAULT
 }
 
+func (p *CreateDepartmentsReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateDepartmentsReq_CreatedId_DEFAULT
+}
+
 func (p *CreateDepartmentsReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1040,11 +1119,12 @@ func (p *CreateDepartmentsReq) String() string {
 }
 
 var fieldIDToName_CreateDepartmentsReq = map[int16]string{
-	2: "name",
-	3: "managerId",
-	4: "parentId",
-	5: "desc",
-	7: "status",
+	2:   "name",
+	3:   "managerId",
+	4:   "parentId",
+	5:   "desc",
+	7:   "status",
+	256: "createdId",
 }
 
 type UpdateDepartmentsReq struct {
@@ -1054,6 +1134,7 @@ type UpdateDepartmentsReq struct {
 	ParentId  int64  `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
 	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateDepartmentsReq() *UpdateDepartmentsReq {
@@ -1064,6 +1145,7 @@ func NewUpdateDepartmentsReq() *UpdateDepartmentsReq {
 		ParentId:  0,
 		Desc:      "",
 		Status:    0,
+		CreatedId: 0,
 	}
 }
 
@@ -1074,6 +1156,7 @@ func (p *UpdateDepartmentsReq) InitDefault() {
 	p.ParentId = 0
 	p.Desc = ""
 	p.Status = 0
+	p.CreatedId = 0
 }
 
 var UpdateDepartmentsReq_Id_DEFAULT int64 = 0
@@ -1129,6 +1212,15 @@ func (p *UpdateDepartmentsReq) GetStatus() (v int64) {
 	}
 	return p.Status
 }
+
+var UpdateDepartmentsReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateDepartmentsReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateDepartmentsReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateDepartmentsReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1146,6 +1238,9 @@ func (p *UpdateDepartmentsReq) SetDesc(val string) {
 }
 func (p *UpdateDepartmentsReq) SetStatus(val int64) {
 	p.Status = val
+}
+func (p *UpdateDepartmentsReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateDepartmentsReq) IsSetId() bool {
@@ -1172,6 +1267,10 @@ func (p *UpdateDepartmentsReq) IsSetStatus() bool {
 	return p.Status != UpdateDepartmentsReq_Status_DEFAULT
 }
 
+func (p *UpdateDepartmentsReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateDepartmentsReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateDepartmentsReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1180,12 +1279,13 @@ func (p *UpdateDepartmentsReq) String() string {
 }
 
 var fieldIDToName_UpdateDepartmentsReq = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "managerId",
-	4: "parentId",
-	5: "desc",
-	7: "status",
+	1:   "id",
+	2:   "name",
+	3:   "managerId",
+	4:   "parentId",
+	5:   "desc",
+	7:   "status",
+	256: "createdId",
 }
 
 type GetDepartmentsListReq struct {
@@ -1277,6 +1377,7 @@ type CreatePositionsReq struct {
 	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
 	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
+	CreatedId    int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreatePositionsReq() *CreatePositionsReq {
@@ -1288,6 +1389,7 @@ func NewCreatePositionsReq() *CreatePositionsReq {
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
+		CreatedId:    0,
 	}
 }
 
@@ -1299,6 +1401,7 @@ func (p *CreatePositionsReq) InitDefault() {
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
+	p.CreatedId = 0
 }
 
 var CreatePositionsReq_Name_DEFAULT string = ""
@@ -1363,6 +1466,15 @@ func (p *CreatePositionsReq) GetQuota() (v int64) {
 	}
 	return p.Quota
 }
+
+var CreatePositionsReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreatePositionsReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreatePositionsReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreatePositionsReq) SetName(val string) {
 	p.Name = val
 }
@@ -1383,6 +1495,9 @@ func (p *CreatePositionsReq) SetStatus(val int64) {
 }
 func (p *CreatePositionsReq) SetQuota(val int64) {
 	p.Quota = val
+}
+func (p *CreatePositionsReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreatePositionsReq) IsSetName() bool {
@@ -1413,6 +1528,10 @@ func (p *CreatePositionsReq) IsSetQuota() bool {
 	return p.Quota != CreatePositionsReq_Quota_DEFAULT
 }
 
+func (p *CreatePositionsReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreatePositionsReq_CreatedId_DEFAULT
+}
+
 func (p *CreatePositionsReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1421,13 +1540,14 @@ func (p *CreatePositionsReq) String() string {
 }
 
 var fieldIDToName_CreatePositionsReq = map[int16]string{
-	2: "name",
-	3: "code",
-	4: "departmentId",
-	5: "parentId",
-	6: "desc",
-	7: "status",
-	9: "quota",
+	2:   "name",
+	3:   "code",
+	4:   "departmentId",
+	5:   "parentId",
+	6:   "desc",
+	7:   "status",
+	9:   "quota",
+	256: "createdId",
 }
 
 type UpdatePositionsReq struct {
@@ -1439,6 +1559,7 @@ type UpdatePositionsReq struct {
 	Desc         string `thrift:"desc,6,optional" frugal:"6,optional,string" json:"desc,omitempty"`
 	Status       int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 	Quota        int64  `thrift:"quota,9,optional" frugal:"9,optional,i64" json:"quota,omitempty"`
+	CreatedId    int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdatePositionsReq() *UpdatePositionsReq {
@@ -1451,6 +1572,7 @@ func NewUpdatePositionsReq() *UpdatePositionsReq {
 		Desc:         "",
 		Status:       0,
 		Quota:        0,
+		CreatedId:    0,
 	}
 }
 
@@ -1463,6 +1585,7 @@ func (p *UpdatePositionsReq) InitDefault() {
 	p.Desc = ""
 	p.Status = 0
 	p.Quota = 0
+	p.CreatedId = 0
 }
 
 var UpdatePositionsReq_Id_DEFAULT int64 = 0
@@ -1536,6 +1659,15 @@ func (p *UpdatePositionsReq) GetQuota() (v int64) {
 	}
 	return p.Quota
 }
+
+var UpdatePositionsReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdatePositionsReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdatePositionsReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdatePositionsReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1559,6 +1691,9 @@ func (p *UpdatePositionsReq) SetStatus(val int64) {
 }
 func (p *UpdatePositionsReq) SetQuota(val int64) {
 	p.Quota = val
+}
+func (p *UpdatePositionsReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdatePositionsReq) IsSetId() bool {
@@ -1593,6 +1728,10 @@ func (p *UpdatePositionsReq) IsSetQuota() bool {
 	return p.Quota != UpdatePositionsReq_Quota_DEFAULT
 }
 
+func (p *UpdatePositionsReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdatePositionsReq_CreatedId_DEFAULT
+}
+
 func (p *UpdatePositionsReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1601,14 +1740,15 @@ func (p *UpdatePositionsReq) String() string {
 }
 
 var fieldIDToName_UpdatePositionsReq = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "code",
-	4: "departmentId",
-	5: "parentId",
-	6: "desc",
-	7: "status",
-	9: "quota",
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "departmentId",
+	5:   "parentId",
+	6:   "desc",
+	7:   "status",
+	9:   "quota",
+	256: "createdId",
 }
 
 type GetPositionsListReq struct {

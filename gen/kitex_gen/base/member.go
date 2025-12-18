@@ -7,42 +7,44 @@ import (
 )
 
 type Member struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username  string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password  string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar    string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Level     int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
-	Gender    int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt    string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp    string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Intention int64  `thrift:"intention,13,optional" frugal:"13,optional,i64" json:"intention,omitempty"`
-	CreatedAt string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username    string `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password    string `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar      string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile      string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name        string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status      int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Level       int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
+	Gender      int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday    string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt      string `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp      string `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Intention   int64  `thrift:"intention,13,optional" frugal:"13,optional,i64" json:"intention,omitempty"`
+	CreatedAt   string `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId   int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewMember() *Member {
 	return &Member{
-		Id:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Level:     0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		Intention: 0,
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
+		Id:          0,
+		Username:    "",
+		Password:    "",
+		Avatar:      "",
+		Mobile:      "",
+		Name:        "",
+		Status:      0,
+		Level:       0,
+		Gender:      0,
+		Birthday:    "",
+		LastAt:      "",
+		LastIp:      "",
+		Intention:   0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -63,6 +65,7 @@ func (p *Member) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Member_Id_DEFAULT int64 = 0
@@ -208,6 +211,15 @@ func (p *Member) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var Member_CreatedName_DEFAULT string = ""
+
+func (p *Member) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Member_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Member) SetId(val int64) {
 	p.Id = val
 }
@@ -255,6 +267,9 @@ func (p *Member) SetUpdatedAt(val string) {
 }
 func (p *Member) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *Member) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Member) IsSetId() bool {
@@ -321,6 +336,10 @@ func (p *Member) IsSetCreatedId() bool {
 	return p.CreatedId != Member_CreatedId_DEFAULT
 }
 
+func (p *Member) IsSetCreatedName() bool {
+	return p.CreatedName != Member_CreatedName_DEFAULT
+}
+
 func (p *Member) String() string {
 	if p == nil {
 		return "<nil>"
@@ -344,5 +363,6 @@ var fieldIDToName_Member = map[int16]string{
 	13:  "intention",
 	251: "createdAt",
 	252: "updatedAt",
-	253: "createdId",
+	256: "createdId",
+	257: "createdName",
 }

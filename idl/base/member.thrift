@@ -18,6 +18,7 @@ struct Member {
 
     251:optional string createdAt=""
     252:optional string updatedAt=""
-    253:optional i64 createdId=0
+   256:optional i64 createdId=0
+   257:optional string createdName="" 
 
 }

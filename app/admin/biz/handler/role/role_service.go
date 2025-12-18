@@ -3,6 +3,7 @@
 package role
 
 import (
+	"admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
@@ -27,9 +28,10 @@ func CreateRole(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateRole(ctx, &system.CreateRoleReq{
-		Name: req.GetName(),
-		Code: req.GetCode(),
-		Desc: req.GetDesc(),
+		Name:      req.GetName(),
+		Code:      req.GetCode(),
+		Desc:      req.GetDesc(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -100,9 +102,10 @@ func UpdateRole(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.UpdateRole(ctx, &system.UpdateRoleReq{
-		Id:   req.GetID(),
-		Name: req.GetName(),
-		Desc: req.GetDesc(),
+		Id:        req.GetID(),
+		Name:      req.GetName(),
+		Desc:      req.GetDesc(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -146,8 +149,9 @@ func CreateRoleMenu(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateRoleMenu(ctx, &system.CreateMenuAuthReq{
-		RoleId: req.GetRoleId(),
-		Ids:    req.GetIds(),
+		RoleId:    req.GetRoleId(),
+		Ids:       req.GetIds(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -170,8 +174,9 @@ func CreateRoleApi(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateRoleApi(ctx, &system.CreateMenuAuthReq{
-		RoleId: req.GetRoleId(),
-		Ids:    req.GetIds(),
+		RoleId:    req.GetRoleId(),
+		Ids:       req.GetIds(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

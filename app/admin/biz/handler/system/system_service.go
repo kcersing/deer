@@ -3,6 +3,7 @@
 package system
 
 import (
+	"admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
@@ -26,11 +27,12 @@ func CreateApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
-		Title:  req.GetTitle(),
-		Path:   req.GetPath(),
-		Desc:   req.GetDesc(),
-		Method: req.GetMethod(),
-		Group:  req.GetGroup(),
+		Title:     req.GetTitle(),
+		Path:      req.GetPath(),
+		Desc:      req.GetDesc(),
+		Method:    req.GetMethod(),
+		Group:     req.GetGroup(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -51,12 +53,13 @@ func UpdateApi(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.SystemClient.UpdateApi(ctx, &system2.UpdateApiReq{
-		Id:     req.GetID(),
-		Title:  req.GetTitle(),
-		Path:   req.GetPath(),
-		Desc:   req.GetDesc(),
-		Method: req.GetMethod(),
-		Group:  req.GetGroup(),
+		Id:        req.GetID(),
+		Title:     req.GetTitle(),
+		Path:      req.GetPath(),
+		Desc:      req.GetDesc(),
+		Method:    req.GetMethod(),
+		Group:     req.GetGroup(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -163,7 +166,7 @@ func LogList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 

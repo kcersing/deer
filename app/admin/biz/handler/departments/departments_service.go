@@ -3,6 +3,7 @@
 package departments
 
 import (
+	utils2 "admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"common/pkg/utils"
@@ -31,6 +32,7 @@ func CreateDepartments(ctx context.Context, c *app.RequestContext) {
 		ParentId:  req.GetParentId(),
 		Desc:      req.GetDesc(),
 		Status:    req.GetStatus(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -79,6 +81,7 @@ func UpdateDepartments(ctx context.Context, c *app.RequestContext) {
 		ParentId:  req.GetParentId(),
 		Desc:      req.GetDesc(),
 		Status:    req.GetStatus(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

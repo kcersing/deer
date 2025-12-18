@@ -3,6 +3,7 @@
 package dict
 
 import (
+	"admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
@@ -11,6 +12,7 @@ import (
 	dict "gen/hertz_gen/dict"
 	base1 "gen/kitex_gen/base"
 	"gen/kitex_gen/system"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -26,10 +28,11 @@ func CreateDict(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateDict(ctx, &base1.Dict{
-		Title:  req.GetTitle(),
-		Code:   req.GetCode(),
-		Status: req.GetStatus(),
-		Desc:   req.GetDesc(),
+		Title:     req.GetTitle(),
+		Code:      req.GetCode(),
+		Status:    req.GetStatus(),
+		Desc:      req.GetDesc(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -52,11 +55,12 @@ func UpdateDict(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.UpdateDict(ctx, &base1.Dict{
-		Id:     req.GetID(),
-		Title:  req.GetTitle(),
-		Code:   req.GetCode(),
-		Status: req.GetStatus(),
-		Desc:   req.GetDesc(),
+		Id:        req.GetID(),
+		Title:     req.GetTitle(),
+		Code:      req.GetCode(),
+		Status:    req.GetStatus(),
+		Desc:      req.GetDesc(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -125,10 +129,11 @@ func CreateDictht(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
-		Title:  req.GetTitle(),
-		Value:  req.GetValue(),
-		Status: req.GetStatus(),
-		DictId: req.GetDictId(),
+		Title:     req.GetTitle(),
+		Value:     req.GetValue(),
+		Status:    req.GetStatus(),
+		DictId:    req.GetDictId(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -150,12 +155,12 @@ func UpdateDictht(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.SystemClient.CreateDictht(ctx, &base1.Dictht{
-		Id:     req.GetID(),
-		Title:  req.GetTitle(),
-		Value:  req.GetValue(),
-		Status: req.GetStatus(),
-		DictId: req.GetDictId(),
+	resp, err := client.SystemClient.UpdateDictht(ctx, &base1.Dictht{
+		Id:        req.GetID(),
+		Title:     req.GetTitle(),
+		Value:     req.GetValue(),
+		Status:    req.GetStatus(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -188,7 +193,7 @@ func DeleteDictht(ctx context.Context, c *app.RequestContext) {
 }
 
 // DicthtList .
-// @router /service/dict/dictht/POST [POST]
+// @router /service/dict/dictht/list POST [POST]
 func DicthtList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req dict.DicthtListReq

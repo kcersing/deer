@@ -9,9 +9,9 @@ init:
 	export GOPROXY=https://mirrors.aliyun.com/goproxy/
 	go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
 	go install github.com/cloudwego/hertz/cmd/hz@latest
-	go install github.com/cloudwego/kitex/tool/cmd/kitex@latest
 	go install github.com/cloudwego/cwgo@latest
 	go install github.com/cloudwego/thriftgo@latest
+	go install github.com/cloudwego/thrift-gen-validator@latest
 
 # start the environment of demo
 .PHONY: start

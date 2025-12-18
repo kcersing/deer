@@ -339,8 +339,8 @@ type ProductItem struct {
 	ActiveAt    string  `thrift:"activeAt,9,optional" frugal:"9,optional,string" json:"activeAt,omitempty"`
 	ExpiredAt   string  `thrift:"expiredAt,10,optional" frugal:"10,optional,string" json:"expiredAt,omitempty"`
 	TagId       []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
-	CreatedId   int64   `thrift:"createdId,14,optional" frugal:"14,optional,i64" json:"createdId,omitempty"`
-	CreatedName string  `thrift:"createdName,15,optional" frugal:"15,optional,string" json:"createdName,omitempty"`
+	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
 	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
 }
@@ -642,8 +642,8 @@ var fieldIDToName_ProductItem = map[int16]string{
 	9:  "activeAt",
 	10: "expiredAt",
 	11: "tagId",
-	14: "createdId",
-	15: "createdName",
+	20: "createdId",
+	21: "createdName",
 	16: "createdAt",
 	17: "updatedAt",
 }

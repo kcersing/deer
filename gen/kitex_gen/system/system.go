@@ -292,20 +292,22 @@ var fieldIDToName_ApiListReq = map[int16]string{
 }
 
 type CreateApiReq struct {
-	Path   string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Desc   string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
-	Group  string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title  string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Path      string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group     string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method    string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title     string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateApiReq() *CreateApiReq {
 	return &CreateApiReq{
-		Path:   "",
-		Desc:   "",
-		Group:  "",
-		Method: "",
-		Title:  "",
+		Path:      "",
+		Desc:      "",
+		Group:     "",
+		Method:    "",
+		Title:     "",
+		CreatedId: 0,
 	}
 }
 
@@ -315,6 +317,7 @@ func (p *CreateApiReq) InitDefault() {
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
+	p.CreatedId = 0
 }
 
 var CreateApiReq_Path_DEFAULT string = ""
@@ -361,6 +364,15 @@ func (p *CreateApiReq) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+var CreateApiReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateApiReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateApiReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateApiReq) SetPath(val string) {
 	p.Path = val
 }
@@ -375,6 +387,9 @@ func (p *CreateApiReq) SetMethod(val string) {
 }
 func (p *CreateApiReq) SetTitle(val string) {
 	p.Title = val
+}
+func (p *CreateApiReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateApiReq) IsSetPath() bool {
@@ -397,6 +412,10 @@ func (p *CreateApiReq) IsSetTitle() bool {
 	return p.Title != CreateApiReq_Title_DEFAULT
 }
 
+func (p *CreateApiReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateApiReq_CreatedId_DEFAULT
+}
+
 func (p *CreateApiReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -405,30 +424,33 @@ func (p *CreateApiReq) String() string {
 }
 
 var fieldIDToName_CreateApiReq = map[int16]string{
-	4: "path",
-	5: "desc",
-	6: "group",
-	7: "method",
-	8: "title",
+	4:   "path",
+	5:   "desc",
+	6:   "group",
+	7:   "method",
+	8:   "title",
+	256: "createdId",
 }
 
 type UpdateApiReq struct {
-	Id     int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Path   string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Desc   string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
-	Group  string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title  string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Path      string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group     string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method    string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title     string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateApiReq() *UpdateApiReq {
 	return &UpdateApiReq{
-		Id:     0,
-		Path:   "",
-		Desc:   "",
-		Group:  "",
-		Method: "",
-		Title:  "",
+		Id:        0,
+		Path:      "",
+		Desc:      "",
+		Group:     "",
+		Method:    "",
+		Title:     "",
+		CreatedId: 0,
 	}
 }
 
@@ -439,6 +461,7 @@ func (p *UpdateApiReq) InitDefault() {
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
+	p.CreatedId = 0
 }
 
 var UpdateApiReq_Id_DEFAULT int64 = 0
@@ -494,6 +517,15 @@ func (p *UpdateApiReq) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+var UpdateApiReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateApiReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateApiReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateApiReq) SetId(val int64) {
 	p.Id = val
 }
@@ -511,6 +543,9 @@ func (p *UpdateApiReq) SetMethod(val string) {
 }
 func (p *UpdateApiReq) SetTitle(val string) {
 	p.Title = val
+}
+func (p *UpdateApiReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateApiReq) IsSetId() bool {
@@ -537,6 +572,10 @@ func (p *UpdateApiReq) IsSetTitle() bool {
 	return p.Title != UpdateApiReq_Title_DEFAULT
 }
 
+func (p *UpdateApiReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateApiReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateApiReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -545,12 +584,13 @@ func (p *UpdateApiReq) String() string {
 }
 
 var fieldIDToName_UpdateApiReq = map[int16]string{
-	1: "id",
-	4: "path",
-	5: "desc",
-	6: "group",
-	7: "method",
-	8: "title",
+	1:   "id",
+	4:   "path",
+	5:   "desc",
+	6:   "group",
+	7:   "method",
+	8:   "title",
+	256: "createdId",
 }
 
 type CreateMenuReq struct {
@@ -567,6 +607,7 @@ type CreateMenuReq struct {
 	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
 	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateMenuReq() *CreateMenuReq {
@@ -584,6 +625,7 @@ func NewCreateMenuReq() *CreateMenuReq {
 		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
+		CreatedId: 0,
 	}
 }
 
@@ -601,6 +643,7 @@ func (p *CreateMenuReq) InitDefault() {
 	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
 }
 
 var CreateMenuReq_Name_DEFAULT string = ""
@@ -719,6 +762,15 @@ func (p *CreateMenuReq) GetUpdatedAt() (v string) {
 	}
 	return p.UpdatedAt
 }
+
+var CreateMenuReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateMenuReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateMenuReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateMenuReq) SetName(val string) {
 	p.Name = val
 }
@@ -757,6 +809,9 @@ func (p *CreateMenuReq) SetCreatedAt(val string) {
 }
 func (p *CreateMenuReq) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
+}
+func (p *CreateMenuReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateMenuReq) IsSetName() bool {
@@ -811,6 +866,10 @@ func (p *CreateMenuReq) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != CreateMenuReq_UpdatedAt_DEFAULT
 }
 
+func (p *CreateMenuReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateMenuReq_CreatedId_DEFAULT
+}
+
 func (p *CreateMenuReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -819,19 +878,20 @@ func (p *CreateMenuReq) String() string {
 }
 
 var fieldIDToName_CreateMenuReq = map[int16]string{
-	2:  "name",
-	3:  "parentId",
-	4:  "level",
-	5:  "path",
-	6:  "redirect",
-	7:  "component",
-	8:  "menuType",
-	9:  "orderNo",
-	10: "ignore",
-	11: "icon",
-	12: "status",
-	15: "createdAt",
-	16: "updatedAt",
+	2:   "name",
+	3:   "parentId",
+	4:   "level",
+	5:   "path",
+	6:   "redirect",
+	7:   "component",
+	8:   "menuType",
+	9:   "orderNo",
+	10:  "ignore",
+	11:  "icon",
+	12:  "status",
+	15:  "createdAt",
+	16:  "updatedAt",
+	256: "createdId",
 }
 
 type UpdateMenuReq struct {
@@ -849,6 +909,7 @@ type UpdateMenuReq struct {
 	Status    int64  `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
 	CreatedAt string `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateMenuReq() *UpdateMenuReq {
@@ -867,6 +928,7 @@ func NewUpdateMenuReq() *UpdateMenuReq {
 		Status:    0,
 		CreatedAt: "",
 		UpdatedAt: "",
+		CreatedId: 0,
 	}
 }
 
@@ -885,6 +947,7 @@ func (p *UpdateMenuReq) InitDefault() {
 	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
 }
 
 var UpdateMenuReq_Id_DEFAULT int64 = 0
@@ -1012,6 +1075,15 @@ func (p *UpdateMenuReq) GetUpdatedAt() (v string) {
 	}
 	return p.UpdatedAt
 }
+
+var UpdateMenuReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateMenuReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateMenuReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateMenuReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1053,6 +1125,9 @@ func (p *UpdateMenuReq) SetCreatedAt(val string) {
 }
 func (p *UpdateMenuReq) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
+}
+func (p *UpdateMenuReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateMenuReq) IsSetId() bool {
@@ -1111,6 +1186,10 @@ func (p *UpdateMenuReq) IsSetUpdatedAt() bool {
 	return p.UpdatedAt != UpdateMenuReq_UpdatedAt_DEFAULT
 }
 
+func (p *UpdateMenuReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateMenuReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateMenuReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1119,20 +1198,21 @@ func (p *UpdateMenuReq) String() string {
 }
 
 var fieldIDToName_UpdateMenuReq = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "parentId",
-	4:  "level",
-	5:  "path",
-	6:  "redirect",
-	7:  "component",
-	8:  "menuType",
-	9:  "orderNo",
-	10: "ignore",
-	11: "icon",
-	12: "status",
-	15: "createdAt",
-	16: "updatedAt",
+	1:   "id",
+	2:   "name",
+	3:   "parentId",
+	4:   "level",
+	5:   "path",
+	6:   "redirect",
+	7:   "component",
+	8:   "menuType",
+	9:   "orderNo",
+	10:  "ignore",
+	11:  "icon",
+	12:  "status",
+	15:  "createdAt",
+	16:  "updatedAt",
+	256: "createdId",
 }
 
 type MenuListReq struct {
@@ -1522,20 +1602,22 @@ var fieldIDToName_RoleListResp = map[int16]string{
 }
 
 type CreateRoleReq struct {
-	Id      int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code      string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc      string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo   int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
 	return &CreateRoleReq{
-		Id:      0,
-		Name:    "",
-		Code:    "",
-		Desc:    "",
-		OrderNo: 0,
+		Id:        0,
+		Name:      "",
+		Code:      "",
+		Desc:      "",
+		OrderNo:   0,
+		CreatedId: 0,
 	}
 }
 
@@ -1545,6 +1627,7 @@ func (p *CreateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.CreatedId = 0
 }
 
 var CreateRoleReq_Id_DEFAULT int64 = 0
@@ -1591,6 +1674,15 @@ func (p *CreateRoleReq) GetOrderNo() (v int64) {
 	}
 	return p.OrderNo
 }
+
+var CreateRoleReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateRoleReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateRoleReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateRoleReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1605,6 +1697,9 @@ func (p *CreateRoleReq) SetDesc(val string) {
 }
 func (p *CreateRoleReq) SetOrderNo(val int64) {
 	p.OrderNo = val
+}
+func (p *CreateRoleReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateRoleReq) IsSetId() bool {
@@ -1627,6 +1722,10 @@ func (p *CreateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != CreateRoleReq_OrderNo_DEFAULT
 }
 
+func (p *CreateRoleReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateRoleReq_CreatedId_DEFAULT
+}
+
 func (p *CreateRoleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1635,11 +1734,12 @@ func (p *CreateRoleReq) String() string {
 }
 
 var fieldIDToName_CreateRoleReq = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "code",
-	4: "desc",
-	5: "orderNo",
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "desc",
+	5:   "orderNo",
+	256: "createdId",
 }
 
 type GetRoleListReq struct {
@@ -1724,20 +1824,22 @@ var fieldIDToName_GetRoleListReq = map[int16]string{
 }
 
 type UpdateRoleReq struct {
-	Id      int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name    string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Code    string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	Desc    string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code      string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc      string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo   int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
 	return &UpdateRoleReq{
-		Id:      0,
-		Name:    "",
-		Code:    "",
-		Desc:    "",
-		OrderNo: 0,
+		Id:        0,
+		Name:      "",
+		Code:      "",
+		Desc:      "",
+		OrderNo:   0,
+		CreatedId: 0,
 	}
 }
 
@@ -1747,6 +1849,7 @@ func (p *UpdateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.CreatedId = 0
 }
 
 var UpdateRoleReq_Id_DEFAULT int64 = 0
@@ -1793,6 +1896,15 @@ func (p *UpdateRoleReq) GetOrderNo() (v int64) {
 	}
 	return p.OrderNo
 }
+
+var UpdateRoleReq_CreatedId_DEFAULT int64 = 0
+
+func (p *UpdateRoleReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return UpdateRoleReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *UpdateRoleReq) SetId(val int64) {
 	p.Id = val
 }
@@ -1807,6 +1919,9 @@ func (p *UpdateRoleReq) SetDesc(val string) {
 }
 func (p *UpdateRoleReq) SetOrderNo(val int64) {
 	p.OrderNo = val
+}
+func (p *UpdateRoleReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *UpdateRoleReq) IsSetId() bool {
@@ -1829,6 +1944,10 @@ func (p *UpdateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != UpdateRoleReq_OrderNo_DEFAULT
 }
 
+func (p *UpdateRoleReq) IsSetCreatedId() bool {
+	return p.CreatedId != UpdateRoleReq_CreatedId_DEFAULT
+}
+
 func (p *UpdateRoleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1837,28 +1956,32 @@ func (p *UpdateRoleReq) String() string {
 }
 
 var fieldIDToName_UpdateRoleReq = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "code",
-	4: "desc",
-	5: "orderNo",
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "desc",
+	5:   "orderNo",
+	256: "createdId",
 }
 
 type CreateMenuAuthReq struct {
-	RoleId int64   `thrift:"roleId,1,optional" frugal:"1,optional,i64" json:"roleId,omitempty"`
-	Ids    []int64 `thrift:"Ids,2,optional" frugal:"2,optional,list<i64>" json:"Ids,omitempty"`
+	RoleId    int64   `thrift:"roleId,1,optional" frugal:"1,optional,i64" json:"roleId,omitempty"`
+	Ids       []int64 `thrift:"Ids,2,optional" frugal:"2,optional,list<i64>" json:"Ids,omitempty"`
+	CreatedId int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateMenuAuthReq() *CreateMenuAuthReq {
 	return &CreateMenuAuthReq{
-		RoleId: 0,
-		Ids:    []int64{},
+		RoleId:    0,
+		Ids:       []int64{},
+		CreatedId: 0,
 	}
 }
 
 func (p *CreateMenuAuthReq) InitDefault() {
 	p.RoleId = 0
 	p.Ids = []int64{}
+	p.CreatedId = 0
 }
 
 var CreateMenuAuthReq_RoleId_DEFAULT int64 = 0
@@ -1878,11 +2001,23 @@ func (p *CreateMenuAuthReq) GetIds() (v []int64) {
 	}
 	return p.Ids
 }
+
+var CreateMenuAuthReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CreateMenuAuthReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CreateMenuAuthReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *CreateMenuAuthReq) SetRoleId(val int64) {
 	p.RoleId = val
 }
 func (p *CreateMenuAuthReq) SetIds(val []int64) {
 	p.Ids = val
+}
+func (p *CreateMenuAuthReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *CreateMenuAuthReq) IsSetRoleId() bool {
@@ -1893,6 +2028,10 @@ func (p *CreateMenuAuthReq) IsSetIds() bool {
 	return p.Ids != nil
 }
 
+func (p *CreateMenuAuthReq) IsSetCreatedId() bool {
+	return p.CreatedId != CreateMenuAuthReq_CreatedId_DEFAULT
+}
+
 func (p *CreateMenuAuthReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1901,8 +2040,9 @@ func (p *CreateMenuAuthReq) String() string {
 }
 
 var fieldIDToName_CreateMenuAuthReq = map[int16]string{
-	1: "roleId",
-	2: "Ids",
+	1:   "roleId",
+	2:   "Ids",
+	256: "createdId",
 }
 
 type DictListReq struct {

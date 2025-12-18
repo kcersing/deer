@@ -6,13 +6,15 @@ import (
 	"sync"
 
 	"gen/kitex_gen/crm/crmservice"
+
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+
+	"time"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	"time"
 )
 
 var CrmClient crmservice.Client
@@ -20,7 +22,7 @@ var CrmOnceClient sync.Once
 
 func initCrmRpc() {
 
-	crmOnceClient.Do(func() {
+	CrmOnceClient.Do(func() {
 
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {

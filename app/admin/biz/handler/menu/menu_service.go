@@ -3,6 +3,7 @@
 package menu
 
 import (
+	"admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
@@ -11,6 +12,7 @@ import (
 	menu "gen/hertz_gen/menu"
 	base1 "gen/kitex_gen/base"
 	"gen/kitex_gen/system"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
@@ -39,6 +41,7 @@ func CreateMenu(ctx context.Context, c *app.RequestContext) {
 		OrderNo:   req.GetOrderNo(),
 		Ignore:    req.GetIgnore(),
 		Icon:      req.GetIcon(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -73,6 +76,7 @@ func UpdateMenu(ctx context.Context, c *app.RequestContext) {
 		OrderNo:   req.GetOrderNo(),
 		Ignore:    req.GetIgnore(),
 		Icon:      req.GetIcon(),
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

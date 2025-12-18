@@ -807,6 +807,8 @@ type FollowUpRecord struct {
 	Record string `thrift:"record,10,optional" form:"record" json:"record,omitempty" query:"record"`
 	//跟进商机
 	OpportunitiesId int64 `thrift:"opportunitiesId,11,optional" form:"opportunitiesId" json:"opportunitiesId,omitempty" query:"opportunitiesId"`
+	// 12:optional i64 AAA=0, //跟进主体
+	CreatedId string `thrift:"createdId,256" form:"createdId" json:"createdId" query:"createdId"`
 }
 
 func NewFollowUpRecord() *FollowUpRecord {
@@ -822,6 +824,7 @@ func NewFollowUpRecord() *FollowUpRecord {
 		UpdatedAt:       "",
 		Record:          "",
 		OpportunitiesId: 0,
+		CreatedId:       "",
 	}
 }
 
@@ -837,6 +840,7 @@ func (p *FollowUpRecord) InitDefault() {
 	p.UpdatedAt = ""
 	p.Record = ""
 	p.OpportunitiesId = 0
+	p.CreatedId = ""
 }
 
 var FollowUpRecord_ID_DEFAULT int64 = 0
@@ -938,18 +942,23 @@ func (p *FollowUpRecord) GetOpportunitiesId() (v int64) {
 	return p.OpportunitiesId
 }
 
+func (p *FollowUpRecord) GetCreatedId() (v string) {
+	return p.CreatedId
+}
+
 var fieldIDToName_FollowUpRecord = map[int16]string{
-	1:  "id",
-	2:  "content",
-	3:  "followUpId",
-	4:  "method",
-	5:  "status",
-	6:  "userId",
-	7:  "division",
-	8:  "createdAt",
-	9:  "updatedAt",
-	10: "record",
-	11: "opportunitiesId",
+	1:   "id",
+	2:   "content",
+	3:   "followUpId",
+	4:   "method",
+	5:   "status",
+	6:   "userId",
+	7:   "division",
+	8:   "createdAt",
+	9:   "updatedAt",
+	10:  "record",
+	11:  "opportunitiesId",
+	256: "createdId",
 }
 
 func (p *FollowUpRecord) IsSetID() bool {
@@ -1098,6 +1107,14 @@ func (p *FollowUpRecord) Read(iprot thrift.TProtocol) (err error) {
 		case 11:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField256(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1253,6 +1270,17 @@ func (p *FollowUpRecord) ReadField11(iprot thrift.TProtocol) error {
 	p.OpportunitiesId = _field
 	return nil
 }
+func (p *FollowUpRecord) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
 
 func (p *FollowUpRecord) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1302,6 +1330,10 @@ func (p *FollowUpRecord) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField11(oprot); err != nil {
 			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
 			goto WriteFieldError
 		}
 	}
@@ -1531,6 +1563,23 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
 }
 
+func (p *FollowUpRecord) writeField256(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("createdId", thrift.STRING, 256); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.CreatedId); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
 func (p *FollowUpRecord) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1559,7 +1608,8 @@ type Opportunities struct {
 	//更新时间
 	UpdatedAt string `thrift:"updatedAt,10,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
 	//标题
-	Title string `thrift:"title,11,optional" form:"title" json:"title,omitempty" query:"title"`
+	Title     string `thrift:"title,11,optional" form:"title" json:"title,omitempty" query:"title"`
+	CreatedId string `thrift:"createdId,256" form:"createdId" json:"createdId" query:"createdId"`
 }
 
 func NewOpportunities() *Opportunities {
@@ -1575,6 +1625,7 @@ func NewOpportunities() *Opportunities {
 		CreatedAt:        "",
 		UpdatedAt:        "",
 		Title:            "",
+		CreatedId:        "",
 	}
 }
 
@@ -1590,6 +1641,7 @@ func (p *Opportunities) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
+	p.CreatedId = ""
 }
 
 var Opportunities_ID_DEFAULT int64 = 0
@@ -1691,18 +1743,23 @@ func (p *Opportunities) GetTitle() (v string) {
 	return p.Title
 }
 
+func (p *Opportunities) GetCreatedId() (v string) {
+	return p.CreatedId
+}
+
 var fieldIDToName_Opportunities = map[int16]string{
-	1:  "id",
-	2:  "memberId",
-	3:  "userId",
-	4:  "period",
-	5:  "periodTime",
-	6:  "winRate",
-	7:  "content",
-	8:  "predictionAmount",
-	9:  "createdAt",
-	10: "updatedAt",
-	11: "title",
+	1:   "id",
+	2:   "memberId",
+	3:   "userId",
+	4:   "period",
+	5:   "periodTime",
+	6:   "winRate",
+	7:   "content",
+	8:   "predictionAmount",
+	9:   "createdAt",
+	10:  "updatedAt",
+	11:  "title",
+	256: "createdId",
 }
 
 func (p *Opportunities) IsSetID() bool {
@@ -1851,6 +1908,14 @@ func (p *Opportunities) Read(iprot thrift.TProtocol) (err error) {
 		case 11:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField256(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2006,6 +2071,17 @@ func (p *Opportunities) ReadField11(iprot thrift.TProtocol) error {
 	p.Title = _field
 	return nil
 }
+func (p *Opportunities) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
 
 func (p *Opportunities) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -2055,6 +2131,10 @@ func (p *Opportunities) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField11(oprot); err != nil {
 			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
 			goto WriteFieldError
 		}
 	}
@@ -2282,6 +2362,23 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+
+func (p *Opportunities) writeField256(oprot thrift.TProtocol) (err error) {
+	if err = oprot.WriteFieldBegin("createdId", thrift.STRING, 256); err != nil {
+		goto WriteFieldBeginError
+	}
+	if err := oprot.WriteString(p.CreatedId); err != nil {
+		return err
+	}
+	if err = oprot.WriteFieldEnd(); err != nil {
+		goto WriteFieldEndError
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
 }
 
 func (p *Opportunities) String() string {

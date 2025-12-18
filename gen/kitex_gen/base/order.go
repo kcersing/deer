@@ -109,7 +109,6 @@ var fieldIDToName_OrderItem = map[int16]string{
 
 type Order struct {
 	MemberId        int64        `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	CreatedId       int64        `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
 	Items           []*OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<OrderItem>" json:"items,omitempty"`
 	Sn              string       `thrift:"sn,4,optional" frugal:"4,optional,string" json:"sn,omitempty"`
 	TotalAmount     int64        `thrift:"totalAmount,5,optional" frugal:"5,optional,i64" json:"totalAmount,omitempty"`
@@ -123,12 +122,13 @@ type Order struct {
 	OrderPays       []*OrderPay  `thrift:"orderPays,13,optional" frugal:"13,optional,list<OrderPay>" json:"orderPays,omitempty"`
 	OrderRefund     *OrderRefund `thrift:"orderRefund,14,optional" frugal:"14,optional,OrderRefund" json:"orderRefund,omitempty"`
 	Id              int64        `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
+	CreatedId       int64        `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName     string       `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewOrder() *Order {
 	return &Order{
 		MemberId:        0,
-		CreatedId:       0,
 		Items:           []*OrderItem{},
 		Sn:              "",
 		TotalAmount:     0,
@@ -142,12 +142,13 @@ func NewOrder() *Order {
 		OrderPays:       []*OrderPay{},
 		OrderRefund:     &OrderRefund{},
 		Id:              0,
+		CreatedId:       0,
+		CreatedName:     "",
 	}
 }
 
 func (p *Order) InitDefault() {
 	p.MemberId = 0
-	p.CreatedId = 0
 	p.Items = []*OrderItem{}
 	p.Sn = ""
 	p.TotalAmount = 0
@@ -161,6 +162,8 @@ func (p *Order) InitDefault() {
 	p.OrderPays = []*OrderPay{}
 	p.OrderRefund = &OrderRefund{}
 	p.Id = 0
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Order_MemberId_DEFAULT int64 = 0
@@ -170,15 +173,6 @@ func (p *Order) GetMemberId() (v int64) {
 		return Order_MemberId_DEFAULT
 	}
 	return p.MemberId
-}
-
-var Order_CreatedId_DEFAULT int64 = 0
-
-func (p *Order) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return Order_CreatedId_DEFAULT
-	}
-	return p.CreatedId
 }
 
 var Order_Items_DEFAULT []*OrderItem = []*OrderItem{}
@@ -297,11 +291,26 @@ func (p *Order) GetId() (v int64) {
 	}
 	return p.Id
 }
+
+var Order_CreatedId_DEFAULT int64 = 0
+
+func (p *Order) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Order_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Order_CreatedName_DEFAULT string = ""
+
+func (p *Order) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Order_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Order) SetMemberId(val int64) {
 	p.MemberId = val
-}
-func (p *Order) SetCreatedId(val int64) {
-	p.CreatedId = val
 }
 func (p *Order) SetItems(val []*OrderItem) {
 	p.Items = val
@@ -342,13 +351,15 @@ func (p *Order) SetOrderRefund(val *OrderRefund) {
 func (p *Order) SetId(val int64) {
 	p.Id = val
 }
+func (p *Order) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Order) SetCreatedName(val string) {
+	p.CreatedName = val
+}
 
 func (p *Order) IsSetMemberId() bool {
 	return p.MemberId != Order_MemberId_DEFAULT
-}
-
-func (p *Order) IsSetCreatedId() bool {
-	return p.CreatedId != Order_CreatedId_DEFAULT
 }
 
 func (p *Order) IsSetItems() bool {
@@ -403,6 +414,14 @@ func (p *Order) IsSetId() bool {
 	return p.Id != Order_Id_DEFAULT
 }
 
+func (p *Order) IsSetCreatedId() bool {
+	return p.CreatedId != Order_CreatedId_DEFAULT
+}
+
+func (p *Order) IsSetCreatedName() bool {
+	return p.CreatedName != Order_CreatedName_DEFAULT
+}
+
 func (p *Order) String() string {
 	if p == nil {
 		return "<nil>"
@@ -412,7 +431,6 @@ func (p *Order) String() string {
 
 var fieldIDToName_Order = map[int16]string{
 	1:   "memberId",
-	2:   "createdId",
 	3:   "items",
 	4:   "sn",
 	5:   "totalAmount",
@@ -426,6 +444,8 @@ var fieldIDToName_Order = map[int16]string{
 	13:  "orderPays",
 	14:  "orderRefund",
 	254: "id",
+	256: "createdId",
+	257: "createdName",
 }
 
 type OrderRefund struct {

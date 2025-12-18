@@ -21,7 +21,9 @@ struct User {
 
      251:optional string createdAt="",
      252:optional string updatedAt="",
-     253:optional i64 createdId=0,
+     256:optional i64 createdId=0,
+     257:optional  string createdName="" ,
+
 }
 
 struct Departments {
@@ -34,7 +36,8 @@ struct Departments {
      8:optional list<Departments> children=[]  (api.raw = "children")
      251:optional string createdAt="",
      252:optional string updatedAt="",
-     253:optional i64 createdId=0,
+     256:optional i64 createdId=0,
+     257:optional  string createdName="" ,
 
 }
 struct Positions {
@@ -49,6 +52,7 @@ struct Positions {
      10:optional list<Positions> children=[]  (api.raw = "children")
      251:optional string createdAt="",
      252:optional string updatedAt="",
-     253:optional i64 createdId=0,
+     256:optional i64 createdId=0,
+     257:optional  string createdName="" ,
 }
 

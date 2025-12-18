@@ -18,7 +18,7 @@ kitex_gen_order:
 hertz_gen_facade:
 	hz model --idl=../idl/admin/user.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/product.thrift --mod=gen --model_dir=hertz_gen
-	hz model --idl=../idl/facade/member.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/member.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/order.thrift --mod=gen --model_dir=hertz_gen
 
 	hz model --idl=../idl/admin/dict.thrift --mod=gen --model_dir=hertz_gen

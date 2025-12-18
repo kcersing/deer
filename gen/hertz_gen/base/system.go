@@ -8,26 +8,30 @@ import (
 )
 
 type Api struct {
-	ID        int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	CreatedAt string `thrift:"createdAt,2,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,3,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
-	Path      string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
-	Desc      string `thrift:"desc,5,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	Group     string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
-	Method    string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
-	Title     string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
+	ID          int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	CreatedAt   string `thrift:"createdAt,2,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,3,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
+	Path        string `thrift:"path,4,optional" form:"path" json:"path,omitempty" query:"path"`
+	Desc        string `thrift:"desc,5,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	Group       string `thrift:"group,6,optional" form:"group" json:"group,omitempty" query:"group"`
+	Method      string `thrift:"method,7,optional" form:"method" json:"method,omitempty" query:"method"`
+	Title       string `thrift:"title,8,optional" form:"title" json:"title,omitempty" query:"title"`
+	CreatedId   int64  `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewApi() *Api {
 	return &Api{
-		ID:        0,
-		CreatedAt: "",
-		UpdatedAt: "",
-		Path:      "",
-		Desc:      "",
-		Group:     "",
-		Method:    "",
-		Title:     "",
+		ID:          0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Path:        "",
+		Desc:        "",
+		Group:       "",
+		Method:      "",
+		Title:       "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -40,6 +44,8 @@ func (p *Api) InitDefault() {
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Api_ID_DEFAULT int64 = 0
@@ -114,15 +120,35 @@ func (p *Api) GetTitle() (v string) {
 	return p.Title
 }
 
+var Api_CreatedId_DEFAULT int64 = 0
+
+func (p *Api) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Api_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Api_CreatedName_DEFAULT string = ""
+
+func (p *Api) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Api_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Api = map[int16]string{
-	1: "id",
-	2: "createdAt",
-	3: "updatedAt",
-	4: "path",
-	5: "desc",
-	6: "group",
-	7: "method",
-	8: "title",
+	1:   "id",
+	2:   "createdAt",
+	3:   "updatedAt",
+	4:   "path",
+	5:   "desc",
+	6:   "group",
+	7:   "method",
+	8:   "title",
+	256: "createdId",
+	257: "createdName",
 }
 
 func (p *Api) IsSetID() bool {
@@ -155,6 +181,14 @@ func (p *Api) IsSetMethod() bool {
 
 func (p *Api) IsSetTitle() bool {
 	return p.Title != Api_Title_DEFAULT
+}
+
+func (p *Api) IsSetCreatedId() bool {
+	return p.CreatedId != Api_CreatedId_DEFAULT
+}
+
+func (p *Api) IsSetCreatedName() bool {
+	return p.CreatedName != Api_CreatedName_DEFAULT
 }
 
 func (p *Api) Read(iprot thrift.TProtocol) (err error) {
@@ -235,6 +269,22 @@ func (p *Api) Read(iprot thrift.TProtocol) (err error) {
 		case 8:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -357,6 +407,28 @@ func (p *Api) ReadField8(iprot thrift.TProtocol) error {
 	p.Title = _field
 	return nil
 }
+func (p *Api) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
+func (p *Api) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
+	return nil
+}
 
 func (p *Api) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -394,6 +466,14 @@ func (p *Api) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField8(oprot); err != nil {
 			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -566,6 +646,44 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
 }
 
+func (p *Api) writeField256(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Api) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
+}
+
 func (p *Api) String() string {
 	if p == nil {
 		return "<nil>"
@@ -575,36 +693,40 @@ func (p *Api) String() string {
 }
 
 type Menu struct {
-	ID        int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Name      string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name" vd:"len($) > 0 && len($) < 33>"`
-	ParentId  int64   `thrift:"parentId,3,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
-	Level     int64   `thrift:"level,4,optional" form:"level" json:"level,omitempty" query:"level"`
-	Path      string  `thrift:"path,5,optional" form:"path" json:"path,omitempty" query:"path"`
-	Redirect  string  `thrift:"redirect,6,optional" form:"redirect" json:"redirect,omitempty" query:"redirect"`
-	Component string  `thrift:"component,7,optional" form:"component" json:"component,omitempty" query:"component"`
-	MenuType  int64   `thrift:"menuType,8,optional" form:"menuType" json:"menuType,omitempty" query:"menuType"`
-	Status    int64   `thrift:"status,12,optional" form:"status" json:"status,omitempty" query:"status"`
-	Children  []*Menu `thrift:"children,14,optional,list<Menu>" form:"children" json:"children,omitempty" query:"children"`
-	CreatedAt string  `thrift:"createdAt,15,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
-	UpdatedAt string  `thrift:"updatedAt,16,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
-	Icon      string  `thrift:"icon,20,optional" form:"icon" json:"icon,omitempty" query:"icon"`
+	ID          int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Name        string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name" vd:"len($) > 0 && len($) < 33>"`
+	ParentId    int64   `thrift:"parentId,3,optional" form:"parentId" json:"parentId,omitempty" query:"parentId"`
+	Level       int64   `thrift:"level,4,optional" form:"level" json:"level,omitempty" query:"level"`
+	Path        string  `thrift:"path,5,optional" form:"path" json:"path,omitempty" query:"path"`
+	Redirect    string  `thrift:"redirect,6,optional" form:"redirect" json:"redirect,omitempty" query:"redirect"`
+	Component   string  `thrift:"component,7,optional" form:"component" json:"component,omitempty" query:"component"`
+	MenuType    int64   `thrift:"menuType,8,optional" form:"menuType" json:"menuType,omitempty" query:"menuType"`
+	Status      int64   `thrift:"status,12,optional" form:"status" json:"status,omitempty" query:"status"`
+	Children    []*Menu `thrift:"children,14,optional,list<Menu>" form:"children" json:"children,omitempty" query:"children"`
+	CreatedAt   string  `thrift:"createdAt,15,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
+	UpdatedAt   string  `thrift:"updatedAt,16,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
+	Icon        string  `thrift:"icon,20,optional" form:"icon" json:"icon,omitempty" query:"icon"`
+	CreatedId   int64   `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string  `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewMenu() *Menu {
 	return &Menu{
-		ID:        0,
-		Name:      "",
-		ParentId:  0,
-		Level:     0,
-		Path:      "",
-		Redirect:  "",
-		Component: "",
-		MenuType:  0,
-		Status:    0,
-		Children:  []*Menu{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		Icon:      "",
+		ID:          0,
+		Name:        "",
+		ParentId:    0,
+		Level:       0,
+		Path:        "",
+		Redirect:    "",
+		Component:   "",
+		MenuType:    0,
+		Status:      0,
+		Children:    []*Menu{},
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Icon:        "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -622,6 +744,8 @@ func (p *Menu) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Icon = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Menu_ID_DEFAULT int64 = 0
@@ -741,20 +865,40 @@ func (p *Menu) GetIcon() (v string) {
 	return p.Icon
 }
 
+var Menu_CreatedId_DEFAULT int64 = 0
+
+func (p *Menu) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Menu_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Menu_CreatedName_DEFAULT string = ""
+
+func (p *Menu) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Menu_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Menu = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "parentId",
-	4:  "level",
-	5:  "path",
-	6:  "redirect",
-	7:  "component",
-	8:  "menuType",
-	12: "status",
-	14: "children",
-	15: "createdAt",
-	16: "updatedAt",
-	20: "icon",
+	1:   "id",
+	2:   "name",
+	3:   "parentId",
+	4:   "level",
+	5:   "path",
+	6:   "redirect",
+	7:   "component",
+	8:   "menuType",
+	12:  "status",
+	14:  "children",
+	15:  "createdAt",
+	16:  "updatedAt",
+	20:  "icon",
+	256: "createdId",
+	257: "createdName",
 }
 
 func (p *Menu) IsSetID() bool {
@@ -807,6 +951,14 @@ func (p *Menu) IsSetUpdatedAt() bool {
 
 func (p *Menu) IsSetIcon() bool {
 	return p.Icon != Menu_Icon_DEFAULT
+}
+
+func (p *Menu) IsSetCreatedId() bool {
+	return p.CreatedId != Menu_CreatedId_DEFAULT
+}
+
+func (p *Menu) IsSetCreatedName() bool {
+	return p.CreatedName != Menu_CreatedName_DEFAULT
 }
 
 func (p *Menu) Read(iprot thrift.TProtocol) (err error) {
@@ -927,6 +1079,22 @@ func (p *Menu) Read(iprot thrift.TProtocol) (err error) {
 		case 20:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField20(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1116,6 +1284,28 @@ func (p *Menu) ReadField20(iprot thrift.TProtocol) error {
 	p.Icon = _field
 	return nil
 }
+func (p *Menu) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
+func (p *Menu) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
+	return nil
+}
 
 func (p *Menu) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1173,6 +1363,14 @@ func (p *Menu) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField20(oprot); err != nil {
 			fieldId = 20
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -1448,6 +1646,44 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 20 end error: ", p), err)
 }
 
+func (p *Menu) writeField256(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Menu) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
+}
+
 func (p *Menu) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1457,24 +1693,28 @@ func (p *Menu) String() string {
 }
 
 type Role struct {
-	ID      int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Name    string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
-	Code    string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
-	Desc    string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64   `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
-	Apis    []int64 `thrift:"apis,6,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
-	Menus   []int64 `thrift:"menus,7,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
+	ID          int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Name        string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
+	Code        string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
+	Desc        string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	OrderNo     int64   `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
+	Apis        []int64 `thrift:"apis,6,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
+	Menus       []int64 `thrift:"menus,7,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
+	CreatedId   int64   `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string  `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewRole() *Role {
 	return &Role{
-		ID:      0,
-		Name:    "",
-		Code:    "",
-		Desc:    "",
-		OrderNo: 0,
-		Apis:    []int64{},
-		Menus:   []int64{},
+		ID:          0,
+		Name:        "",
+		Code:        "",
+		Desc:        "",
+		OrderNo:     0,
+		Apis:        []int64{},
+		Menus:       []int64{},
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -1486,6 +1726,8 @@ func (p *Role) InitDefault() {
 	p.OrderNo = 0
 	p.Apis = []int64{}
 	p.Menus = []int64{}
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Role_ID_DEFAULT int64 = 0
@@ -1551,14 +1793,34 @@ func (p *Role) GetMenus() (v []int64) {
 	return p.Menus
 }
 
+var Role_CreatedId_DEFAULT int64 = 0
+
+func (p *Role) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Role_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Role_CreatedName_DEFAULT string = ""
+
+func (p *Role) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Role_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Role = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "code",
-	4: "desc",
-	5: "orderNo",
-	6: "apis",
-	7: "menus",
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "desc",
+	5:   "orderNo",
+	6:   "apis",
+	7:   "menus",
+	256: "createdId",
+	257: "createdName",
 }
 
 func (p *Role) IsSetID() bool {
@@ -1587,6 +1849,14 @@ func (p *Role) IsSetApis() bool {
 
 func (p *Role) IsSetMenus() bool {
 	return p.Menus != nil
+}
+
+func (p *Role) IsSetCreatedId() bool {
+	return p.CreatedId != Role_CreatedId_DEFAULT
+}
+
+func (p *Role) IsSetCreatedName() bool {
+	return p.CreatedName != Role_CreatedName_DEFAULT
 }
 
 func (p *Role) Read(iprot thrift.TProtocol) (err error) {
@@ -1659,6 +1929,22 @@ func (p *Role) Read(iprot thrift.TProtocol) (err error) {
 		case 7:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1794,6 +2080,28 @@ func (p *Role) ReadField7(iprot thrift.TProtocol) error {
 	p.Menus = _field
 	return nil
 }
+func (p *Role) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
+func (p *Role) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
+	return nil
+}
 
 func (p *Role) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1827,6 +2135,14 @@ func (p *Role) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField7(oprot); err != nil {
 			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -1996,6 +2312,44 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
 }
 
+func (p *Role) writeField256(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Role) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
+}
+
 func (p *Role) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2006,24 +2360,28 @@ func (p *Role) String() string {
 
 // 字典信息
 type Dict struct {
-	ID        int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
-	Title     string `thrift:"title,2" form:"title" json:"title" query:"title"`
-	Code      string `thrift:"code,3" form:"code" json:"code" query:"code"`
-	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
-	Desc      string `thrift:"desc,6" form:"desc" json:"desc" query:"desc"`
-	CreatedAt string `thrift:"createdAt,7" form:"createdAt" json:"createdAt" query:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,8" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
+	ID          int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
+	Title       string `thrift:"title,2" form:"title" json:"title" query:"title"`
+	Code        string `thrift:"code,3" form:"code" json:"code" query:"code"`
+	Status      int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
+	Desc        string `thrift:"desc,6" form:"desc" json:"desc" query:"desc"`
+	CreatedAt   string `thrift:"createdAt,7" form:"createdAt" json:"createdAt" query:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,8" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
+	CreatedId   int64  `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewDict() *Dict {
 	return &Dict{
-		ID:        0,
-		Title:     "",
-		Code:      "",
-		Status:    0,
-		Desc:      "",
-		CreatedAt: "",
-		UpdatedAt: "",
+		ID:          0,
+		Title:       "",
+		Code:        "",
+		Status:      0,
+		Desc:        "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -2035,6 +2393,8 @@ func (p *Dict) InitDefault() {
 	p.Desc = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 func (p *Dict) GetID() (v int64) {
@@ -2065,14 +2425,42 @@ func (p *Dict) GetUpdatedAt() (v string) {
 	return p.UpdatedAt
 }
 
+var Dict_CreatedId_DEFAULT int64 = 0
+
+func (p *Dict) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Dict_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Dict_CreatedName_DEFAULT string = ""
+
+func (p *Dict) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Dict_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Dict = map[int16]string{
-	1: "id",
-	2: "title",
-	3: "code",
-	5: "status",
-	6: "desc",
-	7: "createdAt",
-	8: "updatedAt",
+	1:   "id",
+	2:   "title",
+	3:   "code",
+	5:   "status",
+	6:   "desc",
+	7:   "createdAt",
+	8:   "updatedAt",
+	256: "createdId",
+	257: "createdName",
+}
+
+func (p *Dict) IsSetCreatedId() bool {
+	return p.CreatedId != Dict_CreatedId_DEFAULT
+}
+
+func (p *Dict) IsSetCreatedName() bool {
+	return p.CreatedName != Dict_CreatedName_DEFAULT
 }
 
 func (p *Dict) Read(iprot thrift.TProtocol) (err error) {
@@ -2145,6 +2533,22 @@ func (p *Dict) Read(iprot thrift.TProtocol) (err error) {
 		case 8:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2256,6 +2660,28 @@ func (p *Dict) ReadField8(iprot thrift.TProtocol) error {
 	p.UpdatedAt = _field
 	return nil
 }
+func (p *Dict) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
+func (p *Dict) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
+	return nil
+}
 
 func (p *Dict) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -2289,6 +2715,14 @@ func (p *Dict) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField8(oprot); err != nil {
 			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -2428,6 +2862,44 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
 }
 
+func (p *Dict) writeField256(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Dict) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
+}
+
 func (p *Dict) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2438,23 +2910,27 @@ func (p *Dict) String() string {
 
 // 字典键值信息
 type Dictht struct {
-	ID        int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
-	Title     string `thrift:"title,2" form:"title" json:"title" query:"title"`
-	Value     string `thrift:"value,4" form:"value" json:"value" query:"value"`
-	Status    int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
-	CreatedAt string `thrift:"createdAt,6" form:"createdAt" json:"createdAt" query:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,7" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
-	DictId    int64  `thrift:"dictId,8" form:"dictId" json:"dictId" query:"dictId"`
+	ID          int64  `thrift:"id,1" form:"id" json:"id" query:"id"`
+	Title       string `thrift:"title,2" form:"title" json:"title" query:"title"`
+	Value       string `thrift:"value,4" form:"value" json:"value" query:"value"`
+	Status      int64  `thrift:"status,5" form:"status" json:"status" query:"status"`
+	CreatedAt   string `thrift:"createdAt,6" form:"createdAt" json:"createdAt" query:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,7" form:"updatedAt" json:"updatedAt" query:"updatedAt"`
+	DictId      int64  `thrift:"dictId,8" form:"dictId" json:"dictId" query:"dictId"`
+	CreatedId   int64  `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewDictht() *Dictht {
 	return &Dictht{
-		ID:        0,
-		Title:     "",
-		Value:     "",
-		Status:    0,
-		CreatedAt: "",
-		UpdatedAt: "",
+		ID:          0,
+		Title:       "",
+		Value:       "",
+		Status:      0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -2465,6 +2941,8 @@ func (p *Dictht) InitDefault() {
 	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 func (p *Dictht) GetID() (v int64) {
@@ -2495,14 +2973,42 @@ func (p *Dictht) GetDictId() (v int64) {
 	return p.DictId
 }
 
+var Dictht_CreatedId_DEFAULT int64 = 0
+
+func (p *Dictht) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Dictht_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Dictht_CreatedName_DEFAULT string = ""
+
+func (p *Dictht) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Dictht_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Dictht = map[int16]string{
-	1: "id",
-	2: "title",
-	4: "value",
-	5: "status",
-	6: "createdAt",
-	7: "updatedAt",
-	8: "dictId",
+	1:   "id",
+	2:   "title",
+	4:   "value",
+	5:   "status",
+	6:   "createdAt",
+	7:   "updatedAt",
+	8:   "dictId",
+	256: "createdId",
+	257: "createdName",
+}
+
+func (p *Dictht) IsSetCreatedId() bool {
+	return p.CreatedId != Dictht_CreatedId_DEFAULT
+}
+
+func (p *Dictht) IsSetCreatedName() bool {
+	return p.CreatedName != Dictht_CreatedName_DEFAULT
 }
 
 func (p *Dictht) Read(iprot thrift.TProtocol) (err error) {
@@ -2575,6 +3081,22 @@ func (p *Dictht) Read(iprot thrift.TProtocol) (err error) {
 		case 8:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField8(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 256:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2686,6 +3208,28 @@ func (p *Dictht) ReadField8(iprot thrift.TProtocol) error {
 	p.DictId = _field
 	return nil
 }
+func (p *Dictht) ReadField256(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedId = _field
+	return nil
+}
+func (p *Dictht) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
+	return nil
+}
 
 func (p *Dictht) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -2719,6 +3263,14 @@ func (p *Dictht) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField8(oprot); err != nil {
 			fieldId = 8
+			goto WriteFieldError
+		}
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -2856,6 +3408,44 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
+}
+
+func (p *Dictht) writeField256(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Dictht) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
 }
 
 func (p *Dictht) String() string {

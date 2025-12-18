@@ -32,6 +32,7 @@ struct FollowUpRecord {
      10:optional string record ="", //跟进记录
      11:optional i64 opportunitiesId=0, //跟进商机
      // 12:optional i64 AAA=0, //跟进主体
+    256:  string createdId="" (api.raw = "createdId" )
 }
 //商机
 struct Opportunities {
@@ -46,7 +47,7 @@ struct Opportunities {
      9:optional string createdAt="", //创建时间
      10:optional string updatedAt="", //更新时间
      11:optional string title ="", //标题
-
+   256:  string createdId="" (api.raw = "createdId" )
 //      预计成交日期
 //      协作人
 //      输单原因

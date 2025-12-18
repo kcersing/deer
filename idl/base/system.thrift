@@ -9,6 +9,8 @@ struct Api{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+   256:optional i64 createdId=0 (api.raw = "createdId" )
+   257:optional string createdName="" (api.raw = "createdName" )
 }
 
 struct Menu{
@@ -25,6 +27,8 @@ struct Menu{
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
     20:optional string icon="" (api.raw = "icon")
+   256:optional i64 createdId=0 (api.raw = "createdId" )
+   257:optional string createdName="" (api.raw = "createdName" )
 }
 
 struct Role {
@@ -35,6 +39,8 @@ struct Role {
     5:optional i64 orderNo=0(api.raw = "orderNo")
     6:optional list<i64> apis= [](api.raw = "apis")
     7:optional list<i64> menus= [](api.raw = "menus")
+   256:optional i64 createdId=0 (api.raw = "createdId" )
+   257:optional string createdName="" (api.raw = "createdName" )
 }
 
 // 字典信息
@@ -46,6 +52,9 @@ struct Dict {
     6:  string desc="" (api.raw = "desc" )
     7:  string createdAt="" (api.raw = "createdAt" )
     8:  string updatedAt="" (api.raw = "updatedAt" )
+   256:optional i64 createdId=0 (api.raw = "createdId" )
+   257:optional string createdName="" (api.raw = "createdName" )
+
 }
 
 // 字典键值信息
@@ -57,6 +66,8 @@ struct Dictht {
     6:  string createdAt="" (api.raw = "createdAt" )
     7:  string updatedAt="" (api.raw = "updatedAt" )
     8:  i64 dictId (api.raw = "dictId" )
+   256:optional i64 createdId=0 (api.raw = "createdId" )
+   257:optional string createdName="" (api.raw = "createdName" )
 }
 
 //日志信息

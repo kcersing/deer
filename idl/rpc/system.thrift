@@ -27,6 +27,7 @@ struct CreateApiReq{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 
 }
 struct UpdateApiReq{
@@ -36,6 +37,7 @@ struct UpdateApiReq{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 }
 struct CreateMenuReq{
     2:optional string name="" (api.raw = "name" api.vd = "len($) > 0 && len($) < 33>")
@@ -51,6 +53,7 @@ struct CreateMenuReq{
     12:optional i64 status=0 (api.raw = "status")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 
 }
 struct UpdateMenuReq{
@@ -68,6 +71,7 @@ struct UpdateMenuReq{
     12:optional i64 status=0 (api.raw = "status")
     15:optional string createdAt="" (api.raw = "createdAt")
     16:optional string updatedAt="" (api.raw = "updatedAt")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 }
 struct MenuListReq{
     1:  optional i64 page=1 (api.raw = "page")
@@ -102,6 +106,7 @@ struct CreateRoleReq{
     3:optional string code=""(api.raw = "code")
     4:optional string desc=""(api.raw = "desc")
     5:optional i64 orderNo=0(api.raw = "orderNo")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 }
 
 struct GetRoleListReq{
@@ -111,15 +116,17 @@ struct GetRoleListReq{
 }
 struct UpdateRoleReq {
     1:optional i64 id=0(api.raw = "id")
-        2:optional string name="" (api.raw = "name")
-        3:optional string code=""(api.raw = "code")
-        4:optional string desc=""(api.raw = "desc")
-        5:optional i64 orderNo=0(api.raw = "orderNo")
+    2:optional string name="" (api.raw = "name")
+    3:optional string code=""(api.raw = "code")
+    4:optional string desc=""(api.raw = "desc")
+    5:optional i64 orderNo=0(api.raw = "orderNo")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 
 }
 struct CreateMenuAuthReq{
     1:optional i64 roleId=0 (api.raw = "roleId")
     2:optional list<i64> Ids = [] (api.raw = "ids")
+    256:optional i64 createdId=0 (api.raw = "createdId")
 }
 
 

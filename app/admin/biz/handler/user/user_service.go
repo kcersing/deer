@@ -12,6 +12,7 @@ import (
 	user "gen/hertz_gen/user"
 	base1 "gen/kitex_gen/base"
 	user2 "gen/kitex_gen/user"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -25,9 +26,10 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
+	UserId := utils.GetTokenId(ctx, c)
 	resp, err := client.UserClient.CreateUser(ctx, &user2.CreateUserReq{
-		Username: req.GetUsername(),
+		Username:  req.GetUsername(),
+		CreatedId: UserId,
 	})
 
 	if err != nil {
@@ -107,7 +109,7 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
+	UserId := utils.GetTokenId(ctx, c)
 	resp, err := client.UserClient.UpdateUser(ctx, &user2.UpdateUserReq{
 		Id:            req.GetID(),
 		Avatar:        req.GetAvatar(),
@@ -119,6 +121,7 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		Desc:          req.GetDesc(),
 		DepartmentsId: req.GetDepartmentsId(),
 		PositionsId:   req.GetPositionsId(),
+		CreatedId:     UserId,
 	})
 
 	if err != nil {
@@ -184,10 +187,11 @@ func SetUserRole(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
+	UserId := utils.GetTokenId(ctx, c)
 	resp, err := client.UserClient.SetUserRole(ctx, &user2.SetUserRoleReq{
-		Id:     req.GetID(),
-		RoleId: req.GetRoleId(),
+		Id:        req.GetID(),
+		RoleId:    req.GetRoleId(),
+		CreatedId: UserId,
 	})
 
 	if err != nil {

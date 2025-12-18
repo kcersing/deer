@@ -24,7 +24,8 @@ type User struct {
 	PositionsId   int64   `thrift:"positionsId,16,optional" frugal:"16,optional,i64" json:"positionsId,omitempty"`
 	CreatedAt     string  `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt     string  `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId     int64   `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	CreatedId     int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName   string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewUser() *User {
@@ -47,6 +48,7 @@ func NewUser() *User {
 		CreatedAt:     "",
 		UpdatedAt:     "",
 		CreatedId:     0,
+		CreatedName:   "",
 	}
 }
 
@@ -69,6 +71,7 @@ func (p *User) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var User_Id_DEFAULT int64 = 0
@@ -232,6 +235,15 @@ func (p *User) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var User_CreatedName_DEFAULT string = ""
+
+func (p *User) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return User_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *User) SetId(val int64) {
 	p.Id = val
 }
@@ -285,6 +297,9 @@ func (p *User) SetUpdatedAt(val string) {
 }
 func (p *User) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *User) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *User) IsSetId() bool {
@@ -359,6 +374,10 @@ func (p *User) IsSetCreatedId() bool {
 	return p.CreatedId != User_CreatedId_DEFAULT
 }
 
+func (p *User) IsSetCreatedName() bool {
+	return p.CreatedName != User_CreatedName_DEFAULT
+}
+
 func (p *User) String() string {
 	if p == nil {
 		return "<nil>"
@@ -384,34 +403,37 @@ var fieldIDToName_User = map[int16]string{
 	16:  "positionsId",
 	251: "createdAt",
 	252: "updatedAt",
-	253: "createdId",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Departments struct {
-	Id        int64          `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string         `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ManagerId int64          `thrift:"managerId,3,optional" frugal:"3,optional,i64" json:"managerId,omitempty"`
-	ParentId  int64          `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
-	Desc      string         `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
-	Status    int64          `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Children  []*Departments `thrift:"children,8,optional" frugal:"8,optional,list<Departments>" json:"children,omitempty"`
-	CreatedAt string         `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string         `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId int64          `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	Id          int64          `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string         `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ManagerId   int64          `thrift:"managerId,3,optional" frugal:"3,optional,i64" json:"managerId,omitempty"`
+	ParentId    int64          `thrift:"parentId,4,optional" frugal:"4,optional,i64" json:"parentId,omitempty"`
+	Desc        string         `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Status      int64          `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Children    []*Departments `thrift:"children,8,optional" frugal:"8,optional,list<Departments>" json:"children,omitempty"`
+	CreatedAt   string         `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string         `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId   int64          `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string         `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewDepartments() *Departments {
 	return &Departments{
-		Id:        0,
-		Name:      "",
-		ManagerId: 0,
-		ParentId:  0,
-		Desc:      "",
-		Status:    0,
-		Children:  []*Departments{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
+		Id:          0,
+		Name:        "",
+		ManagerId:   0,
+		ParentId:    0,
+		Desc:        "",
+		Status:      0,
+		Children:    []*Departments{},
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -426,6 +448,7 @@ func (p *Departments) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Departments_Id_DEFAULT int64 = 0
@@ -517,6 +540,15 @@ func (p *Departments) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var Departments_CreatedName_DEFAULT string = ""
+
+func (p *Departments) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Departments_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Departments) SetId(val int64) {
 	p.Id = val
 }
@@ -546,6 +578,9 @@ func (p *Departments) SetUpdatedAt(val string) {
 }
 func (p *Departments) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *Departments) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Departments) IsSetId() bool {
@@ -588,6 +623,10 @@ func (p *Departments) IsSetCreatedId() bool {
 	return p.CreatedId != Departments_CreatedId_DEFAULT
 }
 
+func (p *Departments) IsSetCreatedName() bool {
+	return p.CreatedName != Departments_CreatedName_DEFAULT
+}
+
 func (p *Departments) String() string {
 	if p == nil {
 		return "<nil>"
@@ -605,7 +644,8 @@ var fieldIDToName_Departments = map[int16]string{
 	8:   "children",
 	251: "createdAt",
 	252: "updatedAt",
-	253: "createdId",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Positions struct {
@@ -620,7 +660,8 @@ type Positions struct {
 	Children     []*Positions `thrift:"children,10,optional" frugal:"10,optional,list<Positions>" json:"children,omitempty"`
 	CreatedAt    string       `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt    string       `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId    int64        `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	CreatedId    int64        `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName  string       `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewPositions() *Positions {
@@ -637,6 +678,7 @@ func NewPositions() *Positions {
 		CreatedAt:    "",
 		UpdatedAt:    "",
 		CreatedId:    0,
+		CreatedName:  "",
 	}
 }
 
@@ -653,6 +695,7 @@ func (p *Positions) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Positions_Id_DEFAULT int64 = 0
@@ -762,6 +805,15 @@ func (p *Positions) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var Positions_CreatedName_DEFAULT string = ""
+
+func (p *Positions) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Positions_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Positions) SetId(val int64) {
 	p.Id = val
 }
@@ -797,6 +849,9 @@ func (p *Positions) SetUpdatedAt(val string) {
 }
 func (p *Positions) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *Positions) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Positions) IsSetId() bool {
@@ -847,6 +902,10 @@ func (p *Positions) IsSetCreatedId() bool {
 	return p.CreatedId != Positions_CreatedId_DEFAULT
 }
 
+func (p *Positions) IsSetCreatedName() bool {
+	return p.CreatedName != Positions_CreatedName_DEFAULT
+}
+
 func (p *Positions) String() string {
 	if p == nil {
 		return "<nil>"
@@ -866,5 +925,6 @@ var fieldIDToName_Positions = map[int16]string{
 	10:  "children",
 	251: "createdAt",
 	252: "updatedAt",
-	253: "createdId",
+	256: "createdId",
+	257: "createdName",
 }

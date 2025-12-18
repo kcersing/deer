@@ -21,29 +21,33 @@ type Member struct {
 	//最后一次登录时间
 	LastAt string `thrift:"lastAt,11,optional" form:"lastAt" json:"lastAt,omitempty" query:"lastAt"`
 	//最后一次登录ip
-	LastIp    string `thrift:"lastIp,12,optional" form:"lastIp" json:"lastIp,omitempty" query:"lastIp"`
-	CreatedAt string `thrift:"createdAt,251,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,252,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
-	CreatedId int64  `thrift:"createdId,253,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	LastIp      string `thrift:"lastIp,12,optional" form:"lastIp" json:"lastIp,omitempty" query:"lastIp"`
+	Intention   int64  `thrift:"intention,13,optional" form:"intention" json:"intention,omitempty" query:"intention"`
+	CreatedAt   string `thrift:"createdAt,251,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,252,optional" form:"updatedAt" json:"updatedAt,omitempty" query:"updatedAt"`
+	CreatedId   int64  `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 }
 
 func NewMember() *Member {
 	return &Member{
-		ID:        0,
-		Username:  "",
-		Password:  "",
-		Avatar:    "",
-		Mobile:    "",
-		Name:      "",
-		Status:    0,
-		Level:     0,
-		Gender:    0,
-		Birthday:  "",
-		LastAt:    "",
-		LastIp:    "",
-		CreatedAt: "",
-		UpdatedAt: "",
-		CreatedId: 0,
+		ID:          0,
+		Username:    "",
+		Password:    "",
+		Avatar:      "",
+		Mobile:      "",
+		Name:        "",
+		Status:      0,
+		Level:       0,
+		Gender:      0,
+		Birthday:    "",
+		LastAt:      "",
+		LastIp:      "",
+		Intention:   0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -60,9 +64,11 @@ func (p *Member) InitDefault() {
 	p.Birthday = ""
 	p.LastAt = ""
 	p.LastIp = ""
+	p.Intention = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Member_ID_DEFAULT int64 = 0
@@ -173,6 +179,15 @@ func (p *Member) GetLastIp() (v string) {
 	return p.LastIp
 }
 
+var Member_Intention_DEFAULT int64 = 0
+
+func (p *Member) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return Member_Intention_DEFAULT
+	}
+	return p.Intention
+}
+
 var Member_CreatedAt_DEFAULT string = ""
 
 func (p *Member) GetCreatedAt() (v string) {
@@ -200,6 +215,15 @@ func (p *Member) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
+var Member_CreatedName_DEFAULT string = ""
+
+func (p *Member) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Member_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
 var fieldIDToName_Member = map[int16]string{
 	1:   "id",
 	2:   "username",
@@ -213,9 +237,11 @@ var fieldIDToName_Member = map[int16]string{
 	10:  "birthday",
 	11:  "lastAt",
 	12:  "lastIp",
+	13:  "intention",
 	251: "createdAt",
 	252: "updatedAt",
-	253: "createdId",
+	256: "createdId",
+	257: "createdName",
 }
 
 func (p *Member) IsSetID() bool {
@@ -266,6 +292,10 @@ func (p *Member) IsSetLastIp() bool {
 	return p.LastIp != Member_LastIp_DEFAULT
 }
 
+func (p *Member) IsSetIntention() bool {
+	return p.Intention != Member_Intention_DEFAULT
+}
+
 func (p *Member) IsSetCreatedAt() bool {
 	return p.CreatedAt != Member_CreatedAt_DEFAULT
 }
@@ -276,6 +306,10 @@ func (p *Member) IsSetUpdatedAt() bool {
 
 func (p *Member) IsSetCreatedId() bool {
 	return p.CreatedId != Member_CreatedId_DEFAULT
+}
+
+func (p *Member) IsSetCreatedName() bool {
+	return p.CreatedName != Member_CreatedName_DEFAULT
 }
 
 func (p *Member) Read(iprot thrift.TProtocol) (err error) {
@@ -393,6 +427,14 @@ func (p *Member) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
+		case 13:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField13(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
 		case 251:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField251(iprot); err != nil {
@@ -409,9 +451,17 @@ func (p *Member) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
-		case 253:
+		case 256:
 			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField253(iprot); err != nil {
+				if err = p.ReadField256(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 257:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField257(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -578,6 +628,17 @@ func (p *Member) ReadField12(iprot thrift.TProtocol) error {
 	p.LastIp = _field
 	return nil
 }
+func (p *Member) ReadField13(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Intention = _field
+	return nil
+}
 func (p *Member) ReadField251(iprot thrift.TProtocol) error {
 
 	var _field string
@@ -600,7 +661,7 @@ func (p *Member) ReadField252(iprot thrift.TProtocol) error {
 	p.UpdatedAt = _field
 	return nil
 }
-func (p *Member) ReadField253(iprot thrift.TProtocol) error {
+func (p *Member) ReadField256(iprot thrift.TProtocol) error {
 
 	var _field int64
 	if v, err := iprot.ReadI64(); err != nil {
@@ -609,6 +670,17 @@ func (p *Member) ReadField253(iprot thrift.TProtocol) error {
 		_field = v
 	}
 	p.CreatedId = _field
+	return nil
+}
+func (p *Member) ReadField257(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
 	return nil
 }
 
@@ -666,6 +738,10 @@ func (p *Member) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 12
 			goto WriteFieldError
 		}
+		if err = p.writeField13(oprot); err != nil {
+			fieldId = 13
+			goto WriteFieldError
+		}
 		if err = p.writeField251(oprot); err != nil {
 			fieldId = 251
 			goto WriteFieldError
@@ -674,8 +750,12 @@ func (p *Member) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 252
 			goto WriteFieldError
 		}
-		if err = p.writeField253(oprot); err != nil {
-			fieldId = 253
+		if err = p.writeField256(oprot); err != nil {
+			fieldId = 256
+			goto WriteFieldError
+		}
+		if err = p.writeField257(oprot); err != nil {
+			fieldId = 257
 			goto WriteFieldError
 		}
 	}
@@ -924,6 +1004,25 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
 }
 
+func (p *Member) writeField13(oprot thrift.TProtocol) (err error) {
+	if p.IsSetIntention() {
+		if err = oprot.WriteFieldBegin("intention", thrift.I64, 13); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Intention); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
+}
+
 func (p *Member) writeField251(oprot thrift.TProtocol) (err error) {
 	if p.IsSetCreatedAt() {
 		if err = oprot.WriteFieldBegin("createdAt", thrift.STRING, 251); err != nil {
@@ -962,9 +1061,9 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 252 end error: ", p), err)
 }
 
-func (p *Member) writeField253(oprot thrift.TProtocol) (err error) {
+func (p *Member) writeField256(oprot thrift.TProtocol) (err error) {
 	if p.IsSetCreatedId() {
-		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 253); err != nil {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 256); err != nil {
 			goto WriteFieldBeginError
 		}
 		if err := oprot.WriteI64(p.CreatedId); err != nil {
@@ -976,9 +1075,28 @@ func (p *Member) writeField253(oprot thrift.TProtocol) (err error) {
 	}
 	return nil
 WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 253 begin error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 begin error: ", p), err)
 WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 253 end error: ", p), err)
+	return thrift.PrependError(fmt.Sprintf("%T write field 256 end error: ", p), err)
+}
+
+func (p *Member) writeField257(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 257); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 257 end error: ", p), err)
 }
 
 func (p *Member) String() string {

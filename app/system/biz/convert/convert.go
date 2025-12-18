@@ -17,6 +17,7 @@ func EntToApi(e *ent.API) *base.Api {
 		Group:     e.Group,
 		Method:    e.Method,
 		Title:     e.Title,
+		CreatedId: e.CreatedID,
 	}
 }
 func EntToLog(e *ent.Logs) *base.Log {
@@ -52,15 +53,17 @@ func EntToMenu(e *ent.Menu) *base.Menu {
 		Status:    e.Status,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
+		CreatedId: e.CreatedID,
 	}
 }
 
 func EntToRole(e *ent.Role) *base.Role {
 	return &base.Role{
-		Id:   e.ID,
-		Name: e.Name,
-		Code: *e.Code,
-		Desc: e.Desc,
+		Id:        e.ID,
+		Name:      e.Name,
+		Code:      *e.Code,
+		Desc:      e.Desc,
+		CreatedId: e.CreatedID,
 	}
 }
 
@@ -70,6 +73,9 @@ func EntToDict(e *ent.Dict) *base.Dict {
 		Title:     e.Title,
 		Status:    e.Status,
 		Desc:      e.Desc,
+		Code:      e.Code,
+		CreatedId: e.CreatedID,
+		//CreatedName: e.CreatedName,
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
 	}
@@ -83,6 +89,7 @@ func EntToDictht(e *ent.Dictht) *base.Dictht {
 		CreatedAt: e.CreatedAt.Format(time.DateOnly),
 		UpdatedAt: e.UpdatedAt.Format(time.DateOnly),
 		DictId:    e.DictID,
+		CreatedId: e.CreatedID,
 	}
 }
 

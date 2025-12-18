@@ -35,6 +35,7 @@ struct UpdateMemberReq {
 struct ChangePasswordReq {
     1:optional i64 id=0,
     2:optional string password="",
+
 }
 service MemberService  {
 

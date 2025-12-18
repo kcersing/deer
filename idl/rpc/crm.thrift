@@ -72,6 +72,7 @@ struct CreateFollowUpRecordReq{
      7:optional i64 division=0,
      10:optional string record ="",
      11:optional i64 opportunitiesId=0,
+     256:optional i64 createdId=0,
 }
 struct UpdateFollowUpRecordReq{
     1:optional i64 id=0,
@@ -83,6 +84,7 @@ struct UpdateFollowUpRecordReq{
      7:optional i64 division=0,
      10:optional string record ="",
      11:optional i64 opportunitiesId=0,
+     256:optional i64 createdId=0,
 }
 struct FollowUpRecordListReq{
     1:optional i64 page=1
@@ -105,6 +107,7 @@ struct CreateOpportunitiesReq{
        7:optional string content="", // 内容
        8:optional i64 predictionAmount =0, //预测成交金额
        11:optional string title ="", //标题
+       256:optional i64 createdId=0,
 }
 struct UpdateOpportunitiesReq{
     1:optional i64 id=0,
@@ -114,6 +117,7 @@ struct UpdateOpportunitiesReq{
     7:optional string content="", // 内容
     8:optional i64 predictionAmount =0, //预测成交金额
     11:optional string title ="", //标题
+    256:optional i64 createdId=0,
 }
 struct OpportunitiesListReq{
     1:optional i64 page=1

@@ -7,26 +7,30 @@ import (
 )
 
 type Api struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	CreatedAt string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
-	Path      string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
-	Desc      string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
-	Group     string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
-	Method    string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
-	Title     string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	CreatedAt   string `thrift:"createdAt,2,optional" frugal:"2,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string `thrift:"updatedAt,3,optional" frugal:"3,optional,string" json:"updatedAt,omitempty"`
+	Path        string `thrift:"path,4,optional" frugal:"4,optional,string" json:"path,omitempty"`
+	Desc        string `thrift:"desc,5,optional" frugal:"5,optional,string" json:"desc,omitempty"`
+	Group       string `thrift:"group,6,optional" frugal:"6,optional,string" json:"group,omitempty"`
+	Method      string `thrift:"method,7,optional" frugal:"7,optional,string" json:"method,omitempty"`
+	Title       string `thrift:"title,8,optional" frugal:"8,optional,string" json:"title,omitempty"`
+	CreatedId   int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewApi() *Api {
 	return &Api{
-		Id:        0,
-		CreatedAt: "",
-		UpdatedAt: "",
-		Path:      "",
-		Desc:      "",
-		Group:     "",
-		Method:    "",
-		Title:     "",
+		Id:          0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Path:        "",
+		Desc:        "",
+		Group:       "",
+		Method:      "",
+		Title:       "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -39,6 +43,8 @@ func (p *Api) InitDefault() {
 	p.Group = ""
 	p.Method = ""
 	p.Title = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Api_Id_DEFAULT int64 = 0
@@ -112,6 +118,24 @@ func (p *Api) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+var Api_CreatedId_DEFAULT int64 = 0
+
+func (p *Api) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Api_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Api_CreatedName_DEFAULT string = ""
+
+func (p *Api) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Api_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Api) SetId(val int64) {
 	p.Id = val
 }
@@ -135,6 +159,12 @@ func (p *Api) SetMethod(val string) {
 }
 func (p *Api) SetTitle(val string) {
 	p.Title = val
+}
+func (p *Api) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Api) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Api) IsSetId() bool {
@@ -169,6 +199,14 @@ func (p *Api) IsSetTitle() bool {
 	return p.Title != Api_Title_DEFAULT
 }
 
+func (p *Api) IsSetCreatedId() bool {
+	return p.CreatedId != Api_CreatedId_DEFAULT
+}
+
+func (p *Api) IsSetCreatedName() bool {
+	return p.CreatedName != Api_CreatedName_DEFAULT
+}
+
 func (p *Api) String() string {
 	if p == nil {
 		return "<nil>"
@@ -177,47 +215,53 @@ func (p *Api) String() string {
 }
 
 var fieldIDToName_Api = map[int16]string{
-	1: "id",
-	2: "createdAt",
-	3: "updatedAt",
-	4: "path",
-	5: "desc",
-	6: "group",
-	7: "method",
-	8: "title",
+	1:   "id",
+	2:   "createdAt",
+	3:   "updatedAt",
+	4:   "path",
+	5:   "desc",
+	6:   "group",
+	7:   "method",
+	8:   "title",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Menu struct {
-	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	ParentId  int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
-	Level     int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
-	Path      string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
-	Redirect  string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
-	Component string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
-	MenuType  int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
-	Status    int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
-	Children  []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
-	CreatedAt string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
-	Icon      string  `thrift:"icon,20,optional" frugal:"20,optional,string" json:"icon,omitempty"`
+	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	ParentId    int64   `thrift:"parentId,3,optional" frugal:"3,optional,i64" json:"parentId,omitempty"`
+	Level       int64   `thrift:"level,4,optional" frugal:"4,optional,i64" json:"level,omitempty"`
+	Path        string  `thrift:"path,5,optional" frugal:"5,optional,string" json:"path,omitempty"`
+	Redirect    string  `thrift:"redirect,6,optional" frugal:"6,optional,string" json:"redirect,omitempty"`
+	Component   string  `thrift:"component,7,optional" frugal:"7,optional,string" json:"component,omitempty"`
+	MenuType    int64   `thrift:"menuType,8,optional" frugal:"8,optional,i64" json:"menuType,omitempty"`
+	Status      int64   `thrift:"status,12,optional" frugal:"12,optional,i64" json:"status,omitempty"`
+	Children    []*Menu `thrift:"children,14,optional" frugal:"14,optional,list<Menu>" json:"children,omitempty"`
+	CreatedAt   string  `thrift:"createdAt,15,optional" frugal:"15,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string  `thrift:"updatedAt,16,optional" frugal:"16,optional,string" json:"updatedAt,omitempty"`
+	Icon        string  `thrift:"icon,20,optional" frugal:"20,optional,string" json:"icon,omitempty"`
+	CreatedId   int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewMenu() *Menu {
 	return &Menu{
-		Id:        0,
-		Name:      "",
-		ParentId:  0,
-		Level:     0,
-		Path:      "",
-		Redirect:  "",
-		Component: "",
-		MenuType:  0,
-		Status:    0,
-		Children:  []*Menu{},
-		CreatedAt: "",
-		UpdatedAt: "",
-		Icon:      "",
+		Id:          0,
+		Name:        "",
+		ParentId:    0,
+		Level:       0,
+		Path:        "",
+		Redirect:    "",
+		Component:   "",
+		MenuType:    0,
+		Status:      0,
+		Children:    []*Menu{},
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Icon:        "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -235,6 +279,8 @@ func (p *Menu) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Icon = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Menu_Id_DEFAULT int64 = 0
@@ -353,6 +399,24 @@ func (p *Menu) GetIcon() (v string) {
 	}
 	return p.Icon
 }
+
+var Menu_CreatedId_DEFAULT int64 = 0
+
+func (p *Menu) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Menu_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Menu_CreatedName_DEFAULT string = ""
+
+func (p *Menu) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Menu_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Menu) SetId(val int64) {
 	p.Id = val
 }
@@ -391,6 +455,12 @@ func (p *Menu) SetUpdatedAt(val string) {
 }
 func (p *Menu) SetIcon(val string) {
 	p.Icon = val
+}
+func (p *Menu) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Menu) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Menu) IsSetId() bool {
@@ -445,6 +515,14 @@ func (p *Menu) IsSetIcon() bool {
 	return p.Icon != Menu_Icon_DEFAULT
 }
 
+func (p *Menu) IsSetCreatedId() bool {
+	return p.CreatedId != Menu_CreatedId_DEFAULT
+}
+
+func (p *Menu) IsSetCreatedName() bool {
+	return p.CreatedName != Menu_CreatedName_DEFAULT
+}
+
 func (p *Menu) String() string {
 	if p == nil {
 		return "<nil>"
@@ -453,40 +531,46 @@ func (p *Menu) String() string {
 }
 
 var fieldIDToName_Menu = map[int16]string{
-	1:  "id",
-	2:  "name",
-	3:  "parentId",
-	4:  "level",
-	5:  "path",
-	6:  "redirect",
-	7:  "component",
-	8:  "menuType",
-	12: "status",
-	14: "children",
-	15: "createdAt",
-	16: "updatedAt",
-	20: "icon",
+	1:   "id",
+	2:   "name",
+	3:   "parentId",
+	4:   "level",
+	5:   "path",
+	6:   "redirect",
+	7:   "component",
+	8:   "menuType",
+	12:  "status",
+	14:  "children",
+	15:  "createdAt",
+	16:  "updatedAt",
+	20:  "icon",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Role struct {
-	Id      int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name    string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Code    string  `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	Desc    string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
-	Apis    []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
-	Menus   []int64 `thrift:"menus,7,optional" frugal:"7,optional,list<i64>" json:"menus,omitempty"`
+	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code        string  `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo     int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Apis        []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
+	Menus       []int64 `thrift:"menus,7,optional" frugal:"7,optional,list<i64>" json:"menus,omitempty"`
+	CreatedId   int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewRole() *Role {
 	return &Role{
-		Id:      0,
-		Name:    "",
-		Code:    "",
-		Desc:    "",
-		OrderNo: 0,
-		Apis:    []int64{},
-		Menus:   []int64{},
+		Id:          0,
+		Name:        "",
+		Code:        "",
+		Desc:        "",
+		OrderNo:     0,
+		Apis:        []int64{},
+		Menus:       []int64{},
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -498,6 +582,8 @@ func (p *Role) InitDefault() {
 	p.OrderNo = 0
 	p.Apis = []int64{}
 	p.Menus = []int64{}
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 var Role_Id_DEFAULT int64 = 0
@@ -562,6 +648,24 @@ func (p *Role) GetMenus() (v []int64) {
 	}
 	return p.Menus
 }
+
+var Role_CreatedId_DEFAULT int64 = 0
+
+func (p *Role) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Role_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Role_CreatedName_DEFAULT string = ""
+
+func (p *Role) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Role_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Role) SetId(val int64) {
 	p.Id = val
 }
@@ -582,6 +686,12 @@ func (p *Role) SetApis(val []int64) {
 }
 func (p *Role) SetMenus(val []int64) {
 	p.Menus = val
+}
+func (p *Role) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Role) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 
 func (p *Role) IsSetId() bool {
@@ -612,6 +722,14 @@ func (p *Role) IsSetMenus() bool {
 	return p.Menus != nil
 }
 
+func (p *Role) IsSetCreatedId() bool {
+	return p.CreatedId != Role_CreatedId_DEFAULT
+}
+
+func (p *Role) IsSetCreatedName() bool {
+	return p.CreatedName != Role_CreatedName_DEFAULT
+}
+
 func (p *Role) String() string {
 	if p == nil {
 		return "<nil>"
@@ -620,34 +738,40 @@ func (p *Role) String() string {
 }
 
 var fieldIDToName_Role = map[int16]string{
-	1: "id",
-	2: "name",
-	3: "code",
-	4: "desc",
-	5: "orderNo",
-	6: "apis",
-	7: "menus",
+	1:   "id",
+	2:   "name",
+	3:   "code",
+	4:   "desc",
+	5:   "orderNo",
+	6:   "apis",
+	7:   "menus",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Dict struct {
-	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Code      string `thrift:"code,3" frugal:"3,default,string" json:"code"`
-	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
-	Desc      string `thrift:"desc,6" frugal:"6,default,string" json:"desc"`
-	CreatedAt string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,8" frugal:"8,default,string" json:"updatedAt"`
+	Id          int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Title       string `thrift:"title,2" frugal:"2,default,string" json:"title"`
+	Code        string `thrift:"code,3" frugal:"3,default,string" json:"code"`
+	Status      int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
+	Desc        string `thrift:"desc,6" frugal:"6,default,string" json:"desc"`
+	CreatedAt   string `thrift:"createdAt,7" frugal:"7,default,string" json:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,8" frugal:"8,default,string" json:"updatedAt"`
+	CreatedId   int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewDict() *Dict {
 	return &Dict{
-		Id:        0,
-		Title:     "",
-		Code:      "",
-		Status:    0,
-		Desc:      "",
-		CreatedAt: "",
-		UpdatedAt: "",
+		Id:          0,
+		Title:       "",
+		Code:        "",
+		Status:      0,
+		Desc:        "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -659,6 +783,8 @@ func (p *Dict) InitDefault() {
 	p.Desc = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 func (p *Dict) GetId() (v int64) {
@@ -688,6 +814,24 @@ func (p *Dict) GetCreatedAt() (v string) {
 func (p *Dict) GetUpdatedAt() (v string) {
 	return p.UpdatedAt
 }
+
+var Dict_CreatedId_DEFAULT int64 = 0
+
+func (p *Dict) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Dict_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Dict_CreatedName_DEFAULT string = ""
+
+func (p *Dict) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Dict_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Dict) SetId(val int64) {
 	p.Id = val
 }
@@ -709,6 +853,20 @@ func (p *Dict) SetCreatedAt(val string) {
 func (p *Dict) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
+func (p *Dict) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Dict) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+
+func (p *Dict) IsSetCreatedId() bool {
+	return p.CreatedId != Dict_CreatedId_DEFAULT
+}
+
+func (p *Dict) IsSetCreatedName() bool {
+	return p.CreatedName != Dict_CreatedName_DEFAULT
+}
 
 func (p *Dict) String() string {
 	if p == nil {
@@ -718,33 +876,39 @@ func (p *Dict) String() string {
 }
 
 var fieldIDToName_Dict = map[int16]string{
-	1: "id",
-	2: "title",
-	3: "code",
-	5: "status",
-	6: "desc",
-	7: "createdAt",
-	8: "updatedAt",
+	1:   "id",
+	2:   "title",
+	3:   "code",
+	5:   "status",
+	6:   "desc",
+	7:   "createdAt",
+	8:   "updatedAt",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Dictht struct {
-	Id        int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
-	Title     string `thrift:"title,2" frugal:"2,default,string" json:"title"`
-	Value     string `thrift:"value,4" frugal:"4,default,string" json:"value"`
-	Status    int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
-	CreatedAt string `thrift:"createdAt,6" frugal:"6,default,string" json:"createdAt"`
-	UpdatedAt string `thrift:"updatedAt,7" frugal:"7,default,string" json:"updatedAt"`
-	DictId    int64  `thrift:"dictId,8" frugal:"8,default,i64" json:"dictId"`
+	Id          int64  `thrift:"id,1" frugal:"1,default,i64" json:"id"`
+	Title       string `thrift:"title,2" frugal:"2,default,string" json:"title"`
+	Value       string `thrift:"value,4" frugal:"4,default,string" json:"value"`
+	Status      int64  `thrift:"status,5" frugal:"5,default,i64" json:"status"`
+	CreatedAt   string `thrift:"createdAt,6" frugal:"6,default,string" json:"createdAt"`
+	UpdatedAt   string `thrift:"updatedAt,7" frugal:"7,default,string" json:"updatedAt"`
+	DictId      int64  `thrift:"dictId,8" frugal:"8,default,i64" json:"dictId"`
+	CreatedId   int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName string `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewDictht() *Dictht {
 	return &Dictht{
-		Id:        0,
-		Title:     "",
-		Value:     "",
-		Status:    0,
-		CreatedAt: "",
-		UpdatedAt: "",
+		Id:          0,
+		Title:       "",
+		Value:       "",
+		Status:      0,
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		CreatedId:   0,
+		CreatedName: "",
 	}
 }
 
@@ -755,6 +919,8 @@ func (p *Dictht) InitDefault() {
 	p.Status = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
 }
 
 func (p *Dictht) GetId() (v int64) {
@@ -784,6 +950,24 @@ func (p *Dictht) GetUpdatedAt() (v string) {
 func (p *Dictht) GetDictId() (v int64) {
 	return p.DictId
 }
+
+var Dictht_CreatedId_DEFAULT int64 = 0
+
+func (p *Dictht) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Dictht_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var Dictht_CreatedName_DEFAULT string = ""
+
+func (p *Dictht) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Dictht_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
 func (p *Dictht) SetId(val int64) {
 	p.Id = val
 }
@@ -805,6 +989,20 @@ func (p *Dictht) SetUpdatedAt(val string) {
 func (p *Dictht) SetDictId(val int64) {
 	p.DictId = val
 }
+func (p *Dictht) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Dictht) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+
+func (p *Dictht) IsSetCreatedId() bool {
+	return p.CreatedId != Dictht_CreatedId_DEFAULT
+}
+
+func (p *Dictht) IsSetCreatedName() bool {
+	return p.CreatedName != Dictht_CreatedName_DEFAULT
+}
 
 func (p *Dictht) String() string {
 	if p == nil {
@@ -814,13 +1012,15 @@ func (p *Dictht) String() string {
 }
 
 var fieldIDToName_Dictht = map[int16]string{
-	1: "id",
-	2: "title",
-	4: "value",
-	5: "status",
-	6: "createdAt",
-	7: "updatedAt",
-	8: "dictId",
+	1:   "id",
+	2:   "title",
+	4:   "value",
+	5:   "status",
+	6:   "createdAt",
+	7:   "updatedAt",
+	8:   "dictId",
+	256: "createdId",
+	257: "createdName",
 }
 
 type Log struct {

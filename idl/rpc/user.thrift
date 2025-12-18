@@ -23,6 +23,7 @@ struct CreateUserReq{
 
      9:optional i64 departmentsId=0,
      10:optional i64 positionsId=0,
+     256:optional i64 createdId=0,
 }
 
 struct GetUserListReq{
@@ -44,6 +45,7 @@ struct UpdateUserReq {
 
     9:optional i64 departmentsId=0,
     10:optional i64 positionsId=0,
+     256:optional i64 createdId=0,
 
 }
 
@@ -54,6 +56,8 @@ struct ChangePasswordReq {
 struct SetUserRoleReq{
     1:optional i64 id=0,
     2:optional i64 roleId=0,
+     256:optional i64 createdId=0,
+
 }
 
 
@@ -72,6 +76,8 @@ struct CreateDepartmentsReq{
      4:optional i64 parentId=0,
      5:optional string desc="",
      7:optional i64 status=0,
+     256:optional i64 createdId=0,
+
 }
 struct UpdateDepartmentsReq{
      1:optional i64 id=0,
@@ -80,6 +86,8 @@ struct UpdateDepartmentsReq{
      4:optional i64 parentId=0,
      5:optional string desc="",
      7:optional i64 status=0,
+     256:optional i64 createdId=0,
+
 }
 struct GetDepartmentsListReq{
       1:optional i64 page=1
@@ -94,6 +102,8 @@ struct CreatePositionsReq{
      6:optional string desc="",
      7:optional i64 status=0,
      9:optional i64 quota=0,
+     256:optional i64 createdId=0,
+
 }
 struct UpdatePositionsReq{
      1:optional i64 id=0,
@@ -104,6 +114,7 @@ struct UpdatePositionsReq{
      6:optional string desc="",
      7:optional i64 status=0,
      9:optional i64 quota=0,
+     256:optional i64 createdId=0,
 }
 struct GetPositionsListReq{
       1:optional i64 page=1

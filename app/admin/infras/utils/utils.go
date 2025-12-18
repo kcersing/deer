@@ -4,6 +4,7 @@ import (
 	"common/consts"
 	"context"
 	"encoding/json"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/hertz-contrib/jwt"
@@ -21,4 +22,8 @@ func GetTokenId(ctx context.Context, c *app.RequestContext) int64 {
 		return 0
 	}
 	return id
+	//	if ctx.Value(Key) == nil {
+	//		return 0
+	//	}
+	//	return uint32(ctx.Value(Key).(float64))
 }

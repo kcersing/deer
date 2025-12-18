@@ -3,11 +3,11 @@
 package positions
 
 import (
+	utils2 "admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"context"
 	"gen/hertz_gen/positions"
-
 	user2 "gen/kitex_gen/user"
 
 	utils "common/pkg/utils"
@@ -35,6 +35,7 @@ func CreatePositions(ctx context.Context, c *app.RequestContext) {
 		Desc:         req.GetDesc(),
 		Status:       req.GetStatus(),
 		Quota:        req.GetQuota(),
+		CreatedId:    utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -85,6 +86,7 @@ func UpdatePositions(ctx context.Context, c *app.RequestContext) {
 		Desc:         req.GetDesc(),
 		Status:       req.GetStatus(),
 		Quota:        req.GetQuota(),
+		CreatedId:    utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

@@ -3,6 +3,7 @@
 package crm
 
 import (
+	utils2 "admin/infras/utils"
 	crm2 "gen/kitex_gen/crm"
 
 	"gen/hertz_gen/crm"
@@ -13,6 +14,7 @@ import (
 	"context"
 	base "gen/hertz_gen/base"
 	base1 "gen/kitex_gen/base"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -55,7 +57,7 @@ func CreateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		MemberId:  req.GetMemberId(),
 		UserId:    req.GetUserId(),
 		Status:    req.GetStatus(),
-		CreatedId: req.GetCreatedId(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 		Division:  req.GetDivision(),
 	})
 
@@ -85,7 +87,7 @@ func UpdateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 		MemberId:  req.GetMemberId(),
 		UserId:    req.GetUserId(),
 		Status:    req.GetStatus(),
-		CreatedId: req.GetCreatedId(),
+		CreatedId: utils2.GetTokenId(ctx, c),
 		Division:  req.GetDivision(),
 	})
 
@@ -185,6 +187,7 @@ func CreateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		Division:        req.GetDivision(),
 		Record:          req.GetRecord(),
 		OpportunitiesId: req.GetOpportunitiesId(),
+		CreatedId:       utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -215,6 +218,7 @@ func UpdateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 		Division:        req.GetDivision(),
 		Record:          req.GetRecord(),
 		OpportunitiesId: req.GetOpportunitiesId(),
+		CreatedId:       utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -312,6 +316,7 @@ func CreateOpportunities(ctx context.Context, c *app.RequestContext) {
 		Content:          req.GetContent(),
 		PredictionAmount: req.GetPredictionAmount(),
 		Title:            req.GetTitle(),
+		CreatedId:        utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -341,6 +346,7 @@ func UpdateOpportunities(ctx context.Context, c *app.RequestContext) {
 		Content:          req.GetContent(),
 		PredictionAmount: req.GetPredictionAmount(),
 		Title:            req.GetTitle(),
+		CreatedId:        utils2.GetTokenId(ctx, c),
 	})
 
 	if err != nil {

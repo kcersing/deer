@@ -308,6 +308,7 @@ type FollowUpRecord struct {
 	UpdatedAt       string `thrift:"updatedAt,9,optional" frugal:"9,optional,string" json:"updatedAt,omitempty"`
 	Record          string `thrift:"record,10,optional" frugal:"10,optional,string" json:"record,omitempty"`
 	OpportunitiesId int64  `thrift:"opportunitiesId,11,optional" frugal:"11,optional,i64" json:"opportunitiesId,omitempty"`
+	CreatedId       string `thrift:"createdId,256" frugal:"256,default,string" json:"createdId"`
 }
 
 func NewFollowUpRecord() *FollowUpRecord {
@@ -323,6 +324,7 @@ func NewFollowUpRecord() *FollowUpRecord {
 		UpdatedAt:       "",
 		Record:          "",
 		OpportunitiesId: 0,
+		CreatedId:       "",
 	}
 }
 
@@ -338,6 +340,7 @@ func (p *FollowUpRecord) InitDefault() {
 	p.UpdatedAt = ""
 	p.Record = ""
 	p.OpportunitiesId = 0
+	p.CreatedId = ""
 }
 
 var FollowUpRecord_Id_DEFAULT int64 = 0
@@ -438,6 +441,10 @@ func (p *FollowUpRecord) GetOpportunitiesId() (v int64) {
 	}
 	return p.OpportunitiesId
 }
+
+func (p *FollowUpRecord) GetCreatedId() (v string) {
+	return p.CreatedId
+}
 func (p *FollowUpRecord) SetId(val int64) {
 	p.Id = val
 }
@@ -470,6 +477,9 @@ func (p *FollowUpRecord) SetRecord(val string) {
 }
 func (p *FollowUpRecord) SetOpportunitiesId(val int64) {
 	p.OpportunitiesId = val
+}
+func (p *FollowUpRecord) SetCreatedId(val string) {
+	p.CreatedId = val
 }
 
 func (p *FollowUpRecord) IsSetId() bool {
@@ -524,17 +534,18 @@ func (p *FollowUpRecord) String() string {
 }
 
 var fieldIDToName_FollowUpRecord = map[int16]string{
-	1:  "id",
-	2:  "content",
-	3:  "followUpId",
-	4:  "method",
-	5:  "status",
-	6:  "userId",
-	7:  "division",
-	8:  "createdAt",
-	9:  "updatedAt",
-	10: "record",
-	11: "opportunitiesId",
+	1:   "id",
+	2:   "content",
+	3:   "followUpId",
+	4:   "method",
+	5:   "status",
+	6:   "userId",
+	7:   "division",
+	8:   "createdAt",
+	9:   "updatedAt",
+	10:  "record",
+	11:  "opportunitiesId",
+	256: "createdId",
 }
 
 type Opportunities struct {
@@ -549,6 +560,7 @@ type Opportunities struct {
 	CreatedAt        string          `thrift:"createdAt,9,optional" frugal:"9,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt        string          `thrift:"updatedAt,10,optional" frugal:"10,optional,string" json:"updatedAt,omitempty"`
 	Title            string          `thrift:"title,11,optional" frugal:"11,optional,string" json:"title,omitempty"`
+	CreatedId        string          `thrift:"createdId,256" frugal:"256,default,string" json:"createdId"`
 }
 
 func NewOpportunities() *Opportunities {
@@ -564,6 +576,7 @@ func NewOpportunities() *Opportunities {
 		CreatedAt:        "",
 		UpdatedAt:        "",
 		Title:            "",
+		CreatedId:        "",
 	}
 }
 
@@ -579,6 +592,7 @@ func (p *Opportunities) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Title = ""
+	p.CreatedId = ""
 }
 
 var Opportunities_Id_DEFAULT int64 = 0
@@ -679,6 +693,10 @@ func (p *Opportunities) GetTitle() (v string) {
 	}
 	return p.Title
 }
+
+func (p *Opportunities) GetCreatedId() (v string) {
+	return p.CreatedId
+}
 func (p *Opportunities) SetId(val int64) {
 	p.Id = val
 }
@@ -711,6 +729,9 @@ func (p *Opportunities) SetUpdatedAt(val string) {
 }
 func (p *Opportunities) SetTitle(val string) {
 	p.Title = val
+}
+func (p *Opportunities) SetCreatedId(val string) {
+	p.CreatedId = val
 }
 
 func (p *Opportunities) IsSetId() bool {
@@ -765,15 +786,16 @@ func (p *Opportunities) String() string {
 }
 
 var fieldIDToName_Opportunities = map[int16]string{
-	1:  "id",
-	2:  "memberId",
-	3:  "userId",
-	4:  "period",
-	5:  "periodTime",
-	6:  "winRate",
-	7:  "content",
-	8:  "predictionAmount",
-	9:  "createdAt",
-	10: "updatedAt",
-	11: "title",
+	1:   "id",
+	2:   "memberId",
+	3:   "userId",
+	4:   "period",
+	5:   "periodTime",
+	6:   "winRate",
+	7:   "content",
+	8:   "predictionAmount",
+	9:   "createdAt",
+	10:  "updatedAt",
+	11:  "title",
+	256: "createdId",
 }

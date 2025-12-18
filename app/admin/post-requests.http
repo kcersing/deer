@@ -12,3 +12,17 @@ Content-Type: application/json
 GET https://examples.http-client.intellij.net/ip
 Authorization: Basic YWRtaW46MTIzNDU2
 Accept: application/json
+
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/dict/dictht/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4OTMsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjYwNDUyOTN9.SF1C2cZNvmqHi7SZhw9M9jBzf0cUiDQrlMWPmaphtSI
+
+{"title":"抖音","value":"1","status":0,"id":1}
+
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/logs/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4OTMsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjYwNDUyOTN9.SF1C2cZNvmqHi7SZhw9M9jBzf0cUiDQrlMWPmaphtSI
