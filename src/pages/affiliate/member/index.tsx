@@ -10,24 +10,25 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
-import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
+import {Button, Drawer, Input,AntDesignOutlined,Avatar, message, type TreeDataNode} from 'antd';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { Menu } from  "@/pages/auth/menu/service/data";
-import {deleteMenu, getMenuList} from "@/pages/auth/menu/service/service";
+
+import { Member } from  "@/pages/affiliate/member/service/data";
+import {deleteMember, getMemberList} from "@/pages/affiliate/member/service/service";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<Menu>();
-  const [selectedRowsState, setSelectedRows] = useState<Menu[]>([]);
+  const [currentRow, setCurrentRow] = useState<Member>();
+  const [selectedRowsState, setSelectedRows] = useState<Member[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteMenu, {
+  const { run: delRun, loading } = useRequest(deleteMember, {
     manual: true,
     onSuccess: () => {
       setSelectedRows([]);
@@ -40,7 +41,31 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<Menu>[] = [
+
+  const columns: ProColumns<Member>[] = [
+    {
+      title: "ID",
+      dataIndex: 'id',
+      sorter: true,
+      hideInForm: true,
+      copyable:true,
+    },
+    {
+      title: "图片",
+      dataIndex: 'avatar',
+      sorter: true,
+      hideInForm: true,
+      render: (dom, entity) => {
+        return (
+          <Avatar
+            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
+            src={entity}
+          />
+        );
+      },
+
+    },
+
     {
       title: '名称',
       dataIndex: 'name',
@@ -57,36 +82,55 @@ const TableList: React.FC = () => {
         );
       },
     },
-    {
-      title: "图标",
-      dataIndex: 'icon',
-      sorter: true,
-      hideInForm: true,
-    },
-    {
-      title: "路由路径",
-      dataIndex: 'path',
-      sorter: true,
-      hideInForm: true,
-    },
-    {
-      title: "组件路径",
-      dataIndex: 'component',
-      sorter: true,
-      hideInForm: true,
-      valueType: 'textarea',
-    },
 
     {
-      title: "跳转路径",
-      dataIndex: 'redirect',
+      title: "手机号",
+      dataIndex: 'mobile',
       sorter: true,
       hideInForm: true,
-      valueType: 'textarea',
+      copyable:true,
     },
+    {
+      title: "等级",
+      dataIndex: 'level',
+      sorter: false,
+      hideInForm:false,
+    },
+    {
+      title: "性别",
+      dataIndex: 'gender',
+      sorter: true,
+      hideInForm: true,
 
+    },
+    {
+      title: "出生日期",
+      dataIndex: 'birthday',
+      sorter: true,
+      hideInForm: true,
 
+    },
+    {
+      title: "意向",
+      dataIndex: 'intention',
+      sorter: true,
+      hideInForm: true,
 
+    },
+    {
+      title: "来源",
+      dataIndex: 'source',
+      sorter: true,
+      hideInForm: true,
+
+    },
+    {
+      title: "备注",
+      dataIndex: 'note',
+      sorter: true,
+      hideInForm: true,
+
+    },
 
     {
       title: '状态',
@@ -128,7 +172,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: Menu[]) => {
+    async (selectedRows: Member[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -147,7 +191,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<Menu, API.PageParams>
+      <ProTable<Member, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"
@@ -158,7 +202,7 @@ const TableList: React.FC = () => {
         toolBarRender={() => [
           <CreateForm key="create" reload={actionRef.current?.reload} />,
         ]}
-        request={getMenuList}
+        request={getMemberList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -200,7 +244,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<Menu>
+          <ProDescriptions<Member>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -209,35 +253,12 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<Menu>[]}
+            columns={columns as ProDescriptionsItemProps<Member>[]}
           />
         )}
       </Drawer>
     </PageContainer>
   );
 };
-
-
-// const [menuData, setMenuData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [menuData] = await Promise.all([
-//       getMenuTree(),
-//     ]);
-//     setMenuData(menuData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(menuData);
 
 export default TableList;

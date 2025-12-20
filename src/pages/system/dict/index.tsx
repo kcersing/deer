@@ -30,6 +30,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
       dataIndex: 'id',
       sorter: true,
       hideInForm: true,
+      hideInTable: true,
     },
     {
       title: "标题",
@@ -139,6 +140,7 @@ const DictList: React.FC<DictListProps> = (props) => {
       dataIndex: 'id',
       sorter: true,
       hideInForm: true,
+      hideInTable: true,
     },
     {
       title: '标识',

@@ -41,8 +41,8 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<Log>[] = [
     {
-      title: '名称',
-      dataIndex: 'name',
+      title: 'API',
+      dataIndex: 'api',
       render: (dom, entity) => {
         return (
           <a
@@ -57,34 +57,49 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: "标题",
-      dataIndex: 'title',
+      title: "类型",
+      dataIndex: 'type',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "图标",
-      dataIndex: 'icon',
+      title: "请求方法",
+      dataIndex: 'method',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "路由路径",
-      dataIndex: 'path',
+      title: "日志请求内容",
+      dataIndex: 'req_content',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "组件路径",
-      dataIndex: 'component',
+      title: "日志返回内容",
+      dataIndex: 'resp_content',
+      sorter: true,
+      hideInForm: true,
+      valueType: 'textarea',
+    },
+
+    {
+      title: "IP",
+      dataIndex: 'ip',
       sorter: true,
       hideInForm: true,
       valueType: 'textarea',
     },
 
     {
-      title: "跳转路径",
-      dataIndex: 'redirect',
+      title: "操作者ID",
+      dataIndex: 'identity',
+      sorter: true,
+      hideInForm: true,
+      valueType: 'textarea',
+    },
+    {
+      title: "日志时间",
+      dataIndex: 'time',
       sorter: true,
       hideInForm: true,
       valueType: 'textarea',
@@ -92,23 +107,6 @@ const TableList: React.FC = () => {
 
 
 
-
-    {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0:{
-          text: '禁用',
-          status: 'Error',
-        },
-        1: {
-          text: '正常',
-          status: 'Success',
-        },
-
-      },
-    },
 
   ];
 
