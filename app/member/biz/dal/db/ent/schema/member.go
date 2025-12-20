@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"member/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/entsql"
@@ -8,7 +10,6 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"member/biz/dal/db/ent/schema/mixins"
 )
 
 type Member struct {
@@ -27,7 +28,7 @@ func (Member) Fields() []ent.Field {
 			Default("").
 			Comment("avatar | 头像路径"),
 		field.Int64("condition").
-			Default(1).
+			Default(0).
 			Optional().
 			Comment("状态[0:潜在;1:正式;3:冻结;4:到期]"),
 	}

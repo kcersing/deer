@@ -86,7 +86,7 @@ func GetRoleList(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 

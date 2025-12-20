@@ -1027,12 +1027,11 @@ type Log struct {
 	Type        string `thrift:"type,1,optional" frugal:"1,optional,string" json:"type,omitempty"`
 	Method      string `thrift:"method,2,optional" frugal:"2,optional,string" json:"method,omitempty"`
 	Api         string `thrift:"api,3,optional" frugal:"3,optional,string" json:"api,omitempty"`
-	Success     bool   `thrift:"success,4,optional" frugal:"4,optional,bool" json:"success,omitempty"`
+	Success     int64  `thrift:"success,4,optional" frugal:"4,optional,i64" json:"success,omitempty"`
 	ReqContent  string `thrift:"reqContent,5,optional" frugal:"5,optional,string" json:"reqContent,omitempty"`
 	RespContent string `thrift:"respContent,6,optional" frugal:"6,optional,string" json:"respContent,omitempty"`
 	Ip          string `thrift:"ip,7,optional" frugal:"7,optional,string" json:"ip,omitempty"`
 	UserAgent   string `thrift:"userAgent,8,optional" frugal:"8,optional,string" json:"userAgent,omitempty"`
-	Operatorsr  string `thrift:"operatorsr,9,optional" frugal:"9,optional,string" json:"operatorsr,omitempty"`
 	Time        int64  `thrift:"time,10,optional" frugal:"10,optional,i64" json:"time,omitempty"`
 	CreatedAt   string `thrift:"createdAt,11,optional" frugal:"11,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt   string `thrift:"updatedAt,12,optional" frugal:"12,optional,string" json:"updatedAt,omitempty"`
@@ -1045,12 +1044,11 @@ func NewLog() *Log {
 		Type:        "",
 		Method:      "",
 		Api:         "",
-		Success:     true,
+		Success:     1,
 		ReqContent:  "",
 		RespContent: "",
 		Ip:          "",
 		UserAgent:   "",
-		Operatorsr:  "",
 		Time:        0,
 		CreatedAt:   "",
 		UpdatedAt:   "",
@@ -1063,12 +1061,11 @@ func (p *Log) InitDefault() {
 	p.Type = ""
 	p.Method = ""
 	p.Api = ""
-	p.Success = true
+	p.Success = 1
 	p.ReqContent = ""
 	p.RespContent = ""
 	p.Ip = ""
 	p.UserAgent = ""
-	p.Operatorsr = ""
 	p.Time = 0
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
@@ -1103,9 +1100,9 @@ func (p *Log) GetApi() (v string) {
 	return p.Api
 }
 
-var Log_Success_DEFAULT bool = true
+var Log_Success_DEFAULT int64 = 1
 
-func (p *Log) GetSuccess() (v bool) {
+func (p *Log) GetSuccess() (v int64) {
 	if !p.IsSetSuccess() {
 		return Log_Success_DEFAULT
 	}
@@ -1146,15 +1143,6 @@ func (p *Log) GetUserAgent() (v string) {
 		return Log_UserAgent_DEFAULT
 	}
 	return p.UserAgent
-}
-
-var Log_Operatorsr_DEFAULT string = ""
-
-func (p *Log) GetOperatorsr() (v string) {
-	if !p.IsSetOperatorsr() {
-		return Log_Operatorsr_DEFAULT
-	}
-	return p.Operatorsr
 }
 
 var Log_Time_DEFAULT int64 = 0
@@ -1210,7 +1198,7 @@ func (p *Log) SetMethod(val string) {
 func (p *Log) SetApi(val string) {
 	p.Api = val
 }
-func (p *Log) SetSuccess(val bool) {
+func (p *Log) SetSuccess(val int64) {
 	p.Success = val
 }
 func (p *Log) SetReqContent(val string) {
@@ -1224,9 +1212,6 @@ func (p *Log) SetIp(val string) {
 }
 func (p *Log) SetUserAgent(val string) {
 	p.UserAgent = val
-}
-func (p *Log) SetOperatorsr(val string) {
-	p.Operatorsr = val
 }
 func (p *Log) SetTime(val int64) {
 	p.Time = val
@@ -1276,10 +1261,6 @@ func (p *Log) IsSetUserAgent() bool {
 	return p.UserAgent != Log_UserAgent_DEFAULT
 }
 
-func (p *Log) IsSetOperatorsr() bool {
-	return p.Operatorsr != Log_Operatorsr_DEFAULT
-}
-
 func (p *Log) IsSetTime() bool {
 	return p.Time != Log_Time_DEFAULT
 }
@@ -1316,7 +1297,6 @@ var fieldIDToName_Log = map[int16]string{
 	6:   "respContent",
 	7:   "ip",
 	8:   "userAgent",
-	9:   "operatorsr",
 	10:  "time",
 	11:  "createdAt",
 	12:  "updatedAt",

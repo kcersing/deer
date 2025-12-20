@@ -118,13 +118,13 @@ func (_c *LogsCreate) SetNillableAPI(v *string) *LogsCreate {
 }
 
 // SetSuccess sets the "success" field.
-func (_c *LogsCreate) SetSuccess(v bool) *LogsCreate {
+func (_c *LogsCreate) SetSuccess(v int64) *LogsCreate {
 	_c.mutation.SetSuccess(v)
 	return _c
 }
 
 // SetNillableSuccess sets the "success" field if the given value is not nil.
-func (_c *LogsCreate) SetNillableSuccess(v *bool) *LogsCreate {
+func (_c *LogsCreate) SetNillableSuccess(v *int64) *LogsCreate {
 	if v != nil {
 		_c.SetSuccess(*v)
 	}
@@ -187,16 +187,16 @@ func (_c *LogsCreate) SetNillableUserAgent(v *string) *LogsCreate {
 	return _c
 }
 
-// SetOperatorsr sets the "operatorsr" field.
-func (_c *LogsCreate) SetOperatorsr(v string) *LogsCreate {
-	_c.mutation.SetOperatorsr(v)
+// SetIdentity sets the "identity" field.
+func (_c *LogsCreate) SetIdentity(v int64) *LogsCreate {
+	_c.mutation.SetIdentity(v)
 	return _c
 }
 
-// SetNillableOperatorsr sets the "operatorsr" field if the given value is not nil.
-func (_c *LogsCreate) SetNillableOperatorsr(v *string) *LogsCreate {
+// SetNillableIdentity sets the "identity" field if the given value is not nil.
+func (_c *LogsCreate) SetNillableIdentity(v *int64) *LogsCreate {
 	if v != nil {
-		_c.SetOperatorsr(*v)
+		_c.SetIdentity(*v)
 	}
 	return _c
 }
@@ -211,20 +211,6 @@ func (_c *LogsCreate) SetTime(v int64) *LogsCreate {
 func (_c *LogsCreate) SetNillableTime(v *int64) *LogsCreate {
 	if v != nil {
 		_c.SetTime(*v)
-	}
-	return _c
-}
-
-// SetIdentity sets the "identity" field.
-func (_c *LogsCreate) SetIdentity(v int64) *LogsCreate {
-	_c.mutation.SetIdentity(v)
-	return _c
-}
-
-// SetNillableIdentity sets the "identity" field if the given value is not nil.
-func (_c *LogsCreate) SetNillableIdentity(v *int64) *LogsCreate {
-	if v != nil {
-		_c.SetIdentity(*v)
 	}
 	return _c
 }
@@ -351,7 +337,7 @@ func (_c *LogsCreate) createSpec() (*Logs, *sqlgraph.CreateSpec) {
 		_node.API = value
 	}
 	if value, ok := _c.mutation.Success(); ok {
-		_spec.SetField(logs.FieldSuccess, field.TypeBool, value)
+		_spec.SetField(logs.FieldSuccess, field.TypeInt64, value)
 		_node.Success = value
 	}
 	if value, ok := _c.mutation.ReqContent(); ok {
@@ -370,17 +356,13 @@ func (_c *LogsCreate) createSpec() (*Logs, *sqlgraph.CreateSpec) {
 		_spec.SetField(logs.FieldUserAgent, field.TypeString, value)
 		_node.UserAgent = value
 	}
-	if value, ok := _c.mutation.Operatorsr(); ok {
-		_spec.SetField(logs.FieldOperatorsr, field.TypeString, value)
-		_node.Operatorsr = value
+	if value, ok := _c.mutation.Identity(); ok {
+		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
+		_node.Identity = value
 	}
 	if value, ok := _c.mutation.Time(); ok {
 		_spec.SetField(logs.FieldTime, field.TypeInt64, value)
 		_node.Time = value
-	}
-	if value, ok := _c.mutation.Identity(); ok {
-		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
-		_node.Identity = value
 	}
 	return _node, _spec
 }

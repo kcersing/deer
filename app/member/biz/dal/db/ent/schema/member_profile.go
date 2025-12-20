@@ -20,9 +20,9 @@ func (MemberProfile) Fields() []ent.Field {
 		field.Int64("member_id").Comment("会员id").Optional(),
 		field.Int64("intention").Comment("意向").Optional(),
 		field.Int64("source").Default(0).Comment("来源").Optional(),
-
 		field.Int64("gender").Default(3).Comment("性别 | [1:女性;2:男性;3:保密]").Optional(),
 		field.Time("birthday").Comment("出生日期").Optional(),
+
 		field.String("email").Optional().Comment("email | 邮箱号"),
 		field.String("wecom").Optional().Comment("wecom | 微信号"),
 

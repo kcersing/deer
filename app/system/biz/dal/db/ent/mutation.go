@@ -3247,16 +3247,16 @@ type LogsMutation struct {
 	_type         *string
 	method        *string
 	api           *string
-	success       *bool
+	success       *int64
+	addsuccess    *int64
 	req_content   *string
 	resp_content  *string
 	ip            *string
 	user_agent    *string
-	operatorsr    *string
-	time          *int64
-	addtime       *int64
 	identity      *int64
 	addidentity   *int64
+	time          *int64
+	addtime       *int64
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Logs, error)
@@ -3753,12 +3753,13 @@ func (m *LogsMutation) ResetAPI() {
 }
 
 // SetSuccess sets the "success" field.
-func (m *LogsMutation) SetSuccess(b bool) {
-	m.success = &b
+func (m *LogsMutation) SetSuccess(i int64) {
+	m.success = &i
+	m.addsuccess = nil
 }
 
 // Success returns the value of the "success" field in the mutation.
-func (m *LogsMutation) Success() (r bool, exists bool) {
+func (m *LogsMutation) Success() (r int64, exists bool) {
 	v := m.success
 	if v == nil {
 		return
@@ -3769,7 +3770,7 @@ func (m *LogsMutation) Success() (r bool, exists bool) {
 // OldSuccess returns the old "success" field's value of the Logs entity.
 // If the Logs object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *LogsMutation) OldSuccess(ctx context.Context) (v bool, err error) {
+func (m *LogsMutation) OldSuccess(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldSuccess is only allowed on UpdateOne operations")
 	}
@@ -3783,9 +3784,28 @@ func (m *LogsMutation) OldSuccess(ctx context.Context) (v bool, err error) {
 	return oldValue.Success, nil
 }
 
+// AddSuccess adds i to the "success" field.
+func (m *LogsMutation) AddSuccess(i int64) {
+	if m.addsuccess != nil {
+		*m.addsuccess += i
+	} else {
+		m.addsuccess = &i
+	}
+}
+
+// AddedSuccess returns the value that was added to the "success" field in this mutation.
+func (m *LogsMutation) AddedSuccess() (r int64, exists bool) {
+	v := m.addsuccess
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ClearSuccess clears the value of the "success" field.
 func (m *LogsMutation) ClearSuccess() {
 	m.success = nil
+	m.addsuccess = nil
 	m.clearedFields[logs.FieldSuccess] = struct{}{}
 }
 
@@ -3798,6 +3818,7 @@ func (m *LogsMutation) SuccessCleared() bool {
 // ResetSuccess resets all changes to the "success" field.
 func (m *LogsMutation) ResetSuccess() {
 	m.success = nil
+	m.addsuccess = nil
 	delete(m.clearedFields, logs.FieldSuccess)
 }
 
@@ -3997,53 +4018,74 @@ func (m *LogsMutation) ResetUserAgent() {
 	delete(m.clearedFields, logs.FieldUserAgent)
 }
 
-// SetOperatorsr sets the "operatorsr" field.
-func (m *LogsMutation) SetOperatorsr(s string) {
-	m.operatorsr = &s
+// SetIdentity sets the "identity" field.
+func (m *LogsMutation) SetIdentity(i int64) {
+	m.identity = &i
+	m.addidentity = nil
 }
 
-// Operatorsr returns the value of the "operatorsr" field in the mutation.
-func (m *LogsMutation) Operatorsr() (r string, exists bool) {
-	v := m.operatorsr
+// Identity returns the value of the "identity" field in the mutation.
+func (m *LogsMutation) Identity() (r int64, exists bool) {
+	v := m.identity
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldOperatorsr returns the old "operatorsr" field's value of the Logs entity.
+// OldIdentity returns the old "identity" field's value of the Logs entity.
 // If the Logs object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *LogsMutation) OldOperatorsr(ctx context.Context) (v string, err error) {
+func (m *LogsMutation) OldIdentity(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldOperatorsr is only allowed on UpdateOne operations")
+		return v, errors.New("OldIdentity is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldOperatorsr requires an ID field in the mutation")
+		return v, errors.New("OldIdentity requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldOperatorsr: %w", err)
+		return v, fmt.Errorf("querying old value for OldIdentity: %w", err)
 	}
-	return oldValue.Operatorsr, nil
+	return oldValue.Identity, nil
 }
 
-// ClearOperatorsr clears the value of the "operatorsr" field.
-func (m *LogsMutation) ClearOperatorsr() {
-	m.operatorsr = nil
-	m.clearedFields[logs.FieldOperatorsr] = struct{}{}
+// AddIdentity adds i to the "identity" field.
+func (m *LogsMutation) AddIdentity(i int64) {
+	if m.addidentity != nil {
+		*m.addidentity += i
+	} else {
+		m.addidentity = &i
+	}
 }
 
-// OperatorsrCleared returns if the "operatorsr" field was cleared in this mutation.
-func (m *LogsMutation) OperatorsrCleared() bool {
-	_, ok := m.clearedFields[logs.FieldOperatorsr]
+// AddedIdentity returns the value that was added to the "identity" field in this mutation.
+func (m *LogsMutation) AddedIdentity() (r int64, exists bool) {
+	v := m.addidentity
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearIdentity clears the value of the "identity" field.
+func (m *LogsMutation) ClearIdentity() {
+	m.identity = nil
+	m.addidentity = nil
+	m.clearedFields[logs.FieldIdentity] = struct{}{}
+}
+
+// IdentityCleared returns if the "identity" field was cleared in this mutation.
+func (m *LogsMutation) IdentityCleared() bool {
+	_, ok := m.clearedFields[logs.FieldIdentity]
 	return ok
 }
 
-// ResetOperatorsr resets all changes to the "operatorsr" field.
-func (m *LogsMutation) ResetOperatorsr() {
-	m.operatorsr = nil
-	delete(m.clearedFields, logs.FieldOperatorsr)
+// ResetIdentity resets all changes to the "identity" field.
+func (m *LogsMutation) ResetIdentity() {
+	m.identity = nil
+	m.addidentity = nil
+	delete(m.clearedFields, logs.FieldIdentity)
 }
 
 // SetTime sets the "time" field.
@@ -4116,76 +4158,6 @@ func (m *LogsMutation) ResetTime() {
 	delete(m.clearedFields, logs.FieldTime)
 }
 
-// SetIdentity sets the "identity" field.
-func (m *LogsMutation) SetIdentity(i int64) {
-	m.identity = &i
-	m.addidentity = nil
-}
-
-// Identity returns the value of the "identity" field in the mutation.
-func (m *LogsMutation) Identity() (r int64, exists bool) {
-	v := m.identity
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldIdentity returns the old "identity" field's value of the Logs entity.
-// If the Logs object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *LogsMutation) OldIdentity(ctx context.Context) (v int64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldIdentity is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldIdentity requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldIdentity: %w", err)
-	}
-	return oldValue.Identity, nil
-}
-
-// AddIdentity adds i to the "identity" field.
-func (m *LogsMutation) AddIdentity(i int64) {
-	if m.addidentity != nil {
-		*m.addidentity += i
-	} else {
-		m.addidentity = &i
-	}
-}
-
-// AddedIdentity returns the value that was added to the "identity" field in this mutation.
-func (m *LogsMutation) AddedIdentity() (r int64, exists bool) {
-	v := m.addidentity
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ClearIdentity clears the value of the "identity" field.
-func (m *LogsMutation) ClearIdentity() {
-	m.identity = nil
-	m.addidentity = nil
-	m.clearedFields[logs.FieldIdentity] = struct{}{}
-}
-
-// IdentityCleared returns if the "identity" field was cleared in this mutation.
-func (m *LogsMutation) IdentityCleared() bool {
-	_, ok := m.clearedFields[logs.FieldIdentity]
-	return ok
-}
-
-// ResetIdentity resets all changes to the "identity" field.
-func (m *LogsMutation) ResetIdentity() {
-	m.identity = nil
-	m.addidentity = nil
-	delete(m.clearedFields, logs.FieldIdentity)
-}
-
 // Where appends a list predicates to the LogsMutation builder.
 func (m *LogsMutation) Where(ps ...predicate.Logs) {
 	m.predicates = append(m.predicates, ps...)
@@ -4220,7 +4192,7 @@ func (m *LogsMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *LogsMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 14)
 	if m.created_at != nil {
 		fields = append(fields, logs.FieldCreatedAt)
 	}
@@ -4257,14 +4229,11 @@ func (m *LogsMutation) Fields() []string {
 	if m.user_agent != nil {
 		fields = append(fields, logs.FieldUserAgent)
 	}
-	if m.operatorsr != nil {
-		fields = append(fields, logs.FieldOperatorsr)
+	if m.identity != nil {
+		fields = append(fields, logs.FieldIdentity)
 	}
 	if m.time != nil {
 		fields = append(fields, logs.FieldTime)
-	}
-	if m.identity != nil {
-		fields = append(fields, logs.FieldIdentity)
 	}
 	return fields
 }
@@ -4298,12 +4267,10 @@ func (m *LogsMutation) Field(name string) (ent.Value, bool) {
 		return m.IP()
 	case logs.FieldUserAgent:
 		return m.UserAgent()
-	case logs.FieldOperatorsr:
-		return m.Operatorsr()
-	case logs.FieldTime:
-		return m.Time()
 	case logs.FieldIdentity:
 		return m.Identity()
+	case logs.FieldTime:
+		return m.Time()
 	}
 	return nil, false
 }
@@ -4337,12 +4304,10 @@ func (m *LogsMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldIP(ctx)
 	case logs.FieldUserAgent:
 		return m.OldUserAgent(ctx)
-	case logs.FieldOperatorsr:
-		return m.OldOperatorsr(ctx)
-	case logs.FieldTime:
-		return m.OldTime(ctx)
 	case logs.FieldIdentity:
 		return m.OldIdentity(ctx)
+	case logs.FieldTime:
+		return m.OldTime(ctx)
 	}
 	return nil, fmt.Errorf("unknown Logs field %s", name)
 }
@@ -4402,7 +4367,7 @@ func (m *LogsMutation) SetField(name string, value ent.Value) error {
 		m.SetAPI(v)
 		return nil
 	case logs.FieldSuccess:
-		v, ok := value.(bool)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -4436,12 +4401,12 @@ func (m *LogsMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUserAgent(v)
 		return nil
-	case logs.FieldOperatorsr:
-		v, ok := value.(string)
+	case logs.FieldIdentity:
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetOperatorsr(v)
+		m.SetIdentity(v)
 		return nil
 	case logs.FieldTime:
 		v, ok := value.(int64)
@@ -4449,13 +4414,6 @@ func (m *LogsMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTime(v)
-		return nil
-	case logs.FieldIdentity:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetIdentity(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Logs field %s", name)
@@ -4471,11 +4429,14 @@ func (m *LogsMutation) AddedFields() []string {
 	if m.addcreated_id != nil {
 		fields = append(fields, logs.FieldCreatedID)
 	}
-	if m.addtime != nil {
-		fields = append(fields, logs.FieldTime)
+	if m.addsuccess != nil {
+		fields = append(fields, logs.FieldSuccess)
 	}
 	if m.addidentity != nil {
 		fields = append(fields, logs.FieldIdentity)
+	}
+	if m.addtime != nil {
+		fields = append(fields, logs.FieldTime)
 	}
 	return fields
 }
@@ -4489,10 +4450,12 @@ func (m *LogsMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDelete()
 	case logs.FieldCreatedID:
 		return m.AddedCreatedID()
-	case logs.FieldTime:
-		return m.AddedTime()
+	case logs.FieldSuccess:
+		return m.AddedSuccess()
 	case logs.FieldIdentity:
 		return m.AddedIdentity()
+	case logs.FieldTime:
+		return m.AddedTime()
 	}
 	return nil, false
 }
@@ -4516,12 +4479,12 @@ func (m *LogsMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddCreatedID(v)
 		return nil
-	case logs.FieldTime:
+	case logs.FieldSuccess:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddTime(v)
+		m.AddSuccess(v)
 		return nil
 	case logs.FieldIdentity:
 		v, ok := value.(int64)
@@ -4529,6 +4492,13 @@ func (m *LogsMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddIdentity(v)
+		return nil
+	case logs.FieldTime:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTime(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Logs numeric field %s", name)
@@ -4574,14 +4544,11 @@ func (m *LogsMutation) ClearedFields() []string {
 	if m.FieldCleared(logs.FieldUserAgent) {
 		fields = append(fields, logs.FieldUserAgent)
 	}
-	if m.FieldCleared(logs.FieldOperatorsr) {
-		fields = append(fields, logs.FieldOperatorsr)
+	if m.FieldCleared(logs.FieldIdentity) {
+		fields = append(fields, logs.FieldIdentity)
 	}
 	if m.FieldCleared(logs.FieldTime) {
 		fields = append(fields, logs.FieldTime)
-	}
-	if m.FieldCleared(logs.FieldIdentity) {
-		fields = append(fields, logs.FieldIdentity)
 	}
 	return fields
 }
@@ -4633,14 +4600,11 @@ func (m *LogsMutation) ClearField(name string) error {
 	case logs.FieldUserAgent:
 		m.ClearUserAgent()
 		return nil
-	case logs.FieldOperatorsr:
-		m.ClearOperatorsr()
+	case logs.FieldIdentity:
+		m.ClearIdentity()
 		return nil
 	case logs.FieldTime:
 		m.ClearTime()
-		return nil
-	case logs.FieldIdentity:
-		m.ClearIdentity()
 		return nil
 	}
 	return fmt.Errorf("unknown Logs nullable field %s", name)
@@ -4686,14 +4650,11 @@ func (m *LogsMutation) ResetField(name string) error {
 	case logs.FieldUserAgent:
 		m.ResetUserAgent()
 		return nil
-	case logs.FieldOperatorsr:
-		m.ResetOperatorsr()
+	case logs.FieldIdentity:
+		m.ResetIdentity()
 		return nil
 	case logs.FieldTime:
 		m.ResetTime()
-		return nil
-	case logs.FieldIdentity:
-		m.ResetIdentity()
 		return nil
 	}
 	return fmt.Errorf("unknown Logs field %s", name)

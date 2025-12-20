@@ -226,3 +226,11 @@ func (s *SystemServiceImpl) VerifyRoleAuth(ctx context.Context, req *system.Veri
 
 	return resp, err
 }
+
+// CreateLog implements the SystemServiceImpl interface.
+func (s *SystemServiceImpl) CreateLog(ctx context.Context, req *system.CreateLogReq) (resp *base.NilResponse, err error) {
+	// TODO: Your code here...
+	resp, err = service.NewCreateLogService(ctx).Run(req)
+
+	return resp, err
+}

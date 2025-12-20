@@ -1,9 +1,10 @@
 package mw
 
 import (
+	"admin/infras/utils"
+	"admin/rpc/client"
 	"context"
 	system "gen/kitex_gen/system"
-	"strconv"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/app"
@@ -33,50 +34,17 @@ func LogMw() app.HandlerFunc {
 			respBodyStr = respBodyStr[:200]
 		}
 
-		if c.Response.Header.StatusCode() == 200 {
-			log.Success = true
-		}
+		log.Success = int64(c.Response.Header.StatusCode())
 
 		costTime := time.Since(start).Milliseconds()
 		log.Time = int64(int32(costTime))
-		//var username = "Anonymous"
 
-		//userIn, exist := c.Get("user_id")
-		//if !(exist || userIn == nil) {
-		//	userId := toInt(userIn)
-		//	userInfo, _ := service.NewUser(ctx, c).Info(userId)
-		//	if userInfo != nil {
-		//		username = userInfo.Name
-		//	}
-		//	logs.Operatorsr = username
-		//	logs.Identity = 2
-		//}
-
-		//memberIn, exist := c.Get("member_id")
-		//if !(exist || userIn == nil) {
-		//	memberId := toInt(memberIn)
-		//	//userInfo, _ := service.NewMember(ctx, c).MemberInfo(memberId)
-		//	if userInfo != nil {
-		//		username = userInfo.Name
-		//	}
-		//	logs.Operatorsr = username
-		//	logs.Identity = 1
-		//}
-		//err := service.NewLogs(ctx, c).Create(&logs)
+		log.Identity = utils.GetTokenId(ctx, c)
+		_, err := client.SystemClient.CreateLog(ctx, &log)
 		hlog.Info(log)
-		//if err != nil {
-		//	hlog.Error(err)
-		//}
+		if err != nil {
+			hlog.Error(err)
+		}
 
 	}
-}
-func toInt(idIn interface{}) int64 {
-	var idStr string
-	var ok bool
-	idStr, ok = idIn.(string)
-	if !ok {
-		idStr = "0"
-	}
-	id, _ := strconv.Atoi(idStr)
-	return int64(id)
 }

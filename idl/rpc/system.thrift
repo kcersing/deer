@@ -159,6 +159,10 @@ struct DicthtListResp{
     1:optional list<system.Dictht> data={}
     255:optional base.BaseResp baseResp={}
 }
+struct LogListResp{
+    1:optional list<system.Log> data={}
+    255:optional base.BaseResp baseResp={}
+}
 
 //日志列表请求数据
 struct LogListReq {
@@ -175,7 +179,7 @@ struct CreateLogReq{
     1: optional string type="" (api.raw = "type")
     2: optional string method =""(api.raw = "method")
     3: optional string api =""(api.raw = "api")
-    4: optional bool success = true (api.raw = "success")
+    4: optional i64 success = true (api.raw = "success")
     5: optional string reqContent="" (api.raw = "reqContent")
     6: optional string respContent="" (api.raw = "respContent")
     7: optional string ip="" (api.raw = "ip")
@@ -191,10 +195,7 @@ struct DeleteLogReq {
     1:  optional string startAt = "" (api.raw = "startAt")
     2:  optional string endAt = "" (api.raw = "endAt")
 }
-struct LogListResp{
-    1:optional list<system.Log> data={}
-    255:optional base.BaseResp baseResp={}
-}
+
 struct TreeResp{
     1:optional list<base.Tree> data={}
     255:optional base.BaseResp baseResp={}

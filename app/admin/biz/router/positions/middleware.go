@@ -3,6 +3,7 @@
 package positions
 
 import (
+	"admin/biz/mw"
 	"common/pkg/errno"
 	"context"
 	"fmt"
@@ -44,7 +45,11 @@ func rootMw() []app.HandlerFunc {
 
 func _serviceMw() []app.HandlerFunc {
 	// your code...
-	return nil
+	return []app.HandlerFunc{
+		// use jwt mw
+		mw.LogMw(),
+		mw.JwtMiddleware.MiddlewareFunc(),
+	}
 }
 
 func _positionsMw() []app.HandlerFunc {

@@ -28,9 +28,14 @@ func CreateMember(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.MemberClient.CreateMember(ctx, &member2.CreateMemberReq{
-		Username:  req.GetUsername(),
-		Password:  req.GetPassword(),
+		Name:      req.GetName(),
+		Mobile:    req.GetMobile(),
 		CreatedId: utils2.GetTokenId(ctx, c),
+		Birthday:  req.GetBirthday(),
+		Intention: req.GetIntention(),
+		Gender:    req.GetGender(),
+		Status:    req.GetStatus(),
+		Avatar:    req.GetAvatar(),
 	})
 
 	if err != nil {
@@ -75,21 +80,21 @@ func UpdateMember(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := client.MemberClient.UpdateMember(ctx, &member2.UpdateMemberReq{
 		Id:        req.GetID(),
-		Avatar:    req.GetAvatar(),
-		Mobile:    req.GetMobile(),
 		Name:      req.GetName(),
-		Status:    req.GetStatus(),
-		Level:     req.GetLevel(),
-		Gender:    req.GetGender(),
-		Birthday:  req.GetBirthday(),
+		Mobile:    req.GetMobile(),
 		CreatedId: utils2.GetTokenId(ctx, c),
+		Birthday:  req.GetBirthday(),
+		Intention: req.GetIntention(),
+		Gender:    req.GetGender(),
+		Status:    req.GetStatus(),
+		Avatar:    req.GetAvatar(),
 	})
 
 	if err != nil {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils.SendResponse(c, errno.Success, resp, 0, "")
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -112,7 +117,7 @@ func GetMember(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils.SendResponse(c, errno.Success, resp, 0, "")
+	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 

@@ -3,8 +3,13 @@ include "../base/base.thrift"
 include "../base/member.thrift"
 
 struct CreateMemberReq{
-    1:optional string username="",
-    2:optional string password="",
+    1:optional string name="",
+    2:optional string mobile="",
+    3:optional string avatar="",
+    4:optional string birthday="",
+    5:optional i64 intention=0,
+    6:optional i64 gender=0,
+    7:optional i64 status=0,
 }
 struct GetMemberListReq{
      1:optional i64 page=1
@@ -17,7 +22,7 @@ struct UpdateMemberReq {
     5:optional string mobile="",
     6:optional string name="",
     7:optional i64 status=0,
-    8:optional i64 level=0,
+    8:optional i64 intention=0,
     9:optional i64 gender=0,
     10:optional string birthday="",
 

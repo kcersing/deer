@@ -155,16 +155,23 @@ func (_u *LogsUpdate) ClearAPI() *LogsUpdate {
 }
 
 // SetSuccess sets the "success" field.
-func (_u *LogsUpdate) SetSuccess(v bool) *LogsUpdate {
+func (_u *LogsUpdate) SetSuccess(v int64) *LogsUpdate {
+	_u.mutation.ResetSuccess()
 	_u.mutation.SetSuccess(v)
 	return _u
 }
 
 // SetNillableSuccess sets the "success" field if the given value is not nil.
-func (_u *LogsUpdate) SetNillableSuccess(v *bool) *LogsUpdate {
+func (_u *LogsUpdate) SetNillableSuccess(v *int64) *LogsUpdate {
 	if v != nil {
 		_u.SetSuccess(*v)
 	}
+	return _u
+}
+
+// AddSuccess adds value to the "success" field.
+func (_u *LogsUpdate) AddSuccess(v int64) *LogsUpdate {
+	_u.mutation.AddSuccess(v)
 	return _u
 }
 
@@ -254,23 +261,30 @@ func (_u *LogsUpdate) ClearUserAgent() *LogsUpdate {
 	return _u
 }
 
-// SetOperatorsr sets the "operatorsr" field.
-func (_u *LogsUpdate) SetOperatorsr(v string) *LogsUpdate {
-	_u.mutation.SetOperatorsr(v)
+// SetIdentity sets the "identity" field.
+func (_u *LogsUpdate) SetIdentity(v int64) *LogsUpdate {
+	_u.mutation.ResetIdentity()
+	_u.mutation.SetIdentity(v)
 	return _u
 }
 
-// SetNillableOperatorsr sets the "operatorsr" field if the given value is not nil.
-func (_u *LogsUpdate) SetNillableOperatorsr(v *string) *LogsUpdate {
+// SetNillableIdentity sets the "identity" field if the given value is not nil.
+func (_u *LogsUpdate) SetNillableIdentity(v *int64) *LogsUpdate {
 	if v != nil {
-		_u.SetOperatorsr(*v)
+		_u.SetIdentity(*v)
 	}
 	return _u
 }
 
-// ClearOperatorsr clears the value of the "operatorsr" field.
-func (_u *LogsUpdate) ClearOperatorsr() *LogsUpdate {
-	_u.mutation.ClearOperatorsr()
+// AddIdentity adds value to the "identity" field.
+func (_u *LogsUpdate) AddIdentity(v int64) *LogsUpdate {
+	_u.mutation.AddIdentity(v)
+	return _u
+}
+
+// ClearIdentity clears the value of the "identity" field.
+func (_u *LogsUpdate) ClearIdentity() *LogsUpdate {
+	_u.mutation.ClearIdentity()
 	return _u
 }
 
@@ -298,33 +312,6 @@ func (_u *LogsUpdate) AddTime(v int64) *LogsUpdate {
 // ClearTime clears the value of the "time" field.
 func (_u *LogsUpdate) ClearTime() *LogsUpdate {
 	_u.mutation.ClearTime()
-	return _u
-}
-
-// SetIdentity sets the "identity" field.
-func (_u *LogsUpdate) SetIdentity(v int64) *LogsUpdate {
-	_u.mutation.ResetIdentity()
-	_u.mutation.SetIdentity(v)
-	return _u
-}
-
-// SetNillableIdentity sets the "identity" field if the given value is not nil.
-func (_u *LogsUpdate) SetNillableIdentity(v *int64) *LogsUpdate {
-	if v != nil {
-		_u.SetIdentity(*v)
-	}
-	return _u
-}
-
-// AddIdentity adds value to the "identity" field.
-func (_u *LogsUpdate) AddIdentity(v int64) *LogsUpdate {
-	_u.mutation.AddIdentity(v)
-	return _u
-}
-
-// ClearIdentity clears the value of the "identity" field.
-func (_u *LogsUpdate) ClearIdentity() *LogsUpdate {
-	_u.mutation.ClearIdentity()
 	return _u
 }
 
@@ -424,10 +411,13 @@ func (_u *LogsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(logs.FieldAPI, field.TypeString)
 	}
 	if value, ok := _u.mutation.Success(); ok {
-		_spec.SetField(logs.FieldSuccess, field.TypeBool, value)
+		_spec.SetField(logs.FieldSuccess, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedSuccess(); ok {
+		_spec.AddField(logs.FieldSuccess, field.TypeInt64, value)
 	}
 	if _u.mutation.SuccessCleared() {
-		_spec.ClearField(logs.FieldSuccess, field.TypeBool)
+		_spec.ClearField(logs.FieldSuccess, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ReqContent(); ok {
 		_spec.SetField(logs.FieldReqContent, field.TypeString, value)
@@ -453,11 +443,14 @@ func (_u *LogsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.UserAgentCleared() {
 		_spec.ClearField(logs.FieldUserAgent, field.TypeString)
 	}
-	if value, ok := _u.mutation.Operatorsr(); ok {
-		_spec.SetField(logs.FieldOperatorsr, field.TypeString, value)
+	if value, ok := _u.mutation.Identity(); ok {
+		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
 	}
-	if _u.mutation.OperatorsrCleared() {
-		_spec.ClearField(logs.FieldOperatorsr, field.TypeString)
+	if value, ok := _u.mutation.AddedIdentity(); ok {
+		_spec.AddField(logs.FieldIdentity, field.TypeInt64, value)
+	}
+	if _u.mutation.IdentityCleared() {
+		_spec.ClearField(logs.FieldIdentity, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Time(); ok {
 		_spec.SetField(logs.FieldTime, field.TypeInt64, value)
@@ -467,15 +460,6 @@ func (_u *LogsUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.TimeCleared() {
 		_spec.ClearField(logs.FieldTime, field.TypeInt64)
-	}
-	if value, ok := _u.mutation.Identity(); ok {
-		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedIdentity(); ok {
-		_spec.AddField(logs.FieldIdentity, field.TypeInt64, value)
-	}
-	if _u.mutation.IdentityCleared() {
-		_spec.ClearField(logs.FieldIdentity, field.TypeInt64)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -624,16 +608,23 @@ func (_u *LogsUpdateOne) ClearAPI() *LogsUpdateOne {
 }
 
 // SetSuccess sets the "success" field.
-func (_u *LogsUpdateOne) SetSuccess(v bool) *LogsUpdateOne {
+func (_u *LogsUpdateOne) SetSuccess(v int64) *LogsUpdateOne {
+	_u.mutation.ResetSuccess()
 	_u.mutation.SetSuccess(v)
 	return _u
 }
 
 // SetNillableSuccess sets the "success" field if the given value is not nil.
-func (_u *LogsUpdateOne) SetNillableSuccess(v *bool) *LogsUpdateOne {
+func (_u *LogsUpdateOne) SetNillableSuccess(v *int64) *LogsUpdateOne {
 	if v != nil {
 		_u.SetSuccess(*v)
 	}
+	return _u
+}
+
+// AddSuccess adds value to the "success" field.
+func (_u *LogsUpdateOne) AddSuccess(v int64) *LogsUpdateOne {
+	_u.mutation.AddSuccess(v)
 	return _u
 }
 
@@ -723,23 +714,30 @@ func (_u *LogsUpdateOne) ClearUserAgent() *LogsUpdateOne {
 	return _u
 }
 
-// SetOperatorsr sets the "operatorsr" field.
-func (_u *LogsUpdateOne) SetOperatorsr(v string) *LogsUpdateOne {
-	_u.mutation.SetOperatorsr(v)
+// SetIdentity sets the "identity" field.
+func (_u *LogsUpdateOne) SetIdentity(v int64) *LogsUpdateOne {
+	_u.mutation.ResetIdentity()
+	_u.mutation.SetIdentity(v)
 	return _u
 }
 
-// SetNillableOperatorsr sets the "operatorsr" field if the given value is not nil.
-func (_u *LogsUpdateOne) SetNillableOperatorsr(v *string) *LogsUpdateOne {
+// SetNillableIdentity sets the "identity" field if the given value is not nil.
+func (_u *LogsUpdateOne) SetNillableIdentity(v *int64) *LogsUpdateOne {
 	if v != nil {
-		_u.SetOperatorsr(*v)
+		_u.SetIdentity(*v)
 	}
 	return _u
 }
 
-// ClearOperatorsr clears the value of the "operatorsr" field.
-func (_u *LogsUpdateOne) ClearOperatorsr() *LogsUpdateOne {
-	_u.mutation.ClearOperatorsr()
+// AddIdentity adds value to the "identity" field.
+func (_u *LogsUpdateOne) AddIdentity(v int64) *LogsUpdateOne {
+	_u.mutation.AddIdentity(v)
+	return _u
+}
+
+// ClearIdentity clears the value of the "identity" field.
+func (_u *LogsUpdateOne) ClearIdentity() *LogsUpdateOne {
+	_u.mutation.ClearIdentity()
 	return _u
 }
 
@@ -767,33 +765,6 @@ func (_u *LogsUpdateOne) AddTime(v int64) *LogsUpdateOne {
 // ClearTime clears the value of the "time" field.
 func (_u *LogsUpdateOne) ClearTime() *LogsUpdateOne {
 	_u.mutation.ClearTime()
-	return _u
-}
-
-// SetIdentity sets the "identity" field.
-func (_u *LogsUpdateOne) SetIdentity(v int64) *LogsUpdateOne {
-	_u.mutation.ResetIdentity()
-	_u.mutation.SetIdentity(v)
-	return _u
-}
-
-// SetNillableIdentity sets the "identity" field if the given value is not nil.
-func (_u *LogsUpdateOne) SetNillableIdentity(v *int64) *LogsUpdateOne {
-	if v != nil {
-		_u.SetIdentity(*v)
-	}
-	return _u
-}
-
-// AddIdentity adds value to the "identity" field.
-func (_u *LogsUpdateOne) AddIdentity(v int64) *LogsUpdateOne {
-	_u.mutation.AddIdentity(v)
-	return _u
-}
-
-// ClearIdentity clears the value of the "identity" field.
-func (_u *LogsUpdateOne) ClearIdentity() *LogsUpdateOne {
-	_u.mutation.ClearIdentity()
 	return _u
 }
 
@@ -923,10 +894,13 @@ func (_u *LogsUpdateOne) sqlSave(ctx context.Context) (_node *Logs, err error) {
 		_spec.ClearField(logs.FieldAPI, field.TypeString)
 	}
 	if value, ok := _u.mutation.Success(); ok {
-		_spec.SetField(logs.FieldSuccess, field.TypeBool, value)
+		_spec.SetField(logs.FieldSuccess, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedSuccess(); ok {
+		_spec.AddField(logs.FieldSuccess, field.TypeInt64, value)
 	}
 	if _u.mutation.SuccessCleared() {
-		_spec.ClearField(logs.FieldSuccess, field.TypeBool)
+		_spec.ClearField(logs.FieldSuccess, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.ReqContent(); ok {
 		_spec.SetField(logs.FieldReqContent, field.TypeString, value)
@@ -952,11 +926,14 @@ func (_u *LogsUpdateOne) sqlSave(ctx context.Context) (_node *Logs, err error) {
 	if _u.mutation.UserAgentCleared() {
 		_spec.ClearField(logs.FieldUserAgent, field.TypeString)
 	}
-	if value, ok := _u.mutation.Operatorsr(); ok {
-		_spec.SetField(logs.FieldOperatorsr, field.TypeString, value)
+	if value, ok := _u.mutation.Identity(); ok {
+		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
 	}
-	if _u.mutation.OperatorsrCleared() {
-		_spec.ClearField(logs.FieldOperatorsr, field.TypeString)
+	if value, ok := _u.mutation.AddedIdentity(); ok {
+		_spec.AddField(logs.FieldIdentity, field.TypeInt64, value)
+	}
+	if _u.mutation.IdentityCleared() {
+		_spec.ClearField(logs.FieldIdentity, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Time(); ok {
 		_spec.SetField(logs.FieldTime, field.TypeInt64, value)
@@ -966,15 +943,6 @@ func (_u *LogsUpdateOne) sqlSave(ctx context.Context) (_node *Logs, err error) {
 	}
 	if _u.mutation.TimeCleared() {
 		_spec.ClearField(logs.FieldTime, field.TypeInt64)
-	}
-	if value, ok := _u.mutation.Identity(); ok {
-		_spec.SetField(logs.FieldIdentity, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedIdentity(); ok {
-		_spec.AddField(logs.FieldIdentity, field.TypeInt64, value)
-	}
-	if _u.mutation.IdentityCleared() {
-		_spec.ClearField(logs.FieldIdentity, field.TypeInt64)
 	}
 	_node = &Logs{config: _u.config}
 	_spec.Assign = _node.assignValues

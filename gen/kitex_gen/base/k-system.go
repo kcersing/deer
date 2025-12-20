@@ -2855,7 +2855,7 @@ func (p *Log) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 4:
-			if fieldTypeId == thrift.BOOL {
+			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField4(buf[offset:])
 				offset += l
 				if err != nil {
@@ -2913,20 +2913,6 @@ func (p *Log) FastRead(buf []byte) (int, error) {
 		case 8:
 			if fieldTypeId == thrift.STRING {
 				l, err = p.FastReadField8(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 9:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField9(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -3071,8 +3057,8 @@ func (p *Log) FastReadField3(buf []byte) (int, error) {
 func (p *Log) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
-	var _field bool
-	if v, l, err := thrift.Binary.ReadBool(buf[offset:]); err != nil {
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
@@ -3135,20 +3121,6 @@ func (p *Log) FastReadField8(buf []byte) (int, error) {
 		_field = v
 	}
 	p.UserAgent = _field
-	return offset, nil
-}
-
-func (p *Log) FastReadField9(buf []byte) (int, error) {
-	offset := 0
-
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = v
-	}
-	p.Operatorsr = _field
 	return offset, nil
 }
 
@@ -3240,7 +3212,6 @@ func (p *Log) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
-		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
 		offset += p.fastWriteField12(buf[offset:], w)
 	}
@@ -3259,7 +3230,6 @@ func (p *Log) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field8Length()
-		l += p.field9Length()
 		l += p.field10Length()
 		l += p.field11Length()
 		l += p.field12Length()
@@ -3300,8 +3270,8 @@ func (p *Log) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 func (p *Log) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetSuccess() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.BOOL, 4)
-		offset += thrift.Binary.WriteBool(buf[offset:], p.Success)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 4)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Success)
 	}
 	return offset
 }
@@ -3338,15 +3308,6 @@ func (p *Log) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
 	if p.IsSetUserAgent() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 8)
 		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.UserAgent)
-	}
-	return offset
-}
-
-func (p *Log) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetOperatorsr() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 9)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Operatorsr)
 	}
 	return offset
 }
@@ -3427,7 +3388,7 @@ func (p *Log) field4Length() int {
 	l := 0
 	if p.IsSetSuccess() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.BoolLength()
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }
@@ -3464,15 +3425,6 @@ func (p *Log) field8Length() int {
 	if p.IsSetUserAgent() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.StringLengthNocopy(p.UserAgent)
-	}
-	return l
-}
-
-func (p *Log) field9Length() int {
-	l := 0
-	if p.IsSetOperatorsr() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.Operatorsr)
 	}
 	return l
 }

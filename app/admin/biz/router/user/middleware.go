@@ -7,6 +7,7 @@ import (
 	"common/pkg/errno"
 	"context"
 	"fmt"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
@@ -47,6 +48,7 @@ func _serviceMw() []app.HandlerFunc {
 	// your code...
 	return []app.HandlerFunc{
 		// use jwt mw
+		mw.LogMw(),
 		mw.JwtMiddleware.MiddlewareFunc(),
 	}
 }

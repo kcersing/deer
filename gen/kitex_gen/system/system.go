@@ -2431,6 +2431,67 @@ var fieldIDToName_DicthtListResp = map[int16]string{
 	255: "baseResp",
 }
 
+type LogListResp struct {
+	Data     []*base.Log    `thrift:"data,1,optional" frugal:"1,optional,list<base.Log>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewLogListResp() *LogListResp {
+	return &LogListResp{
+		Data:     []*base.Log{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *LogListResp) InitDefault() {
+	p.Data = []*base.Log{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var LogListResp_Data_DEFAULT []*base.Log = []*base.Log{}
+
+func (p *LogListResp) GetData() (v []*base.Log) {
+	if !p.IsSetData() {
+		return LogListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var LogListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *LogListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return LogListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *LogListResp) SetData(val []*base.Log) {
+	p.Data = val
+}
+func (p *LogListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *LogListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *LogListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *LogListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("LogListResp(%+v)", *p)
+}
+
+var fieldIDToName_LogListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
 type LogListReq struct {
 	Page       int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
 	PageSize   int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
@@ -2616,7 +2677,7 @@ type CreateLogReq struct {
 	Type        string `thrift:"type,1,optional" frugal:"1,optional,string" json:"type,omitempty"`
 	Method      string `thrift:"method,2,optional" frugal:"2,optional,string" json:"method,omitempty"`
 	Api         string `thrift:"api,3,optional" frugal:"3,optional,string" json:"api,omitempty"`
-	Success     bool   `thrift:"success,4,optional" frugal:"4,optional,bool" json:"success,omitempty"`
+	Success     int64  `thrift:"success,4,optional" frugal:"4,optional,i64" json:"success,omitempty"`
 	ReqContent  string `thrift:"reqContent,5,optional" frugal:"5,optional,string" json:"reqContent,omitempty"`
 	RespContent string `thrift:"respContent,6,optional" frugal:"6,optional,string" json:"respContent,omitempty"`
 	Ip          string `thrift:"ip,7,optional" frugal:"7,optional,string" json:"ip,omitempty"`
@@ -2633,7 +2694,7 @@ func NewCreateLogReq() *CreateLogReq {
 		Type:        "",
 		Method:      "",
 		Api:         "",
-		Success:     true,
+		Success:     1,
 		ReqContent:  "",
 		RespContent: "",
 		Ip:          "",
@@ -2650,7 +2711,7 @@ func (p *CreateLogReq) InitDefault() {
 	p.Type = ""
 	p.Method = ""
 	p.Api = ""
-	p.Success = true
+	p.Success = 1
 	p.ReqContent = ""
 	p.RespContent = ""
 	p.Ip = ""
@@ -2689,9 +2750,9 @@ func (p *CreateLogReq) GetApi() (v string) {
 	return p.Api
 }
 
-var CreateLogReq_Success_DEFAULT bool = true
+var CreateLogReq_Success_DEFAULT int64 = 1
 
-func (p *CreateLogReq) GetSuccess() (v bool) {
+func (p *CreateLogReq) GetSuccess() (v int64) {
 	if !p.IsSetSuccess() {
 		return CreateLogReq_Success_DEFAULT
 	}
@@ -2787,7 +2848,7 @@ func (p *CreateLogReq) SetMethod(val string) {
 func (p *CreateLogReq) SetApi(val string) {
 	p.Api = val
 }
-func (p *CreateLogReq) SetSuccess(val bool) {
+func (p *CreateLogReq) SetSuccess(val int64) {
 	p.Success = val
 }
 func (p *CreateLogReq) SetReqContent(val string) {
@@ -2952,67 +3013,6 @@ func (p *DeleteLogReq) String() string {
 var fieldIDToName_DeleteLogReq = map[int16]string{
 	1: "startAt",
 	2: "endAt",
-}
-
-type LogListResp struct {
-	Data     []*base.Log    `thrift:"data,1,optional" frugal:"1,optional,list<base.Log>" json:"data,omitempty"`
-	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
-}
-
-func NewLogListResp() *LogListResp {
-	return &LogListResp{
-		Data:     []*base.Log{},
-		BaseResp: &base.BaseResp{},
-	}
-}
-
-func (p *LogListResp) InitDefault() {
-	p.Data = []*base.Log{}
-	p.BaseResp = &base.BaseResp{}
-}
-
-var LogListResp_Data_DEFAULT []*base.Log = []*base.Log{}
-
-func (p *LogListResp) GetData() (v []*base.Log) {
-	if !p.IsSetData() {
-		return LogListResp_Data_DEFAULT
-	}
-	return p.Data
-}
-
-var LogListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
-
-func (p *LogListResp) GetBaseResp() (v *base.BaseResp) {
-	if !p.IsSetBaseResp() {
-		return LogListResp_BaseResp_DEFAULT
-	}
-	return p.BaseResp
-}
-func (p *LogListResp) SetData(val []*base.Log) {
-	p.Data = val
-}
-func (p *LogListResp) SetBaseResp(val *base.BaseResp) {
-	p.BaseResp = val
-}
-
-func (p *LogListResp) IsSetData() bool {
-	return p.Data != nil
-}
-
-func (p *LogListResp) IsSetBaseResp() bool {
-	return p.BaseResp != nil
-}
-
-func (p *LogListResp) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("LogListResp(%+v)", *p)
-}
-
-var fieldIDToName_LogListResp = map[int16]string{
-	1:   "data",
-	255: "baseResp",
 }
 
 type TreeResp struct {

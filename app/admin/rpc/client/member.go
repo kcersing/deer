@@ -6,20 +6,21 @@ import (
 	"sync"
 
 	"gen/kitex_gen/member/memberservice"
+
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+
+	"time"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	"time"
 )
 
 var MemberClient memberservice.Client
 var memberOnceClient sync.Once
 
 func initMemberRpc() {
-
 	memberOnceClient.Do(func() {
 
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
@@ -29,7 +30,7 @@ func initMemberRpc() {
 		c, err := memberservice.NewClient(
 			consts.MemberRpcServiceName,
 			client.WithResolver(r), // resolver
-			client.WithMuxConnection(1),
+			//client.WithMuxConnection(1),
 			client.WithRPCTimeout(3*time.Second),              // rpc timeout
 			client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
 			client.WithFailureRetry(retry.NewFailurePolicy()), // retry
@@ -42,6 +43,7 @@ func initMemberRpc() {
 		if err != nil {
 			panic(err)
 		}
+
 		MemberClient = c
 
 	})

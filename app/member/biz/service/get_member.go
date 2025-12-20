@@ -34,7 +34,12 @@ func (s *GetMemberService) Run(req *Base.IdReq) (resp *Member.MemberResp, err er
 			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
 			return err
 		}
-		memberResp = convert.EntToMember(only)
+		profile, err := only.QueryMemberProfile().First(ctx)
+		if err != nil {
+			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
+			return err
+		}
+		memberResp = convert.EntToMember(only, profile)
 		return nil
 	})
 	//eg.Go(func() error {

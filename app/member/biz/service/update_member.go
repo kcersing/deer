@@ -4,10 +4,12 @@ import (
 	"common/pkg/errno"
 	"context"
 	Member "gen/kitex_gen/member"
+
+	"github.com/pkg/errors"
 	"member/biz/convert"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent/member"
-	"member/biz/dal/db/ent/memberprofile"
+
 	"time"
 )
 
@@ -30,29 +32,43 @@ func (s *UpdateMemberService) Run(req *Member.UpdateMemberReq) (resp *Member.Mem
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
-	only, err := db.Client.Member.UpdateOneID(req.GetId()).
-		SetAvatar(req.GetAvatar()).
+	tx, err := db.Client.Tx(s.ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "starting a transaction:")
+	}
+	save, err := tx.Member.UpdateOneID(req.GetId()).
 		SetName(req.GetName()).
-		SetStatus(req.GetStatus()).
-		//SetGender(req.GetGender()).
-		//SetBirthday(birthday).
-		//SetDetail(req.GetDetail()).
+		SetStatus(req.Status).
+		SetAvatar(req.GetAvatar()).
 		Save(s.ctx)
 	if err != nil {
+		return nil, rollback(tx, errors.Wrap(err, "update user failed"))
+	}
+	profile, err := save.QueryMemberProfile().First(s.ctx)
+	if err != nil {
+		return nil, rollback(tx, errors.Wrap(err, "query profile nil"))
+	}
+	profile, err = tx.MemberProfile.UpdateOneID(req.GetId()).
+		SetCreatedID(req.CreatedId).
+		SetBirthday(birthday).
+		SetIntention(req.GetIntention()).
+		SetGender(req.GetGender()).
+		SetIntention(req.GetIntention()).
+		//SetSource(req.GetSource()).
+		//SetEmail(req.GetEmail()).
+		//SetWecom(req.GetWecom()).
+		//SetRelationMid(req.GetRelationMid()).
+		//SetRelationMame(req.GetRelationMame()).
+		Save(s.ctx)
+	if err != nil {
+		return nil, rollback(tx, errors.Wrap(err, "update Member Profile failed"))
+	}
+	if err = tx.Commit(); err != nil {
 		return nil, err
 	}
 
-	db.Client.MemberProfile.Update().Where(memberprofile.MemberIDEQ(req.GetId())).
-		SetGender(req.GetGender()).
-		SetBirthday(birthday).
-		SetIntention(0).
-		//SetEmail(req.GetEmail()).
-		//SetWecom(req.GetWecom()).
-		//SetSource(req.GetSource()).
-		Save(s.ctx)
-
 	resp = &Member.MemberResp{
-		Data: convert.EntToMember(only),
+		Data: convert.EntToMember(save, profile),
 	}
 	return
 }

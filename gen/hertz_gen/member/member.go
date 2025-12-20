@@ -10,51 +10,136 @@ import (
 )
 
 type CreateMemberReq struct {
-	Username string `thrift:"username,1,optional" form:"username" json:"username,omitempty" query:"username"`
-	Password string `thrift:"password,2,optional" form:"password" json:"password,omitempty" query:"password"`
+	Name      string `thrift:"name,1,optional" form:"name" json:"name,omitempty" query:"name"`
+	Mobile    string `thrift:"mobile,2,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
+	Avatar    string `thrift:"avatar,3,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
+	Birthday  string `thrift:"birthday,4,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	Intention int64  `thrift:"intention,5,optional" form:"intention" json:"intention,omitempty" query:"intention"`
+	Gender    int64  `thrift:"gender,6,optional" form:"gender" json:"gender,omitempty" query:"gender"`
+	Status    int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewCreateMemberReq() *CreateMemberReq {
 	return &CreateMemberReq{
-		Username: "",
-		Password: "",
+		Name:      "",
+		Mobile:    "",
+		Avatar:    "",
+		Birthday:  "",
+		Intention: 0,
+		Gender:    0,
+		Status:    0,
 	}
 }
 
 func (p *CreateMemberReq) InitDefault() {
-	p.Username = ""
-	p.Password = ""
+	p.Name = ""
+	p.Mobile = ""
+	p.Avatar = ""
+	p.Birthday = ""
+	p.Intention = 0
+	p.Gender = 0
+	p.Status = 0
 }
 
-var CreateMemberReq_Username_DEFAULT string = ""
+var CreateMemberReq_Name_DEFAULT string = ""
 
-func (p *CreateMemberReq) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return CreateMemberReq_Username_DEFAULT
+func (p *CreateMemberReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateMemberReq_Name_DEFAULT
 	}
-	return p.Username
+	return p.Name
 }
 
-var CreateMemberReq_Password_DEFAULT string = ""
+var CreateMemberReq_Mobile_DEFAULT string = ""
 
-func (p *CreateMemberReq) GetPassword() (v string) {
-	if !p.IsSetPassword() {
-		return CreateMemberReq_Password_DEFAULT
+func (p *CreateMemberReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return CreateMemberReq_Mobile_DEFAULT
 	}
-	return p.Password
+	return p.Mobile
+}
+
+var CreateMemberReq_Avatar_DEFAULT string = ""
+
+func (p *CreateMemberReq) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return CreateMemberReq_Avatar_DEFAULT
+	}
+	return p.Avatar
+}
+
+var CreateMemberReq_Birthday_DEFAULT string = ""
+
+func (p *CreateMemberReq) GetBirthday() (v string) {
+	if !p.IsSetBirthday() {
+		return CreateMemberReq_Birthday_DEFAULT
+	}
+	return p.Birthday
+}
+
+var CreateMemberReq_Intention_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return CreateMemberReq_Intention_DEFAULT
+	}
+	return p.Intention
+}
+
+var CreateMemberReq_Gender_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetGender() (v int64) {
+	if !p.IsSetGender() {
+		return CreateMemberReq_Gender_DEFAULT
+	}
+	return p.Gender
+}
+
+var CreateMemberReq_Status_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateMemberReq_Status_DEFAULT
+	}
+	return p.Status
 }
 
 var fieldIDToName_CreateMemberReq = map[int16]string{
-	1: "username",
-	2: "password",
+	1: "name",
+	2: "mobile",
+	3: "avatar",
+	4: "birthday",
+	5: "intention",
+	6: "gender",
+	7: "status",
 }
 
-func (p *CreateMemberReq) IsSetUsername() bool {
-	return p.Username != CreateMemberReq_Username_DEFAULT
+func (p *CreateMemberReq) IsSetName() bool {
+	return p.Name != CreateMemberReq_Name_DEFAULT
 }
 
-func (p *CreateMemberReq) IsSetPassword() bool {
-	return p.Password != CreateMemberReq_Password_DEFAULT
+func (p *CreateMemberReq) IsSetMobile() bool {
+	return p.Mobile != CreateMemberReq_Mobile_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetAvatar() bool {
+	return p.Avatar != CreateMemberReq_Avatar_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetBirthday() bool {
+	return p.Birthday != CreateMemberReq_Birthday_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetIntention() bool {
+	return p.Intention != CreateMemberReq_Intention_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetGender() bool {
+	return p.Gender != CreateMemberReq_Gender_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetStatus() bool {
+	return p.Status != CreateMemberReq_Status_DEFAULT
 }
 
 func (p *CreateMemberReq) Read(iprot thrift.TProtocol) (err error) {
@@ -87,6 +172,46 @@ func (p *CreateMemberReq) Read(iprot thrift.TProtocol) (err error) {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 5:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField7(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -129,7 +254,7 @@ func (p *CreateMemberReq) ReadField1(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Username = _field
+	p.Name = _field
 	return nil
 }
 func (p *CreateMemberReq) ReadField2(iprot thrift.TProtocol) error {
@@ -140,7 +265,62 @@ func (p *CreateMemberReq) ReadField2(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Password = _field
+	p.Mobile = _field
+	return nil
+}
+func (p *CreateMemberReq) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Avatar = _field
+	return nil
+}
+func (p *CreateMemberReq) ReadField4(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Birthday = _field
+	return nil
+}
+func (p *CreateMemberReq) ReadField5(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Intention = _field
+	return nil
+}
+func (p *CreateMemberReq) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Gender = _field
+	return nil
+}
+func (p *CreateMemberReq) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
 	return nil
 }
 
@@ -156,6 +336,26 @@ func (p *CreateMemberReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 	}
@@ -177,11 +377,11 @@ WriteStructEndError:
 }
 
 func (p *CreateMemberReq) writeField1(oprot thrift.TProtocol) (err error) {
-	if p.IsSetUsername() {
-		if err = oprot.WriteFieldBegin("username", thrift.STRING, 1); err != nil {
+	if p.IsSetName() {
+		if err = oprot.WriteFieldBegin("name", thrift.STRING, 1); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Username); err != nil {
+		if err := oprot.WriteString(p.Name); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -196,11 +396,11 @@ WriteFieldEndError:
 }
 
 func (p *CreateMemberReq) writeField2(oprot thrift.TProtocol) (err error) {
-	if p.IsSetPassword() {
-		if err = oprot.WriteFieldBegin("password", thrift.STRING, 2); err != nil {
+	if p.IsSetMobile() {
+		if err = oprot.WriteFieldBegin("mobile", thrift.STRING, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Password); err != nil {
+		if err := oprot.WriteString(p.Mobile); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -212,6 +412,101 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *CreateMemberReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if p.IsSetAvatar() {
+		if err = oprot.WriteFieldBegin("avatar", thrift.STRING, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Avatar); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *CreateMemberReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if p.IsSetBirthday() {
+		if err = oprot.WriteFieldBegin("birthday", thrift.STRING, 4); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Birthday); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+
+func (p *CreateMemberReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if p.IsSetIntention() {
+		if err = oprot.WriteFieldBegin("intention", thrift.I64, 5); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Intention); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *CreateMemberReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if p.IsSetGender() {
+		if err = oprot.WriteFieldBegin("gender", thrift.I64, 6); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Gender); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
+func (p *CreateMemberReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
 }
 
 func (p *CreateMemberReq) String() string {
@@ -495,26 +790,26 @@ func (p *GetMemberListReq) String() string {
 }
 
 type UpdateMemberReq struct {
-	ID       int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Avatar   string `thrift:"avatar,4,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
-	Mobile   string `thrift:"mobile,5,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
-	Name     string `thrift:"name,6,optional" form:"name" json:"name,omitempty" query:"name"`
-	Status   int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
-	Level    int64  `thrift:"level,8,optional" form:"level" json:"level,omitempty" query:"level"`
-	Gender   int64  `thrift:"gender,9,optional" form:"gender" json:"gender,omitempty" query:"gender"`
-	Birthday string `thrift:"birthday,10,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	ID        int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Avatar    string `thrift:"avatar,4,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
+	Mobile    string `thrift:"mobile,5,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
+	Name      string `thrift:"name,6,optional" form:"name" json:"name,omitempty" query:"name"`
+	Status    int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
+	Intention int64  `thrift:"intention,8,optional" form:"intention" json:"intention,omitempty" query:"intention"`
+	Gender    int64  `thrift:"gender,9,optional" form:"gender" json:"gender,omitempty" query:"gender"`
+	Birthday  string `thrift:"birthday,10,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
 }
 
 func NewUpdateMemberReq() *UpdateMemberReq {
 	return &UpdateMemberReq{
-		ID:       0,
-		Avatar:   "",
-		Mobile:   "",
-		Name:     "",
-		Status:   0,
-		Level:    0,
-		Gender:   0,
-		Birthday: "",
+		ID:        0,
+		Avatar:    "",
+		Mobile:    "",
+		Name:      "",
+		Status:    0,
+		Intention: 0,
+		Gender:    0,
+		Birthday:  "",
 	}
 }
 
@@ -524,7 +819,7 @@ func (p *UpdateMemberReq) InitDefault() {
 	p.Mobile = ""
 	p.Name = ""
 	p.Status = 0
-	p.Level = 0
+	p.Intention = 0
 	p.Gender = 0
 	p.Birthday = ""
 }
@@ -574,13 +869,13 @@ func (p *UpdateMemberReq) GetStatus() (v int64) {
 	return p.Status
 }
 
-var UpdateMemberReq_Level_DEFAULT int64 = 0
+var UpdateMemberReq_Intention_DEFAULT int64 = 0
 
-func (p *UpdateMemberReq) GetLevel() (v int64) {
-	if !p.IsSetLevel() {
-		return UpdateMemberReq_Level_DEFAULT
+func (p *UpdateMemberReq) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return UpdateMemberReq_Intention_DEFAULT
 	}
-	return p.Level
+	return p.Intention
 }
 
 var UpdateMemberReq_Gender_DEFAULT int64 = 0
@@ -607,7 +902,7 @@ var fieldIDToName_UpdateMemberReq = map[int16]string{
 	5:  "mobile",
 	6:  "name",
 	7:  "status",
-	8:  "level",
+	8:  "intention",
 	9:  "gender",
 	10: "birthday",
 }
@@ -632,8 +927,8 @@ func (p *UpdateMemberReq) IsSetStatus() bool {
 	return p.Status != UpdateMemberReq_Status_DEFAULT
 }
 
-func (p *UpdateMemberReq) IsSetLevel() bool {
-	return p.Level != UpdateMemberReq_Level_DEFAULT
+func (p *UpdateMemberReq) IsSetIntention() bool {
+	return p.Intention != UpdateMemberReq_Intention_DEFAULT
 }
 
 func (p *UpdateMemberReq) IsSetGender() bool {
@@ -819,7 +1114,7 @@ func (p *UpdateMemberReq) ReadField8(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.Level = _field
+	p.Intention = _field
 	return nil
 }
 func (p *UpdateMemberReq) ReadField9(iprot thrift.TProtocol) error {
@@ -997,11 +1292,11 @@ WriteFieldEndError:
 }
 
 func (p *UpdateMemberReq) writeField8(oprot thrift.TProtocol) (err error) {
-	if p.IsSetLevel() {
-		if err = oprot.WriteFieldBegin("level", thrift.I64, 8); err != nil {
+	if p.IsSetIntention() {
+		if err = oprot.WriteFieldBegin("intention", thrift.I64, 8); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(p.Level); err != nil {
+		if err := oprot.WriteI64(p.Intention); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {

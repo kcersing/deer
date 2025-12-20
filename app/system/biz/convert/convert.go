@@ -25,17 +25,15 @@ func EntToLog(e *ent.Logs) *base.Log {
 		Type:        e.Type,
 		Method:      e.Method,
 		Api:         e.API,
-		Success:     false,
+		Success:     e.Success,
 		ReqContent:  e.ReqContent,
 		RespContent: e.RespContent,
 		Ip:          e.IP,
 		UserAgent:   e.UserAgent,
-		Operatorsr:  e.Operatorsr,
 		Time:        e.Time,
 		CreatedAt:   e.CreatedAt.Format(time.DateTime),
-		UpdatedAt:   "",
-		Identity:    0,
-		Id:          0,
+		Identity:    e.Identity,
+		Id:          e.ID,
 	}
 }
 

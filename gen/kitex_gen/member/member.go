@@ -9,41 +9,56 @@ import (
 )
 
 type CreateMemberReq struct {
-	Username  string `thrift:"username,1,optional" frugal:"1,optional,string" json:"username,omitempty"`
-	Password  string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Name      string `thrift:"name,1,optional" frugal:"1,optional,string" json:"name,omitempty"`
+	Mobile    string `thrift:"mobile,2,optional" frugal:"2,optional,string" json:"mobile,omitempty"`
 	CreatedId int64  `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
+	Birthday  string `thrift:"birthday,4,optional" frugal:"4,optional,string" json:"birthday,omitempty"`
+	Intention int64  `thrift:"intention,5,optional" frugal:"5,optional,i64" json:"intention,omitempty"`
+	Gender    int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Avatar    string `thrift:"avatar,8,optional" frugal:"8,optional,string" json:"avatar,omitempty"`
 }
 
 func NewCreateMemberReq() *CreateMemberReq {
 	return &CreateMemberReq{
-		Username:  "",
-		Password:  "",
+		Name:      "",
+		Mobile:    "",
 		CreatedId: 0,
+		Birthday:  "",
+		Intention: 0,
+		Gender:    0,
+		Status:    0,
+		Avatar:    "",
 	}
 }
 
 func (p *CreateMemberReq) InitDefault() {
-	p.Username = ""
-	p.Password = ""
+	p.Name = ""
+	p.Mobile = ""
 	p.CreatedId = 0
+	p.Birthday = ""
+	p.Intention = 0
+	p.Gender = 0
+	p.Status = 0
+	p.Avatar = ""
 }
 
-var CreateMemberReq_Username_DEFAULT string = ""
+var CreateMemberReq_Name_DEFAULT string = ""
 
-func (p *CreateMemberReq) GetUsername() (v string) {
-	if !p.IsSetUsername() {
-		return CreateMemberReq_Username_DEFAULT
+func (p *CreateMemberReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateMemberReq_Name_DEFAULT
 	}
-	return p.Username
+	return p.Name
 }
 
-var CreateMemberReq_Password_DEFAULT string = ""
+var CreateMemberReq_Mobile_DEFAULT string = ""
 
-func (p *CreateMemberReq) GetPassword() (v string) {
-	if !p.IsSetPassword() {
-		return CreateMemberReq_Password_DEFAULT
+func (p *CreateMemberReq) GetMobile() (v string) {
+	if !p.IsSetMobile() {
+		return CreateMemberReq_Mobile_DEFAULT
 	}
-	return p.Password
+	return p.Mobile
 }
 
 var CreateMemberReq_CreatedId_DEFAULT int64 = 0
@@ -54,26 +69,106 @@ func (p *CreateMemberReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
-func (p *CreateMemberReq) SetUsername(val string) {
-	p.Username = val
+
+var CreateMemberReq_Birthday_DEFAULT string = ""
+
+func (p *CreateMemberReq) GetBirthday() (v string) {
+	if !p.IsSetBirthday() {
+		return CreateMemberReq_Birthday_DEFAULT
+	}
+	return p.Birthday
 }
-func (p *CreateMemberReq) SetPassword(val string) {
-	p.Password = val
+
+var CreateMemberReq_Intention_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return CreateMemberReq_Intention_DEFAULT
+	}
+	return p.Intention
+}
+
+var CreateMemberReq_Gender_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetGender() (v int64) {
+	if !p.IsSetGender() {
+		return CreateMemberReq_Gender_DEFAULT
+	}
+	return p.Gender
+}
+
+var CreateMemberReq_Status_DEFAULT int64 = 0
+
+func (p *CreateMemberReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateMemberReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateMemberReq_Avatar_DEFAULT string = ""
+
+func (p *CreateMemberReq) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return CreateMemberReq_Avatar_DEFAULT
+	}
+	return p.Avatar
+}
+func (p *CreateMemberReq) SetName(val string) {
+	p.Name = val
+}
+func (p *CreateMemberReq) SetMobile(val string) {
+	p.Mobile = val
 }
 func (p *CreateMemberReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-
-func (p *CreateMemberReq) IsSetUsername() bool {
-	return p.Username != CreateMemberReq_Username_DEFAULT
+func (p *CreateMemberReq) SetBirthday(val string) {
+	p.Birthday = val
+}
+func (p *CreateMemberReq) SetIntention(val int64) {
+	p.Intention = val
+}
+func (p *CreateMemberReq) SetGender(val int64) {
+	p.Gender = val
+}
+func (p *CreateMemberReq) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *CreateMemberReq) SetAvatar(val string) {
+	p.Avatar = val
 }
 
-func (p *CreateMemberReq) IsSetPassword() bool {
-	return p.Password != CreateMemberReq_Password_DEFAULT
+func (p *CreateMemberReq) IsSetName() bool {
+	return p.Name != CreateMemberReq_Name_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetMobile() bool {
+	return p.Mobile != CreateMemberReq_Mobile_DEFAULT
 }
 
 func (p *CreateMemberReq) IsSetCreatedId() bool {
 	return p.CreatedId != CreateMemberReq_CreatedId_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetBirthday() bool {
+	return p.Birthday != CreateMemberReq_Birthday_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetIntention() bool {
+	return p.Intention != CreateMemberReq_Intention_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetGender() bool {
+	return p.Gender != CreateMemberReq_Gender_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetStatus() bool {
+	return p.Status != CreateMemberReq_Status_DEFAULT
+}
+
+func (p *CreateMemberReq) IsSetAvatar() bool {
+	return p.Avatar != CreateMemberReq_Avatar_DEFAULT
 }
 
 func (p *CreateMemberReq) String() string {
@@ -84,9 +179,14 @@ func (p *CreateMemberReq) String() string {
 }
 
 var fieldIDToName_CreateMemberReq = map[int16]string{
-	1: "username",
-	2: "password",
+	1: "name",
+	2: "mobile",
 	3: "createdId",
+	4: "birthday",
+	5: "intention",
+	6: "gender",
+	7: "status",
+	8: "avatar",
 }
 
 type GetMemberListReq struct {
@@ -298,7 +398,7 @@ type UpdateMemberReq struct {
 	Mobile    string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
 	Name      string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
 	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Level     int64  `thrift:"level,8,optional" frugal:"8,optional,i64" json:"level,omitempty"`
+	Intention int64  `thrift:"intention,8,optional" frugal:"8,optional,i64" json:"intention,omitempty"`
 	Gender    int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
 	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
 	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
@@ -311,7 +411,7 @@ func NewUpdateMemberReq() *UpdateMemberReq {
 		Mobile:    "",
 		Name:      "",
 		Status:    0,
-		Level:     0,
+		Intention: 0,
 		Gender:    0,
 		Birthday:  "",
 		CreatedId: 0,
@@ -324,7 +424,7 @@ func (p *UpdateMemberReq) InitDefault() {
 	p.Mobile = ""
 	p.Name = ""
 	p.Status = 0
-	p.Level = 0
+	p.Intention = 0
 	p.Gender = 0
 	p.Birthday = ""
 	p.CreatedId = 0
@@ -375,13 +475,13 @@ func (p *UpdateMemberReq) GetStatus() (v int64) {
 	return p.Status
 }
 
-var UpdateMemberReq_Level_DEFAULT int64 = 0
+var UpdateMemberReq_Intention_DEFAULT int64 = 0
 
-func (p *UpdateMemberReq) GetLevel() (v int64) {
-	if !p.IsSetLevel() {
-		return UpdateMemberReq_Level_DEFAULT
+func (p *UpdateMemberReq) GetIntention() (v int64) {
+	if !p.IsSetIntention() {
+		return UpdateMemberReq_Intention_DEFAULT
 	}
-	return p.Level
+	return p.Intention
 }
 
 var UpdateMemberReq_Gender_DEFAULT int64 = 0
@@ -425,8 +525,8 @@ func (p *UpdateMemberReq) SetName(val string) {
 func (p *UpdateMemberReq) SetStatus(val int64) {
 	p.Status = val
 }
-func (p *UpdateMemberReq) SetLevel(val int64) {
-	p.Level = val
+func (p *UpdateMemberReq) SetIntention(val int64) {
+	p.Intention = val
 }
 func (p *UpdateMemberReq) SetGender(val int64) {
 	p.Gender = val
@@ -458,8 +558,8 @@ func (p *UpdateMemberReq) IsSetStatus() bool {
 	return p.Status != UpdateMemberReq_Status_DEFAULT
 }
 
-func (p *UpdateMemberReq) IsSetLevel() bool {
-	return p.Level != UpdateMemberReq_Level_DEFAULT
+func (p *UpdateMemberReq) IsSetIntention() bool {
+	return p.Intention != UpdateMemberReq_Intention_DEFAULT
 }
 
 func (p *UpdateMemberReq) IsSetGender() bool {
@@ -487,7 +587,7 @@ var fieldIDToName_UpdateMemberReq = map[int16]string{
 	5:   "mobile",
 	6:   "name",
 	7:   "status",
-	8:   "level",
+	8:   "intention",
 	9:   "gender",
 	10:  "birthday",
 	253: "createdId",

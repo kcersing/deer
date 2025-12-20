@@ -6,7 +6,7 @@ func Init() {
 	hlog.Info("加载rpc")
 	initSystemRpc()
 	initUserRpc()
-	//initMemberRpc()
+	initMemberRpc()
 	//initProductRpc()
 	//initOrderRpc()
 }

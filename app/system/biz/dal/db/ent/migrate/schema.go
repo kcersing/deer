@@ -108,8 +108,8 @@ var (
 			},
 		},
 	}
-	// SysLogsColumns holds the columns for the "sys_logs" table.
-	SysLogsColumns = []*schema.Column{
+	// SysLogs20251219Columns holds the columns for the "sys_logs_20251219" table.
+	SysLogs20251219Columns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -118,25 +118,24 @@ var (
 		{Name: "type", Type: field.TypeString, Nullable: true, Comment: "type of log | 日志类型"},
 		{Name: "method", Type: field.TypeString, Nullable: true, Comment: "method of log | 日志请求方法"},
 		{Name: "api", Type: field.TypeString, Nullable: true, Comment: "api of log | 日志请求api"},
-		{Name: "success", Type: field.TypeBool, Nullable: true, Comment: "success of log | 日志请求是否成功"},
+		{Name: "success", Type: field.TypeInt64, Nullable: true, Comment: "success of log | 日志请求是否成功"},
 		{Name: "req_content", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "content of request log | 日志请求内容"},
 		{Name: "resp_content", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "content of response log | 日志返回内容"},
 		{Name: "ip", Type: field.TypeString, Nullable: true, Comment: "ip of log | 日志IP"},
 		{Name: "user_agent", Type: field.TypeString, Nullable: true, Comment: "user_agent of log | 日志用户客户端"},
-		{Name: "operatorsr", Type: field.TypeString, Nullable: true, Comment: "operator of log | 日志操作者"},
+		{Name: "identity", Type: field.TypeInt64, Nullable: true, Comment: "操作者"},
 		{Name: "time", Type: field.TypeInt64, Nullable: true, Comment: "time of log(millisecond) | 日志时间(毫秒)"},
-		{Name: "identity", Type: field.TypeInt64, Nullable: true, Comment: "1会员2员工 | 身份"},
 	}
-	// SysLogsTable holds the schema information for the "sys_logs" table.
-	SysLogsTable = &schema.Table{
-		Name:       "sys_logs",
-		Columns:    SysLogsColumns,
-		PrimaryKey: []*schema.Column{SysLogsColumns[0]},
+	// SysLogs20251219Table holds the schema information for the "sys_logs_20251219" table.
+	SysLogs20251219Table = &schema.Table{
+		Name:       "sys_logs_20251219",
+		Columns:    SysLogs20251219Columns,
+		PrimaryKey: []*schema.Column{SysLogs20251219Columns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "logs_api",
-				Unique:  true,
-				Columns: []*schema.Column{SysLogsColumns[7]},
+				Unique:  false,
+				Columns: []*schema.Column{SysLogs20251219Columns[7]},
 			},
 		},
 	}
@@ -331,7 +330,7 @@ var (
 		SysApisTable,
 		SysDictTable,
 		SysDicthtTable,
-		SysLogsTable,
+		SysLogs20251219Table,
 		SysMenusTable,
 		MessagesTable,
 		SysRolesTable,
@@ -353,8 +352,8 @@ func init() {
 	SysDicthtTable.Annotation = &entsql.Annotation{
 		Table: "sys_dictht",
 	}
-	SysLogsTable.Annotation = &entsql.Annotation{
-		Table: "sys_logs",
+	SysLogs20251219Table.Annotation = &entsql.Annotation{
+		Table: "sys_logs_20251219",
 	}
 	SysMenusTable.ForeignKeys[0].RefTable = SysMenusTable
 	SysMenusTable.Annotation = &entsql.Annotation{

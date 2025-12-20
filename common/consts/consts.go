@@ -1,14 +1,10 @@
 package consts
 
 const (
-	UserTableName    = "t_user"
-	ProductTableName = "t_product"
-	OrderTableName   = "t_order"
-	MemberTableName  = "t_member"
-	LogFilePath      = "./file/log/"
-	ExportFilePath   = "./file/export"
-	SecretKey        = "secret key"
-	IdentityKey      = "id"
+	LogFilePath    = "./file/log/"
+	ExportFilePath = "./file/export"
+	SecretKey      = "secret key"
+	IdentityKey    = "id"
 
 	TCP            = "tcp"
 	ExportEndpoint = "4317"

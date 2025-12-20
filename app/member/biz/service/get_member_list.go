@@ -11,6 +11,8 @@ import (
 	"member/biz/convert"
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/predicate"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type GetMemberListService struct {
@@ -22,7 +24,7 @@ func NewGetMemberListService(ctx context.Context) *GetMemberListService {
 
 // Run Update
 func (s *GetMemberListService) Run(req *Member.GetMemberListReq) (resp *Member.MemberListResp, err error) {
-
+	klog.Info("GetMemberListService.Run req: %v", req)
 	var (
 		dataResp []*Base.Member
 	)
@@ -42,8 +44,11 @@ func (s *GetMemberListService) Run(req *Member.GetMemberListReq) (resp *Member.M
 	}
 
 	for _, v := range all {
-
-		dataResp = append(dataResp, convert.EntToMember(v))
+		profile, err := v.QueryMemberProfile().First(s.ctx)
+		if err != nil {
+			return nil, err
+		}
+		dataResp = append(dataResp, convert.EntToMember(v, profile))
 	}
 	return &Member.MemberListResp{
 		Data: dataResp,

@@ -170,6 +170,14 @@ func (p *DicthtListResp) IsValid() error {
 	}
 	return nil
 }
+func (p *LogListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
 func (p *LogListReq) IsValid() error {
 	return nil
 }
@@ -177,14 +185,6 @@ func (p *CreateLogReq) IsValid() error {
 	return nil
 }
 func (p *DeleteLogReq) IsValid() error {
-	return nil
-}
-func (p *LogListResp) IsValid() error {
-	if p.BaseResp != nil {
-		if err := p.BaseResp.IsValid(); err != nil {
-			return fmt.Errorf("field BaseResp not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *TreeResp) IsValid() error {

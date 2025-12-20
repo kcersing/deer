@@ -26,10 +26,10 @@ func CreateUser(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	UserId := utils.GetTokenId(ctx, c)
+
 	resp, err := client.UserClient.CreateUser(ctx, &user2.CreateUserReq{
 		Username:  req.GetUsername(),
-		CreatedId: UserId,
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -109,7 +109,7 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	UserId := utils.GetTokenId(ctx, c)
+
 	resp, err := client.UserClient.UpdateUser(ctx, &user2.UpdateUserReq{
 		Id:            req.GetID(),
 		Avatar:        req.GetAvatar(),
@@ -121,7 +121,7 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		Desc:          req.GetDesc(),
 		DepartmentsId: req.GetDepartmentsId(),
 		PositionsId:   req.GetPositionsId(),
-		CreatedId:     UserId,
+		CreatedId:     utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -187,11 +187,10 @@ func SetUserRole(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	UserId := utils.GetTokenId(ctx, c)
 	resp, err := client.UserClient.SetUserRole(ctx, &user2.SetUserRoleReq{
 		Id:        req.GetID(),
 		RoleId:    req.GetRoleId(),
-		CreatedId: UserId,
+		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
