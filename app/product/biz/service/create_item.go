@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	product "gen/kitex_gen/product"
+
+	"product/biz/convert"
 	"product/biz/dal/db"
 )
 
@@ -17,8 +19,9 @@ func NewCreateItemService(ctx context.Context) *CreateItemService {
 func (s *CreateItemService) Run(req *product.CreateItemReq) (resp *product.ItemResp, err error) {
 	// Finish your business logic.
 
-	save, err := db.Client.ProductItem.Create().
+	entity, err := db.Client.Item.Create().
 		SetName(req.GetName()).
+		SetCode(req.GetCode()).
 		SetPic(req.GetPic()).
 		SetDesc(req.GetDesc()).
 		SetType(req.GetType()).
@@ -26,9 +29,17 @@ func (s *CreateItemService) Run(req *product.CreateItemReq) (resp *product.ItemR
 		SetLength(req.GetLength()).
 		SetCount(req.GetCount()).
 		SetPrice(req.GetPrice()).
-		SetActiveAt(req.GetActiveAt()).
-		SetExpiredAt(req.GetExpiredAt()).
-		SetTagID(req.GetTagID()).
-		Save()
+		SetTagID(req.GetTagId()).
+		SetCreatedID(req.GetCreatedId()).
+		SetStatus(req.GetStatus()).
+		Save(s.ctx)
+	if err != nil {
+		return nil, err
+	}
+	dataResp := convert.EntToItem(entity)
+	resp = &product.ItemResp{
+		Data: dataResp,
+	}
 	return
+
 }

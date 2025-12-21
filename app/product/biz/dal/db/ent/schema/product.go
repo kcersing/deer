@@ -17,6 +17,7 @@ type Product struct {
 func (Product) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").Comment("商品名").Optional(),
+		field.String("code").Comment("标识").Optional(),
 		field.String("pic").Comment("主图").Optional(),
 		field.String("desc").Comment("详情").Optional(),
 		field.Float("price").Comment("价格").Optional(),

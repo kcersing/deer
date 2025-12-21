@@ -20,9 +20,10 @@ struct CreateItemReq {
     /**类型 */
     8:optional string type=""
     9:optional string code=""
+    10:optional i64 price=0
     11: optional list<i64> tagId=0
     14: optional i64 createdId = 0
-
+    15:optional i64 status=0 (api.raw = "status")
 
 }
 
@@ -44,9 +45,10 @@ struct UpdateItemReq {
     /**类型 */
     8:optional string type=""
     9:optional string code="" (api.raw = "code")
+    10:optional i64 price=0
     11: optional list<i64> tagId=0   (api.raw = "tagId")
     14: optional i64 createdId = 0 (api.raw = "createdId")
-
+    15:optional i64 status=0 (api.raw = "status")
 }
 
 struct CreateProductReq {
@@ -104,17 +106,14 @@ struct ListReq {
     2: i64 pageSize =10(api.raw = "pageSize")
     3: optional string name="" (api.raw = "name")
     4: optional list<i64> status =0 (api.raw = "status")
-    5: optional list<i64> venueId =0  (api.raw = "venue")
-    6: optional list<string> createdAt=0  (api.raw = "createdAt")
-    7: optional string type ="" (api.raw = "type")
+
 }
 struct ItemListReq{
     1: i64 page=0 (api.raw = "page")
     2: i64 pageSize=10 (api.raw = "pageSize")
     3: optional string name (api.raw = "name")
     4: optional list<i64> status =0(api.raw = "status")
-    5: optional list<i64> venueId =0  (api.raw = "venue")
-    6: optional list<string> createdAt=0  (api.raw = "createdAt")
+
     7: optional string type ="" (api.raw = "type")
 }
 

@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	base "gen/kitex_gen/base"
+	"product/biz/dal/db"
+	"product/biz/dal/db/ent/item"
 )
 
 type DeleteItemService struct {
@@ -15,6 +17,10 @@ func NewDeleteItemService(ctx context.Context) *DeleteItemService {
 // Run create note info
 func (s *DeleteItemService) Run(req *base.IdReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
-
+	_, err = db.Client.Item.Delete().Where(item.IDEQ(req.GetId())).Exec(s.ctx)
+	if err != nil {
+		return nil, err
+	}
 	return
+
 }

@@ -2,17 +2,17 @@ package convert
 
 import (
 	"common/pkg/utils"
-	Base "gen/kitex_gen/base"
+	"gen/kitex_gen/base"
 	"member/biz/dal/db/ent"
 	"time"
 )
 
-func EntToMember(e *ent.Member, p *ent.MemberProfile) *Base.Member {
+func EntToMember(e *ent.Member, p *ent.MemberProfile) *base.Member {
 	if e == nil || p == nil {
 		return nil
 	}
 
-	mapper := utils.NewCopierMapper[Base.Member, ent.Member]()
+	mapper := utils.NewCopierMapper[base.Member, ent.Member]()
 	var dto = mapper.ToDTO(e)
 
 	dto.Intention = p.Intention

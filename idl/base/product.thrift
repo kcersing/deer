@@ -55,7 +55,10 @@ struct Item {
     /**到期时间 */
     10:optional string expiredAt="" (api.raw = "expiredAt")
     11: optional list<i64> tagId=0   (api.raw = "tagId")
-
+    /**价格 */
+    12:optional i64 price=0 (api.raw = "price")
+    13:optional string code="" (api.raw = "code")
+    14:optional i64 status=0 (api.raw = "status")
     20: optional i64 createdId = 0 (api.raw = "createdId")
     21: optional string createdName = "" (api.raw = "createdName")
 

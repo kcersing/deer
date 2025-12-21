@@ -17,8 +17,10 @@ type CreateItemReq struct {
 	Count     int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
 	Type      string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
 	Code      string  `thrift:"code,9,optional" frugal:"9,optional,string" json:"code,omitempty"`
+	Price     int64   `thrift:"price,10,optional" frugal:"10,optional,i64" json:"price,omitempty"`
 	TagId     []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
 	CreatedId int64   `thrift:"createdId,14,optional" frugal:"14,optional,i64" json:"createdId,omitempty"`
+	Status    int64   `thrift:"status,15,optional" frugal:"15,optional,i64" json:"status,omitempty"`
 }
 
 func NewCreateItemReq() *CreateItemReq {
@@ -31,8 +33,10 @@ func NewCreateItemReq() *CreateItemReq {
 		Count:     0,
 		Type:      "",
 		Code:      "",
+		Price:     0,
 		TagId:     []int64{},
 		CreatedId: 0,
+		Status:    0,
 	}
 }
 
@@ -45,8 +49,10 @@ func (p *CreateItemReq) InitDefault() {
 	p.Count = 0
 	p.Type = ""
 	p.Code = ""
+	p.Price = 0
 	p.TagId = []int64{}
 	p.CreatedId = 0
+	p.Status = 0
 }
 
 var CreateItemReq_Name_DEFAULT string = ""
@@ -121,6 +127,15 @@ func (p *CreateItemReq) GetCode() (v string) {
 	return p.Code
 }
 
+var CreateItemReq_Price_DEFAULT int64 = 0
+
+func (p *CreateItemReq) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return CreateItemReq_Price_DEFAULT
+	}
+	return p.Price
+}
+
 var CreateItemReq_TagId_DEFAULT []int64 = []int64{}
 
 func (p *CreateItemReq) GetTagId() (v []int64) {
@@ -137,6 +152,15 @@ func (p *CreateItemReq) GetCreatedId() (v int64) {
 		return CreateItemReq_CreatedId_DEFAULT
 	}
 	return p.CreatedId
+}
+
+var CreateItemReq_Status_DEFAULT int64 = 0
+
+func (p *CreateItemReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateItemReq_Status_DEFAULT
+	}
+	return p.Status
 }
 func (p *CreateItemReq) SetName(val string) {
 	p.Name = val
@@ -162,11 +186,17 @@ func (p *CreateItemReq) SetType(val string) {
 func (p *CreateItemReq) SetCode(val string) {
 	p.Code = val
 }
+func (p *CreateItemReq) SetPrice(val int64) {
+	p.Price = val
+}
 func (p *CreateItemReq) SetTagId(val []int64) {
 	p.TagId = val
 }
 func (p *CreateItemReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *CreateItemReq) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *CreateItemReq) IsSetName() bool {
@@ -201,12 +231,20 @@ func (p *CreateItemReq) IsSetCode() bool {
 	return p.Code != CreateItemReq_Code_DEFAULT
 }
 
+func (p *CreateItemReq) IsSetPrice() bool {
+	return p.Price != CreateItemReq_Price_DEFAULT
+}
+
 func (p *CreateItemReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
 func (p *CreateItemReq) IsSetCreatedId() bool {
 	return p.CreatedId != CreateItemReq_CreatedId_DEFAULT
+}
+
+func (p *CreateItemReq) IsSetStatus() bool {
+	return p.Status != CreateItemReq_Status_DEFAULT
 }
 
 func (p *CreateItemReq) String() string {
@@ -225,8 +263,10 @@ var fieldIDToName_CreateItemReq = map[int16]string{
 	7:  "count",
 	8:  "type",
 	9:  "code",
+	10: "price",
 	11: "tagId",
 	14: "createdId",
+	15: "status",
 }
 
 type UpdateItemReq struct {
@@ -239,8 +279,10 @@ type UpdateItemReq struct {
 	Count     int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
 	Type      string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
 	Code      string  `thrift:"code,9,optional" frugal:"9,optional,string" json:"code,omitempty"`
+	Price     int64   `thrift:"price,10,optional" frugal:"10,optional,i64" json:"price,omitempty"`
 	TagId     []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
 	CreatedId int64   `thrift:"createdId,14,optional" frugal:"14,optional,i64" json:"createdId,omitempty"`
+	Status    int64   `thrift:"status,15,optional" frugal:"15,optional,i64" json:"status,omitempty"`
 }
 
 func NewUpdateItemReq() *UpdateItemReq {
@@ -254,8 +296,10 @@ func NewUpdateItemReq() *UpdateItemReq {
 		Count:     0,
 		Type:      "",
 		Code:      "",
+		Price:     0,
 		TagId:     []int64{},
 		CreatedId: 0,
+		Status:    0,
 	}
 }
 
@@ -269,8 +313,10 @@ func (p *UpdateItemReq) InitDefault() {
 	p.Count = 0
 	p.Type = ""
 	p.Code = ""
+	p.Price = 0
 	p.TagId = []int64{}
 	p.CreatedId = 0
+	p.Status = 0
 }
 
 var UpdateItemReq_Id_DEFAULT int64 = 0
@@ -354,6 +400,15 @@ func (p *UpdateItemReq) GetCode() (v string) {
 	return p.Code
 }
 
+var UpdateItemReq_Price_DEFAULT int64 = 0
+
+func (p *UpdateItemReq) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return UpdateItemReq_Price_DEFAULT
+	}
+	return p.Price
+}
+
 var UpdateItemReq_TagId_DEFAULT []int64 = []int64{}
 
 func (p *UpdateItemReq) GetTagId() (v []int64) {
@@ -370,6 +425,15 @@ func (p *UpdateItemReq) GetCreatedId() (v int64) {
 		return UpdateItemReq_CreatedId_DEFAULT
 	}
 	return p.CreatedId
+}
+
+var UpdateItemReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateItemReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateItemReq_Status_DEFAULT
+	}
+	return p.Status
 }
 func (p *UpdateItemReq) SetId(val int64) {
 	p.Id = val
@@ -398,11 +462,17 @@ func (p *UpdateItemReq) SetType(val string) {
 func (p *UpdateItemReq) SetCode(val string) {
 	p.Code = val
 }
+func (p *UpdateItemReq) SetPrice(val int64) {
+	p.Price = val
+}
 func (p *UpdateItemReq) SetTagId(val []int64) {
 	p.TagId = val
 }
 func (p *UpdateItemReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *UpdateItemReq) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *UpdateItemReq) IsSetId() bool {
@@ -441,12 +511,20 @@ func (p *UpdateItemReq) IsSetCode() bool {
 	return p.Code != UpdateItemReq_Code_DEFAULT
 }
 
+func (p *UpdateItemReq) IsSetPrice() bool {
+	return p.Price != UpdateItemReq_Price_DEFAULT
+}
+
 func (p *UpdateItemReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
 func (p *UpdateItemReq) IsSetCreatedId() bool {
 	return p.CreatedId != UpdateItemReq_CreatedId_DEFAULT
+}
+
+func (p *UpdateItemReq) IsSetStatus() bool {
+	return p.Status != UpdateItemReq_Status_DEFAULT
 }
 
 func (p *UpdateItemReq) String() string {
@@ -466,8 +544,10 @@ var fieldIDToName_UpdateItemReq = map[int16]string{
 	7:  "count",
 	8:  "type",
 	9:  "code",
+	10: "price",
 	11: "tagId",
 	14: "createdId",
+	15: "status",
 }
 
 type CreateProductReq struct {
@@ -973,24 +1053,18 @@ var fieldIDToName_UpdateProductReq = map[int16]string{
 }
 
 type ListReq struct {
-	Page      int64    `thrift:"page,1" frugal:"1,default,i64" json:"page"`
-	PageSize  int64    `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
-	Name      string   `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
-	Status    []int64  `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
-	VenueId   []int64  `thrift:"venueId,5,optional" frugal:"5,optional,list<i64>" json:"venueId,omitempty"`
-	CreatedAt []string `thrift:"createdAt,6,optional" frugal:"6,optional,list<string>" json:"createdAt,omitempty"`
-	Type      string   `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
+	Page     int64   `thrift:"page,1" frugal:"1,default,i64" json:"page"`
+	PageSize int64   `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name     string  `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
+	Status   []int64 `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
 }
 
 func NewListReq() *ListReq {
 	return &ListReq{
-		Page:      0,
-		PageSize:  10,
-		Name:      "",
-		Status:    []int64{},
-		VenueId:   []int64{},
-		CreatedAt: []string{},
-		Type:      "",
+		Page:     0,
+		PageSize: 10,
+		Name:     "",
+		Status:   []int64{},
 	}
 }
 
@@ -999,9 +1073,6 @@ func (p *ListReq) InitDefault() {
 	p.PageSize = 10
 	p.Name = ""
 	p.Status = []int64{}
-	p.VenueId = []int64{}
-	p.CreatedAt = []string{}
-	p.Type = ""
 }
 
 func (p *ListReq) GetPage() (v int64) {
@@ -1029,33 +1100,6 @@ func (p *ListReq) GetStatus() (v []int64) {
 	}
 	return p.Status
 }
-
-var ListReq_VenueId_DEFAULT []int64 = []int64{}
-
-func (p *ListReq) GetVenueId() (v []int64) {
-	if !p.IsSetVenueId() {
-		return ListReq_VenueId_DEFAULT
-	}
-	return p.VenueId
-}
-
-var ListReq_CreatedAt_DEFAULT []string = []string{}
-
-func (p *ListReq) GetCreatedAt() (v []string) {
-	if !p.IsSetCreatedAt() {
-		return ListReq_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
-var ListReq_Type_DEFAULT string = ""
-
-func (p *ListReq) GetType() (v string) {
-	if !p.IsSetType() {
-		return ListReq_Type_DEFAULT
-	}
-	return p.Type
-}
 func (p *ListReq) SetPage(val int64) {
 	p.Page = val
 }
@@ -1068,15 +1112,6 @@ func (p *ListReq) SetName(val string) {
 func (p *ListReq) SetStatus(val []int64) {
 	p.Status = val
 }
-func (p *ListReq) SetVenueId(val []int64) {
-	p.VenueId = val
-}
-func (p *ListReq) SetCreatedAt(val []string) {
-	p.CreatedAt = val
-}
-func (p *ListReq) SetType(val string) {
-	p.Type = val
-}
 
 func (p *ListReq) IsSetName() bool {
 	return p.Name != ListReq_Name_DEFAULT
@@ -1084,18 +1119,6 @@ func (p *ListReq) IsSetName() bool {
 
 func (p *ListReq) IsSetStatus() bool {
 	return p.Status != nil
-}
-
-func (p *ListReq) IsSetVenueId() bool {
-	return p.VenueId != nil
-}
-
-func (p *ListReq) IsSetCreatedAt() bool {
-	return p.CreatedAt != nil
-}
-
-func (p *ListReq) IsSetType() bool {
-	return p.Type != ListReq_Type_DEFAULT
 }
 
 func (p *ListReq) String() string {
@@ -1110,29 +1133,22 @@ var fieldIDToName_ListReq = map[int16]string{
 	2: "pageSize",
 	3: "name",
 	4: "status",
-	5: "venueId",
-	6: "createdAt",
-	7: "type",
 }
 
 type ItemListReq struct {
-	Page      int64    `thrift:"page,1" frugal:"1,default,i64" json:"page"`
-	PageSize  int64    `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
-	Name      *string  `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
-	Status    []int64  `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
-	VenueId   []int64  `thrift:"venueId,5,optional" frugal:"5,optional,list<i64>" json:"venueId,omitempty"`
-	CreatedAt []string `thrift:"createdAt,6,optional" frugal:"6,optional,list<string>" json:"createdAt,omitempty"`
-	Type      string   `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
+	Page     int64   `thrift:"page,1" frugal:"1,default,i64" json:"page"`
+	PageSize int64   `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name     *string `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
+	Status   []int64 `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
+	Type     string  `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
 }
 
 func NewItemListReq() *ItemListReq {
 	return &ItemListReq{
-		Page:      0,
-		PageSize:  10,
-		Status:    []int64{},
-		VenueId:   []int64{},
-		CreatedAt: []string{},
-		Type:      "",
+		Page:     0,
+		PageSize: 10,
+		Status:   []int64{},
+		Type:     "",
 	}
 }
 
@@ -1140,8 +1156,6 @@ func (p *ItemListReq) InitDefault() {
 	p.Page = 0
 	p.PageSize = 10
 	p.Status = []int64{}
-	p.VenueId = []int64{}
-	p.CreatedAt = []string{}
 	p.Type = ""
 }
 
@@ -1171,24 +1185,6 @@ func (p *ItemListReq) GetStatus() (v []int64) {
 	return p.Status
 }
 
-var ItemListReq_VenueId_DEFAULT []int64 = []int64{}
-
-func (p *ItemListReq) GetVenueId() (v []int64) {
-	if !p.IsSetVenueId() {
-		return ItemListReq_VenueId_DEFAULT
-	}
-	return p.VenueId
-}
-
-var ItemListReq_CreatedAt_DEFAULT []string = []string{}
-
-func (p *ItemListReq) GetCreatedAt() (v []string) {
-	if !p.IsSetCreatedAt() {
-		return ItemListReq_CreatedAt_DEFAULT
-	}
-	return p.CreatedAt
-}
-
 var ItemListReq_Type_DEFAULT string = ""
 
 func (p *ItemListReq) GetType() (v string) {
@@ -1209,12 +1205,6 @@ func (p *ItemListReq) SetName(val *string) {
 func (p *ItemListReq) SetStatus(val []int64) {
 	p.Status = val
 }
-func (p *ItemListReq) SetVenueId(val []int64) {
-	p.VenueId = val
-}
-func (p *ItemListReq) SetCreatedAt(val []string) {
-	p.CreatedAt = val
-}
 func (p *ItemListReq) SetType(val string) {
 	p.Type = val
 }
@@ -1225,14 +1215,6 @@ func (p *ItemListReq) IsSetName() bool {
 
 func (p *ItemListReq) IsSetStatus() bool {
 	return p.Status != nil
-}
-
-func (p *ItemListReq) IsSetVenueId() bool {
-	return p.VenueId != nil
-}
-
-func (p *ItemListReq) IsSetCreatedAt() bool {
-	return p.CreatedAt != nil
 }
 
 func (p *ItemListReq) IsSetType() bool {
@@ -1251,8 +1233,6 @@ var fieldIDToName_ItemListReq = map[int16]string{
 	2: "pageSize",
 	3: "name",
 	4: "status",
-	5: "venueId",
-	6: "createdAt",
 	7: "type",
 }
 

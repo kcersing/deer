@@ -11,11 +11,11 @@ import (
 	"entgo.io/ent/schema/index"
 )
 
-type Field struct {
+type Fields struct {
 	ent.Schema
 }
 
-func (Field) Fields() []ent.Field {
+func (Fields) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("product_item_id").Comment("项Id").Optional(),
 		field.String("name").Comment("显示名称").Optional(),
@@ -28,28 +28,28 @@ func (Field) Fields() []ent.Field {
 	}
 }
 
-func (Field) Mixin() []ent.Mixin {
+func (Fields) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
 	}
 }
 
-func (Field) Edges() []ent.Edge {
+func (Fields) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("item", Item.Type).Ref("fields"),
 	}
 }
 
-func (Field) Indexes() []ent.Index {
+func (Fields) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
 		index.Fields("name"),
 	}
 }
 
-func (Field) Annotations() []schema.Annotation {
+func (Fields) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "Field"},
+		entsql.Annotation{Table: "fields"},
 		entsql.WithComments(true),
 	}
 }
