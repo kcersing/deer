@@ -24,6 +24,6 @@ var (
 func (p *Product) IsValid() error {
 	return nil
 }
-func (p *ProductItem) IsValid() error {
+func (p *Item) IsValid() error {
 	return nil
 }

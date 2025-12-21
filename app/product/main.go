@@ -65,7 +65,6 @@ func main() {
 	opts := kitexInit()
 
 	rpc.Init()
-
 	svr := product.NewServer(new(ProductServiceImpl), opts...)
 
 	err := svr.Run()

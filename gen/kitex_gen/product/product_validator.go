@@ -30,7 +30,7 @@ func (p *UpdateItemReq) IsValid() error {
 func (p *CreateProductReq) IsValid() error {
 	return nil
 }
-func (p *EditProductReq) IsValid() error {
+func (p *UpdateProductReq) IsValid() error {
 	return nil
 }
 func (p *ListReq) IsValid() error {

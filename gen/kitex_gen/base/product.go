@@ -22,6 +22,7 @@ type Product struct {
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
 	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
+	Items       []*Item `thrift:"items,15,optional" frugal:"15,optional,list<Item>" json:"items,omitempty"`
 }
 
 func NewProduct() *Product {
@@ -41,6 +42,7 @@ func NewProduct() *Product {
 		IsSales:     []int64{},
 		SignSalesAt: "",
 		EndSalesAt:  "",
+		Items:       []*Item{},
 	}
 }
 
@@ -60,6 +62,7 @@ func (p *Product) InitDefault() {
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
 	p.EndSalesAt = ""
+	p.Items = []*Item{}
 }
 
 var Product_Id_DEFAULT int64 = 0
@@ -196,6 +199,15 @@ func (p *Product) GetEndSalesAt() (v string) {
 	}
 	return p.EndSalesAt
 }
+
+var Product_Items_DEFAULT []*Item = []*Item{}
+
+func (p *Product) GetItems() (v []*Item) {
+	if !p.IsSetItems() {
+		return Product_Items_DEFAULT
+	}
+	return p.Items
+}
 func (p *Product) SetId(val int64) {
 	p.Id = val
 }
@@ -240,6 +252,9 @@ func (p *Product) SetSignSalesAt(val string) {
 }
 func (p *Product) SetEndSalesAt(val string) {
 	p.EndSalesAt = val
+}
+func (p *Product) SetItems(val []*Item) {
+	p.Items = val
 }
 
 func (p *Product) IsSetId() bool {
@@ -302,6 +317,10 @@ func (p *Product) IsSetEndSalesAt() bool {
 	return p.EndSalesAt != Product_EndSalesAt_DEFAULT
 }
 
+func (p *Product) IsSetItems() bool {
+	return p.Items != nil
+}
+
 func (p *Product) String() string {
 	if p == nil {
 		return "<nil>"
@@ -325,9 +344,10 @@ var fieldIDToName_Product = map[int16]string{
 	10: "isSales",
 	13: "signSalesAt",
 	14: "endSalesAt",
+	15: "items",
 }
 
-type ProductItem struct {
+type Item struct {
 	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
 	Pic         string  `thrift:"pic,3,optional" frugal:"3,optional,string" json:"pic,omitempty"`
@@ -345,8 +365,8 @@ type ProductItem struct {
 	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
 }
 
-func NewProductItem() *ProductItem {
-	return &ProductItem{
+func NewItem() *Item {
+	return &Item{
 		Id:          0,
 		Name:        "",
 		Pic:         "",
@@ -365,7 +385,7 @@ func NewProductItem() *ProductItem {
 	}
 }
 
-func (p *ProductItem) InitDefault() {
+func (p *Item) InitDefault() {
 	p.Id = 0
 	p.Name = ""
 	p.Pic = ""
@@ -383,254 +403,254 @@ func (p *ProductItem) InitDefault() {
 	p.UpdatedAt = ""
 }
 
-var ProductItem_Id_DEFAULT int64 = 0
+var Item_Id_DEFAULT int64 = 0
 
-func (p *ProductItem) GetId() (v int64) {
+func (p *Item) GetId() (v int64) {
 	if !p.IsSetId() {
-		return ProductItem_Id_DEFAULT
+		return Item_Id_DEFAULT
 	}
 	return p.Id
 }
 
-var ProductItem_Name_DEFAULT string = ""
+var Item_Name_DEFAULT string = ""
 
-func (p *ProductItem) GetName() (v string) {
+func (p *Item) GetName() (v string) {
 	if !p.IsSetName() {
-		return ProductItem_Name_DEFAULT
+		return Item_Name_DEFAULT
 	}
 	return p.Name
 }
 
-var ProductItem_Pic_DEFAULT string = ""
+var Item_Pic_DEFAULT string = ""
 
-func (p *ProductItem) GetPic() (v string) {
+func (p *Item) GetPic() (v string) {
 	if !p.IsSetPic() {
-		return ProductItem_Pic_DEFAULT
+		return Item_Pic_DEFAULT
 	}
 	return p.Pic
 }
 
-var ProductItem_Desc_DEFAULT string = ""
+var Item_Desc_DEFAULT string = ""
 
-func (p *ProductItem) GetDesc() (v string) {
+func (p *Item) GetDesc() (v string) {
 	if !p.IsSetDesc() {
-		return ProductItem_Desc_DEFAULT
+		return Item_Desc_DEFAULT
 	}
 	return p.Desc
 }
 
-var ProductItem_Duration_DEFAULT int64 = 0
+var Item_Duration_DEFAULT int64 = 0
 
-func (p *ProductItem) GetDuration() (v int64) {
+func (p *Item) GetDuration() (v int64) {
 	if !p.IsSetDuration() {
-		return ProductItem_Duration_DEFAULT
+		return Item_Duration_DEFAULT
 	}
 	return p.Duration
 }
 
-var ProductItem_Length_DEFAULT int64 = 0
+var Item_Length_DEFAULT int64 = 0
 
-func (p *ProductItem) GetLength() (v int64) {
+func (p *Item) GetLength() (v int64) {
 	if !p.IsSetLength() {
-		return ProductItem_Length_DEFAULT
+		return Item_Length_DEFAULT
 	}
 	return p.Length
 }
 
-var ProductItem_Count_DEFAULT int64 = 0
+var Item_Count_DEFAULT int64 = 0
 
-func (p *ProductItem) GetCount() (v int64) {
+func (p *Item) GetCount() (v int64) {
 	if !p.IsSetCount() {
-		return ProductItem_Count_DEFAULT
+		return Item_Count_DEFAULT
 	}
 	return p.Count
 }
 
-var ProductItem_Type_DEFAULT string = ""
+var Item_Type_DEFAULT string = ""
 
-func (p *ProductItem) GetType() (v string) {
+func (p *Item) GetType() (v string) {
 	if !p.IsSetType() {
-		return ProductItem_Type_DEFAULT
+		return Item_Type_DEFAULT
 	}
 	return p.Type
 }
 
-var ProductItem_ActiveAt_DEFAULT string = ""
+var Item_ActiveAt_DEFAULT string = ""
 
-func (p *ProductItem) GetActiveAt() (v string) {
+func (p *Item) GetActiveAt() (v string) {
 	if !p.IsSetActiveAt() {
-		return ProductItem_ActiveAt_DEFAULT
+		return Item_ActiveAt_DEFAULT
 	}
 	return p.ActiveAt
 }
 
-var ProductItem_ExpiredAt_DEFAULT string = ""
+var Item_ExpiredAt_DEFAULT string = ""
 
-func (p *ProductItem) GetExpiredAt() (v string) {
+func (p *Item) GetExpiredAt() (v string) {
 	if !p.IsSetExpiredAt() {
-		return ProductItem_ExpiredAt_DEFAULT
+		return Item_ExpiredAt_DEFAULT
 	}
 	return p.ExpiredAt
 }
 
-var ProductItem_TagId_DEFAULT []int64 = []int64{}
+var Item_TagId_DEFAULT []int64 = []int64{}
 
-func (p *ProductItem) GetTagId() (v []int64) {
+func (p *Item) GetTagId() (v []int64) {
 	if !p.IsSetTagId() {
-		return ProductItem_TagId_DEFAULT
+		return Item_TagId_DEFAULT
 	}
 	return p.TagId
 }
 
-var ProductItem_CreatedId_DEFAULT int64 = 0
+var Item_CreatedId_DEFAULT int64 = 0
 
-func (p *ProductItem) GetCreatedId() (v int64) {
+func (p *Item) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
-		return ProductItem_CreatedId_DEFAULT
+		return Item_CreatedId_DEFAULT
 	}
 	return p.CreatedId
 }
 
-var ProductItem_CreatedName_DEFAULT string = ""
+var Item_CreatedName_DEFAULT string = ""
 
-func (p *ProductItem) GetCreatedName() (v string) {
+func (p *Item) GetCreatedName() (v string) {
 	if !p.IsSetCreatedName() {
-		return ProductItem_CreatedName_DEFAULT
+		return Item_CreatedName_DEFAULT
 	}
 	return p.CreatedName
 }
 
-var ProductItem_CreatedAt_DEFAULT string = ""
+var Item_CreatedAt_DEFAULT string = ""
 
-func (p *ProductItem) GetCreatedAt() (v string) {
+func (p *Item) GetCreatedAt() (v string) {
 	if !p.IsSetCreatedAt() {
-		return ProductItem_CreatedAt_DEFAULT
+		return Item_CreatedAt_DEFAULT
 	}
 	return p.CreatedAt
 }
 
-var ProductItem_UpdatedAt_DEFAULT string = ""
+var Item_UpdatedAt_DEFAULT string = ""
 
-func (p *ProductItem) GetUpdatedAt() (v string) {
+func (p *Item) GetUpdatedAt() (v string) {
 	if !p.IsSetUpdatedAt() {
-		return ProductItem_UpdatedAt_DEFAULT
+		return Item_UpdatedAt_DEFAULT
 	}
 	return p.UpdatedAt
 }
-func (p *ProductItem) SetId(val int64) {
+func (p *Item) SetId(val int64) {
 	p.Id = val
 }
-func (p *ProductItem) SetName(val string) {
+func (p *Item) SetName(val string) {
 	p.Name = val
 }
-func (p *ProductItem) SetPic(val string) {
+func (p *Item) SetPic(val string) {
 	p.Pic = val
 }
-func (p *ProductItem) SetDesc(val string) {
+func (p *Item) SetDesc(val string) {
 	p.Desc = val
 }
-func (p *ProductItem) SetDuration(val int64) {
+func (p *Item) SetDuration(val int64) {
 	p.Duration = val
 }
-func (p *ProductItem) SetLength(val int64) {
+func (p *Item) SetLength(val int64) {
 	p.Length = val
 }
-func (p *ProductItem) SetCount(val int64) {
+func (p *Item) SetCount(val int64) {
 	p.Count = val
 }
-func (p *ProductItem) SetType(val string) {
+func (p *Item) SetType(val string) {
 	p.Type = val
 }
-func (p *ProductItem) SetActiveAt(val string) {
+func (p *Item) SetActiveAt(val string) {
 	p.ActiveAt = val
 }
-func (p *ProductItem) SetExpiredAt(val string) {
+func (p *Item) SetExpiredAt(val string) {
 	p.ExpiredAt = val
 }
-func (p *ProductItem) SetTagId(val []int64) {
+func (p *Item) SetTagId(val []int64) {
 	p.TagId = val
 }
-func (p *ProductItem) SetCreatedId(val int64) {
+func (p *Item) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *ProductItem) SetCreatedName(val string) {
+func (p *Item) SetCreatedName(val string) {
 	p.CreatedName = val
 }
-func (p *ProductItem) SetCreatedAt(val string) {
+func (p *Item) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *ProductItem) SetUpdatedAt(val string) {
+func (p *Item) SetUpdatedAt(val string) {
 	p.UpdatedAt = val
 }
 
-func (p *ProductItem) IsSetId() bool {
-	return p.Id != ProductItem_Id_DEFAULT
+func (p *Item) IsSetId() bool {
+	return p.Id != Item_Id_DEFAULT
 }
 
-func (p *ProductItem) IsSetName() bool {
-	return p.Name != ProductItem_Name_DEFAULT
+func (p *Item) IsSetName() bool {
+	return p.Name != Item_Name_DEFAULT
 }
 
-func (p *ProductItem) IsSetPic() bool {
-	return p.Pic != ProductItem_Pic_DEFAULT
+func (p *Item) IsSetPic() bool {
+	return p.Pic != Item_Pic_DEFAULT
 }
 
-func (p *ProductItem) IsSetDesc() bool {
-	return p.Desc != ProductItem_Desc_DEFAULT
+func (p *Item) IsSetDesc() bool {
+	return p.Desc != Item_Desc_DEFAULT
 }
 
-func (p *ProductItem) IsSetDuration() bool {
-	return p.Duration != ProductItem_Duration_DEFAULT
+func (p *Item) IsSetDuration() bool {
+	return p.Duration != Item_Duration_DEFAULT
 }
 
-func (p *ProductItem) IsSetLength() bool {
-	return p.Length != ProductItem_Length_DEFAULT
+func (p *Item) IsSetLength() bool {
+	return p.Length != Item_Length_DEFAULT
 }
 
-func (p *ProductItem) IsSetCount() bool {
-	return p.Count != ProductItem_Count_DEFAULT
+func (p *Item) IsSetCount() bool {
+	return p.Count != Item_Count_DEFAULT
 }
 
-func (p *ProductItem) IsSetType() bool {
-	return p.Type != ProductItem_Type_DEFAULT
+func (p *Item) IsSetType() bool {
+	return p.Type != Item_Type_DEFAULT
 }
 
-func (p *ProductItem) IsSetActiveAt() bool {
-	return p.ActiveAt != ProductItem_ActiveAt_DEFAULT
+func (p *Item) IsSetActiveAt() bool {
+	return p.ActiveAt != Item_ActiveAt_DEFAULT
 }
 
-func (p *ProductItem) IsSetExpiredAt() bool {
-	return p.ExpiredAt != ProductItem_ExpiredAt_DEFAULT
+func (p *Item) IsSetExpiredAt() bool {
+	return p.ExpiredAt != Item_ExpiredAt_DEFAULT
 }
 
-func (p *ProductItem) IsSetTagId() bool {
+func (p *Item) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
-func (p *ProductItem) IsSetCreatedId() bool {
-	return p.CreatedId != ProductItem_CreatedId_DEFAULT
+func (p *Item) IsSetCreatedId() bool {
+	return p.CreatedId != Item_CreatedId_DEFAULT
 }
 
-func (p *ProductItem) IsSetCreatedName() bool {
-	return p.CreatedName != ProductItem_CreatedName_DEFAULT
+func (p *Item) IsSetCreatedName() bool {
+	return p.CreatedName != Item_CreatedName_DEFAULT
 }
 
-func (p *ProductItem) IsSetCreatedAt() bool {
-	return p.CreatedAt != ProductItem_CreatedAt_DEFAULT
+func (p *Item) IsSetCreatedAt() bool {
+	return p.CreatedAt != Item_CreatedAt_DEFAULT
 }
 
-func (p *ProductItem) IsSetUpdatedAt() bool {
-	return p.UpdatedAt != ProductItem_UpdatedAt_DEFAULT
+func (p *Item) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != Item_UpdatedAt_DEFAULT
 }
 
-func (p *ProductItem) String() string {
+func (p *Item) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("ProductItem(%+v)", *p)
+	return fmt.Sprintf("Item(%+v)", *p)
 }
 
-var fieldIDToName_ProductItem = map[int16]string{
+var fieldIDToName_Item = map[int16]string{
 	1:  "id",
 	2:  "name",
 	3:  "pic",

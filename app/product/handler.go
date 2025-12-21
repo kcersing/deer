@@ -18,7 +18,7 @@ func (s *ProductServiceImpl) CreateProduct(ctx context.Context, req *product.Cre
 }
 
 // UpdateProduct implements the ProductServiceImpl interface.
-func (s *ProductServiceImpl) UpdateProduct(ctx context.Context, req *product.EditProductReq) (resp *product.ProductResp, err error) {
+func (s *ProductServiceImpl) UpdateProduct(ctx context.Context, req *product.UpdateProductReq) (resp *product.ProductResp, err error) {
 	resp, err = service.NewUpdateProductService(ctx).Run(req)
 
 	return resp, err
@@ -104,6 +104,13 @@ func (s *ProductServiceImpl) DeleteItem(ctx context.Context, req *base.IdReq) (r
 // ItemList implements the ProductServiceImpl interface.
 func (s *ProductServiceImpl) ItemList(ctx context.Context, req *product.ItemListReq) (resp *product.ItemListResp, err error) {
 	resp, err = service.NewItemListService(ctx).Run(req)
+
+	return resp, err
+}
+
+// GetItem implements the ProductServiceImpl interface.
+func (s *ProductServiceImpl) GetItem(ctx context.Context, req *base.IdReq) (resp *product.ItemResp, err error) {
+	resp, err = service.NewGetItemService(ctx).Run(req)
 
 	return resp, err
 }

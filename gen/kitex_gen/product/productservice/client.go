@@ -13,7 +13,7 @@ import (
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
 	CreateProduct(ctx context.Context, req *product.CreateProductReq, callOptions ...callopt.Option) (r *product.ProductResp, err error)
-	UpdateProduct(ctx context.Context, req *product.EditProductReq, callOptions ...callopt.Option) (r *product.ProductResp, err error)
+	UpdateProduct(ctx context.Context, req *product.UpdateProductReq, callOptions ...callopt.Option) (r *product.ProductResp, err error)
 	DeleteProduct(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	OnlineProduct(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	OfflineProduct(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
@@ -26,6 +26,7 @@ type Client interface {
 	UpdateItem(ctx context.Context, req *product.UpdateItemReq, callOptions ...callopt.Option) (r *product.ItemResp, err error)
 	DeleteItem(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	ItemList(ctx context.Context, req *product.ItemListReq, callOptions ...callopt.Option) (r *product.ItemListResp, err error)
+	GetItem(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *product.ItemResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -62,7 +63,7 @@ func (p *kProductServiceClient) CreateProduct(ctx context.Context, req *product.
 	return p.kClient.CreateProduct(ctx, req)
 }
 
-func (p *kProductServiceClient) UpdateProduct(ctx context.Context, req *product.EditProductReq, callOptions ...callopt.Option) (r *product.ProductResp, err error) {
+func (p *kProductServiceClient) UpdateProduct(ctx context.Context, req *product.UpdateProductReq, callOptions ...callopt.Option) (r *product.ProductResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.UpdateProduct(ctx, req)
 }
@@ -125,4 +126,9 @@ func (p *kProductServiceClient) DeleteItem(ctx context.Context, req *base.IdReq,
 func (p *kProductServiceClient) ItemList(ctx context.Context, req *product.ItemListReq, callOptions ...callopt.Option) (r *product.ItemListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ItemList(ctx, req)
+}
+
+func (p *kProductServiceClient) GetItem(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *product.ItemResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetItem(ctx, req)
 }

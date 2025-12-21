@@ -29,9 +29,11 @@ struct Product {
     13: optional string signSalesAt = "" (api.raw = "signSalesAt")
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
 
+
+    15: optional list<Item> items = "" (api.raw = "items")
 }
 
-struct ProductItem {
+struct Item {
     1:optional i64 id =0
     /**名称 */
     2:optional string name="" (api.raw = "name")

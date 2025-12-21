@@ -2,18 +2,14 @@ namespace go product
 include "../base/base.thrift"
 include "../base/product.thrift"
 
-
-
-
 struct CreateItemReq {
 
-    1:optional i64 id =0
-   /**名称 */
-    2:optional string name="" (api.raw = "name")
+    /**名称 */
+    2:optional string name=""
     /**主图 */
-    3:optional string pic="" (api.raw = "pic")
+    3:optional string pic=""
     /**详情 */
-    4:optional string desc="" (api.raw = "desc")
+    4:optional string desc=""
 
     /**时长 */
     5:optional i64 duration =0
@@ -23,16 +19,15 @@ struct CreateItemReq {
     7:optional i64 count =0
     /**类型 */
     8:optional string type=""
-
-    11: optional list<i64> tagId=0   (api.raw = "tagId")
-
-    14: optional i64 createdId = 0 (api.raw = "createdId")
+    9:optional string code=""
+    11: optional list<i64> tagId=0
+    14: optional i64 createdId = 0
 
 
 }
 
 struct UpdateItemReq {
-
+   1:optional i64 id=0 (api.raw = "id")
    /**名称 */
     2:optional string name="" (api.raw = "name")
     /**主图 */
@@ -48,14 +43,14 @@ struct UpdateItemReq {
     7:optional i64 count =0
     /**类型 */
     8:optional string type=""
-
+    9:optional string code="" (api.raw = "code")
     11: optional list<i64> tagId=0   (api.raw = "tagId")
-
     14: optional i64 createdId = 0 (api.raw = "createdId")
 
 }
 
 struct CreateProductReq {
+    1:optional string code="" (api.raw = "code")
     /**名称 */
     2:optional string name="" (api.raw = "name")
     /**主图 */
@@ -78,7 +73,7 @@ struct CreateProductReq {
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
 
 }
-struct EditProductReq {
+struct UpdateProductReq {
 
     1:optional i64 id=0 (api.raw = "id")
 
@@ -91,9 +86,8 @@ struct EditProductReq {
     /**状态*/
     8:optional i64 status=0 (api.raw = "status")
 
-
+    5:optional string code="" (api.raw = "code")
     20: optional i64 createdId = 0 (api.raw = "createdId")
-
 
     /**价格 */
     6:optional double price=0 (api.raw = "price")
@@ -129,7 +123,7 @@ struct ProductResp{
     255:optional base.BaseResp baseResp={}
 }
 struct ItemResp{
-    1:optional product.ProductItem data= {}
+    1:optional product.Item data= {}
     255:optional base.BaseResp baseResp={}
 }
 struct ProductListResp{
@@ -137,20 +131,23 @@ struct ProductListResp{
     255:optional base.BaseResp baseResp={}
 }
 struct ItemListResp{
-    1:optional list<product.ProductItem> data= []
+    1:optional list<product.Item> data= []
     255:optional base.BaseResp baseResp={}
 }
 struct SearchProductReq{
-
+    1:optional i64 page=1
+    2:optional i64 pageSize=10
+    3:optional string keyword=""
 }
 struct DecrStockReq{
-
+  1:optional i64 productId=0,
+  2:optional i64 count=0,
 }
 
 service ProductService  {
 
     ProductResp CreateProduct(1: CreateProductReq req) // 添加商品
-    ProductResp UpdateProduct(1: EditProductReq req) // 编辑商品
+    ProductResp UpdateProduct(1: UpdateProductReq req) // 编辑商品
     base.NilResponse  DeleteProduct(1: base.IdReq req) // 删除商品
     base.NilResponse  OnlineProduct(1: base.IdReq req) // 上架商品
     base.NilResponse  OfflineProduct(1: base.IdReq req) // 下架商品
@@ -170,5 +167,6 @@ service ProductService  {
     // 商品列表
     ItemListResp ItemList(1: ItemListReq req)
 
+    ItemResp GetItem(1: base.IdReq req)
 
 }

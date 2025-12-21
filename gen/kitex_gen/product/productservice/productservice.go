@@ -112,6 +112,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"GetItem": kitex.NewMethodInfo(
+		getItemHandler,
+		newProductServiceGetItemArgs,
+		newProductServiceGetItemResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -430,6 +437,24 @@ func newProductServiceItemListResult() interface{} {
 	return product.NewProductServiceItemListResult()
 }
 
+func getItemHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*product.ProductServiceGetItemArgs)
+	realResult := result.(*product.ProductServiceGetItemResult)
+	success, err := handler.(product.ProductService).GetItem(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newProductServiceGetItemArgs() interface{} {
+	return product.NewProductServiceGetItemArgs()
+}
+
+func newProductServiceGetItemResult() interface{} {
+	return product.NewProductServiceGetItemResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -450,7 +475,7 @@ func (p *kClient) CreateProduct(ctx context.Context, req *product.CreateProductR
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) UpdateProduct(ctx context.Context, req *product.EditProductReq) (r *product.ProductResp, err error) {
+func (p *kClient) UpdateProduct(ctx context.Context, req *product.UpdateProductReq) (r *product.ProductResp, err error) {
 	var _args product.ProductServiceUpdateProductArgs
 	_args.Req = req
 	var _result product.ProductServiceUpdateProductResult
@@ -575,6 +600,16 @@ func (p *kClient) ItemList(ctx context.Context, req *product.ItemListReq) (r *pr
 	_args.Req = req
 	var _result product.ProductServiceItemListResult
 	if err = p.c.Call(ctx, "ItemList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetItem(ctx context.Context, req *base.IdReq) (r *product.ItemResp, err error) {
+	var _args product.ProductServiceGetItemArgs
+	_args.Req = req
+	var _result product.ProductServiceGetItemResult
+	if err = p.c.Call(ctx, "GetItem", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
