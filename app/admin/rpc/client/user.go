@@ -4,44 +4,46 @@ import (
 	"common/consts"
 	"common/mw"
 	"gen/kitex_gen/user/userservice"
+	"sync"
+
 	"github.com/cloudwego/kitex/pkg/retry"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	"sync"
+
+	"time"
 
 	"github.com/cloudwego/kitex/client"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	"time"
 )
 
 var UserClient userservice.Client
 var userOnceClient sync.Once
 
 func initUserRpc() {
-	//userOnceClient.Do(func() {
+	userOnceClient.Do(func() {
 
-	r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
-	if err != nil {
-		panic(err)
-	}
-	c, err := userservice.NewClient(
-		consts.UserRpcServiceName,
-		client.WithResolver(r), // resolver
-		//client.WithMuxConnection(1),
-		client.WithRPCTimeout(3*time.Second),              // rpc timeout
-		client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
-		client.WithFailureRetry(retry.NewFailurePolicy()), // retry
+		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
+		if err != nil {
+			panic(err)
+		}
+		c, err := userservice.NewClient(
+			consts.UserRpcServiceName,
+			client.WithResolver(r), // resolver
+			//client.WithMuxConnection(1),
+			client.WithRPCTimeout(3*time.Second),              // rpc timeout
+			client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
+			client.WithFailureRetry(retry.NewFailurePolicy()), // retry
 
-		client.WithMiddleware(mw.CommonMiddleware),
-		client.WithInstanceMW(mw.ClientsMiddleware),
-		client.WithSuite(tracing.NewClientSuite()),
-		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
-	)
-	if err != nil {
-		panic(err)
-	}
+			client.WithMiddleware(mw.CommonMiddleware),
+			client.WithInstanceMW(mw.ClientsMiddleware),
+			client.WithSuite(tracing.NewClientSuite()),
+			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
+		)
+		if err != nil {
+			panic(err)
+		}
 
-	UserClient = c
+		UserClient = c
 
-	//})
+	})
 }

@@ -7,6 +7,6 @@ func Init() {
 	initSystemRpc()
 	initUserRpc()
 	initMemberRpc()
-	//initProductRpc()
+	initProductRpc()
 	//initOrderRpc()
 }

@@ -3,7 +3,6 @@ namespace go base
 struct Product {
     1:optional i64 id=0 (api.raw = "id")
 
-
     /**名称 */
     2:optional string name="" (api.raw = "name")
     /**主图 */

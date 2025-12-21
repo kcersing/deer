@@ -22,13 +22,13 @@ func (ProductItem) Fields() []ent.Field {
 		field.String("desc").Default("").Comment("概述").Optional(),
 		field.Text("type").Comment("类型").Optional(),
 
-		//field.Int64("duration").Comment("总时长").Optional(),
-		//field.Int64("length").Comment("单次时长").Optional(),
-		//field.Int64("count").Comment("次数").Optional(),
-		//field.Int64("price").Comment("定价").Optional(),
-		//field.Time("active_at").Comment("激活时间").Optional(),
-		//field.Time("expired_at").Comment("到期时间").Optional(),
-		//field.JSON("tag_id", []int64{}).Comment("到期时间").Optional(),
+		field.Int64("duration").Comment("总时长").Optional(),
+		field.Int64("length").Comment("单次时长").Optional(),
+		field.Int64("count").Comment("次数").Optional(),
+		field.Int64("price").Comment("定价").Optional(),
+		field.Time("active_at").Comment("激活时间").Optional(),
+		field.Time("expired_at").Comment("到期时间").Optional(),
+		field.JSON("tag_id", []int64{}).Comment("到期时间").Optional(),
 	}
 }
 
