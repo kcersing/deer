@@ -13,7 +13,7 @@ struct CreateProductReq{
     /**状态*/
     8:optional i64 status=0 (api.raw = "status")
     /**价格 */
-    6:optional double price=0 (api.raw = "price")
+    6:optional i64 price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")
@@ -36,7 +36,7 @@ struct UpdateProductReq{
 
 
     /**价格 */
-    6:optional double price=0 (api.raw = "price")
+    6:optional i64 price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")
@@ -70,17 +70,18 @@ struct CreateItemReq{
     8:optional string type=""
     9:optional string code=""
     11: optional list<i64> tagId=0
-
+    12:optional i64 status=0
+    13:optional i64 price=0
 
 }
 struct UpdateItemReq{
-       1:optional i64 id=0 (api.raw = "id")
+       1:optional i64 id=0
        /**名称 */
-        2:optional string name="" (api.raw = "name")
+        2:optional string name=""
         /**主图 */
-        3:optional string pic="" (api.raw = "pic")
+        3:optional string pic=""
         /**详情 */
-        4:optional string desc="" (api.raw = "desc")
+        4:optional string desc=""
 
         /**时长 */
         5:optional i64 duration =0
@@ -90,9 +91,10 @@ struct UpdateItemReq{
         7:optional i64 count =0
         /**类型 */
         8:optional string type=""
-        9:optional string code="" (api.raw = "code")
-        11: optional list<i64> tagId=0   (api.raw = "tagId")
-
+        9:optional string code=""
+        11: optional list<i64> tagId=0
+       12:optional i64 status=0
+        13:optional i64 price=0
 }
 struct GetItemListReq{
     1:optional i64 page=1

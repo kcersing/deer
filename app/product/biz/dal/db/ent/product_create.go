@@ -147,13 +147,13 @@ func (_c *ProductCreate) SetNillableDesc(v *string) *ProductCreate {
 }
 
 // SetPrice sets the "price" field.
-func (_c *ProductCreate) SetPrice(v float64) *ProductCreate {
+func (_c *ProductCreate) SetPrice(v int64) *ProductCreate {
 	_c.mutation.SetPrice(v)
 	return _c
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_c *ProductCreate) SetNillablePrice(v *float64) *ProductCreate {
+func (_c *ProductCreate) SetNillablePrice(v *int64) *ProductCreate {
 	if v != nil {
 		_c.SetPrice(*v)
 	}
@@ -357,7 +357,7 @@ func (_c *ProductCreate) createSpec() (*Product, *sqlgraph.CreateSpec) {
 		_node.Desc = value
 	}
 	if value, ok := _c.mutation.Price(); ok {
-		_spec.SetField(product.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(product.FieldPrice, field.TypeInt64, value)
 		_node.Price = value
 	}
 	if value, ok := _c.mutation.Stock(); ok {

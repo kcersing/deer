@@ -557,7 +557,7 @@ type CreateProductReq struct {
 	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
 	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
 	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
-	Price       float64 `thrift:"price,6,optional" frugal:"6,optional,double" json:"price,omitempty"`
+	Price       int64   `thrift:"price,6,optional" frugal:"6,optional,i64" json:"price,omitempty"`
 	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
@@ -572,7 +572,7 @@ func NewCreateProductReq() *CreateProductReq {
 		Desc:        "",
 		Status:      0,
 		CreatedId:   0,
-		Price:       0.0,
+		Price:       0,
 		Stock:       0,
 		IsSales:     []int64{},
 		SignSalesAt: "",
@@ -587,7 +587,7 @@ func (p *CreateProductReq) InitDefault() {
 	p.Desc = ""
 	p.Status = 0
 	p.CreatedId = 0
-	p.Price = 0.0
+	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
@@ -648,9 +648,9 @@ func (p *CreateProductReq) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var CreateProductReq_Price_DEFAULT float64 = 0.0
+var CreateProductReq_Price_DEFAULT int64 = 0
 
-func (p *CreateProductReq) GetPrice() (v float64) {
+func (p *CreateProductReq) GetPrice() (v int64) {
 	if !p.IsSetPrice() {
 		return CreateProductReq_Price_DEFAULT
 	}
@@ -710,7 +710,7 @@ func (p *CreateProductReq) SetStatus(val int64) {
 func (p *CreateProductReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *CreateProductReq) SetPrice(val float64) {
+func (p *CreateProductReq) SetPrice(val int64) {
 	p.Price = val
 }
 func (p *CreateProductReq) SetStock(val int64) {
@@ -799,7 +799,7 @@ type UpdateProductReq struct {
 	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
 	Code        string  `thrift:"code,5,optional" frugal:"5,optional,string" json:"code,omitempty"`
 	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
-	Price       float64 `thrift:"price,6,optional" frugal:"6,optional,double" json:"price,omitempty"`
+	Price       int64   `thrift:"price,6,optional" frugal:"6,optional,i64" json:"price,omitempty"`
 	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
@@ -815,7 +815,7 @@ func NewUpdateProductReq() *UpdateProductReq {
 		Status:      0,
 		Code:        "",
 		CreatedId:   0,
-		Price:       0.0,
+		Price:       0,
 		Stock:       0,
 		IsSales:     []int64{},
 		SignSalesAt: "",
@@ -831,7 +831,7 @@ func (p *UpdateProductReq) InitDefault() {
 	p.Status = 0
 	p.Code = ""
 	p.CreatedId = 0
-	p.Price = 0.0
+	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
@@ -901,9 +901,9 @@ func (p *UpdateProductReq) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var UpdateProductReq_Price_DEFAULT float64 = 0.0
+var UpdateProductReq_Price_DEFAULT int64 = 0
 
-func (p *UpdateProductReq) GetPrice() (v float64) {
+func (p *UpdateProductReq) GetPrice() (v int64) {
 	if !p.IsSetPrice() {
 		return UpdateProductReq_Price_DEFAULT
 	}
@@ -966,7 +966,7 @@ func (p *UpdateProductReq) SetCode(val string) {
 func (p *UpdateProductReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *UpdateProductReq) SetPrice(val float64) {
+func (p *UpdateProductReq) SetPrice(val int64) {
 	p.Price = val
 }
 func (p *UpdateProductReq) SetStock(val int64) {

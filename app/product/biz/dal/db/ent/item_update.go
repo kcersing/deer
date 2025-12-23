@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/predicate"
 	"product/biz/dal/db/ent/product"
@@ -350,21 +349,6 @@ func (_u *ItemUpdate) ClearTagID() *ItemUpdate {
 	return _u
 }
 
-// AddFieldIDs adds the "fields" edge to the Fields entity by IDs.
-func (_u *ItemUpdate) AddFieldIDs(ids ...int64) *ItemUpdate {
-	_u.mutation.AddFieldIDs(ids...)
-	return _u
-}
-
-// AddFields adds the "fields" edges to the Fields entity.
-func (_u *ItemUpdate) AddFields(v ...*Fields) *ItemUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddFieldIDs(ids...)
-}
-
 // AddProductIDs adds the "product" edge to the Product entity by IDs.
 func (_u *ItemUpdate) AddProductIDs(ids ...int64) *ItemUpdate {
 	_u.mutation.AddProductIDs(ids...)
@@ -383,27 +367,6 @@ func (_u *ItemUpdate) AddProduct(v ...*Product) *ItemUpdate {
 // Mutation returns the ItemMutation object of the builder.
 func (_u *ItemUpdate) Mutation() *ItemMutation {
 	return _u.mutation
-}
-
-// ClearFields clears all "fields" edges to the Fields entity.
-func (_u *ItemUpdate) ClearFields() *ItemUpdate {
-	_u.mutation.ClearFields()
-	return _u
-}
-
-// RemoveFieldIDs removes the "fields" edge to Fields entities by IDs.
-func (_u *ItemUpdate) RemoveFieldIDs(ids ...int64) *ItemUpdate {
-	_u.mutation.RemoveFieldIDs(ids...)
-	return _u
-}
-
-// RemoveFields removes "fields" edges to Fields entities.
-func (_u *ItemUpdate) RemoveFields(v ...*Fields) *ItemUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveFieldIDs(ids...)
 }
 
 // ClearProduct clears all "product" edges to the Product entity.
@@ -584,51 +547,6 @@ func (_u *ItemUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.TagIDCleared() {
 		_spec.ClearField(item.FieldTagID, field.TypeJSON)
-	}
-	if _u.mutation.FieldsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedFieldsIDs(); len(nodes) > 0 && !_u.mutation.FieldsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.FieldsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if _u.mutation.ProductCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1014,21 +932,6 @@ func (_u *ItemUpdateOne) ClearTagID() *ItemUpdateOne {
 	return _u
 }
 
-// AddFieldIDs adds the "fields" edge to the Fields entity by IDs.
-func (_u *ItemUpdateOne) AddFieldIDs(ids ...int64) *ItemUpdateOne {
-	_u.mutation.AddFieldIDs(ids...)
-	return _u
-}
-
-// AddFields adds the "fields" edges to the Fields entity.
-func (_u *ItemUpdateOne) AddFields(v ...*Fields) *ItemUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddFieldIDs(ids...)
-}
-
 // AddProductIDs adds the "product" edge to the Product entity by IDs.
 func (_u *ItemUpdateOne) AddProductIDs(ids ...int64) *ItemUpdateOne {
 	_u.mutation.AddProductIDs(ids...)
@@ -1047,27 +950,6 @@ func (_u *ItemUpdateOne) AddProduct(v ...*Product) *ItemUpdateOne {
 // Mutation returns the ItemMutation object of the builder.
 func (_u *ItemUpdateOne) Mutation() *ItemMutation {
 	return _u.mutation
-}
-
-// ClearFields clears all "fields" edges to the Fields entity.
-func (_u *ItemUpdateOne) ClearFields() *ItemUpdateOne {
-	_u.mutation.ClearFields()
-	return _u
-}
-
-// RemoveFieldIDs removes the "fields" edge to Fields entities by IDs.
-func (_u *ItemUpdateOne) RemoveFieldIDs(ids ...int64) *ItemUpdateOne {
-	_u.mutation.RemoveFieldIDs(ids...)
-	return _u
-}
-
-// RemoveFields removes "fields" edges to Fields entities.
-func (_u *ItemUpdateOne) RemoveFields(v ...*Fields) *ItemUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveFieldIDs(ids...)
 }
 
 // ClearProduct clears all "product" edges to the Product entity.
@@ -1278,51 +1160,6 @@ func (_u *ItemUpdateOne) sqlSave(ctx context.Context) (_node *Item, err error) {
 	}
 	if _u.mutation.TagIDCleared() {
 		_spec.ClearField(item.FieldTagID, field.TypeJSON)
-	}
-	if _u.mutation.FieldsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedFieldsIDs(); len(nodes) > 0 && !_u.mutation.FieldsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.FieldsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if _u.mutation.ProductCleared() {
 		edge := &sqlgraph.EdgeSpec{

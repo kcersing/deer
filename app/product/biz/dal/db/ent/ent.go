@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
 	"reflect"
@@ -75,7 +74,6 @@ var (
 func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			fields.Table:  fields.ValidColumn,
 			item.Table:    item.ValidColumn,
 			product.Table: product.ValidColumn,
 		})

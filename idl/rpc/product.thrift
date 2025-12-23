@@ -62,12 +62,10 @@ struct CreateProductReq {
     /**状态*/
     8:optional i64 status=0 (api.raw = "status")
 
-
     20: optional i64 createdId = 0 (api.raw = "createdId")
 
-
     /**价格 */
-    6:optional double price=0 (api.raw = "price")
+    6:optional i64 price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")
@@ -92,7 +90,7 @@ struct UpdateProductReq {
     20: optional i64 createdId = 0 (api.raw = "createdId")
 
     /**价格 */
-    6:optional double price=0 (api.raw = "price")
+    6:optional i64 price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")

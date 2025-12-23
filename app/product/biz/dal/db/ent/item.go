@@ -57,28 +57,17 @@ type Item struct {
 
 // ItemEdges holds the relations/edges for other nodes in the graph.
 type ItemEdges struct {
-	// Fields holds the value of the fields edge.
-	Fields []*Fields `json:"fields,omitempty"`
 	// Product holds the value of the product edge.
 	Product []*Product `json:"product,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
-}
-
-// FieldsOrErr returns the Fields value or an error if the edge
-// was not loaded in eager-loading.
-func (e ItemEdges) FieldsOrErr() ([]*Fields, error) {
-	if e.loadedTypes[0] {
-		return e.Fields, nil
-	}
-	return nil, &NotLoadedError{edge: "fields"}
+	loadedTypes [1]bool
 }
 
 // ProductOrErr returns the Product value or an error if the edge
 // was not loaded in eager-loading.
 func (e ItemEdges) ProductOrErr() ([]*Product, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[0] {
 		return e.Product, nil
 	}
 	return nil, &NotLoadedError{edge: "product"}
@@ -221,11 +210,6 @@ func (_m *Item) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *Item) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
-}
-
-// QueryFields queries the "fields" edge of the Item entity.
-func (_m *Item) QueryFields() *FieldsQuery {
-	return NewItemClient(_m.config).QueryFields(_m)
 }
 
 // QueryProduct queries the "product" edge of the Item entity.

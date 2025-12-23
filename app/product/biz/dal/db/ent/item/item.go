@@ -44,17 +44,10 @@ const (
 	FieldPrice = "price"
 	// FieldTagID holds the string denoting the tag_id field in the database.
 	FieldTagID = "tag_id"
-	// EdgeFields holds the string denoting the fields edge name in mutations.
-	EdgeFields = "fields"
 	// EdgeProduct holds the string denoting the product edge name in mutations.
 	EdgeProduct = "product"
 	// Table holds the table name of the item in the database.
 	Table = "items"
-	// FieldsTable is the table that holds the fields relation/edge. The primary key declared below.
-	FieldsTable = "item_fields"
-	// FieldsInverseTable is the table name for the Fields entity.
-	// It exists in this package in order to avoid circular dependency with the "fields" package.
-	FieldsInverseTable = "fields"
 	// ProductTable is the table that holds the product relation/edge. The primary key declared below.
 	ProductTable = "product_items"
 	// ProductInverseTable is the table name for the Product entity.
@@ -83,9 +76,6 @@ var Columns = []string{
 }
 
 var (
-	// FieldsPrimaryKey and FieldsColumn2 are the table columns denoting the
-	// primary key for the fields relation (M2M).
-	FieldsPrimaryKey = []string{"item_id", "fields_id"}
 	// ProductPrimaryKey and ProductColumn2 are the table columns denoting the
 	// primary key for the product relation (M2M).
 	ProductPrimaryKey = []string{"product_id", "item_id"}
@@ -198,20 +188,6 @@ func ByPrice(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPrice, opts...).ToFunc()
 }
 
-// ByFieldsCount orders the results by fields count.
-func ByFieldsCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newFieldsStep(), opts...)
-	}
-}
-
-// ByFields orders the results by fields terms.
-func ByFields(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newFieldsStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
-
 // ByProductCount orders the results by product count.
 func ByProductCount(opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
@@ -224,13 +200,6 @@ func ByProduct(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newProductStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
-}
-func newFieldsStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(FieldsInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.M2M, false, FieldsTable, FieldsPrimaryKey...),
-	)
 }
 func newProductStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(

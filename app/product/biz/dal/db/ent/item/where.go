@@ -960,29 +960,6 @@ func TagIDNotNil() predicate.Item {
 	return predicate.Item(sql.FieldNotNull(FieldTagID))
 }
 
-// HasFields applies the HasEdge predicate on the "fields" edge.
-func HasFields() predicate.Item {
-	return predicate.Item(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, FieldsTable, FieldsPrimaryKey...),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasFieldsWith applies the HasEdge predicate on the "fields" edge with a given conditions (other predicates).
-func HasFieldsWith(preds ...predicate.Fields) predicate.Item {
-	return predicate.Item(func(s *sql.Selector) {
-		step := newFieldsStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
 // HasProduct applies the HasEdge predicate on the "product" edge.
 func HasProduct() predicate.Item {
 	return predicate.Item(func(s *sql.Selector) {

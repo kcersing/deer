@@ -20,7 +20,7 @@ type CreateProductReq struct {
 	/**状态*/
 	Status int64 `thrift:"status,8,optional" form:"status" json:"status,omitempty" query:"status"`
 	/**价格 */
-	Price float64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
+	Price int64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
 	/**库存 */
 	Stock       int64   `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
 	IsSales     []int64 `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
@@ -35,7 +35,7 @@ func NewCreateProductReq() *CreateProductReq {
 		Pic:         "",
 		Desc:        "",
 		Status:      0,
-		Price:       0.0,
+		Price:       0,
 		Stock:       0,
 		IsSales:     []int64{},
 		SignSalesAt: "",
@@ -49,7 +49,7 @@ func (p *CreateProductReq) InitDefault() {
 	p.Pic = ""
 	p.Desc = ""
 	p.Status = 0
-	p.Price = 0.0
+	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
@@ -101,9 +101,9 @@ func (p *CreateProductReq) GetStatus() (v int64) {
 	return p.Status
 }
 
-var CreateProductReq_Price_DEFAULT float64 = 0.0
+var CreateProductReq_Price_DEFAULT int64 = 0
 
-func (p *CreateProductReq) GetPrice() (v float64) {
+func (p *CreateProductReq) GetPrice() (v int64) {
 	if !p.IsSetPrice() {
 		return CreateProductReq_Price_DEFAULT
 	}
@@ -259,7 +259,7 @@ func (p *CreateProductReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 6:
-			if fieldTypeId == thrift.DOUBLE {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField6(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -384,8 +384,8 @@ func (p *CreateProductReq) ReadField8(iprot thrift.TProtocol) error {
 }
 func (p *CreateProductReq) ReadField6(iprot thrift.TProtocol) error {
 
-	var _field float64
-	if v, err := iprot.ReadDouble(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -611,10 +611,10 @@ WriteFieldEndError:
 
 func (p *CreateProductReq) writeField6(oprot thrift.TProtocol) (err error) {
 	if p.IsSetPrice() {
-		if err = oprot.WriteFieldBegin("price", thrift.DOUBLE, 6); err != nil {
+		if err = oprot.WriteFieldBegin("price", thrift.I64, 6); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteDouble(p.Price); err != nil {
+		if err := oprot.WriteI64(p.Price); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -732,7 +732,7 @@ type UpdateProductReq struct {
 	Status int64  `thrift:"status,8,optional" form:"status" json:"status,omitempty" query:"status"`
 	Code   string `thrift:"code,5,optional" form:"code" json:"code,omitempty" query:"code"`
 	/**价格 */
-	Price float64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
+	Price int64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
 	/**库存 */
 	Stock       int64   `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
 	IsSales     []int64 `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
@@ -748,7 +748,7 @@ func NewUpdateProductReq() *UpdateProductReq {
 		Desc:        "",
 		Status:      0,
 		Code:        "",
-		Price:       0.0,
+		Price:       0,
 		Stock:       0,
 		IsSales:     []int64{},
 		SignSalesAt: "",
@@ -763,7 +763,7 @@ func (p *UpdateProductReq) InitDefault() {
 	p.Desc = ""
 	p.Status = 0
 	p.Code = ""
-	p.Price = 0.0
+	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
@@ -824,9 +824,9 @@ func (p *UpdateProductReq) GetCode() (v string) {
 	return p.Code
 }
 
-var UpdateProductReq_Price_DEFAULT float64 = 0.0
+var UpdateProductReq_Price_DEFAULT int64 = 0
 
-func (p *UpdateProductReq) GetPrice() (v float64) {
+func (p *UpdateProductReq) GetPrice() (v int64) {
 	if !p.IsSetPrice() {
 		return UpdateProductReq_Price_DEFAULT
 	}
@@ -995,7 +995,7 @@ func (p *UpdateProductReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 6:
-			if fieldTypeId == thrift.DOUBLE {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField6(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1131,8 +1131,8 @@ func (p *UpdateProductReq) ReadField5(iprot thrift.TProtocol) error {
 }
 func (p *UpdateProductReq) ReadField6(iprot thrift.TProtocol) error {
 
-	var _field float64
-	if v, err := iprot.ReadDouble(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
 		_field = v
@@ -1381,10 +1381,10 @@ WriteFieldEndError:
 
 func (p *UpdateProductReq) writeField6(oprot thrift.TProtocol) (err error) {
 	if p.IsSetPrice() {
-		if err = oprot.WriteFieldBegin("price", thrift.DOUBLE, 6); err != nil {
+		if err = oprot.WriteFieldBegin("price", thrift.I64, 6); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteDouble(p.Price); err != nil {
+		if err := oprot.WriteI64(p.Price); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1776,9 +1776,11 @@ type CreateItemReq struct {
 	/**次数 */
 	Count int64 `thrift:"count,7,optional" form:"count" json:"count,omitempty" query:"count"`
 	/**类型 */
-	Type  string  `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
-	Code  string  `thrift:"code,9,optional" form:"code" json:"code,omitempty" query:"code"`
-	TagId []int64 `thrift:"tagId,11,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Type   string  `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
+	Code   string  `thrift:"code,9,optional" form:"code" json:"code,omitempty" query:"code"`
+	TagId  []int64 `thrift:"tagId,11,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Status int64   `thrift:"status,12,optional" form:"status" json:"status,omitempty" query:"status"`
+	Price  int64   `thrift:"price,13,optional" form:"price" json:"price,omitempty" query:"price"`
 }
 
 func NewCreateItemReq() *CreateItemReq {
@@ -1792,6 +1794,8 @@ func NewCreateItemReq() *CreateItemReq {
 		Type:     "",
 		Code:     "",
 		TagId:    []int64{},
+		Status:   0,
+		Price:    0,
 	}
 }
 
@@ -1805,6 +1809,8 @@ func (p *CreateItemReq) InitDefault() {
 	p.Type = ""
 	p.Code = ""
 	p.TagId = []int64{}
+	p.Status = 0
+	p.Price = 0
 }
 
 var CreateItemReq_Name_DEFAULT string = ""
@@ -1888,6 +1894,24 @@ func (p *CreateItemReq) GetTagId() (v []int64) {
 	return p.TagId
 }
 
+var CreateItemReq_Status_DEFAULT int64 = 0
+
+func (p *CreateItemReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateItemReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var CreateItemReq_Price_DEFAULT int64 = 0
+
+func (p *CreateItemReq) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return CreateItemReq_Price_DEFAULT
+	}
+	return p.Price
+}
+
 var fieldIDToName_CreateItemReq = map[int16]string{
 	2:  "name",
 	3:  "pic",
@@ -1898,6 +1922,8 @@ var fieldIDToName_CreateItemReq = map[int16]string{
 	8:  "type",
 	9:  "code",
 	11: "tagId",
+	12: "status",
+	13: "price",
 }
 
 func (p *CreateItemReq) IsSetName() bool {
@@ -1934,6 +1960,14 @@ func (p *CreateItemReq) IsSetCode() bool {
 
 func (p *CreateItemReq) IsSetTagId() bool {
 	return p.TagId != nil
+}
+
+func (p *CreateItemReq) IsSetStatus() bool {
+	return p.Status != CreateItemReq_Status_DEFAULT
+}
+
+func (p *CreateItemReq) IsSetPrice() bool {
+	return p.Price != CreateItemReq_Price_DEFAULT
 }
 
 func (p *CreateItemReq) Read(iprot thrift.TProtocol) (err error) {
@@ -2022,6 +2056,22 @@ func (p *CreateItemReq) Read(iprot thrift.TProtocol) (err error) {
 		case 11:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 12:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField12(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 13:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField13(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2167,6 +2217,28 @@ func (p *CreateItemReq) ReadField11(iprot thrift.TProtocol) error {
 	p.TagId = _field
 	return nil
 }
+func (p *CreateItemReq) ReadField12(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
+func (p *CreateItemReq) ReadField13(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Price = _field
+	return nil
+}
 
 func (p *CreateItemReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -2208,6 +2280,14 @@ func (p *CreateItemReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField11(oprot); err != nil {
 			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField12(oprot); err != nil {
+			fieldId = 12
+			goto WriteFieldError
+		}
+		if err = p.writeField13(oprot); err != nil {
+			fieldId = 13
 			goto WriteFieldError
 		}
 	}
@@ -2407,6 +2487,44 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
 }
 
+func (p *CreateItemReq) writeField12(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 12); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
+}
+
+func (p *CreateItemReq) writeField13(oprot thrift.TProtocol) (err error) {
+	if p.IsSetPrice() {
+		if err = oprot.WriteFieldBegin("price", thrift.I64, 13); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Price); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
+}
+
 func (p *CreateItemReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2430,9 +2548,11 @@ type UpdateItemReq struct {
 	/**次数 */
 	Count int64 `thrift:"count,7,optional" form:"count" json:"count,omitempty" query:"count"`
 	/**类型 */
-	Type  string  `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
-	Code  string  `thrift:"code,9,optional" form:"code" json:"code,omitempty" query:"code"`
-	TagId []int64 `thrift:"tagId,11,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Type   string  `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
+	Code   string  `thrift:"code,9,optional" form:"code" json:"code,omitempty" query:"code"`
+	TagId  []int64 `thrift:"tagId,11,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Status int64   `thrift:"status,12,optional" form:"status" json:"status,omitempty" query:"status"`
+	Price  int64   `thrift:"price,13,optional" form:"price" json:"price,omitempty" query:"price"`
 }
 
 func NewUpdateItemReq() *UpdateItemReq {
@@ -2447,6 +2567,8 @@ func NewUpdateItemReq() *UpdateItemReq {
 		Type:     "",
 		Code:     "",
 		TagId:    []int64{},
+		Status:   0,
+		Price:    0,
 	}
 }
 
@@ -2461,6 +2583,8 @@ func (p *UpdateItemReq) InitDefault() {
 	p.Type = ""
 	p.Code = ""
 	p.TagId = []int64{}
+	p.Status = 0
+	p.Price = 0
 }
 
 var UpdateItemReq_ID_DEFAULT int64 = 0
@@ -2553,6 +2677,24 @@ func (p *UpdateItemReq) GetTagId() (v []int64) {
 	return p.TagId
 }
 
+var UpdateItemReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateItemReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateItemReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var UpdateItemReq_Price_DEFAULT int64 = 0
+
+func (p *UpdateItemReq) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return UpdateItemReq_Price_DEFAULT
+	}
+	return p.Price
+}
+
 var fieldIDToName_UpdateItemReq = map[int16]string{
 	1:  "id",
 	2:  "name",
@@ -2564,6 +2706,8 @@ var fieldIDToName_UpdateItemReq = map[int16]string{
 	8:  "type",
 	9:  "code",
 	11: "tagId",
+	12: "status",
+	13: "price",
 }
 
 func (p *UpdateItemReq) IsSetID() bool {
@@ -2604,6 +2748,14 @@ func (p *UpdateItemReq) IsSetCode() bool {
 
 func (p *UpdateItemReq) IsSetTagId() bool {
 	return p.TagId != nil
+}
+
+func (p *UpdateItemReq) IsSetStatus() bool {
+	return p.Status != UpdateItemReq_Status_DEFAULT
+}
+
+func (p *UpdateItemReq) IsSetPrice() bool {
+	return p.Price != UpdateItemReq_Price_DEFAULT
 }
 
 func (p *UpdateItemReq) Read(iprot thrift.TProtocol) (err error) {
@@ -2700,6 +2852,22 @@ func (p *UpdateItemReq) Read(iprot thrift.TProtocol) (err error) {
 		case 11:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 12:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField12(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 13:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField13(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -2856,6 +3024,28 @@ func (p *UpdateItemReq) ReadField11(iprot thrift.TProtocol) error {
 	p.TagId = _field
 	return nil
 }
+func (p *UpdateItemReq) ReadField12(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
+func (p *UpdateItemReq) ReadField13(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Price = _field
+	return nil
+}
 
 func (p *UpdateItemReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -2901,6 +3091,14 @@ func (p *UpdateItemReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField11(oprot); err != nil {
 			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField12(oprot); err != nil {
+			fieldId = 12
+			goto WriteFieldError
+		}
+		if err = p.writeField13(oprot); err != nil {
+			fieldId = 13
 			goto WriteFieldError
 		}
 	}
@@ -3117,6 +3315,44 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+
+func (p *UpdateItemReq) writeField12(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 12); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
+}
+
+func (p *UpdateItemReq) writeField13(oprot thrift.TProtocol) (err error) {
+	if p.IsSetPrice() {
+		if err = oprot.WriteFieldBegin("price", thrift.I64, 13); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Price); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
 }
 
 func (p *UpdateItemReq) String() string {

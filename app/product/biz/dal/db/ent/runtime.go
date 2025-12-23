@@ -3,7 +3,6 @@
 package ent
 
 import (
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
 	"product/biz/dal/db/ent/schema"
@@ -14,29 +13,6 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	fieldsMixin := schema.Fields{}.Mixin()
-	fieldsMixinFields0 := fieldsMixin[0].Fields()
-	_ = fieldsMixinFields0
-	fieldsFields := schema.Fields{}.Fields()
-	_ = fieldsFields
-	// fieldsDescCreatedAt is the schema descriptor for created_at field.
-	fieldsDescCreatedAt := fieldsMixinFields0[1].Descriptor()
-	// fields.DefaultCreatedAt holds the default value on creation for the created_at field.
-	fields.DefaultCreatedAt = fieldsDescCreatedAt.Default.(func() time.Time)
-	// fieldsDescUpdatedAt is the schema descriptor for updated_at field.
-	fieldsDescUpdatedAt := fieldsMixinFields0[2].Descriptor()
-	// fields.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	fields.DefaultUpdatedAt = fieldsDescUpdatedAt.Default.(func() time.Time)
-	// fields.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	fields.UpdateDefaultUpdatedAt = fieldsDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// fieldsDescDelete is the schema descriptor for delete field.
-	fieldsDescDelete := fieldsMixinFields0[3].Descriptor()
-	// fields.DefaultDelete holds the default value on creation for the delete field.
-	fields.DefaultDelete = fieldsDescDelete.Default.(int64)
-	// fieldsDescCreatedID is the schema descriptor for created_id field.
-	fieldsDescCreatedID := fieldsMixinFields0[4].Descriptor()
-	// fields.DefaultCreatedID holds the default value on creation for the created_id field.
-	fields.DefaultCreatedID = fieldsDescCreatedID.Default.(int64)
 	itemMixin := schema.Item{}.Mixin()
 	itemMixinFields0 := itemMixin[0].Fields()
 	_ = itemMixinFields0

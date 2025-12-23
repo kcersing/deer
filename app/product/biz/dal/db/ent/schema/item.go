@@ -41,7 +41,7 @@ func (Item) Mixin() []ent.Mixin {
 
 func (Item) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("fields", Fields.Type),
+		//edge.To("fields", Fields.Type),
 		edge.From("product", Product.Type).Ref("items"),
 	}
 }

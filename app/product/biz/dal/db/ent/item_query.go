@@ -7,7 +7,6 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"math"
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/predicate"
 	"product/biz/dal/db/ent/product"
@@ -25,7 +24,6 @@ type ItemQuery struct {
 	order       []item.OrderOption
 	inters      []Interceptor
 	predicates  []predicate.Item
-	withFields  *FieldsQuery
 	withProduct *ProductQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -61,28 +59,6 @@ func (_q *ItemQuery) Unique(unique bool) *ItemQuery {
 func (_q *ItemQuery) Order(o ...item.OrderOption) *ItemQuery {
 	_q.order = append(_q.order, o...)
 	return _q
-}
-
-// QueryFields chains the current query on the "fields" edge.
-func (_q *ItemQuery) QueryFields() *FieldsQuery {
-	query := (&FieldsClient{config: _q.config}).Query()
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		selector := _q.sqlQuery(ctx)
-		if err := selector.Err(); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(item.Table, item.FieldID, selector),
-			sqlgraph.To(fields.Table, fields.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, item.FieldsTable, item.FieldsPrimaryKey...),
-		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
 }
 
 // QueryProduct chains the current query on the "product" edge.
@@ -299,23 +275,11 @@ func (_q *ItemQuery) Clone() *ItemQuery {
 		order:       append([]item.OrderOption{}, _q.order...),
 		inters:      append([]Interceptor{}, _q.inters...),
 		predicates:  append([]predicate.Item{}, _q.predicates...),
-		withFields:  _q.withFields.Clone(),
 		withProduct: _q.withProduct.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
 	}
-}
-
-// WithFields tells the query-builder to eager-load the nodes that are connected to
-// the "fields" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *ItemQuery) WithFields(opts ...func(*FieldsQuery)) *ItemQuery {
-	query := (&FieldsClient{config: _q.config}).Query()
-	for _, opt := range opts {
-		opt(query)
-	}
-	_q.withFields = query
-	return _q
 }
 
 // WithProduct tells the query-builder to eager-load the nodes that are connected to
@@ -407,8 +371,7 @@ func (_q *ItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Item, e
 	var (
 		nodes       = []*Item{}
 		_spec       = _q.querySpec()
-		loadedTypes = [2]bool{
-			_q.withFields != nil,
+		loadedTypes = [1]bool{
 			_q.withProduct != nil,
 		}
 	)
@@ -430,13 +393,6 @@ func (_q *ItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Item, e
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := _q.withFields; query != nil {
-		if err := _q.loadFields(ctx, query, nodes,
-			func(n *Item) { n.Edges.Fields = []*Fields{} },
-			func(n *Item, e *Fields) { n.Edges.Fields = append(n.Edges.Fields, e) }); err != nil {
-			return nil, err
-		}
-	}
 	if query := _q.withProduct; query != nil {
 		if err := _q.loadProduct(ctx, query, nodes,
 			func(n *Item) { n.Edges.Product = []*Product{} },
@@ -447,67 +403,6 @@ func (_q *ItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Item, e
 	return nodes, nil
 }
 
-func (_q *ItemQuery) loadFields(ctx context.Context, query *FieldsQuery, nodes []*Item, init func(*Item), assign func(*Item, *Fields)) error {
-	edgeIDs := make([]driver.Value, len(nodes))
-	byID := make(map[int64]*Item)
-	nids := make(map[int64]map[*Item]struct{})
-	for i, node := range nodes {
-		edgeIDs[i] = node.ID
-		byID[node.ID] = node
-		if init != nil {
-			init(node)
-		}
-	}
-	query.Where(func(s *sql.Selector) {
-		joinT := sql.Table(item.FieldsTable)
-		s.Join(joinT).On(s.C(fields.FieldID), joinT.C(item.FieldsPrimaryKey[1]))
-		s.Where(sql.InValues(joinT.C(item.FieldsPrimaryKey[0]), edgeIDs...))
-		columns := s.SelectedColumns()
-		s.Select(joinT.C(item.FieldsPrimaryKey[0]))
-		s.AppendSelect(columns...)
-		s.SetDistinct(false)
-	})
-	if err := query.prepareQuery(ctx); err != nil {
-		return err
-	}
-	qr := QuerierFunc(func(ctx context.Context, q Query) (Value, error) {
-		return query.sqlAll(ctx, func(_ context.Context, spec *sqlgraph.QuerySpec) {
-			assign := spec.Assign
-			values := spec.ScanValues
-			spec.ScanValues = func(columns []string) ([]any, error) {
-				values, err := values(columns[1:])
-				if err != nil {
-					return nil, err
-				}
-				return append([]any{new(sql.NullInt64)}, values...), nil
-			}
-			spec.Assign = func(columns []string, values []any) error {
-				outValue := values[0].(*sql.NullInt64).Int64
-				inValue := values[1].(*sql.NullInt64).Int64
-				if nids[inValue] == nil {
-					nids[inValue] = map[*Item]struct{}{byID[outValue]: {}}
-					return assign(columns[1:], values[1:])
-				}
-				nids[inValue][byID[outValue]] = struct{}{}
-				return nil
-			}
-		})
-	})
-	neighbors, err := withInterceptors[[]*Fields](ctx, query, qr, query.inters)
-	if err != nil {
-		return err
-	}
-	for _, n := range neighbors {
-		nodes, ok := nids[n.ID]
-		if !ok {
-			return fmt.Errorf(`unexpected "fields" node returned %v`, n.ID)
-		}
-		for kn := range nodes {
-			assign(kn, n)
-		}
-	}
-	return nil
-}
 func (_q *ItemQuery) loadProduct(ctx context.Context, query *ProductQuery, nodes []*Item, init func(*Item), assign func(*Item, *Product)) error {
 	edgeIDs := make([]driver.Value, len(nodes))
 	byID := make(map[int64]*Item)

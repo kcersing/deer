@@ -9,39 +9,6 @@ import (
 )
 
 var (
-	// FieldsColumns holds the columns for the "fields" table.
-	FieldsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
-		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
-		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "product_item_id", Type: field.TypeInt64, Nullable: true, Comment: "项Id"},
-		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "显示名称"},
-		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "标识"},
-		{Name: "type", Type: field.TypeEnum, Nullable: true, Comment: "类型", Enums: []string{"text", "textarea", "select", "radio", "checkbox", "date", "number"}, Default: "text"},
-		{Name: "required", Type: field.TypeInt64, Nullable: true, Comment: "是否必填"},
-		{Name: "order_on", Type: field.TypeInt64, Nullable: true, Comment: "排序"},
-		{Name: "value", Type: field.TypeJSON, Nullable: true, Comment: "值"},
-	}
-	// FieldsTable holds the schema information for the "fields" table.
-	FieldsTable = &schema.Table{
-		Name:       "fields",
-		Columns:    FieldsColumns,
-		PrimaryKey: []*schema.Column{FieldsColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "fields_id",
-				Unique:  false,
-				Columns: []*schema.Column{FieldsColumns[0]},
-			},
-			{
-				Name:    "fields_name",
-				Unique:  false,
-				Columns: []*schema.Column{FieldsColumns[6]},
-			},
-		},
-	}
 	// ItemsColumns holds the columns for the "items" table.
 	ItemsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -91,7 +58,7 @@ var (
 		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "标识"},
 		{Name: "pic", Type: field.TypeString, Nullable: true, Comment: "主图"},
 		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "详情"},
-		{Name: "price", Type: field.TypeFloat64, Nullable: true, Comment: "价格"},
+		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "价格"},
 		{Name: "stock", Type: field.TypeInt64, Nullable: true, Comment: "库存"},
 		{Name: "is_sales", Type: field.TypeJSON, Nullable: true, Comment: "销售方式 1会员端 2PC端"},
 		{Name: "sign_sales_at", Type: field.TypeTime, Nullable: true, Comment: "开始售卖时间"},
@@ -107,31 +74,6 @@ var (
 				Name:    "product_id",
 				Unique:  false,
 				Columns: []*schema.Column{ProductColumns[0]},
-			},
-		},
-	}
-	// ItemFieldsColumns holds the columns for the "item_fields" table.
-	ItemFieldsColumns = []*schema.Column{
-		{Name: "item_id", Type: field.TypeInt64},
-		{Name: "fields_id", Type: field.TypeInt64},
-	}
-	// ItemFieldsTable holds the schema information for the "item_fields" table.
-	ItemFieldsTable = &schema.Table{
-		Name:       "item_fields",
-		Columns:    ItemFieldsColumns,
-		PrimaryKey: []*schema.Column{ItemFieldsColumns[0], ItemFieldsColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "item_fields_item_id",
-				Columns:    []*schema.Column{ItemFieldsColumns[0]},
-				RefColumns: []*schema.Column{ItemsColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "item_fields_fields_id",
-				Columns:    []*schema.Column{ItemFieldsColumns[1]},
-				RefColumns: []*schema.Column{FieldsColumns[0]},
-				OnDelete:   schema.Cascade,
 			},
 		},
 	}
@@ -162,26 +104,19 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		FieldsTable,
 		ItemsTable,
 		ProductTable,
-		ItemFieldsTable,
 		ProductItemsTable,
 	}
 )
 
 func init() {
-	FieldsTable.Annotation = &entsql.Annotation{
-		Table: "fields",
-	}
 	ItemsTable.Annotation = &entsql.Annotation{
 		Table: "items",
 	}
 	ProductTable.Annotation = &entsql.Annotation{
 		Table: "product",
 	}
-	ItemFieldsTable.ForeignKeys[0].RefTable = ItemsTable
-	ItemFieldsTable.ForeignKeys[1].RefTable = FieldsTable
 	ProductItemsTable.ForeignKeys[0].RefTable = ProductTable
 	ProductItemsTable.ForeignKeys[1].RefTable = ItemsTable
 }

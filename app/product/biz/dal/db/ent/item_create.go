@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
 	"time"
@@ -229,21 +228,6 @@ func (_c *ItemCreate) SetID(v int64) *ItemCreate {
 	return _c
 }
 
-// AddFieldIDs adds the "fields" edge to the Fields entity by IDs.
-func (_c *ItemCreate) AddFieldIDs(ids ...int64) *ItemCreate {
-	_c.mutation.AddFieldIDs(ids...)
-	return _c
-}
-
-// AddFields adds the "fields" edges to the Fields entity.
-func (_c *ItemCreate) AddFields(v ...*Fields) *ItemCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddFieldIDs(ids...)
-}
-
 // AddProductIDs adds the "product" edge to the Product entity by IDs.
 func (_c *ItemCreate) AddProductIDs(ids ...int64) *ItemCreate {
 	_c.mutation.AddProductIDs(ids...)
@@ -417,22 +401,6 @@ func (_c *ItemCreate) createSpec() (*Item, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.TagID(); ok {
 		_spec.SetField(item.FieldTagID, field.TypeJSON, value)
 		_node.TagID = value
-	}
-	if nodes := _c.mutation.FieldsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   item.FieldsTable,
-			Columns: item.FieldsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(fields.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := _c.mutation.ProductIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

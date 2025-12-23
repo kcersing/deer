@@ -6,9 +6,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Fields is the predicate function for fields builders.
-type Fields func(*sql.Selector)
-
 // Item is the predicate function for item builders.
 type Item func(*sql.Selector)
 

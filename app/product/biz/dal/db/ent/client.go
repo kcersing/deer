@@ -11,7 +11,6 @@ import (
 
 	"product/biz/dal/db/ent/migrate"
 
-	"product/biz/dal/db/ent/fields"
 	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
 
@@ -26,8 +25,6 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// Fields is the client for interacting with the Fields builders.
-	Fields *FieldsClient
 	// Item is the client for interacting with the Item builders.
 	Item *ItemClient
 	// Product is the client for interacting with the Product builders.
@@ -43,7 +40,6 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.Fields = NewFieldsClient(c.config)
 	c.Item = NewItemClient(c.config)
 	c.Product = NewProductClient(c.config)
 }
@@ -138,7 +134,6 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:     ctx,
 		config:  cfg,
-		Fields:  NewFieldsClient(cfg),
 		Item:    NewItemClient(cfg),
 		Product: NewProductClient(cfg),
 	}, nil
@@ -160,7 +155,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	return &Tx{
 		ctx:     ctx,
 		config:  cfg,
-		Fields:  NewFieldsClient(cfg),
 		Item:    NewItemClient(cfg),
 		Product: NewProductClient(cfg),
 	}, nil
@@ -169,7 +163,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		Fields.
+//		Item.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -191,7 +185,6 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.Fields.Use(hooks...)
 	c.Item.Use(hooks...)
 	c.Product.Use(hooks...)
 }
@@ -199,7 +192,6 @@ func (c *Client) Use(hooks ...Hook) {
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.Fields.Intercept(interceptors...)
 	c.Item.Intercept(interceptors...)
 	c.Product.Intercept(interceptors...)
 }
@@ -207,163 +199,12 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *FieldsMutation:
-		return c.Fields.mutate(ctx, m)
 	case *ItemMutation:
 		return c.Item.mutate(ctx, m)
 	case *ProductMutation:
 		return c.Product.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
-	}
-}
-
-// FieldsClient is a client for the Fields schema.
-type FieldsClient struct {
-	config
-}
-
-// NewFieldsClient returns a client for the Fields from the given config.
-func NewFieldsClient(c config) *FieldsClient {
-	return &FieldsClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `fields.Hooks(f(g(h())))`.
-func (c *FieldsClient) Use(hooks ...Hook) {
-	c.hooks.Fields = append(c.hooks.Fields, hooks...)
-}
-
-// Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `fields.Intercept(f(g(h())))`.
-func (c *FieldsClient) Intercept(interceptors ...Interceptor) {
-	c.inters.Fields = append(c.inters.Fields, interceptors...)
-}
-
-// Create returns a builder for creating a Fields entity.
-func (c *FieldsClient) Create() *FieldsCreate {
-	mutation := newFieldsMutation(c.config, OpCreate)
-	return &FieldsCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Fields entities.
-func (c *FieldsClient) CreateBulk(builders ...*FieldsCreate) *FieldsCreateBulk {
-	return &FieldsCreateBulk{config: c.config, builders: builders}
-}
-
-// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
-// a builder and applies setFunc on it.
-func (c *FieldsClient) MapCreateBulk(slice any, setFunc func(*FieldsCreate, int)) *FieldsCreateBulk {
-	rv := reflect.ValueOf(slice)
-	if rv.Kind() != reflect.Slice {
-		return &FieldsCreateBulk{err: fmt.Errorf("calling to FieldsClient.MapCreateBulk with wrong type %T, need slice", slice)}
-	}
-	builders := make([]*FieldsCreate, rv.Len())
-	for i := 0; i < rv.Len(); i++ {
-		builders[i] = c.Create()
-		setFunc(builders[i], i)
-	}
-	return &FieldsCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Fields.
-func (c *FieldsClient) Update() *FieldsUpdate {
-	mutation := newFieldsMutation(c.config, OpUpdate)
-	return &FieldsUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *FieldsClient) UpdateOne(_m *Fields) *FieldsUpdateOne {
-	mutation := newFieldsMutation(c.config, OpUpdateOne, withFields(_m))
-	return &FieldsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *FieldsClient) UpdateOneID(id int64) *FieldsUpdateOne {
-	mutation := newFieldsMutation(c.config, OpUpdateOne, withFieldsID(id))
-	return &FieldsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Fields.
-func (c *FieldsClient) Delete() *FieldsDelete {
-	mutation := newFieldsMutation(c.config, OpDelete)
-	return &FieldsDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a builder for deleting the given entity.
-func (c *FieldsClient) DeleteOne(_m *Fields) *FieldsDeleteOne {
-	return c.DeleteOneID(_m.ID)
-}
-
-// DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *FieldsClient) DeleteOneID(id int64) *FieldsDeleteOne {
-	builder := c.Delete().Where(fields.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &FieldsDeleteOne{builder}
-}
-
-// Query returns a query builder for Fields.
-func (c *FieldsClient) Query() *FieldsQuery {
-	return &FieldsQuery{
-		config: c.config,
-		ctx:    &QueryContext{Type: TypeFields},
-		inters: c.Interceptors(),
-	}
-}
-
-// Get returns a Fields entity by its id.
-func (c *FieldsClient) Get(ctx context.Context, id int64) (*Fields, error) {
-	return c.Query().Where(fields.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *FieldsClient) GetX(ctx context.Context, id int64) *Fields {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// QueryItem queries the item edge of a Fields.
-func (c *FieldsClient) QueryItem(_m *Fields) *ItemQuery {
-	query := (&ItemClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := _m.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(fields.Table, fields.FieldID, id),
-			sqlgraph.To(item.Table, item.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, fields.ItemTable, fields.ItemPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *FieldsClient) Hooks() []Hook {
-	return c.hooks.Fields
-}
-
-// Interceptors returns the client interceptors.
-func (c *FieldsClient) Interceptors() []Interceptor {
-	return c.inters.Fields
-}
-
-func (c *FieldsClient) mutate(ctx context.Context, m *FieldsMutation) (Value, error) {
-	switch m.Op() {
-	case OpCreate:
-		return (&FieldsCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdate:
-		return (&FieldsUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpUpdateOne:
-		return (&FieldsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
-	case OpDelete, OpDeleteOne:
-		return (&FieldsDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
-	default:
-		return nil, fmt.Errorf("ent: unknown Fields mutation op: %q", m.Op())
 	}
 }
 
@@ -473,22 +314,6 @@ func (c *ItemClient) GetX(ctx context.Context, id int64) *Item {
 		panic(err)
 	}
 	return obj
-}
-
-// QueryFields queries the fields edge of a Item.
-func (c *ItemClient) QueryFields(_m *Item) *FieldsQuery {
-	query := (&FieldsClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := _m.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(item.Table, item.FieldID, id),
-			sqlgraph.To(fields.Table, fields.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, item.FieldsTable, item.FieldsPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
 }
 
 // QueryProduct queries the product edge of a Item.
@@ -684,9 +509,9 @@ func (c *ProductClient) mutate(ctx context.Context, m *ProductMutation) (Value, 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Fields, Item, Product []ent.Hook
+		Item, Product []ent.Hook
 	}
 	inters struct {
-		Fields, Item, Product []ent.Interceptor
+		Item, Product []ent.Interceptor
 	}
 )
