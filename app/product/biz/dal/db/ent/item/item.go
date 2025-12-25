@@ -47,7 +47,7 @@ const (
 	// EdgeProduct holds the string denoting the product edge name in mutations.
 	EdgeProduct = "product"
 	// Table holds the table name of the item in the database.
-	Table = "items"
+	Table = "product_items"
 	// ProductTable is the table that holds the product relation/edge. The primary key declared below.
 	ProductTable = "product_items"
 	// ProductInverseTable is the table name for the Product entity.

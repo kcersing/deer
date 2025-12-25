@@ -108,8 +108,8 @@ var (
 			},
 		},
 	}
-	// SysLogs20251219Columns holds the columns for the "sys_logs_20251219" table.
-	SysLogs20251219Columns = []*schema.Column{
+	// SysLogs20251225Columns holds the columns for the "sys_logs_20251225" table.
+	SysLogs20251225Columns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -126,16 +126,16 @@ var (
 		{Name: "identity", Type: field.TypeInt64, Nullable: true, Comment: "操作者"},
 		{Name: "time", Type: field.TypeInt64, Nullable: true, Comment: "time of log(millisecond) | 日志时间(毫秒)"},
 	}
-	// SysLogs20251219Table holds the schema information for the "sys_logs_20251219" table.
-	SysLogs20251219Table = &schema.Table{
-		Name:       "sys_logs_20251219",
-		Columns:    SysLogs20251219Columns,
-		PrimaryKey: []*schema.Column{SysLogs20251219Columns[0]},
+	// SysLogs20251225Table holds the schema information for the "sys_logs_20251225" table.
+	SysLogs20251225Table = &schema.Table{
+		Name:       "sys_logs_20251225",
+		Columns:    SysLogs20251225Columns,
+		PrimaryKey: []*schema.Column{SysLogs20251225Columns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "logs_api",
 				Unique:  false,
-				Columns: []*schema.Column{SysLogs20251219Columns[7]},
+				Columns: []*schema.Column{SysLogs20251225Columns[7]},
 			},
 		},
 	}
@@ -213,7 +213,7 @@ var (
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "角色名"},
-		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "角色标识"},
+		{Name: "code", Type: field.TypeString, Unique: true, Comment: "角色标识"},
 		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "描述", Default: ""},
 		{Name: "order_no", Type: field.TypeInt64, Nullable: true, Comment: "排序编号", Default: 0},
 		{Name: "menus", Type: field.TypeJSON, Nullable: true, Comment: "分配的菜单列表"},
@@ -275,69 +275,17 @@ var (
 		Columns:    SysSmsLogColumns,
 		PrimaryKey: []*schema.Column{SysSmsLogColumns[0]},
 	}
-	// RoleMenuColumns holds the columns for the "role_menu" table.
-	RoleMenuColumns = []*schema.Column{
-		{Name: "role_id", Type: field.TypeInt64},
-		{Name: "menu_id", Type: field.TypeInt64},
-	}
-	// RoleMenuTable holds the schema information for the "role_menu" table.
-	RoleMenuTable = &schema.Table{
-		Name:       "role_menu",
-		Columns:    RoleMenuColumns,
-		PrimaryKey: []*schema.Column{RoleMenuColumns[0], RoleMenuColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "role_menu_role_id",
-				Columns:    []*schema.Column{RoleMenuColumns[0]},
-				RefColumns: []*schema.Column{SysRolesColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "role_menu_menu_id",
-				Columns:    []*schema.Column{RoleMenuColumns[1]},
-				RefColumns: []*schema.Column{SysMenusColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
-	// RoleAPIColumns holds the columns for the "role_api" table.
-	RoleAPIColumns = []*schema.Column{
-		{Name: "role_id", Type: field.TypeInt64},
-		{Name: "api_id", Type: field.TypeInt64},
-	}
-	// RoleAPITable holds the schema information for the "role_api" table.
-	RoleAPITable = &schema.Table{
-		Name:       "role_api",
-		Columns:    RoleAPIColumns,
-		PrimaryKey: []*schema.Column{RoleAPIColumns[0], RoleAPIColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "role_api_role_id",
-				Columns:    []*schema.Column{RoleAPIColumns[0]},
-				RefColumns: []*schema.Column{SysRolesColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "role_api_api_id",
-				Columns:    []*schema.Column{RoleAPIColumns[1]},
-				RefColumns: []*schema.Column{SysApisColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		SysApisTable,
 		SysDictTable,
 		SysDicthtTable,
-		SysLogs20251219Table,
+		SysLogs20251225Table,
 		SysMenusTable,
 		MessagesTable,
 		SysRolesTable,
 		SysSmsTable,
 		SysSmsLogTable,
-		RoleMenuTable,
-		RoleAPITable,
 	}
 )
 
@@ -352,8 +300,8 @@ func init() {
 	SysDicthtTable.Annotation = &entsql.Annotation{
 		Table: "sys_dictht",
 	}
-	SysLogs20251219Table.Annotation = &entsql.Annotation{
-		Table: "sys_logs_20251219",
+	SysLogs20251225Table.Annotation = &entsql.Annotation{
+		Table: "sys_logs_20251225",
 	}
 	SysMenusTable.ForeignKeys[0].RefTable = SysMenusTable
 	SysMenusTable.Annotation = &entsql.Annotation{
@@ -371,8 +319,4 @@ func init() {
 	SysSmsLogTable.Annotation = &entsql.Annotation{
 		Table: "sys_sms_log",
 	}
-	RoleMenuTable.ForeignKeys[0].RefTable = SysRolesTable
-	RoleMenuTable.ForeignKeys[1].RefTable = SysMenusTable
-	RoleAPITable.ForeignKeys[0].RefTable = SysRolesTable
-	RoleAPITable.ForeignKeys[1].RefTable = SysApisTable
 }

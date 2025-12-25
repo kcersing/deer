@@ -6,8 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/predicate"
 	"system/biz/dal/db/ent/role"
 	"time"
@@ -158,12 +156,6 @@ func (_u *RoleUpdate) SetNillableCode(v *string) *RoleUpdate {
 	return _u
 }
 
-// ClearCode clears the value of the "code" field.
-func (_u *RoleUpdate) ClearCode() *RoleUpdate {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetDesc sets the "desc" field.
 func (_u *RoleUpdate) SetDesc(v string) *RoleUpdate {
 	_u.mutation.SetDesc(v)
@@ -247,81 +239,9 @@ func (_u *RoleUpdate) ClearApis() *RoleUpdate {
 	return _u
 }
 
-// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
-func (_u *RoleUpdate) AddMenuIDs(ids ...int64) *RoleUpdate {
-	_u.mutation.AddMenuIDs(ids...)
-	return _u
-}
-
-// AddMenu adds the "menu" edges to the Menu entity.
-func (_u *RoleUpdate) AddMenu(v ...*Menu) *RoleUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddMenuIDs(ids...)
-}
-
-// AddAPIIDs adds the "api" edge to the API entity by IDs.
-func (_u *RoleUpdate) AddAPIIDs(ids ...int64) *RoleUpdate {
-	_u.mutation.AddAPIIDs(ids...)
-	return _u
-}
-
-// AddAPI adds the "api" edges to the API entity.
-func (_u *RoleUpdate) AddAPI(v ...*API) *RoleUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddAPIIDs(ids...)
-}
-
 // Mutation returns the RoleMutation object of the builder.
 func (_u *RoleUpdate) Mutation() *RoleMutation {
 	return _u.mutation
-}
-
-// ClearMenu clears all "menu" edges to the Menu entity.
-func (_u *RoleUpdate) ClearMenu() *RoleUpdate {
-	_u.mutation.ClearMenu()
-	return _u
-}
-
-// RemoveMenuIDs removes the "menu" edge to Menu entities by IDs.
-func (_u *RoleUpdate) RemoveMenuIDs(ids ...int64) *RoleUpdate {
-	_u.mutation.RemoveMenuIDs(ids...)
-	return _u
-}
-
-// RemoveMenu removes "menu" edges to Menu entities.
-func (_u *RoleUpdate) RemoveMenu(v ...*Menu) *RoleUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveMenuIDs(ids...)
-}
-
-// ClearAPI clears all "api" edges to the API entity.
-func (_u *RoleUpdate) ClearAPI() *RoleUpdate {
-	_u.mutation.ClearAPI()
-	return _u
-}
-
-// RemoveAPIIDs removes the "api" edge to API entities by IDs.
-func (_u *RoleUpdate) RemoveAPIIDs(ids ...int64) *RoleUpdate {
-	_u.mutation.RemoveAPIIDs(ids...)
-	return _u
-}
-
-// RemoveAPI removes "api" edges to API entities.
-func (_u *RoleUpdate) RemoveAPI(v ...*API) *RoleUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveAPIIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -360,20 +280,7 @@ func (_u *RoleUpdate) defaults() {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *RoleUpdate) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := role.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
-		}
-	}
-	return nil
-}
-
 func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -427,9 +334,6 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(role.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Desc(); ok {
 		_spec.SetField(role.FieldDesc, field.TypeString, value)
 	}
@@ -466,96 +370,6 @@ func (_u *RoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.ApisCleared() {
 		_spec.ClearField(role.FieldApis, field.TypeJSON)
-	}
-	if _u.mutation.MenuCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedMenuIDs(); len(nodes) > 0 && !_u.mutation.MenuCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MenuIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.APICleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedAPIIDs(); len(nodes) > 0 && !_u.mutation.APICleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.APIIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -704,12 +518,6 @@ func (_u *RoleUpdateOne) SetNillableCode(v *string) *RoleUpdateOne {
 	return _u
 }
 
-// ClearCode clears the value of the "code" field.
-func (_u *RoleUpdateOne) ClearCode() *RoleUpdateOne {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetDesc sets the "desc" field.
 func (_u *RoleUpdateOne) SetDesc(v string) *RoleUpdateOne {
 	_u.mutation.SetDesc(v)
@@ -793,81 +601,9 @@ func (_u *RoleUpdateOne) ClearApis() *RoleUpdateOne {
 	return _u
 }
 
-// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
-func (_u *RoleUpdateOne) AddMenuIDs(ids ...int64) *RoleUpdateOne {
-	_u.mutation.AddMenuIDs(ids...)
-	return _u
-}
-
-// AddMenu adds the "menu" edges to the Menu entity.
-func (_u *RoleUpdateOne) AddMenu(v ...*Menu) *RoleUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddMenuIDs(ids...)
-}
-
-// AddAPIIDs adds the "api" edge to the API entity by IDs.
-func (_u *RoleUpdateOne) AddAPIIDs(ids ...int64) *RoleUpdateOne {
-	_u.mutation.AddAPIIDs(ids...)
-	return _u
-}
-
-// AddAPI adds the "api" edges to the API entity.
-func (_u *RoleUpdateOne) AddAPI(v ...*API) *RoleUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddAPIIDs(ids...)
-}
-
 // Mutation returns the RoleMutation object of the builder.
 func (_u *RoleUpdateOne) Mutation() *RoleMutation {
 	return _u.mutation
-}
-
-// ClearMenu clears all "menu" edges to the Menu entity.
-func (_u *RoleUpdateOne) ClearMenu() *RoleUpdateOne {
-	_u.mutation.ClearMenu()
-	return _u
-}
-
-// RemoveMenuIDs removes the "menu" edge to Menu entities by IDs.
-func (_u *RoleUpdateOne) RemoveMenuIDs(ids ...int64) *RoleUpdateOne {
-	_u.mutation.RemoveMenuIDs(ids...)
-	return _u
-}
-
-// RemoveMenu removes "menu" edges to Menu entities.
-func (_u *RoleUpdateOne) RemoveMenu(v ...*Menu) *RoleUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveMenuIDs(ids...)
-}
-
-// ClearAPI clears all "api" edges to the API entity.
-func (_u *RoleUpdateOne) ClearAPI() *RoleUpdateOne {
-	_u.mutation.ClearAPI()
-	return _u
-}
-
-// RemoveAPIIDs removes the "api" edge to API entities by IDs.
-func (_u *RoleUpdateOne) RemoveAPIIDs(ids ...int64) *RoleUpdateOne {
-	_u.mutation.RemoveAPIIDs(ids...)
-	return _u
-}
-
-// RemoveAPI removes "api" edges to API entities.
-func (_u *RoleUpdateOne) RemoveAPI(v ...*API) *RoleUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveAPIIDs(ids...)
 }
 
 // Where appends a list predicates to the RoleUpdate builder.
@@ -919,20 +655,7 @@ func (_u *RoleUpdateOne) defaults() {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *RoleUpdateOne) check() error {
-	if v, ok := _u.mutation.Code(); ok {
-		if err := role.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
-		}
-	}
-	return nil
-}
-
 func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(role.Table, role.Columns, sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -1003,9 +726,6 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(role.FieldCode, field.TypeString, value)
 	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(role.FieldCode, field.TypeString)
-	}
 	if value, ok := _u.mutation.Desc(); ok {
 		_spec.SetField(role.FieldDesc, field.TypeString, value)
 	}
@@ -1042,96 +762,6 @@ func (_u *RoleUpdateOne) sqlSave(ctx context.Context) (_node *Role, err error) {
 	}
 	if _u.mutation.ApisCleared() {
 		_spec.ClearField(role.FieldApis, field.TypeJSON)
-	}
-	if _u.mutation.MenuCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedMenuIDs(); len(nodes) > 0 && !_u.mutation.MenuCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MenuIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.APICleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedAPIIDs(); len(nodes) > 0 && !_u.mutation.APICleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.APIIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Role{config: _u.config}
 	_spec.Assign = _node.assignValues

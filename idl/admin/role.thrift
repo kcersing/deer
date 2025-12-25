@@ -6,6 +6,9 @@ struct CreateRoleReq{
     3:optional string code=""(api.raw = "code")
     4:optional string desc=""(api.raw = "desc")
     5:optional i64 orderNo=0(api.raw = "orderNo")
+        6:optional list<i64> menus = [] (api.raw = "menus")
+        7:optional list<i64> apis = [] (api.raw = "apis")
+        8:optional i64 status=0 (api.raw = "status" )
 }
 
 struct GetRoleListReq{
@@ -19,6 +22,9 @@ struct UpdateRoleReq {
     3:optional string code=""(api.raw = "code")
     4:optional string desc=""(api.raw = "desc")
     5:optional i64 orderNo=0(api.raw = "orderNo")
+        6:optional list<i64> menus = [] (api.raw = "menus")
+        7:optional list<i64> apis = [] (api.raw = "apis")
+        8:optional i64 status=0 (api.raw = "status" )
 }
 struct CreateMenuAuthReq{
     1:optional i64 roleId=0 (api.raw = "roleId")

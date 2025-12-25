@@ -4,9 +4,8 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/role"
 	"time"
 
@@ -111,14 +110,6 @@ func (_c *RoleCreate) SetCode(v string) *RoleCreate {
 	return _c
 }
 
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *RoleCreate) SetNillableCode(v *string) *RoleCreate {
-	if v != nil {
-		_c.SetCode(*v)
-	}
-	return _c
-}
-
 // SetDesc sets the "desc" field.
 func (_c *RoleCreate) SetDesc(v string) *RoleCreate {
 	_c.mutation.SetDesc(v)
@@ -163,36 +154,6 @@ func (_c *RoleCreate) SetApis(v []int64) *RoleCreate {
 func (_c *RoleCreate) SetID(v int64) *RoleCreate {
 	_c.mutation.SetID(v)
 	return _c
-}
-
-// AddMenuIDs adds the "menu" edge to the Menu entity by IDs.
-func (_c *RoleCreate) AddMenuIDs(ids ...int64) *RoleCreate {
-	_c.mutation.AddMenuIDs(ids...)
-	return _c
-}
-
-// AddMenu adds the "menu" edges to the Menu entity.
-func (_c *RoleCreate) AddMenu(v ...*Menu) *RoleCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddMenuIDs(ids...)
-}
-
-// AddAPIIDs adds the "api" edge to the API entity by IDs.
-func (_c *RoleCreate) AddAPIIDs(ids ...int64) *RoleCreate {
-	_c.mutation.AddAPIIDs(ids...)
-	return _c
-}
-
-// AddAPI adds the "api" edges to the API entity.
-func (_c *RoleCreate) AddAPI(v ...*API) *RoleCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddAPIIDs(ids...)
 }
 
 // Mutation returns the RoleMutation object of the builder.
@@ -262,10 +223,8 @@ func (_c *RoleCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *RoleCreate) check() error {
-	if v, ok := _c.mutation.Code(); ok {
-		if err := role.CodeValidator(v); err != nil {
-			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "Role.code": %w`, err)}
-		}
+	if _, ok := _c.mutation.Code(); !ok {
+		return &ValidationError{Name: "code", err: errors.New(`ent: missing required field "Role.code"`)}
 	}
 	return nil
 }
@@ -325,7 +284,7 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := _c.mutation.Code(); ok {
 		_spec.SetField(role.FieldCode, field.TypeString, value)
-		_node.Code = &value
+		_node.Code = value
 	}
 	if value, ok := _c.mutation.Desc(); ok {
 		_spec.SetField(role.FieldDesc, field.TypeString, value)
@@ -342,38 +301,6 @@ func (_c *RoleCreate) createSpec() (*Role, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Apis(); ok {
 		_spec.SetField(role.FieldApis, field.TypeJSON, value)
 		_node.Apis = value
-	}
-	if nodes := _c.mutation.MenuIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.MenuTable,
-			Columns: role.MenuPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(menu.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := _c.mutation.APIIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   role.APITable,
-			Columns: role.APIPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(api.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

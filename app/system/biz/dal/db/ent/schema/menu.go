@@ -43,7 +43,6 @@ func (Menu) Mixin() []ent.Mixin {
 
 func (Menu) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("roles", Role.Type).Ref("menu"),
 		edge.To("children", Menu.Type).From("parent").Unique().Field("parent_id"),
 	}
 }

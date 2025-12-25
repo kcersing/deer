@@ -4,9 +4,10 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
+	"system/biz/dal/db"
+
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/pkg/errors"
-	"system/biz/dal/db"
 )
 
 type CreateRoleMenuService struct {
@@ -32,13 +33,7 @@ func (s *CreateRoleMenuService) Run(req *system.CreateMenuAuthReq) (resp *base.N
 		}
 	}()
 
-	//tx.Role.UpdateOneID(roleID).ClearMenus().Exec(a.ctx)
-	err = tx.Role.UpdateOneID(req.GetRoleId()).ClearMenus().Exec(s.ctx)
-	if err != nil {
-		return nil, errors.Wrap(err, "delete role's menu failed, error")
-	}
-
-	err = tx.Role.UpdateOneID(req.GetRoleId()).AddMenuIDs(req.GetIds()...).Exec(s.ctx)
+	err = tx.Role.UpdateOneID(req.GetRoleId()).SetMenus(req.GetIds()).Exec(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "add role's menu failed, error")
 	}

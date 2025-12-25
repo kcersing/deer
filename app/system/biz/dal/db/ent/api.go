@@ -35,29 +35,8 @@ type API struct {
 	// API 分组
 	Group string `json:"group,omitempty"`
 	// HTTP 请求类型
-	Method string `json:"method,omitempty"`
-	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the APIQuery when eager-loading is set.
-	Edges        APIEdges `json:"edges"`
+	Method       string `json:"method,omitempty"`
 	selectValues sql.SelectValues
-}
-
-// APIEdges holds the relations/edges for other nodes in the graph.
-type APIEdges struct {
-	// Roles holds the value of the roles edge.
-	Roles []*Role `json:"roles,omitempty"`
-	// loadedTypes holds the information for reporting if a
-	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
-}
-
-// RolesOrErr returns the Roles value or an error if the edge
-// was not loaded in eager-loading.
-func (e APIEdges) RolesOrErr() ([]*Role, error) {
-	if e.loadedTypes[0] {
-		return e.Roles, nil
-	}
-	return nil, &NotLoadedError{edge: "roles"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -157,11 +136,6 @@ func (_m *API) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *API) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
-}
-
-// QueryRoles queries the "roles" edge of the API entity.
-func (_m *API) QueryRoles() *RoleQuery {
-	return NewAPIClient(_m.config).QueryRoles(_m)
 }
 
 // Update returns a builder for updating this API.

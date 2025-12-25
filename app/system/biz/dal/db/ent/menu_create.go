@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"system/biz/dal/db/ent/menu"
-	"system/biz/dal/db/ent/role"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -236,21 +235,6 @@ func (_c *MenuCreate) SetID(v int64) *MenuCreate {
 	return _c
 }
 
-// AddRoleIDs adds the "roles" edge to the Role entity by IDs.
-func (_c *MenuCreate) AddRoleIDs(ids ...int64) *MenuCreate {
-	_c.mutation.AddRoleIDs(ids...)
-	return _c
-}
-
-// AddRoles adds the "roles" edges to the Role entity.
-func (_c *MenuCreate) AddRoles(v ...*Role) *MenuCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddRoleIDs(ids...)
-}
-
 // SetParent sets the "parent" edge to the Menu entity.
 func (_c *MenuCreate) SetParent(v *Menu) *MenuCreate {
 	return _c.SetParentID(v.ID)
@@ -429,22 +413,6 @@ func (_c *MenuCreate) createSpec() (*Menu, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Level(); ok {
 		_spec.SetField(menu.FieldLevel, field.TypeInt64, value)
 		_node.Level = value
-	}
-	if nodes := _c.mutation.RolesIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   menu.RolesTable,
-			Columns: menu.RolesPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(role.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

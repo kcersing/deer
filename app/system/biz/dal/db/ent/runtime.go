@@ -221,10 +221,6 @@ func init() {
 	roleDescStatus := roleMixinFields1[0].Descriptor()
 	// role.DefaultStatus holds the default value on creation for the status field.
 	role.DefaultStatus = roleDescStatus.Default.(int64)
-	// roleDescCode is the schema descriptor for code field.
-	roleDescCode := roleFields[1].Descriptor()
-	// role.CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	role.CodeValidator = roleDescCode.Validators[0].(func(string) error)
 	// roleDescDesc is the schema descriptor for desc field.
 	roleDescDesc := roleFields[2].Descriptor()
 	// role.DefaultDesc holds the default value on creation for the desc field.

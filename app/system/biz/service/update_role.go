@@ -1,11 +1,14 @@
 package service
 
 import (
+	"common/pkg/errno"
 	"context"
 	system "gen/kitex_gen/system"
-	"github.com/pkg/errors"
 	"system/biz/convert"
 	"system/biz/dal/db"
+	"system/biz/dal/db/ent/role"
+
+	"github.com/pkg/errors"
 )
 
 type UpdateRoleService struct {
@@ -17,13 +20,20 @@ func NewUpdateRoleService(ctx context.Context) *UpdateRoleService {
 
 // Run create note info
 func (s *UpdateRoleService) Run(req *system.UpdateRoleReq) (resp *system.RoleResp, err error) {
-	// Finish your business logic.
+
+	ok, _ := db.Client.Role.Query().Where(role.CodeEQ(req.GetCode()), role.IDNEQ(req.GetId())).Exist(s.ctx)
+	if ok {
+		return nil, errno.AlreadyExist
+	}
 
 	save, err := db.Client.Role.UpdateOneID(req.GetId()).
 		SetName(req.GetName()).
 		SetCode(req.GetCode()).
 		SetDesc(req.GetDesc()).
 		SetOrderNo(req.OrderNo).
+		SetMenus(req.GetMenus()).
+		SetApis(req.GetApis()).
+		SetStatus(req.GetStatus()).
 		Save(s.ctx)
 	if err != nil {
 		err = errors.Wrap(err, "update Role failed")

@@ -32,7 +32,7 @@ type Role struct {
 	// 角色名
 	Name string `json:"name,omitempty"`
 	// 角色标识
-	Code *string `json:"code,omitempty"`
+	Code string `json:"code,omitempty"`
 	// 描述
 	Desc string `json:"desc,omitempty"`
 	// 排序编号
@@ -40,40 +40,8 @@ type Role struct {
 	// 分配的菜单列表
 	Menus []int64 `json:"menus,omitempty"`
 	// 分配的API列表
-	Apis []int64 `json:"apis,omitempty"`
-	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the RoleQuery when eager-loading is set.
-	Edges        RoleEdges `json:"edges"`
+	Apis         []int64 `json:"apis,omitempty"`
 	selectValues sql.SelectValues
-}
-
-// RoleEdges holds the relations/edges for other nodes in the graph.
-type RoleEdges struct {
-	// Menu holds the value of the menu edge.
-	Menu []*Menu `json:"menu,omitempty"`
-	// API holds the value of the api edge.
-	API []*API `json:"api,omitempty"`
-	// loadedTypes holds the information for reporting if a
-	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
-}
-
-// MenuOrErr returns the Menu value or an error if the edge
-// was not loaded in eager-loading.
-func (e RoleEdges) MenuOrErr() ([]*Menu, error) {
-	if e.loadedTypes[0] {
-		return e.Menu, nil
-	}
-	return nil, &NotLoadedError{edge: "menu"}
-}
-
-// APIOrErr returns the API value or an error if the edge
-// was not loaded in eager-loading.
-func (e RoleEdges) APIOrErr() ([]*API, error) {
-	if e.loadedTypes[1] {
-		return e.API, nil
-	}
-	return nil, &NotLoadedError{edge: "api"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -150,8 +118,7 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				_m.Code = new(string)
-				*_m.Code = value.String
+				_m.Code = value.String
 			}
 		case role.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -192,16 +159,6 @@ func (_m *Role) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *Role) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
-}
-
-// QueryMenu queries the "menu" edge of the Role entity.
-func (_m *Role) QueryMenu() *MenuQuery {
-	return NewRoleClient(_m.config).QueryMenu(_m)
-}
-
-// QueryAPI queries the "api" edge of the Role entity.
-func (_m *Role) QueryAPI() *APIQuery {
-	return NewRoleClient(_m.config).QueryAPI(_m)
 }
 
 // Update returns a builder for updating this Role.
@@ -245,10 +202,8 @@ func (_m *Role) String() string {
 	builder.WriteString("name=")
 	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
-	if v := _m.Code; v != nil {
-		builder.WriteString("code=")
-		builder.WriteString(*v)
-	}
+	builder.WriteString("code=")
+	builder.WriteString(_m.Code)
 	builder.WriteString(", ")
 	builder.WriteString("desc=")
 	builder.WriteString(_m.Desc)

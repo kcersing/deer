@@ -42,7 +42,7 @@ const (
 	// FieldTime holds the string denoting the time field in the database.
 	FieldTime = "time"
 	// Table holds the table name of the logs in the database.
-	Table = "sys_logs_20251219"
+	Table = "sys_logs_20251225"
 )
 
 // Columns holds all SQL columns for logs fields.

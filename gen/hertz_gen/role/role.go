@@ -10,10 +10,13 @@ import (
 )
 
 type CreateRoleReq struct {
-	Name    string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
-	Code    string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
-	Desc    string `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64  `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
+	Name    string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
+	Code    string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
+	Desc    string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	OrderNo int64   `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
+	Menus   []int64 `thrift:"menus,6,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
+	Apis    []int64 `thrift:"apis,7,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
+	Status  int64   `thrift:"status,8,optional" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
@@ -22,6 +25,9 @@ func NewCreateRoleReq() *CreateRoleReq {
 		Code:    "",
 		Desc:    "",
 		OrderNo: 0,
+		Menus:   []int64{},
+		Apis:    []int64{},
+		Status:  0,
 	}
 }
 
@@ -30,6 +36,9 @@ func (p *CreateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.Menus = []int64{}
+	p.Apis = []int64{}
+	p.Status = 0
 }
 
 var CreateRoleReq_Name_DEFAULT string = ""
@@ -68,11 +77,41 @@ func (p *CreateRoleReq) GetOrderNo() (v int64) {
 	return p.OrderNo
 }
 
+var CreateRoleReq_Menus_DEFAULT []int64 = []int64{}
+
+func (p *CreateRoleReq) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return CreateRoleReq_Menus_DEFAULT
+	}
+	return p.Menus
+}
+
+var CreateRoleReq_Apis_DEFAULT []int64 = []int64{}
+
+func (p *CreateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return CreateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+
+var CreateRoleReq_Status_DEFAULT int64 = 0
+
+func (p *CreateRoleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateRoleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var fieldIDToName_CreateRoleReq = map[int16]string{
 	2: "name",
 	3: "code",
 	4: "desc",
 	5: "orderNo",
+	6: "menus",
+	7: "apis",
+	8: "status",
 }
 
 func (p *CreateRoleReq) IsSetName() bool {
@@ -89,6 +128,18 @@ func (p *CreateRoleReq) IsSetDesc() bool {
 
 func (p *CreateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != CreateRoleReq_OrderNo_DEFAULT
+}
+
+func (p *CreateRoleReq) IsSetMenus() bool {
+	return p.Menus != nil
+}
+
+func (p *CreateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *CreateRoleReq) IsSetStatus() bool {
+	return p.Status != CreateRoleReq_Status_DEFAULT
 }
 
 func (p *CreateRoleReq) Read(iprot thrift.TProtocol) (err error) {
@@ -137,6 +188,30 @@ func (p *CreateRoleReq) Read(iprot thrift.TProtocol) (err error) {
 		case 5:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 8:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField8(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -215,6 +290,63 @@ func (p *CreateRoleReq) ReadField5(iprot thrift.TProtocol) error {
 	p.OrderNo = _field
 	return nil
 }
+func (p *CreateRoleReq) ReadField6(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Menus = _field
+	return nil
+}
+func (p *CreateRoleReq) ReadField7(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Apis = _field
+	return nil
+}
+func (p *CreateRoleReq) ReadField8(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
 
 func (p *CreateRoleReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -236,6 +368,18 @@ func (p *CreateRoleReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField5(oprot); err != nil {
 			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField8(oprot); err != nil {
+			fieldId = 8
 			goto WriteFieldError
 		}
 	}
@@ -330,6 +474,79 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *CreateRoleReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if p.IsSetMenus() {
+		if err = oprot.WriteFieldBegin("menus", thrift.LIST, 6); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Menus)); err != nil {
+			return err
+		}
+		for _, v := range p.Menus {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
+func (p *CreateRoleReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetApis() {
+		if err = oprot.WriteFieldBegin("apis", thrift.LIST, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Apis)); err != nil {
+			return err
+		}
+		for _, v := range p.Apis {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+
+func (p *CreateRoleReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 8); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
 }
 
 func (p *CreateRoleReq) String() string {
@@ -613,11 +830,14 @@ func (p *GetRoleListReq) String() string {
 }
 
 type UpdateRoleReq struct {
-	ID      int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Name    string `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
-	Code    string `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
-	Desc    string `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	OrderNo int64  `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
+	ID      int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Name    string  `thrift:"name,2,optional" form:"name" json:"name,omitempty" query:"name"`
+	Code    string  `thrift:"code,3,optional" form:"code" json:"code,omitempty" query:"code"`
+	Desc    string  `thrift:"desc,4,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	OrderNo int64   `thrift:"orderNo,5,optional" form:"orderNo" json:"orderNo,omitempty" query:"orderNo"`
+	Menus   []int64 `thrift:"menus,6,optional,list<i64>" form:"menus" json:"menus,omitempty" query:"menus"`
+	Apis    []int64 `thrift:"apis,7,optional,list<i64>" form:"apis" json:"apis,omitempty" query:"apis"`
+	Status  int64   `thrift:"status,8,optional" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
@@ -627,6 +847,9 @@ func NewUpdateRoleReq() *UpdateRoleReq {
 		Code:    "",
 		Desc:    "",
 		OrderNo: 0,
+		Menus:   []int64{},
+		Apis:    []int64{},
+		Status:  0,
 	}
 }
 
@@ -636,6 +859,9 @@ func (p *UpdateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.Menus = []int64{}
+	p.Apis = []int64{}
+	p.Status = 0
 }
 
 var UpdateRoleReq_ID_DEFAULT int64 = 0
@@ -683,12 +909,42 @@ func (p *UpdateRoleReq) GetOrderNo() (v int64) {
 	return p.OrderNo
 }
 
+var UpdateRoleReq_Menus_DEFAULT []int64 = []int64{}
+
+func (p *UpdateRoleReq) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return UpdateRoleReq_Menus_DEFAULT
+	}
+	return p.Menus
+}
+
+var UpdateRoleReq_Apis_DEFAULT []int64 = []int64{}
+
+func (p *UpdateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return UpdateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+
+var UpdateRoleReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateRoleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateRoleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var fieldIDToName_UpdateRoleReq = map[int16]string{
 	1: "id",
 	2: "name",
 	3: "code",
 	4: "desc",
 	5: "orderNo",
+	6: "menus",
+	7: "apis",
+	8: "status",
 }
 
 func (p *UpdateRoleReq) IsSetID() bool {
@@ -709,6 +965,18 @@ func (p *UpdateRoleReq) IsSetDesc() bool {
 
 func (p *UpdateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != UpdateRoleReq_OrderNo_DEFAULT
+}
+
+func (p *UpdateRoleReq) IsSetMenus() bool {
+	return p.Menus != nil
+}
+
+func (p *UpdateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *UpdateRoleReq) IsSetStatus() bool {
+	return p.Status != UpdateRoleReq_Status_DEFAULT
 }
 
 func (p *UpdateRoleReq) Read(iprot thrift.TProtocol) (err error) {
@@ -765,6 +1033,30 @@ func (p *UpdateRoleReq) Read(iprot thrift.TProtocol) (err error) {
 		case 5:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField7(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 8:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField8(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -854,6 +1146,63 @@ func (p *UpdateRoleReq) ReadField5(iprot thrift.TProtocol) error {
 	p.OrderNo = _field
 	return nil
 }
+func (p *UpdateRoleReq) ReadField6(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Menus = _field
+	return nil
+}
+func (p *UpdateRoleReq) ReadField7(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Apis = _field
+	return nil
+}
+func (p *UpdateRoleReq) ReadField8(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
 
 func (p *UpdateRoleReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -879,6 +1228,18 @@ func (p *UpdateRoleReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField5(oprot); err != nil {
 			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
+			goto WriteFieldError
+		}
+		if err = p.writeField8(oprot); err != nil {
+			fieldId = 8
 			goto WriteFieldError
 		}
 	}
@@ -992,6 +1353,79 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *UpdateRoleReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if p.IsSetMenus() {
+		if err = oprot.WriteFieldBegin("menus", thrift.LIST, 6); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Menus)); err != nil {
+			return err
+		}
+		for _, v := range p.Menus {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
+func (p *UpdateRoleReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetApis() {
+		if err = oprot.WriteFieldBegin("apis", thrift.LIST, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Apis)); err != nil {
+			return err
+		}
+		for _, v := range p.Apis {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+
+func (p *UpdateRoleReq) writeField8(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 8); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 8 end error: ", p), err)
 }
 
 func (p *UpdateRoleReq) String() string {

@@ -9,6 +9,7 @@ struct Api{
     6: optional string group="" (api.raw = "group")
     7: optional string method="" (api.raw = "method")
     8: optional string title="" (api.raw = "title")
+
    256:optional i64 createdId=0 (api.raw = "createdId" )
    257:optional string createdName="" (api.raw = "createdName" )
 }
@@ -39,6 +40,7 @@ struct Role {
     5:optional i64 orderNo=0(api.raw = "orderNo")
     6:optional list<i64> apis= [](api.raw = "apis")
     7:optional list<i64> menus= [](api.raw = "menus")
+    8:optional  i64 status=0 (api.raw = "status" )
    256:optional i64 createdId=0 (api.raw = "createdId" )
    257:optional string createdName="" (api.raw = "createdName" )
 }

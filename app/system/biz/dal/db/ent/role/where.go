@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -480,16 +479,6 @@ func CodeHasSuffix(v string) predicate.Role {
 	return predicate.Role(sql.FieldHasSuffix(FieldCode, v))
 }
 
-// CodeIsNil applies the IsNil predicate on the "code" field.
-func CodeIsNil() predicate.Role {
-	return predicate.Role(sql.FieldIsNull(FieldCode))
-}
-
-// CodeNotNil applies the NotNil predicate on the "code" field.
-func CodeNotNil() predicate.Role {
-	return predicate.Role(sql.FieldNotNull(FieldCode))
-}
-
 // CodeEqualFold applies the EqualFold predicate on the "code" field.
 func CodeEqualFold(v string) predicate.Role {
 	return predicate.Role(sql.FieldEqualFold(FieldCode, v))
@@ -643,52 +632,6 @@ func ApisIsNil() predicate.Role {
 // ApisNotNil applies the NotNil predicate on the "apis" field.
 func ApisNotNil() predicate.Role {
 	return predicate.Role(sql.FieldNotNull(FieldApis))
-}
-
-// HasMenu applies the HasEdge predicate on the "menu" edge.
-func HasMenu() predicate.Role {
-	return predicate.Role(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, MenuTable, MenuPrimaryKey...),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasMenuWith applies the HasEdge predicate on the "menu" edge with a given conditions (other predicates).
-func HasMenuWith(preds ...predicate.Menu) predicate.Role {
-	return predicate.Role(func(s *sql.Selector) {
-		step := newMenuStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
-// HasAPI applies the HasEdge predicate on the "api" edge.
-func HasAPI() predicate.Role {
-	return predicate.Role(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, APITable, APIPrimaryKey...),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasAPIWith applies the HasEdge predicate on the "api" edge with a given conditions (other predicates).
-func HasAPIWith(preds ...predicate.API) predicate.Role {
-	return predicate.Role(func(s *sql.Selector) {
-		step := newAPIStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
 }
 
 // And groups predicates with the AND operator between them.

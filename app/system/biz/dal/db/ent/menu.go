@@ -56,24 +56,13 @@ type Menu struct {
 
 // MenuEdges holds the relations/edges for other nodes in the graph.
 type MenuEdges struct {
-	// Roles holds the value of the roles edge.
-	Roles []*Role `json:"roles,omitempty"`
 	// Parent holds the value of the parent edge.
 	Parent *Menu `json:"parent,omitempty"`
 	// Children holds the value of the children edge.
 	Children []*Menu `json:"children,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
-}
-
-// RolesOrErr returns the Roles value or an error if the edge
-// was not loaded in eager-loading.
-func (e MenuEdges) RolesOrErr() ([]*Role, error) {
-	if e.loadedTypes[0] {
-		return e.Roles, nil
-	}
-	return nil, &NotLoadedError{edge: "roles"}
+	loadedTypes [2]bool
 }
 
 // ParentOrErr returns the Parent value or an error if the edge
@@ -81,7 +70,7 @@ func (e MenuEdges) RolesOrErr() ([]*Role, error) {
 func (e MenuEdges) ParentOrErr() (*Menu, error) {
 	if e.Parent != nil {
 		return e.Parent, nil
-	} else if e.loadedTypes[1] {
+	} else if e.loadedTypes[0] {
 		return nil, &NotFoundError{label: menu.Label}
 	}
 	return nil, &NotLoadedError{edge: "parent"}
@@ -90,7 +79,7 @@ func (e MenuEdges) ParentOrErr() (*Menu, error) {
 // ChildrenOrErr returns the Children value or an error if the edge
 // was not loaded in eager-loading.
 func (e MenuEdges) ChildrenOrErr() ([]*Menu, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[1] {
 		return e.Children, nil
 	}
 	return nil, &NotLoadedError{edge: "children"}
@@ -229,11 +218,6 @@ func (_m *Menu) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *Menu) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
-}
-
-// QueryRoles queries the "roles" edge of the Menu entity.
-func (_m *Menu) QueryRoles() *RoleQuery {
-	return NewMenuClient(_m.config).QueryRoles(_m)
 }
 
 // QueryParent queries the "parent" edge of the Menu entity.

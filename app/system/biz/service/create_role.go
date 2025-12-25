@@ -1,11 +1,14 @@
 package service
 
 import (
+	"common/pkg/errno"
 	"context"
 	system "gen/kitex_gen/system"
-	"github.com/pkg/errors"
 	"system/biz/convert"
 	"system/biz/dal/db"
+	"system/biz/dal/db/ent/role"
+
+	"github.com/pkg/errors"
 )
 
 type CreateRoleService struct {
@@ -18,11 +21,19 @@ func NewCreateRoleService(ctx context.Context) *CreateRoleService {
 // Run create note info
 func (s *CreateRoleService) Run(req *system.CreateRoleReq) (resp *system.RoleResp, err error) {
 	// Finish your business logic.
+	ok, _ := db.Client.Role.Query().Where(role.CodeEQ(req.GetCode())).Exist(s.ctx)
+	if ok {
+		return nil, errno.AlreadyExist
+	}
+
 	save, err := db.Client.Role.Create().
-		SetName(req.Name).
-		SetCode(req.Code).
-		SetDesc(req.Desc).
-		SetOrderNo(req.OrderNo).
+		SetName(req.GetName()).
+		SetCode(req.GetCode()).
+		SetDesc(req.GetDesc()).
+		SetOrderNo(req.GetOrderNo()).
+		SetMenus(req.GetMenus()).
+		SetApis(req.GetApis()).
+		SetStatus(req.GetStatus()).
 		Save(s.ctx)
 	if err != nil {
 		err = errors.Wrap(err, "create Role failed")

@@ -50,7 +50,7 @@ const (
 	ItemsTable = "product_items"
 	// ItemsInverseTable is the table name for the Item entity.
 	// It exists in this package in order to avoid circular dependency with the "item" package.
-	ItemsInverseTable = "items"
+	ItemsInverseTable = "product_items"
 )
 
 // Columns holds all SQL columns for product fields.

@@ -21,13 +21,16 @@ func NewGetRoleMenuService(ctx context.Context) *GetRoleMenuService {
 // Run create note info
 func (s *GetRoleMenuService) Run(req *base.IdReq) (resp *system.MenuListResp, err error) {
 	// Finish your business logic.
-	menus, err := db.Client.Role.
+	f, err := db.Client.Role.
 		Query().
-		Where(role.IDIn(req.GetId())).
-		QueryMenu().
-		Where(menu.DeleteEQ(0)).
-		//WithChildren().
-		Order(ent.Asc(menu.FieldOrderNo)).
+		Where(role.IDIn(req.GetId())).First(s.ctx)
+	if err != nil {
+		return nil, err
+	}
+	menus, err := db.Client.Menu.
+		Query().
+		Where(menu.IDIn(f.Menus...)).
+		Order(ent.Asc(menu.FieldID)).
 		All(s.ctx)
 	if err != nil {
 		return nil, err

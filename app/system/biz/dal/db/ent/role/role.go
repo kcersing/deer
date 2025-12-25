@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -36,22 +35,8 @@ const (
 	FieldMenus = "menus"
 	// FieldApis holds the string denoting the apis field in the database.
 	FieldApis = "apis"
-	// EdgeMenu holds the string denoting the menu edge name in mutations.
-	EdgeMenu = "menu"
-	// EdgeAPI holds the string denoting the api edge name in mutations.
-	EdgeAPI = "api"
 	// Table holds the table name of the role in the database.
 	Table = "sys_roles"
-	// MenuTable is the table that holds the menu relation/edge. The primary key declared below.
-	MenuTable = "role_menu"
-	// MenuInverseTable is the table name for the Menu entity.
-	// It exists in this package in order to avoid circular dependency with the "menu" package.
-	MenuInverseTable = "sys_menus"
-	// APITable is the table that holds the api relation/edge. The primary key declared below.
-	APITable = "role_api"
-	// APIInverseTable is the table name for the API entity.
-	// It exists in this package in order to avoid circular dependency with the "api" package.
-	APIInverseTable = "sys_apis"
 )
 
 // Columns holds all SQL columns for role fields.
@@ -69,15 +54,6 @@ var Columns = []string{
 	FieldMenus,
 	FieldApis,
 }
-
-var (
-	// MenuPrimaryKey and MenuColumn2 are the table columns denoting the
-	// primary key for the menu relation (M2M).
-	MenuPrimaryKey = []string{"role_id", "menu_id"}
-	// APIPrimaryKey and APIColumn2 are the table columns denoting the
-	// primary key for the api relation (M2M).
-	APIPrimaryKey = []string{"role_id", "api_id"}
-)
 
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
@@ -102,8 +78,6 @@ var (
 	DefaultCreatedID int64
 	// DefaultStatus holds the default value on creation for the "status" field.
 	DefaultStatus int64
-	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
-	CodeValidator func(string) error
 	// DefaultDesc holds the default value on creation for the "desc" field.
 	DefaultDesc string
 	// DefaultOrderNo holds the default value on creation for the "order_no" field.
@@ -161,46 +135,4 @@ func ByDesc(opts ...sql.OrderTermOption) OrderOption {
 // ByOrderNo orders the results by the order_no field.
 func ByOrderNo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrderNo, opts...).ToFunc()
-}
-
-// ByMenuCount orders the results by menu count.
-func ByMenuCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newMenuStep(), opts...)
-	}
-}
-
-// ByMenu orders the results by menu terms.
-func ByMenu(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newMenuStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
-
-// ByAPICount orders the results by api count.
-func ByAPICount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newAPIStep(), opts...)
-	}
-}
-
-// ByAPI orders the results by api terms.
-func ByAPI(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newAPIStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
-func newMenuStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(MenuInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.M2M, false, MenuTable, MenuPrimaryKey...),
-	)
-}
-func newAPIStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(APIInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.M2M, false, APITable, APIPrimaryKey...),
-	)
 }

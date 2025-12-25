@@ -1602,12 +1602,15 @@ var fieldIDToName_RoleListResp = map[int16]string{
 }
 
 type CreateRoleReq struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Code      string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	Desc      string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo   int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
-	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code      string  `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc      string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo   int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Menus     []int64 `thrift:"menus,6,optional" frugal:"6,optional,list<i64>" json:"menus,omitempty"`
+	Apis      []int64 `thrift:"apis,7,optional" frugal:"7,optional,list<i64>" json:"apis,omitempty"`
+	Status    int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
+	CreatedId int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateRoleReq() *CreateRoleReq {
@@ -1617,6 +1620,9 @@ func NewCreateRoleReq() *CreateRoleReq {
 		Code:      "",
 		Desc:      "",
 		OrderNo:   0,
+		Menus:     []int64{},
+		Apis:      []int64{},
+		Status:    0,
 		CreatedId: 0,
 	}
 }
@@ -1627,6 +1633,9 @@ func (p *CreateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.Menus = []int64{}
+	p.Apis = []int64{}
+	p.Status = 0
 	p.CreatedId = 0
 }
 
@@ -1675,6 +1684,33 @@ func (p *CreateRoleReq) GetOrderNo() (v int64) {
 	return p.OrderNo
 }
 
+var CreateRoleReq_Menus_DEFAULT []int64 = []int64{}
+
+func (p *CreateRoleReq) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return CreateRoleReq_Menus_DEFAULT
+	}
+	return p.Menus
+}
+
+var CreateRoleReq_Apis_DEFAULT []int64 = []int64{}
+
+func (p *CreateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return CreateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+
+var CreateRoleReq_Status_DEFAULT int64 = 0
+
+func (p *CreateRoleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateRoleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var CreateRoleReq_CreatedId_DEFAULT int64 = 0
 
 func (p *CreateRoleReq) GetCreatedId() (v int64) {
@@ -1697,6 +1733,15 @@ func (p *CreateRoleReq) SetDesc(val string) {
 }
 func (p *CreateRoleReq) SetOrderNo(val int64) {
 	p.OrderNo = val
+}
+func (p *CreateRoleReq) SetMenus(val []int64) {
+	p.Menus = val
+}
+func (p *CreateRoleReq) SetApis(val []int64) {
+	p.Apis = val
+}
+func (p *CreateRoleReq) SetStatus(val int64) {
+	p.Status = val
 }
 func (p *CreateRoleReq) SetCreatedId(val int64) {
 	p.CreatedId = val
@@ -1722,6 +1767,18 @@ func (p *CreateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != CreateRoleReq_OrderNo_DEFAULT
 }
 
+func (p *CreateRoleReq) IsSetMenus() bool {
+	return p.Menus != nil
+}
+
+func (p *CreateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *CreateRoleReq) IsSetStatus() bool {
+	return p.Status != CreateRoleReq_Status_DEFAULT
+}
+
 func (p *CreateRoleReq) IsSetCreatedId() bool {
 	return p.CreatedId != CreateRoleReq_CreatedId_DEFAULT
 }
@@ -1739,6 +1796,9 @@ var fieldIDToName_CreateRoleReq = map[int16]string{
 	3:   "code",
 	4:   "desc",
 	5:   "orderNo",
+	6:   "menus",
+	7:   "apis",
+	8:   "status",
 	256: "createdId",
 }
 
@@ -1824,12 +1884,15 @@ var fieldIDToName_GetRoleListReq = map[int16]string{
 }
 
 type UpdateRoleReq struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Name      string `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
-	Code      string `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
-	Desc      string `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
-	OrderNo   int64  `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
-	CreatedId int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name      string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Code      string  `thrift:"code,3,optional" frugal:"3,optional,string" json:"code,omitempty"`
+	Desc      string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
+	OrderNo   int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
+	Menus     []int64 `thrift:"menus,6,optional" frugal:"6,optional,list<i64>" json:"menus,omitempty"`
+	Apis      []int64 `thrift:"apis,7,optional" frugal:"7,optional,list<i64>" json:"apis,omitempty"`
+	Status    int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
+	CreatedId int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateRoleReq() *UpdateRoleReq {
@@ -1839,6 +1902,9 @@ func NewUpdateRoleReq() *UpdateRoleReq {
 		Code:      "",
 		Desc:      "",
 		OrderNo:   0,
+		Menus:     []int64{},
+		Apis:      []int64{},
+		Status:    0,
 		CreatedId: 0,
 	}
 }
@@ -1849,6 +1915,9 @@ func (p *UpdateRoleReq) InitDefault() {
 	p.Code = ""
 	p.Desc = ""
 	p.OrderNo = 0
+	p.Menus = []int64{}
+	p.Apis = []int64{}
+	p.Status = 0
 	p.CreatedId = 0
 }
 
@@ -1897,6 +1966,33 @@ func (p *UpdateRoleReq) GetOrderNo() (v int64) {
 	return p.OrderNo
 }
 
+var UpdateRoleReq_Menus_DEFAULT []int64 = []int64{}
+
+func (p *UpdateRoleReq) GetMenus() (v []int64) {
+	if !p.IsSetMenus() {
+		return UpdateRoleReq_Menus_DEFAULT
+	}
+	return p.Menus
+}
+
+var UpdateRoleReq_Apis_DEFAULT []int64 = []int64{}
+
+func (p *UpdateRoleReq) GetApis() (v []int64) {
+	if !p.IsSetApis() {
+		return UpdateRoleReq_Apis_DEFAULT
+	}
+	return p.Apis
+}
+
+var UpdateRoleReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateRoleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateRoleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var UpdateRoleReq_CreatedId_DEFAULT int64 = 0
 
 func (p *UpdateRoleReq) GetCreatedId() (v int64) {
@@ -1919,6 +2015,15 @@ func (p *UpdateRoleReq) SetDesc(val string) {
 }
 func (p *UpdateRoleReq) SetOrderNo(val int64) {
 	p.OrderNo = val
+}
+func (p *UpdateRoleReq) SetMenus(val []int64) {
+	p.Menus = val
+}
+func (p *UpdateRoleReq) SetApis(val []int64) {
+	p.Apis = val
+}
+func (p *UpdateRoleReq) SetStatus(val int64) {
+	p.Status = val
 }
 func (p *UpdateRoleReq) SetCreatedId(val int64) {
 	p.CreatedId = val
@@ -1944,6 +2049,18 @@ func (p *UpdateRoleReq) IsSetOrderNo() bool {
 	return p.OrderNo != UpdateRoleReq_OrderNo_DEFAULT
 }
 
+func (p *UpdateRoleReq) IsSetMenus() bool {
+	return p.Menus != nil
+}
+
+func (p *UpdateRoleReq) IsSetApis() bool {
+	return p.Apis != nil
+}
+
+func (p *UpdateRoleReq) IsSetStatus() bool {
+	return p.Status != UpdateRoleReq_Status_DEFAULT
+}
+
 func (p *UpdateRoleReq) IsSetCreatedId() bool {
 	return p.CreatedId != UpdateRoleReq_CreatedId_DEFAULT
 }
@@ -1961,6 +2078,9 @@ var fieldIDToName_UpdateRoleReq = map[int16]string{
 	3:   "code",
 	4:   "desc",
 	5:   "orderNo",
+	6:   "menus",
+	7:   "apis",
+	8:   "status",
 	256: "createdId",
 }
 

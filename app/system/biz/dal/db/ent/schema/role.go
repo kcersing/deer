@@ -5,7 +5,6 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	_ "entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
@@ -19,11 +18,7 @@ type Role struct {
 func (Role) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").Comment("角色名").Optional(),
-		field.String("code").
-			Comment("角色标识").
-			NotEmpty().
-			Optional().
-			Nillable(),
+		field.String("code").Comment("角色标识").Unique(),
 
 		field.String("desc").Default("").Comment("描述").Optional(),
 		field.Int64("order_no").Default(0).Comment("排序编号").Optional(),
@@ -51,10 +46,7 @@ func (Role) Mixin() []ent.Mixin {
 }
 
 func (Role) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("menu", Menu.Type),
-		edge.To("api", API.Type),
-	}
+	return []ent.Edge{}
 }
 func (Role) Annotations() []schema.Annotation {
 	return []schema.Annotation{

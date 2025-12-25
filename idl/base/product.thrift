@@ -12,15 +12,12 @@ struct Product {
     /**状态*/
     8:optional i64 status=0 (api.raw = "status")
     18: optional string statusName="" (api.raw = "statusName")
-
+    19:optional string code="" (api.raw = "code")
     20: optional i64 createdId = 0 (api.raw = "createdId")
     21: optional string createdName = "" (api.raw = "createdName")
 
     16: optional string createdAt = ""  (api.raw = "createdAt")
     17: optional string updatedAt = "" (api.raw = "updatedAt")
-
-
-
     /**价格 */
     6:optional double price=0 (api.raw = "price")
     /**库存 */
@@ -50,10 +47,10 @@ struct Item {
     7:optional i64 count =0
     /**类型 */
     8:optional string type=""
-    /**激活时间 */
-    9:optional string activeAt="" (api.raw = "activeAt")
-    /**到期时间 */
-    10:optional string expiredAt="" (api.raw = "expiredAt")
+//    /**激活时间 */
+//    9:optional string activeAt="" (api.raw = "activeAt")
+//    /**到期时间 */
+//    10:optional string expiredAt="" (api.raw = "expiredAt")
     11: optional list<i64> tagId=0   (api.raw = "tagId")
     /**价格 */
     12:optional i64 price=0 (api.raw = "price")

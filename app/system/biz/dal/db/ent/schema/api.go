@@ -6,7 +6,6 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -32,9 +31,7 @@ func (API) Mixin() []ent.Mixin {
 }
 
 func (API) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.From("roles", Role.Type).Ref("api"),
-	}
+	return []ent.Edge{}
 }
 
 func (API) Indexes() []ent.Index {

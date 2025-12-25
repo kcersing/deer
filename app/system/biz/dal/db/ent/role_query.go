@@ -4,11 +4,8 @@ package ent
 
 import (
 	"context"
-	"database/sql/driver"
 	"fmt"
 	"math"
-	"system/biz/dal/db/ent/api"
-	"system/biz/dal/db/ent/menu"
 	"system/biz/dal/db/ent/predicate"
 	"system/biz/dal/db/ent/role"
 
@@ -25,8 +22,6 @@ type RoleQuery struct {
 	order      []role.OrderOption
 	inters     []Interceptor
 	predicates []predicate.Role
-	withMenu   *MenuQuery
-	withAPI    *APIQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -61,50 +56,6 @@ func (_q *RoleQuery) Unique(unique bool) *RoleQuery {
 func (_q *RoleQuery) Order(o ...role.OrderOption) *RoleQuery {
 	_q.order = append(_q.order, o...)
 	return _q
-}
-
-// QueryMenu chains the current query on the "menu" edge.
-func (_q *RoleQuery) QueryMenu() *MenuQuery {
-	query := (&MenuClient{config: _q.config}).Query()
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		selector := _q.sqlQuery(ctx)
-		if err := selector.Err(); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(role.Table, role.FieldID, selector),
-			sqlgraph.To(menu.Table, menu.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, role.MenuTable, role.MenuPrimaryKey...),
-		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryAPI chains the current query on the "api" edge.
-func (_q *RoleQuery) QueryAPI() *APIQuery {
-	query := (&APIClient{config: _q.config}).Query()
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		selector := _q.sqlQuery(ctx)
-		if err := selector.Err(); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(role.Table, role.FieldID, selector),
-			sqlgraph.To(api.Table, api.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, role.APITable, role.APIPrimaryKey...),
-		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
 }
 
 // First returns the first Role entity from the query.
@@ -299,34 +250,10 @@ func (_q *RoleQuery) Clone() *RoleQuery {
 		order:      append([]role.OrderOption{}, _q.order...),
 		inters:     append([]Interceptor{}, _q.inters...),
 		predicates: append([]predicate.Role{}, _q.predicates...),
-		withMenu:   _q.withMenu.Clone(),
-		withAPI:    _q.withAPI.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
 	}
-}
-
-// WithMenu tells the query-builder to eager-load the nodes that are connected to
-// the "menu" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *RoleQuery) WithMenu(opts ...func(*MenuQuery)) *RoleQuery {
-	query := (&MenuClient{config: _q.config}).Query()
-	for _, opt := range opts {
-		opt(query)
-	}
-	_q.withMenu = query
-	return _q
-}
-
-// WithAPI tells the query-builder to eager-load the nodes that are connected to
-// the "api" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *RoleQuery) WithAPI(opts ...func(*APIQuery)) *RoleQuery {
-	query := (&APIClient{config: _q.config}).Query()
-	for _, opt := range opts {
-		opt(query)
-	}
-	_q.withAPI = query
-	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -405,12 +332,8 @@ func (_q *RoleQuery) prepareQuery(ctx context.Context) error {
 
 func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, error) {
 	var (
-		nodes       = []*Role{}
-		_spec       = _q.querySpec()
-		loadedTypes = [2]bool{
-			_q.withMenu != nil,
-			_q.withAPI != nil,
-		}
+		nodes = []*Role{}
+		_spec = _q.querySpec()
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*Role).scanValues(nil, columns)
@@ -418,7 +341,6 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &Role{config: _q.config}
 		nodes = append(nodes, node)
-		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -430,144 +352,7 @@ func (_q *RoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Role, e
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := _q.withMenu; query != nil {
-		if err := _q.loadMenu(ctx, query, nodes,
-			func(n *Role) { n.Edges.Menu = []*Menu{} },
-			func(n *Role, e *Menu) { n.Edges.Menu = append(n.Edges.Menu, e) }); err != nil {
-			return nil, err
-		}
-	}
-	if query := _q.withAPI; query != nil {
-		if err := _q.loadAPI(ctx, query, nodes,
-			func(n *Role) { n.Edges.API = []*API{} },
-			func(n *Role, e *API) { n.Edges.API = append(n.Edges.API, e) }); err != nil {
-			return nil, err
-		}
-	}
 	return nodes, nil
-}
-
-func (_q *RoleQuery) loadMenu(ctx context.Context, query *MenuQuery, nodes []*Role, init func(*Role), assign func(*Role, *Menu)) error {
-	edgeIDs := make([]driver.Value, len(nodes))
-	byID := make(map[int64]*Role)
-	nids := make(map[int64]map[*Role]struct{})
-	for i, node := range nodes {
-		edgeIDs[i] = node.ID
-		byID[node.ID] = node
-		if init != nil {
-			init(node)
-		}
-	}
-	query.Where(func(s *sql.Selector) {
-		joinT := sql.Table(role.MenuTable)
-		s.Join(joinT).On(s.C(menu.FieldID), joinT.C(role.MenuPrimaryKey[1]))
-		s.Where(sql.InValues(joinT.C(role.MenuPrimaryKey[0]), edgeIDs...))
-		columns := s.SelectedColumns()
-		s.Select(joinT.C(role.MenuPrimaryKey[0]))
-		s.AppendSelect(columns...)
-		s.SetDistinct(false)
-	})
-	if err := query.prepareQuery(ctx); err != nil {
-		return err
-	}
-	qr := QuerierFunc(func(ctx context.Context, q Query) (Value, error) {
-		return query.sqlAll(ctx, func(_ context.Context, spec *sqlgraph.QuerySpec) {
-			assign := spec.Assign
-			values := spec.ScanValues
-			spec.ScanValues = func(columns []string) ([]any, error) {
-				values, err := values(columns[1:])
-				if err != nil {
-					return nil, err
-				}
-				return append([]any{new(sql.NullInt64)}, values...), nil
-			}
-			spec.Assign = func(columns []string, values []any) error {
-				outValue := values[0].(*sql.NullInt64).Int64
-				inValue := values[1].(*sql.NullInt64).Int64
-				if nids[inValue] == nil {
-					nids[inValue] = map[*Role]struct{}{byID[outValue]: {}}
-					return assign(columns[1:], values[1:])
-				}
-				nids[inValue][byID[outValue]] = struct{}{}
-				return nil
-			}
-		})
-	})
-	neighbors, err := withInterceptors[[]*Menu](ctx, query, qr, query.inters)
-	if err != nil {
-		return err
-	}
-	for _, n := range neighbors {
-		nodes, ok := nids[n.ID]
-		if !ok {
-			return fmt.Errorf(`unexpected "menu" node returned %v`, n.ID)
-		}
-		for kn := range nodes {
-			assign(kn, n)
-		}
-	}
-	return nil
-}
-func (_q *RoleQuery) loadAPI(ctx context.Context, query *APIQuery, nodes []*Role, init func(*Role), assign func(*Role, *API)) error {
-	edgeIDs := make([]driver.Value, len(nodes))
-	byID := make(map[int64]*Role)
-	nids := make(map[int64]map[*Role]struct{})
-	for i, node := range nodes {
-		edgeIDs[i] = node.ID
-		byID[node.ID] = node
-		if init != nil {
-			init(node)
-		}
-	}
-	query.Where(func(s *sql.Selector) {
-		joinT := sql.Table(role.APITable)
-		s.Join(joinT).On(s.C(api.FieldID), joinT.C(role.APIPrimaryKey[1]))
-		s.Where(sql.InValues(joinT.C(role.APIPrimaryKey[0]), edgeIDs...))
-		columns := s.SelectedColumns()
-		s.Select(joinT.C(role.APIPrimaryKey[0]))
-		s.AppendSelect(columns...)
-		s.SetDistinct(false)
-	})
-	if err := query.prepareQuery(ctx); err != nil {
-		return err
-	}
-	qr := QuerierFunc(func(ctx context.Context, q Query) (Value, error) {
-		return query.sqlAll(ctx, func(_ context.Context, spec *sqlgraph.QuerySpec) {
-			assign := spec.Assign
-			values := spec.ScanValues
-			spec.ScanValues = func(columns []string) ([]any, error) {
-				values, err := values(columns[1:])
-				if err != nil {
-					return nil, err
-				}
-				return append([]any{new(sql.NullInt64)}, values...), nil
-			}
-			spec.Assign = func(columns []string, values []any) error {
-				outValue := values[0].(*sql.NullInt64).Int64
-				inValue := values[1].(*sql.NullInt64).Int64
-				if nids[inValue] == nil {
-					nids[inValue] = map[*Role]struct{}{byID[outValue]: {}}
-					return assign(columns[1:], values[1:])
-				}
-				nids[inValue][byID[outValue]] = struct{}{}
-				return nil
-			}
-		})
-	})
-	neighbors, err := withInterceptors[[]*API](ctx, query, qr, query.inters)
-	if err != nil {
-		return err
-	}
-	for _, n := range neighbors {
-		nodes, ok := nids[n.ID]
-		if !ok {
-			return fmt.Errorf(`unexpected "api" node returned %v`, n.ID)
-		}
-		for kn := range nodes {
-			assign(kn, n)
-		}
-	}
-	return nil
 }
 
 func (_q *RoleQuery) sqlCount(ctx context.Context) (int, error) {

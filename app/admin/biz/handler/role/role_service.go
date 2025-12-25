@@ -31,6 +31,9 @@ func CreateRole(ctx context.Context, c *app.RequestContext) {
 		Name:      req.GetName(),
 		Code:      req.GetCode(),
 		Desc:      req.GetDesc(),
+		OrderNo:   req.GetOrderNo(),
+		Menus:     req.GetMenus(),
+		Apis:      req.GetApis(),
 		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
@@ -38,7 +41,7 @@ func CreateRole(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 
@@ -105,6 +108,10 @@ func UpdateRole(ctx context.Context, c *app.RequestContext) {
 		Id:        req.GetID(),
 		Name:      req.GetName(),
 		Desc:      req.GetDesc(),
+		OrderNo:   req.GetOrderNo(),
+		Menus:     req.GetMenus(),
+		Code:      req.GetCode(),
+		Apis:      req.GetApis(),
 		CreatedId: utils.GetTokenId(ctx, c),
 	})
 
@@ -112,7 +119,7 @@ func UpdateRole(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 }
 

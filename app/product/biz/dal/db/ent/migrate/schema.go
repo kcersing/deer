@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	// ItemsColumns holds the columns for the "items" table.
-	ItemsColumns = []*schema.Column{
+	// ProductItemsColumns holds the columns for the "product_items" table.
+	ProductItemsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -28,21 +28,21 @@ var (
 		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "定价"},
 		{Name: "tag_id", Type: field.TypeJSON, Nullable: true, Comment: "标签"},
 	}
-	// ItemsTable holds the schema information for the "items" table.
-	ItemsTable = &schema.Table{
-		Name:       "items",
-		Columns:    ItemsColumns,
-		PrimaryKey: []*schema.Column{ItemsColumns[0]},
+	// ProductItemsTable holds the schema information for the "product_items" table.
+	ProductItemsTable = &schema.Table{
+		Name:       "product_items",
+		Columns:    ProductItemsColumns,
+		PrimaryKey: []*schema.Column{ProductItemsColumns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "item_id",
 				Unique:  false,
-				Columns: []*schema.Column{ItemsColumns[0]},
+				Columns: []*schema.Column{ProductItemsColumns[0]},
 			},
 			{
 				Name:    "item_name_code",
 				Unique:  false,
-				Columns: []*schema.Column{ItemsColumns[6], ItemsColumns[7]},
+				Columns: []*schema.Column{ProductItemsColumns[6], ProductItemsColumns[7]},
 			},
 		},
 	}
@@ -97,26 +97,26 @@ var (
 			{
 				Symbol:     "product_items_item_id",
 				Columns:    []*schema.Column{ProductItemsColumns[1]},
-				RefColumns: []*schema.Column{ItemsColumns[0]},
+				RefColumns: []*schema.Column{ProductItemsColumns[0]},
 				OnDelete:   schema.Cascade,
 			},
 		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		ItemsTable,
+		ProductItemsTable,
 		ProductTable,
 		ProductItemsTable,
 	}
 )
 
 func init() {
-	ItemsTable.Annotation = &entsql.Annotation{
-		Table: "items",
+	ProductItemsTable.Annotation = &entsql.Annotation{
+		Table: "product_items",
 	}
 	ProductTable.Annotation = &entsql.Annotation{
 		Table: "product",
 	}
 	ProductItemsTable.ForeignKeys[0].RefTable = ProductTable
-	ProductItemsTable.ForeignKeys[1].RefTable = ItemsTable
+	ProductItemsTable.ForeignKeys[1].RefTable = ProductItemsTable
 }

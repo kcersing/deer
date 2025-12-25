@@ -55,7 +55,7 @@ func (Item) Indexes() []ent.Index {
 
 func (Item) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "items"},
+		entsql.Annotation{Table: "product_items"},
 		entsql.WithComments(true),
 	}
 }

@@ -556,6 +556,7 @@ type Role struct {
 	OrderNo     int64   `thrift:"orderNo,5,optional" frugal:"5,optional,i64" json:"orderNo,omitempty"`
 	Apis        []int64 `thrift:"apis,6,optional" frugal:"6,optional,list<i64>" json:"apis,omitempty"`
 	Menus       []int64 `thrift:"menus,7,optional" frugal:"7,optional,list<i64>" json:"menus,omitempty"`
+	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
 	CreatedId   int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 	CreatedName string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
@@ -569,6 +570,7 @@ func NewRole() *Role {
 		OrderNo:     0,
 		Apis:        []int64{},
 		Menus:       []int64{},
+		Status:      0,
 		CreatedId:   0,
 		CreatedName: "",
 	}
@@ -582,6 +584,7 @@ func (p *Role) InitDefault() {
 	p.OrderNo = 0
 	p.Apis = []int64{}
 	p.Menus = []int64{}
+	p.Status = 0
 	p.CreatedId = 0
 	p.CreatedName = ""
 }
@@ -649,6 +652,15 @@ func (p *Role) GetMenus() (v []int64) {
 	return p.Menus
 }
 
+var Role_Status_DEFAULT int64 = 0
+
+func (p *Role) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Role_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var Role_CreatedId_DEFAULT int64 = 0
 
 func (p *Role) GetCreatedId() (v int64) {
@@ -687,6 +699,9 @@ func (p *Role) SetApis(val []int64) {
 func (p *Role) SetMenus(val []int64) {
 	p.Menus = val
 }
+func (p *Role) SetStatus(val int64) {
+	p.Status = val
+}
 func (p *Role) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
@@ -722,6 +737,10 @@ func (p *Role) IsSetMenus() bool {
 	return p.Menus != nil
 }
 
+func (p *Role) IsSetStatus() bool {
+	return p.Status != Role_Status_DEFAULT
+}
+
 func (p *Role) IsSetCreatedId() bool {
 	return p.CreatedId != Role_CreatedId_DEFAULT
 }
@@ -745,6 +764,7 @@ var fieldIDToName_Role = map[int16]string{
 	5:   "orderNo",
 	6:   "apis",
 	7:   "menus",
+	8:   "status",
 	256: "createdId",
 	257: "createdName",
 }
