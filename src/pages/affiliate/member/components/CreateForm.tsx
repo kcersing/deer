@@ -59,8 +59,8 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           return true;
         }}
       >
-        <ProForm.Group>
 
+        <ProForm.Group>
           <ProFormUploadButton
             name="avatar"
             label="图片"
@@ -72,7 +72,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             action="/upload.do"
             extra="图片不能大于1M"
           />
-        </ProForm.Group>
+         </ProForm.Group>
         <ProForm.Group>
 
 
@@ -144,8 +144,8 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             name="status"
             width="md"
             label="状态"
-            checkedChildren="有效" unCheckedChildren="无效"
-            defaultChecked
+            checkedChildren="有效"
+            unCheckedChildren="无效"
           />
 
         </ProForm.Group>

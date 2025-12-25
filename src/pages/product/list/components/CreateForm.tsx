@@ -1,16 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
   type ActionType,
-  ModalForm, ProForm,ProFormSwitch,
+  ModalForm, ProForm,
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea, ProFormUploadButton,ProFormSwitch,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
+import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC } from 'react';
-import {createMenu} from "@/pages/auth/menu/service/service";
 
-import { Menu } from "@/pages/auth/menu/service/data";
+import { createProduct }from "@/pages/product/list/service/service";
+import { Product } from  "@/pages/product/list/service/data";
+
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -22,7 +23,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const { run, loading } = useRequest(createMenu, {
+  const { run, loading } = useRequest(createProduct, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -47,12 +48,27 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;
-          await run({ data: value as Menu });
+          await run({ data: value as Product });
 
           return true;
         }}
       >
         <ProForm.Group>
+          <ProFormUploadButton
+            name="avatar"
+            label="图片"
+            max={1}
+            fieldProps={{
+              name: 'file',
+              listType: 'picture-card',
+            }}
+            action="/upload.do"
+            extra="图片不能大于1M"
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+
+
           <ProFormText
             width="md"
             name="name"

@@ -4,7 +4,8 @@ export type Role = {
   name?: string;
   code?: string;
   desc?: number;
-  order_no?: number;
+  status?: number;
+  orderNo?: number;
   apis?: number[];
   menus?: number[];
 }

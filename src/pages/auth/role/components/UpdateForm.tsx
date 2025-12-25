@@ -2,7 +2,7 @@ import {
   ProForm,
   ProFormCascader,
   ProFormDatePicker,
-  ProFormDateRangePicker,
+  ProFormDateRangePicker,ProFormSwitch,
   ProFormDigit,
   ProFormList,
   ProFormMoney,
@@ -16,8 +16,11 @@ import {
   ModalForm,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Form, message } from 'antd';
+import { Form, message,TreeSelect } from 'antd';
 import React, { cloneElement, useCallback, useState } from 'react';
+import { getMenuList } from "@/pages/auth/menu/service/service";
+
+import { getApiList } from "@/pages/auth/api/service/service";
 
 import { updateRole }from "@/pages/auth/role/service/service";
 import { Role } from  "@/pages/auth/role/service/data";
@@ -54,8 +57,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish = useCallback(
+  const onFinish= (e) => useCallback(
     async (values?: any) => {
+      values.id = e.id;
+      values.status = values.status?1:0;
       await run({ data: values });
       onCancel();
     },
@@ -88,7 +93,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         width="400px"
         open={open}
 
-        onFinish={onFinish}
+        onFinish={onFinish(values)}
       >
         <ProForm.Group>
           <ProFormText
@@ -97,42 +102,98 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="名称"
             tooltip="最长为 24 位"
             placeholder="请输入名称"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
           />
 
           <ProFormText
             width="md"
-            name="title"
-            label="标题"
-            placeholder="请输入标题"
+            name="code"
+            label="标识"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
           />
+          <ProFormText
+            width="md"
+            name="desc"
+            label="简介"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
+          />
+
         </ProForm.Group>
         <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="icon"
-            label="图标"
-            placeholder="请输入图标"
-          />
-          <ProFormText
-            width="md"
-            name="path"
-            label="路由路径"
-            placeholder="请输入路由路径"
-          />
+          <ProFormTreeSelect
 
-          <ProFormText
-            width="md"
-            name="component"
-            label="组件路径"
-            placeholder="请输入组件路径"
+            label="菜单权限"
+            width={260}
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getMenuList({params}).then((res) => {return res.data})
+            }}
+            name="menus"
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+                children: 'children',
+              },
+              allowClear:true,
+              treeCheckable: true,
+              multiple: true,
+              showCheckedStrategy: TreeSelect.SHOW_ALL,
+              placeholder: '请选择',
+            }}
           />
+        </ProForm.Group>
 
-          <ProFormText
-            width="md"
+        <ProForm.Group>
+          <ProFormTreeSelect
+
+            label="API权限"
+            width={260}
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getApiList({params}).then((res) => {return res.data})
+            }}
+            name="apis"
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+                children: 'children',
+              },
+              allowClear:true,
+              treeCheckable: true,
+              multiple: true,
+              showCheckedStrategy: TreeSelect.SHOW_ALL,
+              placeholder: '请选择',
+            }}
+          />
+        </ProForm.Group>
+
+        <ProForm.Group>
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="有效"
+            unCheckedChildren="无效"
           />
-
         </ProForm.Group>
       </ModalForm>
 

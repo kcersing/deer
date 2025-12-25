@@ -42,6 +42,13 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<Api>[] = [
     {
+      title: "id",
+      dataIndex: 'id',
+      sorter: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
       title: '名称',
       dataIndex: 'title',
       render: (dom, entity) => {
@@ -148,7 +155,7 @@ const TableList: React.FC = () => {
     <PageContainer>
       {contextHolder}
       <ProTable<Api, API.PageParams>
-        headerTitle='菜单列表'
+        headerTitle='API列表'
         actionRef={actionRef}
         rowKey="id"
         pagination={false}

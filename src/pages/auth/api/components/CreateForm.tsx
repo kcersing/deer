@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
   type ActionType,
-  ModalForm, ProForm,
+  ModalForm, ProForm,ProFormSwitch,
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
@@ -44,6 +44,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="400px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
+          value.status = value.status?1:0;
           await run({ data: value as Api });
 
           return true;
@@ -116,10 +117,12 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
 
-          <ProFormText
-            width="md"
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="有效"
+            unCheckedChildren="无效"
           />
 
         </ProForm.Group>

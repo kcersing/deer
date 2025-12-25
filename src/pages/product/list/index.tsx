@@ -15,18 +15,20 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { Departments } from  "@/pages/opm/departments/service/data";
-import {getDepartmentsList,deleteDepartments} from "@/pages/opm/departments/service/service";
+
+import { Product } from  "@/pages/product/list/service/data";
+import {deleteProduct, getProductList} from "@/pages/product/list/service/service";
+
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
 
   const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<Departments>();
-  const [selectedRowsState, setSelectedRows] = useState<Departments[]>([]);
+  const [currentRow, setCurrentRow] = useState<Product>();
+  const [selectedRowsState, setSelectedRows] = useState<Product[]>([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run: delRun, loading } = useRequest(deleteDepartments, {
+  const { run: delRun, loading } = useRequest(deleteProduct, {
     manual: true,
     onSuccess: () => {
       setSelectedRows([]);
@@ -39,7 +41,8 @@ const TableList: React.FC = () => {
     },
   });
 
-  const columns: ProColumns<API.RuleListItem>[] = [
+
+  const columns: ProColumns<Product>[] = [
     {
       title: "id",
       dataIndex: 'id',
@@ -48,7 +51,7 @@ const TableList: React.FC = () => {
       hideInTable: true,
     },
     {
-      title: '部门名称',
+      title: '名称',
       dataIndex: 'name',
       render: (dom, entity) => {
         return (
@@ -64,16 +67,40 @@ const TableList: React.FC = () => {
       },
     },
     {
-      title: "职能描述",
-      dataIndex: 'desc',
+      title: "标识",
+      dataIndex: 'code',
       sorter: true,
       hideInForm: true,
     },
     {
-      title: "负责人名称",
-      dataIndex: 'manager',
-      sorter: true,
-      hideInForm: true,
+      title: "简介",
+      dataIndex: 'desc',
+      sorter: false,
+      hideInForm:false,
+    },
+    {
+      title: "价格",
+      dataIndex: 'price',
+      sorter: false,
+      hideInForm:false,
+    },
+    {
+      title: "库存",
+      dataIndex: 'stock',
+      sorter: false,
+      hideInForm:false,
+    },
+    {
+      title: "售卖开始时间",
+      dataIndex: 'signSalesAt',
+      sorter: false,
+      hideInForm:false,
+    },
+    {
+      title: "售卖结束时间",
+      dataIndex: 'endSalesAt',
+      sorter: false,
+      hideInForm:false,
     },
 
     {
@@ -116,7 +143,7 @@ const TableList: React.FC = () => {
    * @param selectedRows
    */
   const handleRemove = useCallback(
-    async (selectedRows: API.RuleListItem[]) => {
+    async (selectedRows: Product[]) => {
       if (!selectedRows?.length) {
         messageApi.warning('请选择删除项');
 
@@ -135,7 +162,7 @@ const TableList: React.FC = () => {
   return (
     <PageContainer>
       {contextHolder}
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable<Product, API.PageParams>
         headerTitle='菜单列表'
         actionRef={actionRef}
         rowKey="id"
@@ -146,7 +173,7 @@ const TableList: React.FC = () => {
         toolBarRender={() => [
           <CreateForm key="create" reload={actionRef.current?.reload} />,
         ]}
-        request={getDepartmentsList}
+        request={getProductList}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -188,7 +215,7 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <ProDescriptions<Departments>
+          <ProDescriptions<Product>
             column={2}
             title={currentRow?.name}
             request={async () => ({
@@ -197,35 +224,12 @@ const TableList: React.FC = () => {
             params={{
               id: currentRow?.name,
             }}
-            columns={columns as ProDescriptionsItemProps<Departments>[]}
+            columns={columns as ProDescriptionsItemProps<Product>[]}
           />
         )}
       </Drawer>
     </PageContainer>
   );
 };
-
-
-// const [menuData, setMenuData] = useState<TreeDataNode[]>([]);
-//
-// const loadData = async () => {
-//   try {
-//     const [menuData] = await Promise.all([
-//       getMenuTree(),
-//     ]);
-//     setMenuData(menuData.data)
-//   } catch (error: any) {
-//     console.error('加载问卷数据失败', error);
-//     message.error(error.message || '加载问卷数据失败');
-//   } finally {
-//     // dispatch({ type: 'LOADING', payload: false });
-//   }
-// }
-//
-// useEffect(() => {
-//   loadData();
-// }, []);
-//
-// console.log(menuData);
 
 export default TableList;

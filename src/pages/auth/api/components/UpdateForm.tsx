@@ -7,7 +7,7 @@ import {
   ProFormList,
   ProFormMoney,
   ProFormTreeSelect,
-  ProFormDateTimePicker,
+  ProFormDateTimePicker,ProFormSwitch,
   ProFormRadio,
   ProFormSelect,
   ProFormText,
@@ -53,8 +53,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish = useCallback(
+  const onFinish= (e) => useCallback(
     async (values?: any) => {
+      values.id = e.id;
+      values.status = values.status?1:0;
       await run({ data: values });
       onCancel();
     },
@@ -87,7 +89,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         width="400px"
         open={open}
 
-        onFinish={onFinish}
+        onFinish={onFinish(values)}
       >
         <ProForm.Group>
           <ProFormText
@@ -125,11 +127,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="组件路径"
             placeholder="请输入组件路径"
           />
-
-          <ProFormText
-            width="md"
+          <ProFormSwitch
             name="status"
+            width="md"
             label="状态"
+            checkedChildren="有效"
+            unCheckedChildren="无效"
           />
 
         </ProForm.Group>

@@ -48,6 +48,7 @@ const CreateDicthtForm: FC<CreateFormProps> = (props) => {
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.dictId = dictId;
+          value.status = value.status?1:0;
            await run({ data: value as Dictht });
           return true;
         }}
@@ -85,8 +86,8 @@ const CreateDicthtForm: FC<CreateFormProps> = (props) => {
             name="status"
             width="md"
             label="状态"
-            checkedChildren="开启" unCheckedChildren="关闭"
-            defaultChecked
+            checkedChildren="开启"
+            unCheckedChildren="关闭"
           />
 
         </ProForm.Group>

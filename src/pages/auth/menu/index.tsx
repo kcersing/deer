@@ -42,6 +42,13 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<Menu>[] = [
     {
+      title: "id",
+      dataIndex: 'id',
+      sorter: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
       title: '名称',
       dataIndex: 'name',
       render: (dom, entity) => {

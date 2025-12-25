@@ -1,45 +1,42 @@
 import {
   ProForm,
   ProFormCascader,
+  ProFormDatePicker,
   ProFormDateRangePicker,
   ProFormDigit,
   ProFormList,
   ProFormMoney,
   ProFormTreeSelect,
   ProFormDateTimePicker,
+  ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea,ProFormSwitch,
   StepsForm,
   ModalForm,
-  ProFormSwitch,
-  ProFormRadio,
-  ProFormDatePicker,ProFormSlider,ProFormUploadButton
+  ProFormUploadButton,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
-import { Form, message,Slider } from 'antd';
+import { Form, message } from 'antd';
 import React, { cloneElement, useCallback, useState } from 'react';
 
-import { Member } from  "@/pages/affiliate/member/service/data";
-import {updateMember} from "@/pages/affiliate/member/service/service";
-
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
+import { Item } from  "@/pages/product/item/service/data";
+import {updateItem} from "@/pages/product/item/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
   onOk?: () => void;
-  values: Partial<Member>;
+  values: Partial<Item>;
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
   const { onOk, values, trigger } = props;
-  const defaultBirthday = dayjs('1980-01-01');
+
   const [open, setOpen] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run } = useRequest(updateMember, {
+  const { run } = useRequest(updateItem, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -97,10 +94,9 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         onFinish={onFinish(values)}
       >
         <ProForm.Group>
-
           <ProFormUploadButton
             name="avatar"
-            label="头像"
+            label="图片"
             max={1}
             fieldProps={{
               name: 'file',
@@ -110,7 +106,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             extra="图片不能大于1M"
           />
         </ProForm.Group>
-          <ProForm.Group>
+
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="name"
@@ -127,9 +124,82 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
           <ProFormText
             width="md"
-            name="mobile"
-            label="手机号"
-            placeholder="请输入手机号"
+            name="code"
+            label="标识"
+            placeholder="请输入标识"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
+          />
+
+          <ProFormTextArea
+            width="md"
+            name="desc"
+            label="概略"
+            placeholder="请输入"
+          />
+          <ProFormSelect
+            initialValue="card"
+            options={[
+              {
+                value: 'card',
+                label: '卡',
+              },
+            ]}
+            placeholder="请输入"
+            width="md"
+            name="type"
+            label="类型"
+          />
+
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormText
+            width="md"
+            name="duration"
+            label="时长"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
+          />
+          <ProFormText
+            width="md"
+            name="length"
+            label="单次时长"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
+          />
+
+          <ProFormText
+            width="md"
+            name="count"
+            label="次数"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
+          />
+
+          <ProFormText
+            width="md"
+            name="price"
+            label="价格"
+            placeholder="请输入"
             rules={[
               {
                 required: true,
@@ -139,25 +209,11 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           />
         </ProForm.Group>
         <ProForm.Group>
-          <ProFormRadio.Group
+          <ProFormText
             width="md"
-            label="性别"
-            name="gender"
-            initialValue={0}
-            options={[
-              {
-                label: '男',
-                value: 1,
-              },
-              {
-                label: '女',
-                value: 2,
-              },
-              {
-                label: '未知',
-                value: 0,
-              },
-            ]}
+            name="tagId"
+            label="标签"
+            placeholder="请输入"
             rules={[
               {
                 required: true,
@@ -165,12 +221,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             ]}
           />
-          <ProFormDatePicker
-            width="md"
-            name="birthday"
-            label="出生日期"
-            initialValue={defaultBirthday}
-          />
+
 
           <ProFormSwitch
             name="status"
@@ -178,25 +229,6 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
-          />
-        </ProForm.Group>
-
-
-        <ProForm.Group>
-          <ProFormSlider
-            fieldProps={{
-              styles: {root:{ width: 460}},
-            }}
-            name="intention"
-            label="意向"
-            marks={{
-              0: '无意向',
-              20: '20%',
-              40: '40%',
-              60: '60%',
-              80: '80%',
-              100: '确定',
-            }}
           />
         </ProForm.Group>
       </ModalForm>

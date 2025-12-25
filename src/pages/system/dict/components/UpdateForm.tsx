@@ -55,12 +55,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish=(e)   => useCallback(
+  const onFinish= (e) => useCallback(
     async (values?: any) => {
-
-      values.status = values.status?1:0;
       values.id = e.id;
-
+      values.status = values.status?1:0;
       await run({ data: values });
       onCancel();
     },
@@ -114,20 +112,20 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
         </ProForm.Group>
         <ProForm.Group>
-          <ProFormText
+
+          <ProFormTextArea
             width="md"
             name="desc"
             label="概略"
             placeholder="请输入"
           />
 
-
           <ProFormSwitch
             name="status"
             width="md"
             label="状态"
-            checkedChildren="开启" unCheckedChildren="关闭"
-
+            checkedChildren="开启"
+            unCheckedChildren="关闭"
           />
 
         </ProForm.Group>

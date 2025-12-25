@@ -59,6 +59,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
+          value.status = value.status?1:0;
           value.detail=detail
           await run({ data: value as User });
           return true;
