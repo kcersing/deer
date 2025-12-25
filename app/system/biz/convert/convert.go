@@ -63,9 +63,9 @@ func EntToRole(e *ent.Role) *base.Role {
 		Desc:      e.Desc,
 		CreatedId: e.CreatedID,
 		OrderNo:   e.OrderNo,
+		Status:    e.Status,
 		Apis:      e.Apis,
 		Menus:     e.Menus,
-		Status:    e.Status,
 	}
 }
 

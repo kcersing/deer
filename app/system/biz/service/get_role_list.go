@@ -7,6 +7,8 @@ import (
 	"system/biz/convert"
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent/predicate"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type GetRoleListService struct {
@@ -23,13 +25,14 @@ func (s *GetRoleListService) Run(req *system.GetRoleListReq) (resp *system.RoleL
 		predicates []predicate.Role
 		dataResp   []*base.Role
 	)
-	apis, err := db.Client.Role.Query().Where(predicates...).
+	all, err := db.Client.Role.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Limit(int(req.PageSize)).All(s.ctx)
 	if err != nil {
 		return resp, err
 	}
-	for _, v := range apis {
+	for _, v := range all {
+		klog.Info("role: %v", v)
 		dataResp = append(dataResp, convert.EntToRole(v))
 	}
 	resp = &system.RoleListResp{
