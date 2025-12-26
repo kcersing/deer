@@ -3,8 +3,9 @@
 package ent
 
 import (
-	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
+	"product/biz/dal/db/ent/productfield"
+	"product/biz/dal/db/ent/productitem"
 	"product/biz/dal/db/ent/schema"
 	"time"
 )
@@ -13,43 +14,6 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	itemMixin := schema.Item{}.Mixin()
-	itemMixinFields0 := itemMixin[0].Fields()
-	_ = itemMixinFields0
-	itemMixinFields1 := itemMixin[1].Fields()
-	_ = itemMixinFields1
-	itemFields := schema.Item{}.Fields()
-	_ = itemFields
-	// itemDescCreatedAt is the schema descriptor for created_at field.
-	itemDescCreatedAt := itemMixinFields0[1].Descriptor()
-	// item.DefaultCreatedAt holds the default value on creation for the created_at field.
-	item.DefaultCreatedAt = itemDescCreatedAt.Default.(func() time.Time)
-	// itemDescUpdatedAt is the schema descriptor for updated_at field.
-	itemDescUpdatedAt := itemMixinFields0[2].Descriptor()
-	// item.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	item.DefaultUpdatedAt = itemDescUpdatedAt.Default.(func() time.Time)
-	// item.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	item.UpdateDefaultUpdatedAt = itemDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// itemDescDelete is the schema descriptor for delete field.
-	itemDescDelete := itemMixinFields0[3].Descriptor()
-	// item.DefaultDelete holds the default value on creation for the delete field.
-	item.DefaultDelete = itemDescDelete.Default.(int64)
-	// itemDescCreatedID is the schema descriptor for created_id field.
-	itemDescCreatedID := itemMixinFields0[4].Descriptor()
-	// item.DefaultCreatedID holds the default value on creation for the created_id field.
-	item.DefaultCreatedID = itemDescCreatedID.Default.(int64)
-	// itemDescStatus is the schema descriptor for status field.
-	itemDescStatus := itemMixinFields1[0].Descriptor()
-	// item.DefaultStatus holds the default value on creation for the status field.
-	item.DefaultStatus = itemDescStatus.Default.(int64)
-	// itemDescPic is the schema descriptor for pic field.
-	itemDescPic := itemFields[2].Descriptor()
-	// item.DefaultPic holds the default value on creation for the pic field.
-	item.DefaultPic = itemDescPic.Default.(string)
-	// itemDescDesc is the schema descriptor for desc field.
-	itemDescDesc := itemFields[3].Descriptor()
-	// item.DefaultDesc holds the default value on creation for the desc field.
-	item.DefaultDesc = itemDescDesc.Default.(string)
 	productMixin := schema.Product{}.Mixin()
 	productMixinFields0 := productMixin[0].Fields()
 	_ = productMixinFields0
@@ -79,4 +43,70 @@ func init() {
 	productDescStatus := productMixinFields1[0].Descriptor()
 	// product.DefaultStatus holds the default value on creation for the status field.
 	product.DefaultStatus = productDescStatus.Default.(int64)
+	productfieldMixin := schema.ProductField{}.Mixin()
+	productfieldMixinFields0 := productfieldMixin[0].Fields()
+	_ = productfieldMixinFields0
+	productfieldMixinFields1 := productfieldMixin[1].Fields()
+	_ = productfieldMixinFields1
+	productfieldFields := schema.ProductField{}.Fields()
+	_ = productfieldFields
+	// productfieldDescCreatedAt is the schema descriptor for created_at field.
+	productfieldDescCreatedAt := productfieldMixinFields0[1].Descriptor()
+	// productfield.DefaultCreatedAt holds the default value on creation for the created_at field.
+	productfield.DefaultCreatedAt = productfieldDescCreatedAt.Default.(func() time.Time)
+	// productfieldDescUpdatedAt is the schema descriptor for updated_at field.
+	productfieldDescUpdatedAt := productfieldMixinFields0[2].Descriptor()
+	// productfield.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	productfield.DefaultUpdatedAt = productfieldDescUpdatedAt.Default.(func() time.Time)
+	// productfield.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	productfield.UpdateDefaultUpdatedAt = productfieldDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// productfieldDescDelete is the schema descriptor for delete field.
+	productfieldDescDelete := productfieldMixinFields0[3].Descriptor()
+	// productfield.DefaultDelete holds the default value on creation for the delete field.
+	productfield.DefaultDelete = productfieldDescDelete.Default.(int64)
+	// productfieldDescCreatedID is the schema descriptor for created_id field.
+	productfieldDescCreatedID := productfieldMixinFields0[4].Descriptor()
+	// productfield.DefaultCreatedID holds the default value on creation for the created_id field.
+	productfield.DefaultCreatedID = productfieldDescCreatedID.Default.(int64)
+	// productfieldDescStatus is the schema descriptor for status field.
+	productfieldDescStatus := productfieldMixinFields1[0].Descriptor()
+	// productfield.DefaultStatus holds the default value on creation for the status field.
+	productfield.DefaultStatus = productfieldDescStatus.Default.(int64)
+	productitemMixin := schema.ProductItem{}.Mixin()
+	productitemMixinFields0 := productitemMixin[0].Fields()
+	_ = productitemMixinFields0
+	productitemMixinFields1 := productitemMixin[1].Fields()
+	_ = productitemMixinFields1
+	productitemFields := schema.ProductItem{}.Fields()
+	_ = productitemFields
+	// productitemDescCreatedAt is the schema descriptor for created_at field.
+	productitemDescCreatedAt := productitemMixinFields0[1].Descriptor()
+	// productitem.DefaultCreatedAt holds the default value on creation for the created_at field.
+	productitem.DefaultCreatedAt = productitemDescCreatedAt.Default.(func() time.Time)
+	// productitemDescUpdatedAt is the schema descriptor for updated_at field.
+	productitemDescUpdatedAt := productitemMixinFields0[2].Descriptor()
+	// productitem.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	productitem.DefaultUpdatedAt = productitemDescUpdatedAt.Default.(func() time.Time)
+	// productitem.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	productitem.UpdateDefaultUpdatedAt = productitemDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// productitemDescDelete is the schema descriptor for delete field.
+	productitemDescDelete := productitemMixinFields0[3].Descriptor()
+	// productitem.DefaultDelete holds the default value on creation for the delete field.
+	productitem.DefaultDelete = productitemDescDelete.Default.(int64)
+	// productitemDescCreatedID is the schema descriptor for created_id field.
+	productitemDescCreatedID := productitemMixinFields0[4].Descriptor()
+	// productitem.DefaultCreatedID holds the default value on creation for the created_id field.
+	productitem.DefaultCreatedID = productitemDescCreatedID.Default.(int64)
+	// productitemDescStatus is the schema descriptor for status field.
+	productitemDescStatus := productitemMixinFields1[0].Descriptor()
+	// productitem.DefaultStatus holds the default value on creation for the status field.
+	productitem.DefaultStatus = productitemDescStatus.Default.(int64)
+	// productitemDescPic is the schema descriptor for pic field.
+	productitemDescPic := productitemFields[2].Descriptor()
+	// productitem.DefaultPic holds the default value on creation for the pic field.
+	productitem.DefaultPic = productitemDescPic.Default.(string)
+	// productitemDescDesc is the schema descriptor for desc field.
+	productitemDescDesc := productitemFields[3].Descriptor()
+	// productitem.DefaultDesc holds the default value on creation for the desc field.
+	productitem.DefaultDesc = productitemDescDesc.Default.(string)
 }

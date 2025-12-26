@@ -18,7 +18,7 @@ func NewUpdateItemService(ctx context.Context) *UpdateItemService {
 func (s *UpdateItemService) Run(req *product.UpdateItemReq) (resp *product.ItemResp, err error) {
 	// Finish your business logic.
 
-	entity, err := db.Client.Item.UpdateOneID(req.GetId()).
+	entity, err := db.Client.ProductItem.UpdateOneID(req.GetId()).
 		SetName(req.GetName()).
 		SetPic(req.GetPic()).
 		SetDesc(req.GetDesc()).

@@ -19,7 +19,7 @@ func NewCreateItemService(ctx context.Context) *CreateItemService {
 func (s *CreateItemService) Run(req *product.CreateItemReq) (resp *product.ItemResp, err error) {
 	// Finish your business logic.
 
-	entity, err := db.Client.Item.Create().
+	entity, err := db.Client.ProductItem.Create().
 		SetName(req.GetName()).
 		SetCode(req.GetCode()).
 		SetPic(req.GetPic()).

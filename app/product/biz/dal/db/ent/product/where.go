@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -880,27 +879,24 @@ func EndSalesAtNotNil() predicate.Product {
 	return predicate.Product(sql.FieldNotNull(FieldEndSalesAt))
 }
 
-// HasItems applies the HasEdge predicate on the "items" edge.
-func HasItems() predicate.Product {
-	return predicate.Product(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, ItemsTable, ItemsPrimaryKey...),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
+// FieldsIsNil applies the IsNil predicate on the "fields" field.
+func FieldsIsNil() predicate.Product {
+	return predicate.Product(sql.FieldIsNull(FieldFields))
 }
 
-// HasItemsWith applies the HasEdge predicate on the "items" edge with a given conditions (other predicates).
-func HasItemsWith(preds ...predicate.Item) predicate.Product {
-	return predicate.Product(func(s *sql.Selector) {
-		step := newItemsStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
+// FieldsNotNil applies the NotNil predicate on the "fields" field.
+func FieldsNotNil() predicate.Product {
+	return predicate.Product(sql.FieldNotNull(FieldFields))
+}
+
+// ItemsIsNil applies the IsNil predicate on the "items" field.
+func ItemsIsNil() predicate.Product {
+	return predicate.Product(sql.FieldIsNull(FieldItems))
+}
+
+// ItemsNotNil applies the NotNil predicate on the "items" field.
+func ItemsNotNil() predicate.Product {
+	return predicate.Product(sql.FieldNotNull(FieldItems))
 }
 
 // And groups predicates with the AND operator between them.

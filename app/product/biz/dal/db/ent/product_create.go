@@ -5,7 +5,6 @@ package ent
 import (
 	"context"
 	"fmt"
-	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/product"
 	"time"
 
@@ -208,25 +207,22 @@ func (_c *ProductCreate) SetNillableEndSalesAt(v *time.Time) *ProductCreate {
 	return _c
 }
 
+// SetFields sets the "fields" field.
+func (_c *ProductCreate) SetFields(v []int64) *ProductCreate {
+	_c.mutation.SetFields(v)
+	return _c
+}
+
+// SetItems sets the "items" field.
+func (_c *ProductCreate) SetItems(v []int64) *ProductCreate {
+	_c.mutation.SetItems(v)
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *ProductCreate) SetID(v int64) *ProductCreate {
 	_c.mutation.SetID(v)
 	return _c
-}
-
-// AddItemIDs adds the "items" edge to the Item entity by IDs.
-func (_c *ProductCreate) AddItemIDs(ids ...int64) *ProductCreate {
-	_c.mutation.AddItemIDs(ids...)
-	return _c
-}
-
-// AddItems adds the "items" edges to the Item entity.
-func (_c *ProductCreate) AddItems(v ...*Item) *ProductCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddItemIDs(ids...)
 }
 
 // Mutation returns the ProductMutation object of the builder.
@@ -376,21 +372,13 @@ func (_c *ProductCreate) createSpec() (*Product, *sqlgraph.CreateSpec) {
 		_spec.SetField(product.FieldEndSalesAt, field.TypeTime, value)
 		_node.EndSalesAt = value
 	}
-	if nodes := _c.mutation.ItemsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
+	if value, ok := _c.mutation.GetFields(); ok {
+		_spec.SetField(product.FieldFields, field.TypeJSON, value)
+		_node.Fields = value
+	}
+	if value, ok := _c.mutation.Items(); ok {
+		_spec.SetField(product.FieldItems, field.TypeJSON, value)
+		_node.Items = value
 	}
 	return _node, _spec
 }

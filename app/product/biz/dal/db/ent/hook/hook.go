@@ -8,18 +8,6 @@ import (
 	"product/biz/dal/db/ent"
 )
 
-// The ItemFunc type is an adapter to allow the use of ordinary
-// function as Item mutator.
-type ItemFunc func(context.Context, *ent.ItemMutation) (ent.Value, error)
-
-// Mutate calls f(ctx, m).
-func (f ItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	if mv, ok := m.(*ent.ItemMutation); ok {
-		return f(ctx, mv)
-	}
-	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ItemMutation", m)
-}
-
 // The ProductFunc type is an adapter to allow the use of ordinary
 // function as Product mutator.
 type ProductFunc func(context.Context, *ent.ProductMutation) (ent.Value, error)
@@ -30,6 +18,30 @@ func (f ProductFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, err
 		return f(ctx, mv)
 	}
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ProductMutation", m)
+}
+
+// The ProductFieldFunc type is an adapter to allow the use of ordinary
+// function as ProductField mutator.
+type ProductFieldFunc func(context.Context, *ent.ProductFieldMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ProductFieldFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.ProductFieldMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ProductFieldMutation", m)
+}
+
+// The ProductItemFunc type is an adapter to allow the use of ordinary
+// function as ProductItem mutator.
+type ProductItemFunc func(context.Context, *ent.ProductItemMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ProductItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.ProductItemMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ProductItemMutation", m)
 }
 
 // Condition is a hook condition function.

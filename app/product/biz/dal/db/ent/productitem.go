@@ -5,7 +5,7 @@ package ent
 import (
 	"encoding/json"
 	"fmt"
-	"product/biz/dal/db/ent/item"
+	"product/biz/dal/db/ent/productitem"
 	"strings"
 	"time"
 
@@ -13,8 +13,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-// Item is the model entity for the Item schema.
-type Item struct {
+// ProductItem is the model entity for the ProductItem schema.
+type ProductItem struct {
 	config `json:"-"`
 	// ID of the ent.
 	// primary key
@@ -48,43 +48,22 @@ type Item struct {
 	// 定价
 	Price int64 `json:"price,omitempty"`
 	// 标签
-	TagID []int64 `json:"tag_id,omitempty"`
-	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the ItemQuery when eager-loading is set.
-	Edges        ItemEdges `json:"edges"`
+	TagID        []int64 `json:"tag_id,omitempty"`
 	selectValues sql.SelectValues
 }
 
-// ItemEdges holds the relations/edges for other nodes in the graph.
-type ItemEdges struct {
-	// Product holds the value of the product edge.
-	Product []*Product `json:"product,omitempty"`
-	// loadedTypes holds the information for reporting if a
-	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
-}
-
-// ProductOrErr returns the Product value or an error if the edge
-// was not loaded in eager-loading.
-func (e ItemEdges) ProductOrErr() ([]*Product, error) {
-	if e.loadedTypes[0] {
-		return e.Product, nil
-	}
-	return nil, &NotLoadedError{edge: "product"}
-}
-
 // scanValues returns the types for scanning values from sql.Rows.
-func (*Item) scanValues(columns []string) ([]any, error) {
+func (*ProductItem) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case item.FieldTagID:
+		case productitem.FieldTagID:
 			values[i] = new([]byte)
-		case item.FieldID, item.FieldDelete, item.FieldCreatedID, item.FieldStatus, item.FieldDuration, item.FieldLength, item.FieldCount, item.FieldPrice:
+		case productitem.FieldID, productitem.FieldDelete, productitem.FieldCreatedID, productitem.FieldStatus, productitem.FieldDuration, productitem.FieldLength, productitem.FieldCount, productitem.FieldPrice:
 			values[i] = new(sql.NullInt64)
-		case item.FieldName, item.FieldCode, item.FieldPic, item.FieldDesc, item.FieldType:
+		case productitem.FieldName, productitem.FieldCode, productitem.FieldPic, productitem.FieldDesc, productitem.FieldType:
 			values[i] = new(sql.NullString)
-		case item.FieldCreatedAt, item.FieldUpdatedAt:
+		case productitem.FieldCreatedAt, productitem.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -94,104 +73,104 @@ func (*Item) scanValues(columns []string) ([]any, error) {
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the Item fields.
-func (_m *Item) assignValues(columns []string, values []any) error {
+// to the ProductItem fields.
+func (_m *ProductItem) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case item.FieldID:
+		case productitem.FieldID:
 			value, ok := values[i].(*sql.NullInt64)
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			_m.ID = int64(value.Int64)
-		case item.FieldCreatedAt:
+		case productitem.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
 				_m.CreatedAt = value.Time
 			}
-		case item.FieldUpdatedAt:
+		case productitem.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
 				_m.UpdatedAt = value.Time
 			}
-		case item.FieldDelete:
+		case productitem.FieldDelete:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field delete", values[i])
 			} else if value.Valid {
 				_m.Delete = value.Int64
 			}
-		case item.FieldCreatedID:
+		case productitem.FieldCreatedID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_id", values[i])
 			} else if value.Valid {
 				_m.CreatedID = value.Int64
 			}
-		case item.FieldStatus:
+		case productitem.FieldStatus:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
 				_m.Status = value.Int64
 			}
-		case item.FieldName:
+		case productitem.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
 				_m.Name = value.String
 			}
-		case item.FieldCode:
+		case productitem.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
 				_m.Code = value.String
 			}
-		case item.FieldPic:
+		case productitem.FieldPic:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field pic", values[i])
 			} else if value.Valid {
 				_m.Pic = value.String
 			}
-		case item.FieldDesc:
+		case productitem.FieldDesc:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field desc", values[i])
 			} else if value.Valid {
 				_m.Desc = value.String
 			}
-		case item.FieldType:
+		case productitem.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
 				_m.Type = value.String
 			}
-		case item.FieldDuration:
+		case productitem.FieldDuration:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field duration", values[i])
 			} else if value.Valid {
 				_m.Duration = value.Int64
 			}
-		case item.FieldLength:
+		case productitem.FieldLength:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field length", values[i])
 			} else if value.Valid {
 				_m.Length = value.Int64
 			}
-		case item.FieldCount:
+		case productitem.FieldCount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field count", values[i])
 			} else if value.Valid {
 				_m.Count = value.Int64
 			}
-		case item.FieldPrice:
+		case productitem.FieldPrice:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
 				_m.Price = value.Int64
 			}
-		case item.FieldTagID:
+		case productitem.FieldTagID:
 			if value, ok := values[i].(*[]byte); !ok {
 				return fmt.Errorf("unexpected type %T for field tag_id", values[i])
 			} else if value != nil && len(*value) > 0 {
@@ -206,39 +185,34 @@ func (_m *Item) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// Value returns the ent.Value that was dynamically selected and assigned to the Item.
+// Value returns the ent.Value that was dynamically selected and assigned to the ProductItem.
 // This includes values selected through modifiers, order, etc.
-func (_m *Item) Value(name string) (ent.Value, error) {
+func (_m *ProductItem) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
 }
 
-// QueryProduct queries the "product" edge of the Item entity.
-func (_m *Item) QueryProduct() *ProductQuery {
-	return NewItemClient(_m.config).QueryProduct(_m)
-}
-
-// Update returns a builder for updating this Item.
-// Note that you need to call Item.Unwrap() before calling this method if this Item
+// Update returns a builder for updating this ProductItem.
+// Note that you need to call ProductItem.Unwrap() before calling this method if this ProductItem
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (_m *Item) Update() *ItemUpdateOne {
-	return NewItemClient(_m.config).UpdateOne(_m)
+func (_m *ProductItem) Update() *ProductItemUpdateOne {
+	return NewProductItemClient(_m.config).UpdateOne(_m)
 }
 
-// Unwrap unwraps the Item entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the ProductItem entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (_m *Item) Unwrap() *Item {
+func (_m *ProductItem) Unwrap() *ProductItem {
 	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: Item is not a transactional entity")
+		panic("ent: ProductItem is not a transactional entity")
 	}
 	_m.config.driver = _tx.drv
 	return _m
 }
 
 // String implements the fmt.Stringer.
-func (_m *Item) String() string {
+func (_m *ProductItem) String() string {
 	var builder strings.Builder
-	builder.WriteString("Item(")
+	builder.WriteString("ProductItem(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("created_at=")
 	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
@@ -288,5 +262,5 @@ func (_m *Item) String() string {
 	return builder.String()
 }
 
-// Items is a parsable slice of Item.
-type Items []*Item
+// ProductItems is a parsable slice of ProductItem.
+type ProductItems []*ProductItem

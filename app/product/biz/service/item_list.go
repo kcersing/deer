@@ -4,7 +4,7 @@ import (
 	"context"
 	"gen/kitex_gen/base"
 	product "gen/kitex_gen/product"
-	"product/biz/dal/db/ent/item"
+	"product/biz/dal/db/ent/productitem"
 	"user/biz/dal/db/ent/position"
 
 	"product/biz/convert"
@@ -29,17 +29,17 @@ func (s *ItemListService) Run(req *product.ItemListReq) (resp *product.ItemListR
 		dataResp []*base.Item
 	)
 
-	var predicates []predicate.Item
+	var predicates []predicate.ProductItem
 	if req.GetName() != "" {
-		predicates = append(predicates, item.NameContains(req.GetName()))
+		predicates = append(predicates, productitem.NameContains(req.GetName()))
 	}
 	if req.GetStatus() != nil {
-		predicates = append(predicates, item.StatusIn(req.GetStatus()...))
+		predicates = append(predicates, productitem.StatusIn(req.GetStatus()...))
 	}
 	if req.GetType() != "" {
-		predicates = append(predicates, item.TypeEQ(req.GetType()))
+		predicates = append(predicates, productitem.TypeEQ(req.GetType()))
 	}
-	all, err := db.Client.Item.Query().Where(predicates...).
+	all, err := db.Client.ProductItem.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(position.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)

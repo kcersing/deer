@@ -6,7 +6,6 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -26,6 +25,8 @@ func (Product) Fields() []ent.Field {
 		field.JSON("is_sales", []int64{}).Comment("销售方式 1会员端 2PC端").Optional(),
 		field.Time("sign_sales_at").Comment("开始售卖时间").Optional(),
 		field.Time("end_sales_at").Comment("结束售卖时间").Optional(),
+		field.JSON("fields", []int64{}).Comment("商品属性").Optional(),
+		field.JSON("items", []int64{}).Comment("商品项").Optional(),
 	}
 }
 
@@ -38,7 +39,7 @@ func (Product) Mixin() []ent.Mixin {
 
 func (Product) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("items", Item.Type),
+		//edge.To("items", ProductItem.Type),
 	}
 }
 
@@ -50,7 +51,7 @@ func (Product) Indexes() []ent.Index {
 
 func (Product) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "product"},
+		entsql.Annotation{Table: "products"},
 		entsql.WithComments(true),
 	}
 }

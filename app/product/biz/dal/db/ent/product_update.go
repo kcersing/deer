@@ -6,7 +6,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"product/biz/dal/db/ent/item"
 	"product/biz/dal/db/ent/predicate"
 	"product/biz/dal/db/ent/product"
 	"time"
@@ -315,45 +314,45 @@ func (_u *ProductUpdate) ClearEndSalesAt() *ProductUpdate {
 	return _u
 }
 
-// AddItemIDs adds the "items" edge to the Item entity by IDs.
-func (_u *ProductUpdate) AddItemIDs(ids ...int64) *ProductUpdate {
-	_u.mutation.AddItemIDs(ids...)
+// SetFields sets the "fields" field.
+func (_u *ProductUpdate) SetFields(v []int64) *ProductUpdate {
+	_u.mutation.SetFields(v)
 	return _u
 }
 
-// AddItems adds the "items" edges to the Item entity.
-func (_u *ProductUpdate) AddItems(v ...*Item) *ProductUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddItemIDs(ids...)
+// AppendFields appends value to the "fields" field.
+func (_u *ProductUpdate) AppendFields(v []int64) *ProductUpdate {
+	_u.mutation.AppendFields(v)
+	return _u
 }
 
-// Mutation returns the ProductMutation object of the builder.
-func (_u *ProductUpdate) Mutation() *ProductMutation {
-	return _u.mutation
+// ClearFields clears the value of the "fields" field.
+func (_u *ProductUpdate) ClearFields() *ProductUpdate {
+	_u.mutation.ClearFields()
+	return _u
 }
 
-// ClearItems clears all "items" edges to the Item entity.
+// SetItems sets the "items" field.
+func (_u *ProductUpdate) SetItems(v []int64) *ProductUpdate {
+	_u.mutation.SetItems(v)
+	return _u
+}
+
+// AppendItems appends value to the "items" field.
+func (_u *ProductUpdate) AppendItems(v []int64) *ProductUpdate {
+	_u.mutation.AppendItems(v)
+	return _u
+}
+
+// ClearItems clears the value of the "items" field.
 func (_u *ProductUpdate) ClearItems() *ProductUpdate {
 	_u.mutation.ClearItems()
 	return _u
 }
 
-// RemoveItemIDs removes the "items" edge to Item entities by IDs.
-func (_u *ProductUpdate) RemoveItemIDs(ids ...int64) *ProductUpdate {
-	_u.mutation.RemoveItemIDs(ids...)
-	return _u
-}
-
-// RemoveItems removes "items" edges to Item entities.
-func (_u *ProductUpdate) RemoveItems(v ...*Item) *ProductUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveItemIDs(ids...)
+// Mutation returns the ProductMutation object of the builder.
+func (_u *ProductUpdate) Mutation() *ProductMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -502,50 +501,27 @@ func (_u *ProductUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.EndSalesAtCleared() {
 		_spec.ClearField(product.FieldEndSalesAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.GetFields(); ok {
+		_spec.SetField(product.FieldFields, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedFields(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, product.FieldFields, value)
+		})
+	}
+	if _u.mutation.FieldsCleared() {
+		_spec.ClearField(product.FieldFields, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.Items(); ok {
+		_spec.SetField(product.FieldItems, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedItems(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, product.FieldItems, value)
+		})
+	}
 	if _u.mutation.ItemsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedItemsIDs(); len(nodes) > 0 && !_u.mutation.ItemsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.ItemsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+		_spec.ClearField(product.FieldItems, field.TypeJSON)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -852,45 +828,45 @@ func (_u *ProductUpdateOne) ClearEndSalesAt() *ProductUpdateOne {
 	return _u
 }
 
-// AddItemIDs adds the "items" edge to the Item entity by IDs.
-func (_u *ProductUpdateOne) AddItemIDs(ids ...int64) *ProductUpdateOne {
-	_u.mutation.AddItemIDs(ids...)
+// SetFields sets the "fields" field.
+func (_u *ProductUpdateOne) SetFields(v []int64) *ProductUpdateOne {
+	_u.mutation.SetFields(v)
 	return _u
 }
 
-// AddItems adds the "items" edges to the Item entity.
-func (_u *ProductUpdateOne) AddItems(v ...*Item) *ProductUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddItemIDs(ids...)
+// AppendFields appends value to the "fields" field.
+func (_u *ProductUpdateOne) AppendFields(v []int64) *ProductUpdateOne {
+	_u.mutation.AppendFields(v)
+	return _u
 }
 
-// Mutation returns the ProductMutation object of the builder.
-func (_u *ProductUpdateOne) Mutation() *ProductMutation {
-	return _u.mutation
+// ClearFields clears the value of the "fields" field.
+func (_u *ProductUpdateOne) ClearFields() *ProductUpdateOne {
+	_u.mutation.ClearFields()
+	return _u
 }
 
-// ClearItems clears all "items" edges to the Item entity.
+// SetItems sets the "items" field.
+func (_u *ProductUpdateOne) SetItems(v []int64) *ProductUpdateOne {
+	_u.mutation.SetItems(v)
+	return _u
+}
+
+// AppendItems appends value to the "items" field.
+func (_u *ProductUpdateOne) AppendItems(v []int64) *ProductUpdateOne {
+	_u.mutation.AppendItems(v)
+	return _u
+}
+
+// ClearItems clears the value of the "items" field.
 func (_u *ProductUpdateOne) ClearItems() *ProductUpdateOne {
 	_u.mutation.ClearItems()
 	return _u
 }
 
-// RemoveItemIDs removes the "items" edge to Item entities by IDs.
-func (_u *ProductUpdateOne) RemoveItemIDs(ids ...int64) *ProductUpdateOne {
-	_u.mutation.RemoveItemIDs(ids...)
-	return _u
-}
-
-// RemoveItems removes "items" edges to Item entities.
-func (_u *ProductUpdateOne) RemoveItems(v ...*Item) *ProductUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveItemIDs(ids...)
+// Mutation returns the ProductMutation object of the builder.
+func (_u *ProductUpdateOne) Mutation() *ProductMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the ProductUpdate builder.
@@ -1069,50 +1045,27 @@ func (_u *ProductUpdateOne) sqlSave(ctx context.Context) (_node *Product, err er
 	if _u.mutation.EndSalesAtCleared() {
 		_spec.ClearField(product.FieldEndSalesAt, field.TypeTime)
 	}
+	if value, ok := _u.mutation.GetFields(); ok {
+		_spec.SetField(product.FieldFields, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedFields(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, product.FieldFields, value)
+		})
+	}
+	if _u.mutation.FieldsCleared() {
+		_spec.ClearField(product.FieldFields, field.TypeJSON)
+	}
+	if value, ok := _u.mutation.Items(); ok {
+		_spec.SetField(product.FieldItems, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedItems(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, product.FieldItems, value)
+		})
+	}
 	if _u.mutation.ItemsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedItemsIDs(); len(nodes) > 0 && !_u.mutation.ItemsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.ItemsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: false,
-			Table:   product.ItemsTable,
-			Columns: product.ItemsPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+		_spec.ClearField(product.FieldItems, field.TypeJSON)
 	}
 	_node = &Product{config: _u.config}
 	_spec.Assign = _node.assignValues

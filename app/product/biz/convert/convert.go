@@ -7,9 +7,9 @@ import (
 	"time"
 )
 
-func EntToItem(e *ent.Item) *base.Item {
+func EntToItem(e *ent.ProductItem) *base.Item {
 
-	mapper := utils.NewCopierMapper[base.Item, ent.Item]()
+	mapper := utils.NewCopierMapper[base.Item, ent.ProductItem]()
 	var dto = mapper.ToDTO(e)
 
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)

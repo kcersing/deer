@@ -25,7 +25,7 @@ func (s *GetItemService) Run(req *base.IdReq) (resp *product.ItemResp, err error
 		return nil, errno.InvalidParameterErr
 	}
 
-	entity, err := db.Client.Item.Get(s.ctx, req.GetId())
+	entity, err := db.Client.ProductItem.Get(s.ctx, req.GetId())
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errno.NotFound

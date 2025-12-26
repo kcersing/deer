@@ -5,29 +5,28 @@ package ent
 import (
 	"context"
 	"fmt"
-	"product/biz/dal/db/ent/item"
-	"product/biz/dal/db/ent/product"
+	"product/biz/dal/db/ent/productitem"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 )
 
-// ItemCreate is the builder for creating a Item entity.
-type ItemCreate struct {
+// ProductItemCreate is the builder for creating a ProductItem entity.
+type ProductItemCreate struct {
 	config
-	mutation *ItemMutation
+	mutation *ProductItemMutation
 	hooks    []Hook
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (_c *ItemCreate) SetCreatedAt(v time.Time) *ItemCreate {
+func (_c *ProductItemCreate) SetCreatedAt(v time.Time) *ProductItemCreate {
 	_c.mutation.SetCreatedAt(v)
 	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableCreatedAt(v *time.Time) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableCreatedAt(v *time.Time) *ProductItemCreate {
 	if v != nil {
 		_c.SetCreatedAt(*v)
 	}
@@ -35,13 +34,13 @@ func (_c *ItemCreate) SetNillableCreatedAt(v *time.Time) *ItemCreate {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (_c *ItemCreate) SetUpdatedAt(v time.Time) *ItemCreate {
+func (_c *ProductItemCreate) SetUpdatedAt(v time.Time) *ProductItemCreate {
 	_c.mutation.SetUpdatedAt(v)
 	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableUpdatedAt(v *time.Time) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableUpdatedAt(v *time.Time) *ProductItemCreate {
 	if v != nil {
 		_c.SetUpdatedAt(*v)
 	}
@@ -49,13 +48,13 @@ func (_c *ItemCreate) SetNillableUpdatedAt(v *time.Time) *ItemCreate {
 }
 
 // SetDelete sets the "delete" field.
-func (_c *ItemCreate) SetDelete(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetDelete(v int64) *ProductItemCreate {
 	_c.mutation.SetDelete(v)
 	return _c
 }
 
 // SetNillableDelete sets the "delete" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableDelete(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableDelete(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetDelete(*v)
 	}
@@ -63,13 +62,13 @@ func (_c *ItemCreate) SetNillableDelete(v *int64) *ItemCreate {
 }
 
 // SetCreatedID sets the "created_id" field.
-func (_c *ItemCreate) SetCreatedID(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetCreatedID(v int64) *ProductItemCreate {
 	_c.mutation.SetCreatedID(v)
 	return _c
 }
 
 // SetNillableCreatedID sets the "created_id" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableCreatedID(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableCreatedID(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetCreatedID(*v)
 	}
@@ -77,13 +76,13 @@ func (_c *ItemCreate) SetNillableCreatedID(v *int64) *ItemCreate {
 }
 
 // SetStatus sets the "status" field.
-func (_c *ItemCreate) SetStatus(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetStatus(v int64) *ProductItemCreate {
 	_c.mutation.SetStatus(v)
 	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableStatus(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableStatus(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetStatus(*v)
 	}
@@ -91,13 +90,13 @@ func (_c *ItemCreate) SetNillableStatus(v *int64) *ItemCreate {
 }
 
 // SetName sets the "name" field.
-func (_c *ItemCreate) SetName(v string) *ItemCreate {
+func (_c *ProductItemCreate) SetName(v string) *ProductItemCreate {
 	_c.mutation.SetName(v)
 	return _c
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableName(v *string) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableName(v *string) *ProductItemCreate {
 	if v != nil {
 		_c.SetName(*v)
 	}
@@ -105,13 +104,13 @@ func (_c *ItemCreate) SetNillableName(v *string) *ItemCreate {
 }
 
 // SetCode sets the "code" field.
-func (_c *ItemCreate) SetCode(v string) *ItemCreate {
+func (_c *ProductItemCreate) SetCode(v string) *ProductItemCreate {
 	_c.mutation.SetCode(v)
 	return _c
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableCode(v *string) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableCode(v *string) *ProductItemCreate {
 	if v != nil {
 		_c.SetCode(*v)
 	}
@@ -119,13 +118,13 @@ func (_c *ItemCreate) SetNillableCode(v *string) *ItemCreate {
 }
 
 // SetPic sets the "pic" field.
-func (_c *ItemCreate) SetPic(v string) *ItemCreate {
+func (_c *ProductItemCreate) SetPic(v string) *ProductItemCreate {
 	_c.mutation.SetPic(v)
 	return _c
 }
 
 // SetNillablePic sets the "pic" field if the given value is not nil.
-func (_c *ItemCreate) SetNillablePic(v *string) *ItemCreate {
+func (_c *ProductItemCreate) SetNillablePic(v *string) *ProductItemCreate {
 	if v != nil {
 		_c.SetPic(*v)
 	}
@@ -133,13 +132,13 @@ func (_c *ItemCreate) SetNillablePic(v *string) *ItemCreate {
 }
 
 // SetDesc sets the "desc" field.
-func (_c *ItemCreate) SetDesc(v string) *ItemCreate {
+func (_c *ProductItemCreate) SetDesc(v string) *ProductItemCreate {
 	_c.mutation.SetDesc(v)
 	return _c
 }
 
 // SetNillableDesc sets the "desc" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableDesc(v *string) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableDesc(v *string) *ProductItemCreate {
 	if v != nil {
 		_c.SetDesc(*v)
 	}
@@ -147,13 +146,13 @@ func (_c *ItemCreate) SetNillableDesc(v *string) *ItemCreate {
 }
 
 // SetType sets the "type" field.
-func (_c *ItemCreate) SetType(v string) *ItemCreate {
+func (_c *ProductItemCreate) SetType(v string) *ProductItemCreate {
 	_c.mutation.SetType(v)
 	return _c
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableType(v *string) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableType(v *string) *ProductItemCreate {
 	if v != nil {
 		_c.SetType(*v)
 	}
@@ -161,13 +160,13 @@ func (_c *ItemCreate) SetNillableType(v *string) *ItemCreate {
 }
 
 // SetDuration sets the "duration" field.
-func (_c *ItemCreate) SetDuration(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetDuration(v int64) *ProductItemCreate {
 	_c.mutation.SetDuration(v)
 	return _c
 }
 
 // SetNillableDuration sets the "duration" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableDuration(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableDuration(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetDuration(*v)
 	}
@@ -175,13 +174,13 @@ func (_c *ItemCreate) SetNillableDuration(v *int64) *ItemCreate {
 }
 
 // SetLength sets the "length" field.
-func (_c *ItemCreate) SetLength(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetLength(v int64) *ProductItemCreate {
 	_c.mutation.SetLength(v)
 	return _c
 }
 
 // SetNillableLength sets the "length" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableLength(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableLength(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetLength(*v)
 	}
@@ -189,13 +188,13 @@ func (_c *ItemCreate) SetNillableLength(v *int64) *ItemCreate {
 }
 
 // SetCount sets the "count" field.
-func (_c *ItemCreate) SetCount(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetCount(v int64) *ProductItemCreate {
 	_c.mutation.SetCount(v)
 	return _c
 }
 
 // SetNillableCount sets the "count" field if the given value is not nil.
-func (_c *ItemCreate) SetNillableCount(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillableCount(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetCount(*v)
 	}
@@ -203,13 +202,13 @@ func (_c *ItemCreate) SetNillableCount(v *int64) *ItemCreate {
 }
 
 // SetPrice sets the "price" field.
-func (_c *ItemCreate) SetPrice(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetPrice(v int64) *ProductItemCreate {
 	_c.mutation.SetPrice(v)
 	return _c
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_c *ItemCreate) SetNillablePrice(v *int64) *ItemCreate {
+func (_c *ProductItemCreate) SetNillablePrice(v *int64) *ProductItemCreate {
 	if v != nil {
 		_c.SetPrice(*v)
 	}
@@ -217,45 +216,30 @@ func (_c *ItemCreate) SetNillablePrice(v *int64) *ItemCreate {
 }
 
 // SetTagID sets the "tag_id" field.
-func (_c *ItemCreate) SetTagID(v []int64) *ItemCreate {
+func (_c *ProductItemCreate) SetTagID(v []int64) *ProductItemCreate {
 	_c.mutation.SetTagID(v)
 	return _c
 }
 
 // SetID sets the "id" field.
-func (_c *ItemCreate) SetID(v int64) *ItemCreate {
+func (_c *ProductItemCreate) SetID(v int64) *ProductItemCreate {
 	_c.mutation.SetID(v)
 	return _c
 }
 
-// AddProductIDs adds the "product" edge to the Product entity by IDs.
-func (_c *ItemCreate) AddProductIDs(ids ...int64) *ItemCreate {
-	_c.mutation.AddProductIDs(ids...)
-	return _c
-}
-
-// AddProduct adds the "product" edges to the Product entity.
-func (_c *ItemCreate) AddProduct(v ...*Product) *ItemCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddProductIDs(ids...)
-}
-
-// Mutation returns the ItemMutation object of the builder.
-func (_c *ItemCreate) Mutation() *ItemMutation {
+// Mutation returns the ProductItemMutation object of the builder.
+func (_c *ProductItemCreate) Mutation() *ProductItemMutation {
 	return _c.mutation
 }
 
-// Save creates the Item in the database.
-func (_c *ItemCreate) Save(ctx context.Context) (*Item, error) {
+// Save creates the ProductItem in the database.
+func (_c *ProductItemCreate) Save(ctx context.Context) (*ProductItem, error) {
 	_c.defaults()
 	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (_c *ItemCreate) SaveX(ctx context.Context) *Item {
+func (_c *ProductItemCreate) SaveX(ctx context.Context) *ProductItem {
 	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -264,56 +248,56 @@ func (_c *ItemCreate) SaveX(ctx context.Context) *Item {
 }
 
 // Exec executes the query.
-func (_c *ItemCreate) Exec(ctx context.Context) error {
+func (_c *ProductItemCreate) Exec(ctx context.Context) error {
 	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_c *ItemCreate) ExecX(ctx context.Context) {
+func (_c *ProductItemCreate) ExecX(ctx context.Context) {
 	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (_c *ItemCreate) defaults() {
+func (_c *ProductItemCreate) defaults() {
 	if _, ok := _c.mutation.CreatedAt(); !ok {
-		v := item.DefaultCreatedAt()
+		v := productitem.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
 	}
 	if _, ok := _c.mutation.UpdatedAt(); !ok {
-		v := item.DefaultUpdatedAt()
+		v := productitem.DefaultUpdatedAt()
 		_c.mutation.SetUpdatedAt(v)
 	}
 	if _, ok := _c.mutation.Delete(); !ok {
-		v := item.DefaultDelete
+		v := productitem.DefaultDelete
 		_c.mutation.SetDelete(v)
 	}
 	if _, ok := _c.mutation.CreatedID(); !ok {
-		v := item.DefaultCreatedID
+		v := productitem.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
 	if _, ok := _c.mutation.Status(); !ok {
-		v := item.DefaultStatus
+		v := productitem.DefaultStatus
 		_c.mutation.SetStatus(v)
 	}
 	if _, ok := _c.mutation.Pic(); !ok {
-		v := item.DefaultPic
+		v := productitem.DefaultPic
 		_c.mutation.SetPic(v)
 	}
 	if _, ok := _c.mutation.Desc(); !ok {
-		v := item.DefaultDesc
+		v := productitem.DefaultDesc
 		_c.mutation.SetDesc(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (_c *ItemCreate) check() error {
+func (_c *ProductItemCreate) check() error {
 	return nil
 }
 
-func (_c *ItemCreate) sqlSave(ctx context.Context) (*Item, error) {
+func (_c *ProductItemCreate) sqlSave(ctx context.Context) (*ProductItem, error) {
 	if err := _c.check(); err != nil {
 		return nil, err
 	}
@@ -333,115 +317,99 @@ func (_c *ItemCreate) sqlSave(ctx context.Context) (*Item, error) {
 	return _node, nil
 }
 
-func (_c *ItemCreate) createSpec() (*Item, *sqlgraph.CreateSpec) {
+func (_c *ProductItemCreate) createSpec() (*ProductItem, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Item{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(item.Table, sqlgraph.NewFieldSpec(item.FieldID, field.TypeInt64))
+		_node = &ProductItem{config: _c.config}
+		_spec = sqlgraph.NewCreateSpec(productitem.Table, sqlgraph.NewFieldSpec(productitem.FieldID, field.TypeInt64))
 	)
 	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
-		_spec.SetField(item.FieldCreatedAt, field.TypeTime, value)
+		_spec.SetField(productitem.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := _c.mutation.UpdatedAt(); ok {
-		_spec.SetField(item.FieldUpdatedAt, field.TypeTime, value)
+		_spec.SetField(productitem.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := _c.mutation.Delete(); ok {
-		_spec.SetField(item.FieldDelete, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldDelete, field.TypeInt64, value)
 		_node.Delete = value
 	}
 	if value, ok := _c.mutation.CreatedID(); ok {
-		_spec.SetField(item.FieldCreatedID, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
 	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(item.FieldStatus, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldStatus, field.TypeInt64, value)
 		_node.Status = value
 	}
 	if value, ok := _c.mutation.Name(); ok {
-		_spec.SetField(item.FieldName, field.TypeString, value)
+		_spec.SetField(productitem.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
 	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(item.FieldCode, field.TypeString, value)
+		_spec.SetField(productitem.FieldCode, field.TypeString, value)
 		_node.Code = value
 	}
 	if value, ok := _c.mutation.Pic(); ok {
-		_spec.SetField(item.FieldPic, field.TypeString, value)
+		_spec.SetField(productitem.FieldPic, field.TypeString, value)
 		_node.Pic = value
 	}
 	if value, ok := _c.mutation.Desc(); ok {
-		_spec.SetField(item.FieldDesc, field.TypeString, value)
+		_spec.SetField(productitem.FieldDesc, field.TypeString, value)
 		_node.Desc = value
 	}
 	if value, ok := _c.mutation.GetType(); ok {
-		_spec.SetField(item.FieldType, field.TypeString, value)
+		_spec.SetField(productitem.FieldType, field.TypeString, value)
 		_node.Type = value
 	}
 	if value, ok := _c.mutation.Duration(); ok {
-		_spec.SetField(item.FieldDuration, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldDuration, field.TypeInt64, value)
 		_node.Duration = value
 	}
 	if value, ok := _c.mutation.Length(); ok {
-		_spec.SetField(item.FieldLength, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldLength, field.TypeInt64, value)
 		_node.Length = value
 	}
 	if value, ok := _c.mutation.Count(); ok {
-		_spec.SetField(item.FieldCount, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldCount, field.TypeInt64, value)
 		_node.Count = value
 	}
 	if value, ok := _c.mutation.Price(); ok {
-		_spec.SetField(item.FieldPrice, field.TypeInt64, value)
+		_spec.SetField(productitem.FieldPrice, field.TypeInt64, value)
 		_node.Price = value
 	}
 	if value, ok := _c.mutation.TagID(); ok {
-		_spec.SetField(item.FieldTagID, field.TypeJSON, value)
+		_spec.SetField(productitem.FieldTagID, field.TypeJSON, value)
 		_node.TagID = value
-	}
-	if nodes := _c.mutation.ProductIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2M,
-			Inverse: true,
-			Table:   item.ProductTable,
-			Columns: item.ProductPrimaryKey,
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(product.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
 
-// ItemCreateBulk is the builder for creating many Item entities in bulk.
-type ItemCreateBulk struct {
+// ProductItemCreateBulk is the builder for creating many ProductItem entities in bulk.
+type ProductItemCreateBulk struct {
 	config
 	err      error
-	builders []*ItemCreate
+	builders []*ProductItemCreate
 }
 
-// Save creates the Item entities in the database.
-func (_c *ItemCreateBulk) Save(ctx context.Context) ([]*Item, error) {
+// Save creates the ProductItem entities in the database.
+func (_c *ProductItemCreateBulk) Save(ctx context.Context) ([]*ProductItem, error) {
 	if _c.err != nil {
 		return nil, _c.err
 	}
 	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
-	nodes := make([]*Item, len(_c.builders))
+	nodes := make([]*ProductItem, len(_c.builders))
 	mutators := make([]Mutator, len(_c.builders))
 	for i := range _c.builders {
 		func(i int, root context.Context) {
 			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-				mutation, ok := m.(*ItemMutation)
+				mutation, ok := m.(*ProductItemMutation)
 				if !ok {
 					return nil, fmt.Errorf("unexpected mutation type %T", m)
 				}
@@ -488,7 +456,7 @@ func (_c *ItemCreateBulk) Save(ctx context.Context) ([]*Item, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (_c *ItemCreateBulk) SaveX(ctx context.Context) []*Item {
+func (_c *ProductItemCreateBulk) SaveX(ctx context.Context) []*ProductItem {
 	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
@@ -497,13 +465,13 @@ func (_c *ItemCreateBulk) SaveX(ctx context.Context) []*Item {
 }
 
 // Exec executes the query.
-func (_c *ItemCreateBulk) Exec(ctx context.Context) error {
+func (_c *ProductItemCreateBulk) Exec(ctx context.Context) error {
 	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (_c *ItemCreateBulk) ExecX(ctx context.Context) {
+func (_c *ProductItemCreateBulk) ExecX(ctx context.Context) {
 	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}

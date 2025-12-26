@@ -6,16 +6,15 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
-	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
 
-type Item struct {
+type ProductItem struct {
 	ent.Schema
 }
 
-func (Item) Fields() []ent.Field {
+func (ProductItem) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("name").Comment("名称").Optional(),
 		field.String("code").Comment("标识").Optional(),
@@ -32,28 +31,28 @@ func (Item) Fields() []ent.Field {
 	}
 }
 
-func (Item) Mixin() []ent.Mixin {
+func (ProductItem) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
 		mixins.StatusMixin{},
 	}
 }
 
-func (Item) Edges() []ent.Edge {
+func (ProductItem) Edges() []ent.Edge {
 	return []ent.Edge{
 		//edge.To("fields", Fields.Type),
-		edge.From("product", Product.Type).Ref("items"),
+		//edge.From("product", Product.Type).Ref("items"),
 	}
 }
 
-func (Item) Indexes() []ent.Index {
+func (ProductItem) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
 		index.Fields("name", "code"),
 	}
 }
 
-func (Item) Annotations() []schema.Annotation {
+func (ProductItem) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entsql.Annotation{Table: "product_items"},
 		entsql.WithComments(true),

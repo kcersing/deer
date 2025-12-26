@@ -9,6 +9,73 @@ import (
 )
 
 var (
+	// ProductsColumns holds the columns for the "products" table.
+	ProductsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "商品名"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "标识"},
+		{Name: "pic", Type: field.TypeString, Nullable: true, Comment: "主图"},
+		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "详情"},
+		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "价格"},
+		{Name: "stock", Type: field.TypeInt64, Nullable: true, Comment: "库存"},
+		{Name: "is_sales", Type: field.TypeJSON, Nullable: true, Comment: "销售方式 1会员端 2PC端"},
+		{Name: "sign_sales_at", Type: field.TypeTime, Nullable: true, Comment: "开始售卖时间"},
+		{Name: "end_sales_at", Type: field.TypeTime, Nullable: true, Comment: "结束售卖时间"},
+		{Name: "fields", Type: field.TypeJSON, Nullable: true, Comment: "商品属性"},
+		{Name: "items", Type: field.TypeJSON, Nullable: true, Comment: "商品项"},
+	}
+	// ProductsTable holds the schema information for the "products" table.
+	ProductsTable = &schema.Table{
+		Name:       "products",
+		Columns:    ProductsColumns,
+		PrimaryKey: []*schema.Column{ProductsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "product_id",
+				Unique:  false,
+				Columns: []*schema.Column{ProductsColumns[0]},
+			},
+		},
+	}
+	// ProductFieldsColumns holds the columns for the "product_fields" table.
+	ProductFieldsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "product_item_id", Type: field.TypeInt64, Nullable: true, Comment: "项Id"},
+		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "显示名称"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "标识"},
+		{Name: "type", Type: field.TypeEnum, Nullable: true, Comment: "类型", Enums: []string{"text", "textarea", "select", "radio", "checkbox", "date", "number"}, Default: "text"},
+		{Name: "required", Type: field.TypeInt64, Nullable: true, Comment: "是否必填"},
+		{Name: "order_on", Type: field.TypeInt64, Nullable: true, Comment: "排序"},
+		{Name: "value", Type: field.TypeJSON, Nullable: true, Comment: "值"},
+	}
+	// ProductFieldsTable holds the schema information for the "product_fields" table.
+	ProductFieldsTable = &schema.Table{
+		Name:       "product_fields",
+		Columns:    ProductFieldsColumns,
+		PrimaryKey: []*schema.Column{ProductFieldsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "productfield_id",
+				Unique:  false,
+				Columns: []*schema.Column{ProductFieldsColumns[0]},
+			},
+			{
+				Name:    "productfield_name",
+				Unique:  false,
+				Columns: []*schema.Column{ProductFieldsColumns[7]},
+			},
+		},
+	}
 	// ProductItemsColumns holds the columns for the "product_items" table.
 	ProductItemsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -35,88 +102,33 @@ var (
 		PrimaryKey: []*schema.Column{ProductItemsColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "item_id",
+				Name:    "productitem_id",
 				Unique:  false,
 				Columns: []*schema.Column{ProductItemsColumns[0]},
 			},
 			{
-				Name:    "item_name_code",
+				Name:    "productitem_name_code",
 				Unique:  false,
 				Columns: []*schema.Column{ProductItemsColumns[6], ProductItemsColumns[7]},
 			},
 		},
 	}
-	// ProductColumns holds the columns for the "product" table.
-	ProductColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
-		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
-		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
-		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
-		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
-		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "商品名"},
-		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "标识"},
-		{Name: "pic", Type: field.TypeString, Nullable: true, Comment: "主图"},
-		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "详情"},
-		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "价格"},
-		{Name: "stock", Type: field.TypeInt64, Nullable: true, Comment: "库存"},
-		{Name: "is_sales", Type: field.TypeJSON, Nullable: true, Comment: "销售方式 1会员端 2PC端"},
-		{Name: "sign_sales_at", Type: field.TypeTime, Nullable: true, Comment: "开始售卖时间"},
-		{Name: "end_sales_at", Type: field.TypeTime, Nullable: true, Comment: "结束售卖时间"},
-	}
-	// ProductTable holds the schema information for the "product" table.
-	ProductTable = &schema.Table{
-		Name:       "product",
-		Columns:    ProductColumns,
-		PrimaryKey: []*schema.Column{ProductColumns[0]},
-		Indexes: []*schema.Index{
-			{
-				Name:    "product_id",
-				Unique:  false,
-				Columns: []*schema.Column{ProductColumns[0]},
-			},
-		},
-	}
-	// ProductItemsColumns holds the columns for the "product_items" table.
-	ProductItemsColumns = []*schema.Column{
-		{Name: "product_id", Type: field.TypeInt64},
-		{Name: "item_id", Type: field.TypeInt64},
-	}
-	// ProductItemsTable holds the schema information for the "product_items" table.
-	ProductItemsTable = &schema.Table{
-		Name:       "product_items",
-		Columns:    ProductItemsColumns,
-		PrimaryKey: []*schema.Column{ProductItemsColumns[0], ProductItemsColumns[1]},
-		ForeignKeys: []*schema.ForeignKey{
-			{
-				Symbol:     "product_items_product_id",
-				Columns:    []*schema.Column{ProductItemsColumns[0]},
-				RefColumns: []*schema.Column{ProductColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-			{
-				Symbol:     "product_items_item_id",
-				Columns:    []*schema.Column{ProductItemsColumns[1]},
-				RefColumns: []*schema.Column{ProductItemsColumns[0]},
-				OnDelete:   schema.Cascade,
-			},
-		},
-	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		ProductItemsTable,
-		ProductTable,
+		ProductsTable,
+		ProductFieldsTable,
 		ProductItemsTable,
 	}
 )
 
 func init() {
+	ProductsTable.Annotation = &entsql.Annotation{
+		Table: "products",
+	}
+	ProductFieldsTable.Annotation = &entsql.Annotation{
+		Table: "product_fields",
+	}
 	ProductItemsTable.Annotation = &entsql.Annotation{
 		Table: "product_items",
 	}
-	ProductTable.Annotation = &entsql.Annotation{
-		Table: "product",
-	}
-	ProductItemsTable.ForeignKeys[0].RefTable = ProductTable
-	ProductItemsTable.ForeignKeys[1].RefTable = ProductItemsTable
 }
