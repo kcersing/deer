@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   type ActionType,
   ModalForm, ProForm,
-  ProFormText,ProFormSwitch
+  ProFormText,ProFormSwitch,ProFormTextArea
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';

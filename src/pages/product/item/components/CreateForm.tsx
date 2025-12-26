@@ -7,7 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
-import React, { FC } from 'react';
+import React, { FC,useState } from 'react';
 
 import { Item } from  "@/pages/product/item/service/data";
 import {createItem} from "@/pages/product/item/service/service";
@@ -20,6 +20,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const { reload } = props;
 
   const [messageApi, contextHolder] = message.useMessage();
+
+
+  const [type, setType] = useState("card");
 
 
   const { run, loading } = useRequest(createItem, {
@@ -107,6 +110,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             initialValue="card"
             options={[
               {
+                value: 'course',
+                label: '课',
+              },
+              {
                 value: 'card',
                 label: '卡',
               },
@@ -114,10 +121,11 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             placeholder="请输入"
             width="md"
             name="type"
+            onChange={(value) => {
+              setType(value);
+            }}
             label="类型"
           />
-
-
 
         </ProForm.Group>
         <ProForm.Group>
@@ -136,14 +144,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           <ProFormText
             width="md"
             name="length"
+            hidden={ type=="card"}
             label="单次时长"
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
+
           />
 
           <ProFormText
@@ -151,12 +155,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             name="count"
             label="次数"
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
+          
           />
 
           <ProFormText

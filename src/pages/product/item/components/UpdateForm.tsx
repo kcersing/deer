@@ -141,9 +141,14 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="概略"
             placeholder="请输入"
           />
+
           <ProFormSelect
             initialValue="card"
             options={[
+              {
+                value: 'course',
+                label: '课',
+              },
               {
                 value: 'card',
                 label: '卡',
@@ -152,9 +157,11 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             placeholder="请输入"
             width="md"
             name="type"
+            onChange={(value) => {
+              setType(value);
+            }}
             label="类型"
           />
-
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText
@@ -173,13 +180,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             width="md"
             name="length"
             label="单次时长"
+            hidden={ type=="card"}
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
           />
 
           <ProFormText
@@ -187,12 +189,6 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             name="count"
             label="次数"
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
           />
 
           <ProFormText

@@ -15,7 +15,7 @@ import { errorConfig } from './requestErrorConfig';
 import '@ant-design/v5-patch-for-react-19';
 import { getMenuList} from "@/pages/auth/menu/service/service";
 import {getUser, getRoleMenuAll} from "@/pages/opm/user/service/service";
-import { matchRoutes } from 'umi';
+import { matchRoutes,Navigate } from 'umi';
 import { loopMenuItem} from "@/utils";
 import Login from '@/pages/login';
 
@@ -23,12 +23,6 @@ const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
 
 let extraRoutes: any[] = [];
-
-
-
-
-
-
 
 export function onRouteChange({ location, clientRoutes, routes, action, basename, isFirst }: any) {
   // const access = useAccess();
@@ -57,10 +51,10 @@ export function patchClientRoutes({ routes }) {
     layout: false,
     element: <Login />,
   });
-  // routes.unshift({
-  //     path: '/',
-  //     redirect: '/welcome',
-  //   });
+  routes.unshift({
+    path: '/',
+    element: <Navigate to="/welcome" replace />,
+    });
 }
 
 
