@@ -12,6 +12,8 @@ import (
 	"product/biz/dal/db/ent"
 
 	"product/biz/dal/db/ent/predicate"
+
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 type ItemListService struct {
@@ -33,17 +35,19 @@ func (s *ItemListService) Run(req *product.ItemListReq) (resp *product.ItemListR
 	if req.GetName() != "" {
 		predicates = append(predicates, productitem.NameContains(req.GetName()))
 	}
-	if req.GetStatus() != nil {
+	if len(req.GetStatus()) > 0 {
 		predicates = append(predicates, productitem.StatusIn(req.GetStatus()...))
 	}
 	if req.GetType() != "" {
 		predicates = append(predicates, productitem.TypeEQ(req.GetType()))
 	}
-	all, err := db.Client.ProductItem.Query().Where(predicates...).
+	predicates = append(predicates, productitem.DeleteEQ(0))
+
+	all, err := db.Client.Debug().ProductItem.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(position.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)
-
+	hlog.Info(all)
 	if err != nil {
 		return nil, err
 	}

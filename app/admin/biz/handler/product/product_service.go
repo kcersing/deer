@@ -18,6 +18,7 @@ import (
 	product "gen/hertz_gen/product"
 
 	base1 "gen/kitex_gen/base"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -42,8 +43,8 @@ func CreateProduct(ctx context.Context, c *app.RequestContext) {
 		Price:       req.GetPrice(),
 		Stock:       req.GetStock(),
 		IsSales:     req.GetIsSales(),
-		SignSalesAt: req.GetSignSalesAt(),
-		EndSalesAt:  req.GetEndSalesAt(),
+		SignSalesAt: req.GetSalesAt()[0],
+		EndSalesAt:  req.GetSalesAt()[1],
 	})
 
 	if err != nil {
@@ -75,8 +76,8 @@ func UpdateProduct(ctx context.Context, c *app.RequestContext) {
 		Price:       req.GetPrice(),
 		Stock:       req.GetStock(),
 		IsSales:     req.GetIsSales(),
-		SignSalesAt: req.GetSignSalesAt(),
-		EndSalesAt:  req.GetEndSalesAt(),
+		SignSalesAt: req.GetSalesAt()[0],
+		EndSalesAt:  req.GetSalesAt()[1],
 	})
 
 	if err != nil {
@@ -339,7 +340,7 @@ func GetItem(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")

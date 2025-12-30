@@ -34,3 +34,10 @@ struct Tree  {
      4:optional	string method="" (api.raw = "method")
      5:optional	list<Tree> children={} (api.raw = "children")
 }
+struct Seat{
+    /**编号*/
+    1: optional i64 num = 0 (api.raw = "num" )
+    2: optional i64 x =0 (api.raw = "x" )
+    3: optional i64 y =0 (api.raw = "y" )
+    4: optional i64 status =0 (api.raw = "status" )
+}

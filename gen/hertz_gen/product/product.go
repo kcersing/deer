@@ -22,24 +22,22 @@ type CreateProductReq struct {
 	/**价格 */
 	Price int64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
 	/**库存 */
-	Stock       int64   `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
-	IsSales     []int64 `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
-	SignSalesAt string  `thrift:"signSalesAt,13,optional" form:"signSalesAt" json:"signSalesAt,omitempty" query:"signSalesAt"`
-	EndSalesAt  string  `thrift:"endSalesAt,14,optional" form:"endSalesAt" json:"endSalesAt,omitempty" query:"endSalesAt"`
+	Stock   int64    `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
+	IsSales []int64  `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
+	SalesAt []string `thrift:"salesAt,13,optional,list<string>" form:"salesAt" json:"salesAt,omitempty" query:"salesAt"`
 }
 
 func NewCreateProductReq() *CreateProductReq {
 	return &CreateProductReq{
-		Code:        "",
-		Name:        "",
-		Pic:         "",
-		Desc:        "",
-		Status:      0,
-		Price:       0,
-		Stock:       0,
-		IsSales:     []int64{},
-		SignSalesAt: "",
-		EndSalesAt:  "",
+		Code:    "",
+		Name:    "",
+		Pic:     "",
+		Desc:    "",
+		Status:  0,
+		Price:   0,
+		Stock:   0,
+		IsSales: []int64{},
+		SalesAt: []string{},
 	}
 }
 
@@ -52,8 +50,7 @@ func (p *CreateProductReq) InitDefault() {
 	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
-	p.SignSalesAt = ""
-	p.EndSalesAt = ""
+	p.SalesAt = []string{}
 }
 
 var CreateProductReq_Code_DEFAULT string = ""
@@ -128,22 +125,13 @@ func (p *CreateProductReq) GetIsSales() (v []int64) {
 	return p.IsSales
 }
 
-var CreateProductReq_SignSalesAt_DEFAULT string = ""
+var CreateProductReq_SalesAt_DEFAULT []string = []string{}
 
-func (p *CreateProductReq) GetSignSalesAt() (v string) {
-	if !p.IsSetSignSalesAt() {
-		return CreateProductReq_SignSalesAt_DEFAULT
+func (p *CreateProductReq) GetSalesAt() (v []string) {
+	if !p.IsSetSalesAt() {
+		return CreateProductReq_SalesAt_DEFAULT
 	}
-	return p.SignSalesAt
-}
-
-var CreateProductReq_EndSalesAt_DEFAULT string = ""
-
-func (p *CreateProductReq) GetEndSalesAt() (v string) {
-	if !p.IsSetEndSalesAt() {
-		return CreateProductReq_EndSalesAt_DEFAULT
-	}
-	return p.EndSalesAt
+	return p.SalesAt
 }
 
 var fieldIDToName_CreateProductReq = map[int16]string{
@@ -155,8 +143,7 @@ var fieldIDToName_CreateProductReq = map[int16]string{
 	6:  "price",
 	7:  "stock",
 	10: "isSales",
-	13: "signSalesAt",
-	14: "endSalesAt",
+	13: "salesAt",
 }
 
 func (p *CreateProductReq) IsSetCode() bool {
@@ -191,12 +178,8 @@ func (p *CreateProductReq) IsSetIsSales() bool {
 	return p.IsSales != nil
 }
 
-func (p *CreateProductReq) IsSetSignSalesAt() bool {
-	return p.SignSalesAt != CreateProductReq_SignSalesAt_DEFAULT
-}
-
-func (p *CreateProductReq) IsSetEndSalesAt() bool {
-	return p.EndSalesAt != CreateProductReq_EndSalesAt_DEFAULT
+func (p *CreateProductReq) IsSetSalesAt() bool {
+	return p.SalesAt != nil
 }
 
 func (p *CreateProductReq) Read(iprot thrift.TProtocol) (err error) {
@@ -283,16 +266,8 @@ func (p *CreateProductReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 13:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField13(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 14:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField14(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -428,25 +403,26 @@ func (p *CreateProductReq) ReadField10(iprot thrift.TProtocol) error {
 	return nil
 }
 func (p *CreateProductReq) ReadField13(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
 		return err
-	} else {
-		_field = v
 	}
-	p.SignSalesAt = _field
-	return nil
-}
-func (p *CreateProductReq) ReadField14(iprot thrift.TProtocol) error {
+	_field := make([]string, 0, size)
+	for i := 0; i < size; i++ {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
+		var _elem string
+		if v, err := iprot.ReadString(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
 	}
-	p.EndSalesAt = _field
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.SalesAt = _field
 	return nil
 }
 
@@ -490,10 +466,6 @@ func (p *CreateProductReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField13(oprot); err != nil {
 			fieldId = 13
-			goto WriteFieldError
-		}
-		if err = p.writeField14(oprot); err != nil {
-			fieldId = 14
 			goto WriteFieldError
 		}
 	}
@@ -675,11 +647,19 @@ WriteFieldEndError:
 }
 
 func (p *CreateProductReq) writeField13(oprot thrift.TProtocol) (err error) {
-	if p.IsSetSignSalesAt() {
-		if err = oprot.WriteFieldBegin("signSalesAt", thrift.STRING, 13); err != nil {
+	if p.IsSetSalesAt() {
+		if err = oprot.WriteFieldBegin("salesAt", thrift.LIST, 13); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.SignSalesAt); err != nil {
+		if err := oprot.WriteListBegin(thrift.STRING, len(p.SalesAt)); err != nil {
+			return err
+		}
+		for _, v := range p.SalesAt {
+			if err := oprot.WriteString(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -691,25 +671,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
-}
-
-func (p *CreateProductReq) writeField14(oprot thrift.TProtocol) (err error) {
-	if p.IsSetEndSalesAt() {
-		if err = oprot.WriteFieldBegin("endSalesAt", thrift.STRING, 14); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(p.EndSalesAt); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 14 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 14 end error: ", p), err)
 }
 
 func (p *CreateProductReq) String() string {
@@ -734,25 +695,23 @@ type UpdateProductReq struct {
 	/**价格 */
 	Price int64 `thrift:"price,6,optional" form:"price" json:"price,omitempty" query:"price"`
 	/**库存 */
-	Stock       int64   `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
-	IsSales     []int64 `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
-	SignSalesAt string  `thrift:"signSalesAt,13,optional" form:"signSalesAt" json:"signSalesAt,omitempty" query:"signSalesAt"`
-	EndSalesAt  string  `thrift:"endSalesAt,14,optional" form:"endSalesAt" json:"endSalesAt,omitempty" query:"endSalesAt"`
+	Stock   int64    `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
+	IsSales []int64  `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
+	SalesAt []string `thrift:"salesAt,13,optional,list<string>" form:"salesAt" json:"salesAt,omitempty" query:"salesAt"`
 }
 
 func NewUpdateProductReq() *UpdateProductReq {
 	return &UpdateProductReq{
-		ID:          0,
-		Name:        "",
-		Pic:         "",
-		Desc:        "",
-		Status:      0,
-		Code:        "",
-		Price:       0,
-		Stock:       0,
-		IsSales:     []int64{},
-		SignSalesAt: "",
-		EndSalesAt:  "",
+		ID:      0,
+		Name:    "",
+		Pic:     "",
+		Desc:    "",
+		Status:  0,
+		Code:    "",
+		Price:   0,
+		Stock:   0,
+		IsSales: []int64{},
+		SalesAt: []string{},
 	}
 }
 
@@ -766,8 +725,7 @@ func (p *UpdateProductReq) InitDefault() {
 	p.Price = 0
 	p.Stock = 0
 	p.IsSales = []int64{}
-	p.SignSalesAt = ""
-	p.EndSalesAt = ""
+	p.SalesAt = []string{}
 }
 
 var UpdateProductReq_ID_DEFAULT int64 = 0
@@ -851,22 +809,13 @@ func (p *UpdateProductReq) GetIsSales() (v []int64) {
 	return p.IsSales
 }
 
-var UpdateProductReq_SignSalesAt_DEFAULT string = ""
+var UpdateProductReq_SalesAt_DEFAULT []string = []string{}
 
-func (p *UpdateProductReq) GetSignSalesAt() (v string) {
-	if !p.IsSetSignSalesAt() {
-		return UpdateProductReq_SignSalesAt_DEFAULT
+func (p *UpdateProductReq) GetSalesAt() (v []string) {
+	if !p.IsSetSalesAt() {
+		return UpdateProductReq_SalesAt_DEFAULT
 	}
-	return p.SignSalesAt
-}
-
-var UpdateProductReq_EndSalesAt_DEFAULT string = ""
-
-func (p *UpdateProductReq) GetEndSalesAt() (v string) {
-	if !p.IsSetEndSalesAt() {
-		return UpdateProductReq_EndSalesAt_DEFAULT
-	}
-	return p.EndSalesAt
+	return p.SalesAt
 }
 
 var fieldIDToName_UpdateProductReq = map[int16]string{
@@ -879,8 +828,7 @@ var fieldIDToName_UpdateProductReq = map[int16]string{
 	6:  "price",
 	7:  "stock",
 	10: "isSales",
-	13: "signSalesAt",
-	14: "endSalesAt",
+	13: "salesAt",
 }
 
 func (p *UpdateProductReq) IsSetID() bool {
@@ -919,12 +867,8 @@ func (p *UpdateProductReq) IsSetIsSales() bool {
 	return p.IsSales != nil
 }
 
-func (p *UpdateProductReq) IsSetSignSalesAt() bool {
-	return p.SignSalesAt != UpdateProductReq_SignSalesAt_DEFAULT
-}
-
-func (p *UpdateProductReq) IsSetEndSalesAt() bool {
-	return p.EndSalesAt != UpdateProductReq_EndSalesAt_DEFAULT
+func (p *UpdateProductReq) IsSetSalesAt() bool {
+	return p.SalesAt != nil
 }
 
 func (p *UpdateProductReq) Read(iprot thrift.TProtocol) (err error) {
@@ -1019,16 +963,8 @@ func (p *UpdateProductReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 13:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField13(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 14:
-			if fieldTypeId == thrift.STRING {
-				if err = p.ReadField14(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1175,25 +1111,26 @@ func (p *UpdateProductReq) ReadField10(iprot thrift.TProtocol) error {
 	return nil
 }
 func (p *UpdateProductReq) ReadField13(iprot thrift.TProtocol) error {
-
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
 		return err
-	} else {
-		_field = v
 	}
-	p.SignSalesAt = _field
-	return nil
-}
-func (p *UpdateProductReq) ReadField14(iprot thrift.TProtocol) error {
+	_field := make([]string, 0, size)
+	for i := 0; i < size; i++ {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
-		return err
-	} else {
-		_field = v
+		var _elem string
+		if v, err := iprot.ReadString(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
 	}
-	p.EndSalesAt = _field
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.SalesAt = _field
 	return nil
 }
 
@@ -1241,10 +1178,6 @@ func (p *UpdateProductReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField13(oprot); err != nil {
 			fieldId = 13
-			goto WriteFieldError
-		}
-		if err = p.writeField14(oprot); err != nil {
-			fieldId = 14
 			goto WriteFieldError
 		}
 	}
@@ -1445,11 +1378,19 @@ WriteFieldEndError:
 }
 
 func (p *UpdateProductReq) writeField13(oprot thrift.TProtocol) (err error) {
-	if p.IsSetSignSalesAt() {
-		if err = oprot.WriteFieldBegin("signSalesAt", thrift.STRING, 13); err != nil {
+	if p.IsSetSalesAt() {
+		if err = oprot.WriteFieldBegin("salesAt", thrift.LIST, 13); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.SignSalesAt); err != nil {
+		if err := oprot.WriteListBegin(thrift.STRING, len(p.SalesAt)); err != nil {
+			return err
+		}
+		for _, v := range p.SalesAt {
+			if err := oprot.WriteString(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1461,25 +1402,6 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
-}
-
-func (p *UpdateProductReq) writeField14(oprot thrift.TProtocol) (err error) {
-	if p.IsSetEndSalesAt() {
-		if err = oprot.WriteFieldBegin("endSalesAt", thrift.STRING, 14); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteString(p.EndSalesAt); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 14 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 14 end error: ", p), err)
 }
 
 func (p *UpdateProductReq) String() string {

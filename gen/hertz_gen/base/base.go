@@ -1701,3 +1701,335 @@ func (p *Tree) String() string {
 	return fmt.Sprintf("Tree(%+v)", *p)
 
 }
+
+type Seat struct {
+	/**编号*/
+	Num    int64 `thrift:"num,1,optional" form:"num" json:"num,omitempty" query:"num"`
+	X      int64 `thrift:"x,2,optional" form:"x" json:"x,omitempty" query:"x"`
+	Y      int64 `thrift:"y,3,optional" form:"y" json:"y,omitempty" query:"y"`
+	Status int64 `thrift:"status,4,optional" form:"status" json:"status,omitempty" query:"status"`
+}
+
+func NewSeat() *Seat {
+	return &Seat{
+		Num:    0,
+		X:      0,
+		Y:      0,
+		Status: 0,
+	}
+}
+
+func (p *Seat) InitDefault() {
+	p.Num = 0
+	p.X = 0
+	p.Y = 0
+	p.Status = 0
+}
+
+var Seat_Num_DEFAULT int64 = 0
+
+func (p *Seat) GetNum() (v int64) {
+	if !p.IsSetNum() {
+		return Seat_Num_DEFAULT
+	}
+	return p.Num
+}
+
+var Seat_X_DEFAULT int64 = 0
+
+func (p *Seat) GetX() (v int64) {
+	if !p.IsSetX() {
+		return Seat_X_DEFAULT
+	}
+	return p.X
+}
+
+var Seat_Y_DEFAULT int64 = 0
+
+func (p *Seat) GetY() (v int64) {
+	if !p.IsSetY() {
+		return Seat_Y_DEFAULT
+	}
+	return p.Y
+}
+
+var Seat_Status_DEFAULT int64 = 0
+
+func (p *Seat) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Seat_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var fieldIDToName_Seat = map[int16]string{
+	1: "num",
+	2: "x",
+	3: "y",
+	4: "status",
+}
+
+func (p *Seat) IsSetNum() bool {
+	return p.Num != Seat_Num_DEFAULT
+}
+
+func (p *Seat) IsSetX() bool {
+	return p.X != Seat_X_DEFAULT
+}
+
+func (p *Seat) IsSetY() bool {
+	return p.Y != Seat_Y_DEFAULT
+}
+
+func (p *Seat) IsSetStatus() bool {
+	return p.Status != Seat_Status_DEFAULT
+}
+
+func (p *Seat) Read(iprot thrift.TProtocol) (err error) {
+
+	var fieldTypeId thrift.TType
+	var fieldId int16
+
+	if _, err = iprot.ReadStructBegin(); err != nil {
+		goto ReadStructBeginError
+	}
+
+	for {
+		_, fieldTypeId, fieldId, err = iprot.ReadFieldBegin()
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField1(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 2:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField4(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		default:
+			if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		}
+		if err = iprot.ReadFieldEnd(); err != nil {
+			goto ReadFieldEndError
+		}
+	}
+	if err = iprot.ReadStructEnd(); err != nil {
+		goto ReadStructEndError
+	}
+
+	return nil
+ReadStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct begin error: ", p), err)
+ReadFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_Seat[fieldId]), err)
+SkipFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+
+ReadFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read field end error", p), err)
+ReadStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T read struct end error: ", p), err)
+}
+
+func (p *Seat) ReadField1(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Num = _field
+	return nil
+}
+func (p *Seat) ReadField2(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.X = _field
+	return nil
+}
+func (p *Seat) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Y = _field
+	return nil
+}
+func (p *Seat) ReadField4(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
+
+func (p *Seat) Write(oprot thrift.TProtocol) (err error) {
+	var fieldId int16
+	if err = oprot.WriteStructBegin("Seat"); err != nil {
+		goto WriteStructBeginError
+	}
+	if p != nil {
+		if err = p.writeField1(oprot); err != nil {
+			fieldId = 1
+			goto WriteFieldError
+		}
+		if err = p.writeField2(oprot); err != nil {
+			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
+			goto WriteFieldError
+		}
+	}
+	if err = oprot.WriteFieldStop(); err != nil {
+		goto WriteFieldStopError
+	}
+	if err = oprot.WriteStructEnd(); err != nil {
+		goto WriteStructEndError
+	}
+	return nil
+WriteStructBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct begin error: ", p), err)
+WriteFieldError:
+	return thrift.PrependError(fmt.Sprintf("%T write field %d error: ", p, fieldId), err)
+WriteFieldStopError:
+	return thrift.PrependError(fmt.Sprintf("%T write field stop error: ", p), err)
+WriteStructEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write struct end error: ", p), err)
+}
+
+func (p *Seat) writeField1(oprot thrift.TProtocol) (err error) {
+	if p.IsSetNum() {
+		if err = oprot.WriteFieldBegin("num", thrift.I64, 1); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Num); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 1 end error: ", p), err)
+}
+
+func (p *Seat) writeField2(oprot thrift.TProtocol) (err error) {
+	if p.IsSetX() {
+		if err = oprot.WriteFieldBegin("x", thrift.I64, 2); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.X); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *Seat) writeField3(oprot thrift.TProtocol) (err error) {
+	if p.IsSetY() {
+		if err = oprot.WriteFieldBegin("y", thrift.I64, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Y); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *Seat) writeField4(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 4); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
+}
+
+func (p *Seat) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Seat(%+v)", *p)
+
+}

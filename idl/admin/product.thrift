@@ -17,8 +17,8 @@ struct CreateProductReq{
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")
-    13: optional string signSalesAt = "" (api.raw = "signSalesAt")
-    14: optional string endSalesAt = "" (api.raw = "endSalesAt")
+ 13: optional list<string> salesAt = [] (api.raw = "salesAt")
+
 }
 struct UpdateProductReq{
    1:optional i64 id=0 (api.raw = "id")
@@ -40,10 +40,7 @@ struct UpdateProductReq{
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
     10: optional list<i64> isSales=0 (api.raw = "isSales")
-    13: optional string signSalesAt = "" (api.raw = "signSalesAt")
-    14: optional string endSalesAt = "" (api.raw = "endSalesAt")
-
-
+    13: optional list<string> salesAt = [] (api.raw = "salesAt")
 }
 struct GetProductListReq{
     1:optional i64 page=1
