@@ -34,7 +34,7 @@ export async function deleteProduct(options?: { [key: string]: any }) {
   });
 }
 /** 获取product  POST /service/product*/
-export async function getProduct() {
+export async function getProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product', {
     method: 'POST', headers: {
       ...headers,
@@ -43,7 +43,7 @@ export async function getProduct() {
 }
 
 /** online product  POST /service/product/online */
-export async function onlineProduct() {
+export async function onlineProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/online', {
     method: 'POST', headers: {
       ...headers,
@@ -51,7 +51,7 @@ export async function onlineProduct() {
   });
 }
 /**  offline product  POST /service/product/offline */
-export async function offlineProduct() {
+export async function offlineProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/offline', {
     method: 'POST', headers: {
       ...headers,
@@ -59,7 +59,7 @@ export async function offlineProduct() {
   });
 }
 /**  search product  POST /service/product/search */
-export async function searchProduct() {
+export async function searchProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/search', {
     method: 'POST', headers: {
       ...headers,

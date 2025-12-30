@@ -79,7 +79,7 @@ export const errorConfig: RequestConfig = {
         message.error('没有响应！请重试。');
       } else {
         // 发送请求时出了点问题
-        message.error('请求出错，请重试。');
+        // message.error('请求出错，请重试。');
       }
     },
   },
@@ -99,7 +99,8 @@ export const errorConfig: RequestConfig = {
     (response) => {
       // 拦截响应数据，进行个性化处理
       const { data } = response as unknown as ResponseStructure;
-        if (data.code ==10002){
+        if (data.code == 10002){
+          message.error('登录超时，请重新登录。');
           history.push('/login');
         }
       // if (data?.code!==0) {

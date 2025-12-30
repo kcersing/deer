@@ -38,11 +38,16 @@ export async function deleteItem(options?: { [key: string]: any }) {
   });
 }
 /** 获取item  POST /service/item*/
-export async function getItem() {
+export async function getItem(options?: { [key: string]: any }) {
+console.log(options)
   return request<TreeResp>('/service/item', {
     method: 'POST', headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** item 列表 POST /service/item/list*/
@@ -56,7 +61,8 @@ export async function getItemList(params: {
   return request<ItemListResp>('/service/item/list', {
     method: 'POST', headers: {
       ...headers,
-    }, data: {
+    },
+    data: {
       page: params.current, ...params,
     }, ...(options || {}),
   });

@@ -1,9 +1,14 @@
 import { PlusOutlined } from '@ant-design/icons';
 import {
   type ActionType,
-  ModalForm, ProForm,ProFormSelect,
+  ModalForm,
+  ProForm,
+  ProFormSelect,
   ProFormText,
-  ProFormTextArea, ProFormUploadButton,ProFormSwitch,
+  ProFormDateRangePicker,
+  ProFormTextArea,
+  ProFormUploadButton,ProFormDigit,
+  ProFormSwitch,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
@@ -46,7 +51,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             新建
           </Button>
         }
-        width="600px"
+       width="900px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;
@@ -97,15 +102,8 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
 
-
-          <ProFormTextArea
-            width="md"
-            name="desc"
-            label="概略"
-            placeholder="请输入"
-          />
-
-
+          </ProForm.Group>
+         <ProForm.Group>
           <ProFormSelect
             initialValue="card"
             options={[
@@ -128,9 +126,13 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           />
 
         </ProForm.Group>
+
         <ProForm.Group>
-          <ProFormText
+          <ProFormDigit
             width="md"
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:type=="card"?"天":"节/天" }}
             name="duration"
             label="时长"
             placeholder="请输入"
@@ -141,7 +143,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             ]}
           />
-          <ProFormText
+          <ProFormDigit
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:"分钟"}}
             width="md"
             name="length"
             hidden={ type=="card"}
@@ -150,16 +155,22 @@ const CreateForm: FC<CreateFormProps> = (props) => {
 
           />
 
-          <ProFormText
+          <ProFormDigit
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:"次"}}
             width="md"
             name="count"
             label="次数"
             placeholder="请输入"
-          
+
           />
 
-          <ProFormText
+          <ProFormDigit
+            min={1}
+            max={10}
             width="md"
+            fieldProps={{ suffix:"元"}}
             name="price"
             label="价格"
             placeholder="请输入"
@@ -171,28 +182,37 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
         </ProForm.Group>
+        {/*<ProForm.Group>*/}
+        {/*  <ProFormText*/}
+        {/*    width="md"*/}
+        {/*    name="tagId"*/}
+        {/*    label="标签"*/}
+        {/*    placeholder="请输入"*/}
+        {/*    rules={[*/}
+        {/*      {*/}
+        {/*        required: true,*/}
+        {/*        message: '不能为空',*/}
+        {/*      },*/}
+        {/*    ]}*/}
+        {/*  />*/}
+        {/*</ProForm.Group>*/}
         <ProForm.Group>
-          <ProFormText
+          <ProFormTextArea
             width="md"
-            name="tagId"
-            label="标签"
+            name="desc"
+            label="概略"
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSwitch
             name="status"
             width="md"
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
-          />
 
+          />
         </ProForm.Group>
       </ModalForm>
     </>
