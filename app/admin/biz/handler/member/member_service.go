@@ -39,7 +39,7 @@ func CreateMember(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -138,7 +138,7 @@ func GetMemberList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")

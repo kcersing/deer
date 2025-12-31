@@ -3,7 +3,6 @@ include "../base/base.thrift"
 include "../base/product.thrift"
 
 struct CreateItemReq {
-
     /**名称 */
     2:optional string name=""
     /**主图 */
@@ -67,7 +66,8 @@ struct CreateProductReq {
     6:optional i64 price=0 
     /**库存 */
     7:optional i64 stock=0
-    10: optional list<i64> isSales=0 
+    9: optional list<i64> items={}
+    10: optional list<i64> isSales={}
     13: optional string signSalesAt = "" 
     14: optional string endSalesAt = "" 
 
@@ -92,7 +92,8 @@ struct UpdateProductReq {
     6:optional i64 price=0 
     /**库存 */
     7:optional i64 stock=0
-    10: optional list<i64> isSales=0 
+    9: optional list<i64> items={}
+    10: optional list<i64> isSales={}
     13: optional string signSalesAt = "" 
     14: optional string endSalesAt = "" 
 

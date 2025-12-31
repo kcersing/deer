@@ -42,6 +42,7 @@ func (s *UpdateProductService) Run(req *product.UpdateProductReq) (resp *product
 		SetEndSalesAt(endSalesAt).
 		SetCreatedID(req.GetCreatedId()).
 		SetStatus(req.GetStatus()).
+		SetItems(req.GetItems()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

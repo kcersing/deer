@@ -476,3 +476,104 @@ var fieldIDToName_Tree = map[int16]string{
 	4: "method",
 	5: "children",
 }
+
+type Seat struct {
+	Num    int64 `thrift:"num,1,optional" frugal:"1,optional,i64" json:"num,omitempty"`
+	X      int64 `thrift:"x,2,optional" frugal:"2,optional,i64" json:"x,omitempty"`
+	Y      int64 `thrift:"y,3,optional" frugal:"3,optional,i64" json:"y,omitempty"`
+	Status int64 `thrift:"status,4,optional" frugal:"4,optional,i64" json:"status,omitempty"`
+}
+
+func NewSeat() *Seat {
+	return &Seat{
+		Num:    0,
+		X:      0,
+		Y:      0,
+		Status: 0,
+	}
+}
+
+func (p *Seat) InitDefault() {
+	p.Num = 0
+	p.X = 0
+	p.Y = 0
+	p.Status = 0
+}
+
+var Seat_Num_DEFAULT int64 = 0
+
+func (p *Seat) GetNum() (v int64) {
+	if !p.IsSetNum() {
+		return Seat_Num_DEFAULT
+	}
+	return p.Num
+}
+
+var Seat_X_DEFAULT int64 = 0
+
+func (p *Seat) GetX() (v int64) {
+	if !p.IsSetX() {
+		return Seat_X_DEFAULT
+	}
+	return p.X
+}
+
+var Seat_Y_DEFAULT int64 = 0
+
+func (p *Seat) GetY() (v int64) {
+	if !p.IsSetY() {
+		return Seat_Y_DEFAULT
+	}
+	return p.Y
+}
+
+var Seat_Status_DEFAULT int64 = 0
+
+func (p *Seat) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Seat_Status_DEFAULT
+	}
+	return p.Status
+}
+func (p *Seat) SetNum(val int64) {
+	p.Num = val
+}
+func (p *Seat) SetX(val int64) {
+	p.X = val
+}
+func (p *Seat) SetY(val int64) {
+	p.Y = val
+}
+func (p *Seat) SetStatus(val int64) {
+	p.Status = val
+}
+
+func (p *Seat) IsSetNum() bool {
+	return p.Num != Seat_Num_DEFAULT
+}
+
+func (p *Seat) IsSetX() bool {
+	return p.X != Seat_X_DEFAULT
+}
+
+func (p *Seat) IsSetY() bool {
+	return p.Y != Seat_Y_DEFAULT
+}
+
+func (p *Seat) IsSetStatus() bool {
+	return p.Status != Seat_Status_DEFAULT
+}
+
+func (p *Seat) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Seat(%+v)", *p)
+}
+
+var fieldIDToName_Seat = map[int16]string{
+	1: "num",
+	2: "x",
+	3: "y",
+	4: "status",
+}

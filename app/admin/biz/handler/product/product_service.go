@@ -45,10 +45,11 @@ func CreateProduct(ctx context.Context, c *app.RequestContext) {
 		IsSales:     req.GetIsSales(),
 		SignSalesAt: req.GetSalesAt()[0],
 		EndSalesAt:  req.GetSalesAt()[1],
+		Items:       req.GetItems(),
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -78,10 +79,11 @@ func UpdateProduct(ctx context.Context, c *app.RequestContext) {
 		IsSales:     req.GetIsSales(),
 		SignSalesAt: req.GetSalesAt()[0],
 		EndSalesAt:  req.GetSalesAt()[1],
+		Items:       req.GetItems(),
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -164,7 +166,7 @@ func GetProduct(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -204,7 +206,7 @@ func GetProductList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -237,7 +239,7 @@ func CreateItem(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -271,7 +273,7 @@ func UpdateItem(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -317,7 +319,7 @@ func GetItemList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")

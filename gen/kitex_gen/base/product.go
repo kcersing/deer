@@ -13,6 +13,7 @@ type Product struct {
 	Desc        string  `thrift:"desc,4,optional" frugal:"4,optional,string" json:"desc,omitempty"`
 	Status      int64   `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
 	StatusName  string  `thrift:"statusName,18,optional" frugal:"18,optional,string" json:"statusName,omitempty"`
+	Code        string  `thrift:"code,19,optional" frugal:"19,optional,string" json:"code,omitempty"`
 	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
 	CreatedName string  `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
 	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
@@ -33,6 +34,7 @@ func NewProduct() *Product {
 		Desc:        "",
 		Status:      0,
 		StatusName:  "",
+		Code:        "",
 		CreatedId:   0,
 		CreatedName: "",
 		CreatedAt:   "",
@@ -53,6 +55,7 @@ func (p *Product) InitDefault() {
 	p.Desc = ""
 	p.Status = 0
 	p.StatusName = ""
+	p.Code = ""
 	p.CreatedId = 0
 	p.CreatedName = ""
 	p.CreatedAt = ""
@@ -117,6 +120,15 @@ func (p *Product) GetStatusName() (v string) {
 		return Product_StatusName_DEFAULT
 	}
 	return p.StatusName
+}
+
+var Product_Code_DEFAULT string = ""
+
+func (p *Product) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return Product_Code_DEFAULT
+	}
+	return p.Code
 }
 
 var Product_CreatedId_DEFAULT int64 = 0
@@ -226,6 +238,9 @@ func (p *Product) SetStatus(val int64) {
 func (p *Product) SetStatusName(val string) {
 	p.StatusName = val
 }
+func (p *Product) SetCode(val string) {
+	p.Code = val
+}
 func (p *Product) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
@@ -279,6 +294,10 @@ func (p *Product) IsSetStatus() bool {
 
 func (p *Product) IsSetStatusName() bool {
 	return p.StatusName != Product_StatusName_DEFAULT
+}
+
+func (p *Product) IsSetCode() bool {
+	return p.Code != Product_Code_DEFAULT
 }
 
 func (p *Product) IsSetCreatedId() bool {
@@ -335,6 +354,7 @@ var fieldIDToName_Product = map[int16]string{
 	4:  "desc",
 	8:  "status",
 	18: "statusName",
+	19: "code",
 	20: "createdId",
 	21: "createdName",
 	16: "createdAt",
@@ -356,8 +376,6 @@ type Item struct {
 	Length      int64   `thrift:"length,6,optional" frugal:"6,optional,i64" json:"length,omitempty"`
 	Count       int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
 	Type        string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
-	ActiveAt    string  `thrift:"activeAt,9,optional" frugal:"9,optional,string" json:"activeAt,omitempty"`
-	ExpiredAt   string  `thrift:"expiredAt,10,optional" frugal:"10,optional,string" json:"expiredAt,omitempty"`
 	TagId       []int64 `thrift:"tagId,11,optional" frugal:"11,optional,list<i64>" json:"tagId,omitempty"`
 	Price       int64   `thrift:"price,12,optional" frugal:"12,optional,i64" json:"price,omitempty"`
 	Code        string  `thrift:"code,13,optional" frugal:"13,optional,string" json:"code,omitempty"`
@@ -378,8 +396,6 @@ func NewItem() *Item {
 		Length:      0,
 		Count:       0,
 		Type:        "",
-		ActiveAt:    "",
-		ExpiredAt:   "",
 		TagId:       []int64{},
 		Price:       0,
 		Code:        "",
@@ -400,8 +416,6 @@ func (p *Item) InitDefault() {
 	p.Length = 0
 	p.Count = 0
 	p.Type = ""
-	p.ActiveAt = ""
-	p.ExpiredAt = ""
 	p.TagId = []int64{}
 	p.Price = 0
 	p.Code = ""
@@ -482,24 +496,6 @@ func (p *Item) GetType() (v string) {
 		return Item_Type_DEFAULT
 	}
 	return p.Type
-}
-
-var Item_ActiveAt_DEFAULT string = ""
-
-func (p *Item) GetActiveAt() (v string) {
-	if !p.IsSetActiveAt() {
-		return Item_ActiveAt_DEFAULT
-	}
-	return p.ActiveAt
-}
-
-var Item_ExpiredAt_DEFAULT string = ""
-
-func (p *Item) GetExpiredAt() (v string) {
-	if !p.IsSetExpiredAt() {
-		return Item_ExpiredAt_DEFAULT
-	}
-	return p.ExpiredAt
 }
 
 var Item_TagId_DEFAULT []int64 = []int64{}
@@ -597,12 +593,6 @@ func (p *Item) SetCount(val int64) {
 func (p *Item) SetType(val string) {
 	p.Type = val
 }
-func (p *Item) SetActiveAt(val string) {
-	p.ActiveAt = val
-}
-func (p *Item) SetExpiredAt(val string) {
-	p.ExpiredAt = val
-}
 func (p *Item) SetTagId(val []int64) {
 	p.TagId = val
 }
@@ -660,14 +650,6 @@ func (p *Item) IsSetType() bool {
 	return p.Type != Item_Type_DEFAULT
 }
 
-func (p *Item) IsSetActiveAt() bool {
-	return p.ActiveAt != Item_ActiveAt_DEFAULT
-}
-
-func (p *Item) IsSetExpiredAt() bool {
-	return p.ExpiredAt != Item_ExpiredAt_DEFAULT
-}
-
 func (p *Item) IsSetTagId() bool {
 	return p.TagId != nil
 }
@@ -716,8 +698,6 @@ var fieldIDToName_Item = map[int16]string{
 	6:  "length",
 	7:  "count",
 	8:  "type",
-	9:  "activeAt",
-	10: "expiredAt",
 	11: "tagId",
 	12: "price",
 	13: "code",

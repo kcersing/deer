@@ -62,7 +62,7 @@ func CreateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -92,7 +92,7 @@ func UpdateFollowUpPlan(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -137,7 +137,7 @@ func FollowUpPlanList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -191,7 +191,7 @@ func CreateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -222,7 +222,7 @@ func UpdateFollowUpRecord(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -268,7 +268,7 @@ func FollowUpRecordList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -320,7 +320,7 @@ func CreateOpportunities(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -350,7 +350,7 @@ func UpdateOpportunities(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")
@@ -396,7 +396,7 @@ func OpportunitiesList(ctx context.Context, c *app.RequestContext) {
 	})
 
 	if err != nil {
-		utils.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
 	utils.SendResponse(c, errno.Success, resp.Data, 0, "")

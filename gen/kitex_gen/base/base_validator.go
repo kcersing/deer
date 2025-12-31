@@ -42,3 +42,6 @@ func (p *CheckAccountReq) IsValid() error {
 func (p *Tree) IsValid() error {
 	return nil
 }
+func (p *Seat) IsValid() error {
+	return nil
+}

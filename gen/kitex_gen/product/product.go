@@ -559,6 +559,7 @@ type CreateProductReq struct {
 	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
 	Price       int64   `thrift:"price,6,optional" frugal:"6,optional,i64" json:"price,omitempty"`
 	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
+	Items       []int64 `thrift:"items,9,optional" frugal:"9,optional,list<i64>" json:"items,omitempty"`
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
 	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
@@ -574,6 +575,7 @@ func NewCreateProductReq() *CreateProductReq {
 		CreatedId:   0,
 		Price:       0,
 		Stock:       0,
+		Items:       []int64{},
 		IsSales:     []int64{},
 		SignSalesAt: "",
 		EndSalesAt:  "",
@@ -589,6 +591,7 @@ func (p *CreateProductReq) InitDefault() {
 	p.CreatedId = 0
 	p.Price = 0
 	p.Stock = 0
+	p.Items = []int64{}
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
 	p.EndSalesAt = ""
@@ -666,6 +669,15 @@ func (p *CreateProductReq) GetStock() (v int64) {
 	return p.Stock
 }
 
+var CreateProductReq_Items_DEFAULT []int64 = []int64{}
+
+func (p *CreateProductReq) GetItems() (v []int64) {
+	if !p.IsSetItems() {
+		return CreateProductReq_Items_DEFAULT
+	}
+	return p.Items
+}
+
 var CreateProductReq_IsSales_DEFAULT []int64 = []int64{}
 
 func (p *CreateProductReq) GetIsSales() (v []int64) {
@@ -716,6 +728,9 @@ func (p *CreateProductReq) SetPrice(val int64) {
 func (p *CreateProductReq) SetStock(val int64) {
 	p.Stock = val
 }
+func (p *CreateProductReq) SetItems(val []int64) {
+	p.Items = val
+}
 func (p *CreateProductReq) SetIsSales(val []int64) {
 	p.IsSales = val
 }
@@ -758,6 +773,10 @@ func (p *CreateProductReq) IsSetStock() bool {
 	return p.Stock != CreateProductReq_Stock_DEFAULT
 }
 
+func (p *CreateProductReq) IsSetItems() bool {
+	return p.Items != nil
+}
+
 func (p *CreateProductReq) IsSetIsSales() bool {
 	return p.IsSales != nil
 }
@@ -786,6 +805,7 @@ var fieldIDToName_CreateProductReq = map[int16]string{
 	20: "createdId",
 	6:  "price",
 	7:  "stock",
+	9:  "items",
 	10: "isSales",
 	13: "signSalesAt",
 	14: "endSalesAt",
@@ -801,6 +821,7 @@ type UpdateProductReq struct {
 	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
 	Price       int64   `thrift:"price,6,optional" frugal:"6,optional,i64" json:"price,omitempty"`
 	Stock       int64   `thrift:"stock,7,optional" frugal:"7,optional,i64" json:"stock,omitempty"`
+	Items       []int64 `thrift:"items,9,optional" frugal:"9,optional,list<i64>" json:"items,omitempty"`
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
 	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
@@ -817,6 +838,7 @@ func NewUpdateProductReq() *UpdateProductReq {
 		CreatedId:   0,
 		Price:       0,
 		Stock:       0,
+		Items:       []int64{},
 		IsSales:     []int64{},
 		SignSalesAt: "",
 		EndSalesAt:  "",
@@ -833,6 +855,7 @@ func (p *UpdateProductReq) InitDefault() {
 	p.CreatedId = 0
 	p.Price = 0
 	p.Stock = 0
+	p.Items = []int64{}
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
 	p.EndSalesAt = ""
@@ -919,6 +942,15 @@ func (p *UpdateProductReq) GetStock() (v int64) {
 	return p.Stock
 }
 
+var UpdateProductReq_Items_DEFAULT []int64 = []int64{}
+
+func (p *UpdateProductReq) GetItems() (v []int64) {
+	if !p.IsSetItems() {
+		return UpdateProductReq_Items_DEFAULT
+	}
+	return p.Items
+}
+
 var UpdateProductReq_IsSales_DEFAULT []int64 = []int64{}
 
 func (p *UpdateProductReq) GetIsSales() (v []int64) {
@@ -972,6 +1004,9 @@ func (p *UpdateProductReq) SetPrice(val int64) {
 func (p *UpdateProductReq) SetStock(val int64) {
 	p.Stock = val
 }
+func (p *UpdateProductReq) SetItems(val []int64) {
+	p.Items = val
+}
 func (p *UpdateProductReq) SetIsSales(val []int64) {
 	p.IsSales = val
 }
@@ -1018,6 +1053,10 @@ func (p *UpdateProductReq) IsSetStock() bool {
 	return p.Stock != UpdateProductReq_Stock_DEFAULT
 }
 
+func (p *UpdateProductReq) IsSetItems() bool {
+	return p.Items != nil
+}
+
 func (p *UpdateProductReq) IsSetIsSales() bool {
 	return p.IsSales != nil
 }
@@ -1047,6 +1086,7 @@ var fieldIDToName_UpdateProductReq = map[int16]string{
 	20: "createdId",
 	6:  "price",
 	7:  "stock",
+	9:  "items",
 	10: "isSales",
 	13: "signSalesAt",
 	14: "endSalesAt",
