@@ -31,7 +31,9 @@ export type ModalForm = {
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
   const { onOk, values, trigger } = props;
+  values.status = (values.status==1?"有效":"无效")
 
+  console.log(values)
   const [open, setOpen] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -93,6 +95,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
         onFinish={onFinish(values)}
       >
+
+
         <ProForm.Group>
           <ProFormUploadButton
             name="avatar"
@@ -135,13 +139,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             ]}
           />
 
-          <ProFormTextArea
-            width="md"
-            name="desc"
-            label="概略"
-            placeholder="请输入"
-          />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSelect
             initialValue="card"
             options={[
@@ -162,10 +161,15 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             }}
             label="类型"
           />
+
         </ProForm.Group>
+
         <ProForm.Group>
-          <ProFormText
+          <ProFormDigit
             width="md"
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:type=="card"?"天":"节/天" }}
             name="duration"
             label="时长"
             placeholder="请输入"
@@ -176,23 +180,32 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             ]}
           />
-          <ProFormText
+          <ProFormDigit
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:"分钟"}}
             width="md"
             name="length"
-            label="单次时长"
             hidden={ type=="card"}
+            label="单次时长"
             placeholder="请输入"
+
           />
 
-          <ProFormText
+          <ProFormDigit
+            min={1}
+            max={10}
+            fieldProps={{ precision: 0 , suffix:"次"}}
             width="md"
             name="count"
             label="次数"
             placeholder="请输入"
+
           />
 
-          <ProFormText
+          <ProFormDigit
             width="md"
+            fieldProps={{ suffix:"元"}}
             name="price"
             label="价格"
             placeholder="请输入"
@@ -204,29 +217,40 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             ]}
           />
         </ProForm.Group>
+
+        {/*<ProForm.Group>*/}
+        {/*  <ProFormText*/}
+        {/*    width="md"*/}
+        {/*    name="tagId"*/}
+        {/*    label="标签"*/}
+        {/*    placeholder="请输入"*/}
+        {/*    rules={[*/}
+        {/*      {*/}
+        {/*        required: true,*/}
+        {/*        message: '不能为空',*/}
+        {/*      },*/}
+        {/*    ]}*/}
+        {/*  />*/}
+        {/*</ProForm.Group>*/}
         <ProForm.Group>
-          <ProFormText
+          <ProFormTextArea
             width="md"
-            name="tagId"
-            label="标签"
+            name="desc"
+            label="概略"
             placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
           />
-
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSwitch
             name="status"
             width="md"
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
+
           />
         </ProForm.Group>
+
       </ModalForm>
 
     </>

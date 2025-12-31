@@ -60,6 +60,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           return true;
         }}
       >
+
         <ProForm.Group>
           <ProFormUploadButton
             name="avatar"
@@ -167,8 +168,6 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           />
 
           <ProFormDigit
-            min={1}
-            max={10}
             width="md"
             fieldProps={{ suffix:"元"}}
             name="price"
@@ -182,6 +181,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
         </ProForm.Group>
+
         {/*<ProForm.Group>*/}
         {/*  <ProFormText*/}
         {/*    width="md"*/}
@@ -211,9 +211,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
-
+            initialValue="有效"
           />
         </ProForm.Group>
+
       </ModalForm>
     </>
   );

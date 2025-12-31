@@ -146,6 +146,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
+            initialValue="有效"
           />
 
         </ProForm.Group>

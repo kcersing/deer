@@ -3,7 +3,7 @@ import {
   type ActionType,
   ModalForm,
   ProForm,
-  ProFormDateRangePicker,ProFormSelect,
+  ProFormDateRangePicker,ProFormSelect,ProFormDigit,
   ProFormText,
   ProFormTextArea,
   ProFormUploadButton,ProFormList,ProCard,ProFormDependency,
@@ -55,6 +55,12 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;
+          console.log(value.attributes)
+          value.itmes=[];
+          for ( let  v in value.attributes) {
+
+            value.itmes.push(value.attributes[v]['itme'])
+          }
           await run({ data: value as Product });
           return true;
         }}
@@ -103,7 +109,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         </ProForm.Group>
         <ProForm.Group>
 
-          <ProFormText
+          <ProFormDigit
             width="md"
             name="stock"
             label="库存"
@@ -116,8 +122,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
 
-          <ProFormText
+          <ProFormDigit
             width="md"
+            fieldProps={{ suffix:"元"}}
             name="price"
             label="价格"
             placeholder="请输入"
@@ -165,8 +172,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             name="status"
             width="md"
             label="状态"
-            checkedChildren="有效"
-            unCheckedChildren="无效"
+            checkedChildren="上架"
+            unCheckedChildren="下架"
+            initialValue="上架"
           />
 
         </ProForm.Group>

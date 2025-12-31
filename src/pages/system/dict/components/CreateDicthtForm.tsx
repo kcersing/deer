@@ -88,6 +88,7 @@ const CreateDicthtForm: FC<CreateFormProps> = (props) => {
             label="状态"
             checkedChildren="开启"
             unCheckedChildren="关闭"
+            initialValue="开启"
           />
 
         </ProForm.Group>

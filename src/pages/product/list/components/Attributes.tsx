@@ -3,10 +3,14 @@ import {
   type ActionType,
   ModalForm,
   ProForm,
-  ProFormDateRangePicker,ProFormSelect,
+  ProFormDateRangePicker,
+  ProFormSelect,
   ProFormText,
   ProFormTextArea,
-  ProFormUploadButton,ProFormList,ProCard,ProFormDependency,
+  ProFormUploadButton,
+  ProFormList,
+  ProCard,
+  ProFormDependency,
   ProFormSwitch,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
@@ -43,39 +47,33 @@ const AttributesItme = (props) => {
     getResponses();
   }, [id]);
 
-console.log(itemData)
+
   if (!itemData){
     return null;
   }
 
   return (
-    <div>
-      <Descriptions size="small" column={2}>
+      <Descriptions  size="small" column={2}>
         <Descriptions.Item label="名称">{itemData.name}</Descriptions.Item>
         <Descriptions.Item label="Code">{itemData.code}</Descriptions.Item>
         <Descriptions.Item label="类别">{itemData.type}</Descriptions.Item>
         <Descriptions.Item label="金额">{itemData.price}</Descriptions.Item>
-
 
         <Descriptions.Item label="期限">{itemData.duration}</Descriptions.Item>
         <Descriptions.Item label="次数">{itemData.count}</Descriptions.Item>
         <Descriptions.Item label="时长">{itemData.length}</Descriptions.Item>
         <Descriptions.Item label="标签">{itemData.tagName}</Descriptions.Item>
 
-
         <Descriptions.Item label="备注">
         {itemData.desc}
         </Descriptions.Item>
       </Descriptions>
-    </div>
   );
 }
 
 const Attributes  = (props) => {
   return (
-
     <ProFormList
-      styles={{padding: "unset"}}
       name="attributes"
       label="属性"
       creatorButtonProps={{
@@ -85,20 +83,25 @@ const Attributes  = (props) => {
       copyIconProps={false}
       itemRender={({ listDom, action }, { index }) => (
         <ProCard
-
           variant="outlined"
           style={{ marginBlockEnd: 8 }}
           title={`属性${index + 1}`}
           extra={action}
-          styles={{ body: { paddingBlockEnd: 0 },padding: "unset"} }
+          styles={{ body: { paddingBlockEnd: 0 }} }
+          bodyStyle={{padding: "unset"}}
         >
           {listDom}
         </ProCard>
       )}
     >
 
-      <ProCard gutter={8} styles={{padding: "unset"}}>
-        <ProCard colSpan={8}  variant="outlined">
+      <ProCard
+
+        split="vertical"
+
+
+      >
+        <ProCard bodyStyle={{ width: 240,flexShrink: 0 }}>
           <ProFormSelect
             name="itme"
             label="选择属性"
@@ -114,26 +117,20 @@ const Attributes  = (props) => {
                 value: 'id',
               },
             }}
-
             placeholder="请选择"
             rules={[{ required: true, message: '请选择!' }]}
           />
         </ProCard>
-        <ProCard colSpan={14}  variant="outlined">
-          <ProFormDependency name={["itme"]}  ignoreFormListField={false} >
+
+        <ProCard  bodyStyle={{ width: 500,flexShrink: 0,padding: "unset",paddingLeft: 24 }}>
+          <ProFormDependency name={["itme"]} ignoreFormListField={false} >
             {(depValues) => (
 
               <AttributesItme id={depValues["itme"]} />
             )}
-
           </ProFormDependency>
-
-
-
-
         </ProCard>
       </ProCard>
-
     </ProFormList>
 
 

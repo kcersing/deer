@@ -6,7 +6,11 @@ type Unpacked<T> = T extends (infer U)[] ? U : T;
 const NotificationView: React.FC = () => {
   const getData = () => {
     const Action = (
-      <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked />
+      <Switch
+        checkedChildren="开"
+        unCheckedChildren="关"
+        initialValue="开"
+      />
     );
     return [
       {

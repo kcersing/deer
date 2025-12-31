@@ -196,8 +196,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             name="status"
             width="md"
             label="状态"
-            checkedChildren="有效"
-            unCheckedChildren="无效"
+            checkedChildren="上架"
+            unCheckedChildren="下架"
           />
 
         </ProForm.Group>
