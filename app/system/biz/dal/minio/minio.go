@@ -4,17 +4,18 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"log"
+	"mime/multipart"
+	"net/url"
+	"system/conf"
+
+	"strings"
+	"time"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"kcers/biz/dal/config"
-	"log"
-	"mime/multipart"
-	"net/url"
-
-	"strings"
-	"time"
 )
 
 var (
@@ -24,17 +25,17 @@ var (
 
 func InitMinio() {
 	ctx := context.Background()
-	Client, err = minio.New(config.GlobalServerConfig.Minio.EndPoint, &minio.Options{
-		Creds:  credentials.NewStaticV4(config.GlobalServerConfig.Minio.AccessKeyID, config.GlobalServerConfig.Minio.SecretAccessKey, ""),
-		Secure: config.GlobalServerConfig.Minio.UseSSL,
+	Client, err = minio.New(conf.GetConf().Minio.EndPoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(conf.GetConf().Minio.AccessKeyID, conf.GetConf().Minio.SecretAccessKey, ""),
+		Secure: conf.GetConf().Minio.UseSSL,
 	})
 
 	if err != nil {
 		log.Fatalln("minio连接错误: ", err)
 	}
 
-	MakeBucket(ctx, config.GlobalServerConfig.Minio.VideoBucketName)
-	MakeBucket(ctx, config.GlobalServerConfig.Minio.ImgBucketName)
+	MakeBucket(ctx, conf.GetConf().Minio.VideoBucketName)
+	MakeBucket(ctx, conf.GetConf().Minio.ImgBucketName)
 }
 
 // MakeBucket create a bucket with a specified name

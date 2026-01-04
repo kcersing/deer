@@ -6,6 +6,8 @@ const (
 	SecretKey      = "secret key"
 	IdentityKey    = "id"
 
+	WechatFilePath = "./file/wechat/"
+
 	TCP            = "tcp"
 	ExportEndpoint = "4317"
 	EtcdAddress    = "101.201.55.134:2379"

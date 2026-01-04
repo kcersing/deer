@@ -23,7 +23,8 @@ func initProductRpc() {
 	productOnceClient.Do(func() {
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
-			panic(err)
+			hlog.Error("NewEtcdResolver err: %s", err)
+			return
 		}
 		c, err := productservice.NewClient(
 			consts.ProductRpcServiceName,
@@ -39,7 +40,8 @@ func initProductRpc() {
 			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
-			panic(err)
+			hlog.Error("NewClient err: %s", err)
+			return
 		}
 		ProductClient = c
 	})

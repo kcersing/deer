@@ -11,7 +11,7 @@ func TestUpdateProduct_Run(t *testing.T) {
 	s := NewUpdateProductService(ctx)
 	// init req and assert value
 
-	req := &product.EditProductReq{}
+	req := &product.UpdateProductReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

@@ -22,6 +22,7 @@ type Config struct {
 	MySQL      MySQL      `yaml:"MySQL"`
 	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
 	Redis      Redis      `yaml:"Redis"`
+	Aliyun     Aliyun     `yaml:"Aliyun"`
 }
 
 type MySQL struct {
@@ -53,6 +54,22 @@ type Kitex struct {
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 }
 
+type Aliyun struct {
+	Access Access `mapstructure:"Access" yaml:"Access"`
+	Sms    Sms    `mapstructure:"Sms" yaml:"Sms"`
+}
+type Access struct {
+	AccessKeyId     string `mapstructure:"AccessKeyId" yaml:"AccessKeyId"`
+	AccessKeySecret string `mapstructure:"AccessKeySecret" yaml:"AccessKeySecret"`
+}
+type Sms struct {
+	Captcha SmsTemplate `mapstructure:"Captcha" yaml:"Captcha"`
+}
+type SmsTemplate struct {
+	SignName     string `mapstructure:"SignName" yaml:"SignName"`
+	TemplateCode string `mapstructure:"TemplateCode" yaml:"TemplateCode"`
+}
+
 // GetConf gets configuration instance
 func GetConf() *Config {
 	once.Do(initConf)
@@ -78,6 +95,7 @@ func initConf() {
 	}
 	pretty.Printf("%+v\n", conf)
 }
+
 func LogLevel() klog.Level {
 	level := GetConf().Kitex.LogLevel
 	switch level {

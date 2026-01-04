@@ -1,14 +1,15 @@
 package wechat
 
 import (
+	"common/consts"
+	"os"
+	"sync"
+	"system/conf"
+
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/payment"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"os"
-	"saas/biz/dal/config"
-	"saas/biz/pkg/consts"
-	"sync"
 )
 
 var PaymentWechatApp *payment.Payment
@@ -30,12 +31,11 @@ const TRANSACTION_FAILED = "TRANSACTION.FAILED"
 
 func NewWXPaymentApp() (*payment.Payment, error) {
 
-	conf := config.GlobalServerConfig.Wechat
 	var cache kernel.CacheInterface
-	if config.GlobalServerConfig.Redis.Host != "" {
+	if conf.GetConf().Redis.Address != "" {
 		cache = kernel.NewRedisClient(&kernel.UniversalOptions{
-			Addrs:    []string{config.GlobalServerConfig.Redis.Host},
-			Password: config.GlobalServerConfig.Redis.Password,
+			Addrs:    []string{conf.GetConf().Redis.Address},
+			Password: conf.GetConf().Redis.Password,
 			DB:       7,
 		})
 	}
@@ -44,17 +44,17 @@ func NewWXPaymentApp() (*payment.Payment, error) {
 		panic(err)
 	}
 	Payment, err := payment.NewPayment(&payment.UserConfig{
-		AppID:              conf.Appid,    // 小程序、公众号或者企业微信的appid
-		MchID:              conf.MchId,    // 商户号 appID
-		MchApiV3Key:        conf.ApiV3Key, //
-		Key:                conf.ApiKey,
-		CertPath:           conf.CertFileContent,
-		KeyPath:            conf.KeyFileContent,
-		SerialNo:           conf.SerialNo,
-		CertificateKeyPath: conf.CertificateKeyPath,
-		WechatPaySerial:    conf.WechatPaySerialNo,
+		AppID:              conf.GetConf().Wechat.Appid,    // 小程序、公众号或者企业微信的appid
+		MchID:              conf.GetConf().Wechat.MchId,    // 商户号 appID
+		MchApiV3Key:        conf.GetConf().Wechat.ApiV3Key, //
+		Key:                conf.GetConf().Wechat.ApiKey,
+		CertPath:           conf.GetConf().Wechat.CertFileContent,
+		KeyPath:            conf.GetConf().Wechat.KeyFileContent,
+		SerialNo:           conf.GetConf().Wechat.SerialNo,
+		CertificateKeyPath: conf.GetConf().Wechat.CertificateKeyPath,
+		WechatPaySerial:    conf.GetConf().Wechat.WechatPaySerialNo,
 		//RSAPublicKeyPath:   conf.RSAPublicKeyPath,
-		NotifyURL: conf.NotifyUrl,
+		NotifyURL: conf.GetConf().Wechat.NotifyUrl,
 		//SubMchID:           conf.MchId,
 		//SubAppID:           conf.Appid,
 		ResponseType: response.TYPE_MAP,

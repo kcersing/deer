@@ -1,14 +1,15 @@
 package wechat
 
 import (
+	"common/consts"
+	"sync"
+	"system/conf"
+
 	"github.com/ArtisanCloud/PowerLibs/v3/logger/drivers"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/kernel/response"
 	"github.com/ArtisanCloud/PowerWeChat/v3/src/miniProgram"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"saas/biz/dal/config"
-	"saas/biz/pkg/consts"
-	"sync"
 )
 
 var MiniProgramApp *miniProgram.MiniProgram
@@ -22,14 +23,15 @@ func InitMiniProgramApp() {
 }
 
 func NewMiniMiniProgramService() *miniProgram.MiniProgram {
-	conf := config.GlobalServerConfig.Wechat
+	conf := conf.GetConf().Wechat
 	var cache kernel.CacheInterface
-	if config.GlobalServerConfig.Redis.Host != "" {
-		cache = kernel.NewRedisClient(&kernel.UniversalOptions{
-			Addrs:    []string{config.GlobalServerConfig.Redis.Host},
-			Password: config.GlobalServerConfig.Redis.Password,
-			DB:       6,
-		})
+
+	if conf.GetConf().Redis.Address != "" {
+	cache = kernel.NewRedisClient(&kernel.UniversalOptions{
+		Addrs:    []string{conf.GetConf().Redis.Address},
+		Password: conf.GetConf().Redis.Password,
+		DB:       6,
+	})
 	}
 	wechatFilePath := consts.WechatFilePath
 

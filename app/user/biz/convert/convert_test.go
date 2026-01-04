@@ -26,7 +26,6 @@ func TestEntToUser_Run(t *testing.T) {
 		PositionID:   nil,
 		LastAt:       time.Time{},
 		LastIP:       "127.0.0.1",
-		Detail:       "简介",
 	})
 
 	t.Logf("resp: %v", s)
