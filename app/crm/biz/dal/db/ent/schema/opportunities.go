@@ -48,7 +48,10 @@ func (Opportunities) Indexes() []ent.Index {
 
 func (Opportunities) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "crm_opportunities"},
+		entsql.Annotation{Table: "crm_opportunities",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

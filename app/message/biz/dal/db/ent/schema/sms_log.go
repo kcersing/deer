@@ -1,18 +1,19 @@
 package schema
 
 import (
+	"system/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"system/biz/dal/db/ent/schema/mixins"
 )
 
-type SmsLog struct {
+type SmsSentRecords struct {
 	ent.Schema
 }
 
-func (SmsLog) Fields() []ent.Field {
+func (SmsSentRecords) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("mobile").Comment("手机号").Optional(),
 		field.String("biz_id").Comment("BizId").Optional(),
@@ -23,24 +24,27 @@ func (SmsLog) Fields() []ent.Field {
 	}
 }
 
-func (SmsLog) Mixin() []ent.Mixin {
+func (SmsSentRecords) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixins.BaseMixin{},
 		mixins.StatusMixin{},
 	}
 }
 
-func (SmsLog) Edges() []ent.Edge {
+func (SmsSentRecords) Edges() []ent.Edge {
 	return []ent.Edge{}
 }
 
-func (SmsLog) Indexes() []ent.Index {
+func (SmsSentRecords) Indexes() []ent.Index {
 	return []ent.Index{}
 }
 
-func (SmsLog) Annotations() []schema.Annotation {
+func (SmsSentRecords) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_sms_log"},
+		entsql.Annotation{Table: "sms_sent_records",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

@@ -44,7 +44,10 @@ func (Hardware) Indexes() []ent.Index {
 
 func (Hardware) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "hardware"},
+		entsql.Annotation{Table: "hardware",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

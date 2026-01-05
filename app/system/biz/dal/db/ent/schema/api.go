@@ -42,7 +42,11 @@ func (API) Indexes() []ent.Index {
 
 func (API) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_apis"},
+		entsql.Annotation{Table: "sys_apis",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("API"),
 	}
 }

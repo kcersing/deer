@@ -49,7 +49,11 @@ func (Dictht) Indexes() []ent.Index {
 
 func (Dictht) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_dictht"},
+		entsql.Annotation{Table: "sys_dictht",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("字典表"),
 	}
 }

@@ -2,7 +2,6 @@ package schema
 
 import (
 	"system/biz/dal/db/ent/schema/mixins"
-	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
@@ -48,7 +47,11 @@ func (Logs) Indexes() []ent.Index {
 
 func (Logs) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_logs_" + time.Now().Format("20060102")},
+		entsql.Annotation{Table: "sys_logs",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("日志表"),
 	}
 }

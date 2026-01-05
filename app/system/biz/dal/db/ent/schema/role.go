@@ -50,7 +50,11 @@ func (Role) Edges() []ent.Edge {
 }
 func (Role) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_roles"},
+		entsql.Annotation{Table: "sys_roles",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("角色表"),
 	}
 }

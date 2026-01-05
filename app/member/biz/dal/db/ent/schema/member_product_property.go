@@ -59,7 +59,10 @@ func (MemberProductProperty) Indexes() []ent.Index {
 
 func (MemberProductProperty) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "member_product_property"},
+		entsql.Annotation{Table: "member_product_property",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

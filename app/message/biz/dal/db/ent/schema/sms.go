@@ -1,11 +1,12 @@
 package schema
 
 import (
+	"system/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
-	"system/biz/dal/db/ent/schema/mixins"
 )
 
 type Sms struct {
@@ -36,7 +37,11 @@ func (Sms) Indexes() []ent.Index {
 
 func (Sms) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_sms"},
+		entsql.Annotation{
+			Table:     "sms",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

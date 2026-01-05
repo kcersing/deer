@@ -52,7 +52,10 @@ func (MemberNote) Indexes() []ent.Index {
 
 func (MemberNote) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "member_note"},
+		entsql.Annotation{Table: "member_note",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

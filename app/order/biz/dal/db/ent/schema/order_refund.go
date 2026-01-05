@@ -46,7 +46,10 @@ func (OrderRefund) Indexes() []ent.Index {
 
 func (OrderRefund) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_refund", Collation: "utf8mb4_unicode_ci"},
+		entsql.Annotation{Table: "order_refund",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

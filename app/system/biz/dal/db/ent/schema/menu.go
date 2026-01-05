@@ -53,7 +53,11 @@ func (Menu) Indexes() []ent.Index {
 }
 func (Menu) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_menus"},
+		entsql.Annotation{Table: "sys_menus",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("菜单表"),
 	}
 }

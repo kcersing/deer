@@ -45,7 +45,10 @@ func (FollowUpRecord) Indexes() []ent.Index {
 
 func (FollowUpRecord) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "crm_follow_up_record"},
+		entsql.Annotation{Table: "crm_follow_up_record",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

@@ -51,7 +51,10 @@ func (Product) Indexes() []ent.Index {
 
 func (Product) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "products"},
+		entsql.Annotation{Table: "products",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

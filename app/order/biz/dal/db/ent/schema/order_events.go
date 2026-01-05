@@ -50,7 +50,10 @@ func (OrderEvents) Indexes() []ent.Index {
 
 func (OrderEvents) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_events", Collation: "utf8mb4_unicode_ci"},
+		entsql.Annotation{Table: "order_events",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

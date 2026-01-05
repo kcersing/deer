@@ -43,7 +43,11 @@ func (Dict) Indexes() []ent.Index {
 
 func (Dict) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "sys_dict"},
+		entsql.Annotation{Table: "sys_dict",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
+		schema.Comment("字典表"),
 	}
 }

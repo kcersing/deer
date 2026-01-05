@@ -1,11 +1,11 @@
 package mixins
 
 import (
-	"time"
-
+	"entgo.io/contrib/entproto"
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/mixin"
+	"time"
 )
 
 // BaseMixin implements the ent.Mixin for sharing
@@ -19,12 +19,19 @@ type BaseMixin struct {
 func (BaseMixin) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("id").
-			Comment("primary key"),
+			Comment("primary key").
+			StructTag(`json:"id,omitempty"`).
+			Annotations(
+				entproto.Field(1),
+			).
+			Positive(),
+
 		field.Time("created_at").
 			Immutable().
 			Default(time.Now).
 			Comment("created time").
-			Optional(),
+			Optional().
+			Nillable(),
 		field.Time("updated_at").
 			Default(time.Now).
 			UpdateDefault(time.Now).

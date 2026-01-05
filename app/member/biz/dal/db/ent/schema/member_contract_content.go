@@ -44,7 +44,10 @@ func (MemberContractContent) Indexes() []ent.Index {
 
 func (MemberContractContent) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "member_contract_content"},
+		entsql.Annotation{Table: "member_contract_content",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

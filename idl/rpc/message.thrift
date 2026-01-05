@@ -1,14 +1,11 @@
 namespace go message
 include "../base/base.thrift"
 include "../base/message.thrift"
-    struct SendSmsListReq {
-         1: optional i64 page=1 (api.raw = "page")
-         2: optional i64 pageSize=100 (api.raw = "pageSize")
-         3: optional string mobile="" (api.raw = "mobile")
-     }
-
-
-
+   struct SendSmsListReq {
+        1: optional i64 page=1 (api.raw = "page")
+        2: optional i64 pageSize=100 (api.raw = "pageSize")
+        3: optional string mobile="" (api.raw = "mobile")
+   }
     struct SmsResp{
         1:optional message.Sms data={}
         255:optional base.BaseResp baseResp={}

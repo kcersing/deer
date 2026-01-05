@@ -46,7 +46,10 @@ func (OrderSnapshots) Indexes() []ent.Index {
 
 func (OrderSnapshots) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_snapshots", Collation: "utf8mb4_unicode_ci"},
+		entsql.Annotation{Table: "order_snapshots",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }

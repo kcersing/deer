@@ -13,6 +13,7 @@ use (
 	./app/test
 	./app/system
 	./app/hardware
+	./app/message
 
 )
 

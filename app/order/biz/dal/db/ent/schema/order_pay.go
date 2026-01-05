@@ -51,7 +51,10 @@ func (OrderPay) Indexes() []ent.Index {
 
 func (OrderPay) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order_pay", Collation: "utf8mb4_unicode_ci"},
+		entsql.Annotation{Table: "order_pay",
+			Charset:   "utf8mb4",
+			Collation: "utf8mb4_bin",
+		},
 		entsql.WithComments(true),
 	}
 }
