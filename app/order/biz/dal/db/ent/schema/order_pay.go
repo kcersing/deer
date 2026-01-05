@@ -56,5 +56,6 @@ func (OrderPay) Annotations() []schema.Annotation {
 			Collation: "utf8mb4_bin",
 		},
 		entsql.WithComments(true),
+		schema.Comment(""),
 	}
 }

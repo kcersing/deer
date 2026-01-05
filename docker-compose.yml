@@ -26,8 +26,8 @@ services:
 #      - "9000:9000"
 #      - "9001:9001"
 #    environment:
-#      MINIO_ROOT_USER: Yj123987
-#      MINIO_ROOT_PASSWORD: Yj987123
+#      MINIO_ROOT_USER: K123987
+#      MINIO_ROOT_PASSWORD: Kj987123
 #      TZ: Asia/Shanghai
 #      LANG: zh_CN.UTF-8
 #    volumes:

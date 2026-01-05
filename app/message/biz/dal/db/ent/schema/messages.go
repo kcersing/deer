@@ -17,8 +17,6 @@ type Messages struct {
 func (Messages) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("title").Comment("消息标题").Optional().Nillable(),
-		field.String("type").Comment("类型[1:用户user;2:会员member]").Optional(),
-		field.String("to_user_id").Comment("该消息接受者ID").Optional().Nillable(),
 		field.String("from_user_id").Comment("该消息发送者ID").Optional().Nillable(),
 		field.String("content").Comment("消息内容").Optional().Nillable(),
 		field.Enum("status").
@@ -59,7 +57,7 @@ func (Messages) Edges() []ent.Edge {
 
 func (Messages) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("to_user_id", "from_user_id"),
+		index.Fields("from_user_id"),
 	}
 }
 
