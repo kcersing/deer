@@ -33,7 +33,7 @@ const (
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
 	// Table holds the table name of the messages in the database.
-	Table = "messages"
+	Table = "msg_messages"
 )
 
 // Columns holds all SQL columns for messages fields.

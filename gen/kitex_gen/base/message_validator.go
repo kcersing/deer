@@ -27,3 +27,9 @@ func (p *Sms) IsValid() error {
 func (p *SmsSend) IsValid() error {
 	return nil
 }
+func (p *MessagesSend) IsValid() error {
+	return nil
+}
+func (p *Messages) IsValid() error {
+	return nil
+}

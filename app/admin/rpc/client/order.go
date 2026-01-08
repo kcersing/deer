@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/order/orderservice"
 	"sync"
 
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 
@@ -24,7 +25,8 @@ func initOrderRpc() {
 
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
-			panic(err)
+			hlog.Error("NewEtcdResolver err: %s", err)
+			return
 		}
 		c, err := orderservice.NewClient(
 			consts.OrderRpcServiceName,
@@ -40,7 +42,8 @@ func initOrderRpc() {
 			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
-			panic(err)
+			hlog.Error("NewClient err: %s", err)
+			return
 		}
 		OrderClient = c
 	})

@@ -68,7 +68,7 @@ func (MessagesSentRecords) Indexes() []ent.Index {
 func (MessagesSentRecords) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entsql.Annotation{
-			Table:     "messages_sent_records",
+			Table:     "msg_messages_sent_records",
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},

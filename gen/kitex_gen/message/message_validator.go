@@ -21,7 +21,7 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *SendSmsListReq) IsValid() error {
+func (p *SmsListReq) IsValid() error {
 	return nil
 }
 func (p *SmsResp) IsValid() error {
@@ -37,7 +37,10 @@ func (p *SmsResp) IsValid() error {
 	}
 	return nil
 }
-func (p *SendSmsListResp) IsValid() error {
+func (p *SendSmsReq) IsValid() error {
+	return nil
+}
+func (p *SmsSendListResp) IsValid() error {
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
@@ -45,6 +48,36 @@ func (p *SendSmsListResp) IsValid() error {
 	}
 	return nil
 }
-func (p *SendSmsReq) IsValid() error {
+func (p *SmsSendListReq) IsValid() error {
+	return nil
+}
+func (p *MessagesListReq) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *SendMemberMessagesReq) IsValid() error {
+	return nil
+}
+func (p *SendUserMessagesReq) IsValid() error {
+	return nil
+}
+func (p *MessagesListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *MessagesSendListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
 	return nil
 }

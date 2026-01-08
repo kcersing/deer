@@ -12,10 +12,13 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	ImgCaptcha(ctx context.Context, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	Sms(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *message.SmsResp, err error)
-	SmsList(ctx context.Context, req *message.SendSmsListReq, callOptions ...callopt.Option) (r *message.SendSmsListResp, err error)
+	SmsSendList(ctx context.Context, req *message.SmsSendListReq, callOptions ...callopt.Option) (r *message.SmsSendListResp, err error)
 	SendSms(ctx context.Context, req *message.SendSmsReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	MessagesList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesListResp, err error)
+	SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -47,22 +50,37 @@ type kMessageServiceClient struct {
 	*kClient
 }
 
-func (p *kMessageServiceClient) ImgCaptcha(ctx context.Context, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.ImgCaptcha(ctx)
-}
-
 func (p *kMessageServiceClient) Sms(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *message.SmsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Sms(ctx, req)
 }
 
-func (p *kMessageServiceClient) SmsList(ctx context.Context, req *message.SendSmsListReq, callOptions ...callopt.Option) (r *message.SendSmsListResp, err error) {
+func (p *kMessageServiceClient) SmsSendList(ctx context.Context, req *message.SmsSendListReq, callOptions ...callopt.Option) (r *message.SmsSendListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SmsList(ctx, req)
+	return p.kClient.SmsSendList(ctx, req)
 }
 
 func (p *kMessageServiceClient) SendSms(ctx context.Context, req *message.SendSmsReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.SendSms(ctx, req)
+}
+
+func (p *kMessageServiceClient) MessagesList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.MessagesList(ctx, req)
+}
+
+func (p *kMessageServiceClient) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SendMemberMessages(ctx, req)
+}
+
+func (p *kMessageServiceClient) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.SendUserMessages(ctx, req)
+}
+
+func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.MessagesSendList(ctx, req)
 }

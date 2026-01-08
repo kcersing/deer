@@ -12,6 +12,8 @@ include "../base/message.thrift"
     }
     struct SendSmsReq{
         1: optional string mobile=""
+        2: optional string type=""
+        3: optional string content = ""
     }
     struct SmsSendListResp{
         1:optional list<message.SmsSend> data={}
@@ -26,12 +28,18 @@ include "../base/message.thrift"
 
         255:optional base.BaseResp baseResp={}
     }
-    struct SendMessagesReq {
-        1: optional string mobile=""
-        2: optional string msg=""
+    struct SendMemberMessagesReq {
+        1: optional i64 memberId=0
+        2: optional string type=""
+        3: optional string content = ""
+
     }
+    struct SendUserMessagesReq {
+        1: optional i64 memberId=0
+        2: optional string type=""
+        3: optional string content = ""
 
-
+    }
     struct MessagesListResp{
         1:optional list<message.Messages> data={}
         255:optional base.BaseResp baseResp={}
@@ -42,19 +50,17 @@ include "../base/message.thrift"
     }
 
     service MessageService  {
-        //获取验证码
-        base.NilResponse ImgCaptcha()
-        /**短信信息*/
+        //短信条数信息
         SmsResp Sms(1: base.IdReq req)
-        /**发送记录*/
+        //发送记录
         SmsSendListResp SmsSendList(1: SmsSendListReq req)
         //发送信息
         base.NilResponse SendSms(1: SendSmsReq req)
-
-        /**发送记录*/
+        //发送记录
         MessagesListResp MessagesList(1: MessagesListReq req)
         //发送信息
-        base.NilResponse SendMessages(1: SendMessagesReq req)
-
+        base.NilResponse SendMemberMessages(1: SendMemberMessagesReq req)
+        base.NilResponse SendUserMessages(1: SendUserMessagesReq req)
+        //发送记录
         MessagesSendListResp MessagesSendList(1: MessagesListReq req)
     }

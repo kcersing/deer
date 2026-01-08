@@ -10,13 +10,6 @@ import (
 // MessageServiceImpl implements the last service interface defined in the IDL.
 type MessageServiceImpl struct{}
 
-// ImgCaptcha implements the MessageServiceImpl interface.
-func (s *MessageServiceImpl) ImgCaptcha(ctx context.Context) (resp *base.NilResponse, err error) {
-	resp, err = service.NewImgCaptchaService(ctx).Run()
-
-	return resp, err
-}
-
 // Sms implements the MessageServiceImpl interface.
 func (s *MessageServiceImpl) Sms(ctx context.Context, req *base.IdReq) (resp *message.SmsResp, err error) {
 	resp, err = service.NewSmsService(ctx).Run(req)
@@ -24,9 +17,9 @@ func (s *MessageServiceImpl) Sms(ctx context.Context, req *base.IdReq) (resp *me
 	return resp, err
 }
 
-// SmsList implements the MessageServiceImpl interface.
-func (s *MessageServiceImpl) SmsList(ctx context.Context, req *message.SendSmsListReq) (resp *message.SendSmsListResp, err error) {
-	resp, err = service.NewSmsListService(ctx).Run(req)
+// SmsSendList implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) SmsSendList(ctx context.Context, req *message.SmsSendListReq) (resp *message.SmsSendListResp, err error) {
+	resp, err = service.NewSmsSendListService(ctx).Run(req)
 
 	return resp, err
 }
@@ -34,6 +27,34 @@ func (s *MessageServiceImpl) SmsList(ctx context.Context, req *message.SendSmsLi
 // SendSms implements the MessageServiceImpl interface.
 func (s *MessageServiceImpl) SendSms(ctx context.Context, req *message.SendSmsReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewSendSmsService(ctx).Run(req)
+
+	return resp, err
+}
+
+// MessagesList implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) MessagesList(ctx context.Context, req *message.MessagesListReq) (resp *message.MessagesListResp, err error) {
+	resp, err = service.NewMessagesListService(ctx).Run(req)
+
+	return resp, err
+}
+
+// SendMemberMessages implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewSendMemberMessagesService(ctx).Run(req)
+
+	return resp, err
+}
+
+// SendUserMessages implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewSendUserMessagesService(ctx).Run(req)
+
+	return resp, err
+}
+
+// MessagesSendList implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) MessagesSendList(ctx context.Context, req *message.MessagesListReq) (resp *message.MessagesSendListResp, err error) {
+	resp, err = service.NewMessagesSendListService(ctx).Run(req)
 
 	return resp, err
 }

@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	// MessagesColumns holds the columns for the "messages" table.
-	MessagesColumns = []*schema.Column{
+	// MsgMessagesColumns holds the columns for the "msg_messages" table.
+	MsgMessagesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -22,21 +22,21 @@ var (
 		{Name: "status", Type: field.TypeEnum, Nullable: true, Comment: "消息状态", Enums: []string{"DRAFT", "PUBLISHED", "SCHEDULED", "REVOKED", "ARCHIVED", "DELETED"}, Default: "DRAFT"},
 		{Name: "type", Type: field.TypeEnum, Nullable: true, Comment: "消息类型", Enums: []string{"NOTIFICATION", "PRIVATE", "GROUP"}, Default: "NOTIFICATION"},
 	}
-	// MessagesTable holds the schema information for the "messages" table.
-	MessagesTable = &schema.Table{
-		Name:       "messages",
-		Columns:    MessagesColumns,
-		PrimaryKey: []*schema.Column{MessagesColumns[0]},
+	// MsgMessagesTable holds the schema information for the "msg_messages" table.
+	MsgMessagesTable = &schema.Table{
+		Name:       "msg_messages",
+		Columns:    MsgMessagesColumns,
+		PrimaryKey: []*schema.Column{MsgMessagesColumns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "messages_from_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{MessagesColumns[6]},
+				Columns: []*schema.Column{MsgMessagesColumns[6]},
 			},
 		},
 	}
-	// MessagesSentRecordsColumns holds the columns for the "messages_sent_records" table.
-	MessagesSentRecordsColumns = []*schema.Column{
+	// MsgMessagesSentRecordsColumns holds the columns for the "msg_messages_sent_records" table.
+	MsgMessagesSentRecordsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -48,21 +48,21 @@ var (
 		{Name: "received_at", Type: field.TypeTime, Nullable: true, Comment: "消息到达用户收件箱的时间"},
 		{Name: "read_at", Type: field.TypeTime, Nullable: true, Comment: "用户阅读消息的时间"},
 	}
-	// MessagesSentRecordsTable holds the schema information for the "messages_sent_records" table.
-	MessagesSentRecordsTable = &schema.Table{
-		Name:       "messages_sent_records",
-		Columns:    MessagesSentRecordsColumns,
-		PrimaryKey: []*schema.Column{MessagesSentRecordsColumns[0]},
+	// MsgMessagesSentRecordsTable holds the schema information for the "msg_messages_sent_records" table.
+	MsgMessagesSentRecordsTable = &schema.Table{
+		Name:       "msg_messages_sent_records",
+		Columns:    MsgMessagesSentRecordsColumns,
+		PrimaryKey: []*schema.Column{MsgMessagesSentRecordsColumns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "messagessentrecords_to_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{MessagesSentRecordsColumns[6]},
+				Columns: []*schema.Column{MsgMessagesSentRecordsColumns[6]},
 			},
 		},
 	}
-	// SmsColumns holds the columns for the "sms" table.
-	SmsColumns = []*schema.Column{
+	// MsgSmsColumns holds the columns for the "msg_sms" table.
+	MsgSmsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -72,14 +72,14 @@ var (
 		{Name: "notice_count", Type: field.TypeInt64, Nullable: true, Comment: "通知短信数量", Default: 0},
 		{Name: "used_notice", Type: field.TypeInt64, Nullable: true, Comment: "已用通知", Default: 0},
 	}
-	// SmsTable holds the schema information for the "sms" table.
-	SmsTable = &schema.Table{
-		Name:       "sms",
-		Columns:    SmsColumns,
-		PrimaryKey: []*schema.Column{SmsColumns[0]},
+	// MsgSmsTable holds the schema information for the "msg_sms" table.
+	MsgSmsTable = &schema.Table{
+		Name:       "msg_sms",
+		Columns:    MsgSmsColumns,
+		PrimaryKey: []*schema.Column{MsgSmsColumns[0]},
 	}
-	// SmsSentRecordsColumns holds the columns for the "sms_sent_records" table.
-	SmsSentRecordsColumns = []*schema.Column{
+	// MsgSmsSentRecordsColumns holds the columns for the "msg_sms_sent_records" table.
+	MsgSmsSentRecordsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
@@ -93,39 +93,39 @@ var (
 		{Name: "notify_type", Type: field.TypeInt64, Nullable: true, Comment: "通知类型[1会员;2员工]", Default: 1},
 		{Name: "template", Type: field.TypeString, Nullable: true, Comment: "短信模板"},
 	}
-	// SmsSentRecordsTable holds the schema information for the "sms_sent_records" table.
-	SmsSentRecordsTable = &schema.Table{
-		Name:       "sms_sent_records",
-		Columns:    SmsSentRecordsColumns,
-		PrimaryKey: []*schema.Column{SmsSentRecordsColumns[0]},
+	// MsgSmsSentRecordsTable holds the schema information for the "msg_sms_sent_records" table.
+	MsgSmsSentRecordsTable = &schema.Table{
+		Name:       "msg_sms_sent_records",
+		Columns:    MsgSmsSentRecordsColumns,
+		PrimaryKey: []*schema.Column{MsgSmsSentRecordsColumns[0]},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		MessagesTable,
-		MessagesSentRecordsTable,
-		SmsTable,
-		SmsSentRecordsTable,
+		MsgMessagesTable,
+		MsgMessagesSentRecordsTable,
+		MsgSmsTable,
+		MsgSmsSentRecordsTable,
 	}
 )
 
 func init() {
-	MessagesTable.Annotation = &entsql.Annotation{
-		Table:     "messages",
+	MsgMessagesTable.Annotation = &entsql.Annotation{
+		Table:     "msg_messages",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
-	MessagesSentRecordsTable.Annotation = &entsql.Annotation{
-		Table:     "messages_sent_records",
+	MsgMessagesSentRecordsTable.Annotation = &entsql.Annotation{
+		Table:     "msg_messages_sent_records",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
-	SmsTable.Annotation = &entsql.Annotation{
-		Table:     "sms",
+	MsgSmsTable.Annotation = &entsql.Annotation{
+		Table:     "msg_sms",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
-	SmsSentRecordsTable.Annotation = &entsql.Annotation{
-		Table:     "sms_sent_records",
+	MsgSmsSentRecordsTable.Annotation = &entsql.Annotation{
+		Table:     "msg_sms_sent_records",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}

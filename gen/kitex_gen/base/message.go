@@ -108,26 +108,26 @@ var fieldIDToName_Sms = map[int16]string{
 }
 
 type SmsSend struct {
-	CreatedAt  string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
-	Status     int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
-	Mobile     string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Code       string `thrift:"code,5,optional" frugal:"5,optional,string" json:"code,omitempty"`
-	BizId      string `thrift:"bizId,7,optional" frugal:"7,optional,string" json:"bizId,omitempty"`
-	NotifyType int64  `thrift:"notifyType,8,optional" frugal:"8,optional,i64" json:"notifyType,omitempty"`
-	Content    string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
-	Templates  string `thrift:"templates,10,optional" frugal:"10,optional,string" json:"templates,omitempty"`
+	CreatedAt string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status    int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	Mobile    string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Code      string `thrift:"code,5,optional" frugal:"5,optional,string" json:"code,omitempty"`
+	BizId     string `thrift:"bizId,7,optional" frugal:"7,optional,string" json:"bizId,omitempty"`
+	UserType  int64  `thrift:"userType,8,optional" frugal:"8,optional,i64" json:"userType,omitempty"`
+	Content   string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	Templates string `thrift:"templates,10,optional" frugal:"10,optional,string" json:"templates,omitempty"`
 }
 
 func NewSmsSend() *SmsSend {
 	return &SmsSend{
-		CreatedAt:  "",
-		Status:     0,
-		Mobile:     "",
-		Code:       "",
-		BizId:      "",
-		NotifyType: 1,
-		Content:    "",
-		Templates:  "",
+		CreatedAt: "",
+		Status:    0,
+		Mobile:    "",
+		Code:      "",
+		BizId:     "",
+		UserType:  1,
+		Content:   "",
+		Templates: "",
 	}
 }
 
@@ -137,7 +137,7 @@ func (p *SmsSend) InitDefault() {
 	p.Mobile = ""
 	p.Code = ""
 	p.BizId = ""
-	p.NotifyType = 1
+	p.UserType = 1
 	p.Content = ""
 	p.Templates = ""
 }
@@ -187,13 +187,13 @@ func (p *SmsSend) GetBizId() (v string) {
 	return p.BizId
 }
 
-var SmsSend_NotifyType_DEFAULT int64 = 1
+var SmsSend_UserType_DEFAULT int64 = 1
 
-func (p *SmsSend) GetNotifyType() (v int64) {
-	if !p.IsSetNotifyType() {
-		return SmsSend_NotifyType_DEFAULT
+func (p *SmsSend) GetUserType() (v int64) {
+	if !p.IsSetUserType() {
+		return SmsSend_UserType_DEFAULT
 	}
-	return p.NotifyType
+	return p.UserType
 }
 
 var SmsSend_Content_DEFAULT string = ""
@@ -228,8 +228,8 @@ func (p *SmsSend) SetCode(val string) {
 func (p *SmsSend) SetBizId(val string) {
 	p.BizId = val
 }
-func (p *SmsSend) SetNotifyType(val int64) {
-	p.NotifyType = val
+func (p *SmsSend) SetUserType(val int64) {
+	p.UserType = val
 }
 func (p *SmsSend) SetContent(val string) {
 	p.Content = val
@@ -258,8 +258,8 @@ func (p *SmsSend) IsSetBizId() bool {
 	return p.BizId != SmsSend_BizId_DEFAULT
 }
 
-func (p *SmsSend) IsSetNotifyType() bool {
-	return p.NotifyType != SmsSend_NotifyType_DEFAULT
+func (p *SmsSend) IsSetUserType() bool {
+	return p.UserType != SmsSend_UserType_DEFAULT
 }
 
 func (p *SmsSend) IsSetContent() bool {
@@ -283,7 +283,369 @@ var fieldIDToName_SmsSend = map[int16]string{
 	3:  "mobile",
 	5:  "code",
 	7:  "bizId",
-	8:  "notifyType",
+	8:  "userType",
 	9:  "content",
 	10: "templates",
+}
+
+type MessagesSend struct {
+	CreatedAt    string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status       int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	ReceivedAt   string `thrift:"receivedAt,4,optional" frugal:"4,optional,string" json:"receivedAt,omitempty"`
+	ReadAt       string `thrift:"readAt,5,optional" frugal:"5,optional,string" json:"readAt,omitempty"`
+	Id           int64  `thrift:"id,6,optional" frugal:"6,optional,i64" json:"id,omitempty"`
+	Type         int64  `thrift:"type,8,optional" frugal:"8,optional,i64" json:"type,omitempty"`
+	Content      string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	MessagesId   int64  `thrift:"messagesId,10,optional" frugal:"10,optional,i64" json:"messagesId,omitempty"`
+	FromUserId   int64  `thrift:"fromUserId,11,optional" frugal:"11,optional,i64" json:"fromUserId,omitempty"`
+	FromUserName string `thrift:"fromUserName,12,optional" frugal:"12,optional,string" json:"fromUserName,omitempty"`
+}
+
+func NewMessagesSend() *MessagesSend {
+	return &MessagesSend{
+		CreatedAt:    "",
+		Status:       0,
+		ReceivedAt:   "",
+		ReadAt:       "",
+		Id:           0,
+		Type:         1,
+		Content:      "",
+		MessagesId:   0,
+		FromUserId:   0,
+		FromUserName: "",
+	}
+}
+
+func (p *MessagesSend) InitDefault() {
+	p.CreatedAt = ""
+	p.Status = 0
+	p.ReceivedAt = ""
+	p.ReadAt = ""
+	p.Id = 0
+	p.Type = 1
+	p.Content = ""
+	p.MessagesId = 0
+	p.FromUserId = 0
+	p.FromUserName = ""
+}
+
+var MessagesSend_CreatedAt_DEFAULT string = ""
+
+func (p *MessagesSend) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return MessagesSend_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var MessagesSend_Status_DEFAULT int64 = 0
+
+func (p *MessagesSend) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return MessagesSend_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var MessagesSend_ReceivedAt_DEFAULT string = ""
+
+func (p *MessagesSend) GetReceivedAt() (v string) {
+	if !p.IsSetReceivedAt() {
+		return MessagesSend_ReceivedAt_DEFAULT
+	}
+	return p.ReceivedAt
+}
+
+var MessagesSend_ReadAt_DEFAULT string = ""
+
+func (p *MessagesSend) GetReadAt() (v string) {
+	if !p.IsSetReadAt() {
+		return MessagesSend_ReadAt_DEFAULT
+	}
+	return p.ReadAt
+}
+
+var MessagesSend_Id_DEFAULT int64 = 0
+
+func (p *MessagesSend) GetId() (v int64) {
+	if !p.IsSetId() {
+		return MessagesSend_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var MessagesSend_Type_DEFAULT int64 = 1
+
+func (p *MessagesSend) GetType() (v int64) {
+	if !p.IsSetType() {
+		return MessagesSend_Type_DEFAULT
+	}
+	return p.Type
+}
+
+var MessagesSend_Content_DEFAULT string = ""
+
+func (p *MessagesSend) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return MessagesSend_Content_DEFAULT
+	}
+	return p.Content
+}
+
+var MessagesSend_MessagesId_DEFAULT int64 = 0
+
+func (p *MessagesSend) GetMessagesId() (v int64) {
+	if !p.IsSetMessagesId() {
+		return MessagesSend_MessagesId_DEFAULT
+	}
+	return p.MessagesId
+}
+
+var MessagesSend_FromUserId_DEFAULT int64 = 0
+
+func (p *MessagesSend) GetFromUserId() (v int64) {
+	if !p.IsSetFromUserId() {
+		return MessagesSend_FromUserId_DEFAULT
+	}
+	return p.FromUserId
+}
+
+var MessagesSend_FromUserName_DEFAULT string = ""
+
+func (p *MessagesSend) GetFromUserName() (v string) {
+	if !p.IsSetFromUserName() {
+		return MessagesSend_FromUserName_DEFAULT
+	}
+	return p.FromUserName
+}
+func (p *MessagesSend) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *MessagesSend) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *MessagesSend) SetReceivedAt(val string) {
+	p.ReceivedAt = val
+}
+func (p *MessagesSend) SetReadAt(val string) {
+	p.ReadAt = val
+}
+func (p *MessagesSend) SetId(val int64) {
+	p.Id = val
+}
+func (p *MessagesSend) SetType(val int64) {
+	p.Type = val
+}
+func (p *MessagesSend) SetContent(val string) {
+	p.Content = val
+}
+func (p *MessagesSend) SetMessagesId(val int64) {
+	p.MessagesId = val
+}
+func (p *MessagesSend) SetFromUserId(val int64) {
+	p.FromUserId = val
+}
+func (p *MessagesSend) SetFromUserName(val string) {
+	p.FromUserName = val
+}
+
+func (p *MessagesSend) IsSetCreatedAt() bool {
+	return p.CreatedAt != MessagesSend_CreatedAt_DEFAULT
+}
+
+func (p *MessagesSend) IsSetStatus() bool {
+	return p.Status != MessagesSend_Status_DEFAULT
+}
+
+func (p *MessagesSend) IsSetReceivedAt() bool {
+	return p.ReceivedAt != MessagesSend_ReceivedAt_DEFAULT
+}
+
+func (p *MessagesSend) IsSetReadAt() bool {
+	return p.ReadAt != MessagesSend_ReadAt_DEFAULT
+}
+
+func (p *MessagesSend) IsSetId() bool {
+	return p.Id != MessagesSend_Id_DEFAULT
+}
+
+func (p *MessagesSend) IsSetType() bool {
+	return p.Type != MessagesSend_Type_DEFAULT
+}
+
+func (p *MessagesSend) IsSetContent() bool {
+	return p.Content != MessagesSend_Content_DEFAULT
+}
+
+func (p *MessagesSend) IsSetMessagesId() bool {
+	return p.MessagesId != MessagesSend_MessagesId_DEFAULT
+}
+
+func (p *MessagesSend) IsSetFromUserId() bool {
+	return p.FromUserId != MessagesSend_FromUserId_DEFAULT
+}
+
+func (p *MessagesSend) IsSetFromUserName() bool {
+	return p.FromUserName != MessagesSend_FromUserName_DEFAULT
+}
+
+func (p *MessagesSend) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MessagesSend(%+v)", *p)
+}
+
+var fieldIDToName_MessagesSend = map[int16]string{
+	1:  "createdAt",
+	2:  "status",
+	4:  "receivedAt",
+	5:  "readAt",
+	6:  "id",
+	8:  "type",
+	9:  "content",
+	10: "messagesId",
+	11: "fromUserId",
+	12: "fromUserName",
+}
+
+type Messages struct {
+	CreatedAt  string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status     int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	FromUserId int64  `thrift:"fromUserId,3,optional" frugal:"3,optional,i64" json:"fromUserId,omitempty"`
+	Id         int64  `thrift:"id,4,optional" frugal:"4,optional,i64" json:"id,omitempty"`
+	Type       int64  `thrift:"type,8,optional" frugal:"8,optional,i64" json:"type,omitempty"`
+	Content    string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+}
+
+func NewMessages() *Messages {
+	return &Messages{
+		CreatedAt:  "",
+		Status:     0,
+		FromUserId: 0,
+		Id:         0,
+		Type:       1,
+		Content:    "",
+	}
+}
+
+func (p *Messages) InitDefault() {
+	p.CreatedAt = ""
+	p.Status = 0
+	p.FromUserId = 0
+	p.Id = 0
+	p.Type = 1
+	p.Content = ""
+}
+
+var Messages_CreatedAt_DEFAULT string = ""
+
+func (p *Messages) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return Messages_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var Messages_Status_DEFAULT int64 = 0
+
+func (p *Messages) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Messages_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var Messages_FromUserId_DEFAULT int64 = 0
+
+func (p *Messages) GetFromUserId() (v int64) {
+	if !p.IsSetFromUserId() {
+		return Messages_FromUserId_DEFAULT
+	}
+	return p.FromUserId
+}
+
+var Messages_Id_DEFAULT int64 = 0
+
+func (p *Messages) GetId() (v int64) {
+	if !p.IsSetId() {
+		return Messages_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var Messages_Type_DEFAULT int64 = 1
+
+func (p *Messages) GetType() (v int64) {
+	if !p.IsSetType() {
+		return Messages_Type_DEFAULT
+	}
+	return p.Type
+}
+
+var Messages_Content_DEFAULT string = ""
+
+func (p *Messages) GetContent() (v string) {
+	if !p.IsSetContent() {
+		return Messages_Content_DEFAULT
+	}
+	return p.Content
+}
+func (p *Messages) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *Messages) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *Messages) SetFromUserId(val int64) {
+	p.FromUserId = val
+}
+func (p *Messages) SetId(val int64) {
+	p.Id = val
+}
+func (p *Messages) SetType(val int64) {
+	p.Type = val
+}
+func (p *Messages) SetContent(val string) {
+	p.Content = val
+}
+
+func (p *Messages) IsSetCreatedAt() bool {
+	return p.CreatedAt != Messages_CreatedAt_DEFAULT
+}
+
+func (p *Messages) IsSetStatus() bool {
+	return p.Status != Messages_Status_DEFAULT
+}
+
+func (p *Messages) IsSetFromUserId() bool {
+	return p.FromUserId != Messages_FromUserId_DEFAULT
+}
+
+func (p *Messages) IsSetId() bool {
+	return p.Id != Messages_Id_DEFAULT
+}
+
+func (p *Messages) IsSetType() bool {
+	return p.Type != Messages_Type_DEFAULT
+}
+
+func (p *Messages) IsSetContent() bool {
+	return p.Content != Messages_Content_DEFAULT
+}
+
+func (p *Messages) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Messages(%+v)", *p)
+}
+
+var fieldIDToName_Messages = map[int16]string{
+	1: "createdAt",
+	2: "status",
+	3: "fromUserId",
+	4: "id",
+	8: "type",
+	9: "content",
 }

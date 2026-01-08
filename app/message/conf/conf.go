@@ -23,6 +23,7 @@ type Config struct {
 	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
 	Redis      Redis      `yaml:"Redis"`
 	Aliyun     Aliyun     `yaml:"Aliyun"`
+	RabbitMq   RabbitMq   `yaml:"RabbitMq"`
 }
 
 type MySQL struct {
@@ -68,6 +69,14 @@ type Sms struct {
 type SmsTemplate struct {
 	SignName     string `mapstructure:"SignName" yaml:"SignName"`
 	TemplateCode string `mapstructure:"TemplateCode" yaml:"TemplateCode"`
+}
+
+type RabbitMq struct {
+	Host     string `mapstructure:"host" yaml:"host"`
+	Port     int    `mapstructure:"port" yaml:"port"`
+	Exchange string `mapstructure:"exchange" yaml:"exchange"`
+	User     string `mapstructure:"user" yaml:"user"`
+	Password string `mapstructure:"password" yaml:"password"`
 }
 
 // GetConf gets configuration instance

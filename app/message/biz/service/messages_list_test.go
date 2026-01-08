@@ -2,14 +2,17 @@ package service
 
 import (
 	"context"
+	message "gen/kitex_gen/message"
 	"testing"
 )
 
-func TestImgCaptcha_Run(t *testing.T) {
+func TestMessagesList_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewImgCaptchaService(ctx)
+	s := NewMessagesListService(ctx)
 	// init req and assert value
-	resp, err := s.Run()
+
+	req := &message.MessagesListReq{}
+	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
 

@@ -29,7 +29,7 @@ namespace go base
         6: optional i64 id=0  (api.raw = "id")
         8: optional i64 type = 1  (api.raw = "type")
         9: optional string content = ""  (api.raw = "content")
-        10: optional i64 messagesId = ""  (api.raw = "messagesId")
+        10: optional i64 messagesId = 0  (api.raw = "messagesId")
         11: optional i64 fromUserId=0  (api.raw = "fromUserId")
         12: optional string fromUserName = ""  (api.raw = "fromUserName")
      }

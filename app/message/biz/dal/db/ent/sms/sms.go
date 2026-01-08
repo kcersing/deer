@@ -28,7 +28,7 @@ const (
 	// FieldUsedNotice holds the string denoting the used_notice field in the database.
 	FieldUsedNotice = "used_notice"
 	// Table holds the table name of the sms in the database.
-	Table = "sms"
+	Table = "msg_sms"
 )
 
 // Columns holds all SQL columns for sms fields.

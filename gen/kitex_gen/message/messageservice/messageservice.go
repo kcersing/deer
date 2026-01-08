@@ -14,13 +14,6 @@ import (
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"ImgCaptcha": kitex.NewMethodInfo(
-		imgCaptchaHandler,
-		newMessageServiceImgCaptchaArgs,
-		newMessageServiceImgCaptchaResult,
-		false,
-		kitex.WithStreamingMode(kitex.StreamingNone),
-	),
 	"Sms": kitex.NewMethodInfo(
 		smsHandler,
 		newMessageServiceSmsArgs,
@@ -28,10 +21,10 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"SmsList": kitex.NewMethodInfo(
-		smsListHandler,
-		newMessageServiceSmsListArgs,
-		newMessageServiceSmsListResult,
+	"SmsSendList": kitex.NewMethodInfo(
+		smsSendListHandler,
+		newMessageServiceSmsSendListArgs,
+		newMessageServiceSmsSendListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -39,6 +32,34 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		sendSmsHandler,
 		newMessageServiceSendSmsArgs,
 		newMessageServiceSendSmsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"MessagesList": kitex.NewMethodInfo(
+		messagesListHandler,
+		newMessageServiceMessagesListArgs,
+		newMessageServiceMessagesListResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"SendMemberMessages": kitex.NewMethodInfo(
+		sendMemberMessagesHandler,
+		newMessageServiceSendMemberMessagesArgs,
+		newMessageServiceSendMemberMessagesResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"SendUserMessages": kitex.NewMethodInfo(
+		sendUserMessagesHandler,
+		newMessageServiceSendUserMessagesArgs,
+		newMessageServiceSendUserMessagesResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"MessagesSendList": kitex.NewMethodInfo(
+		messagesSendListHandler,
+		newMessageServiceMessagesSendListArgs,
+		newMessageServiceMessagesSendListResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -108,24 +129,6 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func imgCaptchaHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	_ = arg.(*message.MessageServiceImgCaptchaArgs)
-	realResult := result.(*message.MessageServiceImgCaptchaResult)
-	success, err := handler.(message.MessageService).ImgCaptcha(ctx)
-	if err != nil {
-		return err
-	}
-	realResult.Success = success
-	return nil
-}
-func newMessageServiceImgCaptchaArgs() interface{} {
-	return message.NewMessageServiceImgCaptchaArgs()
-}
-
-func newMessageServiceImgCaptchaResult() interface{} {
-	return message.NewMessageServiceImgCaptchaResult()
-}
-
 func smsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*message.MessageServiceSmsArgs)
 	realResult := result.(*message.MessageServiceSmsResult)
@@ -144,22 +147,22 @@ func newMessageServiceSmsResult() interface{} {
 	return message.NewMessageServiceSmsResult()
 }
 
-func smsListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*message.MessageServiceSmsListArgs)
-	realResult := result.(*message.MessageServiceSmsListResult)
-	success, err := handler.(message.MessageService).SmsList(ctx, realArg.Req)
+func smsSendListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceSmsSendListArgs)
+	realResult := result.(*message.MessageServiceSmsSendListResult)
+	success, err := handler.(message.MessageService).SmsSendList(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMessageServiceSmsListArgs() interface{} {
-	return message.NewMessageServiceSmsListArgs()
+func newMessageServiceSmsSendListArgs() interface{} {
+	return message.NewMessageServiceSmsSendListArgs()
 }
 
-func newMessageServiceSmsListResult() interface{} {
-	return message.NewMessageServiceSmsListResult()
+func newMessageServiceSmsSendListResult() interface{} {
+	return message.NewMessageServiceSmsSendListResult()
 }
 
 func sendSmsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -180,6 +183,78 @@ func newMessageServiceSendSmsResult() interface{} {
 	return message.NewMessageServiceSendSmsResult()
 }
 
+func messagesListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceMessagesListArgs)
+	realResult := result.(*message.MessageServiceMessagesListResult)
+	success, err := handler.(message.MessageService).MessagesList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceMessagesListArgs() interface{} {
+	return message.NewMessageServiceMessagesListArgs()
+}
+
+func newMessageServiceMessagesListResult() interface{} {
+	return message.NewMessageServiceMessagesListResult()
+}
+
+func sendMemberMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceSendMemberMessagesArgs)
+	realResult := result.(*message.MessageServiceSendMemberMessagesResult)
+	success, err := handler.(message.MessageService).SendMemberMessages(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceSendMemberMessagesArgs() interface{} {
+	return message.NewMessageServiceSendMemberMessagesArgs()
+}
+
+func newMessageServiceSendMemberMessagesResult() interface{} {
+	return message.NewMessageServiceSendMemberMessagesResult()
+}
+
+func sendUserMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceSendUserMessagesArgs)
+	realResult := result.(*message.MessageServiceSendUserMessagesResult)
+	success, err := handler.(message.MessageService).SendUserMessages(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceSendUserMessagesArgs() interface{} {
+	return message.NewMessageServiceSendUserMessagesArgs()
+}
+
+func newMessageServiceSendUserMessagesResult() interface{} {
+	return message.NewMessageServiceSendUserMessagesResult()
+}
+
+func messagesSendListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceMessagesSendListArgs)
+	realResult := result.(*message.MessageServiceMessagesSendListResult)
+	success, err := handler.(message.MessageService).MessagesSendList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceMessagesSendListArgs() interface{} {
+	return message.NewMessageServiceMessagesSendListArgs()
+}
+
+func newMessageServiceMessagesSendListResult() interface{} {
+	return message.NewMessageServiceMessagesSendListResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -188,15 +263,6 @@ func newServiceClient(c client.Client) *kClient {
 	return &kClient{
 		c: c,
 	}
-}
-
-func (p *kClient) ImgCaptcha(ctx context.Context) (r *base.NilResponse, err error) {
-	var _args message.MessageServiceImgCaptchaArgs
-	var _result message.MessageServiceImgCaptchaResult
-	if err = p.c.Call(ctx, "ImgCaptcha", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
 }
 
 func (p *kClient) Sms(ctx context.Context, req *base.IdReq) (r *message.SmsResp, err error) {
@@ -209,11 +275,11 @@ func (p *kClient) Sms(ctx context.Context, req *base.IdReq) (r *message.SmsResp,
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) SmsList(ctx context.Context, req *message.SendSmsListReq) (r *message.SendSmsListResp, err error) {
-	var _args message.MessageServiceSmsListArgs
+func (p *kClient) SmsSendList(ctx context.Context, req *message.SmsSendListReq) (r *message.SmsSendListResp, err error) {
+	var _args message.MessageServiceSmsSendListArgs
 	_args.Req = req
-	var _result message.MessageServiceSmsListResult
-	if err = p.c.Call(ctx, "SmsList", &_args, &_result); err != nil {
+	var _result message.MessageServiceSmsSendListResult
+	if err = p.c.Call(ctx, "SmsSendList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -224,6 +290,46 @@ func (p *kClient) SendSms(ctx context.Context, req *message.SendSmsReq) (r *base
 	_args.Req = req
 	var _result message.MessageServiceSendSmsResult
 	if err = p.c.Call(ctx, "SendSms", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) MessagesList(ctx context.Context, req *message.MessagesListReq) (r *message.MessagesListResp, err error) {
+	var _args message.MessageServiceMessagesListArgs
+	_args.Req = req
+	var _result message.MessageServiceMessagesListResult
+	if err = p.c.Call(ctx, "MessagesList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq) (r *base.NilResponse, err error) {
+	var _args message.MessageServiceSendMemberMessagesArgs
+	_args.Req = req
+	var _result message.MessageServiceSendMemberMessagesResult
+	if err = p.c.Call(ctx, "SendMemberMessages", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq) (r *base.NilResponse, err error) {
+	var _args message.MessageServiceSendUserMessagesArgs
+	_args.Req = req
+	var _result message.MessageServiceSendUserMessagesResult
+	if err = p.c.Call(ctx, "SendUserMessages", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq) (r *message.MessagesSendListResp, err error) {
+	var _args message.MessageServiceMessagesSendListArgs
+	_args.Req = req
+	var _result message.MessageServiceMessagesSendListResult
+	if err = p.c.Call(ctx, "MessagesSendList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

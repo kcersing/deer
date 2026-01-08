@@ -36,7 +36,7 @@ const (
 	// FieldTemplate holds the string denoting the template field in the database.
 	FieldTemplate = "template"
 	// Table holds the table name of the smssentrecords in the database.
-	Table = "sms_sent_records"
+	Table = "msg_sms_sent_records"
 )
 
 // Columns holds all SQL columns for smssentrecords fields.

@@ -7,6 +7,7 @@ import (
 
 	"gen/kitex_gen/crm/crmservice"
 
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 
@@ -26,7 +27,8 @@ func initCrmRpc() {
 
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
-			panic(err)
+			hlog.Error("NewEtcdResolver err: %s", err)
+			return
 		}
 		c, err := crmservice.NewClient(
 			consts.CrmRpcServiceName,
@@ -42,7 +44,8 @@ func initCrmRpc() {
 			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
-			panic(err)
+			hlog.Error("NewClient err: %s", err)
+			return
 		}
 		CrmClient = c
 

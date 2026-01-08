@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/product/productservice"
 	"sync"
 
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 

@@ -33,7 +33,7 @@ const (
 	// FieldReadAt holds the string denoting the read_at field in the database.
 	FieldReadAt = "read_at"
 	// Table holds the table name of the messagessentrecords in the database.
-	Table = "messages_sent_records"
+	Table = "msg_messages_sent_records"
 )
 
 // Columns holds all SQL columns for messagessentrecords fields.

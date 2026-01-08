@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-
+	base "gen/kitex_gen/base"
 	message "gen/kitex_gen/message"
 	"testing"
 )

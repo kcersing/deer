@@ -4,14 +4,17 @@ import (
 	"common/consts"
 	"common/mw"
 	"gen/kitex_gen/system/systemservice"
+	"sync"
+
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	"sync"
+
+	"time"
 
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
-	"time"
 )
 
 var SystemClient systemservice.Client
@@ -21,7 +24,8 @@ func initSystemRpc() {
 	SystemOnceClient.Do(func() {
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
-			panic(err)
+			hlog.Error("NewEtcdResolver err: %s", err)
+			return
 		}
 		c, err := systemservice.NewClient(
 			consts.SystemRpcServiceName,
@@ -37,7 +41,8 @@ func initSystemRpc() {
 			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
-			panic(err)
+			hlog.Error("NewClient err: %s", err)
+			return
 		}
 		SystemClient = c
 	})

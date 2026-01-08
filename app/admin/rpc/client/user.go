@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/user/userservice"
 	"sync"
 
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/retry"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
@@ -24,7 +25,8 @@ func initUserRpc() {
 
 		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
 		if err != nil {
-			panic(err)
+			hlog.Error("NewEtcdResolver err: %s", err)
+			return
 		}
 		c, err := userservice.NewClient(
 			consts.UserRpcServiceName,
@@ -40,9 +42,9 @@ func initUserRpc() {
 			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
 		)
 		if err != nil {
-			panic(err)
+			hlog.Error("NewClient err: %s", err)
+			return
 		}
-
 		UserClient = c
 
 	})
