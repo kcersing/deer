@@ -4,9 +4,10 @@ package main
 
 import (
 	"admin/biz/mw"
-	"admin/rpc/client"
+	"admin/rpc"
 	"common/consts"
 	"common/mtl"
+
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	prometheus "github.com/hertz-contrib/monitor-prometheus"
@@ -17,7 +18,7 @@ import (
 )
 
 func Init() {
-	client.Init()
+	rpc.InitRpc()
 	mw.InitJwt()
 	hlog.SetLogger(hertzlogrus.NewLogger())
 	hlog.SetLevel(hlog.LevelInfo)

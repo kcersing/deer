@@ -2,48 +2,37 @@ package client
 
 import (
 	"common/consts"
-	"common/mw"
+	"common/rpc"
 	"gen/kitex_gen/system/systemservice"
 	"sync"
 
-	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-
-	"time"
-
-	"github.com/cloudwego/kitex/client"
-	"github.com/cloudwego/kitex/pkg/retry"
-	etcd "github.com/kitex-contrib/registry-etcd"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 var SystemClient systemservice.Client
-var SystemOnceClient sync.Once
+var systemOnceClient sync.Once
 
-func initSystemRpc() {
-	SystemOnceClient.Do(func() {
-		r, err := etcd.NewEtcdResolver([]string{consts.EtcdAddress})
-		if err != nil {
-			hlog.Error("NewEtcdResolver err: %s", err)
-			return
+func InitSystemRpc() {
+	systemOnceClient.Do(func() {
+
+		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.SystemRpcServiceName)
+
+		r := rpc.Resolver{
+			R:                nr,
+			ServiceName:      consts.SystemRpcServiceName,
+			BasicServiceName: consts.AdminServiceName,
+			EndpointAddress:  consts.OpenTelemetryAddress,
 		}
-		c, err := systemservice.NewClient(
-			consts.SystemRpcServiceName,
-			client.WithResolver(r), // resolver
-			//client.WithMuxConnection(1),
-			client.WithRPCTimeout(3*time.Second),              // rpc timeout
-			client.WithConnectTimeout(50*time.Millisecond),    // conn timeout
-			client.WithFailureRetry(retry.NewFailurePolicy()), // retry
 
-			client.WithMiddleware(mw.CommonMiddleware),
-			client.WithInstanceMW(mw.ClientsMiddleware),
-			client.WithSuite(tracing.NewClientSuite()),
-			client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "admin"}),
+		c, err := systemservice.NewClient(
+			r.ServiceName,
+			r.Options()...,
 		)
+		r.NewOpenTelemetryProvider()
 		if err != nil {
-			hlog.Error("NewClient err: %s", err)
-			return
+			klog.Fatalf("ERROR: cannot init client: %v\n", err)
 		}
 		SystemClient = c
+
 	})
 }

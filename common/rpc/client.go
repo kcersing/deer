@@ -1,4 +1,4 @@
-package client
+package rpc
 
 import (
 	"common/consts"
@@ -25,7 +25,7 @@ import (
 )
 
 type Resolver struct {
-	r                discovery.Resolver
+	R                discovery.Resolver
 	ServiceName      string
 	BasicServiceName string
 	EndpointAddress  string
@@ -76,7 +76,7 @@ func (r Resolver) NewOpenTelemetryProvider() {
 }
 func (r Resolver) Options() []client.Option {
 	return []client.Option{
-		client.WithResolver(r.r),                                   // resolver
+		client.WithResolver(r.R),                                   // resolver
 		client.WithLoadBalancer(loadbalance.NewWeightedBalancer()), // load balance
 		//client.WithMuxConnection(1),                       // multiplexing
 		client.WithRPCTimeout(3 * time.Second),            // rpc timeout
