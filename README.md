@@ -25,21 +25,19 @@ An e-commerce demo built with `Kitex` and `Hertz`.
     * [gzip](https://github.com/hertz-contrib/gzip)
     * [casbin](https://github.com/casbin/casbin/v2)
 
-## 技术栈
-| 技术            | 介绍 |
-|---------------|----|
-| cwgo          | -  |
-| kitex         | -  |
-| [bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/) | Bootstrap is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes.  |
-| Hertz         | -  |
-| MySQL         | -  |
-| Redis         | -  |
-| ES            | -  |
-| Prometheus    | -  |
-| Jaeger        | -  |
-| Docker        | -  |
+### 技术选型
 
+- HTTP 框架使用 Hertz
+- RPC 框架使用 Kitex
+- 关系型数据库选用 Postgres
+- 非关系型数据库选用 Redis
+- 服务中心与配置中心均选用 Nacos
+- 对象存储服务使用 Minio
+- 消息队列使用 RabbitMQ
+- 使用 Jaeger 与 Prometheus 进行链路追踪以及监控
+- CI 使用 Github Actions
 
+### 架构设计
 
 ## 规划
 

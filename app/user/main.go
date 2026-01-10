@@ -6,15 +6,6 @@ import (
 	"common/mw"
 	"common/pkg/utils"
 	user "gen/kitex_gen/user/userservice"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/cloudwego/kitex/pkg/limit"
-	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/pkg/transmeta"
-	"github.com/cloudwego/kitex/server"
-	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	etcd "github.com/kitex-contrib/registry-etcd"
-	"github.com/kitex-contrib/registry-etcd/retry"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net"
 	"os"
@@ -24,6 +15,15 @@ import (
 	"user/biz/dal"
 	"user/conf"
 	"user/rpc"
+
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/cloudwego/kitex/pkg/limit"
+	"github.com/cloudwego/kitex/pkg/rpcinfo"
+	"github.com/cloudwego/kitex/pkg/transmeta"
+	"github.com/cloudwego/kitex/server"
+	"github.com/kitex-contrib/obs-opentelemetry/tracing"
+	etcd "github.com/kitex-contrib/registry-etcd"
+	"github.com/kitex-contrib/registry-etcd/retry"
 )
 
 func init() {
@@ -49,12 +49,8 @@ func main() {
 			return
 		}
 	}
-	mtl.InitLog(&lumberjack.Logger{
-		Filename:   fileName,
-		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
-		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
-		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
-	}, false)
+	
+	mtl.InitLog(false)
 
 	//mtl.InitTracing(serviceName)
 

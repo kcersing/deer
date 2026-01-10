@@ -14,28 +14,24 @@ require (
 	gen v0.0.0-00010101000000-000000000000
 	github.com/ArtisanCloud/PowerLibs/v3 v3.3.2
 	github.com/ArtisanCloud/PowerWeChat/v3 v3.4.28
-	github.com/alibabacloud-go/darabonba-openapi/v2 v2.1.13
-	github.com/alibabacloud-go/dysmsapi-20170525/v4 v4.1.3
-	github.com/alibabacloud-go/tea v1.3.13
-	github.com/alibabacloud-go/tea-utils/v2 v2.0.7
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/bytedance/sonic v1.14.1
 	github.com/casbin/casbin/v2 v2.128.0
 	github.com/casbin/ent-adapter v1.1.0
-	github.com/cloudwego/hertz v0.9.4-0.20241021100040-3477b0309b81
+	github.com/cloudwego/hertz v0.9.6
 	github.com/cloudwego/kitex v0.15.1
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/hertz-contrib/websocket v0.2.0
+	github.com/hertz-contrib/registry/nacos v0.0.0-20250319055937-8a220332e808
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/kitex-contrib/obs-opentelemetry v0.2.9
 	github.com/kitex-contrib/registry-etcd v0.3.0
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.10.9
 	github.com/minio/minio-go/v7 v7.0.95
+	github.com/nacos-group/nacos-sdk-go v1.1.6
 	github.com/pkg/errors v0.9.1
-	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/redis/go-redis/v9 v9.14.0
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.21
-	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/validator.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.4.0
 )
@@ -44,18 +40,13 @@ require (
 	ariga.io/atlas v0.32.1-0.20250325101103-175b25e1c1b9 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
-	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5 // indirect
-	github.com/alibabacloud-go/debug v1.0.1 // indirect
-	github.com/alibabacloud-go/endpoint-util v1.1.0 // indirect
-	github.com/alibabacloud-go/openapi-util v0.1.1 // indirect
-	github.com/aliyun/credentials-go v1.4.5 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bmatcuk/doublestar v1.3.4 // indirect
 	github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
-	github.com/bwmarrin/snowflake v0.3.0 // indirect
-	github.com/bytedance/go-tagexpr/v2 v2.9.2 // indirect
+	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/bytedance/gopkg v0.1.3 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect
 	github.com/casbin/govaluate v1.3.0 // indirect
@@ -81,6 +72,7 @@ require (
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/go-errors/errors v1.0.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
@@ -91,6 +83,7 @@ require (
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8 // indirect
 	github.com/google/uuid v1.6.0 // indirect
+	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2 // indirect
 	github.com/hashicorp/consul/api v1.26.1 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -102,17 +95,18 @@ require (
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/hashicorp/hcl/v2 v2.23.0 // indirect
 	github.com/hashicorp/serf v0.10.1 // indirect
-	github.com/henrylee2cn/ameda v1.4.10 // indirect
-	github.com/henrylee2cn/goutil v0.0.0-20210127050712-89660552f6f8 // indirect
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jhump/protoreflect v1.8.2 // indirect
+	github.com/jinzhu/copier v0.4.0 // indirect
+	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kitex-contrib/obs-opentelemetry/logging/zap v0.0.0-20241120035129-55da83caab1b // indirect
 	github.com/kitex-contrib/registry-consul v0.2.0 // indirect
+	github.com/kitex-contrib/registry-nacos v0.1.3 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.11 // indirect
 	github.com/kr/text v0.2.0 // indirect
@@ -137,12 +131,12 @@ require (
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/rs/xid v1.6.0 // indirect
+	github.com/smartystreets/assertions v1.1.0 // indirect
 	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tinylib/msgp v1.3.0 // indirect
-	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/zclconf/go-cty v1.16.2 // indirect
 	github.com/zclconf/go-cty-yaml v1.1.0 // indirect
@@ -181,5 +175,6 @@ require (
 	google.golang.org/grpc v1.75.0 // indirect
 	google.golang.org/protobuf v1.36.8 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

@@ -24,7 +24,6 @@ import (
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 	etcd "github.com/kitex-contrib/registry-etcd"
 	"github.com/kitex-contrib/registry-etcd/retry"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 func init() {
@@ -50,12 +49,8 @@ func main() {
 			return
 		}
 	}
-	mtl.InitLog(&lumberjack.Logger{
-		Filename:   fileName,
-		MaxSize:    conf.GetConf().Kitex.LogMaxSize,
-		MaxBackups: conf.GetConf().Kitex.LogMaxBackups,
-		MaxAge:     conf.GetConf().Kitex.LogMaxAge,
-	}, false)
+
+	mtl.InitLog(false)
 
 	//mtl.InitTracing(serviceName)
 

@@ -5,17 +5,22 @@ const (
 	ExportFilePath = "./file/export"
 	SecretKey      = "secret key"
 	IdentityKey    = "id"
+	LogLevel       = "debug"
+	LogFileName    = "log/kitex.log"
+	LogMaxSize     = 20
+	LogMaxBackups  = 5
+	LogMaxAge      = 10
 
 	WechatFilePath = "./file/wechat/"
 
-	TCP                  = "tcp"
-	ExportEndpoint       = "4317"
-	EtcdAddress          = "101.201.55.134:2379"
-	ESAddress            = "http://101.201.55.134:9200"
-	DefaultLimit         = 10
-	OpenTelemetryAddress = "101.201.55.134:4317"
+	TCP = "tcp"
 
-	NacosIpAddr   = "101.201.55.134"
+	EtcdAddress          = "127.0.0.1:2379"
+	ESAddress            = "http://127.0.0.1:9200"
+	DefaultLimit         = 10
+	OpenTelemetryAddress = "127.0.0.1:4317"
+
+	NacosIpAddr   = "127.0.0.1"
 	NacosPort     = 8848
 	NacosLogDir   = "./file/nacos/log"
 	NacosCacheDir = "./file/nacos/cache"

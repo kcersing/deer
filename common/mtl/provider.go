@@ -3,6 +3,7 @@ package mtl
 import (
 	"common/consts"
 	"context"
+
 	"github.com/hertz-contrib/obs-opentelemetry/provider"
 )
 
@@ -14,7 +15,7 @@ import (
 func InitProvider(serviceName string) {
 	p := provider.NewOpenTelemetryProvider(
 		provider.WithServiceName(serviceName),
-		provider.WithExportEndpoint(consts.ExportEndpoint),
+		provider.WithExportEndpoint(consts.OpenTelemetryAddress),
 		provider.WithInsecure(),
 	)
 	defer func(ctx context.Context, p provider.OtelProvider) {
