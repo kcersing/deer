@@ -3,7 +3,7 @@
 package menu
 
 import (
-	"admin/infras/utils"
+	"admin/biz/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"

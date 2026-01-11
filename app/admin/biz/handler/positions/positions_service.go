@@ -3,7 +3,7 @@
 package positions
 
 import (
-	utils2 "admin/infras/utils"
+	utils2 "admin/biz/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"context"
@@ -14,6 +14,7 @@ import (
 	base "gen/hertz_gen/base"
 
 	base1 "gen/kitex_gen/base"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 

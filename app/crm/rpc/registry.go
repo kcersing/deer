@@ -8,5 +8,5 @@ import (
 )
 
 func Registry() (registry2.Registry, *registry2.Info) {
-	return registry.NewRegisterNacos("", consts.SystemRpcServiceName, consts.SystemSnowflakeNode)
+	return registry.NewRegisterNacos("", consts.CrmRpcServiceName, consts.CrmSnowflakeNode)
 }

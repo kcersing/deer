@@ -3,11 +3,11 @@
 package product
 
 import (
+	utils2 "admin/biz/infras/utils"
 	"gen/hertz_gen/base"
 
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 
-	utils2 "admin/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"context"

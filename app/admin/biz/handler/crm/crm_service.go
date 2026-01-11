@@ -3,7 +3,7 @@
 package crm
 
 import (
-	utils2 "admin/infras/utils"
+	utils2 "admin/biz/infras/utils"
 	crm2 "gen/kitex_gen/crm"
 
 	"gen/hertz_gen/crm"

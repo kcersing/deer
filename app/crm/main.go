@@ -9,12 +9,8 @@ import (
 	"crm/conf"
 	"crm/rpc"
 	crm "gen/kitex_gen/crm/crmservice"
-	"log"
 	"net"
-	"os"
-	"path"
 	"strings"
-	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
@@ -22,8 +18,6 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	etcd "github.com/kitex-contrib/registry-etcd"
-	"github.com/kitex-contrib/registry-etcd/retry"
 )
 
 func init() {
@@ -35,32 +29,19 @@ var serviceName = conf.GetConf().Kitex.Service
 func main() {
 
 	mtl.InitFlightRecorder()
-	logFilePath := consts.LogFilePath
-	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
-		panic(err)
-	}
 
-	// Set filename to date
-	logFileName := time.Now().Format(time.DateOnly) + ".log"
-	fileName := path.Join(logFilePath, logFileName)
-	if _, err := os.Stat(fileName); err != nil {
-		if _, err := os.Create(fileName); err != nil {
-			log.Println(err.Error())
-			return
-		}
-	}
 	mtl.InitLog(false)
 
-	//mtl.InitTracing(serviceName)
+	mtl.InitTracing(serviceName)
 
 	//mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
 
-	//mtl.InitProvider(serviceName)
-
-	opts := kitexInit()
+	mtl.InitProvider(serviceName)
 
 	rpc.Init()
 
+	opts := kitexInit()
+	
 	svr := crm.NewServer(new(CrmServiceImpl), opts...)
 	err := svr.Run()
 	if err != nil {
@@ -68,6 +49,8 @@ func main() {
 	}
 }
 func kitexInit() (opts []server.Option) {
+
+	r, info := rpc.Registry()
 
 	// address
 	address := conf.GetConf().Kitex.Address
@@ -79,16 +62,8 @@ func kitexInit() (opts []server.Option) {
 	if err != nil {
 		panic(err)
 	}
-	retryConfig := retry.NewRetryConfig(
-		retry.WithMaxAttemptTimes(10),
-		retry.WithObserveDelay(20*time.Second),
-		retry.WithRetryDelay(5*time.Second),
-	)
-	r, err := etcd.NewEtcdRegistryWithRetry([]string{consts.EtcdAddress}, retryConfig)
 
 	opts = append(opts,
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
-
 		server.WithServiceAddr(addr),
 		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
 		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
@@ -96,7 +71,10 @@ func kitexInit() (opts []server.Option) {
 		server.WithMiddleware(mw.CommonMiddleware),
 		server.WithMiddleware(mw.ServerMiddleware),
 		server.WithSuite(tracing.NewServerSuite()),
+		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
+
 		server.WithRegistry(r),
+		server.WithRegistryInfo(info),
 	)
 
 	return

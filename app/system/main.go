@@ -13,7 +13,6 @@ import (
 	"system/biz/dal"
 	"system/conf"
 	"system/rpc"
-	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/cloudwego/kitex/pkg/limit"
@@ -21,8 +20,6 @@ import (
 	"github.com/cloudwego/kitex/pkg/transmeta"
 	"github.com/cloudwego/kitex/server"
 	"github.com/kitex-contrib/obs-opentelemetry/tracing"
-	etcd "github.com/kitex-contrib/registry-etcd"
-	"github.com/kitex-contrib/registry-etcd/retry"
 )
 
 func init() {
@@ -43,9 +40,9 @@ func main() {
 
 	mtl.InitProvider(serviceName)
 
-	opts := kitexInit()
-
 	rpc.Init()
+
+	opts := kitexInit()
 
 	svr := system.NewServer(new(SystemServiceImpl), opts...)
 
@@ -57,6 +54,8 @@ func main() {
 }
 func kitexInit() (opts []server.Option) {
 
+	r, info := rpc.Registry()
+
 	// address
 	address := conf.GetConf().Kitex.Address
 	if strings.HasPrefix(address, ":") {
@@ -67,16 +66,8 @@ func kitexInit() (opts []server.Option) {
 	if err != nil {
 		panic(err)
 	}
-	retryConfig := retry.NewRetryConfig(
-		retry.WithMaxAttemptTimes(10),
-		retry.WithObserveDelay(20*time.Second),
-		retry.WithRetryDelay(5*time.Second),
-	)
-	r, err := etcd.NewEtcdRegistryWithRetry([]string{consts.EtcdAddress}, retryConfig)
-	r, info := rpc.Registry()
-	rpc.Init()
-	opts = append(opts,
 
+	opts = append(opts,
 		server.WithServiceAddr(addr),
 		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
 		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),

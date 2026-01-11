@@ -3,7 +3,7 @@
 package member
 
 import (
-	utils2 "admin/infras/utils"
+	utils2 "admin/biz/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"common/pkg/utils"

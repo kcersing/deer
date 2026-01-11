@@ -18,7 +18,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/vo"
 )
 
-func NewRegisterNacos(namespaceId, rpcServiceName string) (registry.Registry, *registry.Info) {
+func NewRegisterNacos(namespaceId, rpcServiceName string, flakeNode int64) (registry.Registry, *registry.Info) {
 
 	nacosClient, err := clients.NewNamingClient(
 		vo.NacosClientParam{
@@ -43,7 +43,7 @@ func NewRegisterNacos(namespaceId, rpcServiceName string) (registry.Registry, *r
 	// 注册
 	r := nacos.NewNacosRegistry(nacosClient, nacos.WithGroup(rpcServiceName))
 
-	sf, err := snowflake.NewNode(2)
+	sf, err := snowflake.NewNode(flakeNode)
 	if err != nil {
 		klog.Fatalf("new snowflake node failed: %s", err.Error())
 	}

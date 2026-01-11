@@ -3,25 +3,26 @@
 package main
 
 import (
+	"admin/biz/infras/logger"
 	"admin/biz/mw"
 	"admin/rpc"
 	"common/consts"
 	"common/mtl"
-
+	"context"
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
 	prometheus "github.com/hertz-contrib/monitor-prometheus"
-	hertzlogrus "github.com/hertz-contrib/obs-opentelemetry/logging/logrus"
 	"github.com/hertz-contrib/obs-opentelemetry/tracing"
-	//hertzSentinel "github.com/hertz-contrib/opensergo/sentinel/adapter"
+
+	"github.com/hertz-contrib/opensergo/sentinel/adapter"
 	"github.com/hertz-contrib/pprof"
+	"net/http"
 )
 
 func Init() {
 	rpc.InitRpc()
 	mw.InitJwt()
-	hlog.SetLogger(hertzlogrus.NewLogger())
-	hlog.SetLevel(hlog.LevelInfo)
+	logger.InitLog(false)
 	mtl.InitProvider(consts.AdminServiceName)
 }
 
@@ -31,9 +32,11 @@ func main() {
 
 	tracer, cfg := tracing.NewServerTracer()
 	h := server.New(
+		//server.WithRegistry(r, info),
 		server.WithStreamBody(true),
 		server.WithHostPorts(":9010"),
 		server.WithHandleMethodNotAllowed(true),
+		//server.WithRegistry(r, info),
 		tracer,
 		server.WithTracer(
 			prometheus.NewServerTracer(":9089", "/hertz",
@@ -48,13 +51,13 @@ func main() {
 	// use otel mw
 	h.Use(tracing.ServerMiddleware(cfg))
 
-	//h.Use(hertzSentinel.SentinelServerMiddleware(
-	//	// abort with status 429 by default
-	//	hertzSentinel.WithServerBlockFallback(func(c context.Context, ctx *app.RequestContext) {
-	//		ctx.JSON(http.StatusTooManyRequests, nil)
-	//		ctx.Abort()
-	//	}),
-	//))
+	h.Use(adapter.SentinelServerMiddleware(
+		// abort with status 429 by default
+		adapter.WithServerBlockFallback(func(c context.Context, ctx *app.RequestContext) {
+			ctx.JSON(http.StatusTooManyRequests, nil)
+			ctx.Abort()
+		}),
+	))
 
 	register(h)
 	h.Spin()

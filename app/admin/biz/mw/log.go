@@ -1,7 +1,7 @@
 package mw
 
 import (
-	"admin/infras/utils"
+	"admin/biz/infras/utils"
 	"admin/rpc/client"
 	"context"
 	system "gen/kitex_gen/system"
