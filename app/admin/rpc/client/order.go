@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/rpc"
+	"common/rpc/client"
 	"gen/kitex_gen/order/orderservice"
 	"sync"
 
@@ -16,9 +16,9 @@ func InitOrderRpc() {
 
 	orderOnceClient.Do(func() {
 
-		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.OrderRpcServiceName)
+		nr := client.NewNacosResolver(consts.OrderRpcServiceName, consts.OrderRpcServiceName)
 
-		r := rpc.Resolver{
+		r := client.Resolver{
 			R:                nr,
 			ServiceName:      consts.OrderRpcServiceName,
 			BasicServiceName: consts.AdminServiceName,

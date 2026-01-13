@@ -40,9 +40,9 @@ type Redis struct {
 }
 
 type Kitex struct {
-	Service string `yaml:"Service"`
-	Address string `yaml:"Address"`
-
+	Service         string `yaml:"Service"`
+	Address         string `yaml:"Address"`
+	Node            int64  `yaml:"Node"`
 	MetricsPort     string `yaml:"MetricsPort"`
 	EnablePprof     bool   `yaml:"EnablePprof"`
 	EnableGzip      bool   `yaml:"EnableGzip"`

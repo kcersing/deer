@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/rpc"
+	"common/rpc/client"
 	"gen/kitex_gen/member/memberservice"
 	"sync"
 
@@ -15,9 +15,9 @@ var memberOnceClient sync.Once
 func InitMemberRpc() {
 
 	memberOnceClient.Do(func() {
-		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.MemberRpcServiceName)
+		nr := client.NewNacosResolver(consts.MemberRpcServiceName, consts.MemberRpcServiceName)
 
-		r := rpc.Resolver{
+		r := client.Resolver{
 			R:                nr,
 			ServiceName:      consts.MemberRpcServiceName,
 			BasicServiceName: consts.AdminServiceName,

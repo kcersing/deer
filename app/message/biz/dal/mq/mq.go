@@ -1,13 +1,11 @@
 package mq
 
 import (
-	"context"
 	"fmt"
-	"message/conf"
 	"sync"
 
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/streadway/amqp"
+	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 var (
@@ -22,20 +20,12 @@ func InitMQ() {
 }
 
 func initMQ() *amqp.Connection {
-	c := conf.GetConf().RabbitMq
-	client, err := amqp.Dial(fmt.Sprintf(c.Host, c.User, c.Password, c.Host, c.Port))
+	//c := conf.GetConf().RabbitMq
+	//klog.Info(c)
+	//client, err := amqp.Dial(fmt.Sprintf(c.Host, c.User, c.Password, c.Host, c.Port))
+	client, err := amqp.Dial(fmt.Sprintf("amqp://%s:%s@%s:%d/", "kcersing", "kcer-913639", "127.0.0.1", 5672))
 	if err != nil {
 		klog.Fatal("cannot dial amqp", err)
 	}
 	return client
-}
-
-// Publisher 定义发布接口。
-type Publisher interface {
-	Publish(c context.Context, a any) (err error)
-}
-
-// Subscriber 定义订阅接口。
-type Subscriber interface {
-	Subscribe(c context.Context) (ch chan *any, cleanUp func(), err error)
 }

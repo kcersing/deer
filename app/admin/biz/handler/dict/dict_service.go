@@ -14,6 +14,7 @@ import (
 	"gen/kitex_gen/system"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 // CreateDict .
@@ -109,6 +110,8 @@ func DictList(ctx context.Context, c *app.RequestContext) {
 		PageSize: req.GetPageSize(),
 	})
 
+	hlog.Info(client.SystemClient)
+	hlog.Info(resp)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return

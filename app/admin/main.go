@@ -6,32 +6,38 @@ import (
 	"admin/biz/infras/logger"
 	"admin/biz/mw"
 	"admin/rpc"
+	"common/rpc/registry"
+
 	"common/consts"
 	"common/mtl"
 	"context"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	prometheus "github.com/hertz-contrib/monitor-prometheus"
 	"github.com/hertz-contrib/obs-opentelemetry/tracing"
 
+	"net/http"
+
 	"github.com/hertz-contrib/opensergo/sentinel/adapter"
 	"github.com/hertz-contrib/pprof"
-	"net/http"
 )
 
 func Init() {
+	mtl.InitFlightRecorder()
 	rpc.InitRpc()
 	mw.InitJwt()
-	logger.InitLog(false)
+	logger.InitLog(true)
 	mtl.InitProvider(consts.AdminServiceName)
 }
 
 func main() {
 
 	Init()
-
+	r, info := registry.NewHertzRegisterNacos("admin", 1, "127.0.0.1", 9010)
 	tracer, cfg := tracing.NewServerTracer()
 	h := server.New(
+		server.WithRegistry(r, info),
 		//server.WithRegistry(r, info),
 		server.WithStreamBody(true),
 		server.WithHostPorts(":9010"),
@@ -46,6 +52,7 @@ func main() {
 	)
 	h.NoHijackConnPool = true
 	h.Static("/export", "./files/")
+
 	// use pprof mw
 	pprof.Register(h)
 	// use otel mw
@@ -60,5 +67,6 @@ func main() {
 	))
 
 	register(h)
+
 	h.Spin()
 }

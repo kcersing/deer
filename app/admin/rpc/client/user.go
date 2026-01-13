@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/rpc"
+	"common/rpc/client"
 	"gen/kitex_gen/user/userservice"
 	"sync"
 
@@ -15,11 +15,11 @@ var userOnceClient sync.Once
 func InitUserRpc() {
 	userOnceClient.Do(func() {
 
-		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.SystemRpcServiceName)
+		nr := client.NewNacosResolver(consts.UserRpcServiceName, consts.UserRpcServiceName)
 
-		r := rpc.Resolver{
+		r := client.Resolver{
 			R:                nr,
-			ServiceName:      consts.SystemRpcServiceName,
+			ServiceName:      consts.UserRpcServiceName,
 			BasicServiceName: consts.AdminServiceName,
 			EndpointAddress:  consts.OpenTelemetryAddress,
 		}

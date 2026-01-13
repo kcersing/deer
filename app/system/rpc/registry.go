@@ -7,6 +7,6 @@ import (
 	registry2 "github.com/cloudwego/kitex/pkg/registry"
 )
 
-func Registry() (registry2.Registry, *registry2.Info) {
-	return registry.NewRegisterNacos("", consts.SystemRpcServiceName, consts.SystemSnowflakeNode)
+func Registry(address string) (registry2.Registry, *registry2.Info) {
+	return registry.NewRegisterNacos(consts.SystemRpcServiceName, 2, address)
 }

@@ -28,19 +28,28 @@ func NewPublisher(conn *amqp.Connection, exchange string) (*Publisher, error) {
 	return &Publisher{
 		ch:       ch,
 		exchange: exchange,
-	}, err
+	}, nil
 }
 
 // Publish publishes a message.
-func (p *Publisher) Publish(_ context.Context, s struct{}) error {
+func (p *Publisher) Publish(_ context.Context, s interface{}) error {
 	// 将消息结构体序列化为 JSON
-	body, err := sonic.Marshal(s)
+
+	body, err := sonic.Marshal(&s)
+
 	if err != nil {
 		return fmt.Errorf("cannot marshal: %v", err)
 	}
-	return p.ch.Publish(p.exchange, "", false, false,
+
+	return p.ch.Publish(
+		p.exchange,
+		"",
+		false,
+		false,
 		amqp.Publishing{
+			//ContentType:  "application/json",
 			Body: body,
+			//DeliveryMode: amqp.Persistent, // 消息持久化
 		},
 	)
 }
@@ -53,6 +62,16 @@ type Subscriber struct {
 
 // NewSubscriber creates an amqp subscriber.
 func NewSubscriber(conn *amqp.Connection, exchange string) (*Subscriber, error) {
+
+	ch, err := conn.Channel()
+	if err != nil {
+		return nil, fmt.Errorf("cannot allocate channel: %v", err)
+	}
+	defer ch.Close()
+
+	if err = declareExchange(ch, exchange); err != nil {
+		return nil, fmt.Errorf("cannot declare exchange: %v", err)
+	}
 
 	return &Subscriber{
 		conn:     conn,
@@ -70,7 +89,6 @@ func (s *Subscriber) SubscribeRaw(_ context.Context) (<-chan amqp.Delivery, func
 	if err = declareExchange(ch, s.exchange); err != nil {
 		return nil, func() {}, fmt.Errorf("cannot declare exchange: %v", err)
 	}
-
 	//关闭通道的函数
 	closeCh := func() {
 		err := ch.Close()
@@ -101,7 +119,15 @@ func (s *Subscriber) SubscribeRaw(_ context.Context) (<-chan amqp.Delivery, func
 	}
 
 	// 消费队列消息
-	msgs, err := ch.Consume(q.Name, "", false, false, false, false, nil)
+	msgs, err := ch.Consume(
+		q.Name,
+		"",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
 	if err != nil {
 		return nil, cleanUp, fmt.Errorf("cannot consume queue: %v", err)
 	}
@@ -109,17 +135,18 @@ func (s *Subscriber) SubscribeRaw(_ context.Context) (<-chan amqp.Delivery, func
 }
 
 // Subscribe subscribes and returns a channel with CarEntity data.
-func (s *Subscriber) Subscribe(c context.Context) (chan *struct{}, func(), error) {
+func (s *Subscriber) Subscribe(c context.Context) (chan *interface{}, func(), error) {
 	msgCh, cleanUp, err := s.SubscribeRaw(c)
 	if err != nil {
 		return nil, cleanUp, err
 	}
-	carCh := make(chan *struct{})
+	carCh := make(chan *interface{})
 	go func() {
 		defer close(carCh) // 确保通道关闭，避免接收方阻塞
 		for msg := range msgCh {
-			var carEn struct{}
+			var carEn interface{}
 			// 反序列化消息
+			klog.Infof("msg.Body: ", msg.Body)
 			if err := sonic.Unmarshal(msg.Body, &carEn); err != nil {
 				klog.Errorf("cannot unmarshal message body: %v", err)
 				// 反序列化失败：拒绝消息（不重新入队，避免死循环）
@@ -128,6 +155,7 @@ func (s *Subscriber) Subscribe(c context.Context) (chan *struct{}, func(), error
 				}
 				continue
 			}
+			klog.Infof("carEn: ", carEn)
 			// 发送到业务通道（阻塞直到业务方接收）
 			carCh <- &carEn
 			// 业务处理完成：手动确认消息

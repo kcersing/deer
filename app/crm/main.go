@@ -5,6 +5,7 @@ import (
 	"common/mtl"
 	"common/mw"
 	"common/pkg/utils"
+	"common/serversuite"
 	"crm/biz/dal"
 	"crm/conf"
 	"crm/rpc"
@@ -25,6 +26,7 @@ func init() {
 }
 
 var serviceName = conf.GetConf().Kitex.Service
+var snowflakeNode = conf.GetConf().Kitex.Node
 
 func main() {
 
@@ -40,42 +42,13 @@ func main() {
 
 	rpc.Init()
 
-	opts := kitexInit()
-	
+	address := conf.GetConf().Kitex.Address
+
+	opts := serversuite.Option(serviceName, address, snowflakeNode)
+
 	svr := crm.NewServer(new(CrmServiceImpl), opts...)
 	err := svr.Run()
 	if err != nil {
 		klog.Fatal(err)
 	}
-}
-func kitexInit() (opts []server.Option) {
-
-	r, info := rpc.Registry()
-
-	// address
-	address := conf.GetConf().Kitex.Address
-	if strings.HasPrefix(address, ":") {
-		localIp := utils.MustGetLocalIPv4()
-		address = localIp + address
-	}
-	addr, err := net.ResolveTCPAddr(consts.TCP, address)
-	if err != nil {
-		panic(err)
-	}
-
-	opts = append(opts,
-		server.WithServiceAddr(addr),
-		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
-		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
-		//server.WithMuxTransport(),
-		server.WithMiddleware(mw.CommonMiddleware),
-		server.WithMiddleware(mw.ServerMiddleware),
-		server.WithSuite(tracing.NewServerSuite()),
-		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
-
-		server.WithRegistry(r),
-		server.WithRegistryInfo(info),
-	)
-
-	return
 }

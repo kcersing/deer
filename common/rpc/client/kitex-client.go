@@ -1,4 +1,4 @@
-package rpc
+package client
 
 import (
 	"common/consts"
@@ -18,10 +18,11 @@ import (
 	"github.com/cloudwego/kitex/pkg/retry"
 	etcd "github.com/kitex-contrib/registry-etcd"
 
-	nacos "github.com/kitex-contrib/registry-nacos/resolver"
-	"github.com/nacos-group/nacos-sdk-go/clients"
-	"github.com/nacos-group/nacos-sdk-go/common/constant"
-	"github.com/nacos-group/nacos-sdk-go/vo"
+	nacos "github.com/kitex-contrib/registry-nacos/v2/resolver"
+
+	"github.com/nacos-group/nacos-sdk-go/v2/clients"
+	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
+	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 )
 
 type Resolver struct {
@@ -39,31 +40,39 @@ func NewEtcdResolver(etcdAddress string) discovery.Resolver {
 	return r
 }
 func NewNacosResolver(namespaceId string, serviceName string) discovery.Resolver {
+	// the nacos server config
+	sc := []constant.ServerConfig{
+
+		*constant.NewServerConfig(consts.NacosIpAddr, consts.NacosPort,
+			func(sc *constant.ServerConfig) {
+				// it is not recommended to modify GRPC-Port unless necessary,default by server port +1000
+				sc.GrpcPort = 9848
+			}),
+	}
+	// the nacos client config
+	cc := &constant.ClientConfig{
+		TimeoutMs:           5000,
+		NotLoadCacheAtStart: true,
+		LogDir:              consts.NacosLogDir,
+		LogLevel:            consts.NacosLogLevel,
+		CacheDir:            consts.NacosCacheDir,
+		NamespaceId:         "public",
+	}
 	namingClient, err := clients.NewNamingClient(
 		vo.NacosClientParam{
-			ClientConfig: &constant.ClientConfig{
-				TimeoutMs:           5000,
-				NotLoadCacheAtStart: true,
-				LogDir:              consts.NacosLogDir,
-				LogLevel:            consts.NacosLogLevel,
-				CacheDir:            consts.NacosCacheDir,
-				NamespaceId:         namespaceId,
-			},
-			ServerConfigs: []constant.ServerConfig{
-				{
-					IpAddr: consts.NacosIpAddr,
-					Port:   consts.NacosPort,
-				},
-			},
+			ClientConfig:  cc,
+			ServerConfigs: sc,
 		},
 	)
 	if err != nil {
 		klog.Fatalf("new nacos client failed: %s", err.Error())
 	}
+
 	r := nacos.NewNacosResolver(
 		namingClient,
 		nacos.WithGroup(serviceName),
 	)
+	hlog.Info(r.Name())
 	return r
 }
 

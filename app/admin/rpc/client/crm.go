@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/rpc"
+	"common/rpc/client"
 	"sync"
 
 	"gen/kitex_gen/crm/crmservice"
@@ -17,9 +17,9 @@ func InitCrmRpc() {
 
 	CrmOnceClient.Do(func() {
 
-		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.CrmRpcServiceName)
+		nr := client.NewNacosResolver(consts.CrmRpcServiceName, consts.CrmRpcServiceName)
 
-		r := rpc.Resolver{
+		r := client.Resolver{
 			R:                nr,
 			ServiceName:      consts.CrmRpcServiceName,
 			BasicServiceName: consts.AdminServiceName,

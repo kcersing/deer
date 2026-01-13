@@ -4,9 +4,10 @@ import "admin/rpc/client"
 
 func InitRpc() {
 	//client.InitCrmRpc()
-	client.InitMemberRpc()
-	client.InitOrderRpc()
-	client.InitSystemRpc()
+	//client.InitMemberRpc()
+	//client.InitOrderRpc()
 	client.InitUserRpc()
-	client.InitProductRpc()
+	client.InitSystemRpc()
+
+	//client.InitProductRpc()
 }

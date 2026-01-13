@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/rpc"
+	"common/rpc/client"
 	"gen/kitex_gen/system/systemservice"
 	"sync"
 
@@ -15,9 +15,9 @@ var systemOnceClient sync.Once
 func InitSystemRpc() {
 	systemOnceClient.Do(func() {
 
-		nr := rpc.NewNacosResolver("consts.NacosNamespaceId", consts.SystemRpcServiceName)
+		nr := client.NewNacosResolver(consts.SystemRpcServiceName, consts.SystemRpcServiceName)
 
-		r := rpc.Resolver{
+		r := client.Resolver{
 			R:                nr,
 			ServiceName:      consts.SystemRpcServiceName,
 			BasicServiceName: consts.AdminServiceName,
