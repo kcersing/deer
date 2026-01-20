@@ -18,6 +18,7 @@ func init() {
 
 var serviceName = conf.GetConf().Kitex.Service
 var snowflakeNode = conf.GetConf().Kitex.Node
+var registry = conf.GetConf().Kitex.Registry
 
 func main() {
 
@@ -35,7 +36,7 @@ func main() {
 
 	address := conf.GetConf().Kitex.Address
 
-	opts := serversuite.Option(serviceName, address, snowflakeNode)
+	opts := serversuite.Option(registry, serviceName, address, snowflakeNode)
 
 	svr := system.NewServer(new(SystemServiceImpl), opts...)
 

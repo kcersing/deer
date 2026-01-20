@@ -57,7 +57,7 @@ func (bridge *AMQPBridge) AMQPPublishingMiddleware() Middleware {
 				err := bridge.publisher.Publish(ctx, event.Topic, event.Id, msg)
 				if err != nil {
 					klog.Errorf("[AMQPBridge] publish to AMQP failed, topic=%s, error=%v", event.Topic, err)
-					// 可选：记录失败信息或触发重试机制
+					// 记录失败信息或触发重试机制 未实现
 				} else {
 					klog.Infof("[AMQPBridge] event published to AMQP, topic=%s, eventId=%s", event.Topic, event.Id)
 				}

@@ -1,24 +1,15 @@
 package main
 
 import (
-	"common/consts"
 	"common/mtl"
-	"common/mw"
-	"common/pkg/utils"
+
 	"common/serversuite"
 	"crm/biz/dal"
 	"crm/conf"
 	"crm/rpc"
 	crm "gen/kitex_gen/crm/crmservice"
-	"net"
-	"strings"
 
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/cloudwego/kitex/pkg/limit"
-	"github.com/cloudwego/kitex/pkg/rpcinfo"
-	"github.com/cloudwego/kitex/pkg/transmeta"
-	"github.com/cloudwego/kitex/server"
-	"github.com/kitex-contrib/obs-opentelemetry/tracing"
 )
 
 func init() {
@@ -27,6 +18,7 @@ func init() {
 
 var serviceName = conf.GetConf().Kitex.Service
 var snowflakeNode = conf.GetConf().Kitex.Node
+var registry = conf.GetConf().Kitex.Registry
 
 func main() {
 
@@ -44,7 +36,7 @@ func main() {
 
 	address := conf.GetConf().Kitex.Address
 
-	opts := serversuite.Option(serviceName, address, snowflakeNode)
+	opts := serversuite.Option(registry, serviceName, address, snowflakeNode)
 
 	svr := crm.NewServer(new(CrmServiceImpl), opts...)
 	err := svr.Run()

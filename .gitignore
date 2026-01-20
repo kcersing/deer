@@ -39,3 +39,10 @@ _testmain.go
 *.out
 conf.yaml
 */conf.yaml
+app/admin/admin
+app/crm/crm
+app/member/member
+app/message/message
+app/product/product
+app/system/system
+app/user/user

@@ -9,11 +9,13 @@ import (
 
 // Publisher 定义发布接口。
 type Publisher interface {
+	// Publish 发送单条
 	Publish(c context.Context, routingKey, correlationId string, m Message) (err error)
-
+	// PublishBatch 批量发送，返回失败的索引列表
 	PublishBatch(ctx context.Context, messages []BatchMessage) ([]int, error)
+	// PublishAsync 异步发送到结果通道
 	PublishAsync(ctx context.Context, messages []BatchMessage, resultCh chan PublishResult)
-
+	// Close 关闭发布者并释放资源
 	Close()
 }
 
@@ -28,7 +30,8 @@ type Connection struct {
 }
 
 type Message struct {
-	Event     string    `json:"event"`
-	Payload   any       `json:"payload"`
-	Timestamp time.Time `json:"timestamp"`
+	CorrelationId string    `json:"correlationId"`
+	Event         string    `json:"event"`
+	Payload       any       `json:"payload"`
+	Timestamp     time.Time `json:"timestamp"`
 }

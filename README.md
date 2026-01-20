@@ -121,7 +121,7 @@ follow-up-plan 跟进计划
 - [x] 订单中心
 
 
-## Quick Start
+## Quick Startcd
 
 ### Setup Environment
 ```shell
@@ -149,13 +149,19 @@ $ make stop
 $ go tool pprof -http=:1234 http://localhost:8080/debug/pprof/heap
 ```
 
-### Jaeger
-Visit `http://127.0.0.1:16686/` on browser
-### Grafana
-Visit `http://127.0.0.1:3000/` on browser
+
+### jaeger
+http://101.201.55.134:16686/search
 
 
+### grafana 
+http://101.201.55.134:3000/
 
+### nacos
+http://101.201.55.134:8848/nacos/
+
+### victoriametrics
+http://101.201.55.134:8428/
 
 
 

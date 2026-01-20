@@ -15,15 +15,7 @@ var orderOnceClient sync.Once
 func InitOrderRpc() {
 
 	orderOnceClient.Do(func() {
-
-		nr := client.NewNacosResolver(consts.OrderRpcServiceName, consts.OrderRpcServiceName)
-
-		r := client.Resolver{
-			R:                nr,
-			ServiceName:      consts.OrderRpcServiceName,
-			BasicServiceName: consts.AdminServiceName,
-			EndpointAddress:  consts.OpenTelemetryAddress,
-		}
+		r := client.NewResolver(serviceResolver, consts.OrderRpcServiceName, consts.AdminServiceName, consts.OpenTelemetryAddress)
 
 		c, err := orderservice.NewClient(
 			r.ServiceName,

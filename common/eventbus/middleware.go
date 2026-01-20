@@ -7,8 +7,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 
-// Middleware 是中间件函数类型
-// 它接收下一个要执行的处理函数（next）并返回一个新的处理函数
+// Middleware 中间件类型定义
 type Middleware func(next Handler) Handler
 
 // LoggingPlugin 日志记录

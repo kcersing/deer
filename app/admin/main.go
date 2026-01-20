@@ -5,9 +5,8 @@ package main
 import (
 	"admin/biz/infras/logger"
 	"admin/biz/mw"
+	"admin/conf"
 	"admin/rpc"
-	"common/rpc/registry"
-
 	"common/consts"
 	"common/mtl"
 	"context"
@@ -31,21 +30,23 @@ func Init() {
 	mtl.InitProvider(consts.AdminServiceName)
 }
 
+var serviceAddress = conf.GetConf().Hertz.Address
+var serviceTracer = conf.GetConf().Hertz.Tracer
+
 func main() {
 
 	Init()
-	r, info := registry.NewHertzRegisterNacos("admin", 1, "127.0.0.1", 9010)
+
+	//info := serversuite.GetInfo("admin", "9010", 1)
 	tracer, cfg := tracing.NewServerTracer()
 	h := server.New(
-		server.WithRegistry(r, info),
-		//server.WithRegistry(r, info),
 		server.WithStreamBody(true),
-		server.WithHostPorts(":9010"),
+		server.WithHostPorts(serviceAddress),
 		server.WithHandleMethodNotAllowed(true),
 		//server.WithRegistry(r, info),
 		tracer,
 		server.WithTracer(
-			prometheus.NewServerTracer(":9089", "/hertz",
+			prometheus.NewServerTracer(serviceTracer, "/hertz",
 				prometheus.WithEnableGoCollector(true), // enable go runtime metric collector
 			),
 		),

@@ -1,13 +1,13 @@
-package main
+package example
 
 import (
 	"common/amqpclt"
-	"common/consts"
 	"common/eventbus"
 	"context"
 	"fmt"
 	"message/biz/dal/mq"
 	"sync"
+	"testing"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -17,7 +17,7 @@ import (
 // 示例 1: 基础集成 - 内存事件 + AMQP 双向同步
 // =====================================================================
 
-func ExampleBasicIntegration() {
+func TestExampleBasicIntegration_Run(t *testing.T) {
 	// 1. 初始化 MQ 连接
 	mq.InitMQ()
 
@@ -72,7 +72,7 @@ func ExampleBasicIntegration() {
 // 示例 2: 群发消息场景 - 批量发布到 AMQP
 // =====================================================================
 
-func ExampleBatchMessagingWithAMQP() {
+func TestExampleBatchMessagingWithAMQP_Run(t *testing.T) {
 	// 初始化
 	mq.InitMQ()
 	publisher, _ := amqpclt.NewPublisher(mq.Client, "messages")
@@ -120,7 +120,7 @@ func ExampleBatchMessagingWithAMQP() {
 // 示例 3: 异步群发 - 监听发布结果
 // =====================================================================
 
-func ExampleAsyncBatchMessaging() {
+func TestExampleAsyncBatchMessaging_Run(t *testing.T) {
 	// 初始化
 	mq.InitMQ()
 	publisher, _ := amqpclt.NewPublisher(mq.Client, "messages")
@@ -169,7 +169,7 @@ func ExampleAsyncBatchMessaging() {
 // 示例 4: 订阅处理 - 从 AMQP 接收并处理
 // =====================================================================
 
-func ExampleSubscribeAndHandle() {
+func TestExampleSubscribeAndHandle_Run(t *testing.T) {
 	// 初始化
 	mq.InitMQ()
 	publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
@@ -258,7 +258,7 @@ func (s *SendMemberMessagesService) SendMessages(recipients []string, title, con
 // 示例 6: 中间件链 - 多个中间件组合
 // =====================================================================
 
-func ExampleMiddlewareChain() {
+func TestExampleMiddlewareChain_Run(t *testing.T) {
 	mq.InitMQ()
 	publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
 	subscriber, _ := amqpclt.NewSubscribe(mq.Client, "events")
@@ -309,13 +309,13 @@ func InitGlobalEventBus() error {
 		mq.InitMQ()
 
 		// 创建 AMQP 客户端
-		publisher, err := amqpclt.NewPublisher(mq.Client, consts.MQExchangeEvents)
+		publisher, err := amqpclt.NewPublisher(mq.Client, "deer")
 		if err != nil {
 			klog.Errorf("failed to create publisher: %v", err)
 			return
 		}
 
-		subscriber, err := amqpclt.NewSubscribe(mq.Client, consts.MQExchangeEvents)
+		subscriber, err := amqpclt.NewSubscribe(mq.Client, "deer")
 		if err != nil {
 			klog.Errorf("failed to create subscriber: %v", err)
 			return
@@ -353,7 +353,7 @@ func GetAMQPBridge() *eventbus.AMQPBridge {
 // 示例使用方式
 // =====================================================================
 
-func main() {
+func TestEvenbus_Run(t *testing.T) {
 	// 初始化全局事件总线
 	if err := InitGlobalEventBus(); err != nil {
 		klog.Fatal("failed to initialize event bus", err)

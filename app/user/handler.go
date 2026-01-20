@@ -8,7 +8,8 @@ import (
 )
 
 // UserServiceImpl implements the last service interface defined in the IDL.
-type UserServiceImpl struct{}
+type UserServiceImpl struct {
+}
 
 // CreateUser implements the UserServiceImpl interface.
 func (s *UserServiceImpl) CreateUser(ctx context.Context, req *user.CreateUserReq) (resp *user.UserResp, err error) {

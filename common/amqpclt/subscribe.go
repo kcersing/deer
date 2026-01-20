@@ -8,7 +8,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
-
+var _ Subscriber = (*Subscribe)(nil)
 // Subscribe implements an amqp subscribe.
 type Subscribe struct {
 	conn     *amqp.Connection // AMQP 连接

@@ -56,6 +56,8 @@ type Kitex struct {
 	LogMaxSize    int    `yaml:"LogMaxSize"`
 	LogMaxBackups int    `yaml:"LogMaxBackups"`
 	LogMaxAge     int    `yaml:"LogMaxAge"`
+
+	Registry string `yaml:"Registry"`
 }
 type CasbinConf struct {
 	ModelText string ` json:"ModelText"`

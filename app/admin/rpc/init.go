@@ -3,11 +3,11 @@ package rpc
 import "admin/rpc/client"
 
 func InitRpc() {
-	//client.InitCrmRpc()
-	//client.InitMemberRpc()
-	//client.InitOrderRpc()
-	client.InitUserRpc()
-	client.InitSystemRpc()
 
-	//client.InitProductRpc()
+	client.InitSystemRpc()
+	client.InitUserRpc()
+	client.InitProductRpc()
+	client.InitMemberRpc()
+	//client.InitCrmRpc()
+	//client.InitOrderRpc()
 }

@@ -24,9 +24,9 @@ type (
 // EventBus 事件总线
 type EventBus struct {
 	mu          sync.RWMutex
-	subscribers map[string][]EventChan
-	middlewares []Middleware
-	chain       Handler // 缓存构建好的中间件链
+	subscribers map[string][]EventChan // 订阅者映射：topic → 多个通道
+	middlewares []Middleware           // 中间件件
+	chain       Handler                // 缓存的中间件
 }
 
 // NewEventBus 创建事件总线
@@ -46,7 +46,7 @@ func (eb *EventBus) dispatch(ctx context.Context, event *Event) error {
 	defer eb.mu.RUnlock()
 	for _, subscriber := range subscribers {
 		select {
-		case subscriber <- event:
+		case subscriber <- event: //发送事件
 		default:
 			fmt.Printf("警告: 主题 %s 的一个订阅者通道已满，丢弃事件。", event.Topic)
 		}
@@ -71,11 +71,18 @@ func (eb *EventBus) Use(m Middleware) {
 
 // Publish 发布事件
 func (eb *EventBus) Publish(ctx context.Context, event *Event) {
-
 	eb.chain.Handle(ctx, event)
 }
 
 // Subscribe 订阅事件
+/**
+* 创建通道 → 加入订阅者列表 → 返回通道供外部使用
+* 使用示例：
+* ch := eventBus.Subscribe("user_registered")
+* for event := range ch {
+*     fmt.Println(event)
+* }
+**/
 func (eb *EventBus) Subscribe(topic string) EventChan {
 	eb.mu.Lock()
 	defer eb.mu.Unlock()

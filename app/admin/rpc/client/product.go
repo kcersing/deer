@@ -14,15 +14,7 @@ var productOnceClient sync.Once
 
 func InitProductRpc() {
 	productOnceClient.Do(func() {
-
-		nr := client.NewNacosResolver(consts.ProductRpcServiceName, consts.ProductRpcServiceName)
-
-		r := client.Resolver{
-			R:                nr,
-			ServiceName:      consts.ProductRpcServiceName,
-			BasicServiceName: consts.AdminServiceName,
-			EndpointAddress:  consts.OpenTelemetryAddress,
-		}
+		r := client.NewResolver(serviceResolver, consts.ProductRpcServiceName, consts.AdminServiceName, consts.OpenTelemetryAddress)
 
 		c, err := productservice.NewClient(
 			r.ServiceName,

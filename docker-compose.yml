@@ -1,91 +1,87 @@
 services:
 
-#  postgres:
-#    image: postgres:latest
-#    restart: always
-#    environment:
-#      POSTGRES_DB: postgres
-#      POSTGRES_USER: root
-#      POSTGRES_PASSWORD: kcer913639
-#    volumes:
-#      - /home/docker/postgresql/latest:/var/lib/postgresql
-#      - /home/docker/postgresql/logs:/var/log/postgresql
-#      - /home/docker/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
-#      - /home/docker/postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
-#    ports:
-#      - "5432:5432"
-#    command:
-#      - "postgres"
-#      - "-c"
-#      - "config_file=/etc/postgresql/postgresql.conf"
-
-#  minio:
-#    image: docker.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
-#    container_name: minio
-#    ports:
-#      - "9000:9000"
-#      - "9001:9001"
-#    environment:
-#      MINIO_ROOT_USER: K123987
-#      MINIO_ROOT_PASSWORD: Kj987123
-#      TZ: Asia/Shanghai
-#      LANG: zh_CN.UTF-8
-#    volumes:
-#      - /home/www/minio/data:/data
-#      - /home/www/minio/config:/root/.minio
-#      - /etc/localtime:/etc/localtime:ro
-#    command: server --console-address ':9001' /data
-#    privileged: true
-#    restart: always
-
-#    profiles:
-#      - dev
-#      - release
-
-#  redis:
-#    image: redis:latest
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    environment:
-#      TZ: Asia/Shanghai
-#    volumes:
-#      - ./data/data/redis:/data
-#      - ./data/logs/redis:/logs
-#    command: redis-server --requirepass freecar
-
-#  Etcd:
-#    image: bitnami/etcd:latest
-#    environment:
-#      - ALLOW_NONE_AUTHENTICATION=yes
-#      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
-#    ports:
-#      - "2379:2379"
-#      - "2380:2380"
-
-  # Etcd 管理工具keeper (视图)
-#  Etcd-Keeper:
-#    hostname: etcdkeeper
-#    image: evildecay/etcdkeeper:latest
-#    ports:
-#      - "9100:8080"
-  # Nacos
-  nacos:
-    image: nacos/nacos-server:v2.5.2
-    ports:
-      - "8848:8848"
-      - "9848:9848"
+  postgres:
+    image: postgres:latest
+    restart: always
     environment:
-      - MODE=standalone
-      - JVM_XMS=512m
-      - JVM_XMX=512m
-      - JVM_XMN=256m
-#    volumes:
-#      - ./nacos-data:/home/nacos/data
-#      - ./nacos-logs:/home/nacos/logs
-#    restart: unless-stopped
+      POSTGRES_DB: postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: kcer913639
+    volumes:
+      - ./postgresql/latest:/var/lib/postgresql
+      - ./postgresql/logs:/var/log/postgresql
+      - ./postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    ports:
+      - "5432:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
 
-  # RabbitMQ
+  minio:
+    image: docker.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: Yj123987
+      MINIO_ROOT_PASSWORD: Yj987123
+      TZ: Asia/Shanghai
+      LANG: zh_CN.UTF-8
+    volumes:
+      - /home/www/minio/data:/data
+      - /home/www/minio/config:/root/.minio
+      - /etc/localtime:/etc/localtime:ro
+    command: server --console-address ':9001' /data
+    privileged: true
+    restart: always
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./redis/data/redis:/data
+      - ./redis/logs/redis:/logs
+    command: redis-server --requirepass freecar
+
+  Etcd:
+    image: bitnami/etcd:latest
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+
+#   Etcd 管理工具keeper (视图)
+  Etcd-Keeper:
+    hostname: etcdkeeper
+    image: evildecay/etcdkeeper:latest
+    ports:
+      - "9100:8080"
+  # Nacos
+#  nacos:
+#    image: nacos/nacos-server:v2.5.2
+#    ports:
+#      - "8848:8848"
+#      - "9848:9848"
+#    environment:
+#      - MODE=standalone
+#      - JVM_XMS=512m
+#      - JVM_XMX=512m
+#      - JVM_XMN=256m
+##    volumes:
+#      - ./nacos/nacos-data:/home/nacos/data
+#      - ./nacos/nacos-logs:/home/nacos/logs
+##    restart: unless-stopped
+
+#   RabbitMQ
   RabbitMQ:
     image: rabbitmq:management
     restart: always
@@ -97,9 +93,9 @@ services:
       RABBITMQ_DEFAULT_PASS: kcer-913639
       TZ: Asia/Shanghai
       LANG: zh_CN.UTF-8
-#    volumes:
-#      - /home/docker/rabbitmq/data:/var/lib/rabbitmq
-#      - /home/docker/rabbitmq/conf:/etc/rabbitmq
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq
+      - ./rabbitmq/conf:/etc/rabbitmq
 #
 
 #  elasticsearch:
@@ -125,63 +121,63 @@ services:
 #      - "5601:5601"
 
 
-  # Collector
-  otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.84.0
-    command: [ "--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}" ]
-    volumes:
-#      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
-      - D:/Project\deer\api\otel-collector-config.yaml:/etc/otel-collector-config.yaml
-    ports:
-      - "1888:1888"   # pprof extension
-      - "8888"   # Prometheus' metrics exposed by the collector
-      - "8889:8889"   # Prometheus exporter metrics
-      - "13133:13133" # health_check extension
-      - "4317:4317"   # OTLP gRPC receiver
-      - "55679" # zpages extension
-    depends_on:
-      - jaeger-all-in-one
+#  # Collector
+#  otel-collector:
+#    image: otel/opentelemetry-collector-contrib:0.84.0
+#    command: [ "--config=/etc/otel-collector-config.yaml", "${OTELCOL_ARGS}" ]
+#    volumes:
+##      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+#      - ./otel-collector/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+#    ports:
+#      - "1888:1888"   # pprof extension
+#      - "8888"   # Prometheus' metrics exposed by the collector
+#      - "8889:8889"   # Prometheus exporter metrics
+#      - "13133:13133" # health_check extension
+#      - "4317:4317"   # OTLP gRPC receiver
+#      - "55679" # zpages extension
+#    depends_on:
+#      - jaeger-all-in-one
 
 
-  # Jaeger 链跟踪
-  jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-    ports:
-      - "16686:16686"
-      - "14268"
-      - "14250:14250"
-      - "6831:6831"
-      - "4317"   # OTLP gRPC receiver
+#  # Jaeger 链跟踪
+#  jaeger-all-in-one:
+#    image: jaegertracing/all-in-one:latest
+#    environment:
+#      - COLLECTOR_OTLP_ENABLED=true
+#    ports:
+#      - "16686:16686"
+#      - "14268"
+#      - "14250:14250"
+#      - "6831:6831"
+#      - "4317"   # OTLP gRPC receiver
 #
 #
-  # Victoriametrics 时序数据库
-  victoriametrics:
-    container_name: victoriametrics
-    image: victoriametrics/victoria-metrics
-    ports:
-      - "8428:8428"
-      - "8089:8089"
-      - "8089:8089/udp"
-      - "2003:2003"
-      - "2003:2003/udp"
-      - "4242:4242"
-    command:
-      - '--storageDataPath=/storage'
-      - '--graphiteListenAddr=:2003'
-      - '--opentsdbListenAddr=:4242'
-      - '--httpListenAddr=:8428'
-      - '--influxListenAddr=:8089'
-    restart: always
-
-
-  # Grafana 可视化和监控工具
-  grafana:
-    image: grafana/grafana:latest
-    environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
-    ports:
-      - "3000:3000"
+#  # Victoriametrics 时序数据库
+#  victoriametrics:
+#    container_name: victoriametrics
+#    image: victoriametrics/victoria-metrics
+#    ports:
+#      - "8428:8428"
+#      - "8089:8089"
+#      - "8089:8089/udp"
+#      - "2003:2003"
+#      - "2003:2003/udp"
+#      - "4242:4242"
+#    command:
+#      - '--storageDataPath=/storage'
+#      - '--graphiteListenAddr=:2003'
+#      - '--opentsdbListenAddr=:4242'
+#      - '--httpListenAddr=:8428'
+#      - '--influxListenAddr=:8089'
+#    restart: always
+#
+#
+#  # Grafana 可视化和监控工具
+#  grafana:
+#    image: grafana/grafana:latest
+#    environment:
+#      - GF_AUTH_ANONYMOUS_ENABLED=true
+#      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+#      - GF_AUTH_DISABLE_LOGIN_FORM=true
+#    ports:
+#      - "3000:3000"

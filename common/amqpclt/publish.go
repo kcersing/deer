@@ -9,7 +9,7 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
-
+var _ Publisher = (*Publish)(nil)
 // Publisher implements an amqp publisher.
 type Publish struct {
 	ch       *amqp.Channel // AMQP 通道

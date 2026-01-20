@@ -21,5 +21,6 @@ func RegisterEtcd() registry.Registry {
 	if err != nil {
 		klog.Fatal(err)
 	}
+
 	return r
 }

@@ -25,11 +25,14 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
 )
 
-type Resolver struct {
-	R                discovery.Resolver
-	ServiceName      string
-	BasicServiceName string
-	EndpointAddress  string
+func GetResolver(r, serviceName string) (re discovery.Resolver) {
+
+	if r == "nacos" {
+		re = NewNacosResolver(serviceName)
+	} else if r == "etcd" {
+		re = NewEtcdResolver(consts.EtcdAddress)
+	}
+	return re
 }
 
 func NewEtcdResolver(etcdAddress string) discovery.Resolver {
@@ -39,7 +42,7 @@ func NewEtcdResolver(etcdAddress string) discovery.Resolver {
 	}
 	return r
 }
-func NewNacosResolver(namespaceId string, serviceName string) discovery.Resolver {
+func NewNacosResolver(serviceName string) discovery.Resolver {
 	// the nacos server config
 	sc := []constant.ServerConfig{
 
@@ -84,6 +87,7 @@ func (r Resolver) NewOpenTelemetryProvider() {
 	)
 }
 func (r Resolver) Options() []client.Option {
+
 	return []client.Option{
 		client.WithResolver(r.R),                                   // resolver
 		client.WithLoadBalancer(loadbalance.NewWeightedBalancer()), // load balance

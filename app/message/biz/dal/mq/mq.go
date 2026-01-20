@@ -1,11 +1,3 @@
-/*
- * @Author: kcersing wt4@live.cn
- * @Date: 2026-01-06 16:34:22
- * @LastEditors: kcersing wt4@live.cn
- * @LastEditTime: 2026-01-15 15:51:12
- * @FilePath: \api\app\message\biz\dal\mq\mq.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 package mq
 
 import (
@@ -58,6 +50,8 @@ func initMQ(url string) *amqp.Connection {
 func InitGlobalEventBus() error {
 	var err error
 	once.Do(func() {
+		InitMQ()
+		// 创建 AMQP 客户端
 
 		publisher, err := amqpclt.NewPublisher(Client, "events")
 		if err != nil {
@@ -71,6 +65,7 @@ func InitGlobalEventBus() error {
 			return
 		}
 
+		// 创建事件总线和桥接器
 		globalEventBus = eventbus.NewEventBus()
 		globalBridge = eventbus.NewAMQPBridge(globalEventBus, publisher, subscriber)
 
@@ -87,6 +82,12 @@ func InitGlobalEventBus() error {
 
 	return err
 }
+
+// GetGlobalEventBus 获取全局事件总线
+func GetGlobalEventBus() *eventbus.EventBus {
+	return globalEventBus
+}
+
 // GetGlobalAMQPBridge 获取全局桥接器
 func GetGlobalAMQPBridge() *eventbus.AMQPBridge {
 	return globalBridge

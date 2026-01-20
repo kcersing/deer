@@ -14,15 +14,7 @@ var systemOnceClient sync.Once
 
 func InitSystemRpc() {
 	systemOnceClient.Do(func() {
-
-		nr := client.NewNacosResolver(consts.SystemRpcServiceName, consts.SystemRpcServiceName)
-
-		r := client.Resolver{
-			R:                nr,
-			ServiceName:      consts.SystemRpcServiceName,
-			BasicServiceName: consts.AdminServiceName,
-			EndpointAddress:  consts.OpenTelemetryAddress,
-		}
+		r := client.NewResolver(serviceResolver, consts.SystemRpcServiceName, consts.AdminServiceName, consts.OpenTelemetryAddress)
 
 		c, err := systemservice.NewClient(
 			r.ServiceName,

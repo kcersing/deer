@@ -6,6 +6,7 @@ import (
 	"gen/kitex_gen/user/userservice"
 	"sync"
 
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 
@@ -15,15 +16,8 @@ var userOnceClient sync.Once
 func InitUserRpc() {
 	userOnceClient.Do(func() {
 
-		nr := client.NewNacosResolver(consts.UserRpcServiceName, consts.UserRpcServiceName)
-
-		r := client.Resolver{
-			R:                nr,
-			ServiceName:      consts.UserRpcServiceName,
-			BasicServiceName: consts.AdminServiceName,
-			EndpointAddress:  consts.OpenTelemetryAddress,
-		}
-
+		r := client.NewResolver(serviceResolver, consts.UserRpcServiceName, consts.AdminServiceName, consts.OpenTelemetryAddress)
+		hlog.Info(r)
 		c, err := userservice.NewClient(
 			r.ServiceName,
 			r.Options()...,
@@ -34,6 +28,5 @@ func InitUserRpc() {
 		}
 
 		UserClient = c
-
 	})
 }

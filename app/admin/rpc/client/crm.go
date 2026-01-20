@@ -1,6 +1,7 @@
 package client
 
 import (
+	"admin/conf"
 	"common/consts"
 	"common/rpc/client"
 	"sync"
@@ -13,18 +14,12 @@ import (
 var CrmClient crmservice.Client
 var CrmOnceClient sync.Once
 
+var serviceResolver = conf.GetConf().Hertz.Resolver
+
 func InitCrmRpc() {
 
 	CrmOnceClient.Do(func() {
-
-		nr := client.NewNacosResolver(consts.CrmRpcServiceName, consts.CrmRpcServiceName)
-
-		r := client.Resolver{
-			R:                nr,
-			ServiceName:      consts.CrmRpcServiceName,
-			BasicServiceName: consts.AdminServiceName,
-			EndpointAddress:  consts.OpenTelemetryAddress,
-		}
+		r := client.NewResolver(serviceResolver, consts.CrmRpcServiceName, consts.AdminServiceName, consts.OpenTelemetryAddress)
 
 		c, err := crmservice.NewClient(
 			r.ServiceName,
