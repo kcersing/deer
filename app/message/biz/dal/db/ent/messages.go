@@ -29,7 +29,7 @@ type Messages struct {
 	// 消息标题
 	Title *string `json:"title,omitempty"`
 	// 该消息发送者ID
-	FromUserID *string `json:"from_user_id,omitempty"`
+	FromUserID *int64 `json:"from_user_id,omitempty"`
 	// 消息内容
 	Content *string `json:"content,omitempty"`
 	// 消息状态
@@ -44,9 +44,9 @@ func (*Messages) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case messages.FieldID, messages.FieldDelete, messages.FieldCreatedID:
+		case messages.FieldID, messages.FieldDelete, messages.FieldCreatedID, messages.FieldFromUserID:
 			values[i] = new(sql.NullInt64)
-		case messages.FieldTitle, messages.FieldFromUserID, messages.FieldContent, messages.FieldStatus, messages.FieldType:
+		case messages.FieldTitle, messages.FieldContent, messages.FieldStatus, messages.FieldType:
 			values[i] = new(sql.NullString)
 		case messages.FieldCreatedAt, messages.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -103,11 +103,11 @@ func (_m *Messages) assignValues(columns []string, values []any) error {
 				*_m.Title = value.String
 			}
 		case messages.FieldFromUserID:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field from_user_id", values[i])
 			} else if value.Valid {
-				_m.FromUserID = new(string)
-				*_m.FromUserID = value.String
+				_m.FromUserID = new(int64)
+				*_m.FromUserID = value.Int64
 			}
 		case messages.FieldContent:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -185,7 +185,7 @@ func (_m *Messages) String() string {
 	builder.WriteString(", ")
 	if v := _m.FromUserID; v != nil {
 		builder.WriteString("from_user_id=")
-		builder.WriteString(*v)
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := _m.Content; v != nil {

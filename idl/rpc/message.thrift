@@ -24,20 +24,23 @@ include "../base/message.thrift"
         2: optional string msg=""
     }
     struct MessagesListReq{
-        1:optional list<message.SmsSend> data={}
+       1: optional i64 page=1
+       2: optional i64 pageSize=100
 
-        255:optional base.BaseResp baseResp={}
     }
     struct SendMemberMessagesReq {
         1: optional i64 memberId=0
         2: optional string type=""
         3: optional string content = ""
-
+        4: optional string title = ""
+        5: optional i64 createdId=0
     }
     struct SendUserMessagesReq {
-        1: optional i64 memberId=0
+        1: optional i64 userId=0
         2: optional string type=""
         3: optional string content = ""
+        4: optional string title = ""
+        5: optional i64 createdId=0
 
     }
     struct MessagesListResp{

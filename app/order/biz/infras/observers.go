@@ -20,7 +20,7 @@ type Dispatcher interface {
 	Dispatch(eventType string, handler EventHandler)
 }
 
-// EventDispatcher 分发 EventBus
+// EventDispatcher 分发 eventbus
 type EventDispatcher struct {
 	handlers map[string][]EventHandler
 	mu       sync.RWMutex

@@ -17,7 +17,7 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "消息标题"},
-		{Name: "from_user_id", Type: field.TypeString, Nullable: true, Comment: "该消息发送者ID"},
+		{Name: "from_user_id", Type: field.TypeInt64, Nullable: true, Comment: "该消息发送者ID"},
 		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "消息内容"},
 		{Name: "status", Type: field.TypeEnum, Nullable: true, Comment: "消息状态", Enums: []string{"DRAFT", "PUBLISHED", "SCHEDULED", "REVOKED", "ARCHIVED", "DELETED"}, Default: "DRAFT"},
 		{Name: "type", Type: field.TypeEnum, Nullable: true, Comment: "消息类型", Enums: []string{"NOTIFICATION", "PRIVATE", "GROUP"}, Default: "NOTIFICATION"},

@@ -5,7 +5,7 @@ import (
 	"common/eventbus"
 	"context"
 	"fmt"
-	"message/biz/dal/mq"
+	"message/biz/dal/eventbus/mq"
 	"sync"
 	"testing"
 	"time"
@@ -22,13 +22,13 @@ func TestExampleBasicIntegration_Run(t *testing.T) {
 	mq.InitMQ()
 
 	// 2. 创建 AMQP 发布者和订阅者
-	publisher, err := amqpclt.NewPublisher(mq.Client, "events")
+	publisher, err := amqpclt.NewPublisher(mq.Client, "eventbus")
 	if err != nil {
 		klog.Fatal("cannot create publisher", err)
 	}
 	defer publisher.Close()
 
-	subscriber, err := amqpclt.NewSubscribe(mq.Client, "events")
+	subscriber, err := amqpclt.NewSubscribe(mq.Client, "eventbus")
 	if err != nil {
 		klog.Fatal("cannot create subscriber", err)
 	}
@@ -172,8 +172,8 @@ func TestExampleAsyncBatchMessaging_Run(t *testing.T) {
 func TestExampleSubscribeAndHandle_Run(t *testing.T) {
 	// 初始化
 	mq.InitMQ()
-	publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
-	subscriber, _ := amqpclt.NewSubscribe(mq.Client, "events")
+	publisher, _ := amqpclt.NewPublisher(mq.Client, "eventbus")
+	subscriber, _ := amqpclt.NewSubscribe(mq.Client, "eventbus")
 	eb := eventbus.NewEventBus()
 	bridge := eventbus.NewAMQPBridge(eb, publisher, subscriber)
 
@@ -260,8 +260,8 @@ func (s *SendMemberMessagesService) SendMessages(recipients []string, title, con
 
 func TestExampleMiddlewareChain_Run(t *testing.T) {
 	mq.InitMQ()
-	publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
-	subscriber, _ := amqpclt.NewSubscribe(mq.Client, "events")
+	publisher, _ := amqpclt.NewPublisher(mq.Client, "eventbus")
+	subscriber, _ := amqpclt.NewSubscribe(mq.Client, "eventbus")
 	eb := eventbus.NewEventBus()
 	bridge := eventbus.NewAMQPBridge(eb, publisher, subscriber)
 
@@ -333,7 +333,7 @@ func InitGlobalEventBus() error {
 		ctx := context.Background()
 		globalBridge.StartListener(ctx)
 
-		klog.Infof("[EventBus] Global event bus initialized successfully")
+		klog.Infof("[eventbus] Global event bus initialized successfully")
 	})
 
 	return err

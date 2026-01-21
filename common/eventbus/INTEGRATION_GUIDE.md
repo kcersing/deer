@@ -131,8 +131,8 @@ type AMQPBridge struct {
 ```go
 // 1. 初始化连接
 mq.InitMQ()
-publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
-subscriber, _ := amqpclt.NewSubscribe(mq.Client, "events")
+publisher, _ := amqpclt.NewPublisher(mq.Client, "eventbus")
+subscriber, _ := amqpclt.NewSubscribe(mq.Client, "eventbus")
 
 // 2. 创建事件总线和桥接器
 eb := eventbus.NewEventBus()
@@ -229,8 +229,8 @@ var (
 // 初始化函数
 func init() {
     mq.InitMQ()
-    publisher, _ := amqpclt.NewPublisher(mq.Client, "events")
-    subscriber, _ := amqpclt.NewSubscribe(mq.Client, "events")
+    publisher, _ := amqpclt.NewPublisher(mq.Client, "eventbus")
+    subscriber, _ := amqpclt.NewSubscribe(mq.Client, "eventbus")
     
     globalEventBus = eventbus.NewEventBus()
     globalBridge = eventbus.NewAMQPBridge(globalEventBus, publisher, subscriber)

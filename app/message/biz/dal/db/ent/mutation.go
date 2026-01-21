@@ -36,24 +36,25 @@ const (
 // MessagesMutation represents an operation that mutates the Messages nodes in the graph.
 type MessagesMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *int64
-	created_at    *time.Time
-	updated_at    *time.Time
-	delete        *int64
-	adddelete     *int64
-	created_id    *int64
-	addcreated_id *int64
-	title         *string
-	from_user_id  *string
-	content       *string
-	status        *messages.Status
-	_type         *messages.Type
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*Messages, error)
-	predicates    []predicate.Messages
+	op              Op
+	typ             string
+	id              *int64
+	created_at      *time.Time
+	updated_at      *time.Time
+	delete          *int64
+	adddelete       *int64
+	created_id      *int64
+	addcreated_id   *int64
+	title           *string
+	from_user_id    *int64
+	addfrom_user_id *int64
+	content         *string
+	status          *messages.Status
+	_type           *messages.Type
+	clearedFields   map[string]struct{}
+	done            bool
+	oldValue        func(context.Context) (*Messages, error)
+	predicates      []predicate.Messages
 }
 
 var _ ent.Mutation = (*MessagesMutation)(nil)
@@ -448,12 +449,13 @@ func (m *MessagesMutation) ResetTitle() {
 }
 
 // SetFromUserID sets the "from_user_id" field.
-func (m *MessagesMutation) SetFromUserID(s string) {
-	m.from_user_id = &s
+func (m *MessagesMutation) SetFromUserID(i int64) {
+	m.from_user_id = &i
+	m.addfrom_user_id = nil
 }
 
 // FromUserID returns the value of the "from_user_id" field in the mutation.
-func (m *MessagesMutation) FromUserID() (r string, exists bool) {
+func (m *MessagesMutation) FromUserID() (r int64, exists bool) {
 	v := m.from_user_id
 	if v == nil {
 		return
@@ -464,7 +466,7 @@ func (m *MessagesMutation) FromUserID() (r string, exists bool) {
 // OldFromUserID returns the old "from_user_id" field's value of the Messages entity.
 // If the Messages object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MessagesMutation) OldFromUserID(ctx context.Context) (v *string, err error) {
+func (m *MessagesMutation) OldFromUserID(ctx context.Context) (v *int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldFromUserID is only allowed on UpdateOne operations")
 	}
@@ -478,9 +480,28 @@ func (m *MessagesMutation) OldFromUserID(ctx context.Context) (v *string, err er
 	return oldValue.FromUserID, nil
 }
 
+// AddFromUserID adds i to the "from_user_id" field.
+func (m *MessagesMutation) AddFromUserID(i int64) {
+	if m.addfrom_user_id != nil {
+		*m.addfrom_user_id += i
+	} else {
+		m.addfrom_user_id = &i
+	}
+}
+
+// AddedFromUserID returns the value that was added to the "from_user_id" field in this mutation.
+func (m *MessagesMutation) AddedFromUserID() (r int64, exists bool) {
+	v := m.addfrom_user_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ClearFromUserID clears the value of the "from_user_id" field.
 func (m *MessagesMutation) ClearFromUserID() {
 	m.from_user_id = nil
+	m.addfrom_user_id = nil
 	m.clearedFields[messages.FieldFromUserID] = struct{}{}
 }
 
@@ -493,6 +514,7 @@ func (m *MessagesMutation) FromUserIDCleared() bool {
 // ResetFromUserID resets all changes to the "from_user_id" field.
 func (m *MessagesMutation) ResetFromUserID() {
 	m.from_user_id = nil
+	m.addfrom_user_id = nil
 	delete(m.clearedFields, messages.FieldFromUserID)
 }
 
@@ -803,7 +825,7 @@ func (m *MessagesMutation) SetField(name string, value ent.Value) error {
 		m.SetTitle(v)
 		return nil
 	case messages.FieldFromUserID:
-		v, ok := value.(string)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -844,6 +866,9 @@ func (m *MessagesMutation) AddedFields() []string {
 	if m.addcreated_id != nil {
 		fields = append(fields, messages.FieldCreatedID)
 	}
+	if m.addfrom_user_id != nil {
+		fields = append(fields, messages.FieldFromUserID)
+	}
 	return fields
 }
 
@@ -856,6 +881,8 @@ func (m *MessagesMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDelete()
 	case messages.FieldCreatedID:
 		return m.AddedCreatedID()
+	case messages.FieldFromUserID:
+		return m.AddedFromUserID()
 	}
 	return nil, false
 }
@@ -878,6 +905,13 @@ func (m *MessagesMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddCreatedID(v)
+		return nil
+	case messages.FieldFromUserID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddFromUserID(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Messages numeric field %s", name)

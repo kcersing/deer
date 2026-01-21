@@ -52,11 +52,6 @@ func (p *SmsSendListReq) IsValid() error {
 	return nil
 }
 func (p *MessagesListReq) IsValid() error {
-	if p.BaseResp != nil {
-		if err := p.BaseResp.IsValid(); err != nil {
-			return fmt.Errorf("field BaseResp not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *SendMemberMessagesReq) IsValid() error {

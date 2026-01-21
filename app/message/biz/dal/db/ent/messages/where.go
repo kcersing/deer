@@ -80,7 +80,7 @@ func Title(v string) predicate.Messages {
 }
 
 // FromUserID applies equality check predicate on the "from_user_id" field. It's identical to FromUserIDEQ.
-func FromUserID(v string) predicate.Messages {
+func FromUserID(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldFromUserID, v))
 }
 
@@ -365,58 +365,43 @@ func TitleContainsFold(v string) predicate.Messages {
 }
 
 // FromUserIDEQ applies the EQ predicate on the "from_user_id" field.
-func FromUserIDEQ(v string) predicate.Messages {
+func FromUserIDEQ(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldFromUserID, v))
 }
 
 // FromUserIDNEQ applies the NEQ predicate on the "from_user_id" field.
-func FromUserIDNEQ(v string) predicate.Messages {
+func FromUserIDNEQ(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldNEQ(FieldFromUserID, v))
 }
 
 // FromUserIDIn applies the In predicate on the "from_user_id" field.
-func FromUserIDIn(vs ...string) predicate.Messages {
+func FromUserIDIn(vs ...int64) predicate.Messages {
 	return predicate.Messages(sql.FieldIn(FieldFromUserID, vs...))
 }
 
 // FromUserIDNotIn applies the NotIn predicate on the "from_user_id" field.
-func FromUserIDNotIn(vs ...string) predicate.Messages {
+func FromUserIDNotIn(vs ...int64) predicate.Messages {
 	return predicate.Messages(sql.FieldNotIn(FieldFromUserID, vs...))
 }
 
 // FromUserIDGT applies the GT predicate on the "from_user_id" field.
-func FromUserIDGT(v string) predicate.Messages {
+func FromUserIDGT(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldGT(FieldFromUserID, v))
 }
 
 // FromUserIDGTE applies the GTE predicate on the "from_user_id" field.
-func FromUserIDGTE(v string) predicate.Messages {
+func FromUserIDGTE(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldGTE(FieldFromUserID, v))
 }
 
 // FromUserIDLT applies the LT predicate on the "from_user_id" field.
-func FromUserIDLT(v string) predicate.Messages {
+func FromUserIDLT(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldLT(FieldFromUserID, v))
 }
 
 // FromUserIDLTE applies the LTE predicate on the "from_user_id" field.
-func FromUserIDLTE(v string) predicate.Messages {
+func FromUserIDLTE(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldLTE(FieldFromUserID, v))
-}
-
-// FromUserIDContains applies the Contains predicate on the "from_user_id" field.
-func FromUserIDContains(v string) predicate.Messages {
-	return predicate.Messages(sql.FieldContains(FieldFromUserID, v))
-}
-
-// FromUserIDHasPrefix applies the HasPrefix predicate on the "from_user_id" field.
-func FromUserIDHasPrefix(v string) predicate.Messages {
-	return predicate.Messages(sql.FieldHasPrefix(FieldFromUserID, v))
-}
-
-// FromUserIDHasSuffix applies the HasSuffix predicate on the "from_user_id" field.
-func FromUserIDHasSuffix(v string) predicate.Messages {
-	return predicate.Messages(sql.FieldHasSuffix(FieldFromUserID, v))
 }
 
 // FromUserIDIsNil applies the IsNil predicate on the "from_user_id" field.
@@ -427,16 +412,6 @@ func FromUserIDIsNil() predicate.Messages {
 // FromUserIDNotNil applies the NotNil predicate on the "from_user_id" field.
 func FromUserIDNotNil() predicate.Messages {
 	return predicate.Messages(sql.FieldNotNull(FieldFromUserID))
-}
-
-// FromUserIDEqualFold applies the EqualFold predicate on the "from_user_id" field.
-func FromUserIDEqualFold(v string) predicate.Messages {
-	return predicate.Messages(sql.FieldEqualFold(FieldFromUserID, v))
-}
-
-// FromUserIDContainsFold applies the ContainsFold predicate on the "from_user_id" field.
-func FromUserIDContainsFold(v string) predicate.Messages {
-	return predicate.Messages(sql.FieldContainsFold(FieldFromUserID, v))
 }
 
 // ContentEQ applies the EQ predicate on the "content" field.

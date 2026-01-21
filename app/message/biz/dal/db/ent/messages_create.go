@@ -90,13 +90,13 @@ func (_c *MessagesCreate) SetNillableTitle(v *string) *MessagesCreate {
 }
 
 // SetFromUserID sets the "from_user_id" field.
-func (_c *MessagesCreate) SetFromUserID(v string) *MessagesCreate {
+func (_c *MessagesCreate) SetFromUserID(v int64) *MessagesCreate {
 	_c.mutation.SetFromUserID(v)
 	return _c
 }
 
 // SetNillableFromUserID sets the "from_user_id" field if the given value is not nil.
-func (_c *MessagesCreate) SetNillableFromUserID(v *string) *MessagesCreate {
+func (_c *MessagesCreate) SetNillableFromUserID(v *int64) *MessagesCreate {
 	if v != nil {
 		_c.SetFromUserID(*v)
 	}
@@ -277,7 +277,7 @@ func (_c *MessagesCreate) createSpec() (*Messages, *sqlgraph.CreateSpec) {
 		_node.Title = &value
 	}
 	if value, ok := _c.mutation.FromUserID(); ok {
-		_spec.SetField(messages.FieldFromUserID, field.TypeString, value)
+		_spec.SetField(messages.FieldFromUserID, field.TypeInt64, value)
 		_node.FromUserID = &value
 	}
 	if value, ok := _c.mutation.Content(); ok {

@@ -354,52 +354,52 @@ var fieldIDToName_SmsSendListReq = map[int16]string{
 }
 
 type MessagesListReq struct {
-	Data     []*base.SmsSend `thrift:"data,1,optional" frugal:"1,optional,list<base.SmsSend>" json:"data,omitempty"`
-	BaseResp *base.BaseResp  `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+	Page     int64 `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64 `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
 }
 
 func NewMessagesListReq() *MessagesListReq {
 	return &MessagesListReq{
-		Data:     []*base.SmsSend{},
-		BaseResp: &base.BaseResp{},
+		Page:     1,
+		PageSize: 100,
 	}
 }
 
 func (p *MessagesListReq) InitDefault() {
-	p.Data = []*base.SmsSend{}
-	p.BaseResp = &base.BaseResp{}
+	p.Page = 1
+	p.PageSize = 100
 }
 
-var MessagesListReq_Data_DEFAULT []*base.SmsSend = []*base.SmsSend{}
+var MessagesListReq_Page_DEFAULT int64 = 1
 
-func (p *MessagesListReq) GetData() (v []*base.SmsSend) {
-	if !p.IsSetData() {
-		return MessagesListReq_Data_DEFAULT
+func (p *MessagesListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return MessagesListReq_Page_DEFAULT
 	}
-	return p.Data
+	return p.Page
 }
 
-var MessagesListReq_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+var MessagesListReq_PageSize_DEFAULT int64 = 100
 
-func (p *MessagesListReq) GetBaseResp() (v *base.BaseResp) {
-	if !p.IsSetBaseResp() {
-		return MessagesListReq_BaseResp_DEFAULT
+func (p *MessagesListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return MessagesListReq_PageSize_DEFAULT
 	}
-	return p.BaseResp
+	return p.PageSize
 }
-func (p *MessagesListReq) SetData(val []*base.SmsSend) {
-	p.Data = val
+func (p *MessagesListReq) SetPage(val int64) {
+	p.Page = val
 }
-func (p *MessagesListReq) SetBaseResp(val *base.BaseResp) {
-	p.BaseResp = val
-}
-
-func (p *MessagesListReq) IsSetData() bool {
-	return p.Data != nil
+func (p *MessagesListReq) SetPageSize(val int64) {
+	p.PageSize = val
 }
 
-func (p *MessagesListReq) IsSetBaseResp() bool {
-	return p.BaseResp != nil
+func (p *MessagesListReq) IsSetPage() bool {
+	return p.Page != MessagesListReq_Page_DEFAULT
+}
+
+func (p *MessagesListReq) IsSetPageSize() bool {
+	return p.PageSize != MessagesListReq_PageSize_DEFAULT
 }
 
 func (p *MessagesListReq) String() string {
@@ -410,21 +410,25 @@ func (p *MessagesListReq) String() string {
 }
 
 var fieldIDToName_MessagesListReq = map[int16]string{
-	1:   "data",
-	255: "baseResp",
+	1: "page",
+	2: "pageSize",
 }
 
 type SendMemberMessagesReq struct {
-	MemberId int64  `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	Type     string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content  string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	MemberId  int64  `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	Type      string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
+	Content   string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64  `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewSendMemberMessagesReq() *SendMemberMessagesReq {
 	return &SendMemberMessagesReq{
-		MemberId: 0,
-		Type:     "",
-		Content:  "",
+		MemberId:  0,
+		Type:      "",
+		Content:   "",
+		Title:     "",
+		CreatedId: 0,
 	}
 }
 
@@ -432,6 +436,8 @@ func (p *SendMemberMessagesReq) InitDefault() {
 	p.MemberId = 0
 	p.Type = ""
 	p.Content = ""
+	p.Title = ""
+	p.CreatedId = 0
 }
 
 var SendMemberMessagesReq_MemberId_DEFAULT int64 = 0
@@ -460,6 +466,24 @@ func (p *SendMemberMessagesReq) GetContent() (v string) {
 	}
 	return p.Content
 }
+
+var SendMemberMessagesReq_Title_DEFAULT string = ""
+
+func (p *SendMemberMessagesReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return SendMemberMessagesReq_Title_DEFAULT
+	}
+	return p.Title
+}
+
+var SendMemberMessagesReq_CreatedId_DEFAULT int64 = 0
+
+func (p *SendMemberMessagesReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return SendMemberMessagesReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
 func (p *SendMemberMessagesReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -468,6 +492,12 @@ func (p *SendMemberMessagesReq) SetType(val string) {
 }
 func (p *SendMemberMessagesReq) SetContent(val string) {
 	p.Content = val
+}
+func (p *SendMemberMessagesReq) SetTitle(val string) {
+	p.Title = val
+}
+func (p *SendMemberMessagesReq) SetCreatedId(val int64) {
+	p.CreatedId = val
 }
 
 func (p *SendMemberMessagesReq) IsSetMemberId() bool {
@@ -482,6 +512,14 @@ func (p *SendMemberMessagesReq) IsSetContent() bool {
 	return p.Content != SendMemberMessagesReq_Content_DEFAULT
 }
 
+func (p *SendMemberMessagesReq) IsSetTitle() bool {
+	return p.Title != SendMemberMessagesReq_Title_DEFAULT
+}
+
+func (p *SendMemberMessagesReq) IsSetCreatedId() bool {
+	return p.CreatedId != SendMemberMessagesReq_CreatedId_DEFAULT
+}
+
 func (p *SendMemberMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -493,35 +531,43 @@ var fieldIDToName_SendMemberMessagesReq = map[int16]string{
 	1: "memberId",
 	2: "type",
 	3: "content",
+	4: "title",
+	5: "createdId",
 }
 
 type SendUserMessagesReq struct {
-	MemberId int64  `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	Type     string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content  string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	UserId    int64  `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
+	Type      string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
+	Content   string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64  `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewSendUserMessagesReq() *SendUserMessagesReq {
 	return &SendUserMessagesReq{
-		MemberId: 0,
-		Type:     "",
-		Content:  "",
+		UserId:    0,
+		Type:      "",
+		Content:   "",
+		Title:     "",
+		CreatedId: 0,
 	}
 }
 
 func (p *SendUserMessagesReq) InitDefault() {
-	p.MemberId = 0
+	p.UserId = 0
 	p.Type = ""
 	p.Content = ""
+	p.Title = ""
+	p.CreatedId = 0
 }
 
-var SendUserMessagesReq_MemberId_DEFAULT int64 = 0
+var SendUserMessagesReq_UserId_DEFAULT int64 = 0
 
-func (p *SendUserMessagesReq) GetMemberId() (v int64) {
-	if !p.IsSetMemberId() {
-		return SendUserMessagesReq_MemberId_DEFAULT
+func (p *SendUserMessagesReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return SendUserMessagesReq_UserId_DEFAULT
 	}
-	return p.MemberId
+	return p.UserId
 }
 
 var SendUserMessagesReq_Type_DEFAULT string = ""
@@ -541,8 +587,26 @@ func (p *SendUserMessagesReq) GetContent() (v string) {
 	}
 	return p.Content
 }
-func (p *SendUserMessagesReq) SetMemberId(val int64) {
-	p.MemberId = val
+
+var SendUserMessagesReq_Title_DEFAULT string = ""
+
+func (p *SendUserMessagesReq) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return SendUserMessagesReq_Title_DEFAULT
+	}
+	return p.Title
+}
+
+var SendUserMessagesReq_CreatedId_DEFAULT int64 = 0
+
+func (p *SendUserMessagesReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return SendUserMessagesReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *SendUserMessagesReq) SetUserId(val int64) {
+	p.UserId = val
 }
 func (p *SendUserMessagesReq) SetType(val string) {
 	p.Type = val
@@ -550,9 +614,15 @@ func (p *SendUserMessagesReq) SetType(val string) {
 func (p *SendUserMessagesReq) SetContent(val string) {
 	p.Content = val
 }
+func (p *SendUserMessagesReq) SetTitle(val string) {
+	p.Title = val
+}
+func (p *SendUserMessagesReq) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
 
-func (p *SendUserMessagesReq) IsSetMemberId() bool {
-	return p.MemberId != SendUserMessagesReq_MemberId_DEFAULT
+func (p *SendUserMessagesReq) IsSetUserId() bool {
+	return p.UserId != SendUserMessagesReq_UserId_DEFAULT
 }
 
 func (p *SendUserMessagesReq) IsSetType() bool {
@@ -563,6 +633,14 @@ func (p *SendUserMessagesReq) IsSetContent() bool {
 	return p.Content != SendUserMessagesReq_Content_DEFAULT
 }
 
+func (p *SendUserMessagesReq) IsSetTitle() bool {
+	return p.Title != SendUserMessagesReq_Title_DEFAULT
+}
+
+func (p *SendUserMessagesReq) IsSetCreatedId() bool {
+	return p.CreatedId != SendUserMessagesReq_CreatedId_DEFAULT
+}
+
 func (p *SendUserMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -571,9 +649,11 @@ func (p *SendUserMessagesReq) String() string {
 }
 
 var fieldIDToName_SendUserMessagesReq = map[int16]string{
-	1: "memberId",
+	1: "userId",
 	2: "type",
 	3: "content",
+	4: "title",
+	5: "createdId",
 }
 
 type MessagesListResp struct {

@@ -5,7 +5,7 @@ import (
 	"common/serversuite"
 	message "gen/kitex_gen/message/messageservice"
 	"message/biz/dal"
-	"message/biz/dal/mq"
+	"message/biz/dal/eventbus/mq"
 	"message/conf"
 	"message/rpc"
 

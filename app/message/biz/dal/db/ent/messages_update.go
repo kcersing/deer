@@ -115,16 +115,23 @@ func (_u *MessagesUpdate) ClearTitle() *MessagesUpdate {
 }
 
 // SetFromUserID sets the "from_user_id" field.
-func (_u *MessagesUpdate) SetFromUserID(v string) *MessagesUpdate {
+func (_u *MessagesUpdate) SetFromUserID(v int64) *MessagesUpdate {
+	_u.mutation.ResetFromUserID()
 	_u.mutation.SetFromUserID(v)
 	return _u
 }
 
 // SetNillableFromUserID sets the "from_user_id" field if the given value is not nil.
-func (_u *MessagesUpdate) SetNillableFromUserID(v *string) *MessagesUpdate {
+func (_u *MessagesUpdate) SetNillableFromUserID(v *int64) *MessagesUpdate {
 	if v != nil {
 		_u.SetFromUserID(*v)
 	}
+	return _u
+}
+
+// AddFromUserID adds value to the "from_user_id" field.
+func (_u *MessagesUpdate) AddFromUserID(v int64) *MessagesUpdate {
+	_u.mutation.AddFromUserID(v)
 	return _u
 }
 
@@ -296,10 +303,13 @@ func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(messages.FieldTitle, field.TypeString)
 	}
 	if value, ok := _u.mutation.FromUserID(); ok {
-		_spec.SetField(messages.FieldFromUserID, field.TypeString, value)
+		_spec.SetField(messages.FieldFromUserID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedFromUserID(); ok {
+		_spec.AddField(messages.FieldFromUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.FromUserIDCleared() {
-		_spec.ClearField(messages.FieldFromUserID, field.TypeString)
+		_spec.ClearField(messages.FieldFromUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
@@ -426,16 +436,23 @@ func (_u *MessagesUpdateOne) ClearTitle() *MessagesUpdateOne {
 }
 
 // SetFromUserID sets the "from_user_id" field.
-func (_u *MessagesUpdateOne) SetFromUserID(v string) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetFromUserID(v int64) *MessagesUpdateOne {
+	_u.mutation.ResetFromUserID()
 	_u.mutation.SetFromUserID(v)
 	return _u
 }
 
 // SetNillableFromUserID sets the "from_user_id" field if the given value is not nil.
-func (_u *MessagesUpdateOne) SetNillableFromUserID(v *string) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetNillableFromUserID(v *int64) *MessagesUpdateOne {
 	if v != nil {
 		_u.SetFromUserID(*v)
 	}
+	return _u
+}
+
+// AddFromUserID adds value to the "from_user_id" field.
+func (_u *MessagesUpdateOne) AddFromUserID(v int64) *MessagesUpdateOne {
+	_u.mutation.AddFromUserID(v)
 	return _u
 }
 
@@ -637,10 +654,13 @@ func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err 
 		_spec.ClearField(messages.FieldTitle, field.TypeString)
 	}
 	if value, ok := _u.mutation.FromUserID(); ok {
-		_spec.SetField(messages.FieldFromUserID, field.TypeString, value)
+		_spec.SetField(messages.FieldFromUserID, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedFromUserID(); ok {
+		_spec.AddField(messages.FieldFromUserID, field.TypeInt64, value)
 	}
 	if _u.mutation.FromUserIDCleared() {
-		_spec.ClearField(messages.FieldFromUserID, field.TypeString)
+		_spec.ClearField(messages.FieldFromUserID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)

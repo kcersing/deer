@@ -53,7 +53,7 @@ func (Order) Edges() []ent.Edge {
 
 		edge.To("items", OrderItem.Type),
 		edge.To("pay", OrderPay.Type),
-		edge.To("events", OrderEvents.Type),
+		edge.To("eventbus", OrderEvents.Type),
 		edge.To("snapshots", OrderSnapshots.Type),
 		edge.To("status_history", OrderStatusHistory.Type),
 

@@ -158,7 +158,7 @@ func (bridge *AMQPBridge) PublishBatchToAMQP(ctx context.Context, events []*Even
 	if len(failedIndices) > 0 {
 		klog.Warnf("[AMQPBridge] batch publish: %d/%d success", len(events)-len(failedIndices), len(events))
 	} else {
-		klog.Infof("[AMQPBridge] batch publish: all %d events published successfully", len(events))
+		klog.Infof("[AMQPBridge] batch publish: all %d eventbus published successfully", len(events))
 	}
 
 	return failedIndices, nil

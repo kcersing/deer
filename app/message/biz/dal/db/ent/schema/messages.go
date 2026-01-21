@@ -17,7 +17,7 @@ type Messages struct {
 func (Messages) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("title").Comment("消息标题").Optional().Nillable(),
-		field.String("from_user_id").Comment("该消息发送者ID").Optional().Nillable(),
+		field.Int64("from_user_id").Comment("发送者").Optional().Nillable(),
 		field.String("content").Comment("消息内容").Optional().Nillable(),
 		field.Enum("status").
 			Comment("消息状态").

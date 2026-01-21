@@ -36,7 +36,7 @@ func (OrderEvents) Mixin() []ent.Mixin {
 func (OrderEvents) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("order", Order.Type).
-			Ref("events").
+			Ref("eventbus").
 			Field("aggregate_id").Unique(),
 	}
 }
