@@ -17,5 +17,5 @@ update_facade:
 	hz update --idl=../../idl/admin/crm.thrift -use=deer/hertz_gen/
 	hz update --idl=../../idl/admin/product.thrift -use=deer/hertz_gen/
 
-
+	hz update --idl=../../idl/admin/message.thrift -use=deer/hertz_gen/
 	hz update --idl=../../idl/admin/pub.thrift -use=deer/hertz_gen/

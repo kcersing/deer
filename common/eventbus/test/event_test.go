@@ -1,6 +1,7 @@
-package eventbus
+package test
 
 import (
+	"common/eventbus"
 	"context"
 	"fmt"
 	"sync"
@@ -9,7 +10,7 @@ import (
 )
 
 func TestEventBus_Run(t *testing.T) {
-	eb := NewEventBus()
+	eb := eventbus.NewEventBus()
 	var wg sync.WaitGroup
 	//// 订阅“test”主题活动
 	subscribe := eb.Subscribe("test")
@@ -41,7 +42,7 @@ func TestEventBus_Run(t *testing.T) {
 		fmt.Println("[订阅者 C] 通道已关闭，停止接收。")
 	}()
 
-	eb.SubscribeAsync("order_created", EventHandlerFunc(func(ctx context.Context, event *Event) error {
+	eb.SubscribeAsync("order_created", eventbus.EventHandlerFunc(func(ctx context.Context, event *eventbus.Event) error {
 		fmt.Println("收到订单:", event.Payload)
 		return nil
 	}), 1)
@@ -60,17 +61,17 @@ func TestEventBus_Run(t *testing.T) {
 	// 等待所有订阅 goroutine 启动
 	time.Sleep(100 * time.Millisecond)
 
-	e := NewEvent("test", map[string]any{
+	e := eventbus.NewEvent("test", map[string]any{
 		"postId": 1,
 		"title":  "Welcome to Leapcell",
 		"author": "Leapcell",
 	})
 	eb.Publish(context.Background(), e)
 
-	eb.Publish(context.Background(), NewEvent("order", "订单10000"))
-	eb.Publish(context.Background(), NewEvent("pay", "支付100001"))
+	eb.Publish(context.Background(), eventbus.NewEvent("order", "订单10000"))
+	eb.Publish(context.Background(), eventbus.NewEvent("pay", "支付100001"))
 	// 暂无订阅者的主题
-	eb.Publish(context.Background(), NewEvent("msg", "消息"))
+	eb.Publish(context.Background(), eventbus.NewEvent("msg", "消息"))
 	fmt.Println("--- 事件发布完成 ---")
 
 	time.Sleep(time.Second * 3)
@@ -78,6 +79,6 @@ func TestEventBus_Run(t *testing.T) {
 	eb.Unsubscribe("test", subscribe)
 	// 再次发布，只有 B 会收到
 	fmt.Println("\n--- 再次发布订单事件（A已取消订阅） ---")
-	eb.Publish(context.Background(), NewEvent("order", "订单发货"))
+	eb.Publish(context.Background(), eventbus.NewEvent("order", "订单发货"))
 	time.Sleep(500 * time.Millisecond)
 }

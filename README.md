@@ -144,24 +144,23 @@ $ make stop
 
 ## Examples
 
-### pprof
-```shell
-$ go tool pprof -http=:1234 http://localhost:8080/debug/pprof/heap
-```
-
-
 ### jaeger
-http://101.201.55.134:16686/search
+http://127.0.0.1:16686/search
 
 
 ### grafana 
-http://101.201.55.134:3000/
+http://127.0.0.1:3000/
 
 ### nacos
-http://101.201.55.134:8848/nacos/
+http://127.0.0.1:8848/nacos/
+
+### etcd
+http://127.0.0.1:9100/etcdkeeper/
 
 ### victoriametrics
-http://101.201.55.134:8428/
+http://127.0.0.1:8428/
 
-
-
+### pprof
+```shell
+go tool pprof -http=:8001 http://127.0.0.1:9010/debug/pprof/profile
+```

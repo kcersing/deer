@@ -52,3 +52,17 @@ func TransformPlugin() Middleware {
 		})
 	}
 }
+
+// RecoverPlugin 捕获 handler 中的 panic，防止单个 panic 崩溃整个进程
+func RecoverPlugin() Middleware {
+	return func(next Handler) Handler {
+		return EventHandlerFunc(func(ctx context.Context, event *Event) error {
+			defer func() {
+				if r := recover(); r != nil {
+					klog.Errorf("[RecoverPlugin] panic recovered, topic=%s, err=%v", event.Topic, r)
+				}
+			}()
+			return next.Handle(ctx, event)
+		})
+	}
+}

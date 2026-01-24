@@ -1,6 +1,7 @@
-package eventbus
+package test
 
 import (
+	"common/eventbus"
 	"context"
 	"fmt"
 	"testing"
@@ -9,17 +10,17 @@ import (
 
 func TestEventBusMiddleware_Run(t *testing.T) {
 
-	eb := NewEventBus()
+	eb := eventbus.NewEventBus()
 
 	//注册插件（顺序很重要）
-	eb.Use(LoggingPlugin())     //日志（最外层）
-	eb.Use(FilterPlugin("pay")) // 过滤（在日志和转换之间）
+	eb.Use(eventbus.LoggingPlugin())     //日志（最外层）
+	eb.Use(eventbus.FilterPlugin("pay")) // 过滤（在日志和转换之间）
 
-	eb.Use(TransformPlugin()) // 转换（最内层，靠近分发）
+	eb.Use(eventbus.TransformPlugin()) // 转换（最内层，靠近分发）
 
 	//订阅设置
-	ordersCh := make(EventChan, 10)
-	payCh := make(EventChan, 10)
+	ordersCh := make(eventbus.EventChan, 10)
+	payCh := make(eventbus.EventChan, 10)
 	eb.subscribers["order"] = append(eb.subscribers["order"], ordersCh)
 	eb.subscribers["pay"] = append(eb.subscribers["pay"], payCh)
 
@@ -37,12 +38,12 @@ func TestEventBusMiddleware_Run(t *testing.T) {
 
 	//发布事件
 	fmt.Println("\n--- 发布订单事件 ---")
-	eb.Publish(context.Background(), NewEvent("order", "订单10000"))
-	eb.Publish(context.Background(), NewEvent("order", "订单10001"))
-	eb.Publish(context.Background(), NewEvent("order", "订单10002"))
+	eb.Publish(context.Background(), eventbus.NewEvent("order", "订单10000"))
+	eb.Publish(context.Background(), eventbus.NewEvent("order", "订单10001"))
+	eb.Publish(context.Background(), eventbus.NewEvent("order", "订单10002"))
 	fmt.Println("\n--- 发布支付事件 ---")
-	eb.Publish(context.Background(), NewEvent("pay", "支付100001"))
-	eb.Publish(context.Background(), NewEvent("pay", "支付100002"))
+	eb.Publish(context.Background(), eventbus.NewEvent("pay", "支付100001"))
+	eb.Publish(context.Background(), eventbus.NewEvent("pay", "支付100002"))
 	// 保持程序运行以便观察输出
 	time.Sleep(10000 * time.Millisecond)
 }

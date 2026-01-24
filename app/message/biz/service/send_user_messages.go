@@ -1,11 +1,9 @@
 package service
 
 import (
-	eventbus2 "common/eventbus"
 	"context"
 	base "gen/kitex_gen/base"
 	message "gen/kitex_gen/message"
-	"message/biz/dal/eventbus"
 )
 
 type SendUserMessagesService struct {
@@ -21,12 +19,13 @@ func NewSendUserMessagesService(ctx context.Context) *SendUserMessagesService {
 func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
-	eb := eventbus.GetGlobalEventBus()
+	// eb := events.GetGlobalEventBus()
 
-	//发布事件
-	event := eventbus2.NewEvent("send_user_messages", req)
+	// // 发布事件到事件总线
+	// // 消费者已在应用启动时注册，无需在此处创建
+	// event := eventbus2.NewEvent(event.EventSendUserMessages, req)
 
-	eb.Publish(s.ctx, event)
+	// eb.Publish(s.ctx, event)
 
 	//tx, err := db.Client.Tx(s.ctx)
 	//if err != nil {

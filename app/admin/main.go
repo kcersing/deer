@@ -51,7 +51,8 @@ func main() {
 			),
 		),
 	)
-	h.NoHijackConnPool = true
+	//h.NoHijackConnPool = true
+	//文件导出
 	h.Static("/export", "./files/")
 
 	// use pprof mw

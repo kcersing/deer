@@ -15,10 +15,10 @@ const (
 
 	TCP = "tcp"
 
-	EtcdAddress          = "101.201.55.134:2379"
+	EtcdAddress          = "127.0.0.1:2379"
 	ESAddress            = "http://101.201.55.134:9200"
 	DefaultLimit         = 10
-	OpenTelemetryAddress = "101.201.55.134:4317"
+	OpenTelemetryAddress = "127.0.0.1:4317"
 
 	NacosIpAddr   = "101.201.55.134"
 	NacosPort     = 8848

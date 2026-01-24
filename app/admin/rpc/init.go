@@ -8,6 +8,7 @@ func InitRpc() {
 	client.InitUserRpc()
 	client.InitProductRpc()
 	client.InitMemberRpc()
+	client.InitMessageRpc()
 	//client.InitCrmRpc()
 	//client.InitOrderRpc()
 }

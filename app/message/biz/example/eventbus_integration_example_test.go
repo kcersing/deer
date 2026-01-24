@@ -5,7 +5,7 @@ import (
 	"common/eventbus"
 	"context"
 	"fmt"
-	"message/biz/dal/eventbus/mq"
+	"message/biz/dal/mq"
 	"sync"
 	"testing"
 	"time"

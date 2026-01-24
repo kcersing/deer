@@ -1,6 +1,7 @@
-package eventbus
+package test
 
 import (
+	"common/eventbus"
 	"fmt"
 	"log"
 	"testing"
@@ -12,19 +13,19 @@ func TestEventBusAmqp_Run(t *testing.T) {
 	amqpURL := "amqp://guest:guest@localhost:5672/"
 	exchangeName := "event_bus_exchange"
 
-	bus, err := NewRabbitMQBus(amqpURL, exchangeName)
+	bus, err := eventbus.NewRabbitMQBus(amqpURL, exchangeName)
 	if err != nil {
 		log.Fatalf("%s", err)
 	}
 	defer bus.Close()
 
 	// 订阅者 A
-	bus.Subscribe("subscriber_A_queue", func(event Event) {
+	bus.Subscribe("subscriber_A_queue", func(event eventbus.Event) {
 		fmt.Printf("[A] Received event: Topic=%s, Payload=%v\n", event.Topic, event.Payload)
 	})
 
 	// 订阅者 B (会收到同样的 Fanout 消息)
-	bus.Subscribe("subscriber_B_queue", func(event Event) {
+	bus.Subscribe("subscriber_B_queue", func(event eventbus.Event) {
 		fmt.Printf("[B] Received event: Topic=%s, Payload=%v\n", event.Topic, event.Payload)
 	})
 

@@ -1,9 +1,6 @@
 package mq
 
 import (
-	"common/amqpclt"
-	"common/eventbus"
-	"context"
 	"fmt"
 	"sync"
 	"time"

@@ -21,9 +21,6 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *SmsListReq) IsValid() error {
-	return nil
-}
 func (p *SmsResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {

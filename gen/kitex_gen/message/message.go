@@ -8,87 +8,6 @@ import (
 	"gen/kitex_gen/base"
 )
 
-type SmsListReq struct {
-	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
-	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
-	Mobile   string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-}
-
-func NewSmsListReq() *SmsListReq {
-	return &SmsListReq{
-		Page:     1,
-		PageSize: 100,
-		Mobile:   "",
-	}
-}
-
-func (p *SmsListReq) InitDefault() {
-	p.Page = 1
-	p.PageSize = 100
-	p.Mobile = ""
-}
-
-var SmsListReq_Page_DEFAULT int64 = 1
-
-func (p *SmsListReq) GetPage() (v int64) {
-	if !p.IsSetPage() {
-		return SmsListReq_Page_DEFAULT
-	}
-	return p.Page
-}
-
-var SmsListReq_PageSize_DEFAULT int64 = 100
-
-func (p *SmsListReq) GetPageSize() (v int64) {
-	if !p.IsSetPageSize() {
-		return SmsListReq_PageSize_DEFAULT
-	}
-	return p.PageSize
-}
-
-var SmsListReq_Mobile_DEFAULT string = ""
-
-func (p *SmsListReq) GetMobile() (v string) {
-	if !p.IsSetMobile() {
-		return SmsListReq_Mobile_DEFAULT
-	}
-	return p.Mobile
-}
-func (p *SmsListReq) SetPage(val int64) {
-	p.Page = val
-}
-func (p *SmsListReq) SetPageSize(val int64) {
-	p.PageSize = val
-}
-func (p *SmsListReq) SetMobile(val string) {
-	p.Mobile = val
-}
-
-func (p *SmsListReq) IsSetPage() bool {
-	return p.Page != SmsListReq_Page_DEFAULT
-}
-
-func (p *SmsListReq) IsSetPageSize() bool {
-	return p.PageSize != SmsListReq_PageSize_DEFAULT
-}
-
-func (p *SmsListReq) IsSetMobile() bool {
-	return p.Mobile != SmsListReq_Mobile_DEFAULT
-}
-
-func (p *SmsListReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("SmsListReq(%+v)", *p)
-}
-
-var fieldIDToName_SmsListReq = map[int16]string{
-	1: "page",
-	2: "pageSize",
-	3: "mobile",
-}
-
 type SmsResp struct {
 	Data     *base.Sms      `thrift:"data,1,optional" frugal:"1,optional,base.Sms" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
@@ -293,20 +212,41 @@ var fieldIDToName_SmsSendListResp = map[int16]string{
 }
 
 type SmsSendListReq struct {
-	Mobile string `thrift:"mobile,1,optional" frugal:"1,optional,string" json:"mobile,omitempty"`
-	Msg    string `thrift:"msg,2,optional" frugal:"2,optional,string" json:"msg,omitempty"`
+	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Mobile   string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
 }
 
 func NewSmsSendListReq() *SmsSendListReq {
 	return &SmsSendListReq{
-		Mobile: "",
-		Msg:    "",
+		Page:     1,
+		PageSize: 100,
+		Mobile:   "",
 	}
 }
 
 func (p *SmsSendListReq) InitDefault() {
+	p.Page = 1
+	p.PageSize = 100
 	p.Mobile = ""
-	p.Msg = ""
+}
+
+var SmsSendListReq_Page_DEFAULT int64 = 1
+
+func (p *SmsSendListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return SmsSendListReq_Page_DEFAULT
+	}
+	return p.Page
+}
+
+var SmsSendListReq_PageSize_DEFAULT int64 = 100
+
+func (p *SmsSendListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return SmsSendListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
 }
 
 var SmsSendListReq_Mobile_DEFAULT string = ""
@@ -317,28 +257,26 @@ func (p *SmsSendListReq) GetMobile() (v string) {
 	}
 	return p.Mobile
 }
-
-var SmsSendListReq_Msg_DEFAULT string = ""
-
-func (p *SmsSendListReq) GetMsg() (v string) {
-	if !p.IsSetMsg() {
-		return SmsSendListReq_Msg_DEFAULT
-	}
-	return p.Msg
+func (p *SmsSendListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *SmsSendListReq) SetPageSize(val int64) {
+	p.PageSize = val
 }
 func (p *SmsSendListReq) SetMobile(val string) {
 	p.Mobile = val
 }
-func (p *SmsSendListReq) SetMsg(val string) {
-	p.Msg = val
+
+func (p *SmsSendListReq) IsSetPage() bool {
+	return p.Page != SmsSendListReq_Page_DEFAULT
+}
+
+func (p *SmsSendListReq) IsSetPageSize() bool {
+	return p.PageSize != SmsSendListReq_PageSize_DEFAULT
 }
 
 func (p *SmsSendListReq) IsSetMobile() bool {
 	return p.Mobile != SmsSendListReq_Mobile_DEFAULT
-}
-
-func (p *SmsSendListReq) IsSetMsg() bool {
-	return p.Msg != SmsSendListReq_Msg_DEFAULT
 }
 
 func (p *SmsSendListReq) String() string {
@@ -349,8 +287,9 @@ func (p *SmsSendListReq) String() string {
 }
 
 var fieldIDToName_SmsSendListReq = map[int16]string{
-	1: "mobile",
-	2: "msg",
+	1: "page",
+	2: "pageSize",
+	3: "mobile",
 }
 
 type MessagesListReq struct {
@@ -415,11 +354,12 @@ var fieldIDToName_MessagesListReq = map[int16]string{
 }
 
 type SendMemberMessagesReq struct {
-	MemberId  int64  `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	Type      string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content   string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
-	Title     string `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
-	CreatedId int64  `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	MemberId  int64   `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
+	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64   `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	TagId     []int64 `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
 }
 
 func NewSendMemberMessagesReq() *SendMemberMessagesReq {
@@ -429,6 +369,7 @@ func NewSendMemberMessagesReq() *SendMemberMessagesReq {
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
+		TagId:     []int64{},
 	}
 }
 
@@ -438,6 +379,7 @@ func (p *SendMemberMessagesReq) InitDefault() {
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
+	p.TagId = []int64{}
 }
 
 var SendMemberMessagesReq_MemberId_DEFAULT int64 = 0
@@ -484,6 +426,15 @@ func (p *SendMemberMessagesReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var SendMemberMessagesReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *SendMemberMessagesReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return SendMemberMessagesReq_TagId_DEFAULT
+	}
+	return p.TagId
+}
 func (p *SendMemberMessagesReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -498,6 +449,9 @@ func (p *SendMemberMessagesReq) SetTitle(val string) {
 }
 func (p *SendMemberMessagesReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *SendMemberMessagesReq) SetTagId(val []int64) {
+	p.TagId = val
 }
 
 func (p *SendMemberMessagesReq) IsSetMemberId() bool {
@@ -520,6 +474,10 @@ func (p *SendMemberMessagesReq) IsSetCreatedId() bool {
 	return p.CreatedId != SendMemberMessagesReq_CreatedId_DEFAULT
 }
 
+func (p *SendMemberMessagesReq) IsSetTagId() bool {
+	return p.TagId != nil
+}
+
 func (p *SendMemberMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -533,14 +491,16 @@ var fieldIDToName_SendMemberMessagesReq = map[int16]string{
 	3: "content",
 	4: "title",
 	5: "createdId",
+	6: "tagId",
 }
 
 type SendUserMessagesReq struct {
-	UserId    int64  `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
-	Type      string `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content   string `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
-	Title     string `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
-	CreatedId int64  `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	UserId    int64   `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
+	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
+	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64   `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	TagId     []int64 `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
 }
 
 func NewSendUserMessagesReq() *SendUserMessagesReq {
@@ -550,6 +510,7 @@ func NewSendUserMessagesReq() *SendUserMessagesReq {
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
+		TagId:     []int64{},
 	}
 }
 
@@ -559,6 +520,7 @@ func (p *SendUserMessagesReq) InitDefault() {
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
+	p.TagId = []int64{}
 }
 
 var SendUserMessagesReq_UserId_DEFAULT int64 = 0
@@ -605,6 +567,15 @@ func (p *SendUserMessagesReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var SendUserMessagesReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *SendUserMessagesReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return SendUserMessagesReq_TagId_DEFAULT
+	}
+	return p.TagId
+}
 func (p *SendUserMessagesReq) SetUserId(val int64) {
 	p.UserId = val
 }
@@ -619,6 +590,9 @@ func (p *SendUserMessagesReq) SetTitle(val string) {
 }
 func (p *SendUserMessagesReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *SendUserMessagesReq) SetTagId(val []int64) {
+	p.TagId = val
 }
 
 func (p *SendUserMessagesReq) IsSetUserId() bool {
@@ -641,6 +615,10 @@ func (p *SendUserMessagesReq) IsSetCreatedId() bool {
 	return p.CreatedId != SendUserMessagesReq_CreatedId_DEFAULT
 }
 
+func (p *SendUserMessagesReq) IsSetTagId() bool {
+	return p.TagId != nil
+}
+
 func (p *SendUserMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -654,6 +632,7 @@ var fieldIDToName_SendUserMessagesReq = map[int16]string{
 	3: "content",
 	4: "title",
 	5: "createdId",
+	6: "tagId",
 }
 
 type MessagesListResp struct {

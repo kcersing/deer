@@ -30,3 +30,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4O
 POST http://127.0.0.1:9010/service/item/list
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4OTMsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjYwNDUyOTN9.SF1C2cZNvmqHi7SZhw9M9jBzf0cUiDQrlMWPmaphtSI
+
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/message/send-user-messages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4OTMsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjYwNDUyOTN9.SF1C2cZNvmqHi7SZhw9M9jBzf0cUiDQrlMWPmaphtSI
+
+{
+  "greeting": "HTTP Client with gRPC",
+  "userId": 1,
+  "type":"测试 type",
+  "content":"测试 content",
+  "title":"测试 title",
+  "createdId":1
+}
+

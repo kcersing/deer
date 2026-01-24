@@ -141,3 +141,22 @@ func (eb *EventBus) Unsubscribe(topic string, ch EventChan) {
 	}
 
 }
+
+// ============ 使用消费者池订阅 ============
+
+// SubscribeWithPool 使用消费者池订阅事件
+func (eb *EventBus) SubscribeWithPool(topic string, handler Handler, workerNum int32) *ConsumerPool {
+	pool := NewConsumerPool(topic, handler, workerNum)
+	pool.Start()
+
+	// 创建通道并启动转发 goroutine
+	ch := eb.Subscribe(topic)
+	go func() {
+		for event := range ch {
+			pool.Consume(event)
+		}
+		pool.Stop()
+	}()
+
+	return pool
+}

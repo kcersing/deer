@@ -1,0 +1,12 @@
+### Request with body https://www.jetbrains.com/zh-cn/help/go/2025.3/http-client-in-product-code-editor.html#secure-grpc
+GRPC grpcs://127.0.0.1:9104/message.MessageService/SendUserMessages
+
+
+{
+  "greeting": "HTTP Client with gRPC",
+  "userId": 1,
+  "type":"测试 type",
+  "content":"测试 content",
+  "title":"测试 title",
+  "createdId":1
+}

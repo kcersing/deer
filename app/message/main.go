@@ -3,11 +3,18 @@ package main
 import (
 	"common/mtl"
 	"common/serversuite"
+	"context"
+	"message/biz/events"
+	"time"
+
 	message "gen/kitex_gen/message/messageservice"
 	"message/biz/dal"
-	"message/biz/dal/eventbus/mq"
+	"message/biz/dal/mq"
 	"message/conf"
 	"message/rpc"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )
@@ -15,6 +22,7 @@ import (
 func init() {
 	dal.Init()
 	mq.InitMQ()
+
 }
 
 var serviceName = conf.GetConf().Kitex.Service
@@ -41,9 +49,27 @@ func main() {
 
 	svr := message.NewServer(new(MessageServiceImpl), opts...)
 
-	err := svr.Run()
-
-	if err != nil {
+	if err := events.Bootstrap(); err != nil {
 		klog.Fatal(err)
 	}
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	if err := svr.Run(); err != nil {
+		klog.Fatal(err)
+	}
+	klog.Info("server 999999999999999999")
+	go func() {
+
+		<-sigChan
+		klog.Infof("shutdown signal received")
+		if err := svr.Stop(); err != nil {
+			klog.Errorf("failed to stop server：%v", err)
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		defer cancel()
+		if err := events.Shutdown(ctx); err != nil {
+			klog.Infof("failed to shutdown events: %v", err)
+		}
+	}()
+
 }
