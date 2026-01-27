@@ -22,6 +22,7 @@ import (
 func init() {
 	dal.Init()
 	mq.InitMQ()
+	events.InitGlobalEventBus()
 
 }
 
@@ -57,7 +58,7 @@ func main() {
 	if err := svr.Run(); err != nil {
 		klog.Fatal(err)
 	}
-	klog.Info("server 999999999999999999")
+
 	go func() {
 
 		<-sigChan

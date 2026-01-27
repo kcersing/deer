@@ -31,35 +31,36 @@ func GetConsumerRegistry() *eventbus.ConsumerRegistry { return consumerRegistry 
 // InitGlobalEventBus 全局初始化（应在应用启动时调用）
 func InitGlobalEventBus() error {
 	var err error
+	once.Do(func() {
 
-	// 创建 AMQP 客户端
-	publisher, e := amqpclt.NewPublisher(mq.Client, "eventbus")
-	if e != nil {
-		klog.Errorf("failed to create publisher: %v", e)
-		return err
-	}
+		// 创建 AMQP 客户端
+		publisher, e := amqpclt.NewPublisher(mq.Client, "eventbus")
+		if e != nil {
+			klog.Errorf("[InitGlobalEventBus] failed to create publisher: %v", e)
+			return
+		}
 
-	subscriber, e := amqpclt.NewSubscribe(mq.Client, "eventbus")
-	if e != nil {
-		klog.Errorf("failed to create subscriber: %v", e)
-		return err
-	}
+		subscriber, e := amqpclt.NewSubscribe(mq.Client, "eventbus")
+		if e != nil {
+			klog.Errorf("[InitGlobalEventBus] failed to create subscriber: %v", e)
+			return
+		}
 
-	// 创建事件总线和桥接器
-	globalEventBus = eventbus.NewEventBus()
-	globalBridge = eventbus.NewAMQPBridge(globalEventBus, publisher, subscriber)
+		// 创建事件总线和桥接器
+		globalEventBus = eventbus.NewEventBus()
+		globalBridge = eventbus.NewAMQPBridge(globalEventBus, publisher, subscriber)
 
-	// 注册中间件：恢复、日志、AMQP 发布
-	globalEventBus.Use(eventbus.RecoverPlugin())
-	globalEventBus.Use(eventbus.LoggingPlugin())
-	globalEventBus.Use(globalBridge.AMQPPublishingMiddleware())
+		// 注册中间件：恢复、日志、AMQP 发布
+		globalEventBus.Use(eventbus.RecoverPlugin())
+		globalEventBus.Use(eventbus.LoggingPlugin())
+		globalEventBus.Use(globalBridge.AMQPPublishingMiddleware())
 
-	// 启动后台监听
-	ctx := context.Background()
-	globalBridge.StartListener(ctx)
+		// 启动后台监听
+		ctx := context.Background()
+		globalBridge.StartListener(ctx)
 
-	klog.Infof("[MessageService] Global event bus initialized")
-
+		klog.Infof("[InitGlobalEventBus] Global event bus initialized")
+	})
 	return err
 }
 
@@ -67,24 +68,25 @@ func InitGlobalEventBus() error {
 func Bootstrap() error {
 
 	var err error
-	once.Do(func() {
-		if err := InitGlobalEventBus(); err != nil {
-			return
-		}
-		if consumerRegistry == nil {
-			consumerRegistry = eventbus.NewConsumerRegistry()
-		}
-		if err := InitMessageConsumers(); err != nil {
-			return
-		}
 
-		if err := StartMessageConsumers(); err != nil {
-			return
-		}
-		stopChan = make(chan struct{})
-		klog.Infof("[MessageService] Bootstrap completed")
+	if err := InitGlobalEventBus(); err != nil {
+		return err
+	}
+	if consumerRegistry == nil {
+		consumerRegistry = eventbus.NewConsumerRegistry()
+	}
 
-	})
+	if err := InitMessageConsumers(); err != nil {
+		klog.Infof("[Bootstrap] Err", err)
+		return err
+	}
+
+	if err := StartMessageConsumers(); err != nil {
+		return err
+	}
+
+	stopChan = make(chan struct{})
+
 	return err
 
 }
@@ -103,6 +105,6 @@ func Shutdown(ctx context.Context) error {
 		globalBridge.Stop()
 	}
 
-	klog.Infof("[MessageService] Shutdown completed")
+	klog.Infof("[Shutdown] Shutdown completed")
 	return nil
 }

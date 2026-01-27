@@ -1,11 +1,3 @@
-/*
- * @Author: kcersing wt4@live.cn
- * @Date: 2025-12-12 10:21:48
- * @LastEditors: kcersing wt4@live.cn
- * @LastEditTime: 2026-01-16 11:36:55
- * @FilePath: \api\common\eventbus\event.go
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 package eventbus
 
 import (
@@ -30,6 +22,7 @@ func NewEvent(topic string, payload any) *Event {
 		Id:        uuid.New().String(),
 		Topic:     topic,
 		Payload:   payload,
+		Source:    "service", // 本地服务发布的事件标记为 "service"
 		Version:   0,
 		Timestamp: time.Time{},
 		Priority:  0,

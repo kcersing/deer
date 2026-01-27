@@ -767,32 +767,35 @@ func (p *MessagesListReq) String() string {
 }
 
 type SendMemberMessagesReq struct {
-	MemberId  int64   `thrift:"memberId,1,optional" form:"memberId" json:"memberId,omitempty" query:"memberId"`
-	Type      string  `thrift:"type,2,optional" form:"type" json:"type,omitempty" query:"type"`
-	Content   string  `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
-	Title     string  `thrift:"title,4,optional" form:"title" json:"title,omitempty" query:"title"`
-	CreatedId int64   `thrift:"createdId,5,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
-	TagId     []int64 `thrift:"tagId,6,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	MemberId  int64               `thrift:"memberId,1,optional" form:"memberId" json:"memberId,omitempty" query:"memberId"`
+	Type      base.MessagesType   `thrift:"type,2,optional,MessagesType" form:"type" json:"type,omitempty" query:"type"`
+	Content   string              `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
+	Title     string              `thrift:"title,4,optional" form:"title" json:"title,omitempty" query:"title"`
+	CreatedId int64               `thrift:"createdId,5,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	TagId     []int64             `thrift:"tagId,6,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Status    base.MessagesStatus `thrift:"status,7,optional,MessagesStatus" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewSendMemberMessagesReq() *SendMemberMessagesReq {
 	return &SendMemberMessagesReq{
 		MemberId:  0,
-		Type:      "",
+		Type:      0,
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
 		TagId:     []int64{},
+		Status:    0,
 	}
 }
 
 func (p *SendMemberMessagesReq) InitDefault() {
 	p.MemberId = 0
-	p.Type = ""
+	p.Type = 0
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
 	p.TagId = []int64{}
+	p.Status = 0
 }
 
 var SendMemberMessagesReq_MemberId_DEFAULT int64 = 0
@@ -804,9 +807,9 @@ func (p *SendMemberMessagesReq) GetMemberId() (v int64) {
 	return p.MemberId
 }
 
-var SendMemberMessagesReq_Type_DEFAULT string = ""
+var SendMemberMessagesReq_Type_DEFAULT base.MessagesType = 0
 
-func (p *SendMemberMessagesReq) GetType() (v string) {
+func (p *SendMemberMessagesReq) GetType() (v base.MessagesType) {
 	if !p.IsSetType() {
 		return SendMemberMessagesReq_Type_DEFAULT
 	}
@@ -849,6 +852,15 @@ func (p *SendMemberMessagesReq) GetTagId() (v []int64) {
 	return p.TagId
 }
 
+var SendMemberMessagesReq_Status_DEFAULT base.MessagesStatus = 0
+
+func (p *SendMemberMessagesReq) GetStatus() (v base.MessagesStatus) {
+	if !p.IsSetStatus() {
+		return SendMemberMessagesReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var fieldIDToName_SendMemberMessagesReq = map[int16]string{
 	1: "memberId",
 	2: "type",
@@ -856,6 +868,7 @@ var fieldIDToName_SendMemberMessagesReq = map[int16]string{
 	4: "title",
 	5: "createdId",
 	6: "tagId",
+	7: "status",
 }
 
 func (p *SendMemberMessagesReq) IsSetMemberId() bool {
@@ -880,6 +893,10 @@ func (p *SendMemberMessagesReq) IsSetCreatedId() bool {
 
 func (p *SendMemberMessagesReq) IsSetTagId() bool {
 	return p.TagId != nil
+}
+
+func (p *SendMemberMessagesReq) IsSetStatus() bool {
+	return p.Status != SendMemberMessagesReq_Status_DEFAULT
 }
 
 func (p *SendMemberMessagesReq) Read(iprot thrift.TProtocol) (err error) {
@@ -910,7 +927,7 @@ func (p *SendMemberMessagesReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -944,6 +961,14 @@ func (p *SendMemberMessagesReq) Read(iprot thrift.TProtocol) (err error) {
 		case 6:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField7(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -991,11 +1016,11 @@ func (p *SendMemberMessagesReq) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *SendMemberMessagesReq) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field base.MessagesType
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = base.MessagesType(v)
 	}
 	p.Type = _field
 	return nil
@@ -1056,6 +1081,17 @@ func (p *SendMemberMessagesReq) ReadField6(iprot thrift.TProtocol) error {
 	p.TagId = _field
 	return nil
 }
+func (p *SendMemberMessagesReq) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field base.MessagesStatus
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = base.MessagesStatus(v)
+	}
+	p.Status = _field
+	return nil
+}
 
 func (p *SendMemberMessagesReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1085,6 +1121,10 @@ func (p *SendMemberMessagesReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField6(oprot); err != nil {
 			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 	}
@@ -1126,10 +1166,10 @@ WriteFieldEndError:
 
 func (p *SendMemberMessagesReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if p.IsSetType() {
-		if err = oprot.WriteFieldBegin("type", thrift.STRING, 2); err != nil {
+		if err = oprot.WriteFieldBegin("type", thrift.I32, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Type); err != nil {
+		if err := oprot.WriteI32(int32(p.Type)); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1227,6 +1267,25 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
+func (p *SendMemberMessagesReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I32, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI32(int32(p.Status)); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
+}
+
 func (p *SendMemberMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1236,32 +1295,35 @@ func (p *SendMemberMessagesReq) String() string {
 }
 
 type SendUserMessagesReq struct {
-	UserId    int64   `thrift:"userId,1,optional" form:"userId" json:"userId,omitempty" query:"userId"`
-	Type      string  `thrift:"type,2,optional" form:"type" json:"type,omitempty" query:"type"`
-	Content   string  `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
-	Title     string  `thrift:"title,4,optional" form:"title" json:"title,omitempty" query:"title"`
-	CreatedId int64   `thrift:"createdId,5,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
-	TagId     []int64 `thrift:"tagId,6,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	UserId    int64               `thrift:"userId,1,optional" form:"userId" json:"userId,omitempty" query:"userId"`
+	Type      base.MessagesType   `thrift:"type,2,optional,MessagesType" form:"type" json:"type,omitempty" query:"type"`
+	Content   string              `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
+	Title     string              `thrift:"title,4,optional" form:"title" json:"title,omitempty" query:"title"`
+	CreatedId int64               `thrift:"createdId,5,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	TagId     []int64             `thrift:"tagId,6,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Status    base.MessagesStatus `thrift:"status,7,optional,MessagesStatus" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewSendUserMessagesReq() *SendUserMessagesReq {
 	return &SendUserMessagesReq{
 		UserId:    0,
-		Type:      "",
+		Type:      0,
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
 		TagId:     []int64{},
+		Status:    0,
 	}
 }
 
 func (p *SendUserMessagesReq) InitDefault() {
 	p.UserId = 0
-	p.Type = ""
+	p.Type = 0
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
 	p.TagId = []int64{}
+	p.Status = 0
 }
 
 var SendUserMessagesReq_UserId_DEFAULT int64 = 0
@@ -1273,9 +1335,9 @@ func (p *SendUserMessagesReq) GetUserId() (v int64) {
 	return p.UserId
 }
 
-var SendUserMessagesReq_Type_DEFAULT string = ""
+var SendUserMessagesReq_Type_DEFAULT base.MessagesType = 0
 
-func (p *SendUserMessagesReq) GetType() (v string) {
+func (p *SendUserMessagesReq) GetType() (v base.MessagesType) {
 	if !p.IsSetType() {
 		return SendUserMessagesReq_Type_DEFAULT
 	}
@@ -1318,6 +1380,15 @@ func (p *SendUserMessagesReq) GetTagId() (v []int64) {
 	return p.TagId
 }
 
+var SendUserMessagesReq_Status_DEFAULT base.MessagesStatus = 0
+
+func (p *SendUserMessagesReq) GetStatus() (v base.MessagesStatus) {
+	if !p.IsSetStatus() {
+		return SendUserMessagesReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var fieldIDToName_SendUserMessagesReq = map[int16]string{
 	1: "userId",
 	2: "type",
@@ -1325,6 +1396,7 @@ var fieldIDToName_SendUserMessagesReq = map[int16]string{
 	4: "title",
 	5: "createdId",
 	6: "tagId",
+	7: "status",
 }
 
 func (p *SendUserMessagesReq) IsSetUserId() bool {
@@ -1349,6 +1421,10 @@ func (p *SendUserMessagesReq) IsSetCreatedId() bool {
 
 func (p *SendUserMessagesReq) IsSetTagId() bool {
 	return p.TagId != nil
+}
+
+func (p *SendUserMessagesReq) IsSetStatus() bool {
+	return p.Status != SendUserMessagesReq_Status_DEFAULT
 }
 
 func (p *SendUserMessagesReq) Read(iprot thrift.TProtocol) (err error) {
@@ -1379,7 +1455,7 @@ func (p *SendUserMessagesReq) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.STRING {
+			if fieldTypeId == thrift.I32 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1413,6 +1489,14 @@ func (p *SendUserMessagesReq) Read(iprot thrift.TProtocol) (err error) {
 		case 6:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField6(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 7:
+			if fieldTypeId == thrift.I32 {
+				if err = p.ReadField7(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1460,11 +1544,11 @@ func (p *SendUserMessagesReq) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *SendUserMessagesReq) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field string
-	if v, err := iprot.ReadString(); err != nil {
+	var _field base.MessagesType
+	if v, err := iprot.ReadI32(); err != nil {
 		return err
 	} else {
-		_field = v
+		_field = base.MessagesType(v)
 	}
 	p.Type = _field
 	return nil
@@ -1525,6 +1609,17 @@ func (p *SendUserMessagesReq) ReadField6(iprot thrift.TProtocol) error {
 	p.TagId = _field
 	return nil
 }
+func (p *SendUserMessagesReq) ReadField7(iprot thrift.TProtocol) error {
+
+	var _field base.MessagesStatus
+	if v, err := iprot.ReadI32(); err != nil {
+		return err
+	} else {
+		_field = base.MessagesStatus(v)
+	}
+	p.Status = _field
+	return nil
+}
 
 func (p *SendUserMessagesReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1554,6 +1649,10 @@ func (p *SendUserMessagesReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField6(oprot); err != nil {
 			fieldId = 6
+			goto WriteFieldError
+		}
+		if err = p.writeField7(oprot); err != nil {
+			fieldId = 7
 			goto WriteFieldError
 		}
 	}
@@ -1595,10 +1694,10 @@ WriteFieldEndError:
 
 func (p *SendUserMessagesReq) writeField2(oprot thrift.TProtocol) (err error) {
 	if p.IsSetType() {
-		if err = oprot.WriteFieldBegin("type", thrift.STRING, 2); err != nil {
+		if err = oprot.WriteFieldBegin("type", thrift.I32, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteString(p.Type); err != nil {
+		if err := oprot.WriteI32(int32(p.Type)); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1694,6 +1793,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
+func (p *SendUserMessagesReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I32, 7); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI32(int32(p.Status)); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 7 end error: ", p), err)
 }
 
 func (p *SendUserMessagesReq) String() string {

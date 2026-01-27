@@ -190,9 +190,10 @@ var fieldIDToName_CreateMemberReq = map[int16]string{
 }
 
 type GetMemberListReq struct {
-	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
-	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
-	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+	Page     int64   `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64   `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string  `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+	Tags     []int64 `thrift:"tags,4,optional" frugal:"4,optional,list<i64>" json:"tags,omitempty"`
 }
 
 func NewGetMemberListReq() *GetMemberListReq {
@@ -200,6 +201,7 @@ func NewGetMemberListReq() *GetMemberListReq {
 		Page:     1,
 		PageSize: 10,
 		Keyword:  "",
+		Tags:     []int64{},
 	}
 }
 
@@ -207,6 +209,7 @@ func (p *GetMemberListReq) InitDefault() {
 	p.Page = 1
 	p.PageSize = 10
 	p.Keyword = ""
+	p.Tags = []int64{}
 }
 
 var GetMemberListReq_Page_DEFAULT int64 = 1
@@ -235,6 +238,15 @@ func (p *GetMemberListReq) GetKeyword() (v string) {
 	}
 	return p.Keyword
 }
+
+var GetMemberListReq_Tags_DEFAULT []int64 = []int64{}
+
+func (p *GetMemberListReq) GetTags() (v []int64) {
+	if !p.IsSetTags() {
+		return GetMemberListReq_Tags_DEFAULT
+	}
+	return p.Tags
+}
 func (p *GetMemberListReq) SetPage(val int64) {
 	p.Page = val
 }
@@ -243,6 +255,9 @@ func (p *GetMemberListReq) SetPageSize(val int64) {
 }
 func (p *GetMemberListReq) SetKeyword(val string) {
 	p.Keyword = val
+}
+func (p *GetMemberListReq) SetTags(val []int64) {
+	p.Tags = val
 }
 
 func (p *GetMemberListReq) IsSetPage() bool {
@@ -257,6 +272,10 @@ func (p *GetMemberListReq) IsSetKeyword() bool {
 	return p.Keyword != GetMemberListReq_Keyword_DEFAULT
 }
 
+func (p *GetMemberListReq) IsSetTags() bool {
+	return p.Tags != nil
+}
+
 func (p *GetMemberListReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -268,6 +287,7 @@ var fieldIDToName_GetMemberListReq = map[int16]string{
 	1: "page",
 	2: "pageSize",
 	3: "keyword",
+	4: "tags",
 }
 
 type MemberResp struct {
@@ -654,6 +674,67 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 	2: "password",
 }
 
+type MemberIdsResp struct {
+	Ids      []int64        `thrift:"ids,1,optional" frugal:"1,optional,list<i64>" json:"ids,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewMemberIdsResp() *MemberIdsResp {
+	return &MemberIdsResp{
+		Ids:      []int64{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *MemberIdsResp) InitDefault() {
+	p.Ids = []int64{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var MemberIdsResp_Ids_DEFAULT []int64 = []int64{}
+
+func (p *MemberIdsResp) GetIds() (v []int64) {
+	if !p.IsSetIds() {
+		return MemberIdsResp_Ids_DEFAULT
+	}
+	return p.Ids
+}
+
+var MemberIdsResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *MemberIdsResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return MemberIdsResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *MemberIdsResp) SetIds(val []int64) {
+	p.Ids = val
+}
+func (p *MemberIdsResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *MemberIdsResp) IsSetIds() bool {
+	return p.Ids != nil
+}
+
+func (p *MemberIdsResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *MemberIdsResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberIdsResp(%+v)", *p)
+}
+
+var fieldIDToName_MemberIdsResp = map[int16]string{
+	1:   "ids",
+	255: "baseResp",
+}
+
 type MemberService interface {
 	CreateMember(ctx context.Context, req *CreateMemberReq) (r *MemberResp, err error)
 
@@ -668,6 +749,8 @@ type MemberService interface {
 	LoginMember(ctx context.Context, req *base.CheckAccountReq) (r *MemberResp, err error)
 
 	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.NilResponse, err error)
+
+	GetMemberIds(ctx context.Context, req *GetMemberListReq) (r *base.NilResponse, err error)
 }
 
 type MemberServiceCreateMemberArgs struct {
@@ -1199,5 +1282,81 @@ func (p *MemberServiceChangePasswordResult) String() string {
 }
 
 var fieldIDToName_MemberServiceChangePasswordResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceGetMemberIdsArgs struct {
+	Req *GetMemberListReq `thrift:"req,1" frugal:"1,default,GetMemberListReq" json:"req"`
+}
+
+func NewMemberServiceGetMemberIdsArgs() *MemberServiceGetMemberIdsArgs {
+	return &MemberServiceGetMemberIdsArgs{}
+}
+
+func (p *MemberServiceGetMemberIdsArgs) InitDefault() {
+}
+
+var MemberServiceGetMemberIdsArgs_Req_DEFAULT *GetMemberListReq
+
+func (p *MemberServiceGetMemberIdsArgs) GetReq() (v *GetMemberListReq) {
+	if !p.IsSetReq() {
+		return MemberServiceGetMemberIdsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceGetMemberIdsArgs) SetReq(val *GetMemberListReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceGetMemberIdsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceGetMemberIdsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetMemberIdsArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetMemberIdsArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceGetMemberIdsResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewMemberServiceGetMemberIdsResult() *MemberServiceGetMemberIdsResult {
+	return &MemberServiceGetMemberIdsResult{}
+}
+
+func (p *MemberServiceGetMemberIdsResult) InitDefault() {
+}
+
+var MemberServiceGetMemberIdsResult_Success_DEFAULT *base.NilResponse
+
+func (p *MemberServiceGetMemberIdsResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return MemberServiceGetMemberIdsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceGetMemberIdsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *MemberServiceGetMemberIdsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceGetMemberIdsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetMemberIdsResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetMemberIdsResult = map[int16]string{
 	0: "success",
 }

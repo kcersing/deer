@@ -2,8 +2,9 @@ package eventbus
 
 import (
 	"context"
-	"fmt"
 	"sync"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 // ConsumerPool 消费者池 - 用于高吞吐场景
@@ -52,7 +53,7 @@ func (cp *ConsumerPool) worker() {
 			func() {
 				defer func() {
 					if r := recover(); r != nil {
-						fmt.Printf("[Pool Recover] pool=%s panic: %v\n", cp.name, r)
+						klog.Infof("[Pool Recover] pool=%s panic: %v\n", cp.name, r)
 					}
 				}()
 
@@ -71,9 +72,13 @@ func (cp *ConsumerPool) worker() {
 // Consume 消费事件
 func (cp *ConsumerPool) Consume(event *Event) {
 	select {
+	case <-cp.ctx.Done():
+		klog.Infof("警告: 消费者池 %s 已关闭，丢弃事件\n", cp.name)
+		return
 	case cp.queue <- event:
+		// 写入成功
 	default:
-		fmt.Printf("警告: 消费者池 %s 队列已满，丢弃事件\n", cp.name)
+		klog.Infof("警告: 消费者池 %s 队列已满，丢弃事件\n", cp.name)
 	}
 }
 

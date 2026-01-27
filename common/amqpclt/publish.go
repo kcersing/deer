@@ -3,13 +3,16 @@ package amqpclt
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/kitex/pkg/klog"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
+
 var _ Publisher = (*Publish)(nil)
+
 // Publisher implements an amqp publisher.
 type Publish struct {
 	ch       *amqp.Channel // AMQP 通道
@@ -35,6 +38,10 @@ func NewPublisher(conn *amqp.Connection, exchange string) (*Publish, error) {
 // Publish publishes a message.
 func (p *Publish) Publish(ctx context.Context, routingKey, correlationId string, m Message) error {
 	// 将消息结构体序列化为 JSON
+
+	if m.PayloadType == "" {
+		m.PayloadType = reflect.TypeOf(m.Payload).String()
+	}
 
 	body, err := sonic.Marshal(&m)
 

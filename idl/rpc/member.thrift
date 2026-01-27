@@ -16,6 +16,7 @@ struct GetMemberListReq{
      1:optional i64 page=1
      2:optional i64 pageSize=10
      3:optional string keyword=""
+          4:optional list<i64> tags=[]
 }
 struct MemberResp {
     1:optional member.Member data={}
@@ -42,8 +43,16 @@ struct UpdateMemberReq {
 struct ChangePasswordReq {
     1:optional i64 id=0,
     2:optional string password="",
-
 }
+
+
+
+
+struct MemberIdsResp {
+    1:optional list<i64> ids=[]
+    255:optional base.BaseResp baseResp={}
+}
+
 service MemberService  {
 
      MemberResp CreateMember(1: CreateMemberReq req)
@@ -54,5 +63,5 @@ service MemberService  {
 
      MemberResp LoginMember(1: base.CheckAccountReq req)
      base.NilResponse ChangePassword(1: ChangePasswordReq req)
-
+     base.NilResponse GetMemberIds(1: GetMemberListReq req)
 }

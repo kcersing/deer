@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/common/json"
+	"github.com/cloudwego/kitex/pkg/klog"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
@@ -53,11 +54,13 @@ func (rb *RabbitMQEventBus) Publish(topic string, payload any) error {
 		return fmt.Errorf("failed to publish a message: %w", err)
 	}
 
-	fmt.Printf(" [x] Sent '%s' to Exchange '%s'\n", body, rb.exchangeName)
+	klog.Infof(" [x] Sent '%s' to Exchange '%s'\n", body, rb.exchangeName)
 	return nil
 }
 
-func (rb *RabbitMQEventBus) Subscribe(consumerName string, handler func(event Event)) error {
+// Subscribe 订阅事件从 RabbitMQ
+// 返回事件通道、清理函数和错误
+func (rb *RabbitMQEventBus) Subscribe(consumerName string) (<-chan Event, func(), error) {
 	//声明一个队列
 	q, err := rb.ch.QueueDeclare(
 		consumerName, // 队列名称 , 使用消费者名称作为队列名，可以实现负载均衡
@@ -68,7 +71,7 @@ func (rb *RabbitMQEventBus) Subscribe(consumerName string, handler func(event Ev
 		nil,          // arguments
 	)
 	if err != nil {
-		return fmt.Errorf("failed to declare a queue: %w", err)
+		return nil, nil, fmt.Errorf("failed to declare a queue: %w", err)
 	}
 	// 绑定队列到 Exchange，使用消费者名称作为路由键
 	err = rb.ch.QueueBind(
@@ -79,7 +82,7 @@ func (rb *RabbitMQEventBus) Subscribe(consumerName string, handler func(event Ev
 		nil,
 	)
 	if err != nil {
-		return fmt.Errorf("failed to bind queue: %w", err)
+		return nil, nil, fmt.Errorf("failed to bind queue: %w", err)
 	}
 	// 注册消费者
 	msgs, err := rb.ch.Consume(
@@ -92,25 +95,40 @@ func (rb *RabbitMQEventBus) Subscribe(consumerName string, handler func(event Ev
 		nil,          // args
 	)
 	if err != nil {
-		return fmt.Errorf("failed to register a consumer: %w", err)
+		return nil, nil, fmt.Errorf("failed to register a consumer: %w", err)
 	}
+
+	// 创建事件输出通道
+	eventCh := make(chan Event, 100)
+
+	// 清理函数
+	cleanup := func() {
+		close(eventCh)
+		rb.ch.Cancel(consumerName, false)
+	}
+
 	//启动一个 goroutine 来持续监听消息
 	go func() {
+		defer close(eventCh)
 		for d := range msgs {
 			var event Event
 			if err := json.Unmarshal(d.Body, &event); err != nil {
-				fmt.Errorf("error unmarshalling message: %s", err)
+				klog.Errorf("error unmarshalling message: %v", err)
 				d.Ack(false) // 无法解析的消息直接确认，避免阻塞
 				continue
 			}
-			// 调用订阅者的处理函数
-			handler(event)
+			// 将事件发送到通道
+			select {
+			case eventCh <- event:
+			default:
+				klog.Warnf("event channel full, discarding event: %s", event.Id)
+			}
 			// 手动确认（ACK）：告诉 RabbitMQ 消息已成功处理
 			d.Ack(false)
 		}
 	}()
-	fmt.Printf(" [*] Waiting for messages in queue '%s'. To exit press CTRL+C\n", q.Name)
-	return nil
+	klog.Infof(" [*] Waiting for messages in queue '%s'. To exit press CTRL+C\n", q.Name)
+	return eventCh, cleanup, nil
 }
 
 func NewRabbitMQBus(amqpUrl, exchangeName string) (*RabbitMQEventBus, error) {

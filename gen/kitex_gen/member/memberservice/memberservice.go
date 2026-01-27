@@ -63,6 +63,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"GetMemberIds": kitex.NewMethodInfo(
+		getMemberIdsHandler,
+		newMemberServiceGetMemberIdsArgs,
+		newMemberServiceGetMemberIdsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -255,6 +262,24 @@ func newMemberServiceChangePasswordResult() interface{} {
 	return member.NewMemberServiceChangePasswordResult()
 }
 
+func getMemberIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceGetMemberIdsArgs)
+	realResult := result.(*member.MemberServiceGetMemberIdsResult)
+	success, err := handler.(member.MemberService).GetMemberIds(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceGetMemberIdsArgs() interface{} {
+	return member.NewMemberServiceGetMemberIdsArgs()
+}
+
+func newMemberServiceGetMemberIdsResult() interface{} {
+	return member.NewMemberServiceGetMemberIdsResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -330,6 +355,16 @@ func (p *kClient) ChangePassword(ctx context.Context, req *member.ChangePassword
 	_args.Req = req
 	var _result member.MemberServiceChangePasswordResult
 	if err = p.c.Call(ctx, "ChangePassword", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq) (r *base.NilResponse, err error) {
+	var _args member.MemberServiceGetMemberIdsArgs
+	_args.Req = req
+	var _result member.MemberServiceGetMemberIdsResult
+	if err = p.c.Call(ctx, "GetMemberIds", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

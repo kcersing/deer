@@ -40,12 +40,13 @@ func InitMessageConsumers() error {
 	if err != nil {
 		return err
 	}
+	klog.Infof("[InitMessageConsumers] send user messages ok")
 
 	err = consumerRegistry.RegisterHandler("send_member_messages", eventbus.EventHandlerFunc(HandleSendMemberMessages))
 	if err != nil {
 		return err
 	}
-
+	klog.Infof("[InitMessageConsumers] send member messages ok")
 	// 注册消费者
 	err = consumerRegistry.RegisterConsumer(EventSendUserMessages, "send_user_messages", 10)
 	if err != nil {
@@ -56,7 +57,7 @@ func InitMessageConsumers() error {
 		return err
 	}
 
-	klog.Infof("[MessageService] Event consumers initialized")
+	klog.Infof("[InitMessageConsumers] Event consumers initialized")
 	return nil
 }
 
@@ -65,5 +66,6 @@ func StartMessageConsumers() error {
 	if consumerRegistry == nil {
 		return errors.New("consumer registry not initialized")
 	}
+	klog.Infof("[InitMessageConsumers] Start Message Consumers")
 	return consumerRegistry.StartAll(GetGlobalEventBus())
 }

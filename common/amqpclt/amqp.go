@@ -32,6 +32,7 @@ type Connection struct {
 type Message struct {
 	CorrelationId string    `json:"correlationId"`
 	Event         string    `json:"event"`
+	PayloadType   string    `json:"payloadType"`
 	Payload       any       `json:"payload"`
 	Timestamp     time.Time `json:"timestamp"`
 }

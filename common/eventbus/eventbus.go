@@ -2,8 +2,9 @@ package eventbus
 
 import (
 	"context"
-	"fmt"
 	"sync"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type EventBusInterface interface {
@@ -48,7 +49,7 @@ func (eb *EventBus) dispatch(ctx context.Context, event *Event) error {
 		select {
 		case subscriber <- event: //发送事件
 		default:
-			fmt.Printf("警告: 主题 %s 的一个订阅者通道已满，丢弃事件。", event.Topic)
+			klog.Infof("警告: 主题 %s 的一个订阅者通道已满，丢弃事件。", event.Topic)
 		}
 	}
 	return nil
@@ -69,9 +70,15 @@ func (eb *EventBus) Use(m Middleware) {
 	eb.rebuildChain()
 }
 
-// Publish 发布事件
+// Publish 发布事件到内存总线
 func (eb *EventBus) Publish(ctx context.Context, event *Event) {
 	eb.chain.Handle(ctx, event)
+}
+
+// PublishByTopic 按主题发布事件（简化版）
+func (eb *EventBus) PublishByTopic(ctx context.Context, topic string, payload any) {
+	event := NewEvent(topic, payload)
+	eb.Publish(ctx, event)
 }
 
 // Subscribe 订阅事件
@@ -89,7 +96,7 @@ func (eb *EventBus) Subscribe(topic string) EventChan {
 
 	ch := make(EventChan, 100)
 	eb.subscribers[topic] = append(eb.subscribers[topic], ch)
-	fmt.Printf("已订阅主题: %s\n", topic)
+	klog.Infof("[Subscribe] 已订阅主题: %s\n", topic)
 	return ch
 }
 
@@ -97,12 +104,12 @@ func (eb *EventBus) safeHandle(topic string, handler Handler, event *Event) {
 
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Printf("[Panic Recover] Topic: %s, Error: %v\n", topic, r)
+			klog.Infof("[Panic Recover] Topic: %s, Error: %v\n", topic, r)
 		}
 	}()
 	if err := handler.Handle(context.Background(), event); err != nil {
 		// 可以在这里做统一的错误日志
-		fmt.Printf("[Error] Handle event failed: %v\n", err)
+		klog.Infof("[Error] Handle event failed: %v\n", err)
 	}
 }
 
@@ -134,7 +141,7 @@ func (eb *EventBus) Unsubscribe(topic string, ch EventChan) {
 			if ch == subscriber {
 				eb.subscribers[topic] = append(subscribers[:i], subscribers[i+1:]...)
 				//close(ch)
-				fmt.Printf("已取消订阅主题: %s\n", topic)
+				klog.Infof("已取消订阅主题: %s\n", topic)
 				return
 			}
 		}
@@ -152,10 +159,13 @@ func (eb *EventBus) SubscribeWithPool(topic string, handler Handler, workerNum i
 	// 创建通道并启动转发 goroutine
 	ch := eb.Subscribe(topic)
 	go func() {
+		defer func() {
+			close(ch)
+			pool.Stop()
+		}()
 		for event := range ch {
 			pool.Consume(event)
 		}
-		pool.Stop()
 	}()
 
 	return pool

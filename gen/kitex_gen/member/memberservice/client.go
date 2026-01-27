@@ -19,6 +19,7 @@ type Client interface {
 	GetMemberList(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberListResp, err error)
 	LoginMember(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
 	ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	GetMemberIds(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -83,4 +84,9 @@ func (p *kMemberServiceClient) LoginMember(ctx context.Context, req *base.CheckA
 func (p *kMemberServiceClient) ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.ChangePassword(ctx, req)
+}
+
+func (p *kMemberServiceClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetMemberIds(ctx, req)
 }

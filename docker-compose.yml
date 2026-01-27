@@ -64,7 +64,7 @@ services:
     hostname: etcdkeeper
     image: evildecay/etcdkeeper:latest
     ports:
-      - "9100:8080"
+      - "9100:9100"
 
   # Nacos
 #  nacos:

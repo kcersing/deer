@@ -15,6 +15,7 @@ struct GetMemberListReq{
      1:optional i64 page=1
      2:optional i64 pageSize=10
      3:optional string keyword=""
+     4:optional list<i64> tags=[]
 }
 struct UpdateMemberReq {
   1:optional i64 id=0,
@@ -40,5 +41,6 @@ service MemberService {
      base.NilResponse GetMember(1: base.IdReq req) (api.post = "/service/member")
      base.NilResponse GetMemberList(1: GetMemberListReq req) (api.post = "/service/member/list")
      base.NilResponse ChangePassword(1: ChangePasswordReq req) (api.post = "/service/member/change-password")
+
 
 }

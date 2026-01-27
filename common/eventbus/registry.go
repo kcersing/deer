@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"sync"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 // ============ 消费者注册表 ============
@@ -43,7 +45,7 @@ func (cr *ConsumerRegistry) RegisterHandler(name string, handler Handler) error 
 	}
 
 	cr.handlers[name] = handler
-	fmt.Printf("[Registry] Handler registered: %s\n", name)
+	klog.Infof("[Registry] Handler registered: %s\n", name)
 	return nil
 }
 
@@ -54,6 +56,7 @@ func (cr *ConsumerRegistry) RegisterConsumer(topic string, handlerName string, w
 
 	handler, exists := cr.handlers[handlerName]
 	if !exists {
+		
 		return fmt.Errorf("handler %s not found", handlerName)
 	}
 
@@ -65,7 +68,7 @@ func (cr *ConsumerRegistry) RegisterConsumer(topic string, handlerName string, w
 	}
 
 	cr.consumers[topic] = append(cr.consumers[topic], info)
-	fmt.Printf("[Registry] Consumer registered: topic=%s, handler=%s, workers=%d\n",
+	klog.Infof("[Registry] Consumer registered: topic=%s, handler=%s, workers=%d\n",
 		topic, handlerName, workerNum)
 	return nil
 }
@@ -81,7 +84,7 @@ func (cr *ConsumerRegistry) StartAll(eb *EventBus) error {
 			// 使用消费者池处理
 			pool := eb.SubscribeWithPool(info.Topic, info.Handler, info.WorkerNum)
 			cr.pools[info.HandlerName] = pool
-			fmt.Printf("[Registry] Consumer pool started: %s with %d workers\n",
+			klog.Infof("[Registry] Consumer pool started: %s with %d workers\n",
 				info.HandlerName, info.WorkerNum)
 		}
 	}

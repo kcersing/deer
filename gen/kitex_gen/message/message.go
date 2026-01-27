@@ -354,32 +354,35 @@ var fieldIDToName_MessagesListReq = map[int16]string{
 }
 
 type SendMemberMessagesReq struct {
-	MemberId  int64   `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
-	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
-	CreatedId int64   `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
-	TagId     []int64 `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
+	MemberId  int64               `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	Type      base.MessagesType   `thrift:"type,2,optional" frugal:"2,optional,MessagesType" json:"type,omitempty"`
+	Content   string              `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string              `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64               `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	TagId     []int64             `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
+	Status    base.MessagesStatus `thrift:"status,7,optional" frugal:"7,optional,MessagesStatus" json:"status,omitempty"`
 }
 
 func NewSendMemberMessagesReq() *SendMemberMessagesReq {
 	return &SendMemberMessagesReq{
 		MemberId:  0,
-		Type:      "",
+		Type:      0,
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
 		TagId:     []int64{},
+		Status:    0,
 	}
 }
 
 func (p *SendMemberMessagesReq) InitDefault() {
 	p.MemberId = 0
-	p.Type = ""
+	p.Type = 0
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
 	p.TagId = []int64{}
+	p.Status = 0
 }
 
 var SendMemberMessagesReq_MemberId_DEFAULT int64 = 0
@@ -391,9 +394,9 @@ func (p *SendMemberMessagesReq) GetMemberId() (v int64) {
 	return p.MemberId
 }
 
-var SendMemberMessagesReq_Type_DEFAULT string = ""
+var SendMemberMessagesReq_Type_DEFAULT base.MessagesType = 0
 
-func (p *SendMemberMessagesReq) GetType() (v string) {
+func (p *SendMemberMessagesReq) GetType() (v base.MessagesType) {
 	if !p.IsSetType() {
 		return SendMemberMessagesReq_Type_DEFAULT
 	}
@@ -435,10 +438,19 @@ func (p *SendMemberMessagesReq) GetTagId() (v []int64) {
 	}
 	return p.TagId
 }
+
+var SendMemberMessagesReq_Status_DEFAULT base.MessagesStatus = 0
+
+func (p *SendMemberMessagesReq) GetStatus() (v base.MessagesStatus) {
+	if !p.IsSetStatus() {
+		return SendMemberMessagesReq_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *SendMemberMessagesReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
-func (p *SendMemberMessagesReq) SetType(val string) {
+func (p *SendMemberMessagesReq) SetType(val base.MessagesType) {
 	p.Type = val
 }
 func (p *SendMemberMessagesReq) SetContent(val string) {
@@ -452,6 +464,9 @@ func (p *SendMemberMessagesReq) SetCreatedId(val int64) {
 }
 func (p *SendMemberMessagesReq) SetTagId(val []int64) {
 	p.TagId = val
+}
+func (p *SendMemberMessagesReq) SetStatus(val base.MessagesStatus) {
+	p.Status = val
 }
 
 func (p *SendMemberMessagesReq) IsSetMemberId() bool {
@@ -478,6 +493,10 @@ func (p *SendMemberMessagesReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
+func (p *SendMemberMessagesReq) IsSetStatus() bool {
+	return p.Status != SendMemberMessagesReq_Status_DEFAULT
+}
+
 func (p *SendMemberMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -492,35 +511,39 @@ var fieldIDToName_SendMemberMessagesReq = map[int16]string{
 	4: "title",
 	5: "createdId",
 	6: "tagId",
+	7: "status",
 }
 
 type SendUserMessagesReq struct {
-	UserId    int64   `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
-	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
-	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
-	CreatedId int64   `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
-	TagId     []int64 `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
+	UserId    int64               `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
+	Type      base.MessagesType   `thrift:"type,2,optional" frugal:"2,optional,MessagesType" json:"type,omitempty"`
+	Content   string              `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
+	Title     string              `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
+	CreatedId int64               `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
+	TagId     []int64             `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
+	Status    base.MessagesStatus `thrift:"status,7,optional" frugal:"7,optional,MessagesStatus" json:"status,omitempty"`
 }
 
 func NewSendUserMessagesReq() *SendUserMessagesReq {
 	return &SendUserMessagesReq{
 		UserId:    0,
-		Type:      "",
+		Type:      0,
 		Content:   "",
 		Title:     "",
 		CreatedId: 0,
 		TagId:     []int64{},
+		Status:    0,
 	}
 }
 
 func (p *SendUserMessagesReq) InitDefault() {
 	p.UserId = 0
-	p.Type = ""
+	p.Type = 0
 	p.Content = ""
 	p.Title = ""
 	p.CreatedId = 0
 	p.TagId = []int64{}
+	p.Status = 0
 }
 
 var SendUserMessagesReq_UserId_DEFAULT int64 = 0
@@ -532,9 +555,9 @@ func (p *SendUserMessagesReq) GetUserId() (v int64) {
 	return p.UserId
 }
 
-var SendUserMessagesReq_Type_DEFAULT string = ""
+var SendUserMessagesReq_Type_DEFAULT base.MessagesType = 0
 
-func (p *SendUserMessagesReq) GetType() (v string) {
+func (p *SendUserMessagesReq) GetType() (v base.MessagesType) {
 	if !p.IsSetType() {
 		return SendUserMessagesReq_Type_DEFAULT
 	}
@@ -576,10 +599,19 @@ func (p *SendUserMessagesReq) GetTagId() (v []int64) {
 	}
 	return p.TagId
 }
+
+var SendUserMessagesReq_Status_DEFAULT base.MessagesStatus = 0
+
+func (p *SendUserMessagesReq) GetStatus() (v base.MessagesStatus) {
+	if !p.IsSetStatus() {
+		return SendUserMessagesReq_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *SendUserMessagesReq) SetUserId(val int64) {
 	p.UserId = val
 }
-func (p *SendUserMessagesReq) SetType(val string) {
+func (p *SendUserMessagesReq) SetType(val base.MessagesType) {
 	p.Type = val
 }
 func (p *SendUserMessagesReq) SetContent(val string) {
@@ -593,6 +625,9 @@ func (p *SendUserMessagesReq) SetCreatedId(val int64) {
 }
 func (p *SendUserMessagesReq) SetTagId(val []int64) {
 	p.TagId = val
+}
+func (p *SendUserMessagesReq) SetStatus(val base.MessagesStatus) {
+	p.Status = val
 }
 
 func (p *SendUserMessagesReq) IsSetUserId() bool {
@@ -619,6 +654,10 @@ func (p *SendUserMessagesReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
+func (p *SendUserMessagesReq) IsSetStatus() bool {
+	return p.Status != SendUserMessagesReq_Status_DEFAULT
+}
+
 func (p *SendUserMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -633,6 +672,7 @@ var fieldIDToName_SendUserMessagesReq = map[int16]string{
 	4: "title",
 	5: "createdId",
 	6: "tagId",
+	7: "status",
 }
 
 type MessagesListResp struct {

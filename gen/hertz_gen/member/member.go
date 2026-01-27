@@ -518,9 +518,10 @@ func (p *CreateMemberReq) String() string {
 }
 
 type GetMemberListReq struct {
-	Page     int64  `thrift:"page,1,optional" form:"page" json:"page,omitempty" query:"page"`
-	PageSize int64  `thrift:"pageSize,2,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
-	Keyword  string `thrift:"keyword,3,optional" form:"keyword" json:"keyword,omitempty" query:"keyword"`
+	Page     int64   `thrift:"page,1,optional" form:"page" json:"page,omitempty" query:"page"`
+	PageSize int64   `thrift:"pageSize,2,optional" form:"pageSize" json:"pageSize,omitempty" query:"pageSize"`
+	Keyword  string  `thrift:"keyword,3,optional" form:"keyword" json:"keyword,omitempty" query:"keyword"`
+	Tags     []int64 `thrift:"tags,4,optional,list<i64>" form:"tags" json:"tags,omitempty" query:"tags"`
 }
 
 func NewGetMemberListReq() *GetMemberListReq {
@@ -528,6 +529,7 @@ func NewGetMemberListReq() *GetMemberListReq {
 		Page:     1,
 		PageSize: 10,
 		Keyword:  "",
+		Tags:     []int64{},
 	}
 }
 
@@ -535,6 +537,7 @@ func (p *GetMemberListReq) InitDefault() {
 	p.Page = 1
 	p.PageSize = 10
 	p.Keyword = ""
+	p.Tags = []int64{}
 }
 
 var GetMemberListReq_Page_DEFAULT int64 = 1
@@ -564,10 +567,20 @@ func (p *GetMemberListReq) GetKeyword() (v string) {
 	return p.Keyword
 }
 
+var GetMemberListReq_Tags_DEFAULT []int64 = []int64{}
+
+func (p *GetMemberListReq) GetTags() (v []int64) {
+	if !p.IsSetTags() {
+		return GetMemberListReq_Tags_DEFAULT
+	}
+	return p.Tags
+}
+
 var fieldIDToName_GetMemberListReq = map[int16]string{
 	1: "page",
 	2: "pageSize",
 	3: "keyword",
+	4: "tags",
 }
 
 func (p *GetMemberListReq) IsSetPage() bool {
@@ -580,6 +593,10 @@ func (p *GetMemberListReq) IsSetPageSize() bool {
 
 func (p *GetMemberListReq) IsSetKeyword() bool {
 	return p.Keyword != GetMemberListReq_Keyword_DEFAULT
+}
+
+func (p *GetMemberListReq) IsSetTags() bool {
+	return p.Tags != nil
 }
 
 func (p *GetMemberListReq) Read(iprot thrift.TProtocol) (err error) {
@@ -620,6 +637,14 @@ func (p *GetMemberListReq) Read(iprot thrift.TProtocol) (err error) {
 		case 3:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField3(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 4:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField4(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -687,6 +712,29 @@ func (p *GetMemberListReq) ReadField3(iprot thrift.TProtocol) error {
 	p.Keyword = _field
 	return nil
 }
+func (p *GetMemberListReq) ReadField4(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.Tags = _field
+	return nil
+}
 
 func (p *GetMemberListReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -704,6 +752,10 @@ func (p *GetMemberListReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField3(oprot); err != nil {
 			fieldId = 3
+			goto WriteFieldError
+		}
+		if err = p.writeField4(oprot); err != nil {
+			fieldId = 4
 			goto WriteFieldError
 		}
 	}
@@ -779,6 +831,33 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *GetMemberListReq) writeField4(oprot thrift.TProtocol) (err error) {
+	if p.IsSetTags() {
+		if err = oprot.WriteFieldBegin("tags", thrift.LIST, 4); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.Tags)); err != nil {
+			return err
+		}
+		for _, v := range p.Tags {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 4 end error: ", p), err)
 }
 
 func (p *GetMemberListReq) String() string {

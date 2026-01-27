@@ -10,7 +10,9 @@ import (
 	"context"
 	base "gen/hertz_gen/base"
 	message "gen/hertz_gen/message"
+	Base "gen/kitex_gen/base"
 	message2 "gen/kitex_gen/message"
+
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
 )
@@ -108,7 +110,8 @@ func SendUserMessages(ctx context.Context, c *app.RequestContext) {
 
 	resp, err := client.MessageClient.SendUserMessages(ctx, &message2.SendUserMessagesReq{
 		UserId:    req.GetUserId(),
-		Type:      req.GetType(),
+		Type:      Base.MessagesType(req.GetType()),
+		Status:    Base.MessagesStatus(req.GetStatus()),
 		Content:   req.GetContent(),
 		Title:     req.GetTitle(),
 		CreatedId: utils.GetTokenId(ctx, c),

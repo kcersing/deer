@@ -8,7 +8,9 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
+
 var _ Subscriber = (*Subscribe)(nil)
+
 // Subscribe implements an amqp subscribe.
 type Subscribe struct {
 	conn     *amqp.Connection // AMQP 连接
@@ -85,6 +87,12 @@ func (s *Subscribe) SubscribeRaw(_ context.Context) (<-chan amqp.Delivery, func(
 	return msgs, cleanUp, nil
 }
 
+var payloadTypeRegistry = make(map[string]func() interface{})
+
+func RegisterPayloadType(payloadType string, payloadFunc func() interface{}) {
+	payloadTypeRegistry[payloadType] = payloadFunc
+}
+
 // Subscribe subscribes and returns a channel with CarEntity data.
 func (s *Subscribe) Subscribe(c context.Context) (chan *Message, func(), error) {
 	msgCh, cleanUp, err := s.SubscribeRaw(c)
@@ -102,9 +110,10 @@ func (s *Subscribe) Subscribe(c context.Context) (chan *Message, func(), error) 
 				if !ok {
 					return
 				}
-				var carEn Message
+				var msgData Message
+
 				// 反序列化消息
-				if err := sonic.Unmarshal(msg.Body, &carEn); err != nil {
+				if err := sonic.Unmarshal(msg.Body, &msgData); err != nil {
 					klog.Errorf("cannot unmarshal message body: %v", err)
 					// 反序列化失败：拒绝消息（不重新入队，避免死循环）
 					if nackErr := msg.Nack(false, false); nackErr != nil {
@@ -112,10 +121,21 @@ func (s *Subscribe) Subscribe(c context.Context) (chan *Message, func(), error) 
 					}
 					continue
 				}
+				if msgData.PayloadType == "" {
+					if payloadFunc, ok := payloadTypeRegistry[msgData.PayloadType]; ok {
+						typed := payloadFunc()
+						if raw, ok := msgData.Payload.(map[string]interface{}); ok {
+							if b, err := sonic.Marshal(raw); err == nil {
+								sonic.Unmarshal(b, typed)
+								msgData.Payload = typed
+							}
+						}
+					}
+				}
 
 				// 发送到业务通道（阻塞直到业务方接收）
 				select {
-				case carCh <- &carEn:
+				case carCh <- &msgData:
 					// 业务处理完成：手动确认消息
 					if ackErr := msg.Ack(false); ackErr != nil {
 						klog.Errorf("failed to ack message: %v", ackErr)
