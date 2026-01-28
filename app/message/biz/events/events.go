@@ -15,6 +15,10 @@ const (
 
 	// 发送会员消息事件
 	EventSendMemberMessages = "send_member_messages"
+
+	// 处理器名称常量
+	handlerSendUserMessages   = "send_user_messages_handler"
+	handlerSendMemberMessages = "send_member_messages_handler"
 )
 
 // ============ 事件验证 ============
@@ -36,23 +40,23 @@ func InitMessageConsumers() error {
 	}
 
 	// 注册处理器
-	err := consumerRegistry.RegisterHandler("send_user_messages", eventbus.EventHandlerFunc(HandleSendUserMessages))
+	err := consumerRegistry.RegisterHandler(handlerSendUserMessages, eventbus.EventHandlerFunc(HandleSendUserMessages))
 	if err != nil {
 		return err
 	}
 	klog.Infof("[InitMessageConsumers] send user messages ok")
 
-	err = consumerRegistry.RegisterHandler("send_member_messages", eventbus.EventHandlerFunc(HandleSendMemberMessages))
+	err = consumerRegistry.RegisterHandler(handlerSendMemberMessages, eventbus.EventHandlerFunc(HandleSendMemberMessages))
 	if err != nil {
 		return err
 	}
 	klog.Infof("[InitMessageConsumers] send member messages ok")
 	// 注册消费者
-	err = consumerRegistry.RegisterConsumer(EventSendUserMessages, "send_user_messages", 10)
+	err = consumerRegistry.RegisterConsumer(EventSendUserMessages, handlerSendUserMessages, 10)
 	if err != nil {
 		return err
 	}
-	err = consumerRegistry.RegisterConsumer(EventSendMemberMessages, "send_member_messages", 5)
+	err = consumerRegistry.RegisterConsumer(EventSendMemberMessages, handlerSendMemberMessages, 5)
 	if err != nil {
 		return err
 	}

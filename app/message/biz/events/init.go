@@ -53,7 +53,6 @@ func InitGlobalEventBus() error {
 		// 注册中间件：恢复、日志、AMQP 发布
 		globalEventBus.Use(eventbus.RecoverPlugin())
 		globalEventBus.Use(eventbus.LoggingPlugin())
-		globalEventBus.Use(globalBridge.AMQPPublishingMiddleware())
 
 		// 启动后台监听
 		ctx := context.Background()

@@ -7,20 +7,14 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 
-type EventBusInterface interface {
-
-	//SubscribeOnce(eventType string, handler Handler) error
-	Subscribe(topic string) <-chan Event
-	Unsubscribe(topic string, ch <-chan Event)
-	Publish(ctx context.Context, topic string, payload any)
-
-	Close() error
-}
-
 // EventChan 事件通道
 type (
 	EventChan chan *Event
 )
+
+var _ Bus = (*EventBus)(nil)
+var _ Publish = (*EventBus)(nil)
+var _ Subscribe = (*EventBus)(nil)
 
 // EventBus 事件总线
 type EventBus struct {
@@ -63,16 +57,19 @@ func (eb *EventBus) rebuildChain() {
 }
 
 // Use 添加中间件
-func (eb *EventBus) Use(m Middleware) {
+func (eb *EventBus) Use(mw ...Middleware) {
 	eb.mu.Lock()
 	defer eb.mu.Unlock()
-	eb.middlewares = append(eb.middlewares, m)
+	eb.middlewares = append(eb.middlewares, mw...)
 	eb.rebuildChain()
 }
 
 // Publish 发布事件到内存总线
 func (eb *EventBus) Publish(ctx context.Context, event *Event) {
-	eb.chain.Handle(ctx, event)
+
+	if err := eb.chain.Handle(ctx, event); err != nil {
+		klog.Infof("[Error] Handle event failed: %v\n", err)
+	}
 }
 
 // PublishByTopic 按主题发布事件（简化版）
@@ -169,4 +166,16 @@ func (eb *EventBus) SubscribeWithPool(topic string, handler Handler, workerNum i
 	}()
 
 	return pool
+}
+func (eb *EventBus) Close() error {
+	eb.mu.Lock()
+	defer eb.mu.Unlock()
+	// 关闭所有订阅通道
+	for _, chs := range eb.subscribers {
+		for _, ch := range chs {
+			close(ch)
+		}
+	}
+	eb.subscribers = make(map[string][]EventChan)
+	return nil
 }
