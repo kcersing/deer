@@ -47,7 +47,7 @@ func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *b
 	if err = tx.Commit(); err != nil {
 		return nil, err
 	}
-	eb := events.GetGlobalEventBus()
+	eb := events.GetManager().Bus
 	event := eventbus2.NewEvent("send_user_messages", req)
 	eb.Publish(s.ctx, event)
 	return

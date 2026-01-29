@@ -10,100 +10,90 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 
-// 全局事件总线和桥接器
+// EventManager 统一管理事件总线、桥接器和消费者注册表
+type EventManager struct {
+	Bus      *eventbus.EventBus
+	Bridge   *eventbus.AMQPListener
+	Registry *eventbus.ConsumerRegistry
+}
+
 var (
-	globalEventBus   *eventbus.EventBus
-	globalBridge     *eventbus.AMQPBridge
-	consumerRegistry *eventbus.ConsumerRegistry
-	once             sync.Once
-	stopChan         chan struct{}
+	globalManager *EventManager
+	once          sync.Once
 )
 
-// GetGlobalEventBus 获取全局事件总线
-func GetGlobalEventBus() *eventbus.EventBus { return globalEventBus }
+// GetManager 获取全局的 EventManager 实例
+func GetManager() *EventManager {
+	return globalManager
+}
 
-// GetGlobalAMQPBridge 获取全局桥接器
-func GetGlobalAMQPBridge() *eventbus.AMQPBridge { return globalBridge }
-
-// GetConsumerRegistry 获取消费者注册表
-func GetConsumerRegistry() *eventbus.ConsumerRegistry { return consumerRegistry }
-
-// InitGlobalEventBus 全局初始化（应在应用启动时调用）
-func InitGlobalEventBus() error {
-	var err error
+// Bootstrap 初始化并启动整个事件系统
+func Bootstrap() (err error) {
 	once.Do(func() {
+		klog.Info("[Events] Initializing EventManager...")
 
-		// 创建 AMQP 客户端
-		publisher, e := amqpclt.NewPublisher(mq.Client, "eventbus")
-		if e != nil {
-			klog.Errorf("[InitGlobalEventBus] failed to create publisher: %v", e)
-			return
-		}
-
+		// 1. 创建 AMQP 客户端
 		subscriber, e := amqpclt.NewSubscribe(mq.Client, "eventbus")
 		if e != nil {
-			klog.Errorf("[InitGlobalEventBus] failed to create subscriber: %v", e)
+			err = e
+			klog.Errorf("[Events] Failed to create AMQP subscriber: %v", err)
 			return
 		}
 
-		// 创建事件总线和桥接器
-		globalEventBus = eventbus.NewEventBus()
-		globalBridge = eventbus.NewAMQPBridge(globalEventBus, publisher, subscriber)
+		// 2. 创建核心组件
+		bus := eventbus.NewEventBus()
+		bridge := eventbus.NewAMQPListener(bus, subscriber)
+		registry := eventbus.NewConsumerRegistry()
 
-		// 注册中间件：恢复、日志、AMQP 发布
-		globalEventBus.Use(eventbus.RecoverPlugin())
-		globalEventBus.Use(eventbus.LoggingPlugin())
+		// 3. 应用中间件 (重要步骤)
+		// 顺序很重要：Recover应该在最外层，Timing在内层
+		bus.Use(RecoverMiddleware(), TimingMiddleware())
+		klog.Info("[Events] Middlewares applied.")
 
-		// 启动后台监听
-		ctx := context.Background()
-		globalBridge.StartListener(ctx)
+		globalManager = &EventManager{
+			Bus:      bus,
+			Bridge:   bridge,
+			Registry: registry,
+		}
 
-		klog.Infof("[InitGlobalEventBus] Global event bus initialized")
+		// 4. 注册所有消费者
+		if err = InitMessageConsumers(); err != nil {
+			klog.Errorf("[Events] Failed to initialize consumers: %v", err)
+			return
+		}
+
+		// 5. 启动所有组件
+		if err = bridge.StartListener(context.Background()); err != nil {
+			klog.Errorf("[Events] Failed to start AMQP listener: %v", err)
+			return
+		}
+		if err = registry.StartAll(bus); err != nil {
+			klog.Errorf("[Events] Failed to start consumers: %v", err)
+			return
+		}
+
+		klog.Info("[Events] EventManager started successfully.")
 	})
 	return err
 }
 
-// Bootstrap 初始化并启动事件系统，返回 cleanup 函数以便优雅关闭
-func Bootstrap() error {
-
-	var err error
-
-	if err := InitGlobalEventBus(); err != nil {
-		return err
-	}
-	if consumerRegistry == nil {
-		consumerRegistry = eventbus.NewConsumerRegistry()
-	}
-
-	if err := InitMessageConsumers(); err != nil {
-		klog.Infof("[Bootstrap] Err", err)
-		return err
-	}
-
-	if err := StartMessageConsumers(); err != nil {
-		return err
-	}
-
-	stopChan = make(chan struct{})
-
-	return err
-
-}
-
+// Shutdown 优雅地关闭整个事件系统
 func Shutdown(ctx context.Context) error {
-
-	if stopChan != nil {
-		close(stopChan)
-	}
-	if consumerRegistry != nil {
-		if err := consumerRegistry.Shutdown(ctx); err != nil {
-			return err
-		}
-	}
-	if globalBridge != nil {
-		globalBridge.Stop()
+	if globalManager == nil {
+		klog.Warn("[Events] EventManager not initialized, skipping shutdown.")
+		return nil
 	}
 
-	klog.Infof("[Shutdown] Shutdown completed")
+	klog.Info("[Events] Shutting down EventManager...")
+
+	if err := globalManager.Bridge.Stop(); err != nil {
+		klog.Errorf("[Events] Failed to stop AMQP listener: %v", err)
+	}
+
+	if err := globalManager.Registry.Shutdown(ctx); err != nil {
+		klog.Errorf("[Events] Failed to shutdown consumer registry: %v", err)
+	}
+
+	klog.Info("[Events] EventManager shut down complete.")
 	return nil
 }

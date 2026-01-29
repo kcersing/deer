@@ -30,7 +30,7 @@ func (s *SendMemberMessagesService) Run(req *message.SendMemberMessagesReq) (res
 	if err != nil {
 		return nil, err
 	}
-	eb := events.GetGlobalEventBus()
+	eb := events.GetManager().Bus
 	event := eventbus2.NewEvent("send_member_messages", req)
 	eb.Publish(s.ctx, event)
 	return

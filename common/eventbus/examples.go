@@ -3,223 +3,117 @@ package eventbus
 import (
 	"common/amqpclt"
 	"context"
+	"time"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
-// ============ 实际使用示例 ============
+// --- 1. 定义事件结构体 ---
 
-// 示例1：Message 服务 - 发送用户消息（本地处理）
-func ExampleMessageService() {
-	// 初始化内存总线
-	eventBus := NewEventBus()
+// UserRegisteredEvent 用户注册事件的载荷
+type UserRegisteredEvent struct {
+	UserID   string
+	Username string
+}
 
-	// 初始化消费者注册表
-	registry := NewConsumerRegistry()
+// OrderCreatedEvent 订单创建事件 (用于注册表示例)
+type OrderCreatedEvent struct {
+	OrderID string
+	Amount  float64
+}
 
-	// 注册处理器：处理1 - 保存消息
-	registry.RegisterHandler("save_message_handler",
-		&SaveMessageHandler{})
+// InternalTaskEvent 服务内部任务的载荷
+type InternalTaskEvent struct {
+	TaskID      string
+	Description string
+}
 
-	// 注册处理器：处理2 - 发送推送
-	registry.RegisterHandler("push_notification_handler",
-		&PushNotificationHandler{})
+// NotificationEvent 定义一个用于发送到MQ的通知事件
+type NotificationEvent struct {
+	Recipient string
+	Message   string
+}
 
-	// 注册消费者
-	registry.RegisterConsumer("send_user_messages", "save_message_handler", 5)
-	registry.RegisterConsumer("send_user_messages", "push_notification_handler", 10)
+// --- 2. 定义事件处理器 ---
 
-	// 启动所有消费者
-	registry.StartAll(eventBus)
+// ... (previous handlers) ...
+func handleAdvancedUserRegistered(ctx context.Context, payload UserRegisteredEvent, event Event) error {
+	klog.Infof("[Handler-Advanced] 收到用户注册: UserID=%s, EventID=%s", payload.UserID, event.Id)
+	return nil
+}
+func handleAdvancedInternalTask(ctx context.Context, payload InternalTaskEvent, event Event) error {
+	klog.Infof("[Handler-Advanced] 处理内部任务: TaskID=%s, Desc: %s", payload.TaskID, event.Id)
+	return nil
+}
+func handleRegistryUserRegistered(ctx context.Context, payload UserRegisteredEvent, event Event) error {
+	klog.Infof("[Handler-Registry] 用户注册: UserID=%s", payload.UserID)
+	return nil
+}
+func handleRegistryOrderCreated(ctx context.Context, payload OrderCreatedEvent, event Event) error {
+	klog.Infof("[Handler-Registry] 新订单: OrderID=%s, Amount=%.2f", payload.OrderID, payload.Amount)
+	return nil
+}
+func handleRegistryOrderAnalytics(ctx context.Context, payload OrderCreatedEvent, event Event) error {
+	klog.Infof("[Handler-Registry-Analytics] 记录订单数据: OrderID=%s", payload.OrderID)
+	return nil
+}
 
-	// 发送用户消息 - 仅在本服务处理，不需要其他服务
-	// PublishLocal: 高速、内存中、不跨服务
+// --- 3. 运行高级示例 (手动订阅) ---
+func RunAdvancedExample() { /* ... */ }
 
-	// ❌ 错误方式：创建Publisher但没有使用
-	// pub := NewEventPublisher(eventBus, nil)
-	// pub.PublishDistributed(ctx, "send_user_messages", payload)  // 不必要的MQ发送
+// --- 4. 运行消费者注册表示例 ---
+func RunRegistryExample() { /* ... */ }
 
-	// ✅ 正确方式：直接发布到内存总线
-	ctx := context.Background()
-	payload := map[string]interface{}{
-		"userId":  1,
-		"content": "test message",
+// --- 5. 运行只发往MQ的示例 ---
+
+func RunMQOnlyExample() {
+	klog.Info("\n\n--- 开始运行只发往MQ的示例 ---")
+	bus := NewEventBus()
+	defer bus.Close()
+	// 创建模拟的AMQP发布者
+
+	// 使用模拟的AMQP发布者初始化EventPublisher
+	mockPublisher, _ := amqpclt.NewPublisher(
+		nil,
+		"notification_exchange",
+	)
+	publisher := NewEventPublisher(bus, mockPublisher)
+
+	// 关键：在本地订阅 "notification.sent" 主题，以验证它不会收到消息
+	localSub := bus.SubscribeAsync(
+		"notification.sent",
+		EventHandlerFunc(func(ctx context.Context, event *Event) error {
+			// 如果这个处理器被调用，说明测试失败了
+			klog.Errorf("[MQOnly-FAIL] 本地订阅者不应该收到 ScopeMQOnly 的事件!")
+			return nil
+		}),
+		1,
+	)
+	defer localSub.Unsubscribe()
+
+	klog.Info("\n--- [MQOnly] 发布一个 ScopeMQOnly 事件 ---")
+	err := publisher.Publish(
+		context.Background(),
+		"notification.sent",
+		NotificationEvent{Recipient: "test@example.com", Message: "Hello, World!"},
+		WithScope(ScopeMQOnly), // 明确指定只发送到MQ
+	)
+	if err != nil {
+		klog.Errorf("[MQOnly] 发布事件失败: %v", err)
 	}
 
-	// 由于这个事件只在本服务处理，不需要跨服务，所以用 PublishLocal
-	pub := NewEventPublisher(eventBus, nil)
-	pub.PublishLocal(ctx, "send_user_messages", payload)
+	klog.Info("\n--- [MQOnly] 发布一个 ScopeDistributed 事件作为对比 ---")
+	// 这个事件应该同时触发 MockAMQP 和本地订阅者
+	_ = publisher.Publish(
+		context.Background(),
+		"notification.sent",
+		NotificationEvent{Recipient: "another@example.com", Message: "Distributed Message"},
+		WithScope(ScopeDistributed),
+	)
 
-	// 两个处理器会并发处理这个事件
-	// SaveMessageHandler: 保存到数据库
-	// PushNotificationHandler: 发送推送通知
-}
+	klog.Info("\n--- [MQOnly] 等待1秒观察结果 ---")
+	time.Sleep(1 * time.Second)
 
-// 示例2：Order 服务 - 订单创建（跨服务）
-func ExampleOrderService(amqpPublisher *amqpclt.Publish) {
-	// 初始化
-	eventBus := NewEventBus()
-	publisher := NewEventPublisher(eventBus, amqpPublisher)
-
-	// 注册本服务处理器：创建订单快照
-	eventBus.SubscribeWithPool("order.created",
-		&CreateOrderSnapshotHandler{}, 10)
-
-	// 启动AMQP监听（用于接收其他服务的事件）
-	amqpSub := &amqpclt.Subscribe{} // 假设已初始化
-	listener := NewAMQPListener(eventBus, amqpSub)
-	listener.StartListener(context.Background())
-
-	// 订单创建
-	orderData := map[string]interface{}{
-		"order_id": "ORD-001",
-		"amount":   999.9,
-		"user_id":  123,
-	}
-
-	// 发布分布式事件：
-	// 1. 同步发布到内存总线 → 本服务立即处理（创建快照）
-	// 2. 异步发送到RabbitMQ → 其他服务消费（库存、支付、通知）
-	ctx := context.Background()
-	publisher.PublishDistributed(ctx, "order.created", orderData)
-
-	// 流程：
-	// 时间T0: 本服务收到订单创建请求
-	// 时间T0+: 发送到MQ (异步，不阻塞)
-	// 时间T0+1: 本服务处理 CreateOrderSnapshotHandler
-	// 时间T0+100: 库存服务接收到事件
-	// 时间T0+150: 支付服务接收到事件
-	// 时间T0+200: 通知服务接收到事件
-}
-
-// 示例3：Notification 服务 - 只从MQ消费，不主动发送事件
-func ExampleNotificationService(amqpSubscriber *amqpclt.Subscribe) {
-	// 初始化
-	eventBus := NewEventBus()
-
-	// 从MQ消费邮件发送请求
-	listener := NewAMQPListener(eventBus, amqpSubscriber)
-	listener.StartListener(context.Background())
-
-	// 订阅来自MQ的邮件事件
-	eventBus.SubscribeWithPool("notification.send_email",
-		&SendEmailHandler{}, 5)
-
-	// 订阅来自MQ的短信事件
-	eventBus.SubscribeWithPool("notification.send_sms",
-		&SendSmsHandler{}, 5)
-
-	// 这个服务被动处理来自MQ的请求
-	// 不主动发送事件到MQ（只消费）
-}
-
-// 示例4：Analytics 服务 - 主动触发分析任务
-func ExampleAnalyticsService(amqpPublisher *amqpclt.Publish) {
-	eventBus := NewEventBus()
-	publisher := NewEventPublisher(eventBus, amqpPublisher)
-
-	ctx := context.Background()
-
-	// 场景1：只有本服务处理 - 使用 PublishLocal
-	publisher.PublishLocal(ctx, "internal.cache_warmed", map[string]interface{}{})
-
-	// 场景2：需要其他服务同步处理 - 使用 PublishDistributed
-	publisher.PublishDistributed(ctx, "analytics.user_profile_updated", map[string]interface{}{
-		"user_id": 123,
-		"stats":   "...",
-	})
-	// → 本服务立即处理 + MQ转发给其他服务
-
-	// 场景3：仅触发其他服务异步处理 - 使用 PublishToMQOnly
-	publisher.PublishToMQOnly(ctx, "export.daily_report", map[string]interface{}{
-		"date":   "2026-01-27",
-		"format": "xlsx",
-	})
-	// → 仅发送到MQ，本服务不处理
-}
-
-// 示例5：使用消费者池处理高吞吐事件
-func ExampleHighThroughput() {
-	eventBus := NewEventBus()
-
-	// 方式1：使用 SubscribeWithPool - 最简洁
-	pool1 := eventBus.SubscribeWithPool("page_view_tracked",
-		&TrackPageViewHandler{}, 50) // 50个worker
-
-	defer pool1.Stop()
-
-	// 方式2：使用 ConsumerRegistry - 最灵活
-	registry := NewConsumerRegistry()
-	registry.RegisterHandler("track_event_handler", &TrackEventHandler{})
-	registry.RegisterConsumer("event.tracked", "track_event_handler", 30)
-	registry.StartAll(eventBus)
-
-	defer registry.Shutdown(context.Background())
-}
-
-// 示例6：中间件链处理
-func ExampleMiddleware() {
-	eventBus := NewEventBus()
-
-	// 添加中间件
-	eventBus.Use(LoggingPlugin())            // 记录所有事件
-	eventBus.Use(RecoverPlugin())            // 捕获panic
-	eventBus.Use(FilterPlugin("spam_topic")) // 过滤垃圾事件
-	eventBus.Use(TransformPlugin())          // 转换事件数据
-
-	// 发布时会依次经过这些中间件
-	ctx := context.Background()
-	pub := NewEventPublisher(eventBus, nil)
-	pub.PublishLocal(ctx, "user.login", map[string]interface{}{
-		"user_id": 123,
-	})
-}
-
-// ============ Handler 示例 ============
-
-type SaveMessageHandler struct{}
-
-func (h *SaveMessageHandler) Handle(ctx context.Context, event *Event) error {
-	// 保存消息到数据库
-	return nil
-}
-
-type PushNotificationHandler struct{}
-
-func (h *PushNotificationHandler) Handle(ctx context.Context, event *Event) error {
-	// 发送推送通知
-	return nil
-}
-
-type CreateOrderSnapshotHandler struct{}
-
-func (h *CreateOrderSnapshotHandler) Handle(ctx context.Context, event *Event) error {
-	// 创建订单快照
-	return nil
-}
-
-type SendEmailHandler struct{}
-
-func (h *SendEmailHandler) Handle(ctx context.Context, event *Event) error {
-	// 发送邮件
-	return nil
-}
-
-type SendSmsHandler struct{}
-
-func (h *SendSmsHandler) Handle(ctx context.Context, event *Event) error {
-	// 发送短信
-	return nil
-}
-
-type TrackPageViewHandler struct{}
-
-func (h *TrackPageViewHandler) Handle(ctx context.Context, event *Event) error {
-	// 记录页面访问
-	return nil
-}
-
-type TrackEventHandler struct{}
-
-func (h *TrackEventHandler) Handle(ctx context.Context, event *Event) error {
-	// 记录事件
-	return nil
+	klog.Info("--- 只发往MQ的示例运行结束 ---")
+	klog.Info("预期结果: 只有'Distributed Message'事件会触发本地订阅者的失败日志。")
 }

@@ -10,14 +10,14 @@ import (
 // Middleware 中间件类型定义
 type Middleware func(next Handler) Handler
 
+// 例子
 // LoggingPlugin 日志记录
 func LoggingPlugin() Middleware {
 	return func(next Handler) Handler {
 		return EventHandlerFunc(func(ctx context.Context, event *Event) error {
 			start := time.Now()
-			next.Handle(ctx, event) // 继续执行下一个中间件或最终处理函数
 			klog.Infof("[日志插件] Done: Topic=%s cost=%v", event.Topic, time.Since(start))
-			return nil
+			return next.Handle(ctx, event)
 		})
 	}
 }
