@@ -26,6 +26,8 @@ type Tx struct {
 	MemberProductProperty *MemberProductPropertyClient
 	// MemberProfile is the client for interacting with the MemberProfile builders.
 	MemberProfile *MemberProfileClient
+	// MemberTag is the client for interacting with the MemberTag builders.
+	MemberTag *MemberTagClient
 
 	// lazily loaded.
 	client     *Client
@@ -164,6 +166,7 @@ func (tx *Tx) init() {
 	tx.MemberProduct = NewMemberProductClient(tx.config)
 	tx.MemberProductProperty = NewMemberProductPropertyClient(tx.config)
 	tx.MemberProfile = NewMemberProfileClient(tx.config)
+	tx.MemberTag = NewMemberTagClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

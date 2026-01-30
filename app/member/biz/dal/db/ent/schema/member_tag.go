@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -30,7 +31,9 @@ func (MemberTag) Mixin() []ent.Mixin {
 }
 
 func (MemberTag) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.From("member", Member.Type).Ref("member_tags").Field("member_id").Unique(),
+	}
 }
 
 func (MemberTag) Indexes() []ent.Index {

@@ -360,7 +360,7 @@ func (p *kClient) ChangePassword(ctx context.Context, req *member.ChangePassword
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq) (r *base.NilResponse, err error) {
+func (p *kClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq) (r *member.MemberIdsResp, err error) {
 	var _args member.MemberServiceGetMemberIdsArgs
 	_args.Req = req
 	var _result member.MemberServiceGetMemberIdsResult

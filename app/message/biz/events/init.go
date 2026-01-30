@@ -12,9 +12,10 @@ import (
 
 // EventManager 统一管理事件总线、桥接器和消费者注册表
 type EventManager struct {
-	Bus      *eventbus.EventBus
-	Bridge   *eventbus.AMQPListener
-	Registry *eventbus.ConsumerRegistry
+	Bus       *eventbus.EventBus
+	Bridge    *eventbus.AMQPListener
+	Registry  *eventbus.ConsumerRegistry
+	Publisher *eventbus.EventPublisher
 }
 
 var (
@@ -33,10 +34,14 @@ func Bootstrap() (err error) {
 		klog.Info("[Events] Initializing EventManager...")
 
 		// 1. 创建 AMQP 客户端
+		publisher, e := amqpclt.NewPublisher(mq.Client, "eventbus")
+		if e != nil {
+			err = e
+			return
+		}
 		subscriber, e := amqpclt.NewSubscribe(mq.Client, "eventbus")
 		if e != nil {
 			err = e
-			klog.Errorf("[Events] Failed to create AMQP subscriber: %v", err)
 			return
 		}
 
@@ -44,31 +49,30 @@ func Bootstrap() (err error) {
 		bus := eventbus.NewEventBus()
 		bridge := eventbus.NewAMQPListener(bus, subscriber)
 		registry := eventbus.NewConsumerRegistry()
+		eventPublisher := eventbus.NewEventPublisher(bus, publisher)
 
-		// 3. 应用中间件 (重要步骤)
-		// 顺序很重要：Recover应该在最外层，Timing在内层
-		bus.Use(RecoverMiddleware(), TimingMiddleware())
-		klog.Info("[Events] Middlewares applied.")
+		// 3. 应用中间件
+		// 顺序: Recover (最外层) -> Audit -> Timing -> 最终处理器
+		bus.Use(RecoverMiddleware(), AuditLogMiddleware(), TimingMiddleware())
+		klog.Info("[Events] Middlewares applied: Recover, Audit, Timing.")
 
 		globalManager = &EventManager{
-			Bus:      bus,
+			Bus:       bus,
 			Bridge:   bridge,
-			Registry: registry,
+			Registry:  registry,
+			Publisher: eventPublisher,
 		}
 
 		// 4. 注册所有消费者
 		if err = InitMessageConsumers(); err != nil {
-			klog.Errorf("[Events] Failed to initialize consumers: %v", err)
 			return
 		}
 
 		// 5. 启动所有组件
 		if err = bridge.StartListener(context.Background()); err != nil {
-			klog.Errorf("[Events] Failed to start AMQP listener: %v", err)
 			return
 		}
 		if err = registry.StartAll(bus); err != nil {
-			klog.Errorf("[Events] Failed to start consumers: %v", err)
 			return
 		}
 

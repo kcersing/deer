@@ -22,7 +22,7 @@ var (
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Comment: "mobile number | 手机号"},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "name | 名称"},
 		{Name: "avatar", Type: field.TypeString, Nullable: true, Comment: "avatar | 头像路径", Default: "", SchemaType: map[string]string{"mysql": "varchar(512)"}},
-		{Name: "condition", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:潜在;1:正式;3:冻结;4:到期]", Default: 1},
+		{Name: "condition", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:潜在;1:正式;3:冻结;4:到期]", Default: 0},
 	}
 	// MemberTable holds the schema information for the "member" table.
 	MemberTable = &schema.Table{
@@ -352,6 +352,49 @@ var (
 			},
 		},
 	}
+	// MemberTagsColumns holds the columns for the "member_tags" table.
+	MemberTagsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
+		{Name: "tag_id", Type: field.TypeInt64, Nullable: true, Comment: "标签"},
+		{Name: "weight", Type: field.TypeInt64, Nullable: true, Comment: "权重"},
+		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
+	}
+	// MemberTagsTable holds the schema information for the "member_tags" table.
+	MemberTagsTable = &schema.Table{
+		Name:       "member_tags",
+		Columns:    MemberTagsColumns,
+		PrimaryKey: []*schema.Column{MemberTagsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "member_tags_member_member_tags",
+				Columns:    []*schema.Column{MemberTagsColumns[8]},
+				RefColumns: []*schema.Column{MemberColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "membertag_id",
+				Unique:  false,
+				Columns: []*schema.Column{MemberTagsColumns[0]},
+			},
+			{
+				Name:    "membertag_tag_id",
+				Unique:  false,
+				Columns: []*schema.Column{MemberTagsColumns[6]},
+			},
+			{
+				Name:    "membertag_member_id",
+				Unique:  false,
+				Columns: []*schema.Column{MemberTagsColumns[8]},
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		MemberTable,
@@ -361,25 +404,34 @@ var (
 		MemberProductTable,
 		MemberProductPropertyTable,
 		MemberProfileTable,
+		MemberTagsTable,
 	}
 )
 
 func init() {
 	MemberTable.Annotation = &entsql.Annotation{
-		Table: "member",
+		Table:     "member",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	MemberContractTable.ForeignKeys[0].RefTable = MemberTable
 	MemberContractTable.ForeignKeys[1].RefTable = MemberProductTable
 	MemberContractTable.Annotation = &entsql.Annotation{
-		Table: "member_contract",
+		Table:     "member_contract",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	MemberContractContentTable.ForeignKeys[0].RefTable = MemberContractTable
 	MemberContractContentTable.Annotation = &entsql.Annotation{
-		Table: "member_contract_content",
+		Table:     "member_contract_content",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	MemberNoteTable.ForeignKeys[0].RefTable = MemberTable
 	MemberNoteTable.Annotation = &entsql.Annotation{
-		Table: "member_note",
+		Table:     "member_note",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	MemberProductTable.ForeignKeys[0].RefTable = MemberTable
 	MemberProductTable.Annotation = &entsql.Annotation{
@@ -388,10 +440,20 @@ func init() {
 	}
 	MemberProductPropertyTable.ForeignKeys[0].RefTable = MemberProductTable
 	MemberProductPropertyTable.Annotation = &entsql.Annotation{
-		Table: "member_product_property",
+		Table:     "member_product_property",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 	MemberProfileTable.ForeignKeys[0].RefTable = MemberTable
 	MemberProfileTable.Annotation = &entsql.Annotation{
-		Table: "member_profile",
+		Table:     "member_profile",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	MemberTagsTable.ForeignKeys[0].RefTable = MemberTable
+	MemberTagsTable.Annotation = &entsql.Annotation{
+		Table:     "member_tags",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
 	}
 }

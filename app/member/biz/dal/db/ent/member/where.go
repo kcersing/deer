@@ -877,6 +877,29 @@ func HasMemberContentsWith(preds ...predicate.MemberContract) predicate.Member {
 	})
 }
 
+// HasMemberTags applies the HasEdge predicate on the "member_tags" edge.
+func HasMemberTags() predicate.Member {
+	return predicate.Member(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, MemberTagsTable, MemberTagsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasMemberTagsWith applies the HasEdge predicate on the "member_tags" edge with a given conditions (other predicates).
+func HasMemberTagsWith(preds ...predicate.MemberTag) predicate.Member {
+	return predicate.Member(func(s *sql.Selector) {
+		step := newMemberTagsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.Member) predicate.Member {
 	return predicate.Member(sql.AndPredicates(predicates...))

@@ -13,6 +13,7 @@ import (
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 	"reflect"
 	"sync"
 
@@ -86,6 +87,7 @@ func checkColumn(t, c string) error {
 			memberproduct.Table:         memberproduct.ValidColumn,
 			memberproductproperty.Table: memberproductproperty.ValidColumn,
 			memberprofile.Table:         memberprofile.ValidColumn,
+			membertag.Table:             membertag.ValidColumn,
 		})
 	})
 	return columnCheck(t, c)

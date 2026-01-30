@@ -92,6 +92,18 @@ func (f MemberProfileFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Valu
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MemberProfileMutation", m)
 }
 
+// The MemberTagFunc type is an adapter to allow the use of ordinary
+// function as MemberTag mutator.
+type MemberTagFunc func(context.Context, *ent.MemberTagMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f MemberTagFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.MemberTagMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.MemberTagMutation", m)
+}
+
 // Condition is a hook condition function.
 type Condition func(context.Context, ent.Mutation) bool
 

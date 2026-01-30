@@ -140,6 +140,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"GetUserIds": kitex.NewMethodInfo(
+		getUserIdsHandler,
+		newUserServiceGetUserIdsArgs,
+		newUserServiceGetUserIdsResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -530,6 +537,24 @@ func newUserServiceGetPositionsListResult() interface{} {
 	return user.NewUserServiceGetPositionsListResult()
 }
 
+func getUserIdsHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*user.UserServiceGetUserIdsArgs)
+	realResult := result.(*user.UserServiceGetUserIdsResult)
+	success, err := handler.(user.UserService).GetUserIds(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newUserServiceGetUserIdsArgs() interface{} {
+	return user.NewUserServiceGetUserIdsArgs()
+}
+
+func newUserServiceGetUserIdsResult() interface{} {
+	return user.NewUserServiceGetUserIdsResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -715,6 +740,16 @@ func (p *kClient) GetPositionsList(ctx context.Context, req *user.GetPositionsLi
 	_args.Req = req
 	var _result user.UserServiceGetPositionsListResult
 	if err = p.c.Call(ctx, "GetPositionsList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetUserIds(ctx context.Context, req *user.GetUserListReq) (r *user.UserIdsResp, err error) {
+	var _args user.UserServiceGetUserIdsArgs
+	_args.Req = req
+	var _result user.UserServiceGetUserIdsResult
+	if err = p.c.Call(ctx, "GetUserIds", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

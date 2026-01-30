@@ -18,6 +18,7 @@ import (
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
@@ -44,6 +45,8 @@ type Client struct {
 	MemberProductProperty *MemberProductPropertyClient
 	// MemberProfile is the client for interacting with the MemberProfile builders.
 	MemberProfile *MemberProfileClient
+	// MemberTag is the client for interacting with the MemberTag builders.
+	MemberTag *MemberTagClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -62,6 +65,7 @@ func (c *Client) init() {
 	c.MemberProduct = NewMemberProductClient(c.config)
 	c.MemberProductProperty = NewMemberProductPropertyClient(c.config)
 	c.MemberProfile = NewMemberProfileClient(c.config)
+	c.MemberTag = NewMemberTagClient(c.config)
 }
 
 type (
@@ -161,6 +165,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		MemberProduct:         NewMemberProductClient(cfg),
 		MemberProductProperty: NewMemberProductPropertyClient(cfg),
 		MemberProfile:         NewMemberProfileClient(cfg),
+		MemberTag:             NewMemberTagClient(cfg),
 	}, nil
 }
 
@@ -187,6 +192,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		MemberProduct:         NewMemberProductClient(cfg),
 		MemberProductProperty: NewMemberProductPropertyClient(cfg),
 		MemberProfile:         NewMemberProfileClient(cfg),
+		MemberTag:             NewMemberTagClient(cfg),
 	}, nil
 }
 
@@ -217,7 +223,7 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
 		c.Member, c.MemberContract, c.MemberContractContent, c.MemberNote,
-		c.MemberProduct, c.MemberProductProperty, c.MemberProfile,
+		c.MemberProduct, c.MemberProductProperty, c.MemberProfile, c.MemberTag,
 	} {
 		n.Use(hooks...)
 	}
@@ -228,7 +234,7 @@ func (c *Client) Use(hooks ...Hook) {
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
 		c.Member, c.MemberContract, c.MemberContractContent, c.MemberNote,
-		c.MemberProduct, c.MemberProductProperty, c.MemberProfile,
+		c.MemberProduct, c.MemberProductProperty, c.MemberProfile, c.MemberTag,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -251,6 +257,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.MemberProductProperty.mutate(ctx, m)
 	case *MemberProfileMutation:
 		return c.MemberProfile.mutate(ctx, m)
+	case *MemberTagMutation:
+		return c.MemberTag.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
 	}
@@ -421,6 +429,22 @@ func (c *MemberClient) QueryMemberContents(_m *Member) *MemberContractQuery {
 			sqlgraph.From(member.Table, member.FieldID, id),
 			sqlgraph.To(membercontract.Table, membercontract.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, member.MemberContentsTable, member.MemberContentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMemberTags queries the member_tags edge of a Member.
+func (c *MemberClient) QueryMemberTags(_m *Member) *MemberTagQuery {
+	query := (&MemberTagClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(member.Table, member.FieldID, id),
+			sqlgraph.To(membertag.Table, membertag.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, member.MemberTagsTable, member.MemberTagsColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
@@ -1411,14 +1435,163 @@ func (c *MemberProfileClient) mutate(ctx context.Context, m *MemberProfileMutati
 	}
 }
 
+// MemberTagClient is a client for the MemberTag schema.
+type MemberTagClient struct {
+	config
+}
+
+// NewMemberTagClient returns a client for the MemberTag from the given config.
+func NewMemberTagClient(c config) *MemberTagClient {
+	return &MemberTagClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `membertag.Hooks(f(g(h())))`.
+func (c *MemberTagClient) Use(hooks ...Hook) {
+	c.hooks.MemberTag = append(c.hooks.MemberTag, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `membertag.Intercept(f(g(h())))`.
+func (c *MemberTagClient) Intercept(interceptors ...Interceptor) {
+	c.inters.MemberTag = append(c.inters.MemberTag, interceptors...)
+}
+
+// Create returns a builder for creating a MemberTag entity.
+func (c *MemberTagClient) Create() *MemberTagCreate {
+	mutation := newMemberTagMutation(c.config, OpCreate)
+	return &MemberTagCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of MemberTag entities.
+func (c *MemberTagClient) CreateBulk(builders ...*MemberTagCreate) *MemberTagCreateBulk {
+	return &MemberTagCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *MemberTagClient) MapCreateBulk(slice any, setFunc func(*MemberTagCreate, int)) *MemberTagCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &MemberTagCreateBulk{err: fmt.Errorf("calling to MemberTagClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*MemberTagCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &MemberTagCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for MemberTag.
+func (c *MemberTagClient) Update() *MemberTagUpdate {
+	mutation := newMemberTagMutation(c.config, OpUpdate)
+	return &MemberTagUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *MemberTagClient) UpdateOne(_m *MemberTag) *MemberTagUpdateOne {
+	mutation := newMemberTagMutation(c.config, OpUpdateOne, withMemberTag(_m))
+	return &MemberTagUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *MemberTagClient) UpdateOneID(id int64) *MemberTagUpdateOne {
+	mutation := newMemberTagMutation(c.config, OpUpdateOne, withMemberTagID(id))
+	return &MemberTagUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for MemberTag.
+func (c *MemberTagClient) Delete() *MemberTagDelete {
+	mutation := newMemberTagMutation(c.config, OpDelete)
+	return &MemberTagDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *MemberTagClient) DeleteOne(_m *MemberTag) *MemberTagDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *MemberTagClient) DeleteOneID(id int64) *MemberTagDeleteOne {
+	builder := c.Delete().Where(membertag.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &MemberTagDeleteOne{builder}
+}
+
+// Query returns a query builder for MemberTag.
+func (c *MemberTagClient) Query() *MemberTagQuery {
+	return &MemberTagQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeMemberTag},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a MemberTag entity by its id.
+func (c *MemberTagClient) Get(ctx context.Context, id int64) (*MemberTag, error) {
+	return c.Query().Where(membertag.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *MemberTagClient) GetX(ctx context.Context, id int64) *MemberTag {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryMember queries the member edge of a MemberTag.
+func (c *MemberTagClient) QueryMember(_m *MemberTag) *MemberQuery {
+	query := (&MemberClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(membertag.Table, membertag.FieldID, id),
+			sqlgraph.To(member.Table, member.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, membertag.MemberTable, membertag.MemberColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *MemberTagClient) Hooks() []Hook {
+	return c.hooks.MemberTag
+}
+
+// Interceptors returns the client interceptors.
+func (c *MemberTagClient) Interceptors() []Interceptor {
+	return c.inters.MemberTag
+}
+
+func (c *MemberTagClient) mutate(ctx context.Context, m *MemberTagMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&MemberTagCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&MemberTagUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&MemberTagUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&MemberTagDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown MemberTag mutation op: %q", m.Op())
+	}
+}
+
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
 		Member, MemberContract, MemberContractContent, MemberNote, MemberProduct,
-		MemberProductProperty, MemberProfile []ent.Hook
+		MemberProductProperty, MemberProfile, MemberTag []ent.Hook
 	}
 	inters struct {
 		Member, MemberContract, MemberContractContent, MemberNote, MemberProduct,
-		MemberProductProperty, MemberProfile []ent.Interceptor
+		MemberProductProperty, MemberProfile, MemberTag []ent.Interceptor
 	}
 )

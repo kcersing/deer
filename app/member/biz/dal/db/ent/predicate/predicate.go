@@ -26,3 +26,6 @@ type MemberProductProperty func(*sql.Selector)
 
 // MemberProfile is the predicate function for memberprofile builders.
 type MemberProfile func(*sql.Selector)
+
+// MemberTag is the predicate function for membertag builders.
+type MemberTag func(*sql.Selector)

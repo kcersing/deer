@@ -30,6 +30,7 @@ type Client interface {
 	UpdatePositions(ctx context.Context, req *user.UpdatePositionsReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error)
 	GetPositions(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *user.PositionsResp, err error)
 	GetPositionsList(ctx context.Context, req *user.GetPositionsListReq, callOptions ...callopt.Option) (r *user.PositionsListResp, err error)
+	GetUserIds(ctx context.Context, req *user.GetUserListReq, callOptions ...callopt.Option) (r *user.UserIdsResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -149,4 +150,9 @@ func (p *kUserServiceClient) GetPositions(ctx context.Context, req *base.IdReq, 
 func (p *kUserServiceClient) GetPositionsList(ctx context.Context, req *user.GetPositionsListReq, callOptions ...callopt.Option) (r *user.PositionsListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetPositionsList(ctx, req)
+}
+
+func (p *kUserServiceClient) GetUserIds(ctx context.Context, req *user.GetUserListReq, callOptions ...callopt.Option) (r *user.UserIdsResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetUserIds(ctx, req)
 }

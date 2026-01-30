@@ -13,6 +13,7 @@ import (
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 	"member/biz/dal/db/ent/predicate"
 	"sync"
 	"time"
@@ -37,6 +38,7 @@ const (
 	TypeMemberProduct         = "MemberProduct"
 	TypeMemberProductProperty = "MemberProductProperty"
 	TypeMemberProfile         = "MemberProfile"
+	TypeMemberTag             = "MemberTag"
 )
 
 // MemberMutation represents an operation that mutates the Member nodes in the graph.
@@ -73,6 +75,9 @@ type MemberMutation struct {
 	member_contents        map[int64]struct{}
 	removedmember_contents map[int64]struct{}
 	clearedmember_contents bool
+	member_tags            map[int64]struct{}
+	removedmember_tags     map[int64]struct{}
+	clearedmember_tags     bool
 	done                   bool
 	oldValue               func(context.Context) (*Member, error)
 	predicates             []predicate.Member
@@ -1021,6 +1026,60 @@ func (m *MemberMutation) ResetMemberContents() {
 	m.removedmember_contents = nil
 }
 
+// AddMemberTagIDs adds the "member_tags" edge to the MemberTag entity by ids.
+func (m *MemberMutation) AddMemberTagIDs(ids ...int64) {
+	if m.member_tags == nil {
+		m.member_tags = make(map[int64]struct{})
+	}
+	for i := range ids {
+		m.member_tags[ids[i]] = struct{}{}
+	}
+}
+
+// ClearMemberTags clears the "member_tags" edge to the MemberTag entity.
+func (m *MemberMutation) ClearMemberTags() {
+	m.clearedmember_tags = true
+}
+
+// MemberTagsCleared reports if the "member_tags" edge to the MemberTag entity was cleared.
+func (m *MemberMutation) MemberTagsCleared() bool {
+	return m.clearedmember_tags
+}
+
+// RemoveMemberTagIDs removes the "member_tags" edge to the MemberTag entity by IDs.
+func (m *MemberMutation) RemoveMemberTagIDs(ids ...int64) {
+	if m.removedmember_tags == nil {
+		m.removedmember_tags = make(map[int64]struct{})
+	}
+	for i := range ids {
+		delete(m.member_tags, ids[i])
+		m.removedmember_tags[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedMemberTags returns the removed IDs of the "member_tags" edge to the MemberTag entity.
+func (m *MemberMutation) RemovedMemberTagsIDs() (ids []int64) {
+	for id := range m.removedmember_tags {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// MemberTagsIDs returns the "member_tags" edge IDs in the mutation.
+func (m *MemberMutation) MemberTagsIDs() (ids []int64) {
+	for id := range m.member_tags {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetMemberTags resets all changes to the "member_tags" edge.
+func (m *MemberMutation) ResetMemberTags() {
+	m.member_tags = nil
+	m.clearedmember_tags = false
+	m.removedmember_tags = nil
+}
+
 // Where appends a list predicates to the MemberMutation builder.
 func (m *MemberMutation) Where(ps ...predicate.Member) {
 	m.predicates = append(m.predicates, ps...)
@@ -1444,7 +1503,7 @@ func (m *MemberMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *MemberMutation) AddedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
 	if m.member_profile != nil {
 		edges = append(edges, member.EdgeMemberProfile)
 	}
@@ -1456,6 +1515,9 @@ func (m *MemberMutation) AddedEdges() []string {
 	}
 	if m.member_contents != nil {
 		edges = append(edges, member.EdgeMemberContents)
+	}
+	if m.member_tags != nil {
+		edges = append(edges, member.EdgeMemberTags)
 	}
 	return edges
 }
@@ -1488,13 +1550,19 @@ func (m *MemberMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case member.EdgeMemberTags:
+		ids := make([]ent.Value, 0, len(m.member_tags))
+		for id := range m.member_tags {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *MemberMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
 	if m.removedmember_profile != nil {
 		edges = append(edges, member.EdgeMemberProfile)
 	}
@@ -1506,6 +1574,9 @@ func (m *MemberMutation) RemovedEdges() []string {
 	}
 	if m.removedmember_contents != nil {
 		edges = append(edges, member.EdgeMemberContents)
+	}
+	if m.removedmember_tags != nil {
+		edges = append(edges, member.EdgeMemberTags)
 	}
 	return edges
 }
@@ -1538,13 +1609,19 @@ func (m *MemberMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case member.EdgeMemberTags:
+		ids := make([]ent.Value, 0, len(m.removedmember_tags))
+		for id := range m.removedmember_tags {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *MemberMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 4)
+	edges := make([]string, 0, 5)
 	if m.clearedmember_profile {
 		edges = append(edges, member.EdgeMemberProfile)
 	}
@@ -1556,6 +1633,9 @@ func (m *MemberMutation) ClearedEdges() []string {
 	}
 	if m.clearedmember_contents {
 		edges = append(edges, member.EdgeMemberContents)
+	}
+	if m.clearedmember_tags {
+		edges = append(edges, member.EdgeMemberTags)
 	}
 	return edges
 }
@@ -1572,6 +1652,8 @@ func (m *MemberMutation) EdgeCleared(name string) bool {
 		return m.clearedmember_products
 	case member.EdgeMemberContents:
 		return m.clearedmember_contents
+	case member.EdgeMemberTags:
+		return m.clearedmember_tags
 	}
 	return false
 }
@@ -1599,6 +1681,9 @@ func (m *MemberMutation) ResetEdge(name string) error {
 		return nil
 	case member.EdgeMemberContents:
 		m.ResetMemberContents()
+		return nil
+	case member.EdgeMemberTags:
+		m.ResetMemberTags()
 		return nil
 	}
 	return fmt.Errorf("unknown Member edge %s", name)
@@ -10174,4 +10259,1096 @@ func (m *MemberProfileMutation) ResetEdge(name string) error {
 		return nil
 	}
 	return fmt.Errorf("unknown MemberProfile edge %s", name)
+}
+
+// MemberTagMutation represents an operation that mutates the MemberTag nodes in the graph.
+type MemberTagMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *int64
+	created_at    *time.Time
+	updated_at    *time.Time
+	delete        *int64
+	adddelete     *int64
+	created_id    *int64
+	addcreated_id *int64
+	status        *int64
+	addstatus     *int64
+	tag_id        *int64
+	addtag_id     *int64
+	weight        *int64
+	addweight     *int64
+	clearedFields map[string]struct{}
+	member        *int64
+	clearedmember bool
+	done          bool
+	oldValue      func(context.Context) (*MemberTag, error)
+	predicates    []predicate.MemberTag
+}
+
+var _ ent.Mutation = (*MemberTagMutation)(nil)
+
+// membertagOption allows management of the mutation configuration using functional options.
+type membertagOption func(*MemberTagMutation)
+
+// newMemberTagMutation creates new mutation for the MemberTag entity.
+func newMemberTagMutation(c config, op Op, opts ...membertagOption) *MemberTagMutation {
+	m := &MemberTagMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeMemberTag,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withMemberTagID sets the ID field of the mutation.
+func withMemberTagID(id int64) membertagOption {
+	return func(m *MemberTagMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *MemberTag
+		)
+		m.oldValue = func(ctx context.Context) (*MemberTag, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().MemberTag.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withMemberTag sets the old MemberTag of the mutation.
+func withMemberTag(node *MemberTag) membertagOption {
+	return func(m *MemberTagMutation) {
+		m.oldValue = func(context.Context) (*MemberTag, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m MemberTagMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m MemberTagMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of MemberTag entities.
+func (m *MemberTagMutation) SetID(id int64) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *MemberTagMutation) ID() (id int64, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *MemberTagMutation) IDs(ctx context.Context) ([]int64, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []int64{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().MemberTag.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *MemberTagMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *MemberTagMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (m *MemberTagMutation) ClearCreatedAt() {
+	m.created_at = nil
+	m.clearedFields[membertag.FieldCreatedAt] = struct{}{}
+}
+
+// CreatedAtCleared returns if the "created_at" field was cleared in this mutation.
+func (m *MemberTagMutation) CreatedAtCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldCreatedAt]
+	return ok
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *MemberTagMutation) ResetCreatedAt() {
+	m.created_at = nil
+	delete(m.clearedFields, membertag.FieldCreatedAt)
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *MemberTagMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *MemberTagMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (m *MemberTagMutation) ClearUpdatedAt() {
+	m.updated_at = nil
+	m.clearedFields[membertag.FieldUpdatedAt] = struct{}{}
+}
+
+// UpdatedAtCleared returns if the "updated_at" field was cleared in this mutation.
+func (m *MemberTagMutation) UpdatedAtCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldUpdatedAt]
+	return ok
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *MemberTagMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+	delete(m.clearedFields, membertag.FieldUpdatedAt)
+}
+
+// SetDelete sets the "delete" field.
+func (m *MemberTagMutation) SetDelete(i int64) {
+	m.delete = &i
+	m.adddelete = nil
+}
+
+// Delete returns the value of the "delete" field in the mutation.
+func (m *MemberTagMutation) Delete() (r int64, exists bool) {
+	v := m.delete
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDelete returns the old "delete" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldDelete(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDelete is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDelete requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDelete: %w", err)
+	}
+	return oldValue.Delete, nil
+}
+
+// AddDelete adds i to the "delete" field.
+func (m *MemberTagMutation) AddDelete(i int64) {
+	if m.adddelete != nil {
+		*m.adddelete += i
+	} else {
+		m.adddelete = &i
+	}
+}
+
+// AddedDelete returns the value that was added to the "delete" field in this mutation.
+func (m *MemberTagMutation) AddedDelete() (r int64, exists bool) {
+	v := m.adddelete
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearDelete clears the value of the "delete" field.
+func (m *MemberTagMutation) ClearDelete() {
+	m.delete = nil
+	m.adddelete = nil
+	m.clearedFields[membertag.FieldDelete] = struct{}{}
+}
+
+// DeleteCleared returns if the "delete" field was cleared in this mutation.
+func (m *MemberTagMutation) DeleteCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldDelete]
+	return ok
+}
+
+// ResetDelete resets all changes to the "delete" field.
+func (m *MemberTagMutation) ResetDelete() {
+	m.delete = nil
+	m.adddelete = nil
+	delete(m.clearedFields, membertag.FieldDelete)
+}
+
+// SetCreatedID sets the "created_id" field.
+func (m *MemberTagMutation) SetCreatedID(i int64) {
+	m.created_id = &i
+	m.addcreated_id = nil
+}
+
+// CreatedID returns the value of the "created_id" field in the mutation.
+func (m *MemberTagMutation) CreatedID() (r int64, exists bool) {
+	v := m.created_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedID returns the old "created_id" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldCreatedID(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedID: %w", err)
+	}
+	return oldValue.CreatedID, nil
+}
+
+// AddCreatedID adds i to the "created_id" field.
+func (m *MemberTagMutation) AddCreatedID(i int64) {
+	if m.addcreated_id != nil {
+		*m.addcreated_id += i
+	} else {
+		m.addcreated_id = &i
+	}
+}
+
+// AddedCreatedID returns the value that was added to the "created_id" field in this mutation.
+func (m *MemberTagMutation) AddedCreatedID() (r int64, exists bool) {
+	v := m.addcreated_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearCreatedID clears the value of the "created_id" field.
+func (m *MemberTagMutation) ClearCreatedID() {
+	m.created_id = nil
+	m.addcreated_id = nil
+	m.clearedFields[membertag.FieldCreatedID] = struct{}{}
+}
+
+// CreatedIDCleared returns if the "created_id" field was cleared in this mutation.
+func (m *MemberTagMutation) CreatedIDCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldCreatedID]
+	return ok
+}
+
+// ResetCreatedID resets all changes to the "created_id" field.
+func (m *MemberTagMutation) ResetCreatedID() {
+	m.created_id = nil
+	m.addcreated_id = nil
+	delete(m.clearedFields, membertag.FieldCreatedID)
+}
+
+// SetStatus sets the "status" field.
+func (m *MemberTagMutation) SetStatus(i int64) {
+	m.status = &i
+	m.addstatus = nil
+}
+
+// Status returns the value of the "status" field in the mutation.
+func (m *MemberTagMutation) Status() (r int64, exists bool) {
+	v := m.status
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStatus returns the old "status" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldStatus(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldStatus requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+	}
+	return oldValue.Status, nil
+}
+
+// AddStatus adds i to the "status" field.
+func (m *MemberTagMutation) AddStatus(i int64) {
+	if m.addstatus != nil {
+		*m.addstatus += i
+	} else {
+		m.addstatus = &i
+	}
+}
+
+// AddedStatus returns the value that was added to the "status" field in this mutation.
+func (m *MemberTagMutation) AddedStatus() (r int64, exists bool) {
+	v := m.addstatus
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearStatus clears the value of the "status" field.
+func (m *MemberTagMutation) ClearStatus() {
+	m.status = nil
+	m.addstatus = nil
+	m.clearedFields[membertag.FieldStatus] = struct{}{}
+}
+
+// StatusCleared returns if the "status" field was cleared in this mutation.
+func (m *MemberTagMutation) StatusCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldStatus]
+	return ok
+}
+
+// ResetStatus resets all changes to the "status" field.
+func (m *MemberTagMutation) ResetStatus() {
+	m.status = nil
+	m.addstatus = nil
+	delete(m.clearedFields, membertag.FieldStatus)
+}
+
+// SetMemberID sets the "member_id" field.
+func (m *MemberTagMutation) SetMemberID(i int64) {
+	m.member = &i
+}
+
+// MemberID returns the value of the "member_id" field in the mutation.
+func (m *MemberTagMutation) MemberID() (r int64, exists bool) {
+	v := m.member
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemberID returns the old "member_id" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldMemberID(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemberID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemberID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemberID: %w", err)
+	}
+	return oldValue.MemberID, nil
+}
+
+// ClearMemberID clears the value of the "member_id" field.
+func (m *MemberTagMutation) ClearMemberID() {
+	m.member = nil
+	m.clearedFields[membertag.FieldMemberID] = struct{}{}
+}
+
+// MemberIDCleared returns if the "member_id" field was cleared in this mutation.
+func (m *MemberTagMutation) MemberIDCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldMemberID]
+	return ok
+}
+
+// ResetMemberID resets all changes to the "member_id" field.
+func (m *MemberTagMutation) ResetMemberID() {
+	m.member = nil
+	delete(m.clearedFields, membertag.FieldMemberID)
+}
+
+// SetTagID sets the "tag_id" field.
+func (m *MemberTagMutation) SetTagID(i int64) {
+	m.tag_id = &i
+	m.addtag_id = nil
+}
+
+// TagID returns the value of the "tag_id" field in the mutation.
+func (m *MemberTagMutation) TagID() (r int64, exists bool) {
+	v := m.tag_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTagID returns the old "tag_id" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldTagID(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTagID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTagID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTagID: %w", err)
+	}
+	return oldValue.TagID, nil
+}
+
+// AddTagID adds i to the "tag_id" field.
+func (m *MemberTagMutation) AddTagID(i int64) {
+	if m.addtag_id != nil {
+		*m.addtag_id += i
+	} else {
+		m.addtag_id = &i
+	}
+}
+
+// AddedTagID returns the value that was added to the "tag_id" field in this mutation.
+func (m *MemberTagMutation) AddedTagID() (r int64, exists bool) {
+	v := m.addtag_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (m *MemberTagMutation) ClearTagID() {
+	m.tag_id = nil
+	m.addtag_id = nil
+	m.clearedFields[membertag.FieldTagID] = struct{}{}
+}
+
+// TagIDCleared returns if the "tag_id" field was cleared in this mutation.
+func (m *MemberTagMutation) TagIDCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldTagID]
+	return ok
+}
+
+// ResetTagID resets all changes to the "tag_id" field.
+func (m *MemberTagMutation) ResetTagID() {
+	m.tag_id = nil
+	m.addtag_id = nil
+	delete(m.clearedFields, membertag.FieldTagID)
+}
+
+// SetWeight sets the "weight" field.
+func (m *MemberTagMutation) SetWeight(i int64) {
+	m.weight = &i
+	m.addweight = nil
+}
+
+// Weight returns the value of the "weight" field in the mutation.
+func (m *MemberTagMutation) Weight() (r int64, exists bool) {
+	v := m.weight
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldWeight returns the old "weight" field's value of the MemberTag entity.
+// If the MemberTag object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberTagMutation) OldWeight(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldWeight is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldWeight requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldWeight: %w", err)
+	}
+	return oldValue.Weight, nil
+}
+
+// AddWeight adds i to the "weight" field.
+func (m *MemberTagMutation) AddWeight(i int64) {
+	if m.addweight != nil {
+		*m.addweight += i
+	} else {
+		m.addweight = &i
+	}
+}
+
+// AddedWeight returns the value that was added to the "weight" field in this mutation.
+func (m *MemberTagMutation) AddedWeight() (r int64, exists bool) {
+	v := m.addweight
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearWeight clears the value of the "weight" field.
+func (m *MemberTagMutation) ClearWeight() {
+	m.weight = nil
+	m.addweight = nil
+	m.clearedFields[membertag.FieldWeight] = struct{}{}
+}
+
+// WeightCleared returns if the "weight" field was cleared in this mutation.
+func (m *MemberTagMutation) WeightCleared() bool {
+	_, ok := m.clearedFields[membertag.FieldWeight]
+	return ok
+}
+
+// ResetWeight resets all changes to the "weight" field.
+func (m *MemberTagMutation) ResetWeight() {
+	m.weight = nil
+	m.addweight = nil
+	delete(m.clearedFields, membertag.FieldWeight)
+}
+
+// ClearMember clears the "member" edge to the Member entity.
+func (m *MemberTagMutation) ClearMember() {
+	m.clearedmember = true
+	m.clearedFields[membertag.FieldMemberID] = struct{}{}
+}
+
+// MemberCleared reports if the "member" edge to the Member entity was cleared.
+func (m *MemberTagMutation) MemberCleared() bool {
+	return m.MemberIDCleared() || m.clearedmember
+}
+
+// MemberIDs returns the "member" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// MemberID instead. It exists only for internal usage by the builders.
+func (m *MemberTagMutation) MemberIDs() (ids []int64) {
+	if id := m.member; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetMember resets all changes to the "member" edge.
+func (m *MemberTagMutation) ResetMember() {
+	m.member = nil
+	m.clearedmember = false
+}
+
+// Where appends a list predicates to the MemberTagMutation builder.
+func (m *MemberTagMutation) Where(ps ...predicate.MemberTag) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the MemberTagMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *MemberTagMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.MemberTag, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *MemberTagMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *MemberTagMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (MemberTag).
+func (m *MemberTagMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *MemberTagMutation) Fields() []string {
+	fields := make([]string, 0, 8)
+	if m.created_at != nil {
+		fields = append(fields, membertag.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, membertag.FieldUpdatedAt)
+	}
+	if m.delete != nil {
+		fields = append(fields, membertag.FieldDelete)
+	}
+	if m.created_id != nil {
+		fields = append(fields, membertag.FieldCreatedID)
+	}
+	if m.status != nil {
+		fields = append(fields, membertag.FieldStatus)
+	}
+	if m.member != nil {
+		fields = append(fields, membertag.FieldMemberID)
+	}
+	if m.tag_id != nil {
+		fields = append(fields, membertag.FieldTagID)
+	}
+	if m.weight != nil {
+		fields = append(fields, membertag.FieldWeight)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *MemberTagMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case membertag.FieldCreatedAt:
+		return m.CreatedAt()
+	case membertag.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case membertag.FieldDelete:
+		return m.Delete()
+	case membertag.FieldCreatedID:
+		return m.CreatedID()
+	case membertag.FieldStatus:
+		return m.Status()
+	case membertag.FieldMemberID:
+		return m.MemberID()
+	case membertag.FieldTagID:
+		return m.TagID()
+	case membertag.FieldWeight:
+		return m.Weight()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *MemberTagMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case membertag.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case membertag.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case membertag.FieldDelete:
+		return m.OldDelete(ctx)
+	case membertag.FieldCreatedID:
+		return m.OldCreatedID(ctx)
+	case membertag.FieldStatus:
+		return m.OldStatus(ctx)
+	case membertag.FieldMemberID:
+		return m.OldMemberID(ctx)
+	case membertag.FieldTagID:
+		return m.OldTagID(ctx)
+	case membertag.FieldWeight:
+		return m.OldWeight(ctx)
+	}
+	return nil, fmt.Errorf("unknown MemberTag field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *MemberTagMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case membertag.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case membertag.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case membertag.FieldDelete:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDelete(v)
+		return nil
+	case membertag.FieldCreatedID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedID(v)
+		return nil
+	case membertag.FieldStatus:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStatus(v)
+		return nil
+	case membertag.FieldMemberID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemberID(v)
+		return nil
+	case membertag.FieldTagID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTagID(v)
+		return nil
+	case membertag.FieldWeight:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetWeight(v)
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *MemberTagMutation) AddedFields() []string {
+	var fields []string
+	if m.adddelete != nil {
+		fields = append(fields, membertag.FieldDelete)
+	}
+	if m.addcreated_id != nil {
+		fields = append(fields, membertag.FieldCreatedID)
+	}
+	if m.addstatus != nil {
+		fields = append(fields, membertag.FieldStatus)
+	}
+	if m.addtag_id != nil {
+		fields = append(fields, membertag.FieldTagID)
+	}
+	if m.addweight != nil {
+		fields = append(fields, membertag.FieldWeight)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *MemberTagMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case membertag.FieldDelete:
+		return m.AddedDelete()
+	case membertag.FieldCreatedID:
+		return m.AddedCreatedID()
+	case membertag.FieldStatus:
+		return m.AddedStatus()
+	case membertag.FieldTagID:
+		return m.AddedTagID()
+	case membertag.FieldWeight:
+		return m.AddedWeight()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *MemberTagMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case membertag.FieldDelete:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddDelete(v)
+		return nil
+	case membertag.FieldCreatedID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreatedID(v)
+		return nil
+	case membertag.FieldStatus:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStatus(v)
+		return nil
+	case membertag.FieldTagID:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTagID(v)
+		return nil
+	case membertag.FieldWeight:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddWeight(v)
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *MemberTagMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(membertag.FieldCreatedAt) {
+		fields = append(fields, membertag.FieldCreatedAt)
+	}
+	if m.FieldCleared(membertag.FieldUpdatedAt) {
+		fields = append(fields, membertag.FieldUpdatedAt)
+	}
+	if m.FieldCleared(membertag.FieldDelete) {
+		fields = append(fields, membertag.FieldDelete)
+	}
+	if m.FieldCleared(membertag.FieldCreatedID) {
+		fields = append(fields, membertag.FieldCreatedID)
+	}
+	if m.FieldCleared(membertag.FieldStatus) {
+		fields = append(fields, membertag.FieldStatus)
+	}
+	if m.FieldCleared(membertag.FieldMemberID) {
+		fields = append(fields, membertag.FieldMemberID)
+	}
+	if m.FieldCleared(membertag.FieldTagID) {
+		fields = append(fields, membertag.FieldTagID)
+	}
+	if m.FieldCleared(membertag.FieldWeight) {
+		fields = append(fields, membertag.FieldWeight)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *MemberTagMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *MemberTagMutation) ClearField(name string) error {
+	switch name {
+	case membertag.FieldCreatedAt:
+		m.ClearCreatedAt()
+		return nil
+	case membertag.FieldUpdatedAt:
+		m.ClearUpdatedAt()
+		return nil
+	case membertag.FieldDelete:
+		m.ClearDelete()
+		return nil
+	case membertag.FieldCreatedID:
+		m.ClearCreatedID()
+		return nil
+	case membertag.FieldStatus:
+		m.ClearStatus()
+		return nil
+	case membertag.FieldMemberID:
+		m.ClearMemberID()
+		return nil
+	case membertag.FieldTagID:
+		m.ClearTagID()
+		return nil
+	case membertag.FieldWeight:
+		m.ClearWeight()
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *MemberTagMutation) ResetField(name string) error {
+	switch name {
+	case membertag.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case membertag.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case membertag.FieldDelete:
+		m.ResetDelete()
+		return nil
+	case membertag.FieldCreatedID:
+		m.ResetCreatedID()
+		return nil
+	case membertag.FieldStatus:
+		m.ResetStatus()
+		return nil
+	case membertag.FieldMemberID:
+		m.ResetMemberID()
+		return nil
+	case membertag.FieldTagID:
+		m.ResetTagID()
+		return nil
+	case membertag.FieldWeight:
+		m.ResetWeight()
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *MemberTagMutation) AddedEdges() []string {
+	edges := make([]string, 0, 1)
+	if m.member != nil {
+		edges = append(edges, membertag.EdgeMember)
+	}
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *MemberTagMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case membertag.EdgeMember:
+		if id := m.member; id != nil {
+			return []ent.Value{*id}
+		}
+	}
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *MemberTagMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 1)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *MemberTagMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *MemberTagMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 1)
+	if m.clearedmember {
+		edges = append(edges, membertag.EdgeMember)
+	}
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *MemberTagMutation) EdgeCleared(name string) bool {
+	switch name {
+	case membertag.EdgeMember:
+		return m.clearedmember
+	}
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *MemberTagMutation) ClearEdge(name string) error {
+	switch name {
+	case membertag.EdgeMember:
+		m.ClearMember()
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *MemberTagMutation) ResetEdge(name string) error {
+	switch name {
+	case membertag.EdgeMember:
+		m.ResetMember()
+		return nil
+	}
+	return fmt.Errorf("unknown MemberTag edge %s", name)
 }

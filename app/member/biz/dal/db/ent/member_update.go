@@ -11,6 +11,7 @@ import (
 	"member/biz/dal/db/ent/membernote"
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 	"member/biz/dal/db/ent/predicate"
 	"time"
 
@@ -312,6 +313,21 @@ func (_u *MemberUpdate) AddMemberContents(v ...*MemberContract) *MemberUpdate {
 	return _u.AddMemberContentIDs(ids...)
 }
 
+// AddMemberTagIDs adds the "member_tags" edge to the MemberTag entity by IDs.
+func (_u *MemberUpdate) AddMemberTagIDs(ids ...int64) *MemberUpdate {
+	_u.mutation.AddMemberTagIDs(ids...)
+	return _u
+}
+
+// AddMemberTags adds the "member_tags" edges to the MemberTag entity.
+func (_u *MemberUpdate) AddMemberTags(v ...*MemberTag) *MemberUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddMemberTagIDs(ids...)
+}
+
 // Mutation returns the MemberMutation object of the builder.
 func (_u *MemberUpdate) Mutation() *MemberMutation {
 	return _u.mutation
@@ -399,6 +415,27 @@ func (_u *MemberUpdate) RemoveMemberContents(v ...*MemberContract) *MemberUpdate
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMemberContentIDs(ids...)
+}
+
+// ClearMemberTags clears all "member_tags" edges to the MemberTag entity.
+func (_u *MemberUpdate) ClearMemberTags() *MemberUpdate {
+	_u.mutation.ClearMemberTags()
+	return _u
+}
+
+// RemoveMemberTagIDs removes the "member_tags" edge to MemberTag entities by IDs.
+func (_u *MemberUpdate) RemoveMemberTagIDs(ids ...int64) *MemberUpdate {
+	_u.mutation.RemoveMemberTagIDs(ids...)
+	return _u
+}
+
+// RemoveMemberTags removes "member_tags" edges to MemberTag entities.
+func (_u *MemberUpdate) RemoveMemberTags(v ...*MemberTag) *MemberUpdate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveMemberTagIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -694,6 +731,51 @@ func (_u *MemberUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.MemberTagsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedMemberTagsIDs(); len(nodes) > 0 && !_u.mutation.MemberTagsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.MemberTagsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -1001,6 +1083,21 @@ func (_u *MemberUpdateOne) AddMemberContents(v ...*MemberContract) *MemberUpdate
 	return _u.AddMemberContentIDs(ids...)
 }
 
+// AddMemberTagIDs adds the "member_tags" edge to the MemberTag entity by IDs.
+func (_u *MemberUpdateOne) AddMemberTagIDs(ids ...int64) *MemberUpdateOne {
+	_u.mutation.AddMemberTagIDs(ids...)
+	return _u
+}
+
+// AddMemberTags adds the "member_tags" edges to the MemberTag entity.
+func (_u *MemberUpdateOne) AddMemberTags(v ...*MemberTag) *MemberUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddMemberTagIDs(ids...)
+}
+
 // Mutation returns the MemberMutation object of the builder.
 func (_u *MemberUpdateOne) Mutation() *MemberMutation {
 	return _u.mutation
@@ -1088,6 +1185,27 @@ func (_u *MemberUpdateOne) RemoveMemberContents(v ...*MemberContract) *MemberUpd
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMemberContentIDs(ids...)
+}
+
+// ClearMemberTags clears all "member_tags" edges to the MemberTag entity.
+func (_u *MemberUpdateOne) ClearMemberTags() *MemberUpdateOne {
+	_u.mutation.ClearMemberTags()
+	return _u
+}
+
+// RemoveMemberTagIDs removes the "member_tags" edge to MemberTag entities by IDs.
+func (_u *MemberUpdateOne) RemoveMemberTagIDs(ids ...int64) *MemberUpdateOne {
+	_u.mutation.RemoveMemberTagIDs(ids...)
+	return _u
+}
+
+// RemoveMemberTags removes "member_tags" edges to MemberTag entities.
+func (_u *MemberUpdateOne) RemoveMemberTags(v ...*MemberTag) *MemberUpdateOne {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveMemberTagIDs(ids...)
 }
 
 // Where appends a list predicates to the MemberUpdate builder.
@@ -1413,6 +1531,51 @@ func (_u *MemberUpdateOne) sqlSave(ctx context.Context) (_node *Member, err erro
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if _u.mutation.MemberTagsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedMemberTagsIDs(); len(nodes) > 0 && !_u.mutation.MemberTagsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.MemberTagsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

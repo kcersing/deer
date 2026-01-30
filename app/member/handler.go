@@ -60,7 +60,8 @@ func (s *MemberServiceImpl) ChangePassword(ctx context.Context, req *member.Chan
 }
 
 // GetMemberIds implements the MemberServiceImpl interface.
-func (s *MemberServiceImpl) GetMemberIds(ctx context.Context, req *member.GetMemberListReq) (resp *base.NilResponse, err error) {
-	// TODO: Your code here...
+func (s *MemberServiceImpl) GetMemberIds(ctx context.Context, req *member.GetMemberListReq) (resp *member.MemberIdsResp, err error) {
+	resp, err = service.NewGetMemberIdsService(ctx).Run(req)
+
 	return
 }

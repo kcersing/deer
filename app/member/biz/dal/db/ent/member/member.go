@@ -44,6 +44,8 @@ const (
 	EdgeMemberProducts = "member_products"
 	// EdgeMemberContents holds the string denoting the member_contents edge name in mutations.
 	EdgeMemberContents = "member_contents"
+	// EdgeMemberTags holds the string denoting the member_tags edge name in mutations.
+	EdgeMemberTags = "member_tags"
 	// Table holds the table name of the member in the database.
 	Table = "member"
 	// MemberProfileTable is the table that holds the member_profile relation/edge.
@@ -74,6 +76,13 @@ const (
 	MemberContentsInverseTable = "member_contract"
 	// MemberContentsColumn is the table column denoting the member_contents relation/edge.
 	MemberContentsColumn = "member_id"
+	// MemberTagsTable is the table that holds the member_tags relation/edge.
+	MemberTagsTable = "member_tags"
+	// MemberTagsInverseTable is the table name for the MemberTag entity.
+	// It exists in this package in order to avoid circular dependency with the "membertag" package.
+	MemberTagsInverseTable = "member_tags"
+	// MemberTagsColumn is the table column denoting the member_tags relation/edge.
+	MemberTagsColumn = "member_id"
 )
 
 // Columns holds all SQL columns for member fields.
@@ -239,6 +248,20 @@ func ByMemberContents(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newMemberContentsStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
+
+// ByMemberTagsCount orders the results by member_tags count.
+func ByMemberTagsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newMemberTagsStep(), opts...)
+	}
+}
+
+// ByMemberTags orders the results by member_tags terms.
+func ByMemberTags(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newMemberTagsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
 func newMemberProfileStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
@@ -265,5 +288,12 @@ func newMemberContentsStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(MemberContentsInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.O2M, false, MemberContentsTable, MemberContentsColumn),
+	)
+}
+func newMemberTagsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(MemberTagsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, MemberTagsTable, MemberTagsColumn),
 	)
 }

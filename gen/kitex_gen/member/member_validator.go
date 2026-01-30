@@ -48,17 +48,17 @@ func (p *MemberListResp) IsValid() error {
 	}
 	return nil
 }
-func (p *UpdateMemberReq) IsValid() error {
-	return nil
-}
-func (p *ChangePasswordReq) IsValid() error {
-	return nil
-}
 func (p *MemberIdsResp) IsValid() error {
 	if p.BaseResp != nil {
 		if err := p.BaseResp.IsValid(); err != nil {
 			return fmt.Errorf("field BaseResp not valid, %w", err)
 		}
 	}
+	return nil
+}
+func (p *UpdateMemberReq) IsValid() error {
+	return nil
+}
+func (p *ChangePasswordReq) IsValid() error {
 	return nil
 }

@@ -18,7 +18,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.8.0
 	github.com/kr/pretty v0.3.1
-	github.com/lib/pq v1.11.0
+	github.com/lib/pq v1.11.1
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.17.3
 	gopkg.in/validator.v2 v2.0.1

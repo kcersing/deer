@@ -361,11 +361,12 @@ var fieldIDToName_CreateUserReq = map[int16]string{
 }
 
 type GetUserListReq struct {
-	Page     int64  `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
-	PageSize int64  `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
-	Keyword  string `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
-	Name     string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	Mobile   string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Page     int64   `thrift:"page,1,optional" frugal:"1,optional,i64" json:"page,omitempty"`
+	PageSize int64   `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
+	Keyword  string  `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
+	Name     string  `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Mobile   string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Tags     []int64 `thrift:"tags,6,optional" frugal:"6,optional,list<i64>" json:"tags,omitempty"`
 }
 
 func NewGetUserListReq() *GetUserListReq {
@@ -375,6 +376,7 @@ func NewGetUserListReq() *GetUserListReq {
 		Keyword:  "",
 		Name:     "",
 		Mobile:   "",
+		Tags:     []int64{},
 	}
 }
 
@@ -384,6 +386,7 @@ func (p *GetUserListReq) InitDefault() {
 	p.Keyword = ""
 	p.Name = ""
 	p.Mobile = ""
+	p.Tags = []int64{}
 }
 
 var GetUserListReq_Page_DEFAULT int64 = 1
@@ -430,6 +433,15 @@ func (p *GetUserListReq) GetMobile() (v string) {
 	}
 	return p.Mobile
 }
+
+var GetUserListReq_Tags_DEFAULT []int64 = []int64{}
+
+func (p *GetUserListReq) GetTags() (v []int64) {
+	if !p.IsSetTags() {
+		return GetUserListReq_Tags_DEFAULT
+	}
+	return p.Tags
+}
 func (p *GetUserListReq) SetPage(val int64) {
 	p.Page = val
 }
@@ -444,6 +456,9 @@ func (p *GetUserListReq) SetName(val string) {
 }
 func (p *GetUserListReq) SetMobile(val string) {
 	p.Mobile = val
+}
+func (p *GetUserListReq) SetTags(val []int64) {
+	p.Tags = val
 }
 
 func (p *GetUserListReq) IsSetPage() bool {
@@ -466,6 +481,10 @@ func (p *GetUserListReq) IsSetMobile() bool {
 	return p.Mobile != GetUserListReq_Mobile_DEFAULT
 }
 
+func (p *GetUserListReq) IsSetTags() bool {
+	return p.Tags != nil
+}
+
 func (p *GetUserListReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -479,6 +498,7 @@ var fieldIDToName_GetUserListReq = map[int16]string{
 	3: "keyword",
 	4: "name",
 	5: "mobile",
+	6: "tags",
 }
 
 type UpdateUserReq struct {
@@ -1954,6 +1974,67 @@ var fieldIDToName_PositionsListResp = map[int16]string{
 	255: "baseResp",
 }
 
+type UserIdsResp struct {
+	Data     []int64        `thrift:"data,1,optional" frugal:"1,optional,list<i64>" json:"data,omitempty"`
+	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewUserIdsResp() *UserIdsResp {
+	return &UserIdsResp{
+		Data:     []int64{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *UserIdsResp) InitDefault() {
+	p.Data = []int64{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var UserIdsResp_Data_DEFAULT []int64 = []int64{}
+
+func (p *UserIdsResp) GetData() (v []int64) {
+	if !p.IsSetData() {
+		return UserIdsResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var UserIdsResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *UserIdsResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return UserIdsResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *UserIdsResp) SetData(val []int64) {
+	p.Data = val
+}
+func (p *UserIdsResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *UserIdsResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *UserIdsResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *UserIdsResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserIdsResp(%+v)", *p)
+}
+
+var fieldIDToName_UserIdsResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
 type UserService interface {
 	CreateUser(ctx context.Context, req *CreateUserReq) (r *UserResp, err error)
 
@@ -1990,6 +2071,8 @@ type UserService interface {
 	GetPositions(ctx context.Context, req *base.IdReq) (r *PositionsResp, err error)
 
 	GetPositionsList(ctx context.Context, req *GetPositionsListReq) (r *PositionsListResp, err error)
+
+	GetUserIds(ctx context.Context, req *GetUserListReq) (r *UserIdsResp, err error)
 }
 
 type UserServiceCreateUserArgs struct {
@@ -3357,5 +3440,81 @@ func (p *UserServiceGetPositionsListResult) String() string {
 }
 
 var fieldIDToName_UserServiceGetPositionsListResult = map[int16]string{
+	0: "success",
+}
+
+type UserServiceGetUserIdsArgs struct {
+	Req *GetUserListReq `thrift:"req,1" frugal:"1,default,GetUserListReq" json:"req"`
+}
+
+func NewUserServiceGetUserIdsArgs() *UserServiceGetUserIdsArgs {
+	return &UserServiceGetUserIdsArgs{}
+}
+
+func (p *UserServiceGetUserIdsArgs) InitDefault() {
+}
+
+var UserServiceGetUserIdsArgs_Req_DEFAULT *GetUserListReq
+
+func (p *UserServiceGetUserIdsArgs) GetReq() (v *GetUserListReq) {
+	if !p.IsSetReq() {
+		return UserServiceGetUserIdsArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *UserServiceGetUserIdsArgs) SetReq(val *GetUserListReq) {
+	p.Req = val
+}
+
+func (p *UserServiceGetUserIdsArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *UserServiceGetUserIdsArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetUserIdsArgs(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetUserIdsArgs = map[int16]string{
+	1: "req",
+}
+
+type UserServiceGetUserIdsResult struct {
+	Success *UserIdsResp `thrift:"success,0,optional" frugal:"0,optional,UserIdsResp" json:"success,omitempty"`
+}
+
+func NewUserServiceGetUserIdsResult() *UserServiceGetUserIdsResult {
+	return &UserServiceGetUserIdsResult{}
+}
+
+func (p *UserServiceGetUserIdsResult) InitDefault() {
+}
+
+var UserServiceGetUserIdsResult_Success_DEFAULT *UserIdsResp
+
+func (p *UserServiceGetUserIdsResult) GetSuccess() (v *UserIdsResp) {
+	if !p.IsSetSuccess() {
+		return UserServiceGetUserIdsResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *UserServiceGetUserIdsResult) SetSuccess(x interface{}) {
+	p.Success = x.(*UserIdsResp)
+}
+
+func (p *UserServiceGetUserIdsResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *UserServiceGetUserIdsResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UserServiceGetUserIdsResult(%+v)", *p)
+}
+
+var fieldIDToName_UserServiceGetUserIdsResult = map[int16]string{
 	0: "success",
 }

@@ -3,10 +3,10 @@ package service
 import (
 	"context"
 	Base "gen/kitex_gen/base"
-
 	Member "gen/kitex_gen/member"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent"
+	"member/biz/dal/db/ent/membertag"
 
 	"member/biz/convert"
 	"member/biz/dal/db/ent/member"
@@ -27,10 +27,8 @@ func (s *GetMemberIdsService) Run(req *Member.GetMemberListReq) (resp *Member.Me
 		dataResp []*Base.Member
 	)
 	var predicates []predicate.Member
-	if req.GetKeyword() != "" {
-		predicates = append(predicates, member.Or(
-			member.NameContains(req.GetKeyword()),
-		))
+	if len(req.GetTags()) > 0 {
+		predicates = append(predicates, member.HasMemberTagsWith(membertag.TagIDIn(req.GetTags()...)))
 	}
 
 	all, err := db.Client.Member.Query().Where(predicates...).
@@ -49,6 +47,6 @@ func (s *GetMemberIdsService) Run(req *Member.GetMemberListReq) (resp *Member.Me
 		dataResp = append(dataResp, convert.EntToMember(v, profile))
 	}
 	return &Member.MemberIdsResp{
-		Ids: nil,
+		Data: nil,
 	}, nil
 }

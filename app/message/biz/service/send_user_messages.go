@@ -1,13 +1,11 @@
 package service
 
 import (
-	eventbus2 "common/eventbus"
 	"context"
-	base "gen/kitex_gen/base"
-	message "gen/kitex_gen/message"
+	"gen/kitex_gen/base"
+	"gen/kitex_gen/message"
 	"message/biz/dal/db"
 	"message/biz/dal/db/ent/messages"
-
 	"message/biz/events"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -25,8 +23,6 @@ func NewSendUserMessagesService(ctx context.Context) *SendUserMessagesService {
 
 // Run create note info
 func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *base.NilResponse, err error) {
-	// Finish your business logic.
-
 	tx, err := db.Client.Tx(s.ctx)
 	if err != nil {
 		klog.Error("Tx")
@@ -47,8 +43,10 @@ func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *b
 	if err = tx.Commit(); err != nil {
 		return nil, err
 	}
-	eb := events.GetManager().Bus
-	event := eventbus2.NewEvent("send_user_messages", req)
-	eb.Publish(s.ctx, event)
-	return
+
+	if err = events.SendUserMessages(s.ctx, req); err != nil {
+		klog.Errorf("Failed to publish SendUserMessages event: %v", err)
+	}
+
+	return &base.NilResponse{}, nil
 }

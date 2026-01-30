@@ -25,6 +25,7 @@ type TypedHandler[T any] func(ctx context.Context, payload T, event Event) error
 
 // WrapTyped 把泛型处理函数转换为标准 Handler 接口
 func WrapTyped[T any](handler TypedHandler[T]) Handler {
+
 	return EventHandlerFunc(func(ctx context.Context, event *Event) error {
 		// 1. 尝试断言
 		typedPayload, ok := event.Payload.(T)

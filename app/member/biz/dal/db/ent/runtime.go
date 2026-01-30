@@ -10,6 +10,7 @@ import (
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 	"member/biz/dal/db/ent/schema"
 	"time"
 )
@@ -241,4 +242,33 @@ func init() {
 	memberprofileDescRelationMid := memberprofileFields[7].Descriptor()
 	// memberprofile.DefaultRelationMid holds the default value on creation for the relation_mid field.
 	memberprofile.DefaultRelationMid = memberprofileDescRelationMid.Default.(int64)
+	membertagMixin := schema.MemberTag{}.Mixin()
+	membertagMixinFields0 := membertagMixin[0].Fields()
+	_ = membertagMixinFields0
+	membertagMixinFields1 := membertagMixin[1].Fields()
+	_ = membertagMixinFields1
+	membertagFields := schema.MemberTag{}.Fields()
+	_ = membertagFields
+	// membertagDescCreatedAt is the schema descriptor for created_at field.
+	membertagDescCreatedAt := membertagMixinFields0[1].Descriptor()
+	// membertag.DefaultCreatedAt holds the default value on creation for the created_at field.
+	membertag.DefaultCreatedAt = membertagDescCreatedAt.Default.(func() time.Time)
+	// membertagDescUpdatedAt is the schema descriptor for updated_at field.
+	membertagDescUpdatedAt := membertagMixinFields0[2].Descriptor()
+	// membertag.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	membertag.DefaultUpdatedAt = membertagDescUpdatedAt.Default.(func() time.Time)
+	// membertag.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	membertag.UpdateDefaultUpdatedAt = membertagDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// membertagDescDelete is the schema descriptor for delete field.
+	membertagDescDelete := membertagMixinFields0[3].Descriptor()
+	// membertag.DefaultDelete holds the default value on creation for the delete field.
+	membertag.DefaultDelete = membertagDescDelete.Default.(int64)
+	// membertagDescCreatedID is the schema descriptor for created_id field.
+	membertagDescCreatedID := membertagMixinFields0[4].Descriptor()
+	// membertag.DefaultCreatedID holds the default value on creation for the created_id field.
+	membertag.DefaultCreatedID = membertagDescCreatedID.Default.(int64)
+	// membertagDescStatus is the schema descriptor for status field.
+	membertagDescStatus := membertagMixinFields1[0].Descriptor()
+	// membertag.DefaultStatus holds the default value on creation for the status field.
+	membertag.DefaultStatus = membertagDescStatus.Default.(int64)
 }

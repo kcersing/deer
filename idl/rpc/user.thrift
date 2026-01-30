@@ -32,6 +32,7 @@ struct GetUserListReq{
       3:optional string keyword=""
       4:optional string name=""
       5:optional string mobile="",
+      6:optional list<i64> tags=[]
 }
 struct UpdateUserReq {
     1:optional i64 id=0,
@@ -130,6 +131,10 @@ struct PositionsListResp {
     1:optional list<user.Positions> data= []
     255:optional base.BaseResp baseResp={}
 }
+struct UserIdsResp{
+    1:optional list<i64> data= []
+    255:optional base.BaseResp baseResp={}
+}
 
 service UserService  {
     UserResp CreateUser(1: CreateUserReq req)
@@ -155,4 +160,7 @@ service UserService  {
     PositionsResp UpdatePositions(1: UpdatePositionsReq req)
     PositionsResp GetPositions(1: base.IdReq req)
     PositionsListResp GetPositionsList(1: GetPositionsListReq req)
+
+
+    UserIdsResp GetUserIds(1: GetUserListReq req)
 }

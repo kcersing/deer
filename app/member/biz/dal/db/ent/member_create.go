@@ -10,6 +10,7 @@ import (
 	"member/biz/dal/db/ent/membernote"
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberprofile"
+	"member/biz/dal/db/ent/membertag"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -243,6 +244,21 @@ func (_c *MemberCreate) AddMemberContents(v ...*MemberContract) *MemberCreate {
 	return _c.AddMemberContentIDs(ids...)
 }
 
+// AddMemberTagIDs adds the "member_tags" edge to the MemberTag entity by IDs.
+func (_c *MemberCreate) AddMemberTagIDs(ids ...int64) *MemberCreate {
+	_c.mutation.AddMemberTagIDs(ids...)
+	return _c
+}
+
+// AddMemberTags adds the "member_tags" edges to the MemberTag entity.
+func (_c *MemberCreate) AddMemberTags(v ...*MemberTag) *MemberCreate {
+	ids := make([]int64, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddMemberTagIDs(ids...)
+}
+
 // Mutation returns the MemberMutation object of the builder.
 func (_c *MemberCreate) Mutation() *MemberMutation {
 	return _c.mutation
@@ -443,6 +459,22 @@ func (_c *MemberCreate) createSpec() (*Member, *sqlgraph.CreateSpec) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := _c.mutation.MemberTagsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   member.MemberTagsTable,
+			Columns: []string{member.MemberTagsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(membertag.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

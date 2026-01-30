@@ -137,3 +137,9 @@ func (s *UserServiceImpl) GetPositionsList(ctx context.Context, req *user.GetPos
 
 	return resp, err
 }
+
+// GetUserIds implements the UserServiceImpl interface.
+func (s *UserServiceImpl) GetUserIds(ctx context.Context, req *user.GetUserListReq) (resp *user.UserIdsResp, err error) {
+	// TODO: Your code here...
+	return
+}
