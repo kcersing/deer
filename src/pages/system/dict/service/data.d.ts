@@ -1,3 +1,4 @@
+import {BaseResp} from "@/services/typings";
 export type Dictht = {
   id?: number;
   title?: string;

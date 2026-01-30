@@ -27,13 +27,22 @@ Scripts provided in `package.json`. It's safe to modify or add additional script
 ```bash
 npm start
 ```
+or 
+
+```bash
+yarn start
+```
 
 ### Build project
 
 ```bash
 npm run build
 ```
+or
 
+```bash
+yarn build
+```
 ### Check code style
 
 ```bash
