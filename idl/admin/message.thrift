@@ -42,8 +42,6 @@ include "../base/message.thrift"
         base.NilResponse Sms(1: base.IdReq req)(api.post = "/service/message/sms")
         //短信发送记录
         base.NilResponse SmsSendList(1: SmsSendListReq req)(api.post = "/service/message/sms-send-list")
-        //发送短信信息
-        base.NilResponse SendSms(1: SendSmsReq req)(api.post = "/service/message/send-sms")
         //发送记录
         base.NilResponse MessagesList(1: MessagesListReq req)(api.post = "/service/message/messages-list")
         //发送信息

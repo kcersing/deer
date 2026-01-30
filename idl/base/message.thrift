@@ -34,6 +34,7 @@ namespace go base
          9: optional string content = ""  (api.raw = "content")
          /**模板*/
          10: optional string templates = ""  (api.raw = "templates")
+         11: optional i64 noticeCount=0  (api.raw = "noticeCount")
      }
 
      /**
@@ -71,7 +72,8 @@ namespace go base
          /**状态*/
          2: optional MessagesStatus status=0  (api.raw = "status")
          /**发送用户ID*/
-         3: optional i64 fromUserId=0  (api.raw = "fromUserId")
+         3: optional i64 createdId=0  (api.raw = "createdId")
+         5: optional string createdName=0  (api.raw = "createdName")
          /**id*/
          4: optional i64 id=0  (api.raw = "id")
          /**类型*/
