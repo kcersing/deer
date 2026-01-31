@@ -19,27 +19,14 @@ func (Messages) Fields() []ent.Field {
 		field.String("title").Comment("消息标题").Optional().Nillable(),
 		field.Int64("from_user_id").Comment("发送者").Optional().Nillable(),
 		field.String("content").Comment("消息内容").Optional().Nillable(),
-		field.Enum("status").
+		field.Int64("status").
 			Comment("消息状态").
-			NamedValues(
-				"Draft", "DRAFT",
-				"Published", "PUBLISHED",
-				"Scheduled", "SCHEDULED",
-				"Revoked", "REVOKED",
-				"Archived", "ARCHIVED",
-				"Deleted", "DELETED",
-			).
-			Default("DRAFT").
+			Default(0).
 			Optional().
 			Nillable(),
-		field.Enum("type").
+		field.String("type").
 			Comment("消息类型").
-			NamedValues(
-				"Notification", "NOTIFICATION",
-				"Private", "PRIVATE",
-				"Group", "GROUP",
-			).
-			Default("NOTIFICATION").
+			Default("").
 			Optional().
 			Nillable(),
 	}

@@ -20,21 +20,22 @@ include "../base/message.thrift"
     }
     struct SendMemberMessagesReq {
         1: optional i64 memberId=0
-        2: optional message.MessagesType type=0
+        2: optional string type=""
         3: optional string content = ""
         4: optional string title = ""
         5: optional i64 createdId=0
         6:optional list<i64> tagId=[]
-        7:optional message.MessagesStatus status=0
+        7:optional i64 status=0
     }
     struct SendUserMessagesReq {
         1: optional i64 userId=0
-        2: optional message.MessagesType type=0
+        2: optional string type=""
         3: optional string content = ""
         4: optional string title = ""
         5: optional i64 createdId=0
         6:optional list<i64> tagId=[]
-        7:optional message.MessagesStatus status=0
+        7:optional i64 status=0
+
     }
 
     service MessageService  {
@@ -50,4 +51,7 @@ include "../base/message.thrift"
         base.NilResponse SendUserMessages(1: SendUserMessagesReq req)(api.post = "/service/message/send-user-messages")
         //发送记录
         base.NilResponse MessagesSendList(1: MessagesListReq req)(api.post = "/service/message/messages-send-list")
+
+        base.NilResponse MessagesTypes()(api.post = "/service/message/types")
+
     }

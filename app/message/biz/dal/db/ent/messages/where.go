@@ -89,6 +89,16 @@ func Content(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldContent, v))
 }
 
+// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
+func Status(v int64) predicate.Messages {
+	return predicate.Messages(sql.FieldEQ(FieldStatus, v))
+}
+
+// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
+func Type(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldEQ(FieldType, v))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldCreatedAt, v))
@@ -490,23 +500,43 @@ func ContentContainsFold(v string) predicate.Messages {
 }
 
 // StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v Status) predicate.Messages {
+func StatusEQ(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldStatus, v))
 }
 
 // StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v Status) predicate.Messages {
+func StatusNEQ(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldNEQ(FieldStatus, v))
 }
 
 // StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...Status) predicate.Messages {
+func StatusIn(vs ...int64) predicate.Messages {
 	return predicate.Messages(sql.FieldIn(FieldStatus, vs...))
 }
 
 // StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...Status) predicate.Messages {
+func StatusNotIn(vs ...int64) predicate.Messages {
 	return predicate.Messages(sql.FieldNotIn(FieldStatus, vs...))
+}
+
+// StatusGT applies the GT predicate on the "status" field.
+func StatusGT(v int64) predicate.Messages {
+	return predicate.Messages(sql.FieldGT(FieldStatus, v))
+}
+
+// StatusGTE applies the GTE predicate on the "status" field.
+func StatusGTE(v int64) predicate.Messages {
+	return predicate.Messages(sql.FieldGTE(FieldStatus, v))
+}
+
+// StatusLT applies the LT predicate on the "status" field.
+func StatusLT(v int64) predicate.Messages {
+	return predicate.Messages(sql.FieldLT(FieldStatus, v))
+}
+
+// StatusLTE applies the LTE predicate on the "status" field.
+func StatusLTE(v int64) predicate.Messages {
+	return predicate.Messages(sql.FieldLTE(FieldStatus, v))
 }
 
 // StatusIsNil applies the IsNil predicate on the "status" field.
@@ -520,23 +550,58 @@ func StatusNotNil() predicate.Messages {
 }
 
 // TypeEQ applies the EQ predicate on the "type" field.
-func TypeEQ(v Type) predicate.Messages {
+func TypeEQ(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldType, v))
 }
 
 // TypeNEQ applies the NEQ predicate on the "type" field.
-func TypeNEQ(v Type) predicate.Messages {
+func TypeNEQ(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldNEQ(FieldType, v))
 }
 
 // TypeIn applies the In predicate on the "type" field.
-func TypeIn(vs ...Type) predicate.Messages {
+func TypeIn(vs ...string) predicate.Messages {
 	return predicate.Messages(sql.FieldIn(FieldType, vs...))
 }
 
 // TypeNotIn applies the NotIn predicate on the "type" field.
-func TypeNotIn(vs ...Type) predicate.Messages {
+func TypeNotIn(vs ...string) predicate.Messages {
 	return predicate.Messages(sql.FieldNotIn(FieldType, vs...))
+}
+
+// TypeGT applies the GT predicate on the "type" field.
+func TypeGT(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldGT(FieldType, v))
+}
+
+// TypeGTE applies the GTE predicate on the "type" field.
+func TypeGTE(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldGTE(FieldType, v))
+}
+
+// TypeLT applies the LT predicate on the "type" field.
+func TypeLT(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldLT(FieldType, v))
+}
+
+// TypeLTE applies the LTE predicate on the "type" field.
+func TypeLTE(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldLTE(FieldType, v))
+}
+
+// TypeContains applies the Contains predicate on the "type" field.
+func TypeContains(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldContains(FieldType, v))
+}
+
+// TypeHasPrefix applies the HasPrefix predicate on the "type" field.
+func TypeHasPrefix(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldHasPrefix(FieldType, v))
+}
+
+// TypeHasSuffix applies the HasSuffix predicate on the "type" field.
+func TypeHasSuffix(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldHasSuffix(FieldType, v))
 }
 
 // TypeIsNil applies the IsNil predicate on the "type" field.
@@ -547,6 +612,16 @@ func TypeIsNil() predicate.Messages {
 // TypeNotNil applies the NotNil predicate on the "type" field.
 func TypeNotNil() predicate.Messages {
 	return predicate.Messages(sql.FieldNotNull(FieldType))
+}
+
+// TypeEqualFold applies the EqualFold predicate on the "type" field.
+func TypeEqualFold(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldEqualFold(FieldType, v))
+}
+
+// TypeContainsFold applies the ContainsFold predicate on the "type" field.
+func TypeContainsFold(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldContainsFold(FieldType, v))
 }
 
 // And groups predicates with the AND operator between them.

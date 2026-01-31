@@ -118,13 +118,13 @@ func (_c *MessagesCreate) SetNillableContent(v *string) *MessagesCreate {
 }
 
 // SetStatus sets the "status" field.
-func (_c *MessagesCreate) SetStatus(v messages.Status) *MessagesCreate {
+func (_c *MessagesCreate) SetStatus(v int64) *MessagesCreate {
 	_c.mutation.SetStatus(v)
 	return _c
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_c *MessagesCreate) SetNillableStatus(v *messages.Status) *MessagesCreate {
+func (_c *MessagesCreate) SetNillableStatus(v *int64) *MessagesCreate {
 	if v != nil {
 		_c.SetStatus(*v)
 	}
@@ -132,13 +132,13 @@ func (_c *MessagesCreate) SetNillableStatus(v *messages.Status) *MessagesCreate 
 }
 
 // SetType sets the "type" field.
-func (_c *MessagesCreate) SetType(v messages.Type) *MessagesCreate {
+func (_c *MessagesCreate) SetType(v string) *MessagesCreate {
 	_c.mutation.SetType(v)
 	return _c
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_c *MessagesCreate) SetNillableType(v *messages.Type) *MessagesCreate {
+func (_c *MessagesCreate) SetNillableType(v *string) *MessagesCreate {
 	if v != nil {
 		_c.SetType(*v)
 	}
@@ -214,16 +214,6 @@ func (_c *MessagesCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *MessagesCreate) check() error {
-	if v, ok := _c.mutation.Status(); ok {
-		if err := messages.StatusValidator(v); err != nil {
-			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Messages.status": %w`, err)}
-		}
-	}
-	if v, ok := _c.mutation.GetType(); ok {
-		if err := messages.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Messages.type": %w`, err)}
-		}
-	}
 	return nil
 }
 
@@ -285,11 +275,11 @@ func (_c *MessagesCreate) createSpec() (*Messages, *sqlgraph.CreateSpec) {
 		_node.Content = &value
 	}
 	if value, ok := _c.mutation.Status(); ok {
-		_spec.SetField(messages.FieldStatus, field.TypeEnum, value)
+		_spec.SetField(messages.FieldStatus, field.TypeInt64, value)
 		_node.Status = &value
 	}
 	if value, ok := _c.mutation.GetType(); ok {
-		_spec.SetField(messages.FieldType, field.TypeEnum, value)
+		_spec.SetField(messages.FieldType, field.TypeString, value)
 		_node.Type = &value
 	}
 	return _node, _spec

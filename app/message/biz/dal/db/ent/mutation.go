@@ -49,8 +49,9 @@ type MessagesMutation struct {
 	from_user_id    *int64
 	addfrom_user_id *int64
 	content         *string
-	status          *messages.Status
-	_type           *messages.Type
+	status          *int64
+	addstatus       *int64
+	_type           *string
 	clearedFields   map[string]struct{}
 	done            bool
 	oldValue        func(context.Context) (*Messages, error)
@@ -568,12 +569,13 @@ func (m *MessagesMutation) ResetContent() {
 }
 
 // SetStatus sets the "status" field.
-func (m *MessagesMutation) SetStatus(value messages.Status) {
-	m.status = &value
+func (m *MessagesMutation) SetStatus(i int64) {
+	m.status = &i
+	m.addstatus = nil
 }
 
 // Status returns the value of the "status" field in the mutation.
-func (m *MessagesMutation) Status() (r messages.Status, exists bool) {
+func (m *MessagesMutation) Status() (r int64, exists bool) {
 	v := m.status
 	if v == nil {
 		return
@@ -584,7 +586,7 @@ func (m *MessagesMutation) Status() (r messages.Status, exists bool) {
 // OldStatus returns the old "status" field's value of the Messages entity.
 // If the Messages object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MessagesMutation) OldStatus(ctx context.Context) (v *messages.Status, err error) {
+func (m *MessagesMutation) OldStatus(ctx context.Context) (v *int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
 	}
@@ -598,9 +600,28 @@ func (m *MessagesMutation) OldStatus(ctx context.Context) (v *messages.Status, e
 	return oldValue.Status, nil
 }
 
+// AddStatus adds i to the "status" field.
+func (m *MessagesMutation) AddStatus(i int64) {
+	if m.addstatus != nil {
+		*m.addstatus += i
+	} else {
+		m.addstatus = &i
+	}
+}
+
+// AddedStatus returns the value that was added to the "status" field in this mutation.
+func (m *MessagesMutation) AddedStatus() (r int64, exists bool) {
+	v := m.addstatus
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ClearStatus clears the value of the "status" field.
 func (m *MessagesMutation) ClearStatus() {
 	m.status = nil
+	m.addstatus = nil
 	m.clearedFields[messages.FieldStatus] = struct{}{}
 }
 
@@ -613,16 +634,17 @@ func (m *MessagesMutation) StatusCleared() bool {
 // ResetStatus resets all changes to the "status" field.
 func (m *MessagesMutation) ResetStatus() {
 	m.status = nil
+	m.addstatus = nil
 	delete(m.clearedFields, messages.FieldStatus)
 }
 
 // SetType sets the "type" field.
-func (m *MessagesMutation) SetType(value messages.Type) {
-	m._type = &value
+func (m *MessagesMutation) SetType(s string) {
+	m._type = &s
 }
 
 // GetType returns the value of the "type" field in the mutation.
-func (m *MessagesMutation) GetType() (r messages.Type, exists bool) {
+func (m *MessagesMutation) GetType() (r string, exists bool) {
 	v := m._type
 	if v == nil {
 		return
@@ -633,7 +655,7 @@ func (m *MessagesMutation) GetType() (r messages.Type, exists bool) {
 // OldType returns the old "type" field's value of the Messages entity.
 // If the Messages object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MessagesMutation) OldType(ctx context.Context) (v *messages.Type, err error) {
+func (m *MessagesMutation) OldType(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldType is only allowed on UpdateOne operations")
 	}
@@ -839,14 +861,14 @@ func (m *MessagesMutation) SetField(name string, value ent.Value) error {
 		m.SetContent(v)
 		return nil
 	case messages.FieldStatus:
-		v, ok := value.(messages.Status)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetStatus(v)
 		return nil
 	case messages.FieldType:
-		v, ok := value.(messages.Type)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -869,6 +891,9 @@ func (m *MessagesMutation) AddedFields() []string {
 	if m.addfrom_user_id != nil {
 		fields = append(fields, messages.FieldFromUserID)
 	}
+	if m.addstatus != nil {
+		fields = append(fields, messages.FieldStatus)
+	}
 	return fields
 }
 
@@ -883,6 +908,8 @@ func (m *MessagesMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedCreatedID()
 	case messages.FieldFromUserID:
 		return m.AddedFromUserID()
+	case messages.FieldStatus:
+		return m.AddedStatus()
 	}
 	return nil, false
 }
@@ -912,6 +939,13 @@ func (m *MessagesMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddFromUserID(v)
+		return nil
+	case messages.FieldStatus:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddStatus(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Messages numeric field %s", name)

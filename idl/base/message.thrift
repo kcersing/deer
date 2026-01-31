@@ -44,7 +44,7 @@ namespace go base
         /**创建时间*/
         1: optional string createdAt = ""  (api.raw = "createdAt")
         /**状态*/
-        2: optional MessagesStatus status=0  (api.raw = "status")
+        2: optional i64 status=0  (api.raw = "status")
         /**接收时间*/
         4: optional string receivedAt = ""  (api.raw = "receivedAt")
         /**阅读时间*/
@@ -52,7 +52,7 @@ namespace go base
         /**id*/
         6: optional i64 id=0  (api.raw = "id")
         /**类型*/
-        8: optional MessagesType type = 0  (api.raw = "type")
+        8: optional string type = ""  (api.raw = "type")
         /**内容*/
         9: optional string content = ""  (api.raw = "content")
         /**消息ID*/
@@ -70,44 +70,15 @@ namespace go base
          /**创建时间*/
          1: optional string createdAt = ""  (api.raw = "createdAt")
          /**状态*/
-         2: optional MessagesStatus status=0  (api.raw = "status")
+         2: optional i64 status=0  (api.raw = "status")
          /**发送用户ID*/
          3: optional i64 createdId=0  (api.raw = "createdId")
-         5: optional string createdName=0  (api.raw = "createdName")
+         5: optional string createdName=""  (api.raw = "createdName")
          /**id*/
          4: optional i64 id=0  (api.raw = "id")
          /**类型*/
-         8: optional MessagesType type = 0  (api.raw = "type")
+         8: optional string type="" (api.raw = "type")
          /**内容*/
          9: optional string content = ""  (api.raw = "content")
+         10: optional string title="" (api.raw = "title")
      }
-
-     /**
-      * @description 消息状态
-      */
-     enum MessagesStatus{
-         /** 草稿 */
-         DRAFT = 0;
-         /** 已发布/发送完成 */
-         PUBLISHED = 1;
-         /** 定时发布中 */
-         SCHEDULED = 2;
-         /** 已撤销 */
-         REVOKED = 3;
-         /** 已归档（通常指系统层面的归档） */
-         ARCHIVED = 5;
-         /** 已删除（软删除） */
-         DELETED = 6;
-     }
-
-       /**
-        * @description 消息类型
-        */
-       enum MessagesType {
-         /** 通知 */
-         NOTIFICATION = 0;
-         /** 私信 */
-         PRIVATE = 1;
-         /** 群发 */
-         GROUP = 2;
-       }

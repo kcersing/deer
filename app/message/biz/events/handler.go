@@ -8,7 +8,6 @@ import (
 	"gen/kitex_gen/user"
 	"message/biz/dal/db"
 	"message/biz/dal/db/ent"
-	"message/biz/dal/db/ent/messages"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -25,7 +24,7 @@ func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesRe
 		entry.Details["UserID"] = req.GetUserId()
 		entry.Details["Title"] = req.GetTitle()
 		entry.Details["ContentLength"] = len(req.GetContent())
-		entry.Details["MessageType"] = req.GetType().String()
+		entry.Details["MessageType"] = req.GetType()
 	}
 
 	// TODO: 实现核心业务逻辑
@@ -52,8 +51,8 @@ func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesRe
 		SetContent(req.GetContent()).
 		SetFromUserID(req.GetUserId()).
 		SetTitle(req.GetTitle()).
-		SetStatus(messages.Status(req.GetStatus().String())).
-		SetType(messages.Type(req.GetType().String())).
+		SetStatus(req.GetStatus()).
+		SetType(req.GetType()).
 		Save(ctx)
 
 	var createAll []*ent.MessagesSentRecordsCreate
@@ -79,7 +78,7 @@ func HandleSendMemberMessages(ctx context.Context, req *message.SendMemberMessag
 
 	if entry, ok := GetAuditEntry(ctx); ok {
 		entry.Details["Title"] = req.GetTitle()
-		entry.Details["MessageType"] = req.GetType().String()
+		entry.Details["MessageType"] = req.GetType()
 	}
 
 	// TODO: 实现核心业务逻辑

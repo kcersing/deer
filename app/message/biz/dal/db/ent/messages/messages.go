@@ -3,7 +3,6 @@
 package messages
 
 import (
-	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
@@ -71,64 +70,11 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
+	// DefaultStatus holds the default value on creation for the "status" field.
+	DefaultStatus int64
+	// DefaultType holds the default value on creation for the "type" field.
+	DefaultType string
 )
-
-// Status defines the type for the "status" enum field.
-type Status string
-
-// StatusDraft is the default value of the Status enum.
-const DefaultStatus = StatusDraft
-
-// Status values.
-const (
-	StatusDraft     Status = "DRAFT"
-	StatusPublished Status = "PUBLISHED"
-	StatusScheduled Status = "SCHEDULED"
-	StatusRevoked   Status = "REVOKED"
-	StatusArchived  Status = "ARCHIVED"
-	StatusDeleted   Status = "DELETED"
-)
-
-func (s Status) String() string {
-	return string(s)
-}
-
-// StatusValidator is a validator for the "status" field enum values. It is called by the builders before save.
-func StatusValidator(s Status) error {
-	switch s {
-	case StatusDraft, StatusPublished, StatusScheduled, StatusRevoked, StatusArchived, StatusDeleted:
-		return nil
-	default:
-		return fmt.Errorf("messages: invalid enum value for status field: %q", s)
-	}
-}
-
-// Type defines the type for the "type" enum field.
-type Type string
-
-// TypeNotification is the default value of the Type enum.
-const DefaultType = TypeNotification
-
-// Type values.
-const (
-	TypeNotification Type = "NOTIFICATION"
-	TypePrivate      Type = "PRIVATE"
-	TypeGroup        Type = "GROUP"
-)
-
-func (_type Type) String() string {
-	return string(_type)
-}
-
-// TypeValidator is a validator for the "type" field enum values. It is called by the builders before save.
-func TypeValidator(_type Type) error {
-	switch _type {
-	case TypeNotification, TypePrivate, TypeGroup:
-		return nil
-	default:
-		return fmt.Errorf("messages: invalid enum value for type field: %q", _type)
-	}
-}
 
 // OrderOption defines the ordering options for the Messages queries.
 type OrderOption func(*sql.Selector)

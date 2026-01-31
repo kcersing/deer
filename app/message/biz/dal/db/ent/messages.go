@@ -28,14 +28,14 @@ type Messages struct {
 	CreatedID int64 `json:"created_id,omitempty"`
 	// 消息标题
 	Title *string `json:"title,omitempty"`
-	// 该消息发送者ID
+	// 发送者
 	FromUserID *int64 `json:"from_user_id,omitempty"`
 	// 消息内容
 	Content *string `json:"content,omitempty"`
 	// 消息状态
-	Status *messages.Status `json:"status,omitempty"`
+	Status *int64 `json:"status,omitempty"`
 	// 消息类型
-	Type         *messages.Type `json:"type,omitempty"`
+	Type         *string `json:"type,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -44,9 +44,9 @@ func (*Messages) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case messages.FieldID, messages.FieldDelete, messages.FieldCreatedID, messages.FieldFromUserID:
+		case messages.FieldID, messages.FieldDelete, messages.FieldCreatedID, messages.FieldFromUserID, messages.FieldStatus:
 			values[i] = new(sql.NullInt64)
-		case messages.FieldTitle, messages.FieldContent, messages.FieldStatus, messages.FieldType:
+		case messages.FieldTitle, messages.FieldContent, messages.FieldType:
 			values[i] = new(sql.NullString)
 		case messages.FieldCreatedAt, messages.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -117,18 +117,18 @@ func (_m *Messages) assignValues(columns []string, values []any) error {
 				*_m.Content = value.String
 			}
 		case messages.FieldStatus:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field status", values[i])
 			} else if value.Valid {
-				_m.Status = new(messages.Status)
-				*_m.Status = messages.Status(value.String)
+				_m.Status = new(int64)
+				*_m.Status = value.Int64
 			}
 		case messages.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				_m.Type = new(messages.Type)
-				*_m.Type = messages.Type(value.String)
+				_m.Type = new(string)
+				*_m.Type = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -200,7 +200,7 @@ func (_m *Messages) String() string {
 	builder.WriteString(", ")
 	if v := _m.Type; v != nil {
 		builder.WriteString("type=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
+		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')
 	return builder.String()

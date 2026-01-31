@@ -3,135 +3,9 @@
 package base
 
 import (
-	"database/sql"
-	"database/sql/driver"
 	"fmt"
 	"github.com/apache/thrift/lib/go/thrift"
 )
-
-/**
- * @description 消息状态
- */
-type MessagesStatus int64
-
-const (
-	/** 草稿 */
-	MessagesStatus_DRAFT MessagesStatus = 0
-	/** 已发布/发送完成 */
-	MessagesStatus_PUBLISHED MessagesStatus = 1
-	/** 定时发布中 */
-	MessagesStatus_SCHEDULED MessagesStatus = 2
-	/** 已撤销 */
-	MessagesStatus_REVOKED MessagesStatus = 3
-	/** 已归档（通常指系统层面的归档） */
-	MessagesStatus_ARCHIVED MessagesStatus = 5
-	/** 已删除（软删除） */
-	MessagesStatus_DELETED MessagesStatus = 6
-)
-
-func (p MessagesStatus) String() string {
-	switch p {
-	case MessagesStatus_DRAFT:
-		return "DRAFT"
-	case MessagesStatus_PUBLISHED:
-		return "PUBLISHED"
-	case MessagesStatus_SCHEDULED:
-		return "SCHEDULED"
-	case MessagesStatus_REVOKED:
-		return "REVOKED"
-	case MessagesStatus_ARCHIVED:
-		return "ARCHIVED"
-	case MessagesStatus_DELETED:
-		return "DELETED"
-	}
-	return "<UNSET>"
-}
-
-func MessagesStatusFromString(s string) (MessagesStatus, error) {
-	switch s {
-	case "DRAFT":
-		return MessagesStatus_DRAFT, nil
-	case "PUBLISHED":
-		return MessagesStatus_PUBLISHED, nil
-	case "SCHEDULED":
-		return MessagesStatus_SCHEDULED, nil
-	case "REVOKED":
-		return MessagesStatus_REVOKED, nil
-	case "ARCHIVED":
-		return MessagesStatus_ARCHIVED, nil
-	case "DELETED":
-		return MessagesStatus_DELETED, nil
-	}
-	return MessagesStatus(0), fmt.Errorf("not a valid MessagesStatus string")
-}
-
-func MessagesStatusPtr(v MessagesStatus) *MessagesStatus { return &v }
-func (p *MessagesStatus) Scan(value interface{}) (err error) {
-	var result sql.NullInt64
-	err = result.Scan(value)
-	*p = MessagesStatus(result.Int64)
-	return
-}
-
-func (p *MessagesStatus) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
-
-/**
- * @description 消息类型
- */
-type MessagesType int64
-
-const (
-	/** 通知 */
-	MessagesType_NOTIFICATION MessagesType = 0
-	/** 私信 */
-	MessagesType_PRIVATE MessagesType = 1
-	/** 群发 */
-	MessagesType_GROUP MessagesType = 2
-)
-
-func (p MessagesType) String() string {
-	switch p {
-	case MessagesType_NOTIFICATION:
-		return "NOTIFICATION"
-	case MessagesType_PRIVATE:
-		return "PRIVATE"
-	case MessagesType_GROUP:
-		return "GROUP"
-	}
-	return "<UNSET>"
-}
-
-func MessagesTypeFromString(s string) (MessagesType, error) {
-	switch s {
-	case "NOTIFICATION":
-		return MessagesType_NOTIFICATION, nil
-	case "PRIVATE":
-		return MessagesType_PRIVATE, nil
-	case "GROUP":
-		return MessagesType_GROUP, nil
-	}
-	return MessagesType(0), fmt.Errorf("not a valid MessagesType string")
-}
-
-func MessagesTypePtr(v MessagesType) *MessagesType { return &v }
-func (p *MessagesType) Scan(value interface{}) (err error) {
-	var result sql.NullInt64
-	err = result.Scan(value)
-	*p = MessagesType(result.Int64)
-	return
-}
-
-func (p *MessagesType) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
 
 /**
  * @description 短信服务相关信息
@@ -490,19 +364,21 @@ type SmsSend struct {
 	/**内容*/
 	Content string `thrift:"content,9,optional" form:"content" json:"content,omitempty" query:"content"`
 	/**模板*/
-	Templates string `thrift:"templates,10,optional" form:"templates" json:"templates,omitempty" query:"templates"`
+	Templates   string `thrift:"templates,10,optional" form:"templates" json:"templates,omitempty" query:"templates"`
+	NoticeCount int64  `thrift:"noticeCount,11,optional" form:"noticeCount" json:"noticeCount,omitempty" query:"noticeCount"`
 }
 
 func NewSmsSend() *SmsSend {
 	return &SmsSend{
-		CreatedAt: "",
-		Status:    0,
-		Mobile:    "",
-		Code:      "",
-		BizId:     "",
-		UserType:  1,
-		Content:   "",
-		Templates: "",
+		CreatedAt:   "",
+		Status:      0,
+		Mobile:      "",
+		Code:        "",
+		BizId:       "",
+		UserType:    1,
+		Content:     "",
+		Templates:   "",
+		NoticeCount: 0,
 	}
 }
 
@@ -515,6 +391,7 @@ func (p *SmsSend) InitDefault() {
 	p.UserType = 1
 	p.Content = ""
 	p.Templates = ""
+	p.NoticeCount = 0
 }
 
 var SmsSend_CreatedAt_DEFAULT string = ""
@@ -589,6 +466,15 @@ func (p *SmsSend) GetTemplates() (v string) {
 	return p.Templates
 }
 
+var SmsSend_NoticeCount_DEFAULT int64 = 0
+
+func (p *SmsSend) GetNoticeCount() (v int64) {
+	if !p.IsSetNoticeCount() {
+		return SmsSend_NoticeCount_DEFAULT
+	}
+	return p.NoticeCount
+}
+
 var fieldIDToName_SmsSend = map[int16]string{
 	1:  "createdAt",
 	2:  "status",
@@ -598,6 +484,7 @@ var fieldIDToName_SmsSend = map[int16]string{
 	8:  "userType",
 	9:  "content",
 	10: "templates",
+	11: "noticeCount",
 }
 
 func (p *SmsSend) IsSetCreatedAt() bool {
@@ -630,6 +517,10 @@ func (p *SmsSend) IsSetContent() bool {
 
 func (p *SmsSend) IsSetTemplates() bool {
 	return p.Templates != SmsSend_Templates_DEFAULT
+}
+
+func (p *SmsSend) IsSetNoticeCount() bool {
+	return p.NoticeCount != SmsSend_NoticeCount_DEFAULT
 }
 
 func (p *SmsSend) Read(iprot thrift.TProtocol) (err error) {
@@ -710,6 +601,14 @@ func (p *SmsSend) Read(iprot thrift.TProtocol) (err error) {
 		case 10:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 11:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField11(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -832,6 +731,17 @@ func (p *SmsSend) ReadField10(iprot thrift.TProtocol) error {
 	p.Templates = _field
 	return nil
 }
+func (p *SmsSend) ReadField11(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.NoticeCount = _field
+	return nil
+}
 
 func (p *SmsSend) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -869,6 +779,10 @@ func (p *SmsSend) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField10(oprot); err != nil {
 			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField11(oprot); err != nil {
+			fieldId = 11
 			goto WriteFieldError
 		}
 	}
@@ -1041,6 +955,25 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
 }
 
+func (p *SmsSend) writeField11(oprot thrift.TProtocol) (err error) {
+	if p.IsSetNoticeCount() {
+		if err = oprot.WriteFieldBegin("noticeCount", thrift.I64, 11); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.NoticeCount); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+
 func (p *SmsSend) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1056,7 +989,7 @@ type MessagesSend struct {
 	/**创建时间*/
 	CreatedAt string `thrift:"createdAt,1,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
 	/**状态*/
-	Status MessagesStatus `thrift:"status,2,optional,MessagesStatus" form:"status" json:"status,omitempty" query:"status"`
+	Status int64 `thrift:"status,2,optional" form:"status" json:"status,omitempty" query:"status"`
 	/**接收时间*/
 	ReceivedAt string `thrift:"receivedAt,4,optional" form:"receivedAt" json:"receivedAt,omitempty" query:"receivedAt"`
 	/**阅读时间*/
@@ -1064,7 +997,7 @@ type MessagesSend struct {
 	/**id*/
 	ID int64 `thrift:"id,6,optional" form:"id" json:"id,omitempty" query:"id"`
 	/**类型*/
-	Type MessagesType `thrift:"type,8,optional,MessagesType" form:"type" json:"type,omitempty" query:"type"`
+	Type string `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
 	/**内容*/
 	Content string `thrift:"content,9,optional" form:"content" json:"content,omitempty" query:"content"`
 	/**消息ID*/
@@ -1082,7 +1015,7 @@ func NewMessagesSend() *MessagesSend {
 		ReceivedAt:   "",
 		ReadAt:       "",
 		ID:           0,
-		Type:         0,
+		Type:         "",
 		Content:      "",
 		MessagesId:   0,
 		FromUserId:   0,
@@ -1096,7 +1029,7 @@ func (p *MessagesSend) InitDefault() {
 	p.ReceivedAt = ""
 	p.ReadAt = ""
 	p.ID = 0
-	p.Type = 0
+	p.Type = ""
 	p.Content = ""
 	p.MessagesId = 0
 	p.FromUserId = 0
@@ -1112,9 +1045,9 @@ func (p *MessagesSend) GetCreatedAt() (v string) {
 	return p.CreatedAt
 }
 
-var MessagesSend_Status_DEFAULT MessagesStatus = 0
+var MessagesSend_Status_DEFAULT int64 = 0
 
-func (p *MessagesSend) GetStatus() (v MessagesStatus) {
+func (p *MessagesSend) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return MessagesSend_Status_DEFAULT
 	}
@@ -1148,9 +1081,9 @@ func (p *MessagesSend) GetID() (v int64) {
 	return p.ID
 }
 
-var MessagesSend_Type_DEFAULT MessagesType = 0
+var MessagesSend_Type_DEFAULT string = ""
 
-func (p *MessagesSend) GetType() (v MessagesType) {
+func (p *MessagesSend) GetType() (v string) {
 	if !p.IsSetType() {
 		return MessagesSend_Type_DEFAULT
 	}
@@ -1274,7 +1207,7 @@ func (p *MessagesSend) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1306,7 +1239,7 @@ func (p *MessagesSend) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 8:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField8(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1387,11 +1320,11 @@ func (p *MessagesSend) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *MessagesSend) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field MessagesStatus
-	if v, err := iprot.ReadI32(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		_field = MessagesStatus(v)
+		_field = v
 	}
 	p.Status = _field
 	return nil
@@ -1431,11 +1364,11 @@ func (p *MessagesSend) ReadField6(iprot thrift.TProtocol) error {
 }
 func (p *MessagesSend) ReadField8(iprot thrift.TProtocol) error {
 
-	var _field MessagesType
-	if v, err := iprot.ReadI32(); err != nil {
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		_field = MessagesType(v)
+		_field = v
 	}
 	p.Type = _field
 	return nil
@@ -1570,10 +1503,10 @@ WriteFieldEndError:
 
 func (p *MessagesSend) writeField2(oprot thrift.TProtocol) (err error) {
 	if p.IsSetStatus() {
-		if err = oprot.WriteFieldBegin("status", thrift.I32, 2); err != nil {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI32(int32(p.Status)); err != nil {
+		if err := oprot.WriteI64(p.Status); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1646,10 +1579,10 @@ WriteFieldEndError:
 
 func (p *MessagesSend) writeField8(oprot thrift.TProtocol) (err error) {
 	if p.IsSetType() {
-		if err = oprot.WriteFieldBegin("type", thrift.I32, 8); err != nil {
+		if err = oprot.WriteFieldBegin("type", thrift.STRING, 8); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI32(int32(p.Type)); err != nil {
+		if err := oprot.WriteString(p.Type); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -1754,35 +1687,41 @@ type Messages struct {
 	/**创建时间*/
 	CreatedAt string `thrift:"createdAt,1,optional" form:"createdAt" json:"createdAt,omitempty" query:"createdAt"`
 	/**状态*/
-	Status MessagesStatus `thrift:"status,2,optional,MessagesStatus" form:"status" json:"status,omitempty" query:"status"`
+	Status int64 `thrift:"status,2,optional" form:"status" json:"status,omitempty" query:"status"`
 	/**发送用户ID*/
-	FromUserId int64 `thrift:"fromUserId,3,optional" form:"fromUserId" json:"fromUserId,omitempty" query:"fromUserId"`
+	CreatedId   int64  `thrift:"createdId,3,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
+	CreatedName string `thrift:"createdName,5,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
 	/**id*/
 	ID int64 `thrift:"id,4,optional" form:"id" json:"id,omitempty" query:"id"`
 	/**类型*/
-	Type MessagesType `thrift:"type,8,optional,MessagesType" form:"type" json:"type,omitempty" query:"type"`
+	Type string `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
 	/**内容*/
 	Content string `thrift:"content,9,optional" form:"content" json:"content,omitempty" query:"content"`
+	Title   string `thrift:"title,10,optional" form:"title" json:"title,omitempty" query:"title"`
 }
 
 func NewMessages() *Messages {
 	return &Messages{
-		CreatedAt:  "",
-		Status:     0,
-		FromUserId: 0,
-		ID:         0,
-		Type:       0,
-		Content:    "",
+		CreatedAt:   "",
+		Status:      0,
+		CreatedId:   0,
+		CreatedName: "",
+		ID:          0,
+		Type:        "",
+		Content:     "",
+		Title:       "",
 	}
 }
 
 func (p *Messages) InitDefault() {
 	p.CreatedAt = ""
 	p.Status = 0
-	p.FromUserId = 0
+	p.CreatedId = 0
+	p.CreatedName = ""
 	p.ID = 0
-	p.Type = 0
+	p.Type = ""
 	p.Content = ""
+	p.Title = ""
 }
 
 var Messages_CreatedAt_DEFAULT string = ""
@@ -1794,22 +1733,31 @@ func (p *Messages) GetCreatedAt() (v string) {
 	return p.CreatedAt
 }
 
-var Messages_Status_DEFAULT MessagesStatus = 0
+var Messages_Status_DEFAULT int64 = 0
 
-func (p *Messages) GetStatus() (v MessagesStatus) {
+func (p *Messages) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return Messages_Status_DEFAULT
 	}
 	return p.Status
 }
 
-var Messages_FromUserId_DEFAULT int64 = 0
+var Messages_CreatedId_DEFAULT int64 = 0
 
-func (p *Messages) GetFromUserId() (v int64) {
-	if !p.IsSetFromUserId() {
-		return Messages_FromUserId_DEFAULT
+func (p *Messages) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Messages_CreatedId_DEFAULT
 	}
-	return p.FromUserId
+	return p.CreatedId
+}
+
+var Messages_CreatedName_DEFAULT string = ""
+
+func (p *Messages) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Messages_CreatedName_DEFAULT
+	}
+	return p.CreatedName
 }
 
 var Messages_ID_DEFAULT int64 = 0
@@ -1821,9 +1769,9 @@ func (p *Messages) GetID() (v int64) {
 	return p.ID
 }
 
-var Messages_Type_DEFAULT MessagesType = 0
+var Messages_Type_DEFAULT string = ""
 
-func (p *Messages) GetType() (v MessagesType) {
+func (p *Messages) GetType() (v string) {
 	if !p.IsSetType() {
 		return Messages_Type_DEFAULT
 	}
@@ -1839,13 +1787,24 @@ func (p *Messages) GetContent() (v string) {
 	return p.Content
 }
 
+var Messages_Title_DEFAULT string = ""
+
+func (p *Messages) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return Messages_Title_DEFAULT
+	}
+	return p.Title
+}
+
 var fieldIDToName_Messages = map[int16]string{
-	1: "createdAt",
-	2: "status",
-	3: "fromUserId",
-	4: "id",
-	8: "type",
-	9: "content",
+	1:  "createdAt",
+	2:  "status",
+	3:  "createdId",
+	5:  "createdName",
+	4:  "id",
+	8:  "type",
+	9:  "content",
+	10: "title",
 }
 
 func (p *Messages) IsSetCreatedAt() bool {
@@ -1856,8 +1815,12 @@ func (p *Messages) IsSetStatus() bool {
 	return p.Status != Messages_Status_DEFAULT
 }
 
-func (p *Messages) IsSetFromUserId() bool {
-	return p.FromUserId != Messages_FromUserId_DEFAULT
+func (p *Messages) IsSetCreatedId() bool {
+	return p.CreatedId != Messages_CreatedId_DEFAULT
+}
+
+func (p *Messages) IsSetCreatedName() bool {
+	return p.CreatedName != Messages_CreatedName_DEFAULT
 }
 
 func (p *Messages) IsSetID() bool {
@@ -1870,6 +1833,10 @@ func (p *Messages) IsSetType() bool {
 
 func (p *Messages) IsSetContent() bool {
 	return p.Content != Messages_Content_DEFAULT
+}
+
+func (p *Messages) IsSetTitle() bool {
+	return p.Title != Messages_Title_DEFAULT
 }
 
 func (p *Messages) Read(iprot thrift.TProtocol) (err error) {
@@ -1900,7 +1867,7 @@ func (p *Messages) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 2:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField2(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1915,6 +1882,14 @@ func (p *Messages) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
 		case 4:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField4(iprot); err != nil {
@@ -1924,7 +1899,7 @@ func (p *Messages) Read(iprot thrift.TProtocol) (err error) {
 				goto SkipFieldError
 			}
 		case 8:
-			if fieldTypeId == thrift.I32 {
+			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField8(iprot); err != nil {
 					goto ReadFieldError
 				}
@@ -1934,6 +1909,14 @@ func (p *Messages) Read(iprot thrift.TProtocol) (err error) {
 		case 9:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 10:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField10(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1981,11 +1964,11 @@ func (p *Messages) ReadField1(iprot thrift.TProtocol) error {
 }
 func (p *Messages) ReadField2(iprot thrift.TProtocol) error {
 
-	var _field MessagesStatus
-	if v, err := iprot.ReadI32(); err != nil {
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
 		return err
 	} else {
-		_field = MessagesStatus(v)
+		_field = v
 	}
 	p.Status = _field
 	return nil
@@ -1998,7 +1981,18 @@ func (p *Messages) ReadField3(iprot thrift.TProtocol) error {
 	} else {
 		_field = v
 	}
-	p.FromUserId = _field
+	p.CreatedId = _field
+	return nil
+}
+func (p *Messages) ReadField5(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CreatedName = _field
 	return nil
 }
 func (p *Messages) ReadField4(iprot thrift.TProtocol) error {
@@ -2014,11 +2008,11 @@ func (p *Messages) ReadField4(iprot thrift.TProtocol) error {
 }
 func (p *Messages) ReadField8(iprot thrift.TProtocol) error {
 
-	var _field MessagesType
-	if v, err := iprot.ReadI32(); err != nil {
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
 		return err
 	} else {
-		_field = MessagesType(v)
+		_field = v
 	}
 	p.Type = _field
 	return nil
@@ -2032,6 +2026,17 @@ func (p *Messages) ReadField9(iprot thrift.TProtocol) error {
 		_field = v
 	}
 	p.Content = _field
+	return nil
+}
+func (p *Messages) ReadField10(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Title = _field
 	return nil
 }
 
@@ -2053,6 +2058,10 @@ func (p *Messages) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 3
 			goto WriteFieldError
 		}
+		if err = p.writeField5(oprot); err != nil {
+			fieldId = 5
+			goto WriteFieldError
+		}
 		if err = p.writeField4(oprot); err != nil {
 			fieldId = 4
 			goto WriteFieldError
@@ -2063,6 +2072,10 @@ func (p *Messages) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField9(oprot); err != nil {
 			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField10(oprot); err != nil {
+			fieldId = 10
 			goto WriteFieldError
 		}
 	}
@@ -2104,10 +2117,10 @@ WriteFieldEndError:
 
 func (p *Messages) writeField2(oprot thrift.TProtocol) (err error) {
 	if p.IsSetStatus() {
-		if err = oprot.WriteFieldBegin("status", thrift.I32, 2); err != nil {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 2); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI32(int32(p.Status)); err != nil {
+		if err := oprot.WriteI64(p.Status); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2122,11 +2135,11 @@ WriteFieldEndError:
 }
 
 func (p *Messages) writeField3(oprot thrift.TProtocol) (err error) {
-	if p.IsSetFromUserId() {
-		if err = oprot.WriteFieldBegin("fromUserId", thrift.I64, 3); err != nil {
+	if p.IsSetCreatedId() {
+		if err = oprot.WriteFieldBegin("createdId", thrift.I64, 3); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI64(p.FromUserId); err != nil {
+		if err := oprot.WriteI64(p.CreatedId); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2138,6 +2151,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
+}
+
+func (p *Messages) writeField5(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCreatedName() {
+		if err = oprot.WriteFieldBegin("createdName", thrift.STRING, 5); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CreatedName); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
 }
 
 func (p *Messages) writeField4(oprot thrift.TProtocol) (err error) {
@@ -2161,10 +2193,10 @@ WriteFieldEndError:
 
 func (p *Messages) writeField8(oprot thrift.TProtocol) (err error) {
 	if p.IsSetType() {
-		if err = oprot.WriteFieldBegin("type", thrift.I32, 8); err != nil {
+		if err = oprot.WriteFieldBegin("type", thrift.STRING, 8); err != nil {
 			goto WriteFieldBeginError
 		}
-		if err := oprot.WriteI32(int32(p.Type)); err != nil {
+		if err := oprot.WriteString(p.Type); err != nil {
 			return err
 		}
 		if err = oprot.WriteFieldEnd(); err != nil {
@@ -2195,6 +2227,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
+}
+
+func (p *Messages) writeField10(oprot thrift.TProtocol) (err error) {
+	if p.IsSetTitle() {
+		if err = oprot.WriteFieldBegin("title", thrift.STRING, 10); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Title); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
 }
 
 func (p *Messages) String() string {

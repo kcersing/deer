@@ -162,16 +162,23 @@ func (_u *MessagesUpdate) ClearContent() *MessagesUpdate {
 }
 
 // SetStatus sets the "status" field.
-func (_u *MessagesUpdate) SetStatus(v messages.Status) *MessagesUpdate {
+func (_u *MessagesUpdate) SetStatus(v int64) *MessagesUpdate {
+	_u.mutation.ResetStatus()
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *MessagesUpdate) SetNillableStatus(v *messages.Status) *MessagesUpdate {
+func (_u *MessagesUpdate) SetNillableStatus(v *int64) *MessagesUpdate {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
+	return _u
+}
+
+// AddStatus adds value to the "status" field.
+func (_u *MessagesUpdate) AddStatus(v int64) *MessagesUpdate {
+	_u.mutation.AddStatus(v)
 	return _u
 }
 
@@ -182,13 +189,13 @@ func (_u *MessagesUpdate) ClearStatus() *MessagesUpdate {
 }
 
 // SetType sets the "type" field.
-func (_u *MessagesUpdate) SetType(v messages.Type) *MessagesUpdate {
+func (_u *MessagesUpdate) SetType(v string) *MessagesUpdate {
 	_u.mutation.SetType(v)
 	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_u *MessagesUpdate) SetNillableType(v *messages.Type) *MessagesUpdate {
+func (_u *MessagesUpdate) SetNillableType(v *string) *MessagesUpdate {
 	if v != nil {
 		_u.SetType(*v)
 	}
@@ -242,25 +249,7 @@ func (_u *MessagesUpdate) defaults() {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *MessagesUpdate) check() error {
-	if v, ok := _u.mutation.Status(); ok {
-		if err := messages.StatusValidator(v); err != nil {
-			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Messages.status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.GetType(); ok {
-		if err := messages.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Messages.type": %w`, err)}
-		}
-	}
-	return nil
-}
-
 func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(messages.Table, messages.Columns, sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -318,16 +307,19 @@ func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(messages.FieldContent, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(messages.FieldStatus, field.TypeEnum, value)
+		_spec.SetField(messages.FieldStatus, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedStatus(); ok {
+		_spec.AddField(messages.FieldStatus, field.TypeInt64, value)
 	}
 	if _u.mutation.StatusCleared() {
-		_spec.ClearField(messages.FieldStatus, field.TypeEnum)
+		_spec.ClearField(messages.FieldStatus, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(messages.FieldType, field.TypeEnum, value)
+		_spec.SetField(messages.FieldType, field.TypeString, value)
 	}
 	if _u.mutation.TypeCleared() {
-		_spec.ClearField(messages.FieldType, field.TypeEnum)
+		_spec.ClearField(messages.FieldType, field.TypeString)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -483,16 +475,23 @@ func (_u *MessagesUpdateOne) ClearContent() *MessagesUpdateOne {
 }
 
 // SetStatus sets the "status" field.
-func (_u *MessagesUpdateOne) SetStatus(v messages.Status) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetStatus(v int64) *MessagesUpdateOne {
+	_u.mutation.ResetStatus()
 	_u.mutation.SetStatus(v)
 	return _u
 }
 
 // SetNillableStatus sets the "status" field if the given value is not nil.
-func (_u *MessagesUpdateOne) SetNillableStatus(v *messages.Status) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetNillableStatus(v *int64) *MessagesUpdateOne {
 	if v != nil {
 		_u.SetStatus(*v)
 	}
+	return _u
+}
+
+// AddStatus adds value to the "status" field.
+func (_u *MessagesUpdateOne) AddStatus(v int64) *MessagesUpdateOne {
+	_u.mutation.AddStatus(v)
 	return _u
 }
 
@@ -503,13 +502,13 @@ func (_u *MessagesUpdateOne) ClearStatus() *MessagesUpdateOne {
 }
 
 // SetType sets the "type" field.
-func (_u *MessagesUpdateOne) SetType(v messages.Type) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetType(v string) *MessagesUpdateOne {
 	_u.mutation.SetType(v)
 	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (_u *MessagesUpdateOne) SetNillableType(v *messages.Type) *MessagesUpdateOne {
+func (_u *MessagesUpdateOne) SetNillableType(v *string) *MessagesUpdateOne {
 	if v != nil {
 		_u.SetType(*v)
 	}
@@ -576,25 +575,7 @@ func (_u *MessagesUpdateOne) defaults() {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (_u *MessagesUpdateOne) check() error {
-	if v, ok := _u.mutation.Status(); ok {
-		if err := messages.StatusValidator(v); err != nil {
-			return &ValidationError{Name: "status", err: fmt.Errorf(`ent: validator failed for field "Messages.status": %w`, err)}
-		}
-	}
-	if v, ok := _u.mutation.GetType(); ok {
-		if err := messages.TypeValidator(v); err != nil {
-			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Messages.type": %w`, err)}
-		}
-	}
-	return nil
-}
-
 func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err error) {
-	if err := _u.check(); err != nil {
-		return _node, err
-	}
 	_spec := sqlgraph.NewUpdateSpec(messages.Table, messages.Columns, sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64))
 	id, ok := _u.mutation.ID()
 	if !ok {
@@ -669,16 +650,19 @@ func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err 
 		_spec.ClearField(messages.FieldContent, field.TypeString)
 	}
 	if value, ok := _u.mutation.Status(); ok {
-		_spec.SetField(messages.FieldStatus, field.TypeEnum, value)
+		_spec.SetField(messages.FieldStatus, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedStatus(); ok {
+		_spec.AddField(messages.FieldStatus, field.TypeInt64, value)
 	}
 	if _u.mutation.StatusCleared() {
-		_spec.ClearField(messages.FieldStatus, field.TypeEnum)
+		_spec.ClearField(messages.FieldStatus, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.GetType(); ok {
-		_spec.SetField(messages.FieldType, field.TypeEnum, value)
+		_spec.SetField(messages.FieldType, field.TypeString, value)
 	}
 	if _u.mutation.TypeCleared() {
-		_spec.ClearField(messages.FieldType, field.TypeEnum)
+		_spec.ClearField(messages.FieldType, field.TypeString)
 	}
 	_node = &Messages{config: _u.config}
 	_spec.Assign = _node.assignValues

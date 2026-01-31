@@ -38,6 +38,14 @@ func init() {
 	messagesDescCreatedID := messagesMixinFields0[4].Descriptor()
 	// messages.DefaultCreatedID holds the default value on creation for the created_id field.
 	messages.DefaultCreatedID = messagesDescCreatedID.Default.(int64)
+	// messagesDescStatus is the schema descriptor for status field.
+	messagesDescStatus := messagesFields[3].Descriptor()
+	// messages.DefaultStatus holds the default value on creation for the status field.
+	messages.DefaultStatus = messagesDescStatus.Default.(int64)
+	// messagesDescType is the schema descriptor for type field.
+	messagesDescType := messagesFields[4].Descriptor()
+	// messages.DefaultType holds the default value on creation for the type field.
+	messages.DefaultType = messagesDescType.Default.(string)
 	messagessentrecordsMixin := schema.MessagesSentRecords{}.Mixin()
 	messagessentrecordsMixinFields0 := messagessentrecordsMixin[0].Fields()
 	_ = messagessentrecordsMixinFields0

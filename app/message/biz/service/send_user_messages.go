@@ -5,7 +5,6 @@ import (
 	"gen/kitex_gen/base"
 	"gen/kitex_gen/message"
 	"message/biz/dal/db"
-	"message/biz/dal/db/ent/messages"
 	"message/biz/events"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -34,8 +33,7 @@ func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *b
 		SetContent(req.GetContent()).
 		SetFromUserID(req.GetUserId()).
 		SetTitle(req.GetTitle()).
-		SetStatus(messages.Status(req.GetStatus().String())).
-		SetType(messages.Type(req.GetType().String())).
+		SetType(req.GetType()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, rollback(tx, errors.Wrap(err, "create Member Profile failed"))

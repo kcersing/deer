@@ -47,7 +47,6 @@ func (s *MessagesListService) Run(req *message.MessagesListReq) (resp *message.M
 	}
 
 	for _, v := range all {
-
 		dataResp = append(dataResp, convert.EntToMessages(v))
 	}
 	return &message.MessagesListResp{

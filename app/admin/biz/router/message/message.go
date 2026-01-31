@@ -24,10 +24,10 @@ func Register(r *server.Hertz) {
 			_message.POST("/messages-list", append(_messageslistMw(), message.MessagesList)...)
 			_message.POST("/messages-send-list", append(_messagessendlistMw(), message.MessagesSendList)...)
 			_message.POST("/send-member-messages", append(_sendmembermessagesMw(), message.SendMemberMessages)...)
-			_message.POST("/send-sms", append(_sendsmsMw(), message.SendSms)...)
 			_message.POST("/send-user-messages", append(_sendusermessagesMw(), message.SendUserMessages)...)
 			_message.POST("/sms", append(_smsMw(), message.Sms)...)
 			_message.POST("/sms-send-list", append(_smssendlistMw(), message.SmsSendList)...)
+			_message.POST("/types", append(_messagestypesMw(), message.MessagesTypes)...)
 		}
 	}
 }

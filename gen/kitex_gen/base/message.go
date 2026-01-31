@@ -3,119 +3,8 @@
 package base
 
 import (
-	"database/sql"
-	"database/sql/driver"
 	"fmt"
 )
-
-type MessagesStatus int64
-
-const (
-	MessagesStatus_DRAFT     MessagesStatus = 0
-	MessagesStatus_PUBLISHED MessagesStatus = 1
-	MessagesStatus_SCHEDULED MessagesStatus = 2
-	MessagesStatus_REVOKED   MessagesStatus = 3
-	MessagesStatus_ARCHIVED  MessagesStatus = 5
-	MessagesStatus_DELETED   MessagesStatus = 6
-)
-
-func (p MessagesStatus) String() string {
-	switch p {
-	case MessagesStatus_DRAFT:
-		return "DRAFT"
-	case MessagesStatus_PUBLISHED:
-		return "PUBLISHED"
-	case MessagesStatus_SCHEDULED:
-		return "SCHEDULED"
-	case MessagesStatus_REVOKED:
-		return "REVOKED"
-	case MessagesStatus_ARCHIVED:
-		return "ARCHIVED"
-	case MessagesStatus_DELETED:
-		return "DELETED"
-	}
-	return "<UNSET>"
-}
-
-func MessagesStatusFromString(s string) (MessagesStatus, error) {
-	switch s {
-	case "DRAFT":
-		return MessagesStatus_DRAFT, nil
-	case "PUBLISHED":
-		return MessagesStatus_PUBLISHED, nil
-	case "SCHEDULED":
-		return MessagesStatus_SCHEDULED, nil
-	case "REVOKED":
-		return MessagesStatus_REVOKED, nil
-	case "ARCHIVED":
-		return MessagesStatus_ARCHIVED, nil
-	case "DELETED":
-		return MessagesStatus_DELETED, nil
-	}
-	return MessagesStatus(0), fmt.Errorf("not a valid MessagesStatus string")
-}
-
-func MessagesStatusPtr(v MessagesStatus) *MessagesStatus { return &v }
-func (p *MessagesStatus) Scan(value interface{}) (err error) {
-	var result sql.NullInt64
-	err = result.Scan(value)
-	*p = MessagesStatus(result.Int64)
-	return
-}
-
-func (p *MessagesStatus) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
-
-type MessagesType int64
-
-const (
-	MessagesType_NOTIFICATION MessagesType = 0
-	MessagesType_PRIVATE      MessagesType = 1
-	MessagesType_GROUP        MessagesType = 2
-)
-
-func (p MessagesType) String() string {
-	switch p {
-	case MessagesType_NOTIFICATION:
-		return "NOTIFICATION"
-	case MessagesType_PRIVATE:
-		return "PRIVATE"
-	case MessagesType_GROUP:
-		return "GROUP"
-	}
-	return "<UNSET>"
-}
-
-func MessagesTypeFromString(s string) (MessagesType, error) {
-	switch s {
-	case "NOTIFICATION":
-		return MessagesType_NOTIFICATION, nil
-	case "PRIVATE":
-		return MessagesType_PRIVATE, nil
-	case "GROUP":
-		return MessagesType_GROUP, nil
-	}
-	return MessagesType(0), fmt.Errorf("not a valid MessagesType string")
-}
-
-func MessagesTypePtr(v MessagesType) *MessagesType { return &v }
-func (p *MessagesType) Scan(value interface{}) (err error) {
-	var result sql.NullInt64
-	err = result.Scan(value)
-	*p = MessagesType(result.Int64)
-	return
-}
-
-func (p *MessagesType) Value() (driver.Value, error) {
-	if p == nil {
-		return nil, nil
-	}
-	return int64(*p), nil
-}
 
 type Sms struct {
 	NoticeCount int64  `thrift:"noticeCount,1,optional" frugal:"1,optional,i64" json:"noticeCount,omitempty"`
@@ -219,26 +108,28 @@ var fieldIDToName_Sms = map[int16]string{
 }
 
 type SmsSend struct {
-	CreatedAt string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
-	Status    int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
-	Mobile    string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Code      string `thrift:"code,5,optional" frugal:"5,optional,string" json:"code,omitempty"`
-	BizId     string `thrift:"bizId,7,optional" frugal:"7,optional,string" json:"bizId,omitempty"`
-	UserType  int64  `thrift:"userType,8,optional" frugal:"8,optional,i64" json:"userType,omitempty"`
-	Content   string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
-	Templates string `thrift:"templates,10,optional" frugal:"10,optional,string" json:"templates,omitempty"`
+	CreatedAt   string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status      int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	Mobile      string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Code        string `thrift:"code,5,optional" frugal:"5,optional,string" json:"code,omitempty"`
+	BizId       string `thrift:"bizId,7,optional" frugal:"7,optional,string" json:"bizId,omitempty"`
+	UserType    int64  `thrift:"userType,8,optional" frugal:"8,optional,i64" json:"userType,omitempty"`
+	Content     string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	Templates   string `thrift:"templates,10,optional" frugal:"10,optional,string" json:"templates,omitempty"`
+	NoticeCount int64  `thrift:"noticeCount,11,optional" frugal:"11,optional,i64" json:"noticeCount,omitempty"`
 }
 
 func NewSmsSend() *SmsSend {
 	return &SmsSend{
-		CreatedAt: "",
-		Status:    0,
-		Mobile:    "",
-		Code:      "",
-		BizId:     "",
-		UserType:  1,
-		Content:   "",
-		Templates: "",
+		CreatedAt:   "",
+		Status:      0,
+		Mobile:      "",
+		Code:        "",
+		BizId:       "",
+		UserType:    1,
+		Content:     "",
+		Templates:   "",
+		NoticeCount: 0,
 	}
 }
 
@@ -251,6 +142,7 @@ func (p *SmsSend) InitDefault() {
 	p.UserType = 1
 	p.Content = ""
 	p.Templates = ""
+	p.NoticeCount = 0
 }
 
 var SmsSend_CreatedAt_DEFAULT string = ""
@@ -324,6 +216,15 @@ func (p *SmsSend) GetTemplates() (v string) {
 	}
 	return p.Templates
 }
+
+var SmsSend_NoticeCount_DEFAULT int64 = 0
+
+func (p *SmsSend) GetNoticeCount() (v int64) {
+	if !p.IsSetNoticeCount() {
+		return SmsSend_NoticeCount_DEFAULT
+	}
+	return p.NoticeCount
+}
 func (p *SmsSend) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
@@ -347,6 +248,9 @@ func (p *SmsSend) SetContent(val string) {
 }
 func (p *SmsSend) SetTemplates(val string) {
 	p.Templates = val
+}
+func (p *SmsSend) SetNoticeCount(val int64) {
+	p.NoticeCount = val
 }
 
 func (p *SmsSend) IsSetCreatedAt() bool {
@@ -381,6 +285,10 @@ func (p *SmsSend) IsSetTemplates() bool {
 	return p.Templates != SmsSend_Templates_DEFAULT
 }
 
+func (p *SmsSend) IsSetNoticeCount() bool {
+	return p.NoticeCount != SmsSend_NoticeCount_DEFAULT
+}
+
 func (p *SmsSend) String() string {
 	if p == nil {
 		return "<nil>"
@@ -397,19 +305,20 @@ var fieldIDToName_SmsSend = map[int16]string{
 	8:  "userType",
 	9:  "content",
 	10: "templates",
+	11: "noticeCount",
 }
 
 type MessagesSend struct {
-	CreatedAt    string         `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
-	Status       MessagesStatus `thrift:"status,2,optional" frugal:"2,optional,MessagesStatus" json:"status,omitempty"`
-	ReceivedAt   string         `thrift:"receivedAt,4,optional" frugal:"4,optional,string" json:"receivedAt,omitempty"`
-	ReadAt       string         `thrift:"readAt,5,optional" frugal:"5,optional,string" json:"readAt,omitempty"`
-	Id           int64          `thrift:"id,6,optional" frugal:"6,optional,i64" json:"id,omitempty"`
-	Type         MessagesType   `thrift:"type,8,optional" frugal:"8,optional,MessagesType" json:"type,omitempty"`
-	Content      string         `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
-	MessagesId   int64          `thrift:"messagesId,10,optional" frugal:"10,optional,i64" json:"messagesId,omitempty"`
-	FromUserId   int64          `thrift:"fromUserId,11,optional" frugal:"11,optional,i64" json:"fromUserId,omitempty"`
-	FromUserName string         `thrift:"fromUserName,12,optional" frugal:"12,optional,string" json:"fromUserName,omitempty"`
+	CreatedAt    string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status       int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	ReceivedAt   string `thrift:"receivedAt,4,optional" frugal:"4,optional,string" json:"receivedAt,omitempty"`
+	ReadAt       string `thrift:"readAt,5,optional" frugal:"5,optional,string" json:"readAt,omitempty"`
+	Id           int64  `thrift:"id,6,optional" frugal:"6,optional,i64" json:"id,omitempty"`
+	Type         string `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
+	Content      string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	MessagesId   int64  `thrift:"messagesId,10,optional" frugal:"10,optional,i64" json:"messagesId,omitempty"`
+	FromUserId   int64  `thrift:"fromUserId,11,optional" frugal:"11,optional,i64" json:"fromUserId,omitempty"`
+	FromUserName string `thrift:"fromUserName,12,optional" frugal:"12,optional,string" json:"fromUserName,omitempty"`
 }
 
 func NewMessagesSend() *MessagesSend {
@@ -419,7 +328,7 @@ func NewMessagesSend() *MessagesSend {
 		ReceivedAt:   "",
 		ReadAt:       "",
 		Id:           0,
-		Type:         0,
+		Type:         "",
 		Content:      "",
 		MessagesId:   0,
 		FromUserId:   0,
@@ -433,7 +342,7 @@ func (p *MessagesSend) InitDefault() {
 	p.ReceivedAt = ""
 	p.ReadAt = ""
 	p.Id = 0
-	p.Type = 0
+	p.Type = ""
 	p.Content = ""
 	p.MessagesId = 0
 	p.FromUserId = 0
@@ -449,9 +358,9 @@ func (p *MessagesSend) GetCreatedAt() (v string) {
 	return p.CreatedAt
 }
 
-var MessagesSend_Status_DEFAULT MessagesStatus = 0
+var MessagesSend_Status_DEFAULT int64 = 0
 
-func (p *MessagesSend) GetStatus() (v MessagesStatus) {
+func (p *MessagesSend) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return MessagesSend_Status_DEFAULT
 	}
@@ -485,9 +394,9 @@ func (p *MessagesSend) GetId() (v int64) {
 	return p.Id
 }
 
-var MessagesSend_Type_DEFAULT MessagesType = 0
+var MessagesSend_Type_DEFAULT string = ""
 
-func (p *MessagesSend) GetType() (v MessagesType) {
+func (p *MessagesSend) GetType() (v string) {
 	if !p.IsSetType() {
 		return MessagesSend_Type_DEFAULT
 	}
@@ -532,7 +441,7 @@ func (p *MessagesSend) GetFromUserName() (v string) {
 func (p *MessagesSend) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *MessagesSend) SetStatus(val MessagesStatus) {
+func (p *MessagesSend) SetStatus(val int64) {
 	p.Status = val
 }
 func (p *MessagesSend) SetReceivedAt(val string) {
@@ -544,7 +453,7 @@ func (p *MessagesSend) SetReadAt(val string) {
 func (p *MessagesSend) SetId(val int64) {
 	p.Id = val
 }
-func (p *MessagesSend) SetType(val MessagesType) {
+func (p *MessagesSend) SetType(val string) {
 	p.Type = val
 }
 func (p *MessagesSend) SetContent(val string) {
@@ -621,32 +530,38 @@ var fieldIDToName_MessagesSend = map[int16]string{
 }
 
 type Messages struct {
-	CreatedAt  string         `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
-	Status     MessagesStatus `thrift:"status,2,optional" frugal:"2,optional,MessagesStatus" json:"status,omitempty"`
-	FromUserId int64          `thrift:"fromUserId,3,optional" frugal:"3,optional,i64" json:"fromUserId,omitempty"`
-	Id         int64          `thrift:"id,4,optional" frugal:"4,optional,i64" json:"id,omitempty"`
-	Type       MessagesType   `thrift:"type,8,optional" frugal:"8,optional,MessagesType" json:"type,omitempty"`
-	Content    string         `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	CreatedAt   string `thrift:"createdAt,1,optional" frugal:"1,optional,string" json:"createdAt,omitempty"`
+	Status      int64  `thrift:"status,2,optional" frugal:"2,optional,i64" json:"status,omitempty"`
+	CreatedId   int64  `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
+	CreatedName string `thrift:"createdName,5,optional" frugal:"5,optional,string" json:"createdName,omitempty"`
+	Id          int64  `thrift:"id,4,optional" frugal:"4,optional,i64" json:"id,omitempty"`
+	Type        string `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
+	Content     string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
+	Title       string `thrift:"title,10,optional" frugal:"10,optional,string" json:"title,omitempty"`
 }
 
 func NewMessages() *Messages {
 	return &Messages{
-		CreatedAt:  "",
-		Status:     0,
-		FromUserId: 0,
-		Id:         0,
-		Type:       0,
-		Content:    "",
+		CreatedAt:   "",
+		Status:      0,
+		CreatedId:   0,
+		CreatedName: "",
+		Id:          0,
+		Type:        "",
+		Content:     "",
+		Title:       "",
 	}
 }
 
 func (p *Messages) InitDefault() {
 	p.CreatedAt = ""
 	p.Status = 0
-	p.FromUserId = 0
+	p.CreatedId = 0
+	p.CreatedName = ""
 	p.Id = 0
-	p.Type = 0
+	p.Type = ""
 	p.Content = ""
+	p.Title = ""
 }
 
 var Messages_CreatedAt_DEFAULT string = ""
@@ -658,22 +573,31 @@ func (p *Messages) GetCreatedAt() (v string) {
 	return p.CreatedAt
 }
 
-var Messages_Status_DEFAULT MessagesStatus = 0
+var Messages_Status_DEFAULT int64 = 0
 
-func (p *Messages) GetStatus() (v MessagesStatus) {
+func (p *Messages) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
 		return Messages_Status_DEFAULT
 	}
 	return p.Status
 }
 
-var Messages_FromUserId_DEFAULT int64 = 0
+var Messages_CreatedId_DEFAULT int64 = 0
 
-func (p *Messages) GetFromUserId() (v int64) {
-	if !p.IsSetFromUserId() {
-		return Messages_FromUserId_DEFAULT
+func (p *Messages) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return Messages_CreatedId_DEFAULT
 	}
-	return p.FromUserId
+	return p.CreatedId
+}
+
+var Messages_CreatedName_DEFAULT string = ""
+
+func (p *Messages) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return Messages_CreatedName_DEFAULT
+	}
+	return p.CreatedName
 }
 
 var Messages_Id_DEFAULT int64 = 0
@@ -685,9 +609,9 @@ func (p *Messages) GetId() (v int64) {
 	return p.Id
 }
 
-var Messages_Type_DEFAULT MessagesType = 0
+var Messages_Type_DEFAULT string = ""
 
-func (p *Messages) GetType() (v MessagesType) {
+func (p *Messages) GetType() (v string) {
 	if !p.IsSetType() {
 		return Messages_Type_DEFAULT
 	}
@@ -702,23 +626,38 @@ func (p *Messages) GetContent() (v string) {
 	}
 	return p.Content
 }
+
+var Messages_Title_DEFAULT string = ""
+
+func (p *Messages) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return Messages_Title_DEFAULT
+	}
+	return p.Title
+}
 func (p *Messages) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
-func (p *Messages) SetStatus(val MessagesStatus) {
+func (p *Messages) SetStatus(val int64) {
 	p.Status = val
 }
-func (p *Messages) SetFromUserId(val int64) {
-	p.FromUserId = val
+func (p *Messages) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *Messages) SetCreatedName(val string) {
+	p.CreatedName = val
 }
 func (p *Messages) SetId(val int64) {
 	p.Id = val
 }
-func (p *Messages) SetType(val MessagesType) {
+func (p *Messages) SetType(val string) {
 	p.Type = val
 }
 func (p *Messages) SetContent(val string) {
 	p.Content = val
+}
+func (p *Messages) SetTitle(val string) {
+	p.Title = val
 }
 
 func (p *Messages) IsSetCreatedAt() bool {
@@ -729,8 +668,12 @@ func (p *Messages) IsSetStatus() bool {
 	return p.Status != Messages_Status_DEFAULT
 }
 
-func (p *Messages) IsSetFromUserId() bool {
-	return p.FromUserId != Messages_FromUserId_DEFAULT
+func (p *Messages) IsSetCreatedId() bool {
+	return p.CreatedId != Messages_CreatedId_DEFAULT
+}
+
+func (p *Messages) IsSetCreatedName() bool {
+	return p.CreatedName != Messages_CreatedName_DEFAULT
 }
 
 func (p *Messages) IsSetId() bool {
@@ -745,6 +688,10 @@ func (p *Messages) IsSetContent() bool {
 	return p.Content != Messages_Content_DEFAULT
 }
 
+func (p *Messages) IsSetTitle() bool {
+	return p.Title != Messages_Title_DEFAULT
+}
+
 func (p *Messages) String() string {
 	if p == nil {
 		return "<nil>"
@@ -753,10 +700,12 @@ func (p *Messages) String() string {
 }
 
 var fieldIDToName_Messages = map[int16]string{
-	1: "createdAt",
-	2: "status",
-	3: "fromUserId",
-	4: "id",
-	8: "type",
-	9: "content",
+	1:  "createdAt",
+	2:  "status",
+	3:  "createdId",
+	5:  "createdName",
+	4:  "id",
+	8:  "type",
+	9:  "content",
+	10: "title",
 }

@@ -5,7 +5,6 @@ import (
 	base "gen/kitex_gen/base"
 	message "gen/kitex_gen/message"
 	"message/biz/dal/db"
-	"message/biz/dal/db/ent/messages"
 	"message/biz/events"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -24,7 +23,7 @@ func (s *SendMemberMessagesService) Run(req *message.SendMemberMessagesReq) (res
 		SetTitle(req.GetTitle()).
 		SetContent(req.GetContent()).
 		SetFromUserID(req.GetCreatedId()).
-		SetType(messages.Type(req.GetType())).
+		SetType(req.GetType()).
 		SetCreatedID(req.GetCreatedId()).
 		Save(s.ctx)
 
