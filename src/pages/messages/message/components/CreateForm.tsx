@@ -16,10 +16,13 @@ import React, { FC,useState } from 'react';
 
 import { Item } from  "@/pages/product/item/service/data";
 import {createItem} from "@/pages/product/item/service/service";
-
+import { Messages } from  "./../service/data";
+import {getMessagesTypes} from "./../service/service";
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
+import WangEditor from '@/pages/components/wangeditor'
+
 
 const CreateForm: FC<CreateFormProps> = (props) => {
   const { reload } = props;
@@ -40,12 +43,16 @@ const CreateForm: FC<CreateFormProps> = (props) => {
       messageApi.error('提交失败，请重试！');
     },
   });
-
+  const [detail, setDetail] = useState('');
+  const [detailBody, setDetailBody] = useState('');
+  const optionDetail = (data: React.SetStateAction<string>) => {
+    setDetail(data)
+  };
   return (
     <>
       {contextHolder}
       <ModalForm
-       title='新建'
+       title='发送消息'
         trigger={
           <Button type="primary" icon={<PlusOutlined />}>
             新建
@@ -55,6 +62,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;
+          value.content=detail
           await run({ data: value as Item });
 
           return true;
@@ -62,148 +70,48 @@ const CreateForm: FC<CreateFormProps> = (props) => {
       >
 
         <ProForm.Group>
-          <ProFormUploadButton
-            name="avatar"
-            label="图片"
-            max={1}
-            fieldProps={{
-              name: 'file',
-              listType: 'picture-card',
-            }}
-            action="/upload.do"
-            extra="图片不能大于1M"
+          <ProFormText
+            width="md"
+            name="title"
+            label="消息主题"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
           />
+
         </ProForm.Group>
 
         <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="name"
-            label="名称"
-            tooltip="最长为 24 位"
-            placeholder="请输入名称"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-
-          <ProFormText
-            width="md"
-            name="code"
-            label="标识"
-            placeholder="请输入标识"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-
-          </ProForm.Group>
-         <ProForm.Group>
           <ProFormSelect
-            initialValue="card"
-            options={[
-              {
-                value: 'course',
-                label: '课',
-              },
-              {
-                value: 'card',
-                label: '卡',
-              },
-            ]}
-            placeholder="请输入"
+            name="typs"
+            label="消息分类"
             width="md"
-            name="type"
-            onChange={(value) => {
-              setType(value);
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getMessagesTypes({params}).then((res) => {return res.data})
             }}
-            label="类型"
-          />
 
+            fieldProps={{
+              fieldNames: {
+                label: 'title',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
         </ProForm.Group>
+
 
         <ProForm.Group>
-          <ProFormDigit
-            width="md"
-            min={1}
-            max={10}
-            fieldProps={{ precision: 0 , suffix:type=="card"?"天":"节/天" }}
-            name="duration"
-            label="时长"
-            placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-          <ProFormDigit
-            min={1}
-            max={10}
-            fieldProps={{ precision: 0 , suffix:"分钟"}}
-            width="md"
-            name="length"
-            hidden={ type=="card"}
-            label="单次时长"
-            placeholder="请输入"
-
-          />
-
-          <ProFormDigit
-            min={1}
-            max={10}
-            fieldProps={{ precision: 0 , suffix:"次"}}
-            width="md"
-            name="count"
-            label="次数"
-            placeholder="请输入"
-
-          />
-
-          <ProFormDigit
-            width="md"
-            fieldProps={{ suffix:"元"}}
-            name="price"
-            label="价格"
-            placeholder="请输入"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
+          <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>
 
-        {/*<ProForm.Group>*/}
-        {/*  <ProFormText*/}
-        {/*    width="md"*/}
-        {/*    name="tagId"*/}
-        {/*    label="标签"*/}
-        {/*    placeholder="请输入"*/}
-        {/*    rules={[*/}
-        {/*      {*/}
-        {/*        required: true,*/}
-        {/*        message: '不能为空',*/}
-        {/*      },*/}
-        {/*    ]}*/}
-        {/*  />*/}
-        {/*</ProForm.Group>*/}
-        <ProForm.Group>
-          <ProFormTextArea
-            width="md"
-            name="desc"
-            label="概略"
-            placeholder="请输入"
-          />
-        </ProForm.Group>
+
         <ProForm.Group>
           <ProFormSwitch
             name="status"

@@ -95,3 +95,25 @@ export async function SendUserMessages(options?: { [key: string]: any }) {
       }, ...(options || {}),
     });
   }
+
+/** 删除item  POST /service/message/delete */
+export async function deleteMessages(options?: { [key: string]: any }) {
+  return request<BaseResp>('/service/message/delete', {
+    method: 'POST', headers: {
+      ...headers,
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
+  });
+}
+
+/** 列表 POST /service/message/types */
+export async function getMessagesTypes() {
+  return request<MessagesSendListResp>('/service/message/types', {
+    method: 'POST', headers: {
+      ...headers,
+    },
+  });
+}

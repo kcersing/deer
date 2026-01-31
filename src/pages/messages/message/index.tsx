@@ -10,14 +10,15 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
-import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
+import {Button, Drawer, Dropdown, Space, Tag , Input, message, type TreeDataNode} from 'antd';
+
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 
 import { Messages } from  "./service/data";
-import {deleteMessages, getMessagesList} from "./service/service";
+import {deleteMessages, getMessagesList,getMessagesTypes} from "./service/service";
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
@@ -25,6 +26,22 @@ const TableList: React.FC = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<Messages>();
   const [selectedRowsState, setSelectedRows] = useState<Messages[]>([]);
+
+  const [types, setTypes] = useState([]);
+
+
+
+  useEffect(() => {
+    const getTypes = async () => {
+      const [res] = await Promise.all([
+        getMessagesTypes(),
+      ]);
+      setTypes(res.data)
+    }
+    getTypes();
+  }, []);
+
+
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -52,7 +69,7 @@ const TableList: React.FC = () => {
     },
     {
       title: '消息主题',
-      dataIndex: 'name',
+      dataIndex: 'title',
       render: (dom, entity) => {
         return (
           <a
@@ -66,18 +83,60 @@ const TableList: React.FC = () => {
         );
       },
     },
-    {
-      title: "消息分类",
-      dataIndex: 'categoryName',
-      sorter: true,
-      hideInForm: true,
-    },
 
     {
-      title: "消息类型",
+      title: '消息类型',
       dataIndex: 'type',
-      sorter: false,
-      hideInForm:false,
+      hideInForm: true,
+      render: (dom, entity) => {
+
+        return (
+          <>
+            {  console.log(dom)  }
+            {  console.log(types)  }
+            {console.log(dom.type)}
+            {types.map(type => (
+
+              type.value == dom && <span key={type.title}>{type.title}</span>
+
+            ))}
+          </>
+        );
+      },
+    },
+
+
+    {
+      title: '消息状态',
+      dataIndex: 'status',
+      hideInForm: true,
+      valueEnum: {
+        0:{
+          text: '草稿',
+          status: 'Error',
+        },
+        1: {
+          text: '已发布/发送完成',
+          status: 'Success',
+        },
+        2: {
+          text: '定时发布中',
+          status: 'Success',
+        },
+        3: {
+          text: '已撤销',
+          status: 'Success',
+        },
+        4: {
+          text: '已归档',
+          status: 'Success',
+        },
+        5: {
+          text: '已删除',
+          status: 'Success',
+        },
+
+      },
     },
 
     {
@@ -87,31 +146,11 @@ const TableList: React.FC = () => {
       hideInForm:false,
     },
 
-
     {
       title: "创建时间",
       dataIndex: 'createdAt',
       sorter: false,
       hideInForm:false,
-    },
-
-
-
-    {
-      title: '消息状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0:{
-          text: '禁用',
-          status: 'Error',
-        },
-        1: {
-          text: '正常',
-          status: 'Success',
-        },
-
-      },
     },
     {
       title: '操作',

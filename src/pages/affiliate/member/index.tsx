@@ -10,7 +10,8 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
-import {Button, Drawer, Input,AntDesignOutlined,Avatar, message, type TreeDataNode} from 'antd';
+import {Button, Drawer, Input,Dropdown, Space, Tag ,AntDesignOutlined,Avatar, message, type TreeDataNode} from 'antd';
+
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
@@ -123,6 +124,24 @@ const TableList: React.FC = () => {
       sorter: true,
       hideInForm: true,
 
+    },
+    {
+      disable: true,
+      title: '标签',
+      dataIndex: 'tag',
+      search: false,
+      renderFormItem: (_, { defaultRender }) => {
+        return defaultRender(_);
+      },
+      render: (_, record) => (
+        <Space>
+          {record.labels.map(({ name, color }) => (
+            <Tag color={color} key={name}>
+              {name}
+            </Tag>
+          ))}
+        </Space>
+      ),
     },
     {
       title: "备注",
