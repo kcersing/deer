@@ -15,10 +15,10 @@ import {Button, Drawer, Dropdown, Space, Tag , Input, message, type TreeDataNode
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
-import UpdateForm from './components/UpdateForm';
 
 import { Messages } from  "./service/data";
 import {deleteMessages, getMessagesList,getMessagesTypes} from "./service/service";
+import UpdateForm from './components/UpdateForm';
 
 const TableList: React.FC = () => {
   const actionRef = useRef<ActionType | null>(null);
@@ -71,6 +71,7 @@ const TableList: React.FC = () => {
       title: '消息主题',
       dataIndex: 'title',
       render: (dom, entity) => {
+        console.log(entity)
         return (
           <a
             onClick={() => {
@@ -92,13 +93,8 @@ const TableList: React.FC = () => {
 
         return (
           <>
-            {  console.log(dom)  }
-            {  console.log(types)  }
-            {console.log(dom.type)}
             {types.map(type => (
-
               type.value == dom && <span key={type.title}>{type.title}</span>
-
             ))}
           </>
         );
@@ -208,35 +204,8 @@ const TableList: React.FC = () => {
         ]}
         request={getMessagesList}
         columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
       />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              被选中{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              项
-            </div>
-          }
-        >
-          <Button
-            loading={loading}
-            onClick={() => {
-              handleRemove(selectedRowsState);
-            }}
-          >
-            批量删除
-          </Button>
-          {/*<Button type="primary">*/}
-          {/*  批量更新*/}
-          {/*</Button>*/}
-        </FooterToolbar>
-      )}
+
 
       <Drawer
         width={600}
@@ -247,15 +216,16 @@ const TableList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.name && (
+
+        {currentRow?.title && (
           <ProDescriptions<Messages>
             column={2}
-            title={currentRow?.name}
+            title={currentRow?.title}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.name,
+              id: currentRow?.title,
             }}
             columns={columns as ProDescriptionsItemProps<Messages>[]}
           />

@@ -14,10 +14,8 @@ import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
 import React, { FC,useState } from 'react';
 
-import { Item } from  "@/pages/product/item/service/data";
-import {createItem} from "@/pages/product/item/service/service";
 import { Messages } from  "./../service/data";
-import {getMessagesTypes} from "./../service/service";
+import {getMessagesTypes,SendMemberMessages,SendUserMessages} from "./../service/service";
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
@@ -33,7 +31,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [type, setType] = useState("card");
 
 
-  const { run, loading } = useRequest(createItem, {
+  const { run, loading } = useRequest(SendMemberMessages, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -63,7 +61,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         onFinish={async (value) => {
           value.status = value.status?1:0;
           value.content=detail
-          await run({ data: value as Item });
+          await run({ data: value as Messages });
 
           return true;
         }}
@@ -86,42 +84,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         </ProForm.Group>
 
         <ProForm.Group>
-          <ProFormSelect
-            name="typs"
-            label="消息分类"
-            width="md"
-            params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getMessagesTypes({params}).then((res) => {return res.data})
-            }}
-
-            fieldProps={{
-              fieldNames: {
-                label: 'title',
-                value: 'id',
-              },
-            }}
-            placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
-          />
-        </ProForm.Group>
-
-
-        <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>
 
-
-        <ProForm.Group>
-          <ProFormSwitch
-            name="status"
-            width="md"
-            label="状态"
-            checkedChildren="有效"
-            unCheckedChildren="无效"
-            initialValue="有效"
-          />
-        </ProForm.Group>
 
       </ModalForm>
     </>
