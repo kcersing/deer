@@ -21,6 +21,7 @@ func Register(r *server.Hertz) {
 		_service := root.Group("/service", _serviceMw()...)
 		{
 			_message := _service.Group("/message", _messageMw()...)
+			_message.POST("/delete", append(_deletemessagesMw(), message.DeleteMessages)...)
 			_message.POST("/messages-list", append(_messageslistMw(), message.MessagesList)...)
 			_message.POST("/messages-send-list", append(_messagessendlistMw(), message.MessagesSendList)...)
 			_message.POST("/send-member-messages", append(_sendmembermessagesMw(), message.SendMemberMessages)...)

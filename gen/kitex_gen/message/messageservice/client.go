@@ -19,6 +19,7 @@ type Client interface {
 	SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error)
+	DeleteMessages(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -83,4 +84,9 @@ func (p *kMessageServiceClient) SendUserMessages(ctx context.Context, req *messa
 func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.MessagesSendList(ctx, req)
+}
+
+func (p *kMessageServiceClient) DeleteMessages(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.DeleteMessages(ctx, req)
 }

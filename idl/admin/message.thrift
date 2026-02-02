@@ -2,12 +2,6 @@ namespace go message
 include "../base/base.thrift"
 include "../base/message.thrift"
 
-    struct SendSmsReq{
-        1: optional string mobile=""
-        2: optional string type=""
-        3: optional string content = ""
-    }
-
     struct SmsSendListReq {
        1: optional i64 page=1
        2: optional i64 pageSize=100
@@ -54,4 +48,5 @@ include "../base/message.thrift"
 
         base.NilResponse MessagesTypes()(api.post = "/service/message/types")
 
+        base.NilResponse DeleteMessages(1: base.IdReq req)(api.post = "/service/message/delete")
     }

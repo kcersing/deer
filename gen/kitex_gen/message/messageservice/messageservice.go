@@ -63,6 +63,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"DeleteMessages": kitex.NewMethodInfo(
+		deleteMessagesHandler,
+		newMessageServiceDeleteMessagesArgs,
+		newMessageServiceDeleteMessagesResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -255,6 +262,24 @@ func newMessageServiceMessagesSendListResult() interface{} {
 	return message.NewMessageServiceMessagesSendListResult()
 }
 
+func deleteMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceDeleteMessagesArgs)
+	realResult := result.(*message.MessageServiceDeleteMessagesResult)
+	success, err := handler.(message.MessageService).DeleteMessages(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceDeleteMessagesArgs() interface{} {
+	return message.NewMessageServiceDeleteMessagesArgs()
+}
+
+func newMessageServiceDeleteMessagesResult() interface{} {
+	return message.NewMessageServiceDeleteMessagesResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -330,6 +355,16 @@ func (p *kClient) MessagesSendList(ctx context.Context, req *message.MessagesLis
 	_args.Req = req
 	var _result message.MessageServiceMessagesSendListResult
 	if err = p.c.Call(ctx, "MessagesSendList", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) DeleteMessages(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args message.MessageServiceDeleteMessagesArgs
+	_args.Req = req
+	var _result message.MessageServiceDeleteMessagesResult
+	if err = p.c.Call(ctx, "DeleteMessages", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

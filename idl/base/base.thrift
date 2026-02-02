@@ -14,12 +14,13 @@ struct PageReq {
 struct IdReq {
     1:optional i64 id=0
 }
+
 struct NilResponse {
 
 }
 struct List{
-     1:optional	i64 id =0 (api.raw = "id")
-     2:optional	string title ="" (api.raw = "title")
+    1:optional	i64 id =0 (api.raw = "id")
+    2:optional	string title ="" (api.raw = "title")
 }
 
 struct CheckAccountReq {

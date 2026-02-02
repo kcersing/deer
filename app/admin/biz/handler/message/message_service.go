@@ -4,6 +4,8 @@ package message
 
 import (
 	"admin/biz/infras/utils"
+	base1 "gen/kitex_gen/base"
+
 	"gen/kitex_gen/system"
 
 	"admin/rpc/client"
@@ -28,10 +30,15 @@ func Sms(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.MessageClient.Sms(ctx, &base1.IdReq{
+		Id: req.GetID(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // SmsSendList .
@@ -45,25 +52,17 @@ func SmsSendList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
-}
-
-// SendSms .
-// @router /service/message/send-sms [POST]
-func SendSms(ctx context.Context, c *app.RequestContext) {
-	var err error
-	var req message.SendSmsReq
-	err = c.BindAndValidate(&req)
+	resp, err := client.MessageClient.SmsSendList(ctx, &message2.SmsSendListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // MessagesList .
@@ -99,9 +98,21 @@ func SendMemberMessages(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
-
-	c.JSON(consts.StatusOK, resp)
+	resp, err := client.MessageClient.SendMemberMessages(ctx, &message2.SendMemberMessagesReq{
+		MemberId:  req.GetMemberId(),
+		Type:      req.GetType(),
+		Status:    req.GetStatus(),
+		Content:   req.GetContent(),
+		Title:     req.GetTitle(),
+		CreatedId: utils.GetTokenId(ctx, c),
+		TagId:     req.GetTagId(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }
 
 // SendUserMessages .
@@ -122,6 +133,7 @@ func SendUserMessages(ctx context.Context, c *app.RequestContext) {
 		Content:   req.GetContent(),
 		Title:     req.GetTitle(),
 		CreatedId: utils.GetTokenId(ctx, c),
+		TagId:     req.GetTagId(),
 	})
 
 	if err != nil {
@@ -143,9 +155,17 @@ func MessagesSendList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp := new(base.NilResponse)
+	resp, err := client.MessageClient.MessagesSendList(ctx, &message2.MessagesListReq{
+		Page:     req.GetPage(),
+		PageSize: req.GetPageSize(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
 
-	c.JSON(consts.StatusOK, resp)
+	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	return
 }
 
 // MessagesTypes .
@@ -159,8 +179,29 @@ func MessagesTypes(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	
+
 	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
 
+}
+
+// DeleteMessages .
+// @router /service/message/delete [POST]
+func DeleteMessages(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req base.IdReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, err.Error())
+		return
+	}
+
+	resp, err := client.MessageClient.DeleteMessages(ctx, &base1.IdReq{Id: req.GetID()})
+
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
 }

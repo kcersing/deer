@@ -58,3 +58,9 @@ func (s *MessageServiceImpl) MessagesSendList(ctx context.Context, req *message.
 
 	return resp, err
 }
+
+// DeleteMessages implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) DeleteMessages(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
+	// TODO: Your code here...
+	return
+}

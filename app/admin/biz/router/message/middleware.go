@@ -60,3 +60,8 @@ func _messagestypesMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _deletemessagesMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

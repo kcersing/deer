@@ -811,6 +811,8 @@ type MessageService interface {
 	SendUserMessages(ctx context.Context, req *SendUserMessagesReq) (r *base.NilResponse, err error)
 
 	MessagesSendList(ctx context.Context, req *MessagesListReq) (r *MessagesSendListResp, err error)
+
+	DeleteMessages(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 }
 
 type MessageServiceSmsArgs struct {
@@ -1342,5 +1344,81 @@ func (p *MessageServiceMessagesSendListResult) String() string {
 }
 
 var fieldIDToName_MessageServiceMessagesSendListResult = map[int16]string{
+	0: "success",
+}
+
+type MessageServiceDeleteMessagesArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewMessageServiceDeleteMessagesArgs() *MessageServiceDeleteMessagesArgs {
+	return &MessageServiceDeleteMessagesArgs{}
+}
+
+func (p *MessageServiceDeleteMessagesArgs) InitDefault() {
+}
+
+var MessageServiceDeleteMessagesArgs_Req_DEFAULT *base.IdReq
+
+func (p *MessageServiceDeleteMessagesArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return MessageServiceDeleteMessagesArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MessageServiceDeleteMessagesArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *MessageServiceDeleteMessagesArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MessageServiceDeleteMessagesArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MessageServiceDeleteMessagesArgs(%+v)", *p)
+}
+
+var fieldIDToName_MessageServiceDeleteMessagesArgs = map[int16]string{
+	1: "req",
+}
+
+type MessageServiceDeleteMessagesResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewMessageServiceDeleteMessagesResult() *MessageServiceDeleteMessagesResult {
+	return &MessageServiceDeleteMessagesResult{}
+}
+
+func (p *MessageServiceDeleteMessagesResult) InitDefault() {
+}
+
+var MessageServiceDeleteMessagesResult_Success_DEFAULT *base.NilResponse
+
+func (p *MessageServiceDeleteMessagesResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return MessageServiceDeleteMessagesResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MessageServiceDeleteMessagesResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *MessageServiceDeleteMessagesResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MessageServiceDeleteMessagesResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MessageServiceDeleteMessagesResult(%+v)", *p)
+}
+
+var fieldIDToName_MessageServiceDeleteMessagesResult = map[int16]string{
 	0: "success",
 }
