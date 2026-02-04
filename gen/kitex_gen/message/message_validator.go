@@ -51,10 +51,7 @@ func (p *SmsSendListReq) IsValid() error {
 func (p *MessagesListReq) IsValid() error {
 	return nil
 }
-func (p *SendMemberMessagesReq) IsValid() error {
-	return nil
-}
-func (p *SendUserMessagesReq) IsValid() error {
+func (p *SendMessagesReq) IsValid() error {
 	return nil
 }
 func (p *MessagesListResp) IsValid() error {

@@ -4,6 +4,7 @@ package message
 
 import (
 	"admin/biz/infras/utils"
+
 	base1 "gen/kitex_gen/base"
 
 	"gen/kitex_gen/system"
@@ -42,7 +43,7 @@ func Sms(ctx context.Context, c *app.RequestContext) {
 }
 
 // SmsSendList .
-// @router /service/message/sms-send-list [POST]
+// @router /service/message/sms/send/list [POST]
 func SmsSendList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req message.SmsSendListReq
@@ -66,7 +67,7 @@ func SmsSendList(ctx context.Context, c *app.RequestContext) {
 }
 
 // MessagesList .
-// @router /service/message/messages-list [POST]
+// @router /service/message/list [POST]
 func MessagesList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req message.MessagesListReq
@@ -87,19 +88,19 @@ func MessagesList(ctx context.Context, c *app.RequestContext) {
 	return
 }
 
-// SendMemberMessages .
-// @router /service/message/send-member-messages [POST]
-func SendMemberMessages(ctx context.Context, c *app.RequestContext) {
+// SendMessages .
+// @router /service/message/send [POST]
+func SendMessages(ctx context.Context, c *app.RequestContext) {
 	var err error
-	var req message.SendMemberMessagesReq
+	var req message.SendMessagesReq
 	err = c.BindAndValidate(&req)
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 
-	resp, err := client.MessageClient.SendMemberMessages(ctx, &message2.SendMemberMessagesReq{
-		MemberId:  req.GetMemberId(),
+	resp, err := client.MessageClient.SendMessages(ctx, &message2.SendMessagesReq{
+
 		Type:      req.GetType(),
 		Status:    req.GetStatus(),
 		Content:   req.GetContent(),
@@ -107,35 +108,6 @@ func SendMemberMessages(ctx context.Context, c *app.RequestContext) {
 		CreatedId: utils.GetTokenId(ctx, c),
 		TagId:     req.GetTagId(),
 	})
-	if err != nil {
-		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-		return
-	}
-	utils2.SendResponse(c, errno.Success, resp, 0, "")
-	return
-}
-
-// SendUserMessages .
-// @router /service/message/send-user-messages [POST]
-func SendUserMessages(ctx context.Context, c *app.RequestContext) {
-	var err error
-	var req message.SendUserMessagesReq
-	err = c.BindAndValidate(&req)
-	if err != nil {
-		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
-		return
-	}
-
-	resp, err := client.MessageClient.SendUserMessages(ctx, &message2.SendUserMessagesReq{
-		UserId:    req.GetUserId(),
-		Type:      req.GetType(),
-		Status:    req.GetStatus(),
-		Content:   req.GetContent(),
-		Title:     req.GetTitle(),
-		CreatedId: utils.GetTokenId(ctx, c),
-		TagId:     req.GetTagId(),
-	})
-
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
@@ -145,7 +117,7 @@ func SendUserMessages(ctx context.Context, c *app.RequestContext) {
 }
 
 // MessagesSendList .
-// @router /service/message/messages-send-list [POST]
+// @router /service/message/send/list [POST]
 func MessagesSendList(ctx context.Context, c *app.RequestContext) {
 	var err error
 	var req message.MessagesListReq
@@ -171,7 +143,6 @@ func MessagesSendList(ctx context.Context, c *app.RequestContext) {
 // MessagesTypes .
 // @router /service/message/types [POST]
 func MessagesTypes(ctx context.Context, c *app.RequestContext) {
-
 	resp, err := client.SystemClient.DicthtList(ctx, &system.DicthtListReq{
 		DictId: 5,
 	})
@@ -182,7 +153,6 @@ func MessagesTypes(ctx context.Context, c *app.RequestContext) {
 
 	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
 	return
-
 }
 
 // DeleteMessages .
@@ -200,6 +170,34 @@ func DeleteMessages(ctx context.Context, c *app.RequestContext) {
 
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
+		return
+	}
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
+	return
+}
+
+// UpdateSend .
+// @router /service/message/send/update [POST]
+func UpdateSend(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req message.SendMessagesReq
+	err = c.BindAndValidate(&req)
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
+		return
+	}
+
+	resp, err := client.MessageClient.SendMessages(ctx, &message2.SendMessagesReq{
+
+		Type:      req.GetType(),
+		Status:    req.GetStatus(),
+		Content:   req.GetContent(),
+		Title:     req.GetTitle(),
+		CreatedId: utils.GetTokenId(ctx, c),
+		TagId:     req.GetTagId(),
+	})
+	if err != nil {
+		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
 	utils2.SendResponse(c, errno.Success, resp, 0, "")

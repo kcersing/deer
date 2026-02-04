@@ -11,8 +11,6 @@ import (
 	"message/biz/convert"
 
 	"message/biz/dal/db/ent/predicate"
-
-	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type MessagesListService struct {
@@ -27,7 +25,7 @@ func NewMessagesListService(ctx context.Context) *MessagesListService {
 // Run create note info
 func (s *MessagesListService) Run(req *message.MessagesListReq) (resp *message.MessagesListResp, err error) {
 	// Finish your business logic.
-	klog.Info("GetMemberListService.Run req: %v", req)
+
 	var (
 		dataResp []*Base.Messages
 	)

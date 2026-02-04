@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	Base "gen/kitex_gen/base"
+	base "message/1/kitex_gen/base"
 	"testing"
 )
 
@@ -11,7 +11,7 @@ func TestDeleteMessages_Run(t *testing.T) {
 	s := NewDeleteMessagesService(ctx)
 	// init req and assert value
 
-	req := &Base.IdReq{}
+	req := &base.IdReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

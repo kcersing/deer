@@ -65,3 +65,28 @@ func _deletemessagesMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _sendmessagesMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _updatesendMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _sendMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _sms0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _send0Mw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

@@ -23,6 +23,7 @@ func NewMessagesSendListService(ctx context.Context) *MessagesSendListService {
 // Run create note info
 func (s *MessagesSendListService) Run(req *message.MessagesListReq) (resp *message.MessagesSendListResp, err error) {
 	// Finish your business logic.
+
 	var (
 		dataResp []*Base.MessagesSend
 	)
@@ -48,5 +49,4 @@ func (s *MessagesSendListService) Run(req *message.MessagesListReq) (resp *messa
 	return &message.MessagesSendListResp{
 		Data: dataResp,
 	}, nil
-
 }

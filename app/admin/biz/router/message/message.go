@@ -22,12 +22,17 @@ func Register(r *server.Hertz) {
 		{
 			_message := _service.Group("/message", _messageMw()...)
 			_message.POST("/delete", append(_deletemessagesMw(), message.DeleteMessages)...)
-			_message.POST("/messages-list", append(_messageslistMw(), message.MessagesList)...)
-			_message.POST("/messages-send-list", append(_messagessendlistMw(), message.MessagesSendList)...)
-			_message.POST("/send-member-messages", append(_sendmembermessagesMw(), message.SendMemberMessages)...)
-			_message.POST("/send-user-messages", append(_sendusermessagesMw(), message.SendUserMessages)...)
-			_message.POST("/sms", append(_smsMw(), message.Sms)...)
-			_message.POST("/sms-send-list", append(_smssendlistMw(), message.SmsSendList)...)
+			_message.POST("/list", append(_messageslistMw(), message.MessagesList)...)
+			_message.POST("/send", append(_sendmessagesMw(), message.SendMessages)...)
+			_send := _message.Group("/send", _sendMw()...)
+			_send.POST("/list", append(_messagessendlistMw(), message.MessagesSendList)...)
+			_send.POST("/update", append(_updatesendMw(), message.UpdateSend)...)
+			_message.POST("/sms", append(_sms0Mw(), message.Sms)...)
+			_sms := _message.Group("/sms", _smsMw()...)
+			{
+				_send0 := _sms.Group("/send", _send0Mw()...)
+				_send0.POST("/list", append(_smssendlistMw(), message.SmsSendList)...)
+			}
 			_message.POST("/types", append(_messagestypesMw(), message.MessagesTypes)...)
 		}
 	}

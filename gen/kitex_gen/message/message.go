@@ -353,8 +353,8 @@ var fieldIDToName_MessagesListReq = map[int16]string{
 	2: "pageSize",
 }
 
-type SendMemberMessagesReq struct {
-	MemberId  int64   `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+type SendMessagesReq struct {
+	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
 	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
 	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
 	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
@@ -363,9 +363,9 @@ type SendMemberMessagesReq struct {
 	Status    int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
 }
 
-func NewSendMemberMessagesReq() *SendMemberMessagesReq {
-	return &SendMemberMessagesReq{
-		MemberId:  0,
+func NewSendMessagesReq() *SendMessagesReq {
+	return &SendMessagesReq{
+		Id:        0,
 		Type:      "",
 		Content:   "",
 		Title:     "",
@@ -375,8 +375,8 @@ func NewSendMemberMessagesReq() *SendMemberMessagesReq {
 	}
 }
 
-func (p *SendMemberMessagesReq) InitDefault() {
-	p.MemberId = 0
+func (p *SendMessagesReq) InitDefault() {
+	p.Id = 0
 	p.Type = ""
 	p.Content = ""
 	p.Title = ""
@@ -385,288 +385,127 @@ func (p *SendMemberMessagesReq) InitDefault() {
 	p.Status = 0
 }
 
-var SendMemberMessagesReq_MemberId_DEFAULT int64 = 0
+var SendMessagesReq_Id_DEFAULT int64 = 0
 
-func (p *SendMemberMessagesReq) GetMemberId() (v int64) {
-	if !p.IsSetMemberId() {
-		return SendMemberMessagesReq_MemberId_DEFAULT
+func (p *SendMessagesReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return SendMessagesReq_Id_DEFAULT
 	}
-	return p.MemberId
+	return p.Id
 }
 
-var SendMemberMessagesReq_Type_DEFAULT string = ""
+var SendMessagesReq_Type_DEFAULT string = ""
 
-func (p *SendMemberMessagesReq) GetType() (v string) {
+func (p *SendMessagesReq) GetType() (v string) {
 	if !p.IsSetType() {
-		return SendMemberMessagesReq_Type_DEFAULT
+		return SendMessagesReq_Type_DEFAULT
 	}
 	return p.Type
 }
 
-var SendMemberMessagesReq_Content_DEFAULT string = ""
+var SendMessagesReq_Content_DEFAULT string = ""
 
-func (p *SendMemberMessagesReq) GetContent() (v string) {
+func (p *SendMessagesReq) GetContent() (v string) {
 	if !p.IsSetContent() {
-		return SendMemberMessagesReq_Content_DEFAULT
+		return SendMessagesReq_Content_DEFAULT
 	}
 	return p.Content
 }
 
-var SendMemberMessagesReq_Title_DEFAULT string = ""
+var SendMessagesReq_Title_DEFAULT string = ""
 
-func (p *SendMemberMessagesReq) GetTitle() (v string) {
+func (p *SendMessagesReq) GetTitle() (v string) {
 	if !p.IsSetTitle() {
-		return SendMemberMessagesReq_Title_DEFAULT
+		return SendMessagesReq_Title_DEFAULT
 	}
 	return p.Title
 }
 
-var SendMemberMessagesReq_CreatedId_DEFAULT int64 = 0
+var SendMessagesReq_CreatedId_DEFAULT int64 = 0
 
-func (p *SendMemberMessagesReq) GetCreatedId() (v int64) {
+func (p *SendMessagesReq) GetCreatedId() (v int64) {
 	if !p.IsSetCreatedId() {
-		return SendMemberMessagesReq_CreatedId_DEFAULT
+		return SendMessagesReq_CreatedId_DEFAULT
 	}
 	return p.CreatedId
 }
 
-var SendMemberMessagesReq_TagId_DEFAULT []int64 = []int64{}
+var SendMessagesReq_TagId_DEFAULT []int64 = []int64{}
 
-func (p *SendMemberMessagesReq) GetTagId() (v []int64) {
+func (p *SendMessagesReq) GetTagId() (v []int64) {
 	if !p.IsSetTagId() {
-		return SendMemberMessagesReq_TagId_DEFAULT
+		return SendMessagesReq_TagId_DEFAULT
 	}
 	return p.TagId
 }
 
-var SendMemberMessagesReq_Status_DEFAULT int64 = 0
+var SendMessagesReq_Status_DEFAULT int64 = 0
 
-func (p *SendMemberMessagesReq) GetStatus() (v int64) {
+func (p *SendMessagesReq) GetStatus() (v int64) {
 	if !p.IsSetStatus() {
-		return SendMemberMessagesReq_Status_DEFAULT
+		return SendMessagesReq_Status_DEFAULT
 	}
 	return p.Status
 }
-func (p *SendMemberMessagesReq) SetMemberId(val int64) {
-	p.MemberId = val
+func (p *SendMessagesReq) SetId(val int64) {
+	p.Id = val
 }
-func (p *SendMemberMessagesReq) SetType(val string) {
+func (p *SendMessagesReq) SetType(val string) {
 	p.Type = val
 }
-func (p *SendMemberMessagesReq) SetContent(val string) {
+func (p *SendMessagesReq) SetContent(val string) {
 	p.Content = val
 }
-func (p *SendMemberMessagesReq) SetTitle(val string) {
+func (p *SendMessagesReq) SetTitle(val string) {
 	p.Title = val
 }
-func (p *SendMemberMessagesReq) SetCreatedId(val int64) {
+func (p *SendMessagesReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *SendMemberMessagesReq) SetTagId(val []int64) {
+func (p *SendMessagesReq) SetTagId(val []int64) {
 	p.TagId = val
 }
-func (p *SendMemberMessagesReq) SetStatus(val int64) {
+func (p *SendMessagesReq) SetStatus(val int64) {
 	p.Status = val
 }
 
-func (p *SendMemberMessagesReq) IsSetMemberId() bool {
-	return p.MemberId != SendMemberMessagesReq_MemberId_DEFAULT
+func (p *SendMessagesReq) IsSetId() bool {
+	return p.Id != SendMessagesReq_Id_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) IsSetType() bool {
-	return p.Type != SendMemberMessagesReq_Type_DEFAULT
+func (p *SendMessagesReq) IsSetType() bool {
+	return p.Type != SendMessagesReq_Type_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) IsSetContent() bool {
-	return p.Content != SendMemberMessagesReq_Content_DEFAULT
+func (p *SendMessagesReq) IsSetContent() bool {
+	return p.Content != SendMessagesReq_Content_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) IsSetTitle() bool {
-	return p.Title != SendMemberMessagesReq_Title_DEFAULT
+func (p *SendMessagesReq) IsSetTitle() bool {
+	return p.Title != SendMessagesReq_Title_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) IsSetCreatedId() bool {
-	return p.CreatedId != SendMemberMessagesReq_CreatedId_DEFAULT
+func (p *SendMessagesReq) IsSetCreatedId() bool {
+	return p.CreatedId != SendMessagesReq_CreatedId_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) IsSetTagId() bool {
+func (p *SendMessagesReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
-func (p *SendMemberMessagesReq) IsSetStatus() bool {
-	return p.Status != SendMemberMessagesReq_Status_DEFAULT
+func (p *SendMessagesReq) IsSetStatus() bool {
+	return p.Status != SendMessagesReq_Status_DEFAULT
 }
 
-func (p *SendMemberMessagesReq) String() string {
+func (p *SendMessagesReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("SendMemberMessagesReq(%+v)", *p)
+	return fmt.Sprintf("SendMessagesReq(%+v)", *p)
 }
 
-var fieldIDToName_SendMemberMessagesReq = map[int16]string{
-	1: "memberId",
-	2: "type",
-	3: "content",
-	4: "title",
-	5: "createdId",
-	6: "tagId",
-	7: "status",
-}
-
-type SendUserMessagesReq struct {
-	UserId    int64   `thrift:"userId,1,optional" frugal:"1,optional,i64" json:"userId,omitempty"`
-	Type      string  `thrift:"type,2,optional" frugal:"2,optional,string" json:"type,omitempty"`
-	Content   string  `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
-	Title     string  `thrift:"title,4,optional" frugal:"4,optional,string" json:"title,omitempty"`
-	CreatedId int64   `thrift:"createdId,5,optional" frugal:"5,optional,i64" json:"createdId,omitempty"`
-	TagId     []int64 `thrift:"tagId,6,optional" frugal:"6,optional,list<i64>" json:"tagId,omitempty"`
-	Status    int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-}
-
-func NewSendUserMessagesReq() *SendUserMessagesReq {
-	return &SendUserMessagesReq{
-		UserId:    0,
-		Type:      "",
-		Content:   "",
-		Title:     "",
-		CreatedId: 0,
-		TagId:     []int64{},
-		Status:    0,
-	}
-}
-
-func (p *SendUserMessagesReq) InitDefault() {
-	p.UserId = 0
-	p.Type = ""
-	p.Content = ""
-	p.Title = ""
-	p.CreatedId = 0
-	p.TagId = []int64{}
-	p.Status = 0
-}
-
-var SendUserMessagesReq_UserId_DEFAULT int64 = 0
-
-func (p *SendUserMessagesReq) GetUserId() (v int64) {
-	if !p.IsSetUserId() {
-		return SendUserMessagesReq_UserId_DEFAULT
-	}
-	return p.UserId
-}
-
-var SendUserMessagesReq_Type_DEFAULT string = ""
-
-func (p *SendUserMessagesReq) GetType() (v string) {
-	if !p.IsSetType() {
-		return SendUserMessagesReq_Type_DEFAULT
-	}
-	return p.Type
-}
-
-var SendUserMessagesReq_Content_DEFAULT string = ""
-
-func (p *SendUserMessagesReq) GetContent() (v string) {
-	if !p.IsSetContent() {
-		return SendUserMessagesReq_Content_DEFAULT
-	}
-	return p.Content
-}
-
-var SendUserMessagesReq_Title_DEFAULT string = ""
-
-func (p *SendUserMessagesReq) GetTitle() (v string) {
-	if !p.IsSetTitle() {
-		return SendUserMessagesReq_Title_DEFAULT
-	}
-	return p.Title
-}
-
-var SendUserMessagesReq_CreatedId_DEFAULT int64 = 0
-
-func (p *SendUserMessagesReq) GetCreatedId() (v int64) {
-	if !p.IsSetCreatedId() {
-		return SendUserMessagesReq_CreatedId_DEFAULT
-	}
-	return p.CreatedId
-}
-
-var SendUserMessagesReq_TagId_DEFAULT []int64 = []int64{}
-
-func (p *SendUserMessagesReq) GetTagId() (v []int64) {
-	if !p.IsSetTagId() {
-		return SendUserMessagesReq_TagId_DEFAULT
-	}
-	return p.TagId
-}
-
-var SendUserMessagesReq_Status_DEFAULT int64 = 0
-
-func (p *SendUserMessagesReq) GetStatus() (v int64) {
-	if !p.IsSetStatus() {
-		return SendUserMessagesReq_Status_DEFAULT
-	}
-	return p.Status
-}
-func (p *SendUserMessagesReq) SetUserId(val int64) {
-	p.UserId = val
-}
-func (p *SendUserMessagesReq) SetType(val string) {
-	p.Type = val
-}
-func (p *SendUserMessagesReq) SetContent(val string) {
-	p.Content = val
-}
-func (p *SendUserMessagesReq) SetTitle(val string) {
-	p.Title = val
-}
-func (p *SendUserMessagesReq) SetCreatedId(val int64) {
-	p.CreatedId = val
-}
-func (p *SendUserMessagesReq) SetTagId(val []int64) {
-	p.TagId = val
-}
-func (p *SendUserMessagesReq) SetStatus(val int64) {
-	p.Status = val
-}
-
-func (p *SendUserMessagesReq) IsSetUserId() bool {
-	return p.UserId != SendUserMessagesReq_UserId_DEFAULT
-}
-
-func (p *SendUserMessagesReq) IsSetType() bool {
-	return p.Type != SendUserMessagesReq_Type_DEFAULT
-}
-
-func (p *SendUserMessagesReq) IsSetContent() bool {
-	return p.Content != SendUserMessagesReq_Content_DEFAULT
-}
-
-func (p *SendUserMessagesReq) IsSetTitle() bool {
-	return p.Title != SendUserMessagesReq_Title_DEFAULT
-}
-
-func (p *SendUserMessagesReq) IsSetCreatedId() bool {
-	return p.CreatedId != SendUserMessagesReq_CreatedId_DEFAULT
-}
-
-func (p *SendUserMessagesReq) IsSetTagId() bool {
-	return p.TagId != nil
-}
-
-func (p *SendUserMessagesReq) IsSetStatus() bool {
-	return p.Status != SendUserMessagesReq_Status_DEFAULT
-}
-
-func (p *SendUserMessagesReq) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("SendUserMessagesReq(%+v)", *p)
-}
-
-var fieldIDToName_SendUserMessagesReq = map[int16]string{
-	1: "userId",
+var fieldIDToName_SendMessagesReq = map[int16]string{
+	1: "id",
 	2: "type",
 	3: "content",
 	4: "title",
@@ -806,13 +645,13 @@ type MessageService interface {
 
 	MessagesList(ctx context.Context, req *MessagesListReq) (r *MessagesListResp, err error)
 
-	SendMemberMessages(ctx context.Context, req *SendMemberMessagesReq) (r *base.NilResponse, err error)
-
-	SendUserMessages(ctx context.Context, req *SendUserMessagesReq) (r *base.NilResponse, err error)
+	SendMessages(ctx context.Context, req *SendMessagesReq) (r *base.NilResponse, err error)
 
 	MessagesSendList(ctx context.Context, req *MessagesListReq) (r *MessagesSendListResp, err error)
 
 	DeleteMessages(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
+	UpdateSend(ctx context.Context, req *SendMessagesReq) (r *base.NilResponse, err error)
 }
 
 type MessageServiceSmsArgs struct {
@@ -1119,155 +958,79 @@ var fieldIDToName_MessageServiceMessagesListResult = map[int16]string{
 	0: "success",
 }
 
-type MessageServiceSendMemberMessagesArgs struct {
-	Req *SendMemberMessagesReq `thrift:"req,1" frugal:"1,default,SendMemberMessagesReq" json:"req"`
+type MessageServiceSendMessagesArgs struct {
+	Req *SendMessagesReq `thrift:"req,1" frugal:"1,default,SendMessagesReq" json:"req"`
 }
 
-func NewMessageServiceSendMemberMessagesArgs() *MessageServiceSendMemberMessagesArgs {
-	return &MessageServiceSendMemberMessagesArgs{}
+func NewMessageServiceSendMessagesArgs() *MessageServiceSendMessagesArgs {
+	return &MessageServiceSendMessagesArgs{}
 }
 
-func (p *MessageServiceSendMemberMessagesArgs) InitDefault() {
+func (p *MessageServiceSendMessagesArgs) InitDefault() {
 }
 
-var MessageServiceSendMemberMessagesArgs_Req_DEFAULT *SendMemberMessagesReq
+var MessageServiceSendMessagesArgs_Req_DEFAULT *SendMessagesReq
 
-func (p *MessageServiceSendMemberMessagesArgs) GetReq() (v *SendMemberMessagesReq) {
+func (p *MessageServiceSendMessagesArgs) GetReq() (v *SendMessagesReq) {
 	if !p.IsSetReq() {
-		return MessageServiceSendMemberMessagesArgs_Req_DEFAULT
+		return MessageServiceSendMessagesArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *MessageServiceSendMemberMessagesArgs) SetReq(val *SendMemberMessagesReq) {
+func (p *MessageServiceSendMessagesArgs) SetReq(val *SendMessagesReq) {
 	p.Req = val
 }
 
-func (p *MessageServiceSendMemberMessagesArgs) IsSetReq() bool {
+func (p *MessageServiceSendMessagesArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *MessageServiceSendMemberMessagesArgs) String() string {
+func (p *MessageServiceSendMessagesArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MessageServiceSendMemberMessagesArgs(%+v)", *p)
+	return fmt.Sprintf("MessageServiceSendMessagesArgs(%+v)", *p)
 }
 
-var fieldIDToName_MessageServiceSendMemberMessagesArgs = map[int16]string{
+var fieldIDToName_MessageServiceSendMessagesArgs = map[int16]string{
 	1: "req",
 }
 
-type MessageServiceSendMemberMessagesResult struct {
+type MessageServiceSendMessagesResult struct {
 	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
 }
 
-func NewMessageServiceSendMemberMessagesResult() *MessageServiceSendMemberMessagesResult {
-	return &MessageServiceSendMemberMessagesResult{}
+func NewMessageServiceSendMessagesResult() *MessageServiceSendMessagesResult {
+	return &MessageServiceSendMessagesResult{}
 }
 
-func (p *MessageServiceSendMemberMessagesResult) InitDefault() {
+func (p *MessageServiceSendMessagesResult) InitDefault() {
 }
 
-var MessageServiceSendMemberMessagesResult_Success_DEFAULT *base.NilResponse
+var MessageServiceSendMessagesResult_Success_DEFAULT *base.NilResponse
 
-func (p *MessageServiceSendMemberMessagesResult) GetSuccess() (v *base.NilResponse) {
+func (p *MessageServiceSendMessagesResult) GetSuccess() (v *base.NilResponse) {
 	if !p.IsSetSuccess() {
-		return MessageServiceSendMemberMessagesResult_Success_DEFAULT
+		return MessageServiceSendMessagesResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *MessageServiceSendMemberMessagesResult) SetSuccess(x interface{}) {
+func (p *MessageServiceSendMessagesResult) SetSuccess(x interface{}) {
 	p.Success = x.(*base.NilResponse)
 }
 
-func (p *MessageServiceSendMemberMessagesResult) IsSetSuccess() bool {
+func (p *MessageServiceSendMessagesResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *MessageServiceSendMemberMessagesResult) String() string {
+func (p *MessageServiceSendMessagesResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("MessageServiceSendMemberMessagesResult(%+v)", *p)
+	return fmt.Sprintf("MessageServiceSendMessagesResult(%+v)", *p)
 }
 
-var fieldIDToName_MessageServiceSendMemberMessagesResult = map[int16]string{
-	0: "success",
-}
-
-type MessageServiceSendUserMessagesArgs struct {
-	Req *SendUserMessagesReq `thrift:"req,1" frugal:"1,default,SendUserMessagesReq" json:"req"`
-}
-
-func NewMessageServiceSendUserMessagesArgs() *MessageServiceSendUserMessagesArgs {
-	return &MessageServiceSendUserMessagesArgs{}
-}
-
-func (p *MessageServiceSendUserMessagesArgs) InitDefault() {
-}
-
-var MessageServiceSendUserMessagesArgs_Req_DEFAULT *SendUserMessagesReq
-
-func (p *MessageServiceSendUserMessagesArgs) GetReq() (v *SendUserMessagesReq) {
-	if !p.IsSetReq() {
-		return MessageServiceSendUserMessagesArgs_Req_DEFAULT
-	}
-	return p.Req
-}
-func (p *MessageServiceSendUserMessagesArgs) SetReq(val *SendUserMessagesReq) {
-	p.Req = val
-}
-
-func (p *MessageServiceSendUserMessagesArgs) IsSetReq() bool {
-	return p.Req != nil
-}
-
-func (p *MessageServiceSendUserMessagesArgs) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("MessageServiceSendUserMessagesArgs(%+v)", *p)
-}
-
-var fieldIDToName_MessageServiceSendUserMessagesArgs = map[int16]string{
-	1: "req",
-}
-
-type MessageServiceSendUserMessagesResult struct {
-	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
-}
-
-func NewMessageServiceSendUserMessagesResult() *MessageServiceSendUserMessagesResult {
-	return &MessageServiceSendUserMessagesResult{}
-}
-
-func (p *MessageServiceSendUserMessagesResult) InitDefault() {
-}
-
-var MessageServiceSendUserMessagesResult_Success_DEFAULT *base.NilResponse
-
-func (p *MessageServiceSendUserMessagesResult) GetSuccess() (v *base.NilResponse) {
-	if !p.IsSetSuccess() {
-		return MessageServiceSendUserMessagesResult_Success_DEFAULT
-	}
-	return p.Success
-}
-func (p *MessageServiceSendUserMessagesResult) SetSuccess(x interface{}) {
-	p.Success = x.(*base.NilResponse)
-}
-
-func (p *MessageServiceSendUserMessagesResult) IsSetSuccess() bool {
-	return p.Success != nil
-}
-
-func (p *MessageServiceSendUserMessagesResult) String() string {
-	if p == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("MessageServiceSendUserMessagesResult(%+v)", *p)
-}
-
-var fieldIDToName_MessageServiceSendUserMessagesResult = map[int16]string{
+var fieldIDToName_MessageServiceSendMessagesResult = map[int16]string{
 	0: "success",
 }
 
@@ -1420,5 +1183,81 @@ func (p *MessageServiceDeleteMessagesResult) String() string {
 }
 
 var fieldIDToName_MessageServiceDeleteMessagesResult = map[int16]string{
+	0: "success",
+}
+
+type MessageServiceUpdateSendArgs struct {
+	Req *SendMessagesReq `thrift:"req,1" frugal:"1,default,SendMessagesReq" json:"req"`
+}
+
+func NewMessageServiceUpdateSendArgs() *MessageServiceUpdateSendArgs {
+	return &MessageServiceUpdateSendArgs{}
+}
+
+func (p *MessageServiceUpdateSendArgs) InitDefault() {
+}
+
+var MessageServiceUpdateSendArgs_Req_DEFAULT *SendMessagesReq
+
+func (p *MessageServiceUpdateSendArgs) GetReq() (v *SendMessagesReq) {
+	if !p.IsSetReq() {
+		return MessageServiceUpdateSendArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MessageServiceUpdateSendArgs) SetReq(val *SendMessagesReq) {
+	p.Req = val
+}
+
+func (p *MessageServiceUpdateSendArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MessageServiceUpdateSendArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MessageServiceUpdateSendArgs(%+v)", *p)
+}
+
+var fieldIDToName_MessageServiceUpdateSendArgs = map[int16]string{
+	1: "req",
+}
+
+type MessageServiceUpdateSendResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewMessageServiceUpdateSendResult() *MessageServiceUpdateSendResult {
+	return &MessageServiceUpdateSendResult{}
+}
+
+func (p *MessageServiceUpdateSendResult) InitDefault() {
+}
+
+var MessageServiceUpdateSendResult_Success_DEFAULT *base.NilResponse
+
+func (p *MessageServiceUpdateSendResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return MessageServiceUpdateSendResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MessageServiceUpdateSendResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *MessageServiceUpdateSendResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MessageServiceUpdateSendResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MessageServiceUpdateSendResult(%+v)", *p)
+}
+
+var fieldIDToName_MessageServiceUpdateSendResult = map[int16]string{
 	0: "success",
 }

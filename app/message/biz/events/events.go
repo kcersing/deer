@@ -11,12 +11,10 @@ import (
 
 const (
 	// 事件主题
-	EventSendUserMessages   = "send_user_messages"
-	EventSendMemberMessages = "send_member_messages"
+	EventSendMessages = "send_messages"
 
 	// 处理器名称
-	handlerSendUserMessages   = "send_user_messages_handler"
-	handlerSendMemberMessages = "send_member_messages_handler"
+	handlerSendMessages = "send_messages_handler"
 )
 
 // InitMessageConsumers 初始化消息服务的所有事件消费者。
@@ -30,33 +28,18 @@ func InitMessageConsumers() error {
 
 	// 1. 注册处理器
 	err := registry.RegisterHandler(
-		handlerSendUserMessages,
-		eventbus.WrapTyped(eventbus.TypedHandler[*message.SendUserMessagesReq](HandleSendUserMessages)),
+		handlerSendMessages,
+		eventbus.WrapTyped(eventbus.TypedHandler[*message.SendMessagesReq](HandleSendMessages)),
 	)
 	if err != nil {
-		klog.Errorf("Failed to register handler '%s': %v", handlerSendUserMessages, err)
-		return err
-	}
-
-	err = registry.RegisterHandler(
-		handlerSendMemberMessages,
-		eventbus.WrapTyped(eventbus.TypedHandler[*message.SendMemberMessagesReq](HandleSendMemberMessages)),
-	)
-	if err != nil {
-		klog.Errorf("Failed to register handler '%s': %v", handlerSendMemberMessages, err)
+		klog.Errorf("Failed to register handler '%s': %v", handlerSendMessages, err)
 		return err
 	}
 
 	// 2. 注册消费者 (将主题与处理器绑定)
-	err = registry.RegisterConsumer(EventSendUserMessages, handlerSendUserMessages, 10)
+	err = registry.RegisterConsumer(EventSendMessages, handlerSendMessages, 10)
 	if err != nil {
-		klog.Errorf("Failed to register consumer for event '%s': %v", EventSendUserMessages, err)
-		return err
-	}
-
-	err = registry.RegisterConsumer(EventSendMemberMessages, handlerSendMemberMessages, 5)
-	if err != nil {
-		klog.Errorf("Failed to register consumer for event '%s': %v", EventSendMemberMessages, err)
+		klog.Errorf("Failed to register consumer for event '%s': %v", EventSendMessages, err)
 		return err
 	}
 

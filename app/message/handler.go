@@ -4,6 +4,7 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	message "gen/kitex_gen/message"
+
 	"message/biz/service"
 )
 
@@ -38,16 +39,9 @@ func (s *MessageServiceImpl) MessagesList(ctx context.Context, req *message.Mess
 	return resp, err
 }
 
-// SendMemberMessages implements the MessageServiceImpl interface.
-func (s *MessageServiceImpl) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq) (resp *base.NilResponse, err error) {
-	resp, err = service.NewSendMemberMessagesService(ctx).Run(req)
-
-	return resp, err
-}
-
-// SendUserMessages implements the MessageServiceImpl interface.
-func (s *MessageServiceImpl) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq) (resp *base.NilResponse, err error) {
-	resp, err = service.NewSendUserMessagesService(ctx).Run(req)
+// SendMessages implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) SendMessages(ctx context.Context, req *message.SendMessagesReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewSendMessagesService(ctx).Run(req)
 
 	return resp, err
 }
@@ -61,6 +55,14 @@ func (s *MessageServiceImpl) MessagesSendList(ctx context.Context, req *message.
 
 // DeleteMessages implements the MessageServiceImpl interface.
 func (s *MessageServiceImpl) DeleteMessages(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
-	// TODO: Your code here...
-	return
+	resp, err = service.NewDeleteMessagesService(ctx).Run(req)
+
+	return resp, err
+}
+
+// UpdateSend implements the MessageServiceImpl interface.
+func (s *MessageServiceImpl) UpdateSend(ctx context.Context, req *message.SendMessagesReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewUpdateSendService(ctx).Run(req)
+
+	return resp, err
 }

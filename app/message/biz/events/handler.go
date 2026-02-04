@@ -15,13 +15,13 @@ import (
 
 // ============ 消息服务事件处理器 (类型安全 & 可审计版本) ============
 
-// HandleSendUserMessages 发送用户消息处理器
-func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, event eventbus.Event) error {
+// HandleSendMessages 发送消息处理器
+func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event eventbus.Event) error {
 	klog.Infof("[Handler] 处理发送用户消息事件: Title=%s, EventID=%s", req.GetTitle(), event.Id)
 
 	// 从 context 中获取审计条目并填充业务数据
 	if entry, ok := GetAuditEntry(ctx); ok {
-		entry.Details["UserID"] = req.GetUserId()
+
 		entry.Details["Title"] = req.GetTitle()
 		entry.Details["ContentLength"] = len(req.GetContent())
 		entry.Details["MessageType"] = req.GetType()
@@ -49,7 +49,6 @@ func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesRe
 	_, err = db.Client.Messages.Create().
 		SetCreatedID(req.GetCreatedId()).
 		SetContent(req.GetContent()).
-		SetFromUserID(req.GetUserId()).
 		SetTitle(req.GetTitle()).
 		SetStatus(req.GetStatus()).
 		SetType(req.GetType()).
@@ -59,7 +58,8 @@ func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesRe
 	for _, userID := range resp.Data {
 		createAll = append(createAll,
 			db.Client.MessagesSentRecords.Create().
-				SetMessageID(req.GetUserId()).SetToUserID(userID).
+				SetMessageID(req.GetUserId()).
+				SetToUserID(userID).
 				SetReceivedAt(time.Now()))
 	}
 
@@ -68,20 +68,6 @@ func HandleSendUserMessages(ctx context.Context, req *message.SendUserMessagesRe
 		klog.Errorf("[Handler] 保存消息发送记录失败: %v", err)
 		return err
 	}
-
-	return nil
-}
-
-// HandleSendMemberMessages 发送会员消息处理器
-func HandleSendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, event eventbus.Event) error {
-	klog.Infof("[Handler] 处理发送会员消息事件: Title=%s, EventID=%s", req.GetTitle(), event.Id)
-
-	if entry, ok := GetAuditEntry(ctx); ok {
-		entry.Details["Title"] = req.GetTitle()
-		entry.Details["MessageType"] = req.GetType()
-	}
-
-	// TODO: 实现核心业务逻辑
 
 	return nil
 }

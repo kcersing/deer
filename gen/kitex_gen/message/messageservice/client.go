@@ -16,10 +16,10 @@ type Client interface {
 	SmsSendList(ctx context.Context, req *message.SmsSendListReq, callOptions ...callopt.Option) (r *message.SmsSendListResp, err error)
 	SendSms(ctx context.Context, req *message.SendSmsReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	MessagesList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesListResp, err error)
-	SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
-	SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	SendMessages(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error)
 	DeleteMessages(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	UpdateSend(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -71,14 +71,9 @@ func (p *kMessageServiceClient) MessagesList(ctx context.Context, req *message.M
 	return p.kClient.MessagesList(ctx, req)
 }
 
-func (p *kMessageServiceClient) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+func (p *kMessageServiceClient) SendMessages(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SendMemberMessages(ctx, req)
-}
-
-func (p *kMessageServiceClient) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
-	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.SendUserMessages(ctx, req)
+	return p.kClient.SendMessages(ctx, req)
 }
 
 func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error) {
@@ -89,4 +84,9 @@ func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *messa
 func (p *kMessageServiceClient) DeleteMessages(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.DeleteMessages(ctx, req)
+}
+
+func (p *kMessageServiceClient) UpdateSend(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateSend(ctx, req)
 }

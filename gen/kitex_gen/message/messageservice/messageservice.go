@@ -42,17 +42,10 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
-	"SendMemberMessages": kitex.NewMethodInfo(
-		sendMemberMessagesHandler,
-		newMessageServiceSendMemberMessagesArgs,
-		newMessageServiceSendMemberMessagesResult,
-		false,
-		kitex.WithStreamingMode(kitex.StreamingNone),
-	),
-	"SendUserMessages": kitex.NewMethodInfo(
-		sendUserMessagesHandler,
-		newMessageServiceSendUserMessagesArgs,
-		newMessageServiceSendUserMessagesResult,
+	"SendMessages": kitex.NewMethodInfo(
+		sendMessagesHandler,
+		newMessageServiceSendMessagesArgs,
+		newMessageServiceSendMessagesResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -67,6 +60,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		deleteMessagesHandler,
 		newMessageServiceDeleteMessagesArgs,
 		newMessageServiceDeleteMessagesResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateSend": kitex.NewMethodInfo(
+		updateSendHandler,
+		newMessageServiceUpdateSendArgs,
+		newMessageServiceUpdateSendResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -208,40 +208,22 @@ func newMessageServiceMessagesListResult() interface{} {
 	return message.NewMessageServiceMessagesListResult()
 }
 
-func sendMemberMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*message.MessageServiceSendMemberMessagesArgs)
-	realResult := result.(*message.MessageServiceSendMemberMessagesResult)
-	success, err := handler.(message.MessageService).SendMemberMessages(ctx, realArg.Req)
+func sendMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceSendMessagesArgs)
+	realResult := result.(*message.MessageServiceSendMessagesResult)
+	success, err := handler.(message.MessageService).SendMessages(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newMessageServiceSendMemberMessagesArgs() interface{} {
-	return message.NewMessageServiceSendMemberMessagesArgs()
+func newMessageServiceSendMessagesArgs() interface{} {
+	return message.NewMessageServiceSendMessagesArgs()
 }
 
-func newMessageServiceSendMemberMessagesResult() interface{} {
-	return message.NewMessageServiceSendMemberMessagesResult()
-}
-
-func sendUserMessagesHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*message.MessageServiceSendUserMessagesArgs)
-	realResult := result.(*message.MessageServiceSendUserMessagesResult)
-	success, err := handler.(message.MessageService).SendUserMessages(ctx, realArg.Req)
-	if err != nil {
-		return err
-	}
-	realResult.Success = success
-	return nil
-}
-func newMessageServiceSendUserMessagesArgs() interface{} {
-	return message.NewMessageServiceSendUserMessagesArgs()
-}
-
-func newMessageServiceSendUserMessagesResult() interface{} {
-	return message.NewMessageServiceSendUserMessagesResult()
+func newMessageServiceSendMessagesResult() interface{} {
+	return message.NewMessageServiceSendMessagesResult()
 }
 
 func messagesSendListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -278,6 +260,24 @@ func newMessageServiceDeleteMessagesArgs() interface{} {
 
 func newMessageServiceDeleteMessagesResult() interface{} {
 	return message.NewMessageServiceDeleteMessagesResult()
+}
+
+func updateSendHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*message.MessageServiceUpdateSendArgs)
+	realResult := result.(*message.MessageServiceUpdateSendResult)
+	success, err := handler.(message.MessageService).UpdateSend(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMessageServiceUpdateSendArgs() interface{} {
+	return message.NewMessageServiceUpdateSendArgs()
+}
+
+func newMessageServiceUpdateSendResult() interface{} {
+	return message.NewMessageServiceUpdateSendResult()
 }
 
 type kClient struct {
@@ -330,21 +330,11 @@ func (p *kClient) MessagesList(ctx context.Context, req *message.MessagesListReq
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) SendMemberMessages(ctx context.Context, req *message.SendMemberMessagesReq) (r *base.NilResponse, err error) {
-	var _args message.MessageServiceSendMemberMessagesArgs
+func (p *kClient) SendMessages(ctx context.Context, req *message.SendMessagesReq) (r *base.NilResponse, err error) {
+	var _args message.MessageServiceSendMessagesArgs
 	_args.Req = req
-	var _result message.MessageServiceSendMemberMessagesResult
-	if err = p.c.Call(ctx, "SendMemberMessages", &_args, &_result); err != nil {
-		return
-	}
-	return _result.GetSuccess(), nil
-}
-
-func (p *kClient) SendUserMessages(ctx context.Context, req *message.SendUserMessagesReq) (r *base.NilResponse, err error) {
-	var _args message.MessageServiceSendUserMessagesArgs
-	_args.Req = req
-	var _result message.MessageServiceSendUserMessagesResult
-	if err = p.c.Call(ctx, "SendUserMessages", &_args, &_result); err != nil {
+	var _result message.MessageServiceSendMessagesResult
+	if err = p.c.Call(ctx, "SendMessages", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -365,6 +355,16 @@ func (p *kClient) DeleteMessages(ctx context.Context, req *base.IdReq) (r *base.
 	_args.Req = req
 	var _result message.MessageServiceDeleteMessagesResult
 	if err = p.c.Call(ctx, "DeleteMessages", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateSend(ctx context.Context, req *message.SendMessagesReq) (r *base.NilResponse, err error) {
+	var _args message.MessageServiceUpdateSendArgs
+	_args.Req = req
+	var _result message.MessageServiceUpdateSendResult
+	if err = p.c.Call(ctx, "UpdateSend", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

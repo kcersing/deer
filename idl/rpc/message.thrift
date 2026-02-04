@@ -25,8 +25,8 @@ include "../base/message.thrift"
        2: optional i64 pageSize=100
 
     }
-    struct SendMemberMessagesReq {
-        1: optional i64 memberId=0
+    struct SendMessagesReq {
+        1: optional i64 id=0
         2: optional string type=""
         3: optional string content = ""
         4: optional string title = ""
@@ -34,15 +34,7 @@ include "../base/message.thrift"
         6:optional list<i64> tagId=[]
         7:optional i64 status=0
     }
-    struct SendUserMessagesReq {
-        1: optional i64 userId=0
-        2: optional string type=""
-        3: optional string content = ""
-        4: optional string title = ""
-        5: optional i64 createdId=0
-        6:optional list<i64> tagId=[]
-        7:optional i64 status=0
-    }
+
     struct MessagesListResp{
         1:optional list<message.Messages> data={}
         255:optional base.BaseResp baseResp={}
@@ -62,11 +54,12 @@ include "../base/message.thrift"
         //发送记录
         MessagesListResp MessagesList(1: MessagesListReq req)
         //发送信息
-        base.NilResponse SendMemberMessages(1: SendMemberMessagesReq req)
-        base.NilResponse SendUserMessages(1: SendUserMessagesReq req)
+        base.NilResponse SendMessages(1: SendMessagesReq req)
+
         //发送记录
         MessagesSendListResp MessagesSendList(1: MessagesListReq req)
 
         base.NilResponse DeleteMessages(1: base.IdReq req)
 
+        base.NilResponse UpdateSend(1: SendMessagesReq req)
     }

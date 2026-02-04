@@ -11,27 +11,28 @@ import (
 	"github.com/cockroachdb/errors"
 )
 
-type SendUserMessagesService struct {
+type SendMessagesService struct {
 	ctx context.Context
 }
 
-// NewSendUserMessagesService new SendUserMessagesService
-func NewSendUserMessagesService(ctx context.Context) *SendUserMessagesService {
-	return &SendUserMessagesService{ctx: ctx}
+// NewSendMessagesService new SendMessagesService
+func NewSendMessagesService(ctx context.Context) *SendMessagesService {
+	return &SendMessagesService{ctx: ctx}
 }
 
 // Run create note info
-func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *base.NilResponse, err error) {
+func (s *SendMessagesService) Run(req *message.SendMessagesReq) (resp *base.NilResponse, err error) {
+	// Finish your business logic.
+
 	tx, err := db.Client.Tx(s.ctx)
 	if err != nil {
 		klog.Error("Tx")
 		return nil, err
 	}
 
-	_, err = tx.Messages.Create().
+	save, err := tx.Messages.Create().
 		SetCreatedID(req.GetCreatedId()).
 		SetContent(req.GetContent()).
-		SetFromUserID(req.GetUserId()).
 		SetTitle(req.GetTitle()).
 		SetType(req.GetType()).
 		Save(s.ctx)
@@ -41,7 +42,7 @@ func (s *SendUserMessagesService) Run(req *message.SendUserMessagesReq) (resp *b
 	if err = tx.Commit(); err != nil {
 		return nil, err
 	}
-
+	req.Id = save.ID
 	if err = events.SendUserMessages(s.ctx, req); err != nil {
 		klog.Errorf("Failed to publish SendUserMessages event: %v", err)
 	}

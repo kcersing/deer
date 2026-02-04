@@ -2,17 +2,17 @@ package service
 
 import (
 	"context"
-
-	message "gen/kitex_gen/message"
+	base "message/1/kitex_gen/base"
+	message "message/1/kitex_gen/message"
 	"testing"
 )
 
-func TestSendUserMessages_Run(t *testing.T) {
+func TestUpdateSend_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewSendUserMessagesService(ctx)
+	s := NewUpdateSendService(ctx)
 	// init req and assert value
 
-	req := &message.SendUserMessagesReq{}
+	req := &message.SendMessagesReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)
