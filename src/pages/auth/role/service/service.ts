@@ -34,7 +34,11 @@ export async function deleteRole(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/role/delete', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -47,7 +51,11 @@ export async function updateRole(options?: { [key: string]: any }) {
   return request<RoleResp>('/service/role/update', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 创建 role  POST /service/role/create*/
@@ -55,7 +63,11 @@ export async function createRole(options?: { [key: string]: any }) {
   return request<RoleResp>('/service/role/create', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 获取 role  POST /service/role */
@@ -63,7 +75,11 @@ export async function getRole(options?: { [key: string]: any }) {
   return request<RoleResp>('/service/role', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -73,7 +89,11 @@ export async function CreateRoleMenu(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/role/create/menu', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -82,7 +102,11 @@ export async function CreateRoleApi(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/role/create/api', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -92,7 +116,11 @@ export async function GetRoleApi(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/role/api', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -101,6 +129,10 @@ export async function GetRoleMenu(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/role/menu', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }

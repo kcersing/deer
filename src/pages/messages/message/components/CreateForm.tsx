@@ -15,7 +15,7 @@ import { Button, message } from 'antd';
 import React, { FC,useState } from 'react';
 
 import { Messages } from  "./../service/data";
-import {getMessagesTypes,SendMemberMessages,SendUserMessages} from "./../service/service";
+import {getMessagesTypes,SendMessages} from "./../service/service";
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
@@ -31,7 +31,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [type, setType] = useState("card");
 
 
-  const { run, loading } = useRequest(SendMemberMessages, {
+  const { run, loading } = useRequest(SendMessages, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');

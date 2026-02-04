@@ -20,6 +20,10 @@ export async function logout(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
+    },
     ...(options || {}),
   });
 }

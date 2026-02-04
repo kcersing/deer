@@ -6,7 +6,6 @@ export async function login(body: LoginReq, options?: { [key: string]: any }) {
   return request<LoginResp>('/service/user/login', {
     method: 'POST',
     headers: {
-
       ...headers,
     },
     data: body,
@@ -19,6 +18,10 @@ export async function logout(options?: { [key: string]: any }) {
     method: 'POST',
     headers: {
       ...headers,
+    },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
     },
     ...(options || {}),
   });
@@ -47,7 +50,6 @@ export async function updateUser(body: UpdateUserReq, options?: { [key: string]:
     ...(options || {}),
   });
 }
-
 
 
 /** 获取用户信息 POST /service/user */

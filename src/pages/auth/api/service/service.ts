@@ -9,7 +9,11 @@ export async function updateApi(options?: { [key: string]: any }) {
   return request<ApiResp>('/service/api/update', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -18,7 +22,11 @@ export async function createApi(options?: { [key: string]: any }) {
   return request<ApiResp>('/service/api/create', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -44,7 +52,11 @@ export async function deleteApi(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/api/delete', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 

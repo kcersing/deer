@@ -56,7 +56,11 @@ export async function updateDepartments(body: UpdateDepartmentsReq, options?: { 
   return request<DepartmentsResp>('/service/departments/update', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -65,6 +69,10 @@ export async function deleteDepartments(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/departments/delete', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }

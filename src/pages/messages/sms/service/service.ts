@@ -1,6 +1,4 @@
-import {request} from '@umijs/max';
-import {ItemListResp, ItemResp, Item, MessagesSendListResp, MessagesListResp, SmsSendListResp} from "./data";
-import {TreeResp,Tree,BaseResp} from "@/services/typings";
+import {SmsSendListResp} from "../../message/service/data";
 
 const headers = {
   'Content-Type': 'application/json', Authorization: 'Bearer ' + sessionStorage.getItem('token') || '',
@@ -19,7 +17,7 @@ export async function getSms(options?: { [key: string]: any }) {
     ...(options || {}),
   });
 }
-/** sms  send 列表 POST /service/message/sms-send-list */
+/** sms  send 列表 POST /service/message/sms/send/list */
 export async function getSmsSendList(params: {
   // query
   /** 当前的页码 */
@@ -27,7 +25,7 @@ export async function getSmsSendList(params: {
   pageSize?: number; keywords?: string;
 
 }, options?: { [key: string]: any },) {
-  return request<SmsSendListResp>('/service/message/sms-send-list', {
+  return request<SmsSendListResp>('/service/message/sms/send/list', {
     method: 'POST', headers: {
       ...headers,
     },
@@ -36,7 +34,3 @@ export async function getSmsSendList(params: {
     }, ...(options || {}),
   });
 }
-
-
-
-

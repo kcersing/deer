@@ -44,6 +44,10 @@ export async function deleteMenu(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
+    },
     ...(options || {}),
   });
 }
@@ -60,6 +64,10 @@ export async function updateMenu(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
+    },
     ...(options || {}),
   });
 }
@@ -70,6 +78,10 @@ export async function createMenu(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
+    },
     ...(options || {}),
   });
 }
@@ -78,6 +90,10 @@ export async function getMenu(options?: { [key: string]: any }) {
     method: 'POST',
     headers: {
       ...headers,
+    },
+    data:{
+      key:options.key,
+      dictId:options.dictId,
     },
     ...(options || {}),
   });

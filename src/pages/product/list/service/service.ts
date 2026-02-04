@@ -10,60 +10,94 @@ const headers = {
 /** 创建 product  POST /service/product/create*/
 export async function createProduct(options?: { [key: string]: any }) {
   return request<ProductResp>('/service/product/create', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
 /** 更新product  POST /service/product/update*/
 export async function updateProduct(options?: { [key: string]: any }) {
   return request<ProductResp>('/service/product/update', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
 /** 删除product  POST /service/product/delete*/
 export async function deleteProduct(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/product/delete', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 获取product  POST /service/product*/
 export async function getProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
-
 /** online product  POST /service/product/online */
 export async function onlineProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/online', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /**  offline product  POST /service/product/offline */
 export async function offlineProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/offline', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /**  search product  POST /service/product/search */
 export async function searchProduct(options?: { [key: string]: any }) {
   return request<TreeResp>('/service/product/search', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 

@@ -16,6 +16,9 @@ export async function getLogList(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
@@ -25,6 +28,9 @@ export async function deleteLog(req: DeleteLogReq,options?: { [key: string]: any
     method: 'POST',
     headers: {
       ...headers,
+    },
+    data: {
+      ...options,
     },
     ...(options || {}),
   });

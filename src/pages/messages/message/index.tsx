@@ -152,7 +152,7 @@ const TableList: React.FC = () => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      render: (_, record) => [
+      render: (text, record, _, action) => [
         <UpdateForm
           trigger={
             <a>更新</a>
@@ -161,6 +161,15 @@ const TableList: React.FC = () => {
           onOk={actionRef.current?.reload}
           values={record}
         />,
+
+    <a
+      key="editable"
+      onClick={() => {
+       console.log(record.id)
+      }}
+    >
+      删除
+    </a>,
       ],
     },
   ];

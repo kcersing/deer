@@ -20,15 +20,15 @@ import { useRequest } from '@umijs/max';
 import { Form, message } from 'antd';
 import React, { cloneElement, useCallback, useState } from 'react';
 
-import { Item } from  "@/pages/product/item/service/data";
-import {updateItem} from "@/pages/product/item/service/service";
 
+import { Messages } from  "./../service/data";
+import {updateSend} from "./../service/service";
 import WangEditor from '@/pages/components/wangeditor'
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
   onOk?: () => void;
-  values: Partial<Item>;
+  values: Partial<Messages>;
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
@@ -45,7 +45,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run } = useRequest(updateItem, {
+  const { run } = useRequest(updateSend, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -67,7 +67,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
   const onFinish= (e) => useCallback(
     async (values?: any) => {
       values.id = e.id;
-      values.status = values.status?1:0;
+      value.content=detail
       await run({ data: values });
       onCancel();
     },

@@ -13,6 +13,9 @@ export async function createDict(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
@@ -23,6 +26,9 @@ export async function updateDict(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
@@ -32,6 +38,9 @@ export async function deleteDict(options?: { [key: string]: any }) {
     method: 'POST',
     headers: {
       ...headers,
+    },
+    data: {
+      ...options,
     },
     ...(options || {}),
   });
@@ -56,6 +65,9 @@ export async function createDictht(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
@@ -66,6 +78,9 @@ export async function updateDictht(options?: { [key: string]: any }) {
     headers: {
       ...headers,
     },
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
@@ -75,6 +90,9 @@ export async function deleteDictht(options?: { [key: string]: any }) {
     method: 'POST',
     headers: {
       ...headers,
+    },
+    data: {
+      ...options,
     },
     ...(options || {}),
   });

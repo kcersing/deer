@@ -54,17 +54,27 @@ export async function getPositionsList(
 /** 更新role  POST /service/positions/update*/
 export async function updatePositions(body: UpdatePositionsReq, options?: { [key: string]: any }) {
   return request<PositionsResp>('/service/positions/update', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
 /** 删除role  POST /service/positions/delete*/
 export async function deletePositions(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/positions/delete', {
-    method: 'POST', headers: {
+    method: 'POST',
+    headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }

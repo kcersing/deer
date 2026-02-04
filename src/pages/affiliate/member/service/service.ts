@@ -7,7 +7,11 @@ export async function createMember(options?: { [key: string]: any }) {
   return request<MemberResp>('/service/member/create', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 删除 Member  POST /service/member/delete*/
@@ -15,7 +19,11 @@ export async function deleteMember(options?: { [key: string]: any }) {
   return request<BaseResp>('/service/member/delete', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 更新 Member  POST /service/member/update*/
@@ -23,7 +31,11 @@ export async function updateMember(options?: { [key: string]: any }) {
   return request<MemberResp>('/service/member/update', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 
@@ -32,7 +44,11 @@ export async function getMember(options?: { [key: string]: any }) {
   return request<MemberResp>('/service/member', {
     method: 'POST', headers: {
       ...headers,
-    }, ...(options || {}),
+    },
+    data: {
+      ...options,
+    },
+    ...(options || {}),
   });
 }
 /** 获取 Member 列表 POST /service/member/list */
