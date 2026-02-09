@@ -3,7 +3,7 @@ import {
   type ActionType,ProFormSwitch,
   ModalForm, ProForm,
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea,ProFormSelect
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
@@ -11,10 +11,12 @@ import React, { FC } from 'react';
 
 import { Departments } from  "@/pages/opm/departments/service/data";
 import {createDepartments} from "@/pages/opm/departments/service/service";
+import {getDepartmentsList} from "../service/service";
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
-
+import {getUserList} from "@/pages/opm/user/service/service";
+import {getPositionsList} from "../../positions/service/service";
 const CreateForm: FC<CreateFormProps> = (props) => {
   const { reload } = props;
 
@@ -42,7 +44,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             新建
           </Button>
         }
-        width="400px"
+        width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;
@@ -51,11 +53,32 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           return true;
         }}
       >
+
+        <ProForm.Group>
+          <ProFormSelect
+            name="parentId"
+            label="上级"
+            width="sm"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getDepartmentsList({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <ProFormText
             width="md"
             name="name"
-            label="名称"
+            label="部门名称"
             tooltip="最长为 24 位"
             placeholder="请输入名称"
             rules={[
@@ -65,12 +88,11 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             ]}
           />
-
           <ProFormText
             width="md"
-            name="title"
-            label="标题"
-            placeholder="请输入标题"
+            name="code"
+            label="标识"
+            placeholder="请输入"
             rules={[
               {
                 required: true,
@@ -80,44 +102,36 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           />
         </ProForm.Group>
         <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="icon"
-            label="图标"
-            placeholder="请输入图标"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
-          <ProFormText
-            width="md"
-            name="path"
-            label="路由路径"
-            placeholder="请输入路由路径"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
-          />
+          <ProForm.Group>
+            <ProFormSelect
+              name="managerId"
+              label="负责人ID"
+              width="sm"
+              params={{current: 999, pageSize: 1}}
+              request={(params)=>{
+                return getUserList({params}).then((res) => {return res.data})
+              }}
 
-          <ProFormText
+              fieldProps={{
+                fieldNames: {
+                  label: 'name',
+                  value: 'id',
+                },
+              }}
+              placeholder="请选择"
+              rules={[{ required: true, message: '请选择!' }]}
+            />
+          </ProForm.Group>
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormTextArea
             width="md"
-            name="component"
-            label="组件路径"
-            placeholder="请输入组件路径"
-            rules={[
-              {
-                required: true,
-                message: '不能为空',
-              },
-            ]}
+            name="desc"
+            label="概略"
+            placeholder="请输入"
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSwitch
             name="status"
             width="md"

@@ -51,7 +51,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             新建
           </Button>
         }
-       width="900px"
+       width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;

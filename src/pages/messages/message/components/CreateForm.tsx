@@ -56,16 +56,35 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             新建
           </Button>
         }
-       width="900px"
+       width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
-          value.status = value.status?1:0;
           value.content=detail
           await run({ data: value as Messages });
-
           return true;
         }}
       >
+
+        <ProForm.Group>
+          <ProFormSelect
+            name="typs"
+            label="消息分类"
+            width="md"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getMessagesTypes({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'title',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
+        </ProForm.Group>
 
         <ProForm.Group>
           <ProFormText

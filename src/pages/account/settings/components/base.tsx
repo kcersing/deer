@@ -6,7 +6,7 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
-  ProFormRadio,
+  ProFormRadio,ProFormDatePicker,
 } from '@ant-design/pro-components';
 import { useRequest } from '@umijs/max';
 import { Button, Input, message, Upload } from 'antd';
@@ -14,10 +14,14 @@ import React from 'react';
 import { queryCity, queryCurrent, queryProvince } from '../service';
 import useStyles from './index.style';
 import { User } from  "@/pages/account/service/data";
-import {getUser} from "@/pages/account/service/service";
+import {getUser,updateUser} from "@/pages/account/service/service";
 
+import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
 const BaseView: React.FC = () => {
+
+
   const { styles } = useStyles();
   // 头像组件 方便以后独立，增加裁剪之类的功能
   const AvatarView = ({ avatar }: { avatar: string }) => (
@@ -50,9 +54,31 @@ const BaseView: React.FC = () => {
     }
     return '';
   };
-  const handleFinish = async () => {
-    message.success('更新基本信息成功');
+
+  const { run } = useRequest(updateUser, {
+    manual: true,
+    onSuccess: () => {
+      messageApi.success('提交成功');
+      onOk?.();
+    },
+    onError: () => {
+      messageApi.error('提交失败，请重试！');
+    },
+  });
+
+
+  const handleFinish = async (values?: any) => {
+
+
+
+    values.province = values.province.value
+
+    var  data={...currentUser,...values}
+console.log(data)
+    // await run({ data: data });
   };
+
+
   return (
     <div className={styles.baseView}>
       {loading ? null : (
@@ -69,7 +95,6 @@ const BaseView: React.FC = () => {
               }}
               initialValues={{
                 ...currentUser,
-                // phone: currentUser?.phone.split('-'),
               }}
               hideRequiredMark
             >
@@ -78,6 +103,7 @@ const BaseView: React.FC = () => {
                 width="md"
                 name="name"
                 label="姓名"
+
                 rules={[
                   {
                     required: true,
@@ -85,6 +111,7 @@ const BaseView: React.FC = () => {
                   },
                 ]}
               />
+
               <ProFormRadio.Group
                 width="md"
                 name="gender"
@@ -98,30 +125,25 @@ const BaseView: React.FC = () => {
                 options={[
                   {
                     label: '男',
-                    value: '1',
+                    value: 1,
                   },
                   {
                     label: '女',
-                    value: '2',
+                    value: 2,
                   },
                   {
                     label: '未知',
-                    value: '3',
+                    value: 3,
                   },
                 ]}
               />
 
-              <ProFormText
+              <ProFormDatePicker
                 width="md"
                 name="birthday"
                 label="出生日期"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入您的出生日期!',
-                  },
-                ]}
               />
+
               <ProFormTextArea
                 name="desc"
                 label="个人简介"
@@ -137,39 +159,10 @@ const BaseView: React.FC = () => {
                 width="md"
                 name="email"
                 label="邮箱"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入您的邮箱!',
-                  },
-                ]}
-              />
-              <ProFormSelect
-                width="sm"
-                name="country"
-                label="国家/地区"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入您的国家或地区!',
-                  },
-                ]}
-                options={[
-                  {
-                    label: '中国',
-                    value: 'China',
-                  },
-                ]}
               />
 
               <ProForm.Group title="所在省市" size={8}>
                 <ProFormSelect
-                  rules={[
-                    {
-                      required: true,
-                      message: '请输入您的所在省!',
-                    },
-                  ]}
                   width="sm"
                   fieldProps={{
                     labelInValue: true,
@@ -177,8 +170,6 @@ const BaseView: React.FC = () => {
                   name="province"
                   request={async () => {
                     return queryProvince().then(({ data }) => {
-                      console.log(data)
-
                       return data.map((item) => {
                         return {
                           label: item.name,
@@ -197,12 +188,6 @@ const BaseView: React.FC = () => {
                         }}
                         name="city"
                         width="sm"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入您的所在城市!',
-                          },
-                        ]}
                         disabled={!province}
                         request={async () => {
                           if (!province?.key) {
@@ -228,12 +213,6 @@ const BaseView: React.FC = () => {
                 width="md"
                 name="address"
                 label="街道地址"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入您的街道地址!',
-                  },
-                ]}
               />
             </ProForm>
           </div>

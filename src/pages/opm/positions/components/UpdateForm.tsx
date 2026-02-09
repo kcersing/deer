@@ -21,6 +21,8 @@ import React, { cloneElement, useCallback, useState } from 'react';
 
 import { Positions } from  "@/pages/opm/positions/service/data";
 import {updatePositions} from "@/pages/opm/positions/service/service";
+import {getPositionsList} from "../service/service";
+import {getDepartmentsList} from "../../departments/service/service";
 
 
 export type ModalForm = {
@@ -88,47 +90,99 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         }}
 
         style={{ padding: '32px 40px 48px' }}
-        width="400px"
+        width="800px"
         open={open}
 
         onFinish={onFinish(values)}
       >
-        <ProForm.Group>
-          <ProFormText
-            width="md"
-            name="name"
-            label="名称"
-            tooltip="最长为 24 位"
-            placeholder="请输入名称"
-          />
 
-          <ProFormText
-            width="md"
-            name="title"
-            label="标题"
-            placeholder="请输入标题"
+        <ProForm.Group>
+          <ProFormSelect
+            name="parentId"
+            label="上级"
+            width="sm"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getPositionsList({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
           />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText
             width="md"
-            name="icon"
-            label="图标"
-            placeholder="请输入图标"
-          />
-          <ProFormText
-            width="md"
-            name="path"
-            label="路由路径"
-            placeholder="请输入路由路径"
+            name="name"
+            label="职位名称"
+            tooltip="最长为 24 位"
+            placeholder="请输入名称"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
           />
 
           <ProFormText
             width="md"
-            name="component"
-            label="组件路径"
-            placeholder="请输入组件路径"
+            name="code"
+            label="标识"
+            placeholder="请输入"
+            rules={[
+              {
+                required: true,
+                message: '不能为空',
+              },
+            ]}
           />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormSelect
+            name="departmentId"
+            label="部门"
+            width="sm"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getDepartmentsList({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
+        </ProForm.Group>
+
+
+        <ProForm.Group>
+          <ProFormTextArea
+            width="md"
+            name="desc"
+            label="概略"
+            placeholder="请输入"
+          />
+          <ProFormText
+            width="md"
+            name="quota"
+            label="编制人数"
+            placeholder="请输入"
+          />
+        </ProForm.Group>
+
+
+        <ProForm.Group>
 
           <ProFormSwitch
             name="status"
@@ -136,6 +190,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="状态"
             checkedChildren="有效"
             unCheckedChildren="无效"
+            initialValue="有效"
           />
 
         </ProForm.Group>

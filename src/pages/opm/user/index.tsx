@@ -10,7 +10,7 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
-import {Button, Drawer, Input, message, type TreeDataNode} from 'antd';
+import {Button, Drawer, Input, message, Space ,type TreeDataNode} from 'antd';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
@@ -74,23 +74,30 @@ const TableList: React.FC = () => {
       dataIndex: 'gender',
       sorter: true,
       hideInForm: true,
+
+      render: (dom) => (
+        <Space>
+         {dom==1?"男": dom==2 ?"女":"未知"}
+
+        </Space>
+      ),
+
     },
     {
       title: "部门",
-      dataIndex: '',
+      dataIndex: 'departmentName',
       sorter: true,
       hideInForm: true,
     },
     {
       title: "职位",
-      dataIndex: '',
+      dataIndex: 'positionName',
       sorter: true,
       hideInForm: true,
     },
-
     {
       title: "角色",
-      dataIndex: '',
+      dataIndex: 'roles',
       sorter: true,
       hideInForm: true,
     },

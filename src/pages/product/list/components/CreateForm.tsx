@@ -51,7 +51,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         trigger={
           <Button type="primary" icon={<PlusOutlined />}>新建</Button>
         }
-        width="900px"
+        width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.status = value.status?1:0;

@@ -29,8 +29,6 @@ const TableList: React.FC = () => {
 
   const [types, setTypes] = useState([]);
 
-
-
   useEffect(() => {
     const getTypes = async () => {
       const [res] = await Promise.all([
@@ -40,7 +38,6 @@ const TableList: React.FC = () => {
     }
     getTypes();
   }, []);
-
 
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -64,14 +61,13 @@ const TableList: React.FC = () => {
       title: "id",
       dataIndex: 'id',
       sorter: true,
-      hideInForm: true,
-      hideInTable: true,
+      hideInForm:false,
+
     },
     {
       title: '消息主题',
       dataIndex: 'title',
       render: (dom, entity) => {
-        console.log(entity)
         return (
           <a
             onClick={() => {

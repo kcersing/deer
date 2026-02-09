@@ -28,25 +28,29 @@ export async function logout(options?: { [key: string]: any }) {
 }
 
 /** 创建接口 POST /service/user/create */
-export async function createUser(body: CreateUserReq, options?: { [key: string]: any }) {
+export async function createUser( options?: { [key: string]: any }) {
   return request<UserResp>('/service/user/create', {
     method: 'POST',
     headers: {
       ...headers,
     },
-    data: body,
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }
 
 /** 更新接口 POST /service/user/update */
-export async function updateUser(body: UpdateUserReq, options?: { [key: string]: any }) {
+export async function updateUser(options?: { [key: string]: any }) {
   return request<UserResp>('/service/user/update', {
     method: 'POST',
     headers: {
       ...headers,
     },
-    data: body,
+    data: {
+      ...options,
+    },
     ...(options || {}),
   });
 }

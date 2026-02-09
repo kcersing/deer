@@ -79,9 +79,10 @@ export async function getMessagesTypes() {
 }
 
 
-/** 更新Api  POST /service/message/update-send */
+/** 更新Api  POST /service/message/send/update */
 export async function updateSend(options?: { [key: string]: any }) {
-  return request<ApiResp>('/service/message/update-send', {
+
+  return request<ApiResp>('/service/message/send/update', {
     method: 'POST', headers: {
       ...headers,
     },

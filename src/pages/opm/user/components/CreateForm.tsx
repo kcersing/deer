@@ -5,7 +5,7 @@ import {
   ProFormText,
   ProFormSwitch,
   ProFormDatePicker,
-  ProFormUploadButton,ProFormRadio
+  ProFormUploadButton,ProFormRadio,ProFormSelect,
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message } from 'antd';
@@ -15,6 +15,8 @@ import { User } from  "@/pages/opm/user/service/data";
 import {createUser} from "@/pages/opm/user/service/service";
 
 import WangEditor from '@/pages/components/wangeditor'
+import {getDepartmentsList} from "../../departments/service/service";
+import {getPositionsList} from "../../positions/service/service";
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
@@ -66,22 +68,21 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         }}
       >
 
+        {/*<ProForm.Group>*/}
+        {/*  <ProFormUploadButton*/}
+        {/*    max={1}*/}
+        {/*    width="sm"*/}
+        {/*    name="avatar"*/}
+        {/*    label="头像"*/}
+        {/*    fieldProps={{*/}
+        {/*      name: 'file',*/}
+        {/*      listType: 'picture-card',*/}
+        {/*    }}*/}
+        {/*    action="/upload.do"*/}
+        {/*    extra="头像备注"*/}
+        {/*  />*/}
+        {/*</ProForm.Group>*/}
 
-        <ProForm.Group>
-          <ProFormUploadButton
-            max={1}
-            width="sm"
-            name="avatar"
-            label="头像"
-            fieldProps={{
-              name: 'file',
-              listType: 'picture-card',
-            }}
-            action="/upload.do"
-            extra="头像备注"
-          />
-        </ProForm.Group>
-        {/*number | "xs" | "sm" | "md" | "lg" | "xl"*/}
         <ProForm.Group>
           <ProFormText
             width="sm"
@@ -109,6 +110,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
         </ProForm.Group>
+
         <ProForm.Group>
           <ProFormText
             width="sm"
@@ -125,7 +127,6 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         </ProForm.Group>
 
         <ProForm.Group>
-
           <ProFormRadio.Group
             width="sm"
             name="gender"
@@ -142,6 +143,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             name="birthday"
             label="出生日期"
           />
+
+        </ProForm.Group>
+
+        <ProForm.Group>
           <ProFormSwitch
             width="sm"
             name="status"
@@ -150,8 +155,47 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             unCheckedChildren="关闭"
             initialValue="开启"
           />
-
         </ProForm.Group>
+        <ProForm.Group>
+          <ProFormSelect
+            name="departmentId"
+            label="部门"
+            width="sm"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getDepartmentsList({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
+
+          <ProFormSelect
+            name="positionId"
+            label="职位"
+            width="sm"
+            params={{current: 999, pageSize: 1}}
+            request={(params)=>{
+              return getPositionsList({params}).then((res) => {return res.data})
+            }}
+
+            fieldProps={{
+              fieldNames: {
+                label: 'name',
+                value: 'id',
+              },
+            }}
+            placeholder="请选择"
+            rules={[{ required: true, message: '请选择!' }]}
+          />
+        </ProForm.Group>
+
         <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>

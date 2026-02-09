@@ -44,7 +44,7 @@ const CreateDicthtForm: FC<CreateFormProps> = (props) => {
             新建
           </Button>
         }
-        width="400px"
+        width="800px"
         modalProps={{ okButtonProps: { loading } }}
         onFinish={async (value) => {
           value.dictId = dictId;

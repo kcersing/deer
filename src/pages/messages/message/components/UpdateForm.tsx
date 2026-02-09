@@ -33,12 +33,12 @@ export type ModalForm = {
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
   const { onOk, values, trigger } = props;
-  values.status = (values.status==1?"有效":"无效")
 
-  const [detail, setDetail] = useState(values.content);
+  // const [detail, setDetail] = useState(values.content);
   const [detailBody, setDetailBody] = useState(values.content);
   const optionDetail = (data: React.SetStateAction<string>) => {
-    setDetail(data)
+
+    setDetailBody(data)
   };
 
   const [open, setOpen] = useState(false);
@@ -53,6 +53,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     },
     onError: () => {
       messageApi.error('提交失败，请重试！');
+
     },
   });
 
@@ -64,16 +65,17 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish= (e) => useCallback(
-    async (values?: any) => {
-      values.id = e.id;
-      value.content=detail
-      await run({ data: values });
+  const onFinish= (e) => (
+    async (v?: any) => {
+
+      var data={...e,...v}
+      data.content = detailBody
+      await run({ data: data });
+
       onCancel();
-    },
-    [onCancel, run],
+    }
   );
-  const [form] = Form.useForm<{ name: string; company: string }>();
+  const [form] = Form.useForm();
   return (
     <>
       {contextHolder}
@@ -83,11 +85,9 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           })
         : null}
 
-      <ModalForm<{
-        name: string;
-        company: string;
-      }>
-        initialValues={values}
+      <ModalForm
+
+       initialValues={{...values}}
         title="更新"
         form={form}
         autoFocusFirstInput
@@ -97,7 +97,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         }}
 
         style={{ padding: '32px 40px 48px' }}
-        width="600px"
+        width="800px"
         open={open}
 
         onFinish={onFinish(values)}
@@ -124,14 +124,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>
 
-
         <ProForm.Group>
           <ProFormSelect
             name="status"
             label="状态"
             width="md"
-            params={{current: 999, pageSize: 1}}
-            request={async () => [
+            options={[
               { label: '草稿', value: 0 },
               { label: '已发布/发送完成', value:1 },
               { label: '定时发布中', value: 2 },

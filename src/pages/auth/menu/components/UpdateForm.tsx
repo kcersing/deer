@@ -74,7 +74,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         }}
 
         style={{ padding: '32px 40px 48px' }}
-        width="400px"
+        width="800px"
         open={open}
 
         onFinish={onFinish(values)}

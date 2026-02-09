@@ -87,7 +87,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         }}
 
         style={{ padding: '32px 40px 48px' }}
-        width="400px"
+        width="800px"
         open={open}
 
         onFinish={onFinish(values)}
@@ -171,7 +171,6 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           <ProFormDateRangePicker
             name="salesAt"
             label="销售时间"
-            initialValue={defaultValue}
             rules={[
               {
                 required: true,
