@@ -86,7 +86,7 @@ func RefundAt(v time.Time) predicate.OrderRefund {
 }
 
 // Refund applies equality check predicate on the "refund" field. It's identical to RefundEQ.
-func Refund(v float64) predicate.OrderRefund {
+func Refund(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldEQ(FieldRefund, v))
 }
 
@@ -376,42 +376,42 @@ func RefundAtNotNil() predicate.OrderRefund {
 }
 
 // RefundEQ applies the EQ predicate on the "refund" field.
-func RefundEQ(v float64) predicate.OrderRefund {
+func RefundEQ(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldEQ(FieldRefund, v))
 }
 
 // RefundNEQ applies the NEQ predicate on the "refund" field.
-func RefundNEQ(v float64) predicate.OrderRefund {
+func RefundNEQ(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldNEQ(FieldRefund, v))
 }
 
 // RefundIn applies the In predicate on the "refund" field.
-func RefundIn(vs ...float64) predicate.OrderRefund {
+func RefundIn(vs ...int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldIn(FieldRefund, vs...))
 }
 
 // RefundNotIn applies the NotIn predicate on the "refund" field.
-func RefundNotIn(vs ...float64) predicate.OrderRefund {
+func RefundNotIn(vs ...int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldNotIn(FieldRefund, vs...))
 }
 
 // RefundGT applies the GT predicate on the "refund" field.
-func RefundGT(v float64) predicate.OrderRefund {
+func RefundGT(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldGT(FieldRefund, v))
 }
 
 // RefundGTE applies the GTE predicate on the "refund" field.
-func RefundGTE(v float64) predicate.OrderRefund {
+func RefundGTE(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldGTE(FieldRefund, v))
 }
 
 // RefundLT applies the LT predicate on the "refund" field.
-func RefundLT(v float64) predicate.OrderRefund {
+func RefundLT(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldLT(FieldRefund, v))
 }
 
 // RefundLTE applies the LTE predicate on the "refund" field.
-func RefundLTE(v float64) predicate.OrderRefund {
+func RefundLTE(v int64) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldLTE(FieldRefund, v))
 }
 

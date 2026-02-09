@@ -105,13 +105,13 @@ func (_c *OrderRefundCreate) SetNillableRefundAt(v *time.Time) *OrderRefundCreat
 }
 
 // SetRefund sets the "refund" field.
-func (_c *OrderRefundCreate) SetRefund(v float64) *OrderRefundCreate {
+func (_c *OrderRefundCreate) SetRefund(v int64) *OrderRefundCreate {
 	_c.mutation.SetRefund(v)
 	return _c
 }
 
 // SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_c *OrderRefundCreate) SetNillableRefund(v *float64) *OrderRefundCreate {
+func (_c *OrderRefundCreate) SetNillableRefund(v *int64) *OrderRefundCreate {
 	if v != nil {
 		_c.SetRefund(*v)
 	}
@@ -255,7 +255,7 @@ func (_c *OrderRefundCreate) createSpec() (*OrderRefund, *sqlgraph.CreateSpec) {
 		_node.RefundAt = value
 	}
 	if value, ok := _c.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeFloat64, value)
+		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
 		_node.Refund = value
 	}
 	if value, ok := _c.mutation.RefundNature(); ok {

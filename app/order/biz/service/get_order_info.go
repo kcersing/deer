@@ -8,7 +8,9 @@ import (
 
 type GetOrderInfoService struct {
 	ctx context.Context
-} // NewGetOrderInfoService new GetOrderInfoService
+}
+
+// NewGetOrderInfoService new GetOrderInfoService
 func NewGetOrderInfoService(ctx context.Context) *GetOrderInfoService {
 	return &GetOrderInfoService{ctx: ctx}
 }

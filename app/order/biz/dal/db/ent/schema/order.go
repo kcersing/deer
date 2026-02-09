@@ -35,9 +35,9 @@ func (Order) Fields() []ent.Field {
 
 		field.Int64("version").Default(1).Comment("乐观锁版本号").Optional(),
 
-		field.Float("total_amount").Default(0).Comment("总金额").Optional(),
-		field.Float("actual").Default(0).Comment("实际已付款").Optional(),
-		field.Float("remission").Default(0).Comment("减免").Optional(),
+		field.Int64("total_amount").Default(0).Comment("总金额").Optional(),
+		field.Int64("actual").Default(0).Comment("实际已付款").Optional(),
+		field.Int64("remission").Default(0).Comment("减免").Optional(),
 		field.String("close_nature").Comment("关闭原因").Optional(),
 	}
 }

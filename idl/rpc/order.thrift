@@ -51,6 +51,7 @@ struct CreateOrderReq {
     2:optional i64 createdId=0 (api.raw = "createdId")
     3:optional order.OrderItem items={} (api.raw = "items")
     4:optional i64 totalAmount=0 (api.raw = "totalAmount")
+   5:optional i64 userId=0 (api.raw = "userId")
 }
 
 struct PaymentReq {
@@ -61,7 +62,7 @@ service OrderService  {
     OrderResp GetOrderInfo(1:GetOrderInfoReq req)
     GetOrderListResp GetOrderList(1:GetOrderListReq req)
     base.NilResponse DeleteOrder(1:base.IdReq req)
-    OrderResp CreateOrder(1:GetOrderListReq req)
+    OrderResp CreateOrder(1:CreateOrderReq req)
     OrderResp Payment(1:PaymentReq req)
     base.NilResponse CancelledOrder(1:CreateOrderReq req)
     base.NilResponse RefundOrder(1:RefundOrderReq req)

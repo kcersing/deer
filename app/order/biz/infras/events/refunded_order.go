@@ -10,7 +10,7 @@ import (
 type RefundedOrderEvent struct {
 	common.EventBase
 	Reason         string
-	RefundedAmount float64
+	RefundedAmount int64
 	CreatedId      int64
 }
 

@@ -8,7 +8,9 @@ import (
 
 type PaymentService struct {
 	ctx context.Context
-} // NewPaymentService new PaymentService
+}
+
+// NewPaymentService new PaymentService
 func NewPaymentService(ctx context.Context) *PaymentService {
 	return &PaymentService{ctx: ctx}
 }

@@ -117,14 +117,14 @@ func (_u *OrderPayUpdate) ClearOrderID() *OrderPayUpdate {
 }
 
 // SetRemission sets the "remission" field.
-func (_u *OrderPayUpdate) SetRemission(v float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) SetRemission(v int64) *OrderPayUpdate {
 	_u.mutation.ResetRemission()
 	_u.mutation.SetRemission(v)
 	return _u
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_u *OrderPayUpdate) SetNillableRemission(v *float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) SetNillableRemission(v *int64) *OrderPayUpdate {
 	if v != nil {
 		_u.SetRemission(*v)
 	}
@@ -132,7 +132,7 @@ func (_u *OrderPayUpdate) SetNillableRemission(v *float64) *OrderPayUpdate {
 }
 
 // AddRemission adds value to the "remission" field.
-func (_u *OrderPayUpdate) AddRemission(v float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) AddRemission(v int64) *OrderPayUpdate {
 	_u.mutation.AddRemission(v)
 	return _u
 }
@@ -144,14 +144,14 @@ func (_u *OrderPayUpdate) ClearRemission() *OrderPayUpdate {
 }
 
 // SetPay sets the "pay" field.
-func (_u *OrderPayUpdate) SetPay(v float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) SetPay(v int64) *OrderPayUpdate {
 	_u.mutation.ResetPay()
 	_u.mutation.SetPay(v)
 	return _u
 }
 
 // SetNillablePay sets the "pay" field if the given value is not nil.
-func (_u *OrderPayUpdate) SetNillablePay(v *float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) SetNillablePay(v *int64) *OrderPayUpdate {
 	if v != nil {
 		_u.SetPay(*v)
 	}
@@ -159,7 +159,7 @@ func (_u *OrderPayUpdate) SetNillablePay(v *float64) *OrderPayUpdate {
 }
 
 // AddPay adds value to the "pay" field.
-func (_u *OrderPayUpdate) AddPay(v float64) *OrderPayUpdate {
+func (_u *OrderPayUpdate) AddPay(v int64) *OrderPayUpdate {
 	_u.mutation.AddPay(v)
 	return _u
 }
@@ -377,22 +377,22 @@ func (_u *OrderPayUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(orderpay.FieldCreatedID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
-		_spec.SetField(orderpay.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldRemission, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRemission(); ok {
-		_spec.AddField(orderpay.FieldRemission, field.TypeFloat64, value)
+		_spec.AddField(orderpay.FieldRemission, field.TypeInt64, value)
 	}
 	if _u.mutation.RemissionCleared() {
-		_spec.ClearField(orderpay.FieldRemission, field.TypeFloat64)
+		_spec.ClearField(orderpay.FieldRemission, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Pay(); ok {
-		_spec.SetField(orderpay.FieldPay, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldPay, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPay(); ok {
-		_spec.AddField(orderpay.FieldPay, field.TypeFloat64, value)
+		_spec.AddField(orderpay.FieldPay, field.TypeInt64, value)
 	}
 	if _u.mutation.PayCleared() {
-		_spec.ClearField(orderpay.FieldPay, field.TypeFloat64)
+		_spec.ClearField(orderpay.FieldPay, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Note(); ok {
 		_spec.SetField(orderpay.FieldNote, field.TypeString, value)
@@ -571,14 +571,14 @@ func (_u *OrderPayUpdateOne) ClearOrderID() *OrderPayUpdateOne {
 }
 
 // SetRemission sets the "remission" field.
-func (_u *OrderPayUpdateOne) SetRemission(v float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) SetRemission(v int64) *OrderPayUpdateOne {
 	_u.mutation.ResetRemission()
 	_u.mutation.SetRemission(v)
 	return _u
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_u *OrderPayUpdateOne) SetNillableRemission(v *float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) SetNillableRemission(v *int64) *OrderPayUpdateOne {
 	if v != nil {
 		_u.SetRemission(*v)
 	}
@@ -586,7 +586,7 @@ func (_u *OrderPayUpdateOne) SetNillableRemission(v *float64) *OrderPayUpdateOne
 }
 
 // AddRemission adds value to the "remission" field.
-func (_u *OrderPayUpdateOne) AddRemission(v float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) AddRemission(v int64) *OrderPayUpdateOne {
 	_u.mutation.AddRemission(v)
 	return _u
 }
@@ -598,14 +598,14 @@ func (_u *OrderPayUpdateOne) ClearRemission() *OrderPayUpdateOne {
 }
 
 // SetPay sets the "pay" field.
-func (_u *OrderPayUpdateOne) SetPay(v float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) SetPay(v int64) *OrderPayUpdateOne {
 	_u.mutation.ResetPay()
 	_u.mutation.SetPay(v)
 	return _u
 }
 
 // SetNillablePay sets the "pay" field if the given value is not nil.
-func (_u *OrderPayUpdateOne) SetNillablePay(v *float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) SetNillablePay(v *int64) *OrderPayUpdateOne {
 	if v != nil {
 		_u.SetPay(*v)
 	}
@@ -613,7 +613,7 @@ func (_u *OrderPayUpdateOne) SetNillablePay(v *float64) *OrderPayUpdateOne {
 }
 
 // AddPay adds value to the "pay" field.
-func (_u *OrderPayUpdateOne) AddPay(v float64) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) AddPay(v int64) *OrderPayUpdateOne {
 	_u.mutation.AddPay(v)
 	return _u
 }
@@ -861,22 +861,22 @@ func (_u *OrderPayUpdateOne) sqlSave(ctx context.Context) (_node *OrderPay, err 
 		_spec.ClearField(orderpay.FieldCreatedID, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
-		_spec.SetField(orderpay.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldRemission, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRemission(); ok {
-		_spec.AddField(orderpay.FieldRemission, field.TypeFloat64, value)
+		_spec.AddField(orderpay.FieldRemission, field.TypeInt64, value)
 	}
 	if _u.mutation.RemissionCleared() {
-		_spec.ClearField(orderpay.FieldRemission, field.TypeFloat64)
+		_spec.ClearField(orderpay.FieldRemission, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Pay(); ok {
-		_spec.SetField(orderpay.FieldPay, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldPay, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPay(); ok {
-		_spec.AddField(orderpay.FieldPay, field.TypeFloat64, value)
+		_spec.AddField(orderpay.FieldPay, field.TypeInt64, value)
 	}
 	if _u.mutation.PayCleared() {
-		_spec.ClearField(orderpay.FieldPay, field.TypeFloat64)
+		_spec.ClearField(orderpay.FieldPay, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Note(); ok {
 		_spec.SetField(orderpay.FieldNote, field.TypeString, value)

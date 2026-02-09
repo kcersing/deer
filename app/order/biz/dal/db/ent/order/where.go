@@ -106,17 +106,17 @@ func Version(v int64) predicate.Order {
 }
 
 // TotalAmount applies equality check predicate on the "total_amount" field. It's identical to TotalAmountEQ.
-func TotalAmount(v float64) predicate.Order {
+func TotalAmount(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldTotalAmount, v))
 }
 
 // Actual applies equality check predicate on the "actual" field. It's identical to ActualEQ.
-func Actual(v float64) predicate.Order {
+func Actual(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldActual, v))
 }
 
 // Remission applies equality check predicate on the "remission" field. It's identical to RemissionEQ.
-func Remission(v float64) predicate.Order {
+func Remission(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldRemission, v))
 }
 
@@ -671,42 +671,42 @@ func VersionNotNil() predicate.Order {
 }
 
 // TotalAmountEQ applies the EQ predicate on the "total_amount" field.
-func TotalAmountEQ(v float64) predicate.Order {
+func TotalAmountEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldTotalAmount, v))
 }
 
 // TotalAmountNEQ applies the NEQ predicate on the "total_amount" field.
-func TotalAmountNEQ(v float64) predicate.Order {
+func TotalAmountNEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldTotalAmount, v))
 }
 
 // TotalAmountIn applies the In predicate on the "total_amount" field.
-func TotalAmountIn(vs ...float64) predicate.Order {
+func TotalAmountIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldTotalAmount, vs...))
 }
 
 // TotalAmountNotIn applies the NotIn predicate on the "total_amount" field.
-func TotalAmountNotIn(vs ...float64) predicate.Order {
+func TotalAmountNotIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldTotalAmount, vs...))
 }
 
 // TotalAmountGT applies the GT predicate on the "total_amount" field.
-func TotalAmountGT(v float64) predicate.Order {
+func TotalAmountGT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldTotalAmount, v))
 }
 
 // TotalAmountGTE applies the GTE predicate on the "total_amount" field.
-func TotalAmountGTE(v float64) predicate.Order {
+func TotalAmountGTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldTotalAmount, v))
 }
 
 // TotalAmountLT applies the LT predicate on the "total_amount" field.
-func TotalAmountLT(v float64) predicate.Order {
+func TotalAmountLT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldTotalAmount, v))
 }
 
 // TotalAmountLTE applies the LTE predicate on the "total_amount" field.
-func TotalAmountLTE(v float64) predicate.Order {
+func TotalAmountLTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldTotalAmount, v))
 }
 
@@ -721,42 +721,42 @@ func TotalAmountNotNil() predicate.Order {
 }
 
 // ActualEQ applies the EQ predicate on the "actual" field.
-func ActualEQ(v float64) predicate.Order {
+func ActualEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldActual, v))
 }
 
 // ActualNEQ applies the NEQ predicate on the "actual" field.
-func ActualNEQ(v float64) predicate.Order {
+func ActualNEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldActual, v))
 }
 
 // ActualIn applies the In predicate on the "actual" field.
-func ActualIn(vs ...float64) predicate.Order {
+func ActualIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldActual, vs...))
 }
 
 // ActualNotIn applies the NotIn predicate on the "actual" field.
-func ActualNotIn(vs ...float64) predicate.Order {
+func ActualNotIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldActual, vs...))
 }
 
 // ActualGT applies the GT predicate on the "actual" field.
-func ActualGT(v float64) predicate.Order {
+func ActualGT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldActual, v))
 }
 
 // ActualGTE applies the GTE predicate on the "actual" field.
-func ActualGTE(v float64) predicate.Order {
+func ActualGTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldActual, v))
 }
 
 // ActualLT applies the LT predicate on the "actual" field.
-func ActualLT(v float64) predicate.Order {
+func ActualLT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldActual, v))
 }
 
 // ActualLTE applies the LTE predicate on the "actual" field.
-func ActualLTE(v float64) predicate.Order {
+func ActualLTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldActual, v))
 }
 
@@ -771,42 +771,42 @@ func ActualNotNil() predicate.Order {
 }
 
 // RemissionEQ applies the EQ predicate on the "remission" field.
-func RemissionEQ(v float64) predicate.Order {
+func RemissionEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldRemission, v))
 }
 
 // RemissionNEQ applies the NEQ predicate on the "remission" field.
-func RemissionNEQ(v float64) predicate.Order {
+func RemissionNEQ(v int64) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldRemission, v))
 }
 
 // RemissionIn applies the In predicate on the "remission" field.
-func RemissionIn(vs ...float64) predicate.Order {
+func RemissionIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldRemission, vs...))
 }
 
 // RemissionNotIn applies the NotIn predicate on the "remission" field.
-func RemissionNotIn(vs ...float64) predicate.Order {
+func RemissionNotIn(vs ...int64) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldRemission, vs...))
 }
 
 // RemissionGT applies the GT predicate on the "remission" field.
-func RemissionGT(v float64) predicate.Order {
+func RemissionGT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldRemission, v))
 }
 
 // RemissionGTE applies the GTE predicate on the "remission" field.
-func RemissionGTE(v float64) predicate.Order {
+func RemissionGTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldRemission, v))
 }
 
 // RemissionLT applies the LT predicate on the "remission" field.
-func RemissionLT(v float64) predicate.Order {
+func RemissionLT(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldRemission, v))
 }
 
 // RemissionLTE applies the LTE predicate on the "remission" field.
-func RemissionLTE(v float64) predicate.Order {
+func RemissionLTE(v int64) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldRemission, v))
 }
 

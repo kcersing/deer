@@ -1,8 +1,9 @@
 package schema
 
 import (
-	"entgo.io/ent/schema/edge"
 	"order/biz/dal/db/ent/schema/mixins"
+
+	"entgo.io/ent/schema/edge"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
@@ -11,6 +12,7 @@ import (
 	"entgo.io/ent/schema/index"
 )
 
+// OrderSnapshots 快照表
 type OrderSnapshots struct {
 	ent.Schema
 }

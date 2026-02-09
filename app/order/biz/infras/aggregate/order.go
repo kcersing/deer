@@ -2,7 +2,7 @@ package aggregate
 
 import (
 	"gen/kitex_gen/base"
-	"gen/kitex_gen/order"
+
 	"order/biz/infras/common"
 	"order/biz/infras/events"
 	"time"
@@ -24,9 +24,9 @@ type Order struct {
 
 func NewOrder() (order *Order) {
 	order = &Order{}
-	base := common.NewAggregateBase(order.When)
-	base.SetAggregateType(OrderAggregateType)
-	order.AggregateBase = *base
+	aggregateBase := common.NewAggregateBase(order.When)
+	aggregateBase.SetAggregateType(OrderAggregateType)
+	order.AggregateBase = *aggregateBase
 	order.stateMachine = NewStateMachine(order)
 
 	return order

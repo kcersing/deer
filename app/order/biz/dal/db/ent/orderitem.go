@@ -34,7 +34,7 @@ type OrderItem struct {
 	// 名称
 	Name string `json:"name,omitempty"`
 	// 单价
-	UnitPrice float64 `json:"unit_price,omitempty"`
+	UnitPrice int64 `json:"unit_price,omitempty"`
 	// 数量
 	Quantity int64 `json:"quantity,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -68,9 +68,7 @@ func (*OrderItem) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orderitem.FieldUnitPrice:
-			values[i] = new(sql.NullFloat64)
-		case orderitem.FieldID, orderitem.FieldDelete, orderitem.FieldCreatedID, orderitem.FieldOrderID, orderitem.FieldProductID, orderitem.FieldQuantity:
+		case orderitem.FieldID, orderitem.FieldDelete, orderitem.FieldCreatedID, orderitem.FieldOrderID, orderitem.FieldProductID, orderitem.FieldUnitPrice, orderitem.FieldQuantity:
 			values[i] = new(sql.NullInt64)
 		case orderitem.FieldName:
 			values[i] = new(sql.NullString)
@@ -140,10 +138,10 @@ func (_m *OrderItem) assignValues(columns []string, values []any) error {
 				_m.Name = value.String
 			}
 		case orderitem.FieldUnitPrice:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field unit_price", values[i])
 			} else if value.Valid {
-				_m.UnitPrice = value.Float64
+				_m.UnitPrice = value.Int64
 			}
 		case orderitem.FieldQuantity:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

@@ -119,13 +119,13 @@ func (_c *OrderItemCreate) SetNillableName(v *string) *OrderItemCreate {
 }
 
 // SetUnitPrice sets the "unit_price" field.
-func (_c *OrderItemCreate) SetUnitPrice(v float64) *OrderItemCreate {
+func (_c *OrderItemCreate) SetUnitPrice(v int64) *OrderItemCreate {
 	_c.mutation.SetUnitPrice(v)
 	return _c
 }
 
 // SetNillableUnitPrice sets the "unit_price" field if the given value is not nil.
-func (_c *OrderItemCreate) SetNillableUnitPrice(v *float64) *OrderItemCreate {
+func (_c *OrderItemCreate) SetNillableUnitPrice(v *int64) *OrderItemCreate {
 	if v != nil {
 		_c.SetUnitPrice(*v)
 	}
@@ -273,7 +273,7 @@ func (_c *OrderItemCreate) createSpec() (*OrderItem, *sqlgraph.CreateSpec) {
 		_node.Name = value
 	}
 	if value, ok := _c.mutation.UnitPrice(); ok {
-		_spec.SetField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
+		_spec.SetField(orderitem.FieldUnitPrice, field.TypeInt64, value)
 		_node.UnitPrice = value
 	}
 	if value, ok := _c.mutation.Quantity(); ok {

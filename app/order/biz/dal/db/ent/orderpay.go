@@ -31,9 +31,9 @@ type OrderPay struct {
 	// 订单id
 	OrderID int64 `json:"order_id,omitempty"`
 	// 减免
-	Remission float64 `json:"remission,omitempty"`
+	Remission int64 `json:"remission,omitempty"`
 	// 实际付款
-	Pay float64 `json:"pay,omitempty"`
+	Pay int64 `json:"pay,omitempty"`
 	// 备注
 	Note string `json:"note,omitempty"`
 	// 支付时间
@@ -79,9 +79,7 @@ func (*OrderPay) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case orderpay.FieldPayExtra:
 			values[i] = new([]byte)
-		case orderpay.FieldRemission, orderpay.FieldPay:
-			values[i] = new(sql.NullFloat64)
-		case orderpay.FieldID, orderpay.FieldDelete, orderpay.FieldCreatedID, orderpay.FieldOrderID:
+		case orderpay.FieldID, orderpay.FieldDelete, orderpay.FieldCreatedID, orderpay.FieldOrderID, orderpay.FieldRemission, orderpay.FieldPay:
 			values[i] = new(sql.NullInt64)
 		case orderpay.FieldNote, orderpay.FieldPayWay, orderpay.FieldPaySn, orderpay.FieldPrepayID:
 			values[i] = new(sql.NullString)
@@ -139,16 +137,16 @@ func (_m *OrderPay) assignValues(columns []string, values []any) error {
 				_m.OrderID = value.Int64
 			}
 		case orderpay.FieldRemission:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field remission", values[i])
 			} else if value.Valid {
-				_m.Remission = value.Float64
+				_m.Remission = value.Int64
 			}
 		case orderpay.FieldPay:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field pay", values[i])
 			} else if value.Valid {
-				_m.Pay = value.Float64
+				_m.Pay = value.Int64
 			}
 		case orderpay.FieldNote:
 			if value, ok := values[i].(*sql.NullString); !ok {

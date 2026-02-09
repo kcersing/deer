@@ -41,11 +41,11 @@ type Order struct {
 	// 乐观锁版本号
 	Version int64 `json:"version,omitempty"`
 	// 总金额
-	TotalAmount float64 `json:"total_amount,omitempty"`
+	TotalAmount int64 `json:"total_amount,omitempty"`
 	// 实际已付款
-	Actual float64 `json:"actual,omitempty"`
+	Actual int64 `json:"actual,omitempty"`
 	// 减免
-	Remission float64 `json:"remission,omitempty"`
+	Remission int64 `json:"remission,omitempty"`
 	// 关闭原因
 	CloseNature string `json:"close_nature,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -132,9 +132,7 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldTotalAmount, order.FieldActual, order.FieldRemission:
-			values[i] = new(sql.NullFloat64)
-		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion:
+		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion, order.FieldTotalAmount, order.FieldActual, order.FieldRemission:
 			values[i] = new(sql.NullInt64)
 		case order.FieldSn, order.FieldStatus, order.FieldCloseNature:
 			values[i] = new(sql.NullString)
@@ -228,22 +226,22 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 				_m.Version = value.Int64
 			}
 		case order.FieldTotalAmount:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field total_amount", values[i])
 			} else if value.Valid {
-				_m.TotalAmount = value.Float64
+				_m.TotalAmount = value.Int64
 			}
 		case order.FieldActual:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field actual", values[i])
 			} else if value.Valid {
-				_m.Actual = value.Float64
+				_m.Actual = value.Int64
 			}
 		case order.FieldRemission:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field remission", values[i])
 			} else if value.Valid {
-				_m.Remission = value.Float64
+				_m.Remission = value.Int64
 			}
 		case order.FieldCloseNature:
 			if value, ok := values[i].(*sql.NullString); !ok {

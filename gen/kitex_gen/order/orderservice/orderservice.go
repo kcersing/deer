@@ -295,7 +295,7 @@ func (p *kClient) DeleteOrder(ctx context.Context, req *base.IdReq) (r *base.Nil
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CreateOrder(ctx context.Context, req *order.GetOrderListReq) (r *order.OrderResp, err error) {
+func (p *kClient) CreateOrder(ctx context.Context, req *order.CreateOrderReq) (r *order.OrderResp, err error) {
 	var _args order.OrderServiceCreateOrderArgs
 	_args.Req = req
 	var _result order.OrderServiceCreateOrderResult

@@ -91,13 +91,13 @@ func (_c *OrderPayCreate) SetNillableOrderID(v *int64) *OrderPayCreate {
 }
 
 // SetRemission sets the "remission" field.
-func (_c *OrderPayCreate) SetRemission(v float64) *OrderPayCreate {
+func (_c *OrderPayCreate) SetRemission(v int64) *OrderPayCreate {
 	_c.mutation.SetRemission(v)
 	return _c
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_c *OrderPayCreate) SetNillableRemission(v *float64) *OrderPayCreate {
+func (_c *OrderPayCreate) SetNillableRemission(v *int64) *OrderPayCreate {
 	if v != nil {
 		_c.SetRemission(*v)
 	}
@@ -105,13 +105,13 @@ func (_c *OrderPayCreate) SetNillableRemission(v *float64) *OrderPayCreate {
 }
 
 // SetPay sets the "pay" field.
-func (_c *OrderPayCreate) SetPay(v float64) *OrderPayCreate {
+func (_c *OrderPayCreate) SetPay(v int64) *OrderPayCreate {
 	_c.mutation.SetPay(v)
 	return _c
 }
 
 // SetNillablePay sets the "pay" field if the given value is not nil.
-func (_c *OrderPayCreate) SetNillablePay(v *float64) *OrderPayCreate {
+func (_c *OrderPayCreate) SetNillablePay(v *int64) *OrderPayCreate {
 	if v != nil {
 		_c.SetPay(*v)
 	}
@@ -309,11 +309,11 @@ func (_c *OrderPayCreate) createSpec() (*OrderPay, *sqlgraph.CreateSpec) {
 		_node.CreatedID = value
 	}
 	if value, ok := _c.mutation.Remission(); ok {
-		_spec.SetField(orderpay.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldRemission, field.TypeInt64, value)
 		_node.Remission = value
 	}
 	if value, ok := _c.mutation.Pay(); ok {
-		_spec.SetField(orderpay.FieldPay, field.TypeFloat64, value)
+		_spec.SetField(orderpay.FieldPay, field.TypeInt64, value)
 		_node.Pay = value
 	}
 	if value, ok := _c.mutation.Note(); ok {

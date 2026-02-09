@@ -256,14 +256,14 @@ func (_u *OrderUpdate) ClearVersion() *OrderUpdate {
 }
 
 // SetTotalAmount sets the "total_amount" field.
-func (_u *OrderUpdate) SetTotalAmount(v float64) *OrderUpdate {
+func (_u *OrderUpdate) SetTotalAmount(v int64) *OrderUpdate {
 	_u.mutation.ResetTotalAmount()
 	_u.mutation.SetTotalAmount(v)
 	return _u
 }
 
 // SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableTotalAmount(v *float64) *OrderUpdate {
+func (_u *OrderUpdate) SetNillableTotalAmount(v *int64) *OrderUpdate {
 	if v != nil {
 		_u.SetTotalAmount(*v)
 	}
@@ -271,7 +271,7 @@ func (_u *OrderUpdate) SetNillableTotalAmount(v *float64) *OrderUpdate {
 }
 
 // AddTotalAmount adds value to the "total_amount" field.
-func (_u *OrderUpdate) AddTotalAmount(v float64) *OrderUpdate {
+func (_u *OrderUpdate) AddTotalAmount(v int64) *OrderUpdate {
 	_u.mutation.AddTotalAmount(v)
 	return _u
 }
@@ -283,14 +283,14 @@ func (_u *OrderUpdate) ClearTotalAmount() *OrderUpdate {
 }
 
 // SetActual sets the "actual" field.
-func (_u *OrderUpdate) SetActual(v float64) *OrderUpdate {
+func (_u *OrderUpdate) SetActual(v int64) *OrderUpdate {
 	_u.mutation.ResetActual()
 	_u.mutation.SetActual(v)
 	return _u
 }
 
 // SetNillableActual sets the "actual" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableActual(v *float64) *OrderUpdate {
+func (_u *OrderUpdate) SetNillableActual(v *int64) *OrderUpdate {
 	if v != nil {
 		_u.SetActual(*v)
 	}
@@ -298,7 +298,7 @@ func (_u *OrderUpdate) SetNillableActual(v *float64) *OrderUpdate {
 }
 
 // AddActual adds value to the "actual" field.
-func (_u *OrderUpdate) AddActual(v float64) *OrderUpdate {
+func (_u *OrderUpdate) AddActual(v int64) *OrderUpdate {
 	_u.mutation.AddActual(v)
 	return _u
 }
@@ -310,14 +310,14 @@ func (_u *OrderUpdate) ClearActual() *OrderUpdate {
 }
 
 // SetRemission sets the "remission" field.
-func (_u *OrderUpdate) SetRemission(v float64) *OrderUpdate {
+func (_u *OrderUpdate) SetRemission(v int64) *OrderUpdate {
 	_u.mutation.ResetRemission()
 	_u.mutation.SetRemission(v)
 	return _u
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableRemission(v *float64) *OrderUpdate {
+func (_u *OrderUpdate) SetNillableRemission(v *int64) *OrderUpdate {
 	if v != nil {
 		_u.SetRemission(*v)
 	}
@@ -325,7 +325,7 @@ func (_u *OrderUpdate) SetNillableRemission(v *float64) *OrderUpdate {
 }
 
 // AddRemission adds value to the "remission" field.
-func (_u *OrderUpdate) AddRemission(v float64) *OrderUpdate {
+func (_u *OrderUpdate) AddRemission(v int64) *OrderUpdate {
 	_u.mutation.AddRemission(v)
 	return _u
 }
@@ -711,31 +711,31 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(order.FieldVersion, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.TotalAmount(); ok {
-		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_spec.SetField(order.FieldTotalAmount, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedTotalAmount(); ok {
-		_spec.AddField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_spec.AddField(order.FieldTotalAmount, field.TypeInt64, value)
 	}
 	if _u.mutation.TotalAmountCleared() {
-		_spec.ClearField(order.FieldTotalAmount, field.TypeFloat64)
+		_spec.ClearField(order.FieldTotalAmount, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Actual(); ok {
-		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+		_spec.SetField(order.FieldActual, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedActual(); ok {
-		_spec.AddField(order.FieldActual, field.TypeFloat64, value)
+		_spec.AddField(order.FieldActual, field.TypeInt64, value)
 	}
 	if _u.mutation.ActualCleared() {
-		_spec.ClearField(order.FieldActual, field.TypeFloat64)
+		_spec.ClearField(order.FieldActual, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
-		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(order.FieldRemission, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRemission(); ok {
-		_spec.AddField(order.FieldRemission, field.TypeFloat64, value)
+		_spec.AddField(order.FieldRemission, field.TypeInt64, value)
 	}
 	if _u.mutation.RemissionCleared() {
-		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
+		_spec.ClearField(order.FieldRemission, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CloseNature(); ok {
 		_spec.SetField(order.FieldCloseNature, field.TypeString, value)
@@ -1255,14 +1255,14 @@ func (_u *OrderUpdateOne) ClearVersion() *OrderUpdateOne {
 }
 
 // SetTotalAmount sets the "total_amount" field.
-func (_u *OrderUpdateOne) SetTotalAmount(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetTotalAmount(v int64) *OrderUpdateOne {
 	_u.mutation.ResetTotalAmount()
 	_u.mutation.SetTotalAmount(v)
 	return _u
 }
 
 // SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableTotalAmount(v *float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetNillableTotalAmount(v *int64) *OrderUpdateOne {
 	if v != nil {
 		_u.SetTotalAmount(*v)
 	}
@@ -1270,7 +1270,7 @@ func (_u *OrderUpdateOne) SetNillableTotalAmount(v *float64) *OrderUpdateOne {
 }
 
 // AddTotalAmount adds value to the "total_amount" field.
-func (_u *OrderUpdateOne) AddTotalAmount(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) AddTotalAmount(v int64) *OrderUpdateOne {
 	_u.mutation.AddTotalAmount(v)
 	return _u
 }
@@ -1282,14 +1282,14 @@ func (_u *OrderUpdateOne) ClearTotalAmount() *OrderUpdateOne {
 }
 
 // SetActual sets the "actual" field.
-func (_u *OrderUpdateOne) SetActual(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetActual(v int64) *OrderUpdateOne {
 	_u.mutation.ResetActual()
 	_u.mutation.SetActual(v)
 	return _u
 }
 
 // SetNillableActual sets the "actual" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableActual(v *float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetNillableActual(v *int64) *OrderUpdateOne {
 	if v != nil {
 		_u.SetActual(*v)
 	}
@@ -1297,7 +1297,7 @@ func (_u *OrderUpdateOne) SetNillableActual(v *float64) *OrderUpdateOne {
 }
 
 // AddActual adds value to the "actual" field.
-func (_u *OrderUpdateOne) AddActual(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) AddActual(v int64) *OrderUpdateOne {
 	_u.mutation.AddActual(v)
 	return _u
 }
@@ -1309,14 +1309,14 @@ func (_u *OrderUpdateOne) ClearActual() *OrderUpdateOne {
 }
 
 // SetRemission sets the "remission" field.
-func (_u *OrderUpdateOne) SetRemission(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetRemission(v int64) *OrderUpdateOne {
 	_u.mutation.ResetRemission()
 	_u.mutation.SetRemission(v)
 	return _u
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableRemission(v *float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetNillableRemission(v *int64) *OrderUpdateOne {
 	if v != nil {
 		_u.SetRemission(*v)
 	}
@@ -1324,7 +1324,7 @@ func (_u *OrderUpdateOne) SetNillableRemission(v *float64) *OrderUpdateOne {
 }
 
 // AddRemission adds value to the "remission" field.
-func (_u *OrderUpdateOne) AddRemission(v float64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) AddRemission(v int64) *OrderUpdateOne {
 	_u.mutation.AddRemission(v)
 	return _u
 }
@@ -1740,31 +1740,31 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 		_spec.ClearField(order.FieldVersion, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.TotalAmount(); ok {
-		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_spec.SetField(order.FieldTotalAmount, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedTotalAmount(); ok {
-		_spec.AddField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_spec.AddField(order.FieldTotalAmount, field.TypeInt64, value)
 	}
 	if _u.mutation.TotalAmountCleared() {
-		_spec.ClearField(order.FieldTotalAmount, field.TypeFloat64)
+		_spec.ClearField(order.FieldTotalAmount, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Actual(); ok {
-		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+		_spec.SetField(order.FieldActual, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedActual(); ok {
-		_spec.AddField(order.FieldActual, field.TypeFloat64, value)
+		_spec.AddField(order.FieldActual, field.TypeInt64, value)
 	}
 	if _u.mutation.ActualCleared() {
-		_spec.ClearField(order.FieldActual, field.TypeFloat64)
+		_spec.ClearField(order.FieldActual, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Remission(); ok {
-		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(order.FieldRemission, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRemission(); ok {
-		_spec.AddField(order.FieldRemission, field.TypeFloat64, value)
+		_spec.AddField(order.FieldRemission, field.TypeInt64, value)
 	}
 	if _u.mutation.RemissionCleared() {
-		_spec.ClearField(order.FieldRemission, field.TypeFloat64)
+		_spec.ClearField(order.FieldRemission, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.CloseNature(); ok {
 		_spec.SetField(order.FieldCloseNature, field.TypeString, value)

@@ -18,7 +18,7 @@ func (OrderRefund) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("order_id").Comment("订单id").Optional(),
 		field.Time("refund_at").Comment("订单退费时间").Optional(),
-		field.Float("refund").Default(0).Comment("退费金额").Optional(),
+		field.Int64("refund").Default(0).Comment("退费金额").Optional(),
 		field.String("refund_nature").Comment("退费原因").Optional(),
 	}
 }

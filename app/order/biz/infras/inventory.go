@@ -2,9 +2,9 @@ package infras
 
 import (
 	"context"
-	"gen/kitex_gen/order"
+	"gen/kitex_gen/base"
 	"github.com/cloudwego/kitex/pkg/klog"
-	"order/biz/dal/mysql/ent"
+	"order/biz/dal/db/ent"
 	"order/biz/infras/common"
 	"order/biz/infras/events"
 )
@@ -28,7 +28,7 @@ func (h *InventoryHandler) Handle(ctx context.Context, event common.Event) error
 	return nil
 }
 
-func (h *InventoryHandler) Reserve(aggregateID int64, items []*order.Item) error {
+func (h *InventoryHandler) Reserve(aggregateID int64, items []*base.OrderItem) error {
 	// 实现库存预留逻辑
 	// 1. 校验库存是否充足
 	// 2. 预留库存
@@ -50,11 +50,11 @@ func (h *InventoryHandler) Release(aggregateID int64) error {
 
 type InventoryRepository interface {
 	// 预留库存（返回错误表示库存不足）
-	Reserve(ctx context.Context, items []*order.Item) error
+	Reserve(ctx context.Context, items []*base.OrderItem) error
 	// 释放库存
 	Release(ctx context.Context, aggregateID int64) error
 	// 检查库存是否充足
-	CheckAvailability(ctx context.Context, items []*order.Item) (bool, error)
+	CheckAvailability(ctx context.Context, items []*base.OrderItem) (bool, error)
 }
 
 // InventoryRepositoryImpl 订单仓储实现
@@ -65,7 +65,7 @@ type InventoryRepositoryImpl struct {
 	subscriptionSvc SubscriptionService // 新增：订阅服务
 }
 
-func (o InventoryRepositoryImpl) Reserve(ctx context.Context, items []*order.Item) error {
+func (o InventoryRepositoryImpl) Reserve(ctx context.Context, items []*base.OrderItem) error {
 	klog.Info("库存预留")
 	return nil
 }
@@ -73,7 +73,7 @@ func (o InventoryRepositoryImpl) Release(ctx context.Context, aggregateID int64)
 	klog.Info("库存释放")
 	return nil
 }
-func (o InventoryRepositoryImpl) CheckAvailability(ctx context.Context, items []*order.Item) (bool, error) {
+func (o InventoryRepositoryImpl) CheckAvailability(ctx context.Context, items []*base.OrderItem) (bool, error) {
 	return true, nil
 }
 

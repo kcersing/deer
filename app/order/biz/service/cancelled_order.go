@@ -8,7 +8,9 @@ import (
 
 type CancelledOrderService struct {
 	ctx context.Context
-} // NewCancelledOrderService new CancelledOrderService
+}
+
+// NewCancelledOrderService new CancelledOrderService
 func NewCancelledOrderService(ctx context.Context) *CancelledOrderService {
 	return &CancelledOrderService{ctx: ctx}
 }

@@ -136,14 +136,14 @@ func (_u *OrderRefundUpdate) ClearRefundAt() *OrderRefundUpdate {
 }
 
 // SetRefund sets the "refund" field.
-func (_u *OrderRefundUpdate) SetRefund(v float64) *OrderRefundUpdate {
+func (_u *OrderRefundUpdate) SetRefund(v int64) *OrderRefundUpdate {
 	_u.mutation.ResetRefund()
 	_u.mutation.SetRefund(v)
 	return _u
 }
 
 // SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderRefundUpdate) SetNillableRefund(v *float64) *OrderRefundUpdate {
+func (_u *OrderRefundUpdate) SetNillableRefund(v *int64) *OrderRefundUpdate {
 	if v != nil {
 		_u.SetRefund(*v)
 	}
@@ -151,7 +151,7 @@ func (_u *OrderRefundUpdate) SetNillableRefund(v *float64) *OrderRefundUpdate {
 }
 
 // AddRefund adds value to the "refund" field.
-func (_u *OrderRefundUpdate) AddRefund(v float64) *OrderRefundUpdate {
+func (_u *OrderRefundUpdate) AddRefund(v int64) *OrderRefundUpdate {
 	_u.mutation.AddRefund(v)
 	return _u
 }
@@ -277,13 +277,13 @@ func (_u *OrderRefundUpdate) sqlSave(ctx context.Context) (_node int, err error)
 		_spec.ClearField(orderrefund.FieldRefundAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeFloat64, value)
+		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(orderrefund.FieldRefund, field.TypeFloat64, value)
+		_spec.AddField(orderrefund.FieldRefund, field.TypeInt64, value)
 	}
 	if _u.mutation.RefundCleared() {
-		_spec.ClearField(orderrefund.FieldRefund, field.TypeFloat64)
+		_spec.ClearField(orderrefund.FieldRefund, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.RefundNature(); ok {
 		_spec.SetField(orderrefund.FieldRefundNature, field.TypeString, value)
@@ -447,14 +447,14 @@ func (_u *OrderRefundUpdateOne) ClearRefundAt() *OrderRefundUpdateOne {
 }
 
 // SetRefund sets the "refund" field.
-func (_u *OrderRefundUpdateOne) SetRefund(v float64) *OrderRefundUpdateOne {
+func (_u *OrderRefundUpdateOne) SetRefund(v int64) *OrderRefundUpdateOne {
 	_u.mutation.ResetRefund()
 	_u.mutation.SetRefund(v)
 	return _u
 }
 
 // SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderRefundUpdateOne) SetNillableRefund(v *float64) *OrderRefundUpdateOne {
+func (_u *OrderRefundUpdateOne) SetNillableRefund(v *int64) *OrderRefundUpdateOne {
 	if v != nil {
 		_u.SetRefund(*v)
 	}
@@ -462,7 +462,7 @@ func (_u *OrderRefundUpdateOne) SetNillableRefund(v *float64) *OrderRefundUpdate
 }
 
 // AddRefund adds value to the "refund" field.
-func (_u *OrderRefundUpdateOne) AddRefund(v float64) *OrderRefundUpdateOne {
+func (_u *OrderRefundUpdateOne) AddRefund(v int64) *OrderRefundUpdateOne {
 	_u.mutation.AddRefund(v)
 	return _u
 }
@@ -618,13 +618,13 @@ func (_u *OrderRefundUpdateOne) sqlSave(ctx context.Context) (_node *OrderRefund
 		_spec.ClearField(orderrefund.FieldRefundAt, field.TypeTime)
 	}
 	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeFloat64, value)
+		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(orderrefund.FieldRefund, field.TypeFloat64, value)
+		_spec.AddField(orderrefund.FieldRefund, field.TypeInt64, value)
 	}
 	if _u.mutation.RefundCleared() {
-		_spec.ClearField(orderrefund.FieldRefund, field.TypeFloat64)
+		_spec.ClearField(orderrefund.FieldRefund, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.RefundNature(); ok {
 		_spec.SetField(orderrefund.FieldRefundNature, field.TypeString, value)

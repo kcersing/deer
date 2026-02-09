@@ -32,7 +32,7 @@ func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IdReq) (re
 }
 
 // CreateOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) CreateOrder(ctx context.Context, req *order.GetOrderListReq) (resp *order.OrderResp, err error) {
+func (s *OrderServiceImpl) CreateOrder(ctx context.Context, req *order.CreateOrderReq) (resp *order.OrderResp, err error) {
 	resp, err = service.NewCreateOrderService(ctx).Run(req)
 
 	return resp, err

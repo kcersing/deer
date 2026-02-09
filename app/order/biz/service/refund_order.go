@@ -8,7 +8,9 @@ import (
 
 type RefundOrderService struct {
 	ctx context.Context
-} // NewRefundOrderService new RefundOrderService
+}
+
+// NewRefundOrderService new RefundOrderService
 func NewRefundOrderService(ctx context.Context) *RefundOrderService {
 	return &RefundOrderService{ctx: ctx}
 }

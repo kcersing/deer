@@ -173,13 +173,13 @@ func (_c *OrderCreate) SetNillableVersion(v *int64) *OrderCreate {
 }
 
 // SetTotalAmount sets the "total_amount" field.
-func (_c *OrderCreate) SetTotalAmount(v float64) *OrderCreate {
+func (_c *OrderCreate) SetTotalAmount(v int64) *OrderCreate {
 	_c.mutation.SetTotalAmount(v)
 	return _c
 }
 
 // SetNillableTotalAmount sets the "total_amount" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableTotalAmount(v *float64) *OrderCreate {
+func (_c *OrderCreate) SetNillableTotalAmount(v *int64) *OrderCreate {
 	if v != nil {
 		_c.SetTotalAmount(*v)
 	}
@@ -187,13 +187,13 @@ func (_c *OrderCreate) SetNillableTotalAmount(v *float64) *OrderCreate {
 }
 
 // SetActual sets the "actual" field.
-func (_c *OrderCreate) SetActual(v float64) *OrderCreate {
+func (_c *OrderCreate) SetActual(v int64) *OrderCreate {
 	_c.mutation.SetActual(v)
 	return _c
 }
 
 // SetNillableActual sets the "actual" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableActual(v *float64) *OrderCreate {
+func (_c *OrderCreate) SetNillableActual(v *int64) *OrderCreate {
 	if v != nil {
 		_c.SetActual(*v)
 	}
@@ -201,13 +201,13 @@ func (_c *OrderCreate) SetNillableActual(v *float64) *OrderCreate {
 }
 
 // SetRemission sets the "remission" field.
-func (_c *OrderCreate) SetRemission(v float64) *OrderCreate {
+func (_c *OrderCreate) SetRemission(v int64) *OrderCreate {
 	_c.mutation.SetRemission(v)
 	return _c
 }
 
 // SetNillableRemission sets the "remission" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableRemission(v *float64) *OrderCreate {
+func (_c *OrderCreate) SetNillableRemission(v *int64) *OrderCreate {
 	if v != nil {
 		_c.SetRemission(*v)
 	}
@@ -484,15 +484,15 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_node.Version = value
 	}
 	if value, ok := _c.mutation.TotalAmount(); ok {
-		_spec.SetField(order.FieldTotalAmount, field.TypeFloat64, value)
+		_spec.SetField(order.FieldTotalAmount, field.TypeInt64, value)
 		_node.TotalAmount = value
 	}
 	if value, ok := _c.mutation.Actual(); ok {
-		_spec.SetField(order.FieldActual, field.TypeFloat64, value)
+		_spec.SetField(order.FieldActual, field.TypeInt64, value)
 		_node.Actual = value
 	}
 	if value, ok := _c.mutation.Remission(); ok {
-		_spec.SetField(order.FieldRemission, field.TypeFloat64, value)
+		_spec.SetField(order.FieldRemission, field.TypeInt64, value)
 		_node.Remission = value
 	}
 	if value, ok := _c.mutation.CloseNature(); ok {

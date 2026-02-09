@@ -23,9 +23,9 @@ var (
 		{Name: "completion_at", Type: field.TypeTime, Nullable: true, Comment: "订单完成时间"},
 		{Name: "close_at", Type: field.TypeTime, Nullable: true, Comment: "订单关闭时间"},
 		{Name: "version", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号", Default: 1},
-		{Name: "total_amount", Type: field.TypeFloat64, Nullable: true, Comment: "总金额", Default: 0},
-		{Name: "actual", Type: field.TypeFloat64, Nullable: true, Comment: "实际已付款", Default: 0},
-		{Name: "remission", Type: field.TypeFloat64, Nullable: true, Comment: "减免", Default: 0},
+		{Name: "total_amount", Type: field.TypeInt64, Nullable: true, Comment: "总金额", Default: 0},
+		{Name: "actual", Type: field.TypeInt64, Nullable: true, Comment: "实际已付款", Default: 0},
+		{Name: "remission", Type: field.TypeInt64, Nullable: true, Comment: "减免", Default: 0},
 		{Name: "close_nature", Type: field.TypeString, Nullable: true, Comment: "关闭原因"},
 	}
 	// OrderTable holds the schema information for the "order" table.
@@ -144,7 +144,7 @@ var (
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "product_id", Type: field.TypeInt64, Nullable: true, Comment: "产品id"},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "名称"},
-		{Name: "unit_price", Type: field.TypeFloat64, Nullable: true, Comment: "单价"},
+		{Name: "unit_price", Type: field.TypeInt64, Nullable: true, Comment: "单价"},
 		{Name: "quantity", Type: field.TypeInt64, Nullable: true, Comment: "数量", Default: 1},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
 	}
@@ -186,8 +186,8 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "remission", Type: field.TypeFloat64, Nullable: true, Comment: "减免"},
-		{Name: "pay", Type: field.TypeFloat64, Nullable: true, Comment: "实际付款"},
+		{Name: "remission", Type: field.TypeInt64, Nullable: true, Comment: "减免"},
+		{Name: "pay", Type: field.TypeInt64, Nullable: true, Comment: "实际付款"},
 		{Name: "note", Type: field.TypeString, Nullable: true, Comment: "备注"},
 		{Name: "pay_at", Type: field.TypeTime, Nullable: true, Comment: "支付时间"},
 		{Name: "pay_way", Type: field.TypeString, Nullable: true, Comment: "支付方式"},
@@ -230,7 +230,7 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
-		{Name: "refund", Type: field.TypeFloat64, Nullable: true, Comment: "退费金额", Default: 0},
+		{Name: "refund", Type: field.TypeInt64, Nullable: true, Comment: "退费金额", Default: 0},
 		{Name: "refund_nature", Type: field.TypeString, Nullable: true, Comment: "退费原因"},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
 	}

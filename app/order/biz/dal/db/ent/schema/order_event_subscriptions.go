@@ -1,12 +1,13 @@
 package schema
 
 import (
+	"order/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"order/biz/dal/db/ent/schema/mixins"
 )
 
 type OrderEventSubscriptions struct {

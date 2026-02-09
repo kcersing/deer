@@ -91,7 +91,7 @@ func Name(v string) predicate.OrderItem {
 }
 
 // UnitPrice applies equality check predicate on the "unit_price" field. It's identical to UnitPriceEQ.
-func UnitPrice(v float64) predicate.OrderItem {
+func UnitPrice(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldEQ(FieldUnitPrice, v))
 }
 
@@ -456,42 +456,42 @@ func NameContainsFold(v string) predicate.OrderItem {
 }
 
 // UnitPriceEQ applies the EQ predicate on the "unit_price" field.
-func UnitPriceEQ(v float64) predicate.OrderItem {
+func UnitPriceEQ(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldEQ(FieldUnitPrice, v))
 }
 
 // UnitPriceNEQ applies the NEQ predicate on the "unit_price" field.
-func UnitPriceNEQ(v float64) predicate.OrderItem {
+func UnitPriceNEQ(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldNEQ(FieldUnitPrice, v))
 }
 
 // UnitPriceIn applies the In predicate on the "unit_price" field.
-func UnitPriceIn(vs ...float64) predicate.OrderItem {
+func UnitPriceIn(vs ...int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldIn(FieldUnitPrice, vs...))
 }
 
 // UnitPriceNotIn applies the NotIn predicate on the "unit_price" field.
-func UnitPriceNotIn(vs ...float64) predicate.OrderItem {
+func UnitPriceNotIn(vs ...int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldNotIn(FieldUnitPrice, vs...))
 }
 
 // UnitPriceGT applies the GT predicate on the "unit_price" field.
-func UnitPriceGT(v float64) predicate.OrderItem {
+func UnitPriceGT(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldGT(FieldUnitPrice, v))
 }
 
 // UnitPriceGTE applies the GTE predicate on the "unit_price" field.
-func UnitPriceGTE(v float64) predicate.OrderItem {
+func UnitPriceGTE(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldGTE(FieldUnitPrice, v))
 }
 
 // UnitPriceLT applies the LT predicate on the "unit_price" field.
-func UnitPriceLT(v float64) predicate.OrderItem {
+func UnitPriceLT(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldLT(FieldUnitPrice, v))
 }
 
 // UnitPriceLTE applies the LTE predicate on the "unit_price" field.
-func UnitPriceLTE(v float64) predicate.OrderItem {
+func UnitPriceLTE(v int64) predicate.OrderItem {
 	return predicate.OrderItem(sql.FieldLTE(FieldUnitPrice, v))
 }
 

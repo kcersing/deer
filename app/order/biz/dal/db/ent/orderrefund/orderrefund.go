@@ -78,7 +78,7 @@ var (
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
 	// DefaultRefund holds the default value on creation for the "refund" field.
-	DefaultRefund float64
+	DefaultRefund int64
 )
 
 // OrderOption defines the ordering options for the OrderRefund queries.

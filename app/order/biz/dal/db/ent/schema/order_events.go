@@ -1,15 +1,17 @@
 package schema
 
 import (
+	"order/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"order/biz/dal/db/ent/schema/mixins"
 )
 
+// OrderEvents 事件表
 type OrderEvents struct {
 	ent.Schema
 }

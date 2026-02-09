@@ -163,14 +163,14 @@ func (_u *OrderItemUpdate) ClearName() *OrderItemUpdate {
 }
 
 // SetUnitPrice sets the "unit_price" field.
-func (_u *OrderItemUpdate) SetUnitPrice(v float64) *OrderItemUpdate {
+func (_u *OrderItemUpdate) SetUnitPrice(v int64) *OrderItemUpdate {
 	_u.mutation.ResetUnitPrice()
 	_u.mutation.SetUnitPrice(v)
 	return _u
 }
 
 // SetNillableUnitPrice sets the "unit_price" field if the given value is not nil.
-func (_u *OrderItemUpdate) SetNillableUnitPrice(v *float64) *OrderItemUpdate {
+func (_u *OrderItemUpdate) SetNillableUnitPrice(v *int64) *OrderItemUpdate {
 	if v != nil {
 		_u.SetUnitPrice(*v)
 	}
@@ -178,7 +178,7 @@ func (_u *OrderItemUpdate) SetNillableUnitPrice(v *float64) *OrderItemUpdate {
 }
 
 // AddUnitPrice adds value to the "unit_price" field.
-func (_u *OrderItemUpdate) AddUnitPrice(v float64) *OrderItemUpdate {
+func (_u *OrderItemUpdate) AddUnitPrice(v int64) *OrderItemUpdate {
 	_u.mutation.AddUnitPrice(v)
 	return _u
 }
@@ -320,13 +320,13 @@ func (_u *OrderItemUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(orderitem.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.UnitPrice(); ok {
-		_spec.SetField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
+		_spec.SetField(orderitem.FieldUnitPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUnitPrice(); ok {
-		_spec.AddField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
+		_spec.AddField(orderitem.FieldUnitPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.UnitPriceCleared() {
-		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeFloat64)
+		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Quantity(); ok {
 		_spec.SetField(orderitem.FieldQuantity, field.TypeInt64, value)
@@ -520,14 +520,14 @@ func (_u *OrderItemUpdateOne) ClearName() *OrderItemUpdateOne {
 }
 
 // SetUnitPrice sets the "unit_price" field.
-func (_u *OrderItemUpdateOne) SetUnitPrice(v float64) *OrderItemUpdateOne {
+func (_u *OrderItemUpdateOne) SetUnitPrice(v int64) *OrderItemUpdateOne {
 	_u.mutation.ResetUnitPrice()
 	_u.mutation.SetUnitPrice(v)
 	return _u
 }
 
 // SetNillableUnitPrice sets the "unit_price" field if the given value is not nil.
-func (_u *OrderItemUpdateOne) SetNillableUnitPrice(v *float64) *OrderItemUpdateOne {
+func (_u *OrderItemUpdateOne) SetNillableUnitPrice(v *int64) *OrderItemUpdateOne {
 	if v != nil {
 		_u.SetUnitPrice(*v)
 	}
@@ -535,7 +535,7 @@ func (_u *OrderItemUpdateOne) SetNillableUnitPrice(v *float64) *OrderItemUpdateO
 }
 
 // AddUnitPrice adds value to the "unit_price" field.
-func (_u *OrderItemUpdateOne) AddUnitPrice(v float64) *OrderItemUpdateOne {
+func (_u *OrderItemUpdateOne) AddUnitPrice(v int64) *OrderItemUpdateOne {
 	_u.mutation.AddUnitPrice(v)
 	return _u
 }
@@ -707,13 +707,13 @@ func (_u *OrderItemUpdateOne) sqlSave(ctx context.Context) (_node *OrderItem, er
 		_spec.ClearField(orderitem.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.UnitPrice(); ok {
-		_spec.SetField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
+		_spec.SetField(orderitem.FieldUnitPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedUnitPrice(); ok {
-		_spec.AddField(orderitem.FieldUnitPrice, field.TypeFloat64, value)
+		_spec.AddField(orderitem.FieldUnitPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.UnitPriceCleared() {
-		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeFloat64)
+		_spec.ClearField(orderitem.FieldUnitPrice, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Quantity(); ok {
 		_spec.SetField(orderitem.FieldQuantity, field.TypeInt64, value)

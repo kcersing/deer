@@ -49,15 +49,15 @@ func init() {
 	// orderDescTotalAmount is the schema descriptor for total_amount field.
 	orderDescTotalAmount := orderFields[7].Descriptor()
 	// order.DefaultTotalAmount holds the default value on creation for the total_amount field.
-	order.DefaultTotalAmount = orderDescTotalAmount.Default.(float64)
+	order.DefaultTotalAmount = orderDescTotalAmount.Default.(int64)
 	// orderDescActual is the schema descriptor for actual field.
 	orderDescActual := orderFields[8].Descriptor()
 	// order.DefaultActual holds the default value on creation for the actual field.
-	order.DefaultActual = orderDescActual.Default.(float64)
+	order.DefaultActual = orderDescActual.Default.(int64)
 	// orderDescRemission is the schema descriptor for remission field.
 	orderDescRemission := orderFields[9].Descriptor()
 	// order.DefaultRemission holds the default value on creation for the remission field.
-	order.DefaultRemission = orderDescRemission.Default.(float64)
+	order.DefaultRemission = orderDescRemission.Default.(int64)
 	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()
 	ordereventsubscriptionsMixinFields0 := ordereventsubscriptionsMixin[0].Fields()
 	_ = ordereventsubscriptionsMixinFields0
@@ -180,7 +180,7 @@ func init() {
 	// orderrefundDescRefund is the schema descriptor for refund field.
 	orderrefundDescRefund := orderrefundFields[2].Descriptor()
 	// orderrefund.DefaultRefund holds the default value on creation for the refund field.
-	orderrefund.DefaultRefund = orderrefundDescRefund.Default.(float64)
+	orderrefund.DefaultRefund = orderrefundDescRefund.Default.(int64)
 	ordersnapshotsMixin := schema.OrderSnapshots{}.Mixin()
 	ordersnapshotsMixinFields0 := ordersnapshotsMixin[0].Fields()
 	_ = ordersnapshotsMixinFields0

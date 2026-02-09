@@ -147,11 +147,11 @@ var (
 	// DefaultVersion holds the default value on creation for the "version" field.
 	DefaultVersion int64
 	// DefaultTotalAmount holds the default value on creation for the "total_amount" field.
-	DefaultTotalAmount float64
+	DefaultTotalAmount int64
 	// DefaultActual holds the default value on creation for the "actual" field.
-	DefaultActual float64
+	DefaultActual int64
 	// DefaultRemission holds the default value on creation for the "remission" field.
-	DefaultRemission float64
+	DefaultRemission int64
 )
 
 // Status defines the type for the "status" enum field.

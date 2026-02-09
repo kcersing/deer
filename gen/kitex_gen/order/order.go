@@ -576,6 +576,7 @@ type CreateOrderReq struct {
 	CreatedId   int64           `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
 	Items       *base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,base.OrderItem" json:"items,omitempty"`
 	TotalAmount int64           `thrift:"totalAmount,4,optional" frugal:"4,optional,i64" json:"totalAmount,omitempty"`
+	UserId      int64           `thrift:"userId,5,optional" frugal:"5,optional,i64" json:"userId,omitempty"`
 }
 
 func NewCreateOrderReq() *CreateOrderReq {
@@ -584,6 +585,7 @@ func NewCreateOrderReq() *CreateOrderReq {
 		CreatedId:   0,
 		Items:       &base.OrderItem{},
 		TotalAmount: 0,
+		UserId:      0,
 	}
 }
 
@@ -592,6 +594,7 @@ func (p *CreateOrderReq) InitDefault() {
 	p.CreatedId = 0
 	p.Items = &base.OrderItem{}
 	p.TotalAmount = 0
+	p.UserId = 0
 }
 
 var CreateOrderReq_MemberId_DEFAULT int64 = 0
@@ -629,6 +632,15 @@ func (p *CreateOrderReq) GetTotalAmount() (v int64) {
 	}
 	return p.TotalAmount
 }
+
+var CreateOrderReq_UserId_DEFAULT int64 = 0
+
+func (p *CreateOrderReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return CreateOrderReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
 func (p *CreateOrderReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -640,6 +652,9 @@ func (p *CreateOrderReq) SetItems(val *base.OrderItem) {
 }
 func (p *CreateOrderReq) SetTotalAmount(val int64) {
 	p.TotalAmount = val
+}
+func (p *CreateOrderReq) SetUserId(val int64) {
+	p.UserId = val
 }
 
 func (p *CreateOrderReq) IsSetMemberId() bool {
@@ -658,6 +673,10 @@ func (p *CreateOrderReq) IsSetTotalAmount() bool {
 	return p.TotalAmount != CreateOrderReq_TotalAmount_DEFAULT
 }
 
+func (p *CreateOrderReq) IsSetUserId() bool {
+	return p.UserId != CreateOrderReq_UserId_DEFAULT
+}
+
 func (p *CreateOrderReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -670,6 +689,7 @@ var fieldIDToName_CreateOrderReq = map[int16]string{
 	2: "createdId",
 	3: "items",
 	4: "totalAmount",
+	5: "userId",
 }
 
 type PaymentReq struct {
@@ -698,7 +718,7 @@ type OrderService interface {
 
 	DeleteOrder(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
 
-	CreateOrder(ctx context.Context, req *GetOrderListReq) (r *OrderResp, err error)
+	CreateOrder(ctx context.Context, req *CreateOrderReq) (r *OrderResp, err error)
 
 	Payment(ctx context.Context, req *PaymentReq) (r *OrderResp, err error)
 
@@ -936,7 +956,7 @@ var fieldIDToName_OrderServiceDeleteOrderResult = map[int16]string{
 }
 
 type OrderServiceCreateOrderArgs struct {
-	Req *GetOrderListReq `thrift:"req,1" frugal:"1,default,GetOrderListReq" json:"req"`
+	Req *CreateOrderReq `thrift:"req,1" frugal:"1,default,CreateOrderReq" json:"req"`
 }
 
 func NewOrderServiceCreateOrderArgs() *OrderServiceCreateOrderArgs {
@@ -946,15 +966,15 @@ func NewOrderServiceCreateOrderArgs() *OrderServiceCreateOrderArgs {
 func (p *OrderServiceCreateOrderArgs) InitDefault() {
 }
 
-var OrderServiceCreateOrderArgs_Req_DEFAULT *GetOrderListReq
+var OrderServiceCreateOrderArgs_Req_DEFAULT *CreateOrderReq
 
-func (p *OrderServiceCreateOrderArgs) GetReq() (v *GetOrderListReq) {
+func (p *OrderServiceCreateOrderArgs) GetReq() (v *CreateOrderReq) {
 	if !p.IsSetReq() {
 		return OrderServiceCreateOrderArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *OrderServiceCreateOrderArgs) SetReq(val *GetOrderListReq) {
+func (p *OrderServiceCreateOrderArgs) SetReq(val *CreateOrderReq) {
 	p.Req = val
 }
 

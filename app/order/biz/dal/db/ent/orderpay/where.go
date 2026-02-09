@@ -81,12 +81,12 @@ func OrderID(v int64) predicate.OrderPay {
 }
 
 // Remission applies equality check predicate on the "remission" field. It's identical to RemissionEQ.
-func Remission(v float64) predicate.OrderPay {
+func Remission(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldRemission, v))
 }
 
 // Pay applies equality check predicate on the "pay" field. It's identical to PayEQ.
-func Pay(v float64) predicate.OrderPay {
+func Pay(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldPay, v))
 }
 
@@ -346,42 +346,42 @@ func OrderIDNotNil() predicate.OrderPay {
 }
 
 // RemissionEQ applies the EQ predicate on the "remission" field.
-func RemissionEQ(v float64) predicate.OrderPay {
+func RemissionEQ(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldRemission, v))
 }
 
 // RemissionNEQ applies the NEQ predicate on the "remission" field.
-func RemissionNEQ(v float64) predicate.OrderPay {
+func RemissionNEQ(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldNEQ(FieldRemission, v))
 }
 
 // RemissionIn applies the In predicate on the "remission" field.
-func RemissionIn(vs ...float64) predicate.OrderPay {
+func RemissionIn(vs ...int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldIn(FieldRemission, vs...))
 }
 
 // RemissionNotIn applies the NotIn predicate on the "remission" field.
-func RemissionNotIn(vs ...float64) predicate.OrderPay {
+func RemissionNotIn(vs ...int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldNotIn(FieldRemission, vs...))
 }
 
 // RemissionGT applies the GT predicate on the "remission" field.
-func RemissionGT(v float64) predicate.OrderPay {
+func RemissionGT(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldGT(FieldRemission, v))
 }
 
 // RemissionGTE applies the GTE predicate on the "remission" field.
-func RemissionGTE(v float64) predicate.OrderPay {
+func RemissionGTE(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldGTE(FieldRemission, v))
 }
 
 // RemissionLT applies the LT predicate on the "remission" field.
-func RemissionLT(v float64) predicate.OrderPay {
+func RemissionLT(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldLT(FieldRemission, v))
 }
 
 // RemissionLTE applies the LTE predicate on the "remission" field.
-func RemissionLTE(v float64) predicate.OrderPay {
+func RemissionLTE(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldLTE(FieldRemission, v))
 }
 
@@ -396,42 +396,42 @@ func RemissionNotNil() predicate.OrderPay {
 }
 
 // PayEQ applies the EQ predicate on the "pay" field.
-func PayEQ(v float64) predicate.OrderPay {
+func PayEQ(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldPay, v))
 }
 
 // PayNEQ applies the NEQ predicate on the "pay" field.
-func PayNEQ(v float64) predicate.OrderPay {
+func PayNEQ(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldNEQ(FieldPay, v))
 }
 
 // PayIn applies the In predicate on the "pay" field.
-func PayIn(vs ...float64) predicate.OrderPay {
+func PayIn(vs ...int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldIn(FieldPay, vs...))
 }
 
 // PayNotIn applies the NotIn predicate on the "pay" field.
-func PayNotIn(vs ...float64) predicate.OrderPay {
+func PayNotIn(vs ...int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldNotIn(FieldPay, vs...))
 }
 
 // PayGT applies the GT predicate on the "pay" field.
-func PayGT(v float64) predicate.OrderPay {
+func PayGT(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldGT(FieldPay, v))
 }
 
 // PayGTE applies the GTE predicate on the "pay" field.
-func PayGTE(v float64) predicate.OrderPay {
+func PayGTE(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldGTE(FieldPay, v))
 }
 
 // PayLT applies the LT predicate on the "pay" field.
-func PayLT(v float64) predicate.OrderPay {
+func PayLT(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldLT(FieldPay, v))
 }
 
 // PayLTE applies the LTE predicate on the "pay" field.
-func PayLTE(v float64) predicate.OrderPay {
+func PayLTE(v int64) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldLTE(FieldPay, v))
 }
 

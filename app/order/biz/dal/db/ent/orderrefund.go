@@ -32,7 +32,7 @@ type OrderRefund struct {
 	// 订单退费时间
 	RefundAt time.Time `json:"refund_at,omitempty"`
 	// 退费金额
-	Refund float64 `json:"refund,omitempty"`
+	Refund int64 `json:"refund,omitempty"`
 	// 退费原因
 	RefundNature string `json:"refund_nature,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -66,9 +66,7 @@ func (*OrderRefund) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orderrefund.FieldRefund:
-			values[i] = new(sql.NullFloat64)
-		case orderrefund.FieldID, orderrefund.FieldDelete, orderrefund.FieldCreatedID, orderrefund.FieldOrderID:
+		case orderrefund.FieldID, orderrefund.FieldDelete, orderrefund.FieldCreatedID, orderrefund.FieldOrderID, orderrefund.FieldRefund:
 			values[i] = new(sql.NullInt64)
 		case orderrefund.FieldRefundNature:
 			values[i] = new(sql.NullString)
@@ -132,10 +130,10 @@ func (_m *OrderRefund) assignValues(columns []string, values []any) error {
 				_m.RefundAt = value.Time
 			}
 		case orderrefund.FieldRefund:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field refund", values[i])
 			} else if value.Valid {
-				_m.Refund = value.Float64
+				_m.Refund = value.Int64
 			}
 		case orderrefund.FieldRefundNature:
 			if value, ok := values[i].(*sql.NullString); !ok {

@@ -19,7 +19,7 @@ func (OrderItem) Fields() []ent.Field {
 		field.Int64("order_id").Comment("订单id").Optional(),
 		field.Int64("product_id").Comment("产品id").Optional(),
 		field.String("name").Comment("名称").Optional(),
-		field.Float("unit_price").Comment("单价").Optional(),
+		field.Int64("unit_price").Comment("单价").Optional(),
 		field.Int64("quantity").Default(1).Comment("数量").Optional(),
 	}
 }

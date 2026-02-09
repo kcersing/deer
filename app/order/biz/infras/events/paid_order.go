@@ -1,18 +1,19 @@
 package events
 
 import (
-	"github.com/google/uuid"
 	"order/biz/infras/common"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // PaidOrderEvent 支付订单事件
 type PaidOrderEvent struct {
 	common.EventBase
-	PayedAmount float64
+	PayedAmount int64
 	PayMethod   string
 	CreatedId   int64
-	Remission   float64
+	Remission   int64
 	Reason      string
 	PaySn       string
 	PrepayId    string

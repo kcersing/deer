@@ -12,7 +12,7 @@ func TestCreateOrder_Run(t *testing.T) {
 	s := NewCreateOrderService(ctx)
 	// init req and assert value
 
-	req := &order.GetOrderListReq{}
+	req := &order.CreateOrderReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

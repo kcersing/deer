@@ -2,13 +2,14 @@ package repo
 
 import (
 	"context"
+	"order/biz/dal/db"
 	"order/biz/infras"
 	"order/biz/infras/events"
 
-	"order/biz/dal/mysql/ent"
-	entOrder "order/biz/dal/mysql/ent/order"
-	orderevents2 "order/biz/dal/mysql/ent/orderevents"
-	ordersnapshots2 "order/biz/dal/mysql/ent/ordersnapshots"
+	"order/biz/dal/db/ent"
+	entOrder "order/biz/dal/db/ent/order"
+	orderevents2 "order/biz/dal/db/ent/orderevents"
+	ordersnapshots2 "order/biz/dal/db/ent/ordersnapshots"
 	"order/biz/infras/aggregate"
 	"order/biz/infras/common"
 
@@ -18,6 +19,8 @@ import (
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
 )
+
+var OrderRepoClient *OrderRepo
 
 type OrderRepository interface {
 	Save(order *aggregate.Order) (err error)
@@ -43,10 +46,10 @@ func (o *OrderRepo) Delete() {
 	panic("implement me")
 }
 
-func NewOrderRepository(db *ent.Client, ctx context.Context) OrderRepository {
-	return &OrderRepo{
-		db:  db,
-		ctx: ctx,
+func InitOrderRepository() {
+	OrderRepoClient = &OrderRepo{
+		db:  db.Client,
+		ctx: context.Background(),
 	}
 }
 
@@ -88,9 +91,9 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 		SetStatus(entOrder.Status(order.Status)).
 		SetCreatedID(order.CreatedId).
 		SetMemberID(order.MemberId).
-		SetVersion(order.Version).
-		OnConflict().
-		UpdateNewValues()
+		SetVersion(order.Version)
+	//OnConflict().
+	//UpdateNewValues()
 
 	order.Id, err = orderEnt.ID(o.ctx)
 	order.AggregateID = order.Id
