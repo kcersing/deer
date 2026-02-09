@@ -2,11 +2,12 @@ package infras
 
 import (
 	"context"
-	"deer/app/order/biz/infras/common"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/pkg/errors"
+	"order/biz/infras/common"
 	"sync"
 	"time"
+
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/pkg/errors"
 )
 
 // EventHandler 事件处理器接口
@@ -16,8 +17,8 @@ type EventHandler interface {
 
 type Dispatcher interface {
 	RegisterHandler(eventType string, handler EventHandler)
-	Unregister(observer EventHandler)
-	Dispatch(eventType string, handler EventHandler)
+	Unregister(eventType string, handler EventHandler)
+	Dispatch(ctx context.Context, event common.Event) error
 }
 
 // EventDispatcher 分发 eventbus
@@ -52,11 +53,9 @@ func (d *EventDispatcher) Unregister(eventType string, handler EventHandler) {
 
 // Dispatch 并发分发事件
 func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) error {
-
 	d.mu.RLock()
-	defer d.mu.RUnlock()
-
 	handlers, ok := d.handlers[event.GetType()]
+	d.mu.RUnlock()
 	if !ok || len(handlers) == 0 {
 		return nil
 	}
@@ -66,22 +65,20 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 
 	for _, handler := range handlers {
 		klog.Infof("开始处理事件: %s", event.GetType())
-
-		wg.Go(func() {
-			func(h EventHandler) {
-				// 带超时和重试的事件处理
-				if err := withRetry(func() error {
-					ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-					defer cancel()
-					return h.Handle(ctx, event)
-				}, 3); err != nil {
-					errCh <- err
-				}
-			}(handler)
-		})
+		wg.Add(1)
+		go func(h EventHandler) {
+			defer wg.Done()
+			if err := withRetry(func() error {
+				ctx2, cancel := context.WithTimeout(ctx, 5*time.Second)
+				defer cancel()
+				return h.Handle(ctx2, event)
+			}, 3); err != nil {
+				errCh <- err
+			}
+		}(handler)
 	}
 
-	// 等待所有处理器完成
+	// 等待所有处理器完成并关闭错误通道
 	go func() {
 		wg.Wait()
 		close(errCh)

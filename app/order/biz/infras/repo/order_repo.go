@@ -2,13 +2,18 @@ package repo
 
 import (
 	"context"
-	"deer/app/order/biz/dal/mysql/ent"
-	entOrder "deer/app/order/biz/dal/mysql/ent/order"
-	orderevents2 "deer/app/order/biz/dal/mysql/ent/orderevents"
-	ordersnapshots2 "deer/app/order/biz/dal/mysql/ent/ordersnapshots"
-	"deer/app/order/biz/infras/aggregate"
-	"deer/app/order/biz/infras/common"
-	"deer/app/order/biz/infras/events"
+	"order/biz/infras"
+	"order/biz/infras/events"
+
+	"order/biz/dal/mysql/ent"
+	entOrder "order/biz/dal/mysql/ent/order"
+	orderevents2 "order/biz/dal/mysql/ent/orderevents"
+	ordersnapshots2 "order/biz/dal/mysql/ent/ordersnapshots"
+	"order/biz/infras/aggregate"
+	"order/biz/infras/common"
+
+	"common/eventbus"
+
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
@@ -22,8 +27,10 @@ type OrderRepository interface {
 }
 
 type OrderRepo struct {
-	db  *ent.Client
-	ctx context.Context
+	db              *ent.Client
+	ctx             context.Context
+	subscriptionSvc infras.SubscriptionService
+	publisher       *eventbus.EventPublisher
 }
 
 func (o *OrderRepo) FindAll() {
@@ -40,6 +47,16 @@ func NewOrderRepository(db *ent.Client, ctx context.Context) OrderRepository {
 	return &OrderRepo{
 		db:  db,
 		ctx: ctx,
+	}
+}
+
+// NewOrderRepositoryWithDeps 创建带可选依赖的仓储（订阅服务、事件发布器）
+func NewOrderRepositoryWithDeps(db *ent.Client, ctx context.Context, sub infras.SubscriptionService, pub *eventbus.EventPublisher) OrderRepository {
+	return &OrderRepo{
+		db:              db,
+		ctx:             ctx,
+		subscriptionSvc: sub,
+		publisher:       pub,
 	}
 }
 
@@ -126,13 +143,26 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	if err := tx.Commit(); err != nil {
 		return errors.Wrap(err, "提交事务失败")
 	}
-	//if err == nil {
-	//	for _, e := range es {
-	//		if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
-	//			klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetID(), err)
-	//		}
-	//	}
-	//}
+	if err == nil {
+		// 优先使用通用事件发布器进行分发（可发布到本地和 MQ），没有则回退到旧的 subscriptionSvc
+		if o.publisher != nil {
+			for _, e := range es {
+				// 使用 Distributed 使事件同时发往 MQ 与本地（按需要调整）
+				// 将领域事件作为 payload 传递，发布器会封装为 transport event
+				// 设置时间与版本信息到 transport event 在 publisher 端处理
+				if perr := o.publisher.Distributed(o.ctx, e.GetType(), e); perr != nil {
+					klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), perr)
+				}
+				// 轻微延迟以避免短时间内大量 goroutine 累积在 publishToMQ
+			}
+		} else if o.subscriptionSvc != nil {
+			for _, e := range es {
+				if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
+					klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetId(), err)
+				}
+			}
+		}
+	}
 	order.ClearUncommittedEvents() // 事务成功后清除未提交事件
 	return nil
 }
@@ -146,24 +176,27 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 		Order(ent.Desc(ordersnapshots2.FieldAggregateVersion)).
 		First(o.ctx)
 
+	var lastVersion int64 = 0
 	if err != nil && !ent.IsNotFound(err) {
 		return nil, errors.Wrap(err, "查询快照失败")
 	}
-	err = sonic.Unmarshal(snapshot.AggregateData, &order)
-	if err != nil {
-		return nil, err
+
+	// 如果找到了快照 (err == nil)
+	if snapshot != nil {
+		err = sonic.Unmarshal(snapshot.AggregateData, &order)
+		if err != nil {
+			return nil, errors.Wrap(err, "快照数据反序列化失败")
+		}
+		lastVersion = snapshot.AggregateVersion
 	}
 
-	//var lastVersion int64
-	//if snapshot != nil {
-	//	lastVersion = snapshot.AggregateVersion
-	//}
-
-	eventAlls, err := o.db.Debug().OrderEvents.Query().Where(
+	// 从快照版本之后开始查询事件
+	eventAlls, err := o.db.OrderEvents.Query().Where(
 		orderevents2.AggregateID(id),
-		//orderevents2.EventVersionGT(lastVersion),
+		orderevents2.EventVersionGT(lastVersion),
 	).
-		Order(ent.Asc(orderevents2.FieldCreatedAt)).
+		// 使用 EventVersion 排序以确保事件顺序的绝对正确性
+		Order(ent.Asc(orderevents2.FieldEventVersion)).
 		All(o.ctx)
 
 	if err != nil {
@@ -171,30 +204,48 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 	}
 
 	var eventAll []common.Event
-	var out common.Event
 	for _, eventEnt := range eventAlls {
 		switch eventEnt.EventType {
 		case string(common.Created):
-			out = &events.CreatedOrderEvent{}
+			ev := &events.CreatedOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		case string(common.Paid):
-			out = &events.PaidOrderEvent{}
+			ev := &events.PaidOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		case string(common.Shipped):
-			out = &events.ShippedOrderEvent{}
+			ev := &events.ShippedOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		case string(common.Cancelled):
-			out = &events.CancelledOrderEvent{}
+			ev := &events.CancelledOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		case string(common.Refunded):
-			out = &events.RefundedOrderEvent{}
+			ev := &events.RefundedOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		case string(common.Completed):
-			out = &events.CompletedOrderEvent{}
+			ev := &events.CompletedOrderEvent{}
+			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+				return nil, err
+			}
+			eventAll = append(eventAll, ev)
 		default:
 			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
 			continue
 		}
-		err := sonic.Unmarshal(eventEnt.EventData, &out)
-		if err != nil {
-			return nil, err
-		}
-		eventAll = append(eventAll, out)
 	}
 	err = order.Load(eventAll)
 	if err != nil {
