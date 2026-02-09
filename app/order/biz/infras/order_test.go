@@ -2,12 +2,12 @@ package infras
 
 import (
 	"context"
-	db "deer/app/order/biz/dal/mysql"
-	"deer/app/order/biz/infras/aggregate"
-	"deer/app/order/biz/infras/events"
-	"deer/app/order/biz/infras/repo"
-	"deer/kitex_gen/deer/order"
+	"gen/kitex_gen/order"
 	"github.com/cloudwego/kitex/pkg/klog"
+	db "order/biz/dal/mysql"
+	"order/biz/infras/aggregate"
+	"order/biz/infras/events"
+	"order/biz/infras/repo"
 	"testing"
 )
 

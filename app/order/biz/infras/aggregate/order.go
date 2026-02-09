@@ -1,9 +1,10 @@
 package aggregate
 
 import (
-	"deer/app/order/biz/infras/common"
-	"deer/app/order/biz/infras/events"
-	"deer/kitex_gen/deer/order"
+	"gen/kitex_gen/base"
+	"gen/kitex_gen/order"
+	"order/biz/infras/common"
+	"order/biz/infras/events"
 	"time"
 
 	"sync"
@@ -14,7 +15,7 @@ const (
 )
 
 type Order struct {
-	order.Order
+	base.Order
 
 	stateMachine *StateMachine
 	common.AggregateBase
@@ -91,7 +92,7 @@ func (o *Order) onPaid(evt common.Event) (err error) {
 	o.mu.Lock()
 	defer o.mu.Unlock()
 	if eventData, ok := evt.(*events.PaidOrderEvent); ok {
-		var orderPay order.OrderPay
+		var orderPay base.OrderPay
 		orderPay.CreatedId = eventData.CreatedId
 		orderPay.Pay = eventData.PayedAmount
 		orderPay.PayWay = eventData.PayMethod

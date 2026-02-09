@@ -1,8 +1,8 @@
 package schema
 
 import (
-	"deer/app/order/biz/dal/mysql/ent/schema/mixins"
 	"entgo.io/ent/schema/edge"
+	"order/biz/dal/db/ent/schema/mixins"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"

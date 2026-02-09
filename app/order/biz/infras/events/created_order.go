@@ -1,9 +1,9 @@
 package events
 
 import (
-	"deer/app/order/biz/infras/common"
-	"deer/kitex_gen/deer/order"
+	"gen/kitex_gen/order"
 	"github.com/google/uuid"
+	"order/biz/infras/common"
 	"time"
 )
 

@@ -2,11 +2,11 @@ package infras
 
 import (
 	"context"
-	"deer/app/order/biz/dal/mysql/ent"
-	"deer/app/order/biz/infras/common"
-	"deer/app/order/biz/infras/events"
-	"deer/kitex_gen/deer/order"
+	"gen/kitex_gen/order"
 	"github.com/cloudwego/kitex/pkg/klog"
+	"order/biz/dal/mysql/ent"
+	"order/biz/infras/common"
+	"order/biz/infras/events"
 )
 
 // InventoryHandler 库存处理器

@@ -2,8 +2,9 @@ package infras
 
 import (
 	"context"
-	"deer/app/order/biz/dal/mysql/ent"
-	"deer/app/order/biz/infras/common"
+	"gen/kitex_gen/order"
+	"order/biz/dal/mysql/ent"
+	"order/biz/infras/common"
 )
 
 // 订单状态变更 → 生成事件 → 仓储保存事件（事务）→ 事务提交 → 订阅服务通知订阅者 → 更新订阅状态
