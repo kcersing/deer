@@ -19,6 +19,9 @@ struct User {
      15:optional i64 departmentsId=0,
      16:optional i64 positionsId=0,
 
+     17:optional string departmentName="",
+     18:optional string positionName="",
+
      251:optional string createdAt="",
      252:optional string updatedAt="",
      256:optional i64 createdId=0,

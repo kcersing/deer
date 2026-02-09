@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"user/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/entsql"
@@ -8,7 +10,6 @@ import (
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"user/biz/dal/db/ent/schema/mixins"
 )
 
 type User struct {
@@ -42,6 +43,11 @@ func (User) Fields() []ent.Field {
 		field.String("last_ip").Comment("最后一次登录ip").Optional(),
 
 		field.String("desc").Comment("详情").Optional(),
+
+		field.String("email").Comment("email").Optional(),
+		field.Int64("city").Default(0).Comment("市").Optional(),
+		field.Int64("province").Default(0).Comment("省").Optional(),
+		field.String("address").Comment("address").Optional(),
 	}
 }
 

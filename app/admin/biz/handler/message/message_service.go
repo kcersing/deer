@@ -187,14 +187,14 @@ func UpdateSend(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.MessageClient.SendMessages(ctx, &message2.SendMessagesReq{
-
+	resp, err := client.MessageClient.UpdateSend(ctx, &message2.SendMessagesReq{
 		Type:      req.GetType(),
 		Status:    req.GetStatus(),
 		Content:   req.GetContent(),
 		Title:     req.GetTitle(),
 		CreatedId: utils.GetTokenId(ctx, c),
 		TagId:     req.GetTagId(),
+		Id:        req.GetID(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")

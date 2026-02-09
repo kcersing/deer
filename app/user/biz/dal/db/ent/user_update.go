@@ -365,6 +365,100 @@ func (_u *UserUpdate) ClearDesc() *UserUpdate {
 	return _u
 }
 
+// SetEmail sets the "email" field.
+func (_u *UserUpdate) SetEmail(v string) *UserUpdate {
+	_u.mutation.SetEmail(v)
+	return _u
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableEmail(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetEmail(*v)
+	}
+	return _u
+}
+
+// ClearEmail clears the value of the "email" field.
+func (_u *UserUpdate) ClearEmail() *UserUpdate {
+	_u.mutation.ClearEmail()
+	return _u
+}
+
+// SetCity sets the "city" field.
+func (_u *UserUpdate) SetCity(v int64) *UserUpdate {
+	_u.mutation.ResetCity()
+	_u.mutation.SetCity(v)
+	return _u
+}
+
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableCity(v *int64) *UserUpdate {
+	if v != nil {
+		_u.SetCity(*v)
+	}
+	return _u
+}
+
+// AddCity adds value to the "city" field.
+func (_u *UserUpdate) AddCity(v int64) *UserUpdate {
+	_u.mutation.AddCity(v)
+	return _u
+}
+
+// ClearCity clears the value of the "city" field.
+func (_u *UserUpdate) ClearCity() *UserUpdate {
+	_u.mutation.ClearCity()
+	return _u
+}
+
+// SetProvince sets the "province" field.
+func (_u *UserUpdate) SetProvince(v int64) *UserUpdate {
+	_u.mutation.ResetProvince()
+	_u.mutation.SetProvince(v)
+	return _u
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableProvince(v *int64) *UserUpdate {
+	if v != nil {
+		_u.SetProvince(*v)
+	}
+	return _u
+}
+
+// AddProvince adds value to the "province" field.
+func (_u *UserUpdate) AddProvince(v int64) *UserUpdate {
+	_u.mutation.AddProvince(v)
+	return _u
+}
+
+// ClearProvince clears the value of the "province" field.
+func (_u *UserUpdate) ClearProvince() *UserUpdate {
+	_u.mutation.ClearProvince()
+	return _u
+}
+
+// SetAddress sets the "address" field.
+func (_u *UserUpdate) SetAddress(v string) *UserUpdate {
+	_u.mutation.SetAddress(v)
+	return _u
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (_u *UserUpdate) SetNillableAddress(v *string) *UserUpdate {
+	if v != nil {
+		_u.SetAddress(*v)
+	}
+	return _u
+}
+
+// ClearAddress clears the value of the "address" field.
+func (_u *UserUpdate) ClearAddress() *UserUpdate {
+	_u.mutation.ClearAddress()
+	return _u
+}
+
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by IDs.
 func (_u *UserUpdate) AddUserRoleIDs(ids ...int) *UserUpdate {
 	_u.mutation.AddUserRoleIDs(ids...)
@@ -558,6 +652,36 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.DescCleared() {
 		_spec.ClearField(user.FieldDesc, field.TypeString)
+	}
+	if value, ok := _u.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+	}
+	if _u.mutation.EmailCleared() {
+		_spec.ClearField(user.FieldEmail, field.TypeString)
+	}
+	if value, ok := _u.mutation.City(); ok {
+		_spec.SetField(user.FieldCity, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedCity(); ok {
+		_spec.AddField(user.FieldCity, field.TypeInt64, value)
+	}
+	if _u.mutation.CityCleared() {
+		_spec.ClearField(user.FieldCity, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Province(); ok {
+		_spec.SetField(user.FieldProvince, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedProvince(); ok {
+		_spec.AddField(user.FieldProvince, field.TypeInt64, value)
+	}
+	if _u.mutation.ProvinceCleared() {
+		_spec.ClearField(user.FieldProvince, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Address(); ok {
+		_spec.SetField(user.FieldAddress, field.TypeString, value)
+	}
+	if _u.mutation.AddressCleared() {
+		_spec.ClearField(user.FieldAddress, field.TypeString)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -960,6 +1084,100 @@ func (_u *UserUpdateOne) ClearDesc() *UserUpdateOne {
 	return _u
 }
 
+// SetEmail sets the "email" field.
+func (_u *UserUpdateOne) SetEmail(v string) *UserUpdateOne {
+	_u.mutation.SetEmail(v)
+	return _u
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableEmail(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetEmail(*v)
+	}
+	return _u
+}
+
+// ClearEmail clears the value of the "email" field.
+func (_u *UserUpdateOne) ClearEmail() *UserUpdateOne {
+	_u.mutation.ClearEmail()
+	return _u
+}
+
+// SetCity sets the "city" field.
+func (_u *UserUpdateOne) SetCity(v int64) *UserUpdateOne {
+	_u.mutation.ResetCity()
+	_u.mutation.SetCity(v)
+	return _u
+}
+
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableCity(v *int64) *UserUpdateOne {
+	if v != nil {
+		_u.SetCity(*v)
+	}
+	return _u
+}
+
+// AddCity adds value to the "city" field.
+func (_u *UserUpdateOne) AddCity(v int64) *UserUpdateOne {
+	_u.mutation.AddCity(v)
+	return _u
+}
+
+// ClearCity clears the value of the "city" field.
+func (_u *UserUpdateOne) ClearCity() *UserUpdateOne {
+	_u.mutation.ClearCity()
+	return _u
+}
+
+// SetProvince sets the "province" field.
+func (_u *UserUpdateOne) SetProvince(v int64) *UserUpdateOne {
+	_u.mutation.ResetProvince()
+	_u.mutation.SetProvince(v)
+	return _u
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableProvince(v *int64) *UserUpdateOne {
+	if v != nil {
+		_u.SetProvince(*v)
+	}
+	return _u
+}
+
+// AddProvince adds value to the "province" field.
+func (_u *UserUpdateOne) AddProvince(v int64) *UserUpdateOne {
+	_u.mutation.AddProvince(v)
+	return _u
+}
+
+// ClearProvince clears the value of the "province" field.
+func (_u *UserUpdateOne) ClearProvince() *UserUpdateOne {
+	_u.mutation.ClearProvince()
+	return _u
+}
+
+// SetAddress sets the "address" field.
+func (_u *UserUpdateOne) SetAddress(v string) *UserUpdateOne {
+	_u.mutation.SetAddress(v)
+	return _u
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (_u *UserUpdateOne) SetNillableAddress(v *string) *UserUpdateOne {
+	if v != nil {
+		_u.SetAddress(*v)
+	}
+	return _u
+}
+
+// ClearAddress clears the value of the "address" field.
+func (_u *UserUpdateOne) ClearAddress() *UserUpdateOne {
+	_u.mutation.ClearAddress()
+	return _u
+}
+
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by IDs.
 func (_u *UserUpdateOne) AddUserRoleIDs(ids ...int) *UserUpdateOne {
 	_u.mutation.AddUserRoleIDs(ids...)
@@ -1183,6 +1401,36 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if _u.mutation.DescCleared() {
 		_spec.ClearField(user.FieldDesc, field.TypeString)
+	}
+	if value, ok := _u.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+	}
+	if _u.mutation.EmailCleared() {
+		_spec.ClearField(user.FieldEmail, field.TypeString)
+	}
+	if value, ok := _u.mutation.City(); ok {
+		_spec.SetField(user.FieldCity, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedCity(); ok {
+		_spec.AddField(user.FieldCity, field.TypeInt64, value)
+	}
+	if _u.mutation.CityCleared() {
+		_spec.ClearField(user.FieldCity, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Province(); ok {
+		_spec.SetField(user.FieldProvince, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedProvince(); ok {
+		_spec.AddField(user.FieldProvince, field.TypeInt64, value)
+	}
+	if _u.mutation.ProvinceCleared() {
+		_spec.ClearField(user.FieldProvince, field.TypeInt64)
+	}
+	if value, ok := _u.mutation.Address(); ok {
+		_spec.SetField(user.FieldAddress, field.TypeString, value)
+	}
+	if _u.mutation.AddressCleared() {
+		_spec.ClearField(user.FieldAddress, field.TypeString)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -46,8 +46,14 @@ struct UpdateUserReq {
 
     9:optional i64 departmentsId=0,
     10:optional i64 positionsId=0,
+
+
      256:optional i64 createdId=0,
 
+     15:optional string address="",
+      12:optional i64 city=0,
+      13:optional i64 province=0,
+      14:optional string email="",
 }
 
 struct ChangePasswordReq {

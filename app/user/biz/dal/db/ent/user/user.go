@@ -48,6 +48,14 @@ const (
 	FieldLastIP = "last_ip"
 	// FieldDesc holds the string denoting the desc field in the database.
 	FieldDesc = "desc"
+	// FieldEmail holds the string denoting the email field in the database.
+	FieldEmail = "email"
+	// FieldCity holds the string denoting the city field in the database.
+	FieldCity = "city"
+	// FieldProvince holds the string denoting the province field in the database.
+	FieldProvince = "province"
+	// FieldAddress holds the string denoting the address field in the database.
+	FieldAddress = "address"
 	// EdgeUserRole holds the string denoting the user_role edge name in mutations.
 	EdgeUserRole = "user_role"
 	// Table holds the table name of the user in the database.
@@ -81,6 +89,10 @@ var Columns = []string{
 	FieldLastAt,
 	FieldLastIP,
 	FieldDesc,
+	FieldEmail,
+	FieldCity,
+	FieldProvince,
+	FieldAddress,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -108,6 +120,10 @@ var (
 	DefaultStatus int64
 	// DefaultGender holds the default value on creation for the "gender" field.
 	DefaultGender int64
+	// DefaultCity holds the default value on creation for the "city" field.
+	DefaultCity int64
+	// DefaultProvince holds the default value on creation for the "province" field.
+	DefaultProvince int64
 )
 
 // OrderOption defines the ordering options for the User queries.
@@ -201,6 +217,26 @@ func ByLastIP(opts ...sql.OrderTermOption) OrderOption {
 // ByDesc orders the results by the desc field.
 func ByDesc(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDesc, opts...).ToFunc()
+}
+
+// ByEmail orders the results by the email field.
+func ByEmail(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldEmail, opts...).ToFunc()
+}
+
+// ByCity orders the results by the city field.
+func ByCity(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCity, opts...).ToFunc()
+}
+
+// ByProvince orders the results by the province field.
+func ByProvince(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldProvince, opts...).ToFunc()
+}
+
+// ByAddress orders the results by the address field.
+func ByAddress(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAddress, opts...).ToFunc()
 }
 
 // ByUserRoleCount orders the results by user_role count.

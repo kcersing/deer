@@ -8,8 +8,6 @@ struct OrderItem {
 }
 struct Order {
     1:optional i64 memberId=0 (api.raw = "memberId")
-
-
     3:optional list<OrderItem> items={} (api.raw = "items")
     4:optional string sn="" (api.raw = "sn")
     5:optional i64 totalAmount=0 (api.raw = "totalAmount")

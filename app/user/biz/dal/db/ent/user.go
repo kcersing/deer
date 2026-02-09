@@ -52,6 +52,14 @@ type User struct {
 	LastIP string `json:"last_ip,omitempty"`
 	// 详情
 	Desc string `json:"desc,omitempty"`
+	// email
+	Email string `json:"email,omitempty"`
+	// 市
+	City int64 `json:"city,omitempty"`
+	// 省
+	Province int64 `json:"province,omitempty"`
+	// address
+	Address string `json:"address,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the UserQuery when eager-loading is set.
 	Edges        UserEdges `json:"edges"`
@@ -81,9 +89,9 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender, user.FieldDepartmentID, user.FieldPositionID:
+		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender, user.FieldDepartmentID, user.FieldPositionID, user.FieldCity, user.FieldProvince:
 			values[i] = new(sql.NullInt64)
-		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDesc:
+		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDesc, user.FieldEmail, user.FieldAddress:
 			values[i] = new(sql.NullString)
 		case user.FieldCreatedAt, user.FieldUpdatedAt, user.FieldBirthday, user.FieldLastAt:
 			values[i] = new(sql.NullTime)
@@ -212,6 +220,30 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Desc = value.String
 			}
+		case user.FieldEmail:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field email", values[i])
+			} else if value.Valid {
+				_m.Email = value.String
+			}
+		case user.FieldCity:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field city", values[i])
+			} else if value.Valid {
+				_m.City = value.Int64
+			}
+		case user.FieldProvince:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field province", values[i])
+			} else if value.Valid {
+				_m.Province = value.Int64
+			}
+		case user.FieldAddress:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field address", values[i])
+			} else if value.Valid {
+				_m.Address = value.String
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -307,6 +339,18 @@ func (_m *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("desc=")
 	builder.WriteString(_m.Desc)
+	builder.WriteString(", ")
+	builder.WriteString("email=")
+	builder.WriteString(_m.Email)
+	builder.WriteString(", ")
+	builder.WriteString("city=")
+	builder.WriteString(fmt.Sprintf("%v", _m.City))
+	builder.WriteString(", ")
+	builder.WriteString("province=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Province))
+	builder.WriteString(", ")
+	builder.WriteString("address=")
+	builder.WriteString(_m.Address)
 	builder.WriteByte(')')
 	return builder.String()
 }

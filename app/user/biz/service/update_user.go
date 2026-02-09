@@ -8,6 +8,8 @@ import (
 	"user/biz/convert"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type UpdateUserService struct {
@@ -25,6 +27,7 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 		return nil, errno.UserMobileExistErr
 	}
 
+	klog.Infof("user:%#v\n", req.GetBirthday())
 	birthday, err := time.Parse(time.DateOnly, req.GetBirthday())
 	if err != nil {
 		return nil, errno.TimeFormatErr
@@ -37,6 +40,12 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 		SetGender(req.GetGender()).
 		SetBirthday(birthday).
 		SetDesc(req.GetDesc()).
+		SetDepartmentID(req.GetDepartmentsId()).
+		SetPositionID(req.GetPositionsId()).
+		SetCity(req.GetCity()).
+		SetProvince(req.GetProvince()).
+		SetAddress(req.GetAddress()).
+		SetEmail(req.GetEmail()).
 		//SetRoleID(req.GetRoleId()).
 		Save(s.ctx)
 	if err != nil {

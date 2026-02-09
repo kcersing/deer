@@ -2450,6 +2450,12 @@ type UserMutation struct {
 	last_at          *time.Time
 	last_ip          *string
 	desc             *string
+	email            *string
+	city             *int64
+	addcity          *int64
+	province         *int64
+	addprovince      *int64
+	address          *string
 	clearedFields    map[string]struct{}
 	user_role        map[int]struct{}
 	removeduser_role map[int]struct{}
@@ -3483,6 +3489,244 @@ func (m *UserMutation) ResetDesc() {
 	delete(m.clearedFields, user.FieldDesc)
 }
 
+// SetEmail sets the "email" field.
+func (m *UserMutation) SetEmail(s string) {
+	m.email = &s
+}
+
+// Email returns the value of the "email" field in the mutation.
+func (m *UserMutation) Email() (r string, exists bool) {
+	v := m.email
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEmail returns the old "email" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldEmail(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEmail is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEmail requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEmail: %w", err)
+	}
+	return oldValue.Email, nil
+}
+
+// ClearEmail clears the value of the "email" field.
+func (m *UserMutation) ClearEmail() {
+	m.email = nil
+	m.clearedFields[user.FieldEmail] = struct{}{}
+}
+
+// EmailCleared returns if the "email" field was cleared in this mutation.
+func (m *UserMutation) EmailCleared() bool {
+	_, ok := m.clearedFields[user.FieldEmail]
+	return ok
+}
+
+// ResetEmail resets all changes to the "email" field.
+func (m *UserMutation) ResetEmail() {
+	m.email = nil
+	delete(m.clearedFields, user.FieldEmail)
+}
+
+// SetCity sets the "city" field.
+func (m *UserMutation) SetCity(i int64) {
+	m.city = &i
+	m.addcity = nil
+}
+
+// City returns the value of the "city" field in the mutation.
+func (m *UserMutation) City() (r int64, exists bool) {
+	v := m.city
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCity returns the old "city" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldCity(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCity is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCity requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCity: %w", err)
+	}
+	return oldValue.City, nil
+}
+
+// AddCity adds i to the "city" field.
+func (m *UserMutation) AddCity(i int64) {
+	if m.addcity != nil {
+		*m.addcity += i
+	} else {
+		m.addcity = &i
+	}
+}
+
+// AddedCity returns the value that was added to the "city" field in this mutation.
+func (m *UserMutation) AddedCity() (r int64, exists bool) {
+	v := m.addcity
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearCity clears the value of the "city" field.
+func (m *UserMutation) ClearCity() {
+	m.city = nil
+	m.addcity = nil
+	m.clearedFields[user.FieldCity] = struct{}{}
+}
+
+// CityCleared returns if the "city" field was cleared in this mutation.
+func (m *UserMutation) CityCleared() bool {
+	_, ok := m.clearedFields[user.FieldCity]
+	return ok
+}
+
+// ResetCity resets all changes to the "city" field.
+func (m *UserMutation) ResetCity() {
+	m.city = nil
+	m.addcity = nil
+	delete(m.clearedFields, user.FieldCity)
+}
+
+// SetProvince sets the "province" field.
+func (m *UserMutation) SetProvince(i int64) {
+	m.province = &i
+	m.addprovince = nil
+}
+
+// Province returns the value of the "province" field in the mutation.
+func (m *UserMutation) Province() (r int64, exists bool) {
+	v := m.province
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldProvince returns the old "province" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldProvince(ctx context.Context) (v int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldProvince is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldProvince requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldProvince: %w", err)
+	}
+	return oldValue.Province, nil
+}
+
+// AddProvince adds i to the "province" field.
+func (m *UserMutation) AddProvince(i int64) {
+	if m.addprovince != nil {
+		*m.addprovince += i
+	} else {
+		m.addprovince = &i
+	}
+}
+
+// AddedProvince returns the value that was added to the "province" field in this mutation.
+func (m *UserMutation) AddedProvince() (r int64, exists bool) {
+	v := m.addprovince
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearProvince clears the value of the "province" field.
+func (m *UserMutation) ClearProvince() {
+	m.province = nil
+	m.addprovince = nil
+	m.clearedFields[user.FieldProvince] = struct{}{}
+}
+
+// ProvinceCleared returns if the "province" field was cleared in this mutation.
+func (m *UserMutation) ProvinceCleared() bool {
+	_, ok := m.clearedFields[user.FieldProvince]
+	return ok
+}
+
+// ResetProvince resets all changes to the "province" field.
+func (m *UserMutation) ResetProvince() {
+	m.province = nil
+	m.addprovince = nil
+	delete(m.clearedFields, user.FieldProvince)
+}
+
+// SetAddress sets the "address" field.
+func (m *UserMutation) SetAddress(s string) {
+	m.address = &s
+}
+
+// Address returns the value of the "address" field in the mutation.
+func (m *UserMutation) Address() (r string, exists bool) {
+	v := m.address
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAddress returns the old "address" field's value of the User entity.
+// If the User object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *UserMutation) OldAddress(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldAddress is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldAddress requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAddress: %w", err)
+	}
+	return oldValue.Address, nil
+}
+
+// ClearAddress clears the value of the "address" field.
+func (m *UserMutation) ClearAddress() {
+	m.address = nil
+	m.clearedFields[user.FieldAddress] = struct{}{}
+}
+
+// AddressCleared returns if the "address" field was cleared in this mutation.
+func (m *UserMutation) AddressCleared() bool {
+	_, ok := m.clearedFields[user.FieldAddress]
+	return ok
+}
+
+// ResetAddress resets all changes to the "address" field.
+func (m *UserMutation) ResetAddress() {
+	m.address = nil
+	delete(m.clearedFields, user.FieldAddress)
+}
+
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by ids.
 func (m *UserMutation) AddUserRoleIDs(ids ...int) {
 	if m.user_role == nil {
@@ -3571,7 +3815,7 @@ func (m *UserMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *UserMutation) Fields() []string {
-	fields := make([]string, 0, 17)
+	fields := make([]string, 0, 21)
 	if m.created_at != nil {
 		fields = append(fields, user.FieldCreatedAt)
 	}
@@ -3623,6 +3867,18 @@ func (m *UserMutation) Fields() []string {
 	if m.desc != nil {
 		fields = append(fields, user.FieldDesc)
 	}
+	if m.email != nil {
+		fields = append(fields, user.FieldEmail)
+	}
+	if m.city != nil {
+		fields = append(fields, user.FieldCity)
+	}
+	if m.province != nil {
+		fields = append(fields, user.FieldProvince)
+	}
+	if m.address != nil {
+		fields = append(fields, user.FieldAddress)
+	}
 	return fields
 }
 
@@ -3665,6 +3921,14 @@ func (m *UserMutation) Field(name string) (ent.Value, bool) {
 		return m.LastIP()
 	case user.FieldDesc:
 		return m.Desc()
+	case user.FieldEmail:
+		return m.Email()
+	case user.FieldCity:
+		return m.City()
+	case user.FieldProvince:
+		return m.Province()
+	case user.FieldAddress:
+		return m.Address()
 	}
 	return nil, false
 }
@@ -3708,6 +3972,14 @@ func (m *UserMutation) OldField(ctx context.Context, name string) (ent.Value, er
 		return m.OldLastIP(ctx)
 	case user.FieldDesc:
 		return m.OldDesc(ctx)
+	case user.FieldEmail:
+		return m.OldEmail(ctx)
+	case user.FieldCity:
+		return m.OldCity(ctx)
+	case user.FieldProvince:
+		return m.OldProvince(ctx)
+	case user.FieldAddress:
+		return m.OldAddress(ctx)
 	}
 	return nil, fmt.Errorf("unknown User field %s", name)
 }
@@ -3836,6 +4108,34 @@ func (m *UserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDesc(v)
 		return nil
+	case user.FieldEmail:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEmail(v)
+		return nil
+	case user.FieldCity:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCity(v)
+		return nil
+	case user.FieldProvince:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetProvince(v)
+		return nil
+	case user.FieldAddress:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAddress(v)
+		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)
 }
@@ -3862,6 +4162,12 @@ func (m *UserMutation) AddedFields() []string {
 	if m.addposition_id != nil {
 		fields = append(fields, user.FieldPositionID)
 	}
+	if m.addcity != nil {
+		fields = append(fields, user.FieldCity)
+	}
+	if m.addprovince != nil {
+		fields = append(fields, user.FieldProvince)
+	}
 	return fields
 }
 
@@ -3882,6 +4188,10 @@ func (m *UserMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedDepartmentID()
 	case user.FieldPositionID:
 		return m.AddedPositionID()
+	case user.FieldCity:
+		return m.AddedCity()
+	case user.FieldProvince:
+		return m.AddedProvince()
 	}
 	return nil, false
 }
@@ -3933,6 +4243,20 @@ func (m *UserMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddPositionID(v)
 		return nil
+	case user.FieldCity:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCity(v)
+		return nil
+	case user.FieldProvince:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddProvince(v)
+		return nil
 	}
 	return fmt.Errorf("unknown User numeric field %s", name)
 }
@@ -3982,6 +4306,18 @@ func (m *UserMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(user.FieldDesc) {
 		fields = append(fields, user.FieldDesc)
+	}
+	if m.FieldCleared(user.FieldEmail) {
+		fields = append(fields, user.FieldEmail)
+	}
+	if m.FieldCleared(user.FieldCity) {
+		fields = append(fields, user.FieldCity)
+	}
+	if m.FieldCleared(user.FieldProvince) {
+		fields = append(fields, user.FieldProvince)
+	}
+	if m.FieldCleared(user.FieldAddress) {
+		fields = append(fields, user.FieldAddress)
 	}
 	return fields
 }
@@ -4038,6 +4374,18 @@ func (m *UserMutation) ClearField(name string) error {
 		return nil
 	case user.FieldDesc:
 		m.ClearDesc()
+		return nil
+	case user.FieldEmail:
+		m.ClearEmail()
+		return nil
+	case user.FieldCity:
+		m.ClearCity()
+		return nil
+	case user.FieldProvince:
+		m.ClearProvince()
+		return nil
+	case user.FieldAddress:
+		m.ClearAddress()
 		return nil
 	}
 	return fmt.Errorf("unknown User nullable field %s", name)
@@ -4097,6 +4445,18 @@ func (m *UserMutation) ResetField(name string) error {
 		return nil
 	case user.FieldDesc:
 		m.ResetDesc()
+		return nil
+	case user.FieldEmail:
+		m.ResetEmail()
+		return nil
+	case user.FieldCity:
+		m.ResetCity()
+		return nil
+	case user.FieldProvince:
+		m.ResetProvince()
+		return nil
+	case user.FieldAddress:
+		m.ResetAddress()
 		return nil
 	}
 	return fmt.Errorf("unknown User field %s", name)

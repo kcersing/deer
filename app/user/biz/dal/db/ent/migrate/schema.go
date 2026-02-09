@@ -90,6 +90,10 @@ var (
 		{Name: "last_at", Type: field.TypeTime, Nullable: true, Comment: "最后一次登录时间"},
 		{Name: "last_ip", Type: field.TypeString, Nullable: true, Comment: "最后一次登录ip"},
 		{Name: "desc", Type: field.TypeString, Nullable: true, Comment: "详情"},
+		{Name: "email", Type: field.TypeString, Nullable: true, Comment: "email"},
+		{Name: "city", Type: field.TypeInt64, Nullable: true, Comment: "市", Default: 0},
+		{Name: "province", Type: field.TypeInt64, Nullable: true, Comment: "省", Default: 0},
+		{Name: "address", Type: field.TypeString, Nullable: true, Comment: "address"},
 	}
 	// UsersTable holds the schema information for the "users" table.
 	UsersTable = &schema.Table{

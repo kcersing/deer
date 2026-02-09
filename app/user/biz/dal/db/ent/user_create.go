@@ -235,6 +235,62 @@ func (_c *UserCreate) SetNillableDesc(v *string) *UserCreate {
 	return _c
 }
 
+// SetEmail sets the "email" field.
+func (_c *UserCreate) SetEmail(v string) *UserCreate {
+	_c.mutation.SetEmail(v)
+	return _c
+}
+
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (_c *UserCreate) SetNillableEmail(v *string) *UserCreate {
+	if v != nil {
+		_c.SetEmail(*v)
+	}
+	return _c
+}
+
+// SetCity sets the "city" field.
+func (_c *UserCreate) SetCity(v int64) *UserCreate {
+	_c.mutation.SetCity(v)
+	return _c
+}
+
+// SetNillableCity sets the "city" field if the given value is not nil.
+func (_c *UserCreate) SetNillableCity(v *int64) *UserCreate {
+	if v != nil {
+		_c.SetCity(*v)
+	}
+	return _c
+}
+
+// SetProvince sets the "province" field.
+func (_c *UserCreate) SetProvince(v int64) *UserCreate {
+	_c.mutation.SetProvince(v)
+	return _c
+}
+
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (_c *UserCreate) SetNillableProvince(v *int64) *UserCreate {
+	if v != nil {
+		_c.SetProvince(*v)
+	}
+	return _c
+}
+
+// SetAddress sets the "address" field.
+func (_c *UserCreate) SetAddress(v string) *UserCreate {
+	_c.mutation.SetAddress(v)
+	return _c
+}
+
+// SetNillableAddress sets the "address" field if the given value is not nil.
+func (_c *UserCreate) SetNillableAddress(v *string) *UserCreate {
+	if v != nil {
+		_c.SetAddress(*v)
+	}
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *UserCreate) SetID(v int64) *UserCreate {
 	_c.mutation.SetID(v)
@@ -314,6 +370,14 @@ func (_c *UserCreate) defaults() {
 	if _, ok := _c.mutation.Gender(); !ok {
 		v := user.DefaultGender
 		_c.mutation.SetGender(v)
+	}
+	if _, ok := _c.mutation.City(); !ok {
+		v := user.DefaultCity
+		_c.mutation.SetCity(v)
+	}
+	if _, ok := _c.mutation.Province(); !ok {
+		v := user.DefaultProvince
+		_c.mutation.SetProvince(v)
 	}
 }
 
@@ -427,6 +491,22 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Desc(); ok {
 		_spec.SetField(user.FieldDesc, field.TypeString, value)
 		_node.Desc = value
+	}
+	if value, ok := _c.mutation.Email(); ok {
+		_spec.SetField(user.FieldEmail, field.TypeString, value)
+		_node.Email = value
+	}
+	if value, ok := _c.mutation.City(); ok {
+		_spec.SetField(user.FieldCity, field.TypeInt64, value)
+		_node.City = value
+	}
+	if value, ok := _c.mutation.Province(); ok {
+		_spec.SetField(user.FieldProvince, field.TypeInt64, value)
+		_node.Province = value
+	}
+	if value, ok := _c.mutation.Address(); ok {
+		_spec.SetField(user.FieldAddress, field.TypeString, value)
+		_node.Address = value
 	}
 	if nodes := _c.mutation.UserRoleIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

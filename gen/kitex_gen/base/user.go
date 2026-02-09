@@ -7,48 +7,52 @@ import (
 )
 
 type User struct {
-	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Username      string  `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
-	Password      string  `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
-	Avatar        string  `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile        string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name          string  `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status        int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Gender        int64   `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday      string  `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	LastAt        string  `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
-	LastIp        string  `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
-	Desc          string  `thrift:"desc,13,optional" frugal:"13,optional,string" json:"desc,omitempty"`
-	Roles         []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
-	DepartmentsId int64   `thrift:"departmentsId,15,optional" frugal:"15,optional,i64" json:"departmentsId,omitempty"`
-	PositionsId   int64   `thrift:"positionsId,16,optional" frugal:"16,optional,i64" json:"positionsId,omitempty"`
-	CreatedAt     string  `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
-	UpdatedAt     string  `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
-	CreatedId     int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
-	CreatedName   string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
+	Id             int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Username       string  `thrift:"username,2,optional" frugal:"2,optional,string" json:"username,omitempty"`
+	Password       string  `thrift:"password,3,optional" frugal:"3,optional,string" json:"password,omitempty"`
+	Avatar         string  `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile         string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name           string  `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status         int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Gender         int64   `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday       string  `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	LastAt         string  `thrift:"lastAt,11,optional" frugal:"11,optional,string" json:"lastAt,omitempty"`
+	LastIp         string  `thrift:"lastIp,12,optional" frugal:"12,optional,string" json:"lastIp,omitempty"`
+	Desc           string  `thrift:"desc,13,optional" frugal:"13,optional,string" json:"desc,omitempty"`
+	Roles          []*Role `thrift:"roles,14,optional" frugal:"14,optional,list<Role>" json:"roles,omitempty"`
+	DepartmentsId  int64   `thrift:"departmentsId,15,optional" frugal:"15,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId    int64   `thrift:"positionsId,16,optional" frugal:"16,optional,i64" json:"positionsId,omitempty"`
+	DepartmentName string  `thrift:"departmentName,17,optional" frugal:"17,optional,string" json:"departmentName,omitempty"`
+	PositionName   string  `thrift:"positionName,18,optional" frugal:"18,optional,string" json:"positionName,omitempty"`
+	CreatedAt      string  `thrift:"createdAt,251,optional" frugal:"251,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt      string  `thrift:"updatedAt,252,optional" frugal:"252,optional,string" json:"updatedAt,omitempty"`
+	CreatedId      int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	CreatedName    string  `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
 }
 
 func NewUser() *User {
 	return &User{
-		Id:            0,
-		Username:      "",
-		Password:      "",
-		Avatar:        "",
-		Mobile:        "",
-		Name:          "",
-		Status:        0,
-		Gender:        0,
-		Birthday:      "",
-		LastAt:        "",
-		LastIp:        "",
-		Desc:          "",
-		Roles:         []*Role{},
-		DepartmentsId: 0,
-		PositionsId:   0,
-		CreatedAt:     "",
-		UpdatedAt:     "",
-		CreatedId:     0,
-		CreatedName:   "",
+		Id:             0,
+		Username:       "",
+		Password:       "",
+		Avatar:         "",
+		Mobile:         "",
+		Name:           "",
+		Status:         0,
+		Gender:         0,
+		Birthday:       "",
+		LastAt:         "",
+		LastIp:         "",
+		Desc:           "",
+		Roles:          []*Role{},
+		DepartmentsId:  0,
+		PositionsId:    0,
+		DepartmentName: "",
+		PositionName:   "",
+		CreatedAt:      "",
+		UpdatedAt:      "",
+		CreatedId:      0,
+		CreatedName:    "",
 	}
 }
 
@@ -68,6 +72,8 @@ func (p *User) InitDefault() {
 	p.Roles = []*Role{}
 	p.DepartmentsId = 0
 	p.PositionsId = 0
+	p.DepartmentName = ""
+	p.PositionName = ""
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.CreatedId = 0
@@ -209,6 +215,24 @@ func (p *User) GetPositionsId() (v int64) {
 	return p.PositionsId
 }
 
+var User_DepartmentName_DEFAULT string = ""
+
+func (p *User) GetDepartmentName() (v string) {
+	if !p.IsSetDepartmentName() {
+		return User_DepartmentName_DEFAULT
+	}
+	return p.DepartmentName
+}
+
+var User_PositionName_DEFAULT string = ""
+
+func (p *User) GetPositionName() (v string) {
+	if !p.IsSetPositionName() {
+		return User_PositionName_DEFAULT
+	}
+	return p.PositionName
+}
+
 var User_CreatedAt_DEFAULT string = ""
 
 func (p *User) GetCreatedAt() (v string) {
@@ -289,6 +313,12 @@ func (p *User) SetDepartmentsId(val int64) {
 func (p *User) SetPositionsId(val int64) {
 	p.PositionsId = val
 }
+func (p *User) SetDepartmentName(val string) {
+	p.DepartmentName = val
+}
+func (p *User) SetPositionName(val string) {
+	p.PositionName = val
+}
 func (p *User) SetCreatedAt(val string) {
 	p.CreatedAt = val
 }
@@ -362,6 +392,14 @@ func (p *User) IsSetPositionsId() bool {
 	return p.PositionsId != User_PositionsId_DEFAULT
 }
 
+func (p *User) IsSetDepartmentName() bool {
+	return p.DepartmentName != User_DepartmentName_DEFAULT
+}
+
+func (p *User) IsSetPositionName() bool {
+	return p.PositionName != User_PositionName_DEFAULT
+}
+
 func (p *User) IsSetCreatedAt() bool {
 	return p.CreatedAt != User_CreatedAt_DEFAULT
 }
@@ -401,6 +439,8 @@ var fieldIDToName_User = map[int16]string{
 	14:  "roles",
 	15:  "departmentsId",
 	16:  "positionsId",
+	17:  "departmentName",
+	18:  "positionName",
 	251: "createdAt",
 	252: "updatedAt",
 	256: "createdId",

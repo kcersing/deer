@@ -37,14 +37,14 @@ func (s *SendMessagesService) Run(req *message.SendMessagesReq) (resp *base.NilR
 		SetType(req.GetType()).
 		Save(s.ctx)
 	if err != nil {
-		return nil, rollback(tx, errors.Wrap(err, "create Member Profile failed"))
+		return nil, rollback(tx, errors.Wrap(err, "create Messages failed"))
 	}
 	if err = tx.Commit(); err != nil {
 		return nil, err
 	}
 	req.Id = save.ID
-	if err = events.SendUserMessages(s.ctx, req); err != nil {
-		klog.Errorf("Failed to publish SendUserMessages event: %v", err)
+	if err = events.SendMessages(s.ctx, req); err != nil {
+		klog.Errorf("Failed to publish SendMessages event: %v", err)
 	}
 
 	return &base.NilResponse{}, nil

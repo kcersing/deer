@@ -513,6 +513,10 @@ type UpdateUserReq struct {
 	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
 	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
 	CreatedId     int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Address       string `thrift:"address,15,optional" frugal:"15,optional,string" json:"address,omitempty"`
+	City          int64  `thrift:"city,12,optional" frugal:"12,optional,i64" json:"city,omitempty"`
+	Province      int64  `thrift:"province,13,optional" frugal:"13,optional,i64" json:"province,omitempty"`
+	Email         string `thrift:"email,14,optional" frugal:"14,optional,string" json:"email,omitempty"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
@@ -528,6 +532,10 @@ func NewUpdateUserReq() *UpdateUserReq {
 		DepartmentsId: 0,
 		PositionsId:   0,
 		CreatedId:     0,
+		Address:       "",
+		City:          0,
+		Province:      0,
+		Email:         "",
 	}
 }
 
@@ -543,6 +551,10 @@ func (p *UpdateUserReq) InitDefault() {
 	p.DepartmentsId = 0
 	p.PositionsId = 0
 	p.CreatedId = 0
+	p.Address = ""
+	p.City = 0
+	p.Province = 0
+	p.Email = ""
 }
 
 var UpdateUserReq_Id_DEFAULT int64 = 0
@@ -643,6 +655,42 @@ func (p *UpdateUserReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var UpdateUserReq_Address_DEFAULT string = ""
+
+func (p *UpdateUserReq) GetAddress() (v string) {
+	if !p.IsSetAddress() {
+		return UpdateUserReq_Address_DEFAULT
+	}
+	return p.Address
+}
+
+var UpdateUserReq_City_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetCity() (v int64) {
+	if !p.IsSetCity() {
+		return UpdateUserReq_City_DEFAULT
+	}
+	return p.City
+}
+
+var UpdateUserReq_Province_DEFAULT int64 = 0
+
+func (p *UpdateUserReq) GetProvince() (v int64) {
+	if !p.IsSetProvince() {
+		return UpdateUserReq_Province_DEFAULT
+	}
+	return p.Province
+}
+
+var UpdateUserReq_Email_DEFAULT string = ""
+
+func (p *UpdateUserReq) GetEmail() (v string) {
+	if !p.IsSetEmail() {
+		return UpdateUserReq_Email_DEFAULT
+	}
+	return p.Email
+}
 func (p *UpdateUserReq) SetId(val int64) {
 	p.Id = val
 }
@@ -675,6 +723,18 @@ func (p *UpdateUserReq) SetPositionsId(val int64) {
 }
 func (p *UpdateUserReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *UpdateUserReq) SetAddress(val string) {
+	p.Address = val
+}
+func (p *UpdateUserReq) SetCity(val int64) {
+	p.City = val
+}
+func (p *UpdateUserReq) SetProvince(val int64) {
+	p.Province = val
+}
+func (p *UpdateUserReq) SetEmail(val string) {
+	p.Email = val
 }
 
 func (p *UpdateUserReq) IsSetId() bool {
@@ -721,6 +781,22 @@ func (p *UpdateUserReq) IsSetCreatedId() bool {
 	return p.CreatedId != UpdateUserReq_CreatedId_DEFAULT
 }
 
+func (p *UpdateUserReq) IsSetAddress() bool {
+	return p.Address != UpdateUserReq_Address_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetCity() bool {
+	return p.City != UpdateUserReq_City_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetProvince() bool {
+	return p.Province != UpdateUserReq_Province_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetEmail() bool {
+	return p.Email != UpdateUserReq_Email_DEFAULT
+}
+
 func (p *UpdateUserReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -740,6 +816,10 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 	9:   "departmentsId",
 	10:  "positionsId",
 	256: "createdId",
+	15:  "address",
+	12:  "city",
+	13:  "province",
+	14:  "email",
 }
 
 type ChangePasswordReq struct {

@@ -122,13 +122,17 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		DepartmentsId: req.GetDepartmentsId(),
 		PositionsId:   req.GetPositionsId(),
 		CreatedId:     utils.GetTokenId(ctx, c),
+		City:          req.GetCity(),
+		Province:      req.GetProvince(),
+		Address:       req.GetAddress(),
+		Email:         req.GetEmail(),
 	})
 
 	if err != nil {
-		utils2.SendResponse(c, errno.ConvertErr(err), resp.Data, 0, "")
+		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return
 	}
-	utils2.SendResponse(c, errno.Success, resp.Data, 0, "")
+	utils2.SendResponse(c, errno.Success, resp, 0, "")
 	return
 }
 

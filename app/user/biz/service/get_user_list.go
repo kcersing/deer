@@ -38,9 +38,26 @@ func (s *GetUserListService) Run(req *User.GetUserListReq) (resp *User.UserListR
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(user.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)
+	ds, err := db.Client.Department.Query().All(s.ctx)
+	ps, err := db.Client.Position.Query().All(s.ctx)
+	//Role, err := db.Client.Role.Query().Where(role.IDIn(users...)).All(s.ctx)
 	for _, v := range users {
+		ur := convert.EntToUser(v)
+		ur.Roles = nil
+		for _, d := range ds {
+			if *v.DepartmentID == d.ID {
+				ur.DepartmentName = *d.Name
+				break
+			}
+		}
+		for _, p := range ps {
+			if *v.PositionID == p.ID {
+				ur.PositionName = *p.Name
+				break
+			}
+		}
+		userResp = append(userResp, ur)
 
-		userResp = append(userResp, convert.EntToUser(v))
 	}
 	if err != nil {
 		return nil, err

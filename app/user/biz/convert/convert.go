@@ -26,6 +26,10 @@ func EntToUser(e *ent.User) *Base.User {
 	dto.LastAt = e.LastAt.Format(time.DateOnly)
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
 	dto.UpdatedAt = e.UpdatedAt.Format(time.DateOnly)
+	dto.PositionsId = *e.PositionID
+	dto.DepartmentsId = *e.DepartmentID
+	dto.Password = ""
+
 	return &dto
 }
 

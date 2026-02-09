@@ -121,6 +121,14 @@ func init() {
 	userDescGender := userFields[5].Descriptor()
 	// user.DefaultGender holds the default value on creation for the gender field.
 	user.DefaultGender = userDescGender.Default.(int64)
+	// userDescCity is the schema descriptor for city field.
+	userDescCity := userFields[13].Descriptor()
+	// user.DefaultCity holds the default value on creation for the city field.
+	user.DefaultCity = userDescCity.Default.(int64)
+	// userDescProvince is the schema descriptor for province field.
+	userDescProvince := userFields[14].Descriptor()
+	// user.DefaultProvince holds the default value on creation for the province field.
+	user.DefaultProvince = userDescProvince.Default.(int64)
 	userloginlogMixin := schema.UserLoginLog{}.Mixin()
 	userloginlogMixinFields0 := userloginlogMixin[0].Fields()
 	_ = userloginlogMixinFields0

@@ -58,7 +58,7 @@ func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event
 	for _, userID := range resp.Data {
 		createAll = append(createAll,
 			db.Client.MessagesSentRecords.Create().
-				SetMessageID(req.GetUserId()).
+				SetMessageID(req.GetId()).
 				SetToUserID(userID).
 				SetReceivedAt(time.Now()))
 	}

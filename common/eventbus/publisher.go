@@ -4,6 +4,7 @@ import (
 	"common/amqpclt"
 	"context"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -37,14 +38,26 @@ func WithScope(scope PublishScope) func(*PublishOptions) {
 type EventPublisher struct {
 	memoryBus *EventBus        // 内存事件总线
 	amqpPub   *amqpclt.Publish // AMQP 发布者（可选）
+	mqQueue   chan *Event      // 本地队列，由后台 worker 负责推送到 MQ
+	wg        sync.WaitGroup
 }
 
 // NewEventPublisher 创建事件发布管理器
 func NewEventPublisher(memoryBus *EventBus, amqpPub *amqpclt.Publish) *EventPublisher {
-	return &EventPublisher{
+	pub := &EventPublisher{
 		memoryBus: memoryBus,
 		amqpPub:   amqpPub,
 	}
+	if amqpPub != nil {
+		// 使用默认队列大小
+		pub.mqQueue = make(chan *Event, DefaultConfig.QueueSize)
+		pub.wg.Add(1)
+		go func() {
+			defer pub.wg.Done()
+			pub.startMQWorker()
+		}()
+	}
+	return pub
 }
 
 // Publish 是统一的事件发布方法
@@ -71,11 +84,16 @@ func (pub *EventPublisher) Publish(ctx context.Context, topic string, payload an
 			return pub.Publish(ctx, topic, payload, WithScope(ScopeLocal))
 		}
 		event.Source = "service"
-		// 1. 异步发送到MQ
-		go pub.publishToMQ(ctx, event)
-		// 2. 发送到内存总线
+		// 把事件放入 MQ 队列，由后台 worker 负责发送，避免为每次发布起 goroutine
+		select {
+		case pub.mqQueue <- event:
+		default:
+			// 队列满时降级为直接异步发送，避免丢弃事件
+			go pub.publishToMQ(context.Background(), event)
+		}
+		// 发送到内存总线
 		pub.memoryBus.Publish(ctx, event)
-		klog.Infof("[Publish] Event published to memory bus and MQ, topic=%s, eventId=%s", topic, event.Id)
+		klog.Infof("[Publish] Event queued for MQ and published to memory bus, topic=%s, eventId=%s", topic, event.Id)
 
 	case ScopeMQOnly:
 		if pub.amqpPub == nil {
@@ -83,7 +101,11 @@ func (pub *EventPublisher) Publish(ctx context.Context, topic string, payload an
 			return fmt.Errorf("[Publish] AMQP publisher not configured, cannot publish to MQ only")
 		}
 		event.Source = "service"
-		err = pub.publishToMQ(ctx, event)
+		select {
+		case pub.mqQueue <- event:
+		default:
+			go pub.publishToMQ(context.Background(), event)
+		}
 
 	default:
 		err = fmt.Errorf("unknown publish scope: %v", options.Scope)
@@ -105,6 +127,28 @@ func (pub *EventPublisher) publishToMQ(ctx context.Context, event *Event) error 
 		klog.Infof("[Publish] event published to MQ, topic=%s, eventId=%s", event.Topic, event.Id)
 	}
 	return err
+}
+
+// startMQWorker 从本地队列消费事件并发送到 MQ
+func (pub *EventPublisher) startMQWorker() {
+	for ev := range pub.mqQueue {
+		if ev == nil {
+			continue
+		}
+		// 使用背景上下文，不应阻塞主业务流程
+		if err := pub.publishToMQ(context.Background(), ev); err != nil {
+			klog.Errorf("[MQWorker] publish failed: %v", err)
+		}
+	}
+}
+
+// Close 优雅关闭发布器（等待后台 worker 退出）
+func (pub *EventPublisher) Close() error {
+	if pub.mqQueue != nil {
+		close(pub.mqQueue)
+		pub.wg.Wait()
+	}
+	return nil
 }
 
 // ============ 方便的简写方法 ============

@@ -23,23 +23,15 @@ func NewUpdateSendService(ctx context.Context) *UpdateSendService {
 func (s *UpdateSendService) Run(req *message.SendMessagesReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
-	tx, err := db.Client.Tx(s.ctx)
-	if err != nil {
-		klog.Error("Tx")
-		return nil, err
-	}
-
-	_, err = tx.Messages.UpdateOneID(req.Id).
-		SetCreatedID(req.GetCreatedId()).
+	klog.Info(req.String())
+	_, err = db.Client.Messages.UpdateOneID(req.GetId()).
 		SetContent(req.GetContent()).
+		SetStatus(req.GetStatus()).
 		SetTitle(req.GetTitle()).
 		SetType(req.GetType()).
 		Save(s.ctx)
 	if err != nil {
-		return nil, rollback(tx, errors.Wrap(err, "create Member Profile failed"))
-	}
-	if err = tx.Commit(); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, "update message failed")
 	}
 
 	return &base.NilResponse{}, nil

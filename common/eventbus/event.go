@@ -1,4 +1,3 @@
-
 package eventbus
 
 import (
@@ -25,7 +24,7 @@ func NewEvent(topic string, payload any) *Event {
 		Payload:   payload,
 		Source:    "service", // 本地服务发布的事件标记为 "service"
 		Version:   0,
-		Timestamp: time.Time{},
+		Timestamp: time.Now(),
 		Priority:  0,
 	}
 }
