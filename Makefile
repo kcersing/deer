@@ -40,32 +40,40 @@ stop:
 VERSION?=1.0.0
 BUILD_DATE=$(shell date +%FT%T%z)
 # 模块
-MODULES=admin crm facade hardware member message order product system user
+# MODULES=admin crm facade hardware member message order product system user
+MODULES=admin member message order product system user
 # 构建参数
-LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Commit=${COMMIT} -X main.BuildDate=${BUILD_DATE}"
+LDFLAGS=-ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.buildTime=${BUILD_DATE}"
 # 设置目标平台
 # PLATFORMS=linux-amd64 windows-amd64 darwin-amd64
 PLATFORMS=linux-amd64 windows-amd64
 # 跨平台构建规则
+.PHONY: build-run
 build-run: $(PLATFORMS)
 $(PLATFORMS):
-	echo "$@"; \
-    GOOS=$(shell echo $@ | cut -d- -f1) \
-    GOARCH=$(shell echo $@ | cut -d- -f2) \
-	
+	GOOS=$(shell echo $@ | cut -d- -f1) ; \
+	GOARCH=$(shell echo $@ | cut -d- -f2) ; \
+
 	@for module in $(MODULES); do \
         echo "app/$$module/"; \
+		echo "go build ${LDFLAGS} ."; \
 		cd "app/$$module/"; \
-		go build ${LDFLAGS} . \
+		go build ${LDFLAGS} . ; \
+		cd ../..; \
+    done
+
+# 更新依赖库
+up-get:
+	@for module in $(MODULES); do \
+		cd "app/$$module/"; \
+		go get -u ./... ; \
 		cd ../..; \
     done
 
 
-# .PHONY: build-run
-build-run:
-	@for module in $(MODULES); do \
-        echo "app/$$module/"; \
-		cd "app/$$module/"; \
-		go build ${LDFLAGS} . \
-		cd ../..; \
-    done
+# 显示当前版本信息
+.PHONY: version
+version:
+	@echo "Version: ${VERSION}"
+	@echo "Commit: ${COMMIT}" 
+	@echo "Branch: ${BRANCH}" 
