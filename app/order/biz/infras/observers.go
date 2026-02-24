@@ -115,7 +115,7 @@ var (
 	once               sync.Once
 )
 
-func initEventHandlers() *EventDispatcher {
+func InitEventHandlers() *EventDispatcher {
 	// 使用sync.Once确保初始化代码只执行一次
 	once.Do(func() {
 		dispatcherInstance = NewEventDispatcher()

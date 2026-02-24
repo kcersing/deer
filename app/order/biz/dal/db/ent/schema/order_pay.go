@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"order/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"order/biz/dal/db/ent/schema/mixins"
 )
 
 type OrderPay struct {
@@ -17,7 +18,7 @@ type OrderPay struct {
 func (OrderPay) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("order_id").Comment("订单id").Optional(),
-		field.Int64("remission").Comment("减免").Optional(),
+		field.Int64("remission").Default(0).Comment("减免").Optional(),
 		field.Int64("pay").Comment("实际付款").Optional(),
 		field.String("note").Comment("备注").Optional(),
 		field.Time("pay_at").Comment("支付时间").Optional(),

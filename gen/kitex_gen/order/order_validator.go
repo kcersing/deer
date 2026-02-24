@@ -73,11 +73,6 @@ func (p *OrderResp) IsValid() error {
 	return nil
 }
 func (p *CreateOrderReq) IsValid() error {
-	if p.Items != nil {
-		if err := p.Items.IsValid(); err != nil {
-			return fmt.Errorf("field Items not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *PaymentReq) IsValid() error {

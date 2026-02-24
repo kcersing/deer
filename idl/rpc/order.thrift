@@ -49,7 +49,7 @@ struct OrderResp {
 struct CreateOrderReq {
     1:optional i64 memberId=0 (api.raw = "memberId")
     2:optional i64 createdId=0 (api.raw = "createdId")
-    3:optional order.OrderItem items={} (api.raw = "items")
+    3:optional list<order.OrderItem> items={} (api.raw = "items")
     4:optional i64 totalAmount=0 (api.raw = "totalAmount")
    5:optional i64 userId=0 (api.raw = "userId")
 }

@@ -16,7 +16,6 @@ const (
 
 type Order struct {
 	base.Order
-
 	stateMachine *StateMachine
 	common.AggregateBase
 	mu sync.RWMutex

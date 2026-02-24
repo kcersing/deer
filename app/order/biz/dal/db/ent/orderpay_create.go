@@ -256,6 +256,10 @@ func (_c *OrderPayCreate) defaults() {
 		v := orderpay.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
+	if _, ok := _c.mutation.Remission(); !ok {
+		v := orderpay.DefaultRemission
+		_c.mutation.SetRemission(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.

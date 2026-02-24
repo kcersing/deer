@@ -186,7 +186,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "remission", Type: field.TypeInt64, Nullable: true, Comment: "减免"},
+		{Name: "remission", Type: field.TypeInt64, Nullable: true, Comment: "减免", Default: 0},
 		{Name: "pay", Type: field.TypeInt64, Nullable: true, Comment: "实际付款"},
 		{Name: "note", Type: field.TypeString, Nullable: true, Comment: "备注"},
 		{Name: "pay_at", Type: field.TypeTime, Nullable: true, Comment: "支付时间"},

@@ -1,5 +1,17 @@
-MODULE = github.com/kcersing/deer
 
+
+# 版本信息
+COMMIT=$(shell git rev-parse HEAD)
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+
+# 包列表
+PACKAGES=$(shell go list ./... | grep -v /vendor/)
+GO_FILES=$(shell find . -name "*.go" -type f -not -path "./vendor/*")
+
+
+
+
+# 初始化构建环境
 .PHONY: init
 init:
 	go env -w GO111MODULE=on
@@ -23,35 +35,37 @@ start:
 stop:
 	docker-compose down
 
-# run the facade service
-.PHONY: facade
-facade:
-	cd app/facade
-	sh app/facade/run.sh
-
-# run the user service
-.PHONY: user
-user:
-	cd app/user
-	go run app/user/*.go
-
-# run the member service
-.PHONY: member
-member:
-	cd app/member
-	go run app/member/*.go
-
-# run the order service
-.PHONY: order
-order:
-	cd app/order
-	go run app/order/*.go
-
-# run the product service
-.PHONY: product
-product:
-	cd app/product
-	go run app/product/*.go
-
-
 #  cwgo server --type RPC --module order --server_name order --idl ../../../idl/rpc/order.thrift
+
+VERSION?=1.0.0
+BUILD_DATE=$(shell date +%FT%T%z)
+# 模块
+MODULES=admin crm facade hardware member message order product system user
+# 构建参数
+LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.Commit=${COMMIT} -X main.BuildDate=${BUILD_DATE}"
+# 设置目标平台
+# PLATFORMS=linux-amd64 windows-amd64 darwin-amd64
+PLATFORMS=linux-amd64 windows-amd64
+# 跨平台构建规则
+build-run: $(PLATFORMS)
+$(PLATFORMS):
+	echo "$@"; \
+    GOOS=$(shell echo $@ | cut -d- -f1) \
+    GOARCH=$(shell echo $@ | cut -d- -f2) \
+	
+	@for module in $(MODULES); do \
+        echo "app/$$module/"; \
+		cd "app/$$module/"; \
+		go build ${LDFLAGS} . \
+		cd ../..; \
+    done
+
+
+# .PHONY: build-run
+build-run:
+	@for module in $(MODULES); do \
+        echo "app/$$module/"; \
+		cd "app/$$module/"; \
+		go build ${LDFLAGS} . \
+		cd ../..; \
+    done

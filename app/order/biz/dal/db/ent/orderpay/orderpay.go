@@ -92,6 +92,8 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
+	// DefaultRemission holds the default value on creation for the "remission" field.
+	DefaultRemission int64
 )
 
 // OrderOption defines the ordering options for the OrderPay queries.

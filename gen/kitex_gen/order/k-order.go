@@ -1475,7 +1475,7 @@ func (p *CreateOrderReq) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 3:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.LIST {
 				l, err = p.FastReadField3(buf[offset:])
 				offset += l
 				if err != nil {
@@ -1564,11 +1564,24 @@ func (p *CreateOrderReq) FastReadField2(buf []byte) (int, error) {
 
 func (p *CreateOrderReq) FastReadField3(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewOrderItem()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
 		return offset, err
-	} else {
-		offset += l
+	}
+	_field := make([]*base.OrderItem, 0, size)
+	values := make([]base.OrderItem, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
 	}
 	p.Items = _field
 	return offset, nil
@@ -1653,8 +1666,15 @@ func (p *CreateOrderReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int 
 func (p *CreateOrderReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetItems() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 3)
-		offset += p.Items.FastWriteNocopy(buf[offset:], w)
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 3)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Items {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
 	}
 	return offset
 }
@@ -1699,7 +1719,11 @@ func (p *CreateOrderReq) field3Length() int {
 	l := 0
 	if p.IsSetItems() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.Items.BLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Items {
+			_ = v
+			l += v.BLength()
+		}
 	}
 	return l
 }

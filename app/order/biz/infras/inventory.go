@@ -3,10 +3,11 @@ package infras
 import (
 	"context"
 	"gen/kitex_gen/base"
-	"github.com/cloudwego/kitex/pkg/klog"
 	"order/biz/dal/db/ent"
 	"order/biz/infras/common"
 	"order/biz/infras/events"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 // InventoryHandler 库存处理器
@@ -49,11 +50,11 @@ func (h *InventoryHandler) Release(aggregateID int64) error {
 }
 
 type InventoryRepository interface {
-	// 预留库存（返回错误表示库存不足）
+	// Reserve 预留库存（返回错误表示库存不足）
 	Reserve(ctx context.Context, items []*base.OrderItem) error
-	// 释放库存
+	// Release 释放库存
 	Release(ctx context.Context, aggregateID int64) error
-	// 检查库存是否充足
+	// CheckAvailability 检查库存是否充足
 	CheckAvailability(ctx context.Context, items []*base.OrderItem) (bool, error)
 }
 

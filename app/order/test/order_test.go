@@ -1,10 +1,13 @@
-package infras
+package test
 
 import (
 	"context"
-	"gen/kitex_gen/order"
+	"gen/kitex_gen/base"
+	"order/biz/dal/db"
+	"order/biz/infras"
+
 	"github.com/cloudwego/kitex/pkg/klog"
-	db "order/biz/dal/mysql"
+
 	"order/biz/infras/aggregate"
 	"order/biz/infras/events"
 	"order/biz/infras/repo"
@@ -12,24 +15,25 @@ import (
 )
 
 func TestOrderSave(t *testing.T) {
-	item := []*order.Item{{Name: "商品1", ProductId: 1001, Quantity: 2, Price: 99.9}}
+	db.InitDB()
+	repo.InitOrderRepository()
+
+	item := []*base.OrderItem{{Name: "商品1", ProductId: 1001, Quantity: 2, Price: 9990}}
 	order := aggregate.NewOrder()
-	evt := events.NewCreatedOrderEvent("SN20230001", item, 99.9, 1, 2)
-	dbs := db.InItDB("root:root@tcp(127.0.0.1:3306)/orders?charset=utf8mb4&parseTime=True&loc=Local", true)
-	orderRepo := repo.NewOrderRepository(dbs, context.Background())
+	evt := events.NewCreatedOrderEvent("SN20230001", item, 9990, 1, 2)
+
 	err := order.Apply(evt)
-	dispatcher := initEventHandlers()
+	dispatcher := infras.InitEventHandlers()
 	err = dispatcher.Dispatch(context.Background(), evt)
 	klog.Info(err)
-	err = orderRepo.Save(order)
+	err = repo.OrderRepoClient.Save(order)
 	klog.Info(err)
 
 }
 
 func TestOrderPain(t *testing.T) {
-	dbs := db.InItDB("root:root@tcp(127.0.0.1:3306)/orders?charset=utf8mb4&parseTime=True&loc=Local", true)
-	orderRepo := repo.NewOrderRepository(dbs, context.Background())
-	odr, err := orderRepo.FindById(1)
+
+	odr, err := repo.OrderRepoClient.FindById(1)
 	if err != nil {
 		klog.Info(err)
 	}
@@ -53,9 +57,8 @@ func TestOrderPain(t *testing.T) {
 }
 
 func TestOrderFindById(t *testing.T) {
-	dbs := db.InItDB("root:root@tcp(127.0.0.1:3306)/orders?charset=utf8mb4&parseTime=True&loc=Local", true)
-	orderRepo := repo.NewOrderRepository(dbs, context.Background())
-	odr, err := orderRepo.FindById(1)
+
+	odr, err := repo.OrderRepoClient.FindById(1)
 	if err != nil {
 		klog.Info(err)
 	}

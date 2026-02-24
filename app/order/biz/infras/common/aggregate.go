@@ -74,6 +74,9 @@ func (a *AggregateBase) GetAppliedEvents() []Event { return a.appliedEvents }
 func (a *AggregateBase) SetAppliedEvents(events []Event) {
 	a.appliedEvents = events
 }
+func (a *AggregateBase) SetAggregateID(aggregateID int64) {
+	a.AggregateID = aggregateID
+}
 func (a *AggregateBase) SetAggregateType(aggregateType string) {
 	a.AggregateType = aggregateType
 }

@@ -572,18 +572,18 @@ var fieldIDToName_OrderResp = map[int16]string{
 }
 
 type CreateOrderReq struct {
-	MemberId    int64           `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	CreatedId   int64           `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
-	Items       *base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,base.OrderItem" json:"items,omitempty"`
-	TotalAmount int64           `thrift:"totalAmount,4,optional" frugal:"4,optional,i64" json:"totalAmount,omitempty"`
-	UserId      int64           `thrift:"userId,5,optional" frugal:"5,optional,i64" json:"userId,omitempty"`
+	MemberId    int64             `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	CreatedId   int64             `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
+	Items       []*base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<base.OrderItem>" json:"items,omitempty"`
+	TotalAmount int64             `thrift:"totalAmount,4,optional" frugal:"4,optional,i64" json:"totalAmount,omitempty"`
+	UserId      int64             `thrift:"userId,5,optional" frugal:"5,optional,i64" json:"userId,omitempty"`
 }
 
 func NewCreateOrderReq() *CreateOrderReq {
 	return &CreateOrderReq{
 		MemberId:    0,
 		CreatedId:   0,
-		Items:       &base.OrderItem{},
+		Items:       []*base.OrderItem{},
 		TotalAmount: 0,
 		UserId:      0,
 	}
@@ -592,7 +592,7 @@ func NewCreateOrderReq() *CreateOrderReq {
 func (p *CreateOrderReq) InitDefault() {
 	p.MemberId = 0
 	p.CreatedId = 0
-	p.Items = &base.OrderItem{}
+	p.Items = []*base.OrderItem{}
 	p.TotalAmount = 0
 	p.UserId = 0
 }
@@ -615,9 +615,9 @@ func (p *CreateOrderReq) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var CreateOrderReq_Items_DEFAULT *base.OrderItem = &base.OrderItem{}
+var CreateOrderReq_Items_DEFAULT []*base.OrderItem = []*base.OrderItem{}
 
-func (p *CreateOrderReq) GetItems() (v *base.OrderItem) {
+func (p *CreateOrderReq) GetItems() (v []*base.OrderItem) {
 	if !p.IsSetItems() {
 		return CreateOrderReq_Items_DEFAULT
 	}
@@ -647,7 +647,7 @@ func (p *CreateOrderReq) SetMemberId(val int64) {
 func (p *CreateOrderReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *CreateOrderReq) SetItems(val *base.OrderItem) {
+func (p *CreateOrderReq) SetItems(val []*base.OrderItem) {
 	p.Items = val
 }
 func (p *CreateOrderReq) SetTotalAmount(val int64) {

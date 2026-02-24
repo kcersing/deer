@@ -154,6 +154,10 @@ func init() {
 	orderpayDescCreatedID := orderpayMixinFields0[4].Descriptor()
 	// orderpay.DefaultCreatedID holds the default value on creation for the created_id field.
 	orderpay.DefaultCreatedID = orderpayDescCreatedID.Default.(int64)
+	// orderpayDescRemission is the schema descriptor for remission field.
+	orderpayDescRemission := orderpayFields[1].Descriptor()
+	// orderpay.DefaultRemission holds the default value on creation for the remission field.
+	orderpay.DefaultRemission = orderpayDescRemission.Default.(int64)
 	orderrefundMixin := schema.OrderRefund{}.Mixin()
 	orderrefundMixinFields0 := orderrefundMixin[0].Fields()
 	_ = orderrefundMixinFields0

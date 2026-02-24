@@ -3,13 +3,11 @@ package repo
 import (
 	"context"
 	"order/biz/dal/db"
-	"order/biz/infras"
-	"order/biz/infras/events"
-
 	"order/biz/dal/db/ent"
 	entOrder "order/biz/dal/db/ent/order"
 	orderevents2 "order/biz/dal/db/ent/orderevents"
 	ordersnapshots2 "order/biz/dal/db/ent/ordersnapshots"
+	"order/biz/infras"
 	"order/biz/infras/aggregate"
 	"order/biz/infras/common"
 
@@ -54,9 +52,9 @@ func InitOrderRepository() {
 }
 
 // NewOrderRepositoryWithDeps 创建带可选依赖的仓储（订阅服务、事件发布器）
-func NewOrderRepositoryWithDeps(db *ent.Client, ctx context.Context, sub infras.SubscriptionService, pub *eventbus.EventPublisher) OrderRepository {
+func NewOrderRepositoryWithDeps(ctx context.Context, sub infras.SubscriptionService, pub *eventbus.EventPublisher) OrderRepository {
 	return &OrderRepo{
-		db:              db,
+		db:              db.Client,
 		ctx:             ctx,
 		subscriptionSvc: sub,
 		publisher:       pub,
@@ -67,45 +65,49 @@ var _ OrderRepository = &OrderRepo{}
 
 func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	es := order.GetUncommittedEvents()
+	klog.Info(len(es))
 	if len(es) == 0 {
 		return nil
 	}
-	tx, err := o.db.Tx(o.ctx)
-	if err != nil {
-		return errors.Wrap(err, "创建事务失败")
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			_ = tx.Rollback()
-			klog.Errorf("transaction panicked: %v", r)
-			panic(r)
-		} else if err != nil {
-			if rbErr := tx.Rollback(); rbErr != nil {
-				klog.Errorf("rollback failed: %v", rbErr)
-			}
-		}
-	}()
 
-	orderEnt := tx.Order.Create().
+	// 使用事务来保存聚合根
+	err = infras.WithTx(func(tx *ent.Tx) error {
+		return o.saveAggregateWithinTx(tx, order, es)
+	})
+	klog.Info(len(es))
+	if err != nil {
+		return err // 错误已在 withTx 中包装
+	}
+	klog.Info(len(es))
+	// 事务成功后，发布事件
+	o.publishEvents(es)
+	order.ClearUncommittedEvents() // 清除未提交事件
+	return nil
+}
+
+// saveAggregateWithinTx 在一个事务中持久化订单聚合根的所有变更。
+func (o *OrderRepo) saveAggregateWithinTx(tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
+	// 1. 保存订单主实体
+
+	klog.Info(len(es))
+	orderEnt, err := tx.Order.Create().
 		SetSn(order.Sn).
 		SetStatus(entOrder.Status(order.Status)).
 		SetCreatedID(order.CreatedId).
 		SetMemberID(order.MemberId).
-		SetVersion(order.Version)
-	//OnConflict().
-	//UpdateNewValues()
-
-	order.Id, err = orderEnt.ID(o.ctx)
-	order.AggregateID = order.Id
+		SetVersion(order.Version).
+		Save(o.ctx)
 	if err != nil {
-		klog.Errorf("save order failed: %v", err)
 		return errors.Wrap(err, "保存订单失败")
 	}
 
+	// 更新聚合根ID
+	order.AggregateBase.SetAggregateID(orderEnt.ID)
+
+	// 2. 批量保存订单项
 	items := make([]*ent.OrderItemCreate, len(order.Items))
 	for i, item := range order.Items {
-		items[i] = tx.OrderItem.
-			Create().
+		items[i] = tx.OrderItem.Create().
 			SetName(item.Name).
 			SetProductID(item.ProductId).
 			SetQuantity(item.Quantity).
@@ -116,12 +118,13 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	if _, err = tx.OrderItem.CreateBulk(items...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单项失败")
 	}
+
+	// 3. 批量保存领域事件
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
 		e.SetAggregateID(order.AggregateID)
-		eventData, _ := sonic.Marshal(e)
-		ets[i] = tx.OrderEvents.
-			Create().
+		eventData, _ := sonic.Marshal(e) // 错误在聚合根内部已处理，这里忽略
+		ets[i] = tx.OrderEvents.Create().
 			SetEventID(e.GetId()).
 			SetAggregateID(order.AggregateID).
 			SetEventType(e.GetType()).
@@ -132,8 +135,9 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
 	}
-	order.Id = order.AggregateID
-	orderData, _ := sonic.Marshal(order)
+
+	// 4. 保存订单快照
+	orderData, _ := sonic.Marshal(order) // 错误在聚合根内部已处理，这里忽略
 	_, err = tx.OrderSnapshots.Create().
 		SetAggregateVersion(order.Version).
 		SetAggregateID(order.AggregateID).
@@ -143,31 +147,29 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 		return errors.Wrap(err, "保存订单快照失败")
 	}
 
-	if err := tx.Commit(); err != nil {
-		return errors.Wrap(err, "提交事务失败")
-	}
-	if err == nil {
-		// 优先使用通用事件发布器进行分发（可发布到本地和 MQ），没有则回退到旧的 subscriptionSvc
-		if o.publisher != nil {
-			for _, e := range es {
-				// 使用 Distributed 使事件同时发往 MQ 与本地（按需要调整）
-				// 将领域事件作为 payload 传递，发布器会封装为 transport event
-				// 设置时间与版本信息到 transport event 在 publisher 端处理
-				if perr := o.publisher.Distributed(o.ctx, e.GetType(), e); perr != nil {
-					klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), perr)
-				}
-				// 轻微延迟以避免短时间内大量 goroutine 累积在 publishToMQ
+	return nil
+}
+
+// publishEvents 负责发布领域事件。
+func (o *OrderRepo) publishEvents(events []common.Event) {
+	// 优先使用通用事件发布器进行分发
+	if o.publisher != nil {
+		for _, e := range events {
+			if err := o.publisher.Distributed(o.ctx, e.GetType(), e); err != nil {
+				klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), err)
 			}
-		} else if o.subscriptionSvc != nil {
-			for _, e := range es {
-				if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
-					klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetId(), err)
-				}
+		}
+		return
+	}
+
+	// 回退到旧的订阅服务
+	if o.subscriptionSvc != nil {
+		for _, e := range events {
+			if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
+				klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetId(), err)
 			}
 		}
 	}
-	order.ClearUncommittedEvents() // 事务成功后清除未提交事件
-	return nil
 }
 
 func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
@@ -208,47 +210,18 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 
 	var eventAll []common.Event
 	for _, eventEnt := range eventAlls {
-		switch eventEnt.EventType {
-		case string(common.Created):
-			ev := &events.CreatedOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		case string(common.Paid):
-			ev := &events.PaidOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		case string(common.Shipped):
-			ev := &events.ShippedOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		case string(common.Cancelled):
-			ev := &events.CancelledOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		case string(common.Refunded):
-			ev := &events.RefundedOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		case string(common.Completed):
-			ev := &events.CompletedOrderEvent{}
-			if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-				return nil, err
-			}
-			eventAll = append(eventAll, ev)
-		default:
-			klog.Warnf("unsupported event type: %s", eventEnt.EventType)
+		// 使用事件工厂创建事件实例
+		ev, err := NewEventByType(eventEnt.EventType)
+		if err != nil {
+			klog.Warnf("跳过未知事件类型: %v", err)
 			continue
 		}
+
+		// 反序列化事件数据
+		if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
+			return nil, errors.Wrapf(err, "事件数据反序列化失败 (event_type: %s)", eventEnt.EventType)
+		}
+		eventAll = append(eventAll, ev)
 	}
 	err = order.Load(eventAll)
 	if err != nil {

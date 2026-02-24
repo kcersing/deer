@@ -12,7 +12,7 @@ const (
 
 )
 
-// 定义状态转换规则
+// Transitions 定义状态转换规则
 var Transitions = map[OrderStatus][]OrderStatus{
 	Created: {Paid, Cancelled},
 	Paid:    {Shipped, Refunded, Cancelled},

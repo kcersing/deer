@@ -1,9 +1,10 @@
 package events
 
 import (
-	"github.com/google/uuid"
 	"order/biz/infras/common"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // CancelledOrderEvent 取消订单事件
