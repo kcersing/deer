@@ -26,7 +26,7 @@ var (
 	_ = thrift.STOP
 )
 
-func (p *GetOrderInfoReq) FastRead(buf []byte) (int, error) {
+func (p *GetOrderReq) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -84,12 +84,12 @@ func (p *GetOrderInfoReq) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_GetOrderInfoReq[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_GetOrderReq[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
-func (p *GetOrderInfoReq) FastReadField1(buf []byte) (int, error) {
+func (p *GetOrderReq) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
 	var _field int64
@@ -103,25 +103,25 @@ func (p *GetOrderInfoReq) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *GetOrderInfoReq) FastReadField2(buf []byte) (int, error) {
+func (p *GetOrderReq) FastReadField2(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *string
+	var _field string
 	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Sn = _field
 	return offset, nil
 }
 
-func (p *GetOrderInfoReq) FastWrite(buf []byte) int {
+func (p *GetOrderReq) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *GetOrderInfoReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *GetOrderReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -131,7 +131,7 @@ func (p *GetOrderInfoReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 	return offset
 }
 
-func (p *GetOrderInfoReq) BLength() int {
+func (p *GetOrderReq) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -141,7 +141,7 @@ func (p *GetOrderInfoReq) BLength() int {
 	return l
 }
 
-func (p *GetOrderInfoReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *GetOrderReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetId() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 1)
@@ -150,16 +150,16 @@ func (p *GetOrderInfoReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int
 	return offset
 }
 
-func (p *GetOrderInfoReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
+func (p *GetOrderReq) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetSn() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Sn)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Sn)
 	}
 	return offset
 }
 
-func (p *GetOrderInfoReq) field1Length() int {
+func (p *GetOrderReq) field1Length() int {
 	l := 0
 	if p.IsSetId() {
 		l += thrift.Binary.FieldBeginLength()
@@ -168,11 +168,11 @@ func (p *GetOrderInfoReq) field1Length() int {
 	return l
 }
 
-func (p *GetOrderInfoReq) field2Length() int {
+func (p *GetOrderReq) field2Length() int {
 	l := 0
 	if p.IsSetSn() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Sn)
+		l += thrift.Binary.StringLengthNocopy(p.Sn)
 	}
 	return l
 }
@@ -265,8 +265,22 @@ func (p *GetOrderListReq) FastRead(buf []byte) (int, error) {
 				}
 			}
 		case 254:
-			if fieldTypeId == thrift.STRUCT {
+			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField254(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 255:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField255(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -327,12 +341,12 @@ func (p *GetOrderListReq) FastReadField2(buf []byte) (int, error) {
 func (p *GetOrderListReq) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
-	var _field *string
+	var _field string
 	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
-		_field = &v
+		_field = v
 	}
 	p.Status = _field
 	return offset, nil
@@ -368,13 +382,29 @@ func (p *GetOrderListReq) FastReadField5(buf []byte) (int, error) {
 
 func (p *GetOrderListReq) FastReadField254(buf []byte) (int, error) {
 	offset := 0
-	_field := base.NewPageReq()
-	if l, err := _field.FastRead(buf[offset:]); err != nil {
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
 		return offset, err
 	} else {
 		offset += l
+		_field = v
 	}
-	p.PageReq = _field
+	p.Page = _field
+	return offset, nil
+}
+
+func (p *GetOrderListReq) FastReadField255(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.PageSize = _field
 	return offset, nil
 }
 
@@ -387,10 +417,11 @@ func (p *GetOrderListReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
+		offset += p.fastWriteField254(buf[offset:], w)
+		offset += p.fastWriteField255(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
-		offset += p.fastWriteField254(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -405,6 +436,7 @@ func (p *GetOrderListReq) BLength() int {
 		l += p.field4Length()
 		l += p.field5Length()
 		l += p.field254Length()
+		l += p.field255Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -432,7 +464,7 @@ func (p *GetOrderListReq) fastWriteField3(buf []byte, w thrift.NocopyWriter) int
 	offset := 0
 	if p.IsSetStatus() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 3)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.Status)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Status)
 	}
 	return offset
 }
@@ -457,9 +489,18 @@ func (p *GetOrderListReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int
 
 func (p *GetOrderListReq) fastWriteField254(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetPageReq() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 254)
-		offset += p.PageReq.FastWriteNocopy(buf[offset:], w)
+	if p.IsSetPage() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 254)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Page)
+	}
+	return offset
+}
+
+func (p *GetOrderListReq) fastWriteField255(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetPageSize() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 255)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.PageSize)
 	}
 	return offset
 }
@@ -486,7 +527,7 @@ func (p *GetOrderListReq) field3Length() int {
 	l := 0
 	if p.IsSetStatus() {
 		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.Status)
+		l += thrift.Binary.StringLengthNocopy(p.Status)
 	}
 	return l
 }
@@ -511,9 +552,18 @@ func (p *GetOrderListReq) field5Length() int {
 
 func (p *GetOrderListReq) field254Length() int {
 	l := 0
-	if p.IsSetPageReq() {
+	if p.IsSetPage() {
 		l += thrift.Binary.FieldBeginLength()
-		l += p.PageReq.BLength()
+		l += thrift.Binary.I64Length()
+	}
+	return l
+}
+
+func (p *GetOrderListReq) field255Length() int {
+	l := 0
+	if p.IsSetPageSize() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }
@@ -1796,7 +1846,7 @@ func (p *PaymentReq) BLength() int {
 	return l
 }
 
-func (p *OrderServiceGetOrderInfoArgs) FastRead(buf []byte) (int, error) {
+func (p *OrderServiceGetOrderArgs) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -1840,14 +1890,14 @@ func (p *OrderServiceGetOrderInfoArgs) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_OrderServiceGetOrderInfoArgs[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_OrderServiceGetOrderArgs[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
-func (p *OrderServiceGetOrderInfoArgs) FastReadField1(buf []byte) (int, error) {
+func (p *OrderServiceGetOrderArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewGetOrderInfoReq()
+	_field := NewGetOrderReq()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -1857,11 +1907,11 @@ func (p *OrderServiceGetOrderInfoArgs) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *OrderServiceGetOrderInfoArgs) FastWrite(buf []byte) int {
+func (p *OrderServiceGetOrderArgs) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *OrderServiceGetOrderInfoArgs) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *OrderServiceGetOrderArgs) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
@@ -1870,7 +1920,7 @@ func (p *OrderServiceGetOrderInfoArgs) FastWriteNocopy(buf []byte, w thrift.Noco
 	return offset
 }
 
-func (p *OrderServiceGetOrderInfoArgs) BLength() int {
+func (p *OrderServiceGetOrderArgs) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
@@ -1879,21 +1929,21 @@ func (p *OrderServiceGetOrderInfoArgs) BLength() int {
 	return l
 }
 
-func (p *OrderServiceGetOrderInfoArgs) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+func (p *OrderServiceGetOrderArgs) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
 	offset += p.Req.FastWriteNocopy(buf[offset:], w)
 	return offset
 }
 
-func (p *OrderServiceGetOrderInfoArgs) field1Length() int {
+func (p *OrderServiceGetOrderArgs) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += p.Req.BLength()
 	return l
 }
 
-func (p *OrderServiceGetOrderInfoResult) FastRead(buf []byte) (int, error) {
+func (p *OrderServiceGetOrderResult) FastRead(buf []byte) (int, error) {
 
 	var err error
 	var offset int
@@ -1937,12 +1987,12 @@ func (p *OrderServiceGetOrderInfoResult) FastRead(buf []byte) (int, error) {
 ReadFieldBeginError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
 ReadFieldError:
-	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_OrderServiceGetOrderInfoResult[fieldId]), err)
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_OrderServiceGetOrderResult[fieldId]), err)
 SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
-func (p *OrderServiceGetOrderInfoResult) FastReadField0(buf []byte) (int, error) {
+func (p *OrderServiceGetOrderResult) FastReadField0(buf []byte) (int, error) {
 	offset := 0
 	_field := NewOrderResp()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
@@ -1954,11 +2004,11 @@ func (p *OrderServiceGetOrderInfoResult) FastReadField0(buf []byte) (int, error)
 	return offset, nil
 }
 
-func (p *OrderServiceGetOrderInfoResult) FastWrite(buf []byte) int {
+func (p *OrderServiceGetOrderResult) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
 
-func (p *OrderServiceGetOrderInfoResult) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+func (p *OrderServiceGetOrderResult) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p != nil {
 		offset += p.fastWriteField0(buf[offset:], w)
@@ -1967,7 +2017,7 @@ func (p *OrderServiceGetOrderInfoResult) FastWriteNocopy(buf []byte, w thrift.No
 	return offset
 }
 
-func (p *OrderServiceGetOrderInfoResult) BLength() int {
+func (p *OrderServiceGetOrderResult) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field0Length()
@@ -1976,7 +2026,7 @@ func (p *OrderServiceGetOrderInfoResult) BLength() int {
 	return l
 }
 
-func (p *OrderServiceGetOrderInfoResult) fastWriteField0(buf []byte, w thrift.NocopyWriter) int {
+func (p *OrderServiceGetOrderResult) fastWriteField0(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetSuccess() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 0)
@@ -1985,7 +2035,7 @@ func (p *OrderServiceGetOrderInfoResult) fastWriteField0(buf []byte, w thrift.No
 	return offset
 }
 
-func (p *OrderServiceGetOrderInfoResult) field0Length() int {
+func (p *OrderServiceGetOrderResult) field0Length() int {
 	l := 0
 	if p.IsSetSuccess() {
 		l += thrift.Binary.FieldBeginLength()
@@ -2837,7 +2887,7 @@ SkipFieldError:
 
 func (p *OrderServiceCancelledOrderArgs) FastReadField1(buf []byte) (int, error) {
 	offset := 0
-	_field := NewCreateOrderReq()
+	_field := NewCancelledOrderReq()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
 	} else {
@@ -3182,11 +3232,11 @@ func (p *OrderServiceRefundOrderResult) field0Length() int {
 	return l
 }
 
-func (p *OrderServiceGetOrderInfoArgs) GetFirstArgument() interface{} {
+func (p *OrderServiceGetOrderArgs) GetFirstArgument() interface{} {
 	return p.Req
 }
 
-func (p *OrderServiceGetOrderInfoResult) GetResult() interface{} {
+func (p *OrderServiceGetOrderResult) GetResult() interface{} {
 	return p.Success
 }
 

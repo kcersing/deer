@@ -14,10 +14,10 @@ import (
 var errInvalidMessageType = errors.New("invalid message type for service method handler")
 
 var serviceMethods = map[string]kitex.MethodInfo{
-	"GetOrderInfo": kitex.NewMethodInfo(
-		getOrderInfoHandler,
-		newOrderServiceGetOrderInfoArgs,
-		newOrderServiceGetOrderInfoResult,
+	"GetOrder": kitex.NewMethodInfo(
+		getOrderHandler,
+		newOrderServiceGetOrderArgs,
+		newOrderServiceGetOrderResult,
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
@@ -129,22 +129,22 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 	return svcInfo
 }
 
-func getOrderInfoHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
-	realArg := arg.(*order.OrderServiceGetOrderInfoArgs)
-	realResult := result.(*order.OrderServiceGetOrderInfoResult)
-	success, err := handler.(order.OrderService).GetOrderInfo(ctx, realArg.Req)
+func getOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceGetOrderArgs)
+	realResult := result.(*order.OrderServiceGetOrderResult)
+	success, err := handler.(order.OrderService).GetOrder(ctx, realArg.Req)
 	if err != nil {
 		return err
 	}
 	realResult.Success = success
 	return nil
 }
-func newOrderServiceGetOrderInfoArgs() interface{} {
-	return order.NewOrderServiceGetOrderInfoArgs()
+func newOrderServiceGetOrderArgs() interface{} {
+	return order.NewOrderServiceGetOrderArgs()
 }
 
-func newOrderServiceGetOrderInfoResult() interface{} {
-	return order.NewOrderServiceGetOrderInfoResult()
+func newOrderServiceGetOrderResult() interface{} {
+	return order.NewOrderServiceGetOrderResult()
 }
 
 func getOrderListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
@@ -265,11 +265,11 @@ func newServiceClient(c client.Client) *kClient {
 	}
 }
 
-func (p *kClient) GetOrderInfo(ctx context.Context, req *order.GetOrderInfoReq) (r *order.OrderResp, err error) {
-	var _args order.OrderServiceGetOrderInfoArgs
+func (p *kClient) GetOrder(ctx context.Context, req *order.GetOrderReq) (r *order.OrderResp, err error) {
+	var _args order.OrderServiceGetOrderArgs
 	_args.Req = req
-	var _result order.OrderServiceGetOrderInfoResult
-	if err = p.c.Call(ctx, "GetOrderInfo", &_args, &_result); err != nil {
+	var _result order.OrderServiceGetOrderResult
+	if err = p.c.Call(ctx, "GetOrder", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil
@@ -315,7 +315,7 @@ func (p *kClient) Payment(ctx context.Context, req *order.PaymentReq) (r *order.
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) CancelledOrder(ctx context.Context, req *order.CreateOrderReq) (r *base.NilResponse, err error) {
+func (p *kClient) CancelledOrder(ctx context.Context, req *order.CancelledOrderReq) (r *base.NilResponse, err error) {
 	var _args order.OrderServiceCancelledOrderArgs
 	_args.Req = req
 	var _result order.OrderServiceCancelledOrderResult

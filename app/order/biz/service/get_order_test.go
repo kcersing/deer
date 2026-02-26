@@ -2,17 +2,16 @@ package service
 
 import (
 	"context"
-	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
 	"testing"
 )
 
-func TestGetOrderInfo_Run(t *testing.T) {
+func TestGetOrder_Run(t *testing.T) {
 	ctx := context.Background()
-	s := NewGetOrderInfoService(ctx)
+	s := NewGetOrderService(ctx)
 	// init req and assert value
 
-	req := &order.GetOrderInfoReq{}
+	req := &order.GetOrderReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

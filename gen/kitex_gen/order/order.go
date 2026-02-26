@@ -8,90 +8,97 @@ import (
 	"gen/kitex_gen/base"
 )
 
-type GetOrderInfoReq struct {
-	Id int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Sn *string `thrift:"sn,2,optional" frugal:"2,optional,string" json:"sn,omitempty"`
+type GetOrderReq struct {
+	Id int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Sn string `thrift:"sn,2,optional" frugal:"2,optional,string" json:"sn,omitempty"`
 }
 
-func NewGetOrderInfoReq() *GetOrderInfoReq {
-	return &GetOrderInfoReq{
+func NewGetOrderReq() *GetOrderReq {
+	return &GetOrderReq{
 		Id: 0,
+		Sn: "",
 	}
 }
 
-func (p *GetOrderInfoReq) InitDefault() {
+func (p *GetOrderReq) InitDefault() {
 	p.Id = 0
+	p.Sn = ""
 }
 
-var GetOrderInfoReq_Id_DEFAULT int64 = 0
+var GetOrderReq_Id_DEFAULT int64 = 0
 
-func (p *GetOrderInfoReq) GetId() (v int64) {
+func (p *GetOrderReq) GetId() (v int64) {
 	if !p.IsSetId() {
-		return GetOrderInfoReq_Id_DEFAULT
+		return GetOrderReq_Id_DEFAULT
 	}
 	return p.Id
 }
 
-var GetOrderInfoReq_Sn_DEFAULT string
+var GetOrderReq_Sn_DEFAULT string = ""
 
-func (p *GetOrderInfoReq) GetSn() (v string) {
+func (p *GetOrderReq) GetSn() (v string) {
 	if !p.IsSetSn() {
-		return GetOrderInfoReq_Sn_DEFAULT
+		return GetOrderReq_Sn_DEFAULT
 	}
-	return *p.Sn
+	return p.Sn
 }
-func (p *GetOrderInfoReq) SetId(val int64) {
+func (p *GetOrderReq) SetId(val int64) {
 	p.Id = val
 }
-func (p *GetOrderInfoReq) SetSn(val *string) {
+func (p *GetOrderReq) SetSn(val string) {
 	p.Sn = val
 }
 
-func (p *GetOrderInfoReq) IsSetId() bool {
-	return p.Id != GetOrderInfoReq_Id_DEFAULT
+func (p *GetOrderReq) IsSetId() bool {
+	return p.Id != GetOrderReq_Id_DEFAULT
 }
 
-func (p *GetOrderInfoReq) IsSetSn() bool {
-	return p.Sn != nil
+func (p *GetOrderReq) IsSetSn() bool {
+	return p.Sn != GetOrderReq_Sn_DEFAULT
 }
 
-func (p *GetOrderInfoReq) String() string {
+func (p *GetOrderReq) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("GetOrderInfoReq(%+v)", *p)
+	return fmt.Sprintf("GetOrderReq(%+v)", *p)
 }
 
-var fieldIDToName_GetOrderInfoReq = map[int16]string{
+var fieldIDToName_GetOrderReq = map[int16]string{
 	1: "id",
 	2: "sn",
 }
 
 type GetOrderListReq struct {
-	MemberId  int64         `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	CreatedId int64         `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
-	Status    *string       `thrift:"status,3,optional" frugal:"3,optional,string" json:"status,omitempty"`
-	Nature    string        `thrift:"nature,4,optional" frugal:"4,optional,string" json:"nature,omitempty"`
-	SearchKey string        `thrift:"searchKey,5,optional" frugal:"5,optional,string" json:"searchKey,omitempty"`
-	PageReq   *base.PageReq `thrift:"pageReq,254,optional" frugal:"254,optional,base.PageReq" json:"pageReq,omitempty"`
+	MemberId  int64  `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	CreatedId int64  `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
+	Status    string `thrift:"status,3,optional" frugal:"3,optional,string" json:"status,omitempty"`
+	Nature    string `thrift:"nature,4,optional" frugal:"4,optional,string" json:"nature,omitempty"`
+	SearchKey string `thrift:"searchKey,5,optional" frugal:"5,optional,string" json:"searchKey,omitempty"`
+	Page      int64  `thrift:"page,254,optional" frugal:"254,optional,i64" json:"page,omitempty"`
+	PageSize  int64  `thrift:"pageSize,255,optional" frugal:"255,optional,i64" json:"pageSize,omitempty"`
 }
 
 func NewGetOrderListReq() *GetOrderListReq {
 	return &GetOrderListReq{
 		MemberId:  0,
 		CreatedId: 0,
+		Status:    "",
 		Nature:    "",
 		SearchKey: "",
-		PageReq:   &base.PageReq{},
+		Page:      1,
+		PageSize:  100,
 	}
 }
 
 func (p *GetOrderListReq) InitDefault() {
 	p.MemberId = 0
 	p.CreatedId = 0
+	p.Status = ""
 	p.Nature = ""
 	p.SearchKey = ""
-	p.PageReq = &base.PageReq{}
+	p.Page = 1
+	p.PageSize = 100
 }
 
 var GetOrderListReq_MemberId_DEFAULT int64 = 0
@@ -112,13 +119,13 @@ func (p *GetOrderListReq) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var GetOrderListReq_Status_DEFAULT string
+var GetOrderListReq_Status_DEFAULT string = ""
 
 func (p *GetOrderListReq) GetStatus() (v string) {
 	if !p.IsSetStatus() {
 		return GetOrderListReq_Status_DEFAULT
 	}
-	return *p.Status
+	return p.Status
 }
 
 var GetOrderListReq_Nature_DEFAULT string = ""
@@ -139,13 +146,22 @@ func (p *GetOrderListReq) GetSearchKey() (v string) {
 	return p.SearchKey
 }
 
-var GetOrderListReq_PageReq_DEFAULT *base.PageReq = &base.PageReq{}
+var GetOrderListReq_Page_DEFAULT int64 = 1
 
-func (p *GetOrderListReq) GetPageReq() (v *base.PageReq) {
-	if !p.IsSetPageReq() {
-		return GetOrderListReq_PageReq_DEFAULT
+func (p *GetOrderListReq) GetPage() (v int64) {
+	if !p.IsSetPage() {
+		return GetOrderListReq_Page_DEFAULT
 	}
-	return p.PageReq
+	return p.Page
+}
+
+var GetOrderListReq_PageSize_DEFAULT int64 = 100
+
+func (p *GetOrderListReq) GetPageSize() (v int64) {
+	if !p.IsSetPageSize() {
+		return GetOrderListReq_PageSize_DEFAULT
+	}
+	return p.PageSize
 }
 func (p *GetOrderListReq) SetMemberId(val int64) {
 	p.MemberId = val
@@ -153,7 +169,7 @@ func (p *GetOrderListReq) SetMemberId(val int64) {
 func (p *GetOrderListReq) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *GetOrderListReq) SetStatus(val *string) {
+func (p *GetOrderListReq) SetStatus(val string) {
 	p.Status = val
 }
 func (p *GetOrderListReq) SetNature(val string) {
@@ -162,8 +178,11 @@ func (p *GetOrderListReq) SetNature(val string) {
 func (p *GetOrderListReq) SetSearchKey(val string) {
 	p.SearchKey = val
 }
-func (p *GetOrderListReq) SetPageReq(val *base.PageReq) {
-	p.PageReq = val
+func (p *GetOrderListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *GetOrderListReq) SetPageSize(val int64) {
+	p.PageSize = val
 }
 
 func (p *GetOrderListReq) IsSetMemberId() bool {
@@ -175,7 +194,7 @@ func (p *GetOrderListReq) IsSetCreatedId() bool {
 }
 
 func (p *GetOrderListReq) IsSetStatus() bool {
-	return p.Status != nil
+	return p.Status != GetOrderListReq_Status_DEFAULT
 }
 
 func (p *GetOrderListReq) IsSetNature() bool {
@@ -186,8 +205,12 @@ func (p *GetOrderListReq) IsSetSearchKey() bool {
 	return p.SearchKey != GetOrderListReq_SearchKey_DEFAULT
 }
 
-func (p *GetOrderListReq) IsSetPageReq() bool {
-	return p.PageReq != nil
+func (p *GetOrderListReq) IsSetPage() bool {
+	return p.Page != GetOrderListReq_Page_DEFAULT
+}
+
+func (p *GetOrderListReq) IsSetPageSize() bool {
+	return p.PageSize != GetOrderListReq_PageSize_DEFAULT
 }
 
 func (p *GetOrderListReq) String() string {
@@ -203,7 +226,8 @@ var fieldIDToName_GetOrderListReq = map[int16]string{
 	3:   "status",
 	4:   "nature",
 	5:   "searchKey",
-	254: "pageReq",
+	254: "page",
+	255: "pageSize",
 }
 
 type GetOrderListResp struct {
@@ -712,7 +736,7 @@ func (p *PaymentReq) String() string {
 var fieldIDToName_PaymentReq = map[int16]string{}
 
 type OrderService interface {
-	GetOrderInfo(ctx context.Context, req *GetOrderInfoReq) (r *OrderResp, err error)
+	GetOrder(ctx context.Context, req *GetOrderReq) (r *OrderResp, err error)
 
 	GetOrderList(ctx context.Context, req *GetOrderListReq) (r *GetOrderListResp, err error)
 
@@ -722,84 +746,84 @@ type OrderService interface {
 
 	Payment(ctx context.Context, req *PaymentReq) (r *OrderResp, err error)
 
-	CancelledOrder(ctx context.Context, req *CreateOrderReq) (r *base.NilResponse, err error)
+	CancelledOrder(ctx context.Context, req *CancelledOrderReq) (r *base.NilResponse, err error)
 
 	RefundOrder(ctx context.Context, req *RefundOrderReq) (r *base.NilResponse, err error)
 }
 
-type OrderServiceGetOrderInfoArgs struct {
-	Req *GetOrderInfoReq `thrift:"req,1" frugal:"1,default,GetOrderInfoReq" json:"req"`
+type OrderServiceGetOrderArgs struct {
+	Req *GetOrderReq `thrift:"req,1" frugal:"1,default,GetOrderReq" json:"req"`
 }
 
-func NewOrderServiceGetOrderInfoArgs() *OrderServiceGetOrderInfoArgs {
-	return &OrderServiceGetOrderInfoArgs{}
+func NewOrderServiceGetOrderArgs() *OrderServiceGetOrderArgs {
+	return &OrderServiceGetOrderArgs{}
 }
 
-func (p *OrderServiceGetOrderInfoArgs) InitDefault() {
+func (p *OrderServiceGetOrderArgs) InitDefault() {
 }
 
-var OrderServiceGetOrderInfoArgs_Req_DEFAULT *GetOrderInfoReq
+var OrderServiceGetOrderArgs_Req_DEFAULT *GetOrderReq
 
-func (p *OrderServiceGetOrderInfoArgs) GetReq() (v *GetOrderInfoReq) {
+func (p *OrderServiceGetOrderArgs) GetReq() (v *GetOrderReq) {
 	if !p.IsSetReq() {
-		return OrderServiceGetOrderInfoArgs_Req_DEFAULT
+		return OrderServiceGetOrderArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *OrderServiceGetOrderInfoArgs) SetReq(val *GetOrderInfoReq) {
+func (p *OrderServiceGetOrderArgs) SetReq(val *GetOrderReq) {
 	p.Req = val
 }
 
-func (p *OrderServiceGetOrderInfoArgs) IsSetReq() bool {
+func (p *OrderServiceGetOrderArgs) IsSetReq() bool {
 	return p.Req != nil
 }
 
-func (p *OrderServiceGetOrderInfoArgs) String() string {
+func (p *OrderServiceGetOrderArgs) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderServiceGetOrderInfoArgs(%+v)", *p)
+	return fmt.Sprintf("OrderServiceGetOrderArgs(%+v)", *p)
 }
 
-var fieldIDToName_OrderServiceGetOrderInfoArgs = map[int16]string{
+var fieldIDToName_OrderServiceGetOrderArgs = map[int16]string{
 	1: "req",
 }
 
-type OrderServiceGetOrderInfoResult struct {
+type OrderServiceGetOrderResult struct {
 	Success *OrderResp `thrift:"success,0,optional" frugal:"0,optional,OrderResp" json:"success,omitempty"`
 }
 
-func NewOrderServiceGetOrderInfoResult() *OrderServiceGetOrderInfoResult {
-	return &OrderServiceGetOrderInfoResult{}
+func NewOrderServiceGetOrderResult() *OrderServiceGetOrderResult {
+	return &OrderServiceGetOrderResult{}
 }
 
-func (p *OrderServiceGetOrderInfoResult) InitDefault() {
+func (p *OrderServiceGetOrderResult) InitDefault() {
 }
 
-var OrderServiceGetOrderInfoResult_Success_DEFAULT *OrderResp
+var OrderServiceGetOrderResult_Success_DEFAULT *OrderResp
 
-func (p *OrderServiceGetOrderInfoResult) GetSuccess() (v *OrderResp) {
+func (p *OrderServiceGetOrderResult) GetSuccess() (v *OrderResp) {
 	if !p.IsSetSuccess() {
-		return OrderServiceGetOrderInfoResult_Success_DEFAULT
+		return OrderServiceGetOrderResult_Success_DEFAULT
 	}
 	return p.Success
 }
-func (p *OrderServiceGetOrderInfoResult) SetSuccess(x interface{}) {
+func (p *OrderServiceGetOrderResult) SetSuccess(x interface{}) {
 	p.Success = x.(*OrderResp)
 }
 
-func (p *OrderServiceGetOrderInfoResult) IsSetSuccess() bool {
+func (p *OrderServiceGetOrderResult) IsSetSuccess() bool {
 	return p.Success != nil
 }
 
-func (p *OrderServiceGetOrderInfoResult) String() string {
+func (p *OrderServiceGetOrderResult) String() string {
 	if p == nil {
 		return "<nil>"
 	}
-	return fmt.Sprintf("OrderServiceGetOrderInfoResult(%+v)", *p)
+	return fmt.Sprintf("OrderServiceGetOrderResult(%+v)", *p)
 }
 
-var fieldIDToName_OrderServiceGetOrderInfoResult = map[int16]string{
+var fieldIDToName_OrderServiceGetOrderResult = map[int16]string{
 	0: "success",
 }
 
@@ -1108,7 +1132,7 @@ var fieldIDToName_OrderServicePaymentResult = map[int16]string{
 }
 
 type OrderServiceCancelledOrderArgs struct {
-	Req *CreateOrderReq `thrift:"req,1" frugal:"1,default,CreateOrderReq" json:"req"`
+	Req *CancelledOrderReq `thrift:"req,1" frugal:"1,default,CancelledOrderReq" json:"req"`
 }
 
 func NewOrderServiceCancelledOrderArgs() *OrderServiceCancelledOrderArgs {
@@ -1118,15 +1142,15 @@ func NewOrderServiceCancelledOrderArgs() *OrderServiceCancelledOrderArgs {
 func (p *OrderServiceCancelledOrderArgs) InitDefault() {
 }
 
-var OrderServiceCancelledOrderArgs_Req_DEFAULT *CreateOrderReq
+var OrderServiceCancelledOrderArgs_Req_DEFAULT *CancelledOrderReq
 
-func (p *OrderServiceCancelledOrderArgs) GetReq() (v *CreateOrderReq) {
+func (p *OrderServiceCancelledOrderArgs) GetReq() (v *CancelledOrderReq) {
 	if !p.IsSetReq() {
 		return OrderServiceCancelledOrderArgs_Req_DEFAULT
 	}
 	return p.Req
 }
-func (p *OrderServiceCancelledOrderArgs) SetReq(val *CreateOrderReq) {
+func (p *OrderServiceCancelledOrderArgs) SetReq(val *CancelledOrderReq) {
 	p.Req = val
 }
 

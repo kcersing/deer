@@ -12,12 +12,12 @@ import (
 
 // Client is designed to provide IDL-compatible methods with call-option parameter for kitex framework.
 type Client interface {
-	GetOrderInfo(ctx context.Context, req *order.GetOrderInfoReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
+	GetOrder(ctx context.Context, req *order.GetOrderReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
 	GetOrderList(ctx context.Context, req *order.GetOrderListReq, callOptions ...callopt.Option) (r *order.GetOrderListResp, err error)
 	DeleteOrder(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	CreateOrder(ctx context.Context, req *order.CreateOrderReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
 	Payment(ctx context.Context, req *order.PaymentReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
-	CancelledOrder(ctx context.Context, req *order.CreateOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	CancelledOrder(ctx context.Context, req *order.CancelledOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	RefundOrder(ctx context.Context, req *order.RefundOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
@@ -50,9 +50,9 @@ type kOrderServiceClient struct {
 	*kClient
 }
 
-func (p *kOrderServiceClient) GetOrderInfo(ctx context.Context, req *order.GetOrderInfoReq, callOptions ...callopt.Option) (r *order.OrderResp, err error) {
+func (p *kOrderServiceClient) GetOrder(ctx context.Context, req *order.GetOrderReq, callOptions ...callopt.Option) (r *order.OrderResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
-	return p.kClient.GetOrderInfo(ctx, req)
+	return p.kClient.GetOrder(ctx, req)
 }
 
 func (p *kOrderServiceClient) GetOrderList(ctx context.Context, req *order.GetOrderListReq, callOptions ...callopt.Option) (r *order.GetOrderListResp, err error) {
@@ -75,7 +75,7 @@ func (p *kOrderServiceClient) Payment(ctx context.Context, req *order.PaymentReq
 	return p.kClient.Payment(ctx, req)
 }
 
-func (p *kOrderServiceClient) CancelledOrder(ctx context.Context, req *order.CreateOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+func (p *kOrderServiceClient) CancelledOrder(ctx context.Context, req *order.CancelledOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.CancelledOrder(ctx, req)
 }

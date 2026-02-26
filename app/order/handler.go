@@ -10,9 +10,9 @@ import (
 // OrderServiceImpl implements the last service interface defined in the IDL.
 type OrderServiceImpl struct{}
 
-// GetOrderInfo implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) GetOrderInfo(ctx context.Context, req *order.GetOrderInfoReq) (resp *order.OrderResp, err error) {
-	resp, err = service.NewGetOrderInfoService(ctx).Run(req)
+// GetOrder implements the OrderServiceImpl interface.
+func (s *OrderServiceImpl) GetOrder(ctx context.Context, req *order.GetOrderReq) (resp *order.OrderResp, err error) {
+	resp, err = service.NewGetOrderService(ctx).Run(req)
 
 	return resp, err
 }
@@ -46,7 +46,7 @@ func (s *OrderServiceImpl) Payment(ctx context.Context, req *order.PaymentReq) (
 }
 
 // CancelledOrder implements the OrderServiceImpl interface.
-func (s *OrderServiceImpl) CancelledOrder(ctx context.Context, req *order.CreateOrderReq) (resp *base.NilResponse, err error) {
+func (s *OrderServiceImpl) CancelledOrder(ctx context.Context, req *order.CancelledOrderReq) (resp *base.NilResponse, err error) {
 	resp, err = service.NewCancelledOrderService(ctx).Run(req)
 
 	return resp, err

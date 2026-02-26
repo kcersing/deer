@@ -2,25 +2,23 @@ namespace go order
 include "../base/base.thrift"
 include "../base/order.thrift"
 
-
-
-
-
-struct GetOrderInfoReq {
+struct GetOrderReq {
     1:optional i64 id=0 (api.raw = "id")
-    2:optional string sn (api.raw = "sn")
+    2:optional string sn="" (api.raw = "sn")
 }
 struct GetOrderListReq{
     1:optional i64 memberId=0 (api.raw = "memberId")
     2:optional i64 createdId=0 (api.raw = "createdId")
-    3:optional string status(api.raw = "status")
+    3:optional string status=""(api.raw = "status")
     4:optional string nature="" (api.raw = "nature")
     5:optional string searchKey="" (api.raw = "searchKey")
 
-    254:optional base.PageReq pageReq = {}
+
+    254: optional i64 page=1
+    255: optional i64 pageSize=100
 }
 struct GetOrderListResp {
-    1:optional list<order.Order> data={}
+    1:optional list<order.Order> data=[]
     255:optional base.BaseResp baseResp={}
 }
 
@@ -49,7 +47,7 @@ struct OrderResp {
 struct CreateOrderReq {
     1:optional i64 memberId=0 (api.raw = "memberId")
     2:optional i64 createdId=0 (api.raw = "createdId")
-    3:optional list<order.OrderItem> items={} (api.raw = "items")
+    3:optional list<order.OrderItem> items=[] (api.raw = "items")
     4:optional i64 totalAmount=0 (api.raw = "totalAmount")
    5:optional i64 userId=0 (api.raw = "userId")
 }
@@ -59,11 +57,11 @@ struct PaymentReq {
 }
 
 service OrderService  {
-    OrderResp GetOrderInfo(1:GetOrderInfoReq req)
+    OrderResp GetOrder(1:GetOrderReq req)
     GetOrderListResp GetOrderList(1:GetOrderListReq req)
     base.NilResponse DeleteOrder(1:base.IdReq req)
     OrderResp CreateOrder(1:CreateOrderReq req)
     OrderResp Payment(1:PaymentReq req)
-    base.NilResponse CancelledOrder(1:CreateOrderReq req)
+    base.NilResponse CancelledOrder(1:CancelledOrderReq req)
     base.NilResponse RefundOrder(1:RefundOrderReq req)
 }

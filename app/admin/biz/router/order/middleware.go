@@ -60,3 +60,38 @@ func _getorderbyidMw() []app.HandlerFunc {
 	// your code...
 	return nil
 }
+
+func _getorderMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _cancelledorderMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _createorderMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _deleteorderMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _getorderlistMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _paymentMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}
+
+func _refundorderMw() []app.HandlerFunc {
+	// your code...
+	return nil
+}

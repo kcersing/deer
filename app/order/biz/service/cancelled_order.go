@@ -16,7 +16,7 @@ func NewCancelledOrderService(ctx context.Context) *CancelledOrderService {
 }
 
 // Run create note info
-func (s *CancelledOrderService) Run(req *order.CreateOrderReq) (resp *base.NilResponse, err error) {
+func (s *CancelledOrderService) Run(req *order.CancelledOrderReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
 
 	return

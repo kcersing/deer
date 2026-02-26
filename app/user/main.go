@@ -38,6 +38,7 @@ func main() {
 		fmt.Printf("Golang Version : %s\n", goVersion)
 		return
 	}
+
 	mtl.InitFlightRecorder()
 
 	mtl.InitLog(false)

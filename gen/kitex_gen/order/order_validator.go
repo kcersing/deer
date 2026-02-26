@@ -21,15 +21,10 @@ var (
 	_ = time.Nanosecond
 )
 
-func (p *GetOrderInfoReq) IsValid() error {
+func (p *GetOrderReq) IsValid() error {
 	return nil
 }
 func (p *GetOrderListReq) IsValid() error {
-	if p.PageReq != nil {
-		if err := p.PageReq.IsValid(); err != nil {
-			return fmt.Errorf("field PageReq not valid, %w", err)
-		}
-	}
 	return nil
 }
 func (p *GetOrderListResp) IsValid() error {

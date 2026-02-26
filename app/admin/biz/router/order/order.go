@@ -3,6 +3,7 @@
 package order
 
 import (
+	order "admin/biz/handler/order"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -18,9 +19,13 @@ func Register(r *server.Hertz) {
 	root := r.Group("/", rootMw()...)
 	{
 		_service := root.Group("/service", _serviceMw()...)
-		{
-			_order := _service.Group("/order", _orderMw()...)
-		
-		}
+		_service.POST("/order", append(_getorderMw(), order.GetOrder)...)
+		_order := _service.Group("/order", _orderMw()...)
+		_order.POST("/cancelled", append(_cancelledorderMw(), order.CancelledOrder)...)
+		_order.POST("/create", append(_createorderMw(), order.CreateOrder)...)
+		_order.POST("/delete", append(_deleteorderMw(), order.DeleteOrder)...)
+		_order.POST("/list", append(_getorderlistMw(), order.GetOrderList)...)
+		_order.POST("/payment", append(_paymentMw(), order.Payment)...)
+		_order.POST("/refund", append(_refundorderMw(), order.RefundOrder)...)
 	}
 }

@@ -1,18 +1,18 @@
 services:
 
-  golang:
-    hostname: golang
-    image: golang:1.26.0
-    volumes: # 挂载卷
-      - d:/project:/go
-    ports: # 端口映射
-      - "9039:9039"
-    stdin_open: true
-    tty: true
-    restart: always
-    privileged: true
-    environment:
-      TimeZone: Asia/Shanghai
+#  golang:
+#    hostname: golang
+#    image: golang:1.26.0
+#    volumes: # 挂载卷
+#      - d:/project:/go
+#    ports: # 端口映射
+#      - "9039:9039"
+#    stdin_open: true
+#    tty: true
+#    restart: always
+#    privileged: true
+#    environment:
+#      TimeZone: Asia/Shanghai
 
 #  postgres:
 #    image: postgres:latest

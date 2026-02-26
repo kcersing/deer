@@ -7,17 +7,17 @@ import (
 	"order/biz/infras/repo"
 )
 
-type GetOrderInfoService struct {
+type GetOrderService struct {
 	ctx context.Context
 }
 
-// NewGetOrderInfoService new GetOrderInfoService
-func NewGetOrderInfoService(ctx context.Context) *GetOrderInfoService {
-	return &GetOrderInfoService{ctx: ctx}
+// NewGetOrderService new GetOrderService
+func NewGetOrderService(ctx context.Context) *GetOrderService {
+	return &GetOrderService{ctx: ctx}
 }
 
 // Run create note info
-func (s *GetOrderInfoService) Run(req *order.GetOrderInfoReq) (resp *order.OrderResp, err error) {
+func (s *GetOrderService) Run(req *order.GetOrderReq) (resp *order.OrderResp, err error) {
 	// Finish your business logic.
 	orderFromDB, err := repo.OrderRepoClient.FindById(req.GetId())
 	if err != nil {

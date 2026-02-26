@@ -1,5 +1,3 @@
-
-
 # 版本信息
 COMMIT=$(shell git rev-parse HEAD)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
@@ -7,8 +5,6 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # 包列表
 PACKAGES=$(shell go list ./... | grep -v /vendor/)
 GO_FILES=$(shell find . -name "*.go" -type f -not -path "./vendor/*")
-
-
 
 
 # 初始化构建环境
