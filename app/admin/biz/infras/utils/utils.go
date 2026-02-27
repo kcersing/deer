@@ -15,7 +15,7 @@ func GetTokenId(ctx context.Context, c *app.RequestContext) int64 {
 	if len(claims) == 0 {
 		return 0
 	}
-	token, _ := claims[consts.IdentityKey].(map[string]interface{})
+	token, _ := claims[consts.IdentityKey].(map[string]any)
 	hlog.Infof("token id: %d", token)
 	id, err := token["id"].(json.Number).Int64()
 	if err != nil {

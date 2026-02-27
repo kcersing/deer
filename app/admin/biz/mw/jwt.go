@@ -33,13 +33,13 @@ func InitJwt() {
 			MaxRefresh:  time.Hour,
 			TimeFunc:    time.Now,
 			IdentityKey: consts.IdentityKey,
-			IdentityHandler: func(ctx context.Context, c *app.RequestContext) interface{} {
+			IdentityHandler: func(ctx context.Context, c *app.RequestContext) any {
 				claims := jwt.ExtractClaims(ctx, c)
-				payloadMap, _ := claims[consts.IdentityKey].(map[string]interface{})
+				payloadMap, _ := claims[consts.IdentityKey].(map[string]any)
 				return payloadMap
 			},
 
-			Authenticator: func(ctx context.Context, c *app.RequestContext) (interface{}, error) {
+			Authenticator: func(ctx context.Context, c *app.RequestContext) (any, error) {
 				var err error
 				var req jwtLogin
 
@@ -58,16 +58,16 @@ func InitJwt() {
 				if err != nil {
 					return nil, err
 				}
-				return map[string]interface{}{
+				return map[string]any{
 					"id": resp.Data.GetId(),
 				}, nil
 			},
-			Authorizator: func(data interface{}, ctx context.Context, c *app.RequestContext) bool {
+			Authorizator: func(data any, ctx context.Context, c *app.RequestContext) bool {
 				obj := string(c.URI().Path())
 				act := string(c.Method())
 				hlog.Infof("obj: %v | act: %v", obj, act)
 				// IdentityHandler 返回的数据
-				if v, ok := data.(map[string]interface{}); ok {
+				if v, ok := data.(map[string]any); ok {
 					hlog.Infof("authorizator data: %v", v)
 					return true
 				}
@@ -83,9 +83,9 @@ func InitJwt() {
 
 				return true
 			},
-			PayloadFunc: func(data interface{}) jwt.MapClaims {
+			PayloadFunc: func(data any) jwt.MapClaims {
 
-				if v, ok := data.(map[string]interface{}); ok {
+				if v, ok := data.(map[string]any); ok {
 					return jwt.MapClaims{
 						consts.IdentityKey: v,
 					}
@@ -97,14 +97,14 @@ func InitJwt() {
 			},
 			LoginResponse: func(ctx context.Context, c *app.RequestContext, code int, token string, expire time.Time) {
 				utils.SendResponse(c, errno.Success,
-					map[string]interface{}{
+					map[string]any{
 						"token":  token,
 						"expire": expire.Format(time.DateTime),
 					}, 0, "")
 			},
 			RefreshResponse: func(ctx context.Context, c *app.RequestContext, code int, token string, expire time.Time) {
 				utils.SendResponse(c, errno.Success,
-					map[string]interface{}{
+					map[string]any{
 						"token":  token,
 						"expire": expire.Format(time.DateTime),
 					}, 0, "")

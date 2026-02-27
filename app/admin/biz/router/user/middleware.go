@@ -23,7 +23,7 @@ func rootMw() []app.HandlerFunc {
 	return []app.HandlerFunc{
 		// use recovery mw
 		recovery.Recovery(recovery.WithRecoveryHandler(
-			func(ctx context.Context, c *app.RequestContext, err interface{}, stack []byte) {
+			func(ctx context.Context, c *app.RequestContext, err any, stack []byte) {
 				hlog.SystemLogger().CtxErrorf(ctx, "[Recovery] err=%v\nstack=%s", err, stack)
 				c.JSON(consts.StatusInternalServerError, utils.H{
 					"code":    errno.ServiceErr.ErrCode,

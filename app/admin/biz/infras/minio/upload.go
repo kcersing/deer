@@ -64,7 +64,7 @@ func UpLoadImg(ctx context.Context, c *app.RequestContext, bucketName string) (u
 	dateName := nowTime.Format("2006/01/02")
 	file.Filename = dateName + "/" + filename + path.Ext(file.Filename)
 
-	uploadinfo, err = NewManager(bucketName).PutObjectURL(ctx, bucketName, file)
+	uploadinfo, err = NewManager(bucketName).PutToBucket(ctx, bucketName, file)
 
 	return uploadinfo, err
 

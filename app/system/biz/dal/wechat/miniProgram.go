@@ -23,21 +23,21 @@ func InitMiniProgramApp() {
 }
 
 func NewMiniMiniProgramService() *miniProgram.MiniProgram {
-	conf := conf.GetConf().Wechat
+
 	var cache kernel.CacheInterface
 
 	if conf.GetConf().Redis.Address != "" {
-	cache = kernel.NewRedisClient(&kernel.UniversalOptions{
-		Addrs:    []string{conf.GetConf().Redis.Address},
-		Password: conf.GetConf().Redis.Password,
-		DB:       6,
-	})
+		cache = kernel.NewRedisClient(&kernel.UniversalOptions{
+			Addrs:    []string{conf.GetConf().Redis.Address},
+			Password: conf.GetConf().Redis.Password,
+			DB:       6,
+		})
 	}
 	wechatFilePath := consts.WechatFilePath
-
+	wechatConf := conf.GetConf().Wechat
 	app, err := miniProgram.NewMiniProgram(&miniProgram.UserConfig{
-		AppID:        conf.Appid,
-		Secret:       conf.AppSecret,
+		AppID:        wechatConf.Appid,
+		Secret:       wechatConf.AppSecret,
 		ResponseType: response.TYPE_MAP,
 		Http:         miniProgram.Http{},
 		Log: miniProgram.Log{
