@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	base "gen/kitex_gen/base"
-	order "gen/kitex_gen/order"
 	"testing"
 )
 

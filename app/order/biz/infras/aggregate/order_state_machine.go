@@ -3,6 +3,7 @@ package aggregate
 import (
 	"fmt"
 	"order/biz/infras/common"
+	"slices"
 )
 
 // StateMachine 订单状态机
@@ -25,13 +26,7 @@ func (m *StateMachine) Transition(target common.OrderStatus, event common.Event)
 	}
 
 	// 检查是否允许转换
-	allowed := false
-	for _, statu := range common.Transitions[common.OrderStatus(current)] {
-		if statu == target {
-			allowed = true
-			break
-		}
-	}
+	allowed := slices.Contains(common.Transitions[common.OrderStatus(current)], target)
 	if !allowed {
 		return fmt.Errorf("状态转换不允许: %s -> %s", current, target)
 	}

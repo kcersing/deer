@@ -2,8 +2,7 @@ package service
 
 import (
 	"context"
-	base "gen/kitex_gen/base"
-	order "gen/kitex_gen/order"
+	"gen/kitex_gen/order"
 	"testing"
 )
 
@@ -12,7 +11,7 @@ func TestCancelledOrder_Run(t *testing.T) {
 	s := NewCancelledOrderService(ctx)
 	// init req and assert value
 
-	req := &order.CreateOrderReq{}
+	req := &order.CancelledOrderReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

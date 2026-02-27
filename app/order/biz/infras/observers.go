@@ -99,7 +99,7 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 // withRetry 重试机制
 func withRetry(fn func() error, maxRetries int) error {
 	var err error
-	for i := 0; i < maxRetries; i++ {
+	for i := range maxRetries {
 		if err = fn(); err == nil {
 			return nil
 		}
