@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"order/biz/infras/common"
 	"order/biz/infras/events"
+
+	"github.com/bytedance/sonic"
 )
 
 // eventFactory 是一个函数，用于创建一个新的事件实例。
@@ -36,4 +38,16 @@ func NewEventByType(eventType string) (common.Event, error) {
 		return nil, fmt.Errorf("unsupported event type: %s", eventType)
 	}
 	return factory(), nil
+}
+
+// NewEventWithData 根据事件类型和数据创建一个新的事件实例。
+func NewEventWithData(eventType string, data []byte) (common.Event, error) {
+	event, err := NewEventByType(eventType)
+	if err != nil {
+		return nil, err
+	}
+	if err := sonic.Unmarshal(data, event); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal event data for type %s: %w", eventType, err)
+	}
+	return event, nil
 }

@@ -52,6 +52,45 @@ services:
 #    privileged: true
 #    restart: always
 
+#  rustfs:
+#    image: rustfs/rustfs:latest
+#    container_name: rustfs
+#    restart: unless-stopped    # 自动重启，确保服务高可用
+#    ports:
+#      - "9000:9000"    # S3 API端口
+#      - "9001:9001"    # Web控制台端口
+#    environment:
+#      # API 和控制台监听地址
+#      - RUSTFS_ADDRESS=0.0.0.0:9000
+#      - RUSTFS_CONSOLE_ADDRESS=0.0.0.0:9001
+#      - RUSTFS_CONSOLE_ENABLE=true
+#      # CORS 设置，控制台与 S3 API 都放开来源
+#      - RUSTFS_CORS_ALLOWED_ORIGINS=*
+#      - RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS=*
+#      - RUSTFS_ACCESS_KEY= ""                 # 管理员用户名
+#      - RUSTFS_SECRET_KEY= ""  # 管理员密码，生产环境务必修改！
+#      - RUSTFS_DEFAULT_REGION= "us-east-1"         # 默认区域
+#      # 日志级别
+#      - RUSTFS_OBS_LOGGER_LEVEL=info
+#    volumes:
+#      - ./data:/data    # 数据持久化
+#      - ./logs:/logs    # 日志持久化
+#    healthcheck:        # 健康检查
+##      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+#      test: ["CMD", "sh", "-c", "curl -f http://localhost:9000/health && curl -f http://localhost:9001/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 40s
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 2G
+#          cpus: '2.0'
+#        reservations:
+#          memory: 512M
+#          cpus: '0.5'
+
 #  redis:
 #    image: redis:latest
 #    restart: always

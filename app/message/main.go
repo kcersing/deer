@@ -75,7 +75,8 @@ func main() {
 		// 停止事件系统
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		if err := events.Shutdown(ctx); err != nil {
+
+		if err := events.GetManager().Shutdown(ctx); err != nil {
 			klog.Errorf("Failed to shutdown events: %v", err)
 		}
 	}()

@@ -60,10 +60,9 @@ type InventoryRepository interface {
 
 // InventoryRepositoryImpl 订单仓储实现
 type InventoryRepositoryImpl struct {
-	db              *ent.Client
-	ctx             context.Context
-	snapshotFreq    int                 // 快照频率
-	subscriptionSvc SubscriptionService // 新增：订阅服务
+	db           *ent.Client
+	ctx          context.Context
+	snapshotFreq int // 快照频率
 }
 
 func (o InventoryRepositoryImpl) Reserve(ctx context.Context, items []*base.OrderItem) error {

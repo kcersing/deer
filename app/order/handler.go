@@ -33,7 +33,8 @@ func (s *OrderServiceImpl) DeleteOrder(ctx context.Context, req *base.IdReq) (re
 
 // CreateOrder implements the OrderServiceImpl interface.
 func (s *OrderServiceImpl) CreateOrder(ctx context.Context, req *order.CreateOrderReq) (resp *order.OrderResp, err error) {
-	resp, err = service.NewCreateOrderService(ctx).Run(req)
+	// 将 main.go 中初始化的 publisher 传递进来
+	resp, err = service.NewCreateOrderService(ctx, globalEventPublisher).Run(req)
 
 	return resp, err
 }

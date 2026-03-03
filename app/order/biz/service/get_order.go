@@ -1,10 +1,14 @@
 package service
 
 import (
+	"common/pkg/errno"
 	"context"
-	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
 	"order/biz/infras/repo"
+
+	"order/biz/dal/convert"
+	"order/biz/dal/db"
+	"order/biz/dal/db/ent"
 )
 
 type GetOrderService struct {
@@ -19,29 +23,26 @@ func NewGetOrderService(ctx context.Context) *GetOrderService {
 // Run create note info
 func (s *GetOrderService) Run(req *order.GetOrderReq) (resp *order.OrderResp, err error) {
 	// Finish your business logic.
-	orderFromDB, err := repo.OrderRepoClient.FindById(req.GetId())
+	orderFromDB, err := repo.NewOrderRepo(nil).FindById(req.GetId())
 	if err != nil {
 		return nil, err
 	}
-	resp = &order.OrderResp{
-		Data: &base.Order{
-			MemberId:    orderFromDB.MemberId,
-			Items:       orderFromDB.Items,
-			Sn:          orderFromDB.Sn,
-			TotalAmount: orderFromDB.TotalAmount,
-			Status:      orderFromDB.Status,
-			Nature:      orderFromDB.Nature,
-			//CreatedAt:       orderFromDB.CreatedAt.Format(time.RFC3339),
-			//CompletionAt:    orderFromDB.CompletionAt.Format(time.RFC3339),
-			//CloseAt:         orderFromDB.CloseAt.Format(time.RFC3339),
-			//UpdatedAt:       orderFromDB.UpdatedAt.Format(time.RFC3339),
-			CancelledReason: orderFromDB.CancelledReason,
-			OrderPays:       orderFromDB.OrderPays,
-			OrderRefund:     orderFromDB.OrderRefund,
-			Id:              orderFromDB.Id,
-			CreatedId:       orderFromDB.CreatedId,
-			CreatedName:     orderFromDB.CreatedName,
-		},
+
+	if req == nil {
+		return nil, errno.InvalidParameterErr
 	}
+
+	entity, err := db.Client.Order.Get(s.ctx, req.GetId())
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, errno.NotFound
+		}
+		return nil, errno.QueryFailed
+	}
+	dataResp := convert.EntToOrder(entity)
+	resp = &order.OrderResp{
+		Data: dataResp,
+	}
+
 	return
 }

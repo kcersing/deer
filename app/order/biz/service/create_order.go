@@ -1,6 +1,7 @@
 package service
 
 import (
+	"common/eventbus"
 	"common/pkg/utils"
 	"context"
 	base "gen/kitex_gen/base"
@@ -11,18 +12,21 @@ import (
 )
 
 type CreateOrderService struct {
-	ctx context.Context
+	ctx       context.Context
+	publisher *eventbus.EventPublisher
 }
 
 // NewCreateOrderService new CreateOrderService
-func NewCreateOrderService(ctx context.Context) *CreateOrderService {
-	return &CreateOrderService{ctx: ctx}
+func NewCreateOrderService(ctx context.Context, publisher *eventbus.EventPublisher) *CreateOrderService {
+	return &CreateOrderService{
+		ctx:       ctx,
+		publisher: publisher,
+	}
 }
 
 // Run create note info
 func (s *CreateOrderService) Run(req *order.CreateOrderReq) (resp *order.OrderResp, err error) {
-	// Finish your business logic.
-	order := aggregate.NewOrder()
+	node := aggregate.NewOrder()
 	items := make([]*base.OrderItem, 0, len(req.GetItems()))
 
 	for _, item := range req.GetItems() {
@@ -34,20 +38,21 @@ func (s *CreateOrderService) Run(req *order.CreateOrderReq) (resp *order.OrderRe
 	event := events.NewCreatedOrderEvent(
 		utils.CreateCn(),
 		items,
-		// 金额单位：分
 		req.GetTotalAmount()*100,
 		req.GetMemberId(),
 		req.GetUserId(),
 	)
 
-	err = order.Apply(event)
+	err = node.Apply(event)
 	if err != nil {
 		return nil, err
-	} // 订单应用事件，改变状态为 "created"
-	err = repo.OrderRepoClient.Save(order)
+	}
+
+	// 将 publisher 注入 Repository，由 Repository 负责在事务提交后发布事件
+	err = repo.NewOrderRepo(s.publisher).Save(s.ctx, node)
 	if err != nil {
 		return nil, err
-	} // 持久化（写事件表、聚合表、快照）
-	// 事务提交后 → 发布到 eventbus → 库存预留、发送通知等异步处理
+	}
+
 	return
 }

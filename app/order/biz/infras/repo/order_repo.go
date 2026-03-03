@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+
 	"order/biz/dal/db"
 	"order/biz/dal/db/ent"
 	entOrder "order/biz/dal/db/ent/order"
@@ -18,52 +19,37 @@ import (
 	"github.com/pkg/errors"
 )
 
-var OrderRepoClient *OrderRepo
-
 type OrderRepository interface {
-	Save(order *aggregate.Order) (err error)
-	FindById(id int64) (order *aggregate.Order, err error)
+	Save(ctx context.Context, order *aggregate.Order) (err error)
+	FindById(ctx context.Context, id int64) (order *aggregate.Order, err error)
 	FindAll()
 	Delete()
 }
 
 type OrderRepo struct {
-	db              *ent.Client
-	ctx             context.Context
-	subscriptionSvc infras.SubscriptionService
-	publisher       *eventbus.EventPublisher
+	db        *ent.Client
+	publisher *eventbus.EventPublisher
 }
 
 func (o *OrderRepo) FindAll() {
-	//TODO implement me
-	panic("implement me")
+	panic(errors.New("not implemented"))
 }
 
 func (o *OrderRepo) Delete() {
-	//TODO implement me
-	panic("implement me")
+	panic(errors.New("not implemented"))
 }
 
-func InitOrderRepository() {
-	OrderRepoClient = &OrderRepo{
-		db:  db.Client,
-		ctx: context.Background(),
-	}
-}
-
-// NewOrderRepositoryWithDeps 创建带可选依赖的仓储（订阅服务、事件发布器）
-func NewOrderRepositoryWithDeps(ctx context.Context, sub infras.SubscriptionService, pub *eventbus.EventPublisher) OrderRepository {
+// NewOrderRepo 创建带可选依赖的仓储（订阅服务、事件发布器）
+func NewOrderRepo(pub *eventbus.EventPublisher) OrderRepository {
 	return &OrderRepo{
-		db:              db.Client,
-		ctx:             ctx,
-		subscriptionSvc: sub,
-		publisher:       pub,
+		db:        db.Client,
+		publisher: pub,
 	}
 }
 
 var _ OrderRepository = &OrderRepo{}
 
-func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
+func (o *OrderRepo) Save(ctx context.Context, order *aggregate.Order) (err error) {
 	es := order.GetUncommittedEvents()
 	klog.Info(len(es))
 	if len(es) == 0 {
@@ -72,7 +58,7 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 
 	// 使用事务来保存聚合根
 	err = infras.WithTx(func(tx *ent.Tx) error {
-		return o.saveAggregateWithinTx(tx, order, es)
+		return o.saveAggregateWithinTx(ctx, tx, order, es)
 	})
 	klog.Info(len(es))
 	if err != nil {
@@ -80,31 +66,44 @@ func (o *OrderRepo) Save(order *aggregate.Order) (err error) {
 	}
 	klog.Info(len(es))
 	// 事务成功后，发布事件
-	o.publishEvents(es)
+	o.publishEvents(ctx, es)
 	order.ClearUncommittedEvents() // 清除未提交事件
 	return nil
 }
 
 // saveAggregateWithinTx 在一个事务中持久化订单聚合根的所有变更。
-func (o *OrderRepo) saveAggregateWithinTx(tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
-	// 1. 保存订单主实体
+func (o *OrderRepo) saveAggregateWithinTx(ctx context.Context, tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
+	if err := o.saveOrderEntity(ctx, tx, order); err != nil {
+		return err
+	}
+	if err := o.saveOrderItems(ctx, tx, order); err != nil {
+		return err
+	}
+	if err := o.saveEvents(ctx, tx, order, es); err != nil {
+		return err
+	}
+	if err := o.saveSnapshot(ctx, tx, order); err != nil {
+		return err
+	}
+	return nil
+}
 
-	klog.Info(len(es))
+func (o *OrderRepo) saveOrderEntity(ctx context.Context, tx *ent.Tx, order *aggregate.Order) error {
 	orderEnt, err := tx.Order.Create().
 		SetSn(order.Sn).
 		SetStatus(entOrder.Status(order.Status)).
 		SetCreatedID(order.CreatedId).
 		SetMemberID(order.MemberId).
 		SetVersion(order.Version).
-		Save(o.ctx)
+		Save(ctx)
 	if err != nil {
 		return errors.Wrap(err, "保存订单失败")
 	}
-
-	// 更新聚合根ID
 	order.AggregateBase.SetAggregateID(orderEnt.ID)
+	return nil
+}
 
-	// 2. 批量保存订单项
+func (o *OrderRepo) saveOrderItems(ctx context.Context, tx *ent.Tx, order *aggregate.Order) error {
 	items := make([]*ent.OrderItemCreate, len(order.Items))
 	for i, item := range order.Items {
 		items[i] = tx.OrderItem.Create().
@@ -115,15 +114,20 @@ func (o *OrderRepo) saveAggregateWithinTx(tx *ent.Tx, order *aggregate.Order, es
 			SetOrderID(order.AggregateID).
 			SetCreatedID(order.CreatedId)
 	}
-	if _, err = tx.OrderItem.CreateBulk(items...).Save(o.ctx); err != nil {
+	if _, err := tx.OrderItem.CreateBulk(items...).Save(ctx); err != nil {
 		return errors.Wrap(err, "保存订单项失败")
 	}
+	return nil
+}
 
-	// 3. 批量保存领域事件
+func (o *OrderRepo) saveEvents(ctx context.Context, tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
 	ets := make([]*ent.OrderEventsCreate, len(es))
 	for i, e := range es {
 		e.SetAggregateID(order.AggregateID)
-		eventData, _ := sonic.Marshal(e) // 错误在聚合根内部已处理，这里忽略
+		eventData, err := sonic.Marshal(e)
+		if err != nil {
+			return errors.Wrap(err, "序列化事件数据失败")
+		}
 		ets[i] = tx.OrderEvents.Create().
 			SetEventID(e.GetId()).
 			SetAggregateID(order.AggregateID).
@@ -132,54 +136,49 @@ func (o *OrderRepo) saveAggregateWithinTx(tx *ent.Tx, order *aggregate.Order, es
 			SetEventVersion(order.Version).
 			SetEventData(eventData)
 	}
-	if _, err = tx.OrderEvents.CreateBulk(ets...).Save(o.ctx); err != nil {
+	if _, err := tx.OrderEvents.CreateBulk(ets...).Save(ctx); err != nil {
 		return errors.Wrap(err, "保存订单事件失败")
 	}
+	return nil
+}
 
-	// 4. 保存订单快照
-	orderData, _ := sonic.Marshal(order) // 错误在聚合根内部已处理，这里忽略
+func (o *OrderRepo) saveSnapshot(ctx context.Context, tx *ent.Tx, order *aggregate.Order) error {
+	orderData, err := sonic.Marshal(order)
+	if err != nil {
+		return errors.Wrap(err, "序列化订单快照失败")
+	}
 	_, err = tx.OrderSnapshots.Create().
 		SetAggregateVersion(order.Version).
 		SetAggregateID(order.AggregateID).
 		SetAggregateData(orderData).
-		Save(o.ctx)
+		Save(ctx)
 	if err != nil {
 		return errors.Wrap(err, "保存订单快照失败")
 	}
-
 	return nil
 }
 
 // publishEvents 负责发布领域事件。
-func (o *OrderRepo) publishEvents(events []common.Event) {
+func (o *OrderRepo) publishEvents(ctx context.Context, events []common.Event) {
 	// 优先使用通用事件发布器进行分发
 	if o.publisher != nil {
 		for _, e := range events {
-			if err := o.publisher.Distributed(o.ctx, e.GetType(), e); err != nil {
+			if err := o.publisher.Distributed(ctx, e.GetType(), e); err != nil {
 				klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), err)
 			}
 		}
 		return
 	}
-
-	// 回退到旧的订阅服务
-	if o.subscriptionSvc != nil {
-		for _, e := range events {
-			if err := o.subscriptionSvc.ProcessEvent(o.ctx, e); err != nil {
-				klog.Errorf("通知订阅者失败(event_id=%s): %v", e.GetId(), err)
-			}
-		}
-	}
 }
 
-func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
+func (o *OrderRepo) FindById(ctx context.Context, id int64) (order *aggregate.Order, err error) {
 	order = aggregate.NewOrder()
 	// 1. 尝试加载最新快照
 	snapshot, err := o.db.OrderSnapshots.
 		Query().
 		Where(ordersnapshots2.AggregateID(id)).
 		Order(ent.Desc(ordersnapshots2.FieldAggregateVersion)).
-		First(o.ctx)
+		First(ctx)
 
 	var lastVersion int64 = 0
 	if err != nil && !ent.IsNotFound(err) {
@@ -202,7 +201,7 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 	).
 		// 使用 EventVersion 排序以确保事件顺序的绝对正确性
 		Order(ent.Asc(orderevents2.FieldEventVersion)).
-		All(o.ctx)
+		All(ctx)
 
 	if err != nil {
 		return nil, errors.Wrap(err, "查询事件记录失败")
@@ -210,16 +209,10 @@ func (o *OrderRepo) FindById(id int64) (order *aggregate.Order, err error) {
 
 	var eventAll []common.Event
 	for _, eventEnt := range eventAlls {
-		// 使用事件工厂创建事件实例
-		ev, err := NewEventByType(eventEnt.EventType)
+		ev, err := NewEventWithData(eventEnt.EventType, eventEnt.EventData)
 		if err != nil {
-			klog.Warnf("跳过未知事件类型: %v", err)
+			klog.Warnf("跳过无法处理的事件: %v", err)
 			continue
-		}
-
-		// 反序列化事件数据
-		if err := sonic.Unmarshal(eventEnt.EventData, ev); err != nil {
-			return nil, errors.Wrapf(err, "事件数据反序列化失败 (event_type: %s)", eventEnt.EventType)
 		}
 		eventAll = append(eventAll, ev)
 	}
