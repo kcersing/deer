@@ -1,4 +1,5 @@
 import {Position} from "@/pages/opm/positions/service/data";
+import {BaseResp} from "@/services/typings";
 
 export type Departments = {
   id?: number;

@@ -1,4 +1,5 @@
-
+import {BaseResp} from "@/services/typings";
+import {Role} from "@/pages/auth/role/service/data";
 export type LoginReq = {
   username: string;
   password: string;

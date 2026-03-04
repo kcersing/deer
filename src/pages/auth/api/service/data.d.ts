@@ -1,3 +1,4 @@
+import {BaseResp} from "@/services/typings";
 
 export type ApiListResp = {
   data?: Api[];

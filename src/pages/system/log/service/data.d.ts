@@ -1,5 +1,6 @@
 //日志信息
 import {Dict} from "@/pages/system/dict/service/data";
+import {BaseResp} from "@/services/typings";
 
 export type Log = {
   type?: number;

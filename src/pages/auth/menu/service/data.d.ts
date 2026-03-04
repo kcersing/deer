@@ -1,4 +1,5 @@
-import {Role} from "@/pages/auth/role/service/data";
+
+import {BaseResp} from "@/services/typings";
 
 export type MenuResp={
   data?: Menu;
