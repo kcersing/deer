@@ -3,7 +3,6 @@
 package order
 
 import (
-	"admin/biz/mw"
 	"common/pkg/errno"
 	"context"
 	"fmt"
@@ -46,8 +45,8 @@ func _serviceMw() []app.HandlerFunc {
 	// your code...
 	return []app.HandlerFunc{
 		// use jwt mw
-		mw.LogMw(),
-		mw.JwtMiddleware.MiddlewareFunc(),
+		//mw.LogMw(),
+		//mw.JwtMiddleware.MiddlewareFunc(),
 	}
 }
 

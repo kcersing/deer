@@ -6,6 +6,7 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
+	"order/biz/infras"
 	"order/biz/infras/aggregate"
 	"order/biz/infras/events"
 	"order/biz/infras/repo"
@@ -17,10 +18,10 @@ type CreateOrderService struct {
 }
 
 // NewCreateOrderService new CreateOrderService
-func NewCreateOrderService(ctx context.Context, publisher *eventbus.EventPublisher) *CreateOrderService {
+func NewCreateOrderService(ctx context.Context) *CreateOrderService {
 	return &CreateOrderService{
 		ctx:       ctx,
-		publisher: publisher,
+		publisher: infras.GetManager().Publisher,
 	}
 }
 

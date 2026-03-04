@@ -16,6 +16,9 @@ func EntToOrder(e *ent.Order) *base.Order {
 	var dto = mapper.ToDTO(e)
 
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
+	//for _, item := range e.Edges.Items {
+	//	dto.Items = append(dto.Items, EntToOrderItem(item))
+	//}
 
 	return dto
 

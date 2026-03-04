@@ -56,3 +56,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4O
 {
 
 }
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/order
+Content-Type: application/json
+
+{
+  "id":1,
+  "sn":""
+}
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/order/list
+Content-Type: application/json
+
+{
+
+}

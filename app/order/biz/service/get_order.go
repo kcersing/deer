@@ -6,9 +6,7 @@ import (
 	order "gen/kitex_gen/order"
 	"order/biz/infras/repo"
 
-	"order/biz/dal/convert"
-	"order/biz/dal/db"
-	"order/biz/dal/db/ent"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type GetOrderService struct {
@@ -23,25 +21,25 @@ func NewGetOrderService(ctx context.Context) *GetOrderService {
 // Run create note info
 func (s *GetOrderService) Run(req *order.GetOrderReq) (resp *order.OrderResp, err error) {
 	// Finish your business logic.
-	orderFromDB, err := repo.NewOrderRepo(nil).FindById(req.GetId())
-	if err != nil {
-		return nil, err
-	}
-
+	klog.Info(req)
 	if req == nil {
 		return nil, errno.InvalidParameterErr
 	}
 
-	entity, err := db.Client.Order.Get(s.ctx, req.GetId())
-	if err != nil {
-		if ent.IsNotFound(err) {
-			return nil, errno.NotFound
-		}
-		return nil, errno.QueryFailed
-	}
-	dataResp := convert.EntToOrder(entity)
+	orderFromDB, err := repo.NewOrderRepo(nil).FindById(s.ctx, req.GetId())
+	klog.Info(orderFromDB)
+
+	//if err != nil {
+	//	if ent.IsNotFound(err) {
+	//		return nil, errno.NotFound
+	//	}
+	//	return nil, errno.QueryFailed
+	//}
+
+	//klog.Info(orderFromDB)
+	//
 	resp = &order.OrderResp{
-		Data: dataResp,
+		Data: nil,
 	}
 
 	return

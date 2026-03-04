@@ -2,12 +2,13 @@ package infras
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"order/biz/infras/common"
 	"sync"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/pkg/errors"
 )
 
 // EventHandler 事件处理器接口
@@ -43,6 +44,9 @@ func (d *EventDispatcher) RegisterHandler(eventType string, handler EventHandler
 
 // Unregister 移除
 func (d *EventDispatcher) Unregister(eventType string, handler EventHandler) {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+
 	for i, obs := range d.handlers[eventType] {
 		if obs == handler {
 			d.handlers[eventType] = append(d.handlers[eventType][:i], d.handlers[eventType][i+1:]...)
@@ -69,11 +73,13 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 		go func(h EventHandler) {
 			defer wg.Done()
 			if err := withRetry(func() error {
+				// 为每个处理器创建一个独立的、带超时的上下文
 				ctx2, cancel := context.WithTimeout(ctx, 5*time.Second)
 				defer cancel()
 				return h.Handle(ctx2, event)
 			}, 3); err != nil {
-				errCh <- err
+				// 包装错误，提供更多上下文
+				errCh <- fmt.Errorf("handler %T failed: %w", h, err)
 			}
 		}(handler)
 	}
@@ -90,8 +96,9 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 		errs = append(errs, err)
 	}
 
+	// 优化：使用更详细的方式聚合错误
 	if len(errs) > 0 {
-		return errors.Errorf("共%d个事件处理器执行失败", len(errs))
+		return errors.Join(errs...)
 	}
 	return nil
 }
@@ -99,14 +106,15 @@ func (d *EventDispatcher) Dispatch(ctx context.Context, event common.Event) erro
 // withRetry 重试机制
 func withRetry(fn func() error, maxRetries int) error {
 	var err error
-	for i := range maxRetries {
+	for i := 0; i < maxRetries; i++ {
 		if err = fn(); err == nil {
 			return nil
 		}
-		klog.Errorf("重试第%d次失败: %v", i+1, err)
-		time.Sleep(time.Millisecond * 100 * time.Duration(i+1)) // 指数退避
+		klog.Errorf("Attempt %d failed: %v. Retrying...", i+1, err)
+		// 指数退避
+		time.Sleep(time.Millisecond * 100 * time.Duration(i+1))
 	}
-	return err
+	return fmt.Errorf("failed after %d attempts: %w", maxRetries, err)
 }
 
 // 添加单例实例和同步控制变量
@@ -120,8 +128,9 @@ func InitEventHandlers() *EventDispatcher {
 	once.Do(func() {
 		dispatcherInstance = NewEventDispatcher()
 		inventoryHandler := &InventoryHandler{}
-		dispatcherInstance.RegisterHandler("created", inventoryHandler)
-		dispatcherInstance.RegisterHandler("cancelled", inventoryHandler)
+		// 订阅更具体的事件类型
+		dispatcherInstance.RegisterHandler(string(common.Created), inventoryHandler)
+		dispatcherInstance.RegisterHandler(string(common.Cancelled), inventoryHandler)
 	})
 	return dispatcherInstance
 }

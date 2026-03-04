@@ -155,7 +155,7 @@ http://127.0.0.1:3000/
 http://127.0.0.1:8848/nacos/
 
 ### etcd
-http://127.0.0.1:9100/etcdkeeper/
+http://127.0.0.1:9100/c
 
 ### victoriametrics
 http://127.0.0.1:8428/

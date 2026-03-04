@@ -11,7 +11,6 @@ import (
 
 	message "gen/kitex_gen/message/messageservice"
 	"message/biz/dal"
-	"message/biz/dal/mq"
 	"message/conf"
 	"message/rpc"
 	"os"
@@ -23,7 +22,6 @@ import (
 
 func init() {
 	dal.Init()
-	mq.InitMQ()
 }
 
 var serviceName = conf.GetConf().Kitex.Service

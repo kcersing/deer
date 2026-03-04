@@ -33,5 +33,6 @@ func initMQ(url string) *amqp.Connection {
 		klog.Fatal("cannot dial amqp", err)
 	}
 	// client.IsClosed()
+
 	return client
 }

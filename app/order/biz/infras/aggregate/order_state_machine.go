@@ -15,28 +15,18 @@ func NewStateMachine(order *Order) *StateMachine {
 	return &StateMachine{order: order}
 }
 
-// Transition 执行状态转换
-func (m *StateMachine) Transition(target common.OrderStatus, event common.Event) error {
-	m.order.mu.Lock()
-	current := m.order.Status
-	m.order.mu.Unlock()
+// ValidateTransition 校验状态转换是否允许
+func (m *StateMachine) ValidateTransition(target common.OrderStatus) error {
 
+	current := m.order.Status
 	if current == string(target) {
 		return nil // 状态未变更
 	}
-
 	// 检查是否允许转换
 	allowed := slices.Contains(common.Transitions[common.OrderStatus(current)], target)
 	if !allowed {
 		return fmt.Errorf("状态转换不允许: %s -> %s", current, target)
 	}
-
-	// 执行转换
-	m.order.mu.Lock()
-	m.order.Status = string(target)
-	//m.order.Version++
-	//m.order.uncommittedEvents = append(m.order.uncommittedEvents, event)
-	m.order.mu.Unlock()
 
 	return nil
 }
