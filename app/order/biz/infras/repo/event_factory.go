@@ -8,10 +8,10 @@ import (
 	"github.com/bytedance/sonic"
 )
 
-// eventFactory 是一个函数，用于创建一个新的事件实例。
+// eventFactory 用于创建一个新的事件实例。
 type eventFactory func() common.Event
 
-// eventRegistry 是一个事件类型到其工厂函数的映射。
+// eventRegistry 事件类型到其工厂函数的映射。
 var eventRegistry = make(map[string]eventFactory)
 
 func init() {

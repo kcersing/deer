@@ -164,6 +164,11 @@ func ByPrepayID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPrepayID, opts...).ToFunc()
 }
 
+// ByPayExtra orders the results by the pay_extra field.
+func ByPayExtra(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPayExtra, opts...).ToFunc()
+}
+
 // ByOrderField orders the results by order field.
 func ByOrderField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {

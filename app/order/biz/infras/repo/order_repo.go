@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"common/eventbus"
 	"context"
 	"fmt"
 	"order/biz/dal/db"
@@ -12,8 +13,6 @@ import (
 	"order/biz/infras/aggregate"
 	"order/biz/infras/common"
 
-	"common/eventbus"
-
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/pkg/errors"
@@ -21,7 +20,7 @@ import (
 
 const (
 	// SnapshotFrequency 定义了创建快照的频率（每N个版本）
-	SnapshotFrequency = 50
+	SnapshotFrequency = 10
 )
 
 var (
@@ -31,7 +30,6 @@ var (
 type OrderRepository interface {
 	Save(ctx context.Context, order *aggregate.Order) (err error)
 	FindById(ctx context.Context, id int64) (order *aggregate.Order, err error)
-	Delete(ctx context.Context, id int64)
 }
 
 type OrderRepo struct {
@@ -39,15 +37,11 @@ type OrderRepo struct {
 	publisher *eventbus.EventPublisher
 }
 
-func (o *OrderRepo) Delete(ctx context.Context, id int64) {
-	panic(errors.New("not implemented"))
-}
-
 // NewOrderRepo 创建带可选依赖的仓储（订阅服务、事件发布器）
-func NewOrderRepo(pub *eventbus.EventPublisher) *OrderRepo {
+func NewOrderRepo() *OrderRepo {
 	return &OrderRepo{
 		db:        db.Client,
-		publisher: pub,
+		publisher: infras.GetManager().Publisher,
 	}
 }
 
@@ -59,6 +53,7 @@ func (o *OrderRepo) Save(ctx context.Context, order *aggregate.Order) (err error
 		return nil
 	}
 
+	klog.Info(order)
 	// 使用事务来保存聚合根
 	err = infras.WithTx(func(tx *ent.Tx) error {
 		return o.saveAggregateWithinTx(ctx, tx, order, es)
@@ -133,6 +128,7 @@ func (o *OrderRepo) saveOrderEntity(ctx context.Context, tx *ent.Tx, order *aggr
 		}
 		return errors.Wrap(err, "更新订单实体失败")
 	}
+	
 	fmt.Println(res)
 	return nil
 }
@@ -156,6 +152,9 @@ func (o *OrderRepo) saveOrderItems(ctx context.Context, tx *ent.Tx, order *aggre
 
 func (o *OrderRepo) saveEvents(ctx context.Context, tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
 	ets := make([]*ent.OrderEventsCreate, len(es))
+
+	klog.Info(order)
+
 	for i, e := range es {
 		// 确保事件的聚合ID已设置
 		if e.GetAggregateID() == 0 {

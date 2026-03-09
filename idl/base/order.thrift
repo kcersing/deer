@@ -30,9 +30,9 @@ struct Order {
 
 struct OrderRefund {
     1:optional string refundAt="" (api.raw = "refundAt")
-    2:optional string refundReason="" (api.raw = "refundReason")
     3:optional i64 createdId=0 (api.raw = "createdId")
-    4:optional i64 refundAmount=0 (api.raw = "refundAmount")
+    2:optional string reason="" (api.raw = "reason")
+    4:optional i64 amount=0 (api.raw = "amount")
 }
 
 

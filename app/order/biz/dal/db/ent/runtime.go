@@ -181,10 +181,10 @@ func init() {
 	orderrefundDescCreatedID := orderrefundMixinFields0[4].Descriptor()
 	// orderrefund.DefaultCreatedID holds the default value on creation for the created_id field.
 	orderrefund.DefaultCreatedID = orderrefundDescCreatedID.Default.(int64)
-	// orderrefundDescRefund is the schema descriptor for refund field.
-	orderrefundDescRefund := orderrefundFields[2].Descriptor()
-	// orderrefund.DefaultRefund holds the default value on creation for the refund field.
-	orderrefund.DefaultRefund = orderrefundDescRefund.Default.(int64)
+	// orderrefundDescAmount is the schema descriptor for amount field.
+	orderrefundDescAmount := orderrefundFields[2].Descriptor()
+	// orderrefund.DefaultAmount holds the default value on creation for the amount field.
+	orderrefund.DefaultAmount = orderrefundDescAmount.Default.(int64)
 	ordersnapshotsMixin := schema.OrderSnapshots{}.Mixin()
 	ordersnapshotsMixinFields0 := ordersnapshotsMixin[0].Fields()
 	_ = ordersnapshotsMixinFields0

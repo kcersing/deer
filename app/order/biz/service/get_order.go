@@ -26,7 +26,7 @@ func (s *GetOrderService) Run(req *order.GetOrderReq) (resp *order.OrderResp, er
 		return nil, errno.InvalidParameterErr
 	}
 
-	orderFromDB, err := repo.NewOrderRepo(nil).FindById(s.ctx, req.GetId())
+	orderFromDB, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
 	klog.Info(orderFromDB)
 
 	//if err != nil {

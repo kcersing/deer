@@ -2,30 +2,19 @@ package utils
 
 import (
 	"crypto/rand"
-	"strconv"
+	"encoding/binary"
+	"fmt"
 	"time"
 )
 
-func CreateCn() string {
-
-	b := make([]byte, 10)
-	_, err := rand.Read(b)
-	if err != nil {
+// CreateSn 生成一个序列号.
+// 序列号由时间戳(YYMMDDHHMMSS)和一个4位随机数组成.
+func CreateSn() string {
+	var b [4]byte
+	if _, err := rand.Read(b[:]); err != nil {
 		panic(err)
 	}
-
-	// 将字节转换为整数
-	intFromBytes := int64(0)
-	for _, v := range b {
-		intFromBytes = (intFromBytes << 8) | int64(v)
-	}
-
-	// 格式化时间
-	formatted := time.Now().Format("060102150405")
-
-	str := strconv.FormatInt(intFromBytes, 10)
-	return formatted + str[1:5]
-
+	return time.Now().Format("060102150405") + fmt.Sprintf("%04d", binary.BigEndian.Uint32(b[:])%10000)
 }
 
 func ConvertIntSliceToInt64Slice(intSlice []int) []int64 {

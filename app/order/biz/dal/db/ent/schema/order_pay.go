@@ -25,7 +25,7 @@ func (OrderPay) Fields() []ent.Field {
 		field.String("pay_way").Comment("支付方式").Optional(),
 		field.String("pay_sn").Comment("支付单号").Optional(),
 		field.String("prepay_id").Comment("预支付交易会话标识").Optional(),
-		field.JSON("pay_extra", []byte{}).Comment("支付额外信息").Optional(),
+		field.Text("pay_extra").Comment("支付额外信息").Optional(),
 	}
 }
 

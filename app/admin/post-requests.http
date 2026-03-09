@@ -57,6 +57,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4O
 
 }
 ### Send POST request with json body
+POST http://127.0.0.1:9010/service/order/create
+Content-Type: application/json
+
+{
+  "memberId":1,
+  "createdId":2,
+  "items":[{"productId":1, "quantity":1, "price":100, "name":"测试产品"}],
+  "totalAmount":100,
+  "userId":1
+}
+
+
+### Send POST request with json body
 POST http://127.0.0.1:9010/service/order
 Content-Type: application/json
 
@@ -72,3 +85,13 @@ Content-Type: application/json
 {
 
 }
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/order/cancelled
+Content-Type: application/json
+
+{
+  "id":1,
+  "reason":    "不想要了",
+  "createdId": 2
+}
+

@@ -193,7 +193,7 @@ var (
 		{Name: "pay_way", Type: field.TypeString, Nullable: true, Comment: "支付方式"},
 		{Name: "pay_sn", Type: field.TypeString, Nullable: true, Comment: "支付单号"},
 		{Name: "prepay_id", Type: field.TypeString, Nullable: true, Comment: "预支付交易会话标识"},
-		{Name: "pay_extra", Type: field.TypeJSON, Nullable: true, Comment: "支付额外信息"},
+		{Name: "pay_extra", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "支付额外信息"},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
 	}
 	// OrderPayTable holds the schema information for the "order_pay" table.
@@ -230,8 +230,8 @@ var (
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "refund_at", Type: field.TypeTime, Nullable: true, Comment: "订单退费时间"},
-		{Name: "refund", Type: field.TypeInt64, Nullable: true, Comment: "退费金额", Default: 0},
-		{Name: "refund_nature", Type: field.TypeString, Nullable: true, Comment: "退费原因"},
+		{Name: "amount", Type: field.TypeInt64, Nullable: true, Comment: "退费金额", Default: 0},
+		{Name: "nature", Type: field.TypeString, Nullable: true, Comment: "退费原因"},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
 	}
 	// OrderRefundTable holds the schema information for the "order_refund" table.

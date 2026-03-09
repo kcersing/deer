@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"order/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"order/biz/dal/db/ent/schema/mixins"
 )
 
 type OrderRefund struct {
@@ -18,8 +19,8 @@ func (OrderRefund) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("order_id").Comment("订单id").Optional(),
 		field.Time("refund_at").Comment("订单退费时间").Optional(),
-		field.Int64("refund").Default(0).Comment("退费金额").Optional(),
-		field.String("refund_nature").Comment("退费原因").Optional(),
+		field.Int64("amount").Default(0).Comment("退费金额").Optional(),
+		field.String("nature").Comment("退费原因").Optional(),
 	}
 }
 

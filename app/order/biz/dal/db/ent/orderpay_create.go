@@ -189,8 +189,16 @@ func (_c *OrderPayCreate) SetNillablePrepayID(v *string) *OrderPayCreate {
 }
 
 // SetPayExtra sets the "pay_extra" field.
-func (_c *OrderPayCreate) SetPayExtra(v []uint8) *OrderPayCreate {
+func (_c *OrderPayCreate) SetPayExtra(v string) *OrderPayCreate {
 	_c.mutation.SetPayExtra(v)
+	return _c
+}
+
+// SetNillablePayExtra sets the "pay_extra" field if the given value is not nil.
+func (_c *OrderPayCreate) SetNillablePayExtra(v *string) *OrderPayCreate {
+	if v != nil {
+		_c.SetPayExtra(*v)
+	}
 	return _c
 }
 
@@ -341,7 +349,7 @@ func (_c *OrderPayCreate) createSpec() (*OrderPay, *sqlgraph.CreateSpec) {
 		_node.PrepayID = value
 	}
 	if value, ok := _c.mutation.PayExtra(); ok {
-		_spec.SetField(orderpay.FieldPayExtra, field.TypeJSON, value)
+		_spec.SetField(orderpay.FieldPayExtra, field.TypeString, value)
 		_node.PayExtra = value
 	}
 	if nodes := _c.mutation.OrderIDs(); len(nodes) > 0 {

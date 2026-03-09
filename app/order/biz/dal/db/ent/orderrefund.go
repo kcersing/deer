@@ -32,9 +32,9 @@ type OrderRefund struct {
 	// 订单退费时间
 	RefundAt time.Time `json:"refund_at,omitempty"`
 	// 退费金额
-	Refund int64 `json:"refund,omitempty"`
+	Amount int64 `json:"amount,omitempty"`
 	// 退费原因
-	RefundNature string `json:"refund_nature,omitempty"`
+	Nature string `json:"nature,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderRefundQuery when eager-loading is set.
 	Edges        OrderRefundEdges `json:"edges"`
@@ -66,9 +66,9 @@ func (*OrderRefund) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orderrefund.FieldID, orderrefund.FieldDelete, orderrefund.FieldCreatedID, orderrefund.FieldOrderID, orderrefund.FieldRefund:
+		case orderrefund.FieldID, orderrefund.FieldDelete, orderrefund.FieldCreatedID, orderrefund.FieldOrderID, orderrefund.FieldAmount:
 			values[i] = new(sql.NullInt64)
-		case orderrefund.FieldRefundNature:
+		case orderrefund.FieldNature:
 			values[i] = new(sql.NullString)
 		case orderrefund.FieldCreatedAt, orderrefund.FieldUpdatedAt, orderrefund.FieldRefundAt:
 			values[i] = new(sql.NullTime)
@@ -129,17 +129,17 @@ func (_m *OrderRefund) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.RefundAt = value.Time
 			}
-		case orderrefund.FieldRefund:
+		case orderrefund.FieldAmount:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field refund", values[i])
+				return fmt.Errorf("unexpected type %T for field amount", values[i])
 			} else if value.Valid {
-				_m.Refund = value.Int64
+				_m.Amount = value.Int64
 			}
-		case orderrefund.FieldRefundNature:
+		case orderrefund.FieldNature:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field refund_nature", values[i])
+				return fmt.Errorf("unexpected type %T for field nature", values[i])
 			} else if value.Valid {
-				_m.RefundNature = value.String
+				_m.Nature = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -200,11 +200,11 @@ func (_m *OrderRefund) String() string {
 	builder.WriteString("refund_at=")
 	builder.WriteString(_m.RefundAt.Format(time.ANSIC))
 	builder.WriteString(", ")
-	builder.WriteString("refund=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Refund))
+	builder.WriteString("amount=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Amount))
 	builder.WriteString(", ")
-	builder.WriteString("refund_nature=")
-	builder.WriteString(_m.RefundNature)
+	builder.WriteString("nature=")
+	builder.WriteString(_m.Nature)
 	builder.WriteByte(')')
 	return builder.String()
 }

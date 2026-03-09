@@ -717,13 +717,90 @@ var fieldIDToName_CreateOrderReq = map[int16]string{
 }
 
 type PaymentReq struct {
+	Id     int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Amount int64  `thrift:"amount,2,optional" frugal:"2,optional,i64" json:"amount,omitempty"`
+	Method string `thrift:"method,3,optional" frugal:"3,optional,string" json:"method,omitempty"`
+	Third  string `thrift:"third,4,optional" frugal:"4,optional,string" json:"third,omitempty"`
 }
 
 func NewPaymentReq() *PaymentReq {
-	return &PaymentReq{}
+	return &PaymentReq{
+		Id:     0,
+		Amount: 0,
+		Method: "",
+		Third:  "",
+	}
 }
 
 func (p *PaymentReq) InitDefault() {
+	p.Id = 0
+	p.Amount = 0
+	p.Method = ""
+	p.Third = ""
+}
+
+var PaymentReq_Id_DEFAULT int64 = 0
+
+func (p *PaymentReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return PaymentReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var PaymentReq_Amount_DEFAULT int64 = 0
+
+func (p *PaymentReq) GetAmount() (v int64) {
+	if !p.IsSetAmount() {
+		return PaymentReq_Amount_DEFAULT
+	}
+	return p.Amount
+}
+
+var PaymentReq_Method_DEFAULT string = ""
+
+func (p *PaymentReq) GetMethod() (v string) {
+	if !p.IsSetMethod() {
+		return PaymentReq_Method_DEFAULT
+	}
+	return p.Method
+}
+
+var PaymentReq_Third_DEFAULT string = ""
+
+func (p *PaymentReq) GetThird() (v string) {
+	if !p.IsSetThird() {
+		return PaymentReq_Third_DEFAULT
+	}
+	return p.Third
+}
+func (p *PaymentReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *PaymentReq) SetAmount(val int64) {
+	p.Amount = val
+}
+func (p *PaymentReq) SetMethod(val string) {
+	p.Method = val
+}
+func (p *PaymentReq) SetThird(val string) {
+	p.Third = val
+}
+
+func (p *PaymentReq) IsSetId() bool {
+	return p.Id != PaymentReq_Id_DEFAULT
+}
+
+func (p *PaymentReq) IsSetAmount() bool {
+	return p.Amount != PaymentReq_Amount_DEFAULT
+}
+
+func (p *PaymentReq) IsSetMethod() bool {
+	return p.Method != PaymentReq_Method_DEFAULT
+}
+
+func (p *PaymentReq) IsSetThird() bool {
+	return p.Third != PaymentReq_Third_DEFAULT
 }
 
 func (p *PaymentReq) String() string {
@@ -733,7 +810,12 @@ func (p *PaymentReq) String() string {
 	return fmt.Sprintf("PaymentReq(%+v)", *p)
 }
 
-var fieldIDToName_PaymentReq = map[int16]string{}
+var fieldIDToName_PaymentReq = map[int16]string{
+	1: "id",
+	2: "amount",
+	3: "method",
+	4: "third",
+}
 
 type OrderService interface {
 	GetOrder(ctx context.Context, req *GetOrderReq) (r *OrderResp, err error)

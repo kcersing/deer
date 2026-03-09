@@ -135,50 +135,50 @@ func (_u *OrderRefundUpdate) ClearRefundAt() *OrderRefundUpdate {
 	return _u
 }
 
-// SetRefund sets the "refund" field.
-func (_u *OrderRefundUpdate) SetRefund(v int64) *OrderRefundUpdate {
-	_u.mutation.ResetRefund()
-	_u.mutation.SetRefund(v)
+// SetAmount sets the "amount" field.
+func (_u *OrderRefundUpdate) SetAmount(v int64) *OrderRefundUpdate {
+	_u.mutation.ResetAmount()
+	_u.mutation.SetAmount(v)
 	return _u
 }
 
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderRefundUpdate) SetNillableRefund(v *int64) *OrderRefundUpdate {
+// SetNillableAmount sets the "amount" field if the given value is not nil.
+func (_u *OrderRefundUpdate) SetNillableAmount(v *int64) *OrderRefundUpdate {
 	if v != nil {
-		_u.SetRefund(*v)
+		_u.SetAmount(*v)
 	}
 	return _u
 }
 
-// AddRefund adds value to the "refund" field.
-func (_u *OrderRefundUpdate) AddRefund(v int64) *OrderRefundUpdate {
-	_u.mutation.AddRefund(v)
+// AddAmount adds value to the "amount" field.
+func (_u *OrderRefundUpdate) AddAmount(v int64) *OrderRefundUpdate {
+	_u.mutation.AddAmount(v)
 	return _u
 }
 
-// ClearRefund clears the value of the "refund" field.
-func (_u *OrderRefundUpdate) ClearRefund() *OrderRefundUpdate {
-	_u.mutation.ClearRefund()
+// ClearAmount clears the value of the "amount" field.
+func (_u *OrderRefundUpdate) ClearAmount() *OrderRefundUpdate {
+	_u.mutation.ClearAmount()
 	return _u
 }
 
-// SetRefundNature sets the "refund_nature" field.
-func (_u *OrderRefundUpdate) SetRefundNature(v string) *OrderRefundUpdate {
-	_u.mutation.SetRefundNature(v)
+// SetNature sets the "nature" field.
+func (_u *OrderRefundUpdate) SetNature(v string) *OrderRefundUpdate {
+	_u.mutation.SetNature(v)
 	return _u
 }
 
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_u *OrderRefundUpdate) SetNillableRefundNature(v *string) *OrderRefundUpdate {
+// SetNillableNature sets the "nature" field if the given value is not nil.
+func (_u *OrderRefundUpdate) SetNillableNature(v *string) *OrderRefundUpdate {
 	if v != nil {
-		_u.SetRefundNature(*v)
+		_u.SetNature(*v)
 	}
 	return _u
 }
 
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (_u *OrderRefundUpdate) ClearRefundNature() *OrderRefundUpdate {
-	_u.mutation.ClearRefundNature()
+// ClearNature clears the value of the "nature" field.
+func (_u *OrderRefundUpdate) ClearNature() *OrderRefundUpdate {
+	_u.mutation.ClearNature()
 	return _u
 }
 
@@ -276,20 +276,20 @@ func (_u *OrderRefundUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	if _u.mutation.RefundAtCleared() {
 		_spec.ClearField(orderrefund.FieldRefundAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
+	if value, ok := _u.mutation.Amount(); ok {
+		_spec.SetField(orderrefund.FieldAmount, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(orderrefund.FieldRefund, field.TypeInt64, value)
+	if value, ok := _u.mutation.AddedAmount(); ok {
+		_spec.AddField(orderrefund.FieldAmount, field.TypeInt64, value)
 	}
-	if _u.mutation.RefundCleared() {
-		_spec.ClearField(orderrefund.FieldRefund, field.TypeInt64)
+	if _u.mutation.AmountCleared() {
+		_spec.ClearField(orderrefund.FieldAmount, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.RefundNature(); ok {
-		_spec.SetField(orderrefund.FieldRefundNature, field.TypeString, value)
+	if value, ok := _u.mutation.Nature(); ok {
+		_spec.SetField(orderrefund.FieldNature, field.TypeString, value)
 	}
-	if _u.mutation.RefundNatureCleared() {
-		_spec.ClearField(orderrefund.FieldRefundNature, field.TypeString)
+	if _u.mutation.NatureCleared() {
+		_spec.ClearField(orderrefund.FieldNature, field.TypeString)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -446,50 +446,50 @@ func (_u *OrderRefundUpdateOne) ClearRefundAt() *OrderRefundUpdateOne {
 	return _u
 }
 
-// SetRefund sets the "refund" field.
-func (_u *OrderRefundUpdateOne) SetRefund(v int64) *OrderRefundUpdateOne {
-	_u.mutation.ResetRefund()
-	_u.mutation.SetRefund(v)
+// SetAmount sets the "amount" field.
+func (_u *OrderRefundUpdateOne) SetAmount(v int64) *OrderRefundUpdateOne {
+	_u.mutation.ResetAmount()
+	_u.mutation.SetAmount(v)
 	return _u
 }
 
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_u *OrderRefundUpdateOne) SetNillableRefund(v *int64) *OrderRefundUpdateOne {
+// SetNillableAmount sets the "amount" field if the given value is not nil.
+func (_u *OrderRefundUpdateOne) SetNillableAmount(v *int64) *OrderRefundUpdateOne {
 	if v != nil {
-		_u.SetRefund(*v)
+		_u.SetAmount(*v)
 	}
 	return _u
 }
 
-// AddRefund adds value to the "refund" field.
-func (_u *OrderRefundUpdateOne) AddRefund(v int64) *OrderRefundUpdateOne {
-	_u.mutation.AddRefund(v)
+// AddAmount adds value to the "amount" field.
+func (_u *OrderRefundUpdateOne) AddAmount(v int64) *OrderRefundUpdateOne {
+	_u.mutation.AddAmount(v)
 	return _u
 }
 
-// ClearRefund clears the value of the "refund" field.
-func (_u *OrderRefundUpdateOne) ClearRefund() *OrderRefundUpdateOne {
-	_u.mutation.ClearRefund()
+// ClearAmount clears the value of the "amount" field.
+func (_u *OrderRefundUpdateOne) ClearAmount() *OrderRefundUpdateOne {
+	_u.mutation.ClearAmount()
 	return _u
 }
 
-// SetRefundNature sets the "refund_nature" field.
-func (_u *OrderRefundUpdateOne) SetRefundNature(v string) *OrderRefundUpdateOne {
-	_u.mutation.SetRefundNature(v)
+// SetNature sets the "nature" field.
+func (_u *OrderRefundUpdateOne) SetNature(v string) *OrderRefundUpdateOne {
+	_u.mutation.SetNature(v)
 	return _u
 }
 
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_u *OrderRefundUpdateOne) SetNillableRefundNature(v *string) *OrderRefundUpdateOne {
+// SetNillableNature sets the "nature" field if the given value is not nil.
+func (_u *OrderRefundUpdateOne) SetNillableNature(v *string) *OrderRefundUpdateOne {
 	if v != nil {
-		_u.SetRefundNature(*v)
+		_u.SetNature(*v)
 	}
 	return _u
 }
 
-// ClearRefundNature clears the value of the "refund_nature" field.
-func (_u *OrderRefundUpdateOne) ClearRefundNature() *OrderRefundUpdateOne {
-	_u.mutation.ClearRefundNature()
+// ClearNature clears the value of the "nature" field.
+func (_u *OrderRefundUpdateOne) ClearNature() *OrderRefundUpdateOne {
+	_u.mutation.ClearNature()
 	return _u
 }
 
@@ -617,20 +617,20 @@ func (_u *OrderRefundUpdateOne) sqlSave(ctx context.Context) (_node *OrderRefund
 	if _u.mutation.RefundAtCleared() {
 		_spec.ClearField(orderrefund.FieldRefundAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
+	if value, ok := _u.mutation.Amount(); ok {
+		_spec.SetField(orderrefund.FieldAmount, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedRefund(); ok {
-		_spec.AddField(orderrefund.FieldRefund, field.TypeInt64, value)
+	if value, ok := _u.mutation.AddedAmount(); ok {
+		_spec.AddField(orderrefund.FieldAmount, field.TypeInt64, value)
 	}
-	if _u.mutation.RefundCleared() {
-		_spec.ClearField(orderrefund.FieldRefund, field.TypeInt64)
+	if _u.mutation.AmountCleared() {
+		_spec.ClearField(orderrefund.FieldAmount, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.RefundNature(); ok {
-		_spec.SetField(orderrefund.FieldRefundNature, field.TypeString, value)
+	if value, ok := _u.mutation.Nature(); ok {
+		_spec.SetField(orderrefund.FieldNature, field.TypeString, value)
 	}
-	if _u.mutation.RefundNatureCleared() {
-		_spec.ClearField(orderrefund.FieldRefundNature, field.TypeString)
+	if _u.mutation.NatureCleared() {
+		_spec.ClearField(orderrefund.FieldNature, field.TypeString)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{

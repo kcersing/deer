@@ -4,6 +4,8 @@ import (
 	"common/amqpclt"
 	"common/eventbus"
 	"context"
+	"order/biz/infras/common"
+	"order/biz/infras/events"
 
 	"order/biz/dal/mq"
 	"sync"
@@ -12,10 +14,11 @@ import (
 )
 
 const (
-	// 事件主题
-	EventSendOrder = "send_order"
+
 	// 处理器名称
-	handlerSendOrder = "send_order_handler"
+	handleOrderPay = "pay_order_handler"
+
+	handleOrderRefunded = "refunded_order_handler"
 )
 
 var (
@@ -59,18 +62,43 @@ func Bootstrap() (err error) {
 		globalManager = eventbus.NewEventManager(bus, bridge, registry, eventPublisher)
 		// 4. 注册所有消费者
 		// 4.1. 注册处理器
+
 		//err := globalManager.Registry.RegisterHandler(
 		//	EventSendOrder,
-		//	eventbus.WrapTyped(eventbus.TypedHandler[*order.SendOrderReq](HandleSendOrder)),
+		//	eventbus.WrapTyped(eventbus.TypedHandler[*events.PaidOrderEvent](events.HandleOrderPay)),
 		//)
+		//if err != nil {
+		//	klog.Errorf("Failed to register handler '%s': %v", handlerSendOrder, err)
+		//
+		//}
+
+		err := globalManager.Registry.RegisterHandler(
+			string(common.Paid),
+			eventbus.WrapTyped(eventbus.TypedHandler[*events.PaidOrderEvent](events.HandleOrderPay)),
+		)
 		if err != nil {
-			klog.Errorf("Failed to register handler '%s': %v", EventSendOrder, err)
+			klog.Errorf("Failed to register handler '%s': %v", handleOrderPay, err)
 
 		}
-		// 4.2. 注册消费者 (将主题与处理器绑定)
-		err = globalManager.Registry.RegisterConsumer(EventSendOrder, handlerSendOrder, 10)
+		err = globalManager.Registry.RegisterHandler(
+			string(common.Refunded),
+			eventbus.WrapTyped(eventbus.TypedHandler[*events.RefundedOrderEvent](events.HandleOrderRefunded)),
+		)
 		if err != nil {
-			klog.Errorf("Failed to register consumer for event '%s': %v", handlerSendOrder, err)
+			klog.Errorf("Failed to register handler '%s': %v", handleOrderRefunded, err)
+
+		}
+
+		// 4.2. 注册消费者 (将主题与处理器绑定)
+
+		err = globalManager.Registry.RegisterConsumer(string(common.Paid), handleOrderPay, 10)
+		if err != nil {
+			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderPay, err)
+		}
+
+		err = globalManager.Registry.RegisterConsumer(string(common.Refunded), handleOrderRefunded, 10)
+		if err != nil {
+			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderRefunded, err)
 		}
 
 		// 5. 启动所有组件

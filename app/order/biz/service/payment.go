@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	order "gen/kitex_gen/order"
+	"order/biz/infras/events"
+	"order/biz/infras/repo"
 )
 
 type PaymentService struct {
@@ -16,14 +18,30 @@ func NewPaymentService(ctx context.Context) *PaymentService {
 
 // Run create note info
 func (s *PaymentService) Run(req *order.PaymentReq) (resp *order.OrderResp, err error) {
-	// Finish your business logic.
-	//// === 第三步：支付订单 ===
-	//paidEvent := events.NewPaidOrderEvent(orderId, userId)
-	//paidEvent.PayedAmount = 9999
-	//paidEvent.PayMethod = "alipay"
-	//
-	//orderFromDB.Apply(paidEvent)  // 订单状态转为 "paid"，添加支付记录到 OrderPays
-	//repo.Save(orderFromDB)        // 持久化新事件（版本 2）
-	//// 事务提交后 → 发布支付事件到 eventbus → 触发发货流程
-	return
+
+	node, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
+	if err != nil {
+		return nil, err
+	}
+	event := events.NewPaidOrderEvent(req.GetId())
+	event.Amount = req.GetAmount()
+	event.Method = req.GetMethod()
+	event.PrepayId = req.GetThird()
+	err = node.Apply(event)
+	if err != nil {
+		return nil, err
+	}
+	err = repo.NewOrderRepo().Save(s.ctx, node)
+	if err != nil {
+		return nil, err
+	}
+
+	err = events.OrderPayEvent(s.ctx, event)
+	if err != nil {
+		return nil, err
+	}
+
+	return &order.OrderResp{
+		Data: &node.Order,
+	}, nil
 }

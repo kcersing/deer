@@ -3,7 +3,6 @@
 package ent
 
 import (
-	"encoding/json"
 	"fmt"
 	"order/biz/dal/db/ent/order"
 	"order/biz/dal/db/ent/orderpay"
@@ -45,7 +44,7 @@ type OrderPay struct {
 	// 预支付交易会话标识
 	PrepayID string `json:"prepay_id,omitempty"`
 	// 支付额外信息
-	PayExtra []uint8 `json:"pay_extra,omitempty"`
+	PayExtra string `json:"pay_extra,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrderPayQuery when eager-loading is set.
 	Edges        OrderPayEdges `json:"edges"`
@@ -77,11 +76,9 @@ func (*OrderPay) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orderpay.FieldPayExtra:
-			values[i] = new([]byte)
 		case orderpay.FieldID, orderpay.FieldDelete, orderpay.FieldCreatedID, orderpay.FieldOrderID, orderpay.FieldRemission, orderpay.FieldPay:
 			values[i] = new(sql.NullInt64)
-		case orderpay.FieldNote, orderpay.FieldPayWay, orderpay.FieldPaySn, orderpay.FieldPrepayID:
+		case orderpay.FieldNote, orderpay.FieldPayWay, orderpay.FieldPaySn, orderpay.FieldPrepayID, orderpay.FieldPayExtra:
 			values[i] = new(sql.NullString)
 		case orderpay.FieldCreatedAt, orderpay.FieldUpdatedAt, orderpay.FieldPayAt:
 			values[i] = new(sql.NullTime)
@@ -179,12 +176,10 @@ func (_m *OrderPay) assignValues(columns []string, values []any) error {
 				_m.PrepayID = value.String
 			}
 		case orderpay.FieldPayExtra:
-			if value, ok := values[i].(*[]byte); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field pay_extra", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &_m.PayExtra); err != nil {
-					return fmt.Errorf("unmarshal field pay_extra: %w", err)
-				}
+			} else if value.Valid {
+				_m.PayExtra = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -264,7 +259,7 @@ func (_m *OrderPay) String() string {
 	builder.WriteString(_m.PrepayID)
 	builder.WriteString(", ")
 	builder.WriteString("pay_extra=")
-	builder.WriteString(fmt.Sprintf("%v", _m.PayExtra))
+	builder.WriteString(_m.PayExtra)
 	builder.WriteByte(')')
 	return builder.String()
 }

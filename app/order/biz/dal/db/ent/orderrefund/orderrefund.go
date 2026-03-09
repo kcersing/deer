@@ -26,10 +26,10 @@ const (
 	FieldOrderID = "order_id"
 	// FieldRefundAt holds the string denoting the refund_at field in the database.
 	FieldRefundAt = "refund_at"
-	// FieldRefund holds the string denoting the refund field in the database.
-	FieldRefund = "refund"
-	// FieldRefundNature holds the string denoting the refund_nature field in the database.
-	FieldRefundNature = "refund_nature"
+	// FieldAmount holds the string denoting the amount field in the database.
+	FieldAmount = "amount"
+	// FieldNature holds the string denoting the nature field in the database.
+	FieldNature = "nature"
 	// EdgeOrder holds the string denoting the order edge name in mutations.
 	EdgeOrder = "order"
 	// Table holds the table name of the orderrefund in the database.
@@ -52,8 +52,8 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldOrderID,
 	FieldRefundAt,
-	FieldRefund,
-	FieldRefundNature,
+	FieldAmount,
+	FieldNature,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -77,8 +77,8 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
-	// DefaultRefund holds the default value on creation for the "refund" field.
-	DefaultRefund int64
+	// DefaultAmount holds the default value on creation for the "amount" field.
+	DefaultAmount int64
 )
 
 // OrderOption defines the ordering options for the OrderRefund queries.
@@ -119,14 +119,14 @@ func ByRefundAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRefundAt, opts...).ToFunc()
 }
 
-// ByRefund orders the results by the refund field.
-func ByRefund(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRefund, opts...).ToFunc()
+// ByAmount orders the results by the amount field.
+func ByAmount(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldAmount, opts...).ToFunc()
 }
 
-// ByRefundNature orders the results by the refund_nature field.
-func ByRefundNature(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldRefundNature, opts...).ToFunc()
+// ByNature orders the results by the nature field.
+func ByNature(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldNature, opts...).ToFunc()
 }
 
 // ByOrderField orders the results by order field.

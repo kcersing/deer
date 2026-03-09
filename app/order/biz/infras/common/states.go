@@ -14,9 +14,10 @@ const (
 
 // Transitions 定义状态转换规则
 var Transitions = map[OrderStatus][]OrderStatus{
-	Created: {Paid, Cancelled},
-	Paid:    {Shipped, Refunded, Cancelled},
-	Shipped: {Completed, Refunded},
+	Created:   {Paid, Cancelled},
+	Paid:      {Shipped, Refunded, Cancelled},
+	Shipped:   {Completed, Refunded},
+	Cancelled: {Created},
 }
 
 //1. created "已创建", "交易已创建，等待用户支付"

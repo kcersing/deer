@@ -37,7 +37,7 @@ func (s *CreateOrderService) Run(req *order.CreateOrderReq) (resp *order.OrderRe
 		})
 	}
 	event := events.NewCreatedOrderEvent(
-		utils.CreateCn(),
+		utils.CreateSn(),
 		items,
 		req.GetTotalAmount()*100,
 		req.GetMemberId(),
@@ -49,11 +49,12 @@ func (s *CreateOrderService) Run(req *order.CreateOrderReq) (resp *order.OrderRe
 		return nil, err
 	}
 
-	// 将 publisher 注入 Repository，由 Repository 负责在事务提交后发布事件
-	err = repo.NewOrderRepo(s.publisher).Save(s.ctx, node)
+	err = repo.NewOrderRepo().Save(s.ctx, node)
 	if err != nil {
 		return nil, err
 	}
 
-	return
+	return &order.OrderResp{
+		Data: &node.Order,
+	}, nil
 }

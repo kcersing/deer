@@ -13,7 +13,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -271,14 +270,16 @@ func (_u *OrderPayUpdate) ClearPrepayID() *OrderPayUpdate {
 }
 
 // SetPayExtra sets the "pay_extra" field.
-func (_u *OrderPayUpdate) SetPayExtra(v []uint8) *OrderPayUpdate {
+func (_u *OrderPayUpdate) SetPayExtra(v string) *OrderPayUpdate {
 	_u.mutation.SetPayExtra(v)
 	return _u
 }
 
-// AppendPayExtra appends value to the "pay_extra" field.
-func (_u *OrderPayUpdate) AppendPayExtra(v []uint8) *OrderPayUpdate {
-	_u.mutation.AppendPayExtra(v)
+// SetNillablePayExtra sets the "pay_extra" field if the given value is not nil.
+func (_u *OrderPayUpdate) SetNillablePayExtra(v *string) *OrderPayUpdate {
+	if v != nil {
+		_u.SetPayExtra(*v)
+	}
 	return _u
 }
 
@@ -425,15 +426,10 @@ func (_u *OrderPayUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(orderpay.FieldPrepayID, field.TypeString)
 	}
 	if value, ok := _u.mutation.PayExtra(); ok {
-		_spec.SetField(orderpay.FieldPayExtra, field.TypeJSON, value)
-	}
-	if value, ok := _u.mutation.AppendedPayExtra(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, orderpay.FieldPayExtra, value)
-		})
+		_spec.SetField(orderpay.FieldPayExtra, field.TypeString, value)
 	}
 	if _u.mutation.PayExtraCleared() {
-		_spec.ClearField(orderpay.FieldPayExtra, field.TypeJSON)
+		_spec.ClearField(orderpay.FieldPayExtra, field.TypeString)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -725,14 +721,16 @@ func (_u *OrderPayUpdateOne) ClearPrepayID() *OrderPayUpdateOne {
 }
 
 // SetPayExtra sets the "pay_extra" field.
-func (_u *OrderPayUpdateOne) SetPayExtra(v []uint8) *OrderPayUpdateOne {
+func (_u *OrderPayUpdateOne) SetPayExtra(v string) *OrderPayUpdateOne {
 	_u.mutation.SetPayExtra(v)
 	return _u
 }
 
-// AppendPayExtra appends value to the "pay_extra" field.
-func (_u *OrderPayUpdateOne) AppendPayExtra(v []uint8) *OrderPayUpdateOne {
-	_u.mutation.AppendPayExtra(v)
+// SetNillablePayExtra sets the "pay_extra" field if the given value is not nil.
+func (_u *OrderPayUpdateOne) SetNillablePayExtra(v *string) *OrderPayUpdateOne {
+	if v != nil {
+		_u.SetPayExtra(*v)
+	}
 	return _u
 }
 
@@ -909,15 +907,10 @@ func (_u *OrderPayUpdateOne) sqlSave(ctx context.Context) (_node *OrderPay, err 
 		_spec.ClearField(orderpay.FieldPrepayID, field.TypeString)
 	}
 	if value, ok := _u.mutation.PayExtra(); ok {
-		_spec.SetField(orderpay.FieldPayExtra, field.TypeJSON, value)
-	}
-	if value, ok := _u.mutation.AppendedPayExtra(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, orderpay.FieldPayExtra, value)
-		})
+		_spec.SetField(orderpay.FieldPayExtra, field.TypeString, value)
 	}
 	if _u.mutation.PayExtraCleared() {
-		_spec.ClearField(orderpay.FieldPayExtra, field.TypeJSON)
+		_spec.ClearField(orderpay.FieldPayExtra, field.TypeString)
 	}
 	if _u.mutation.OrderCleared() {
 		edge := &sqlgraph.EdgeSpec{

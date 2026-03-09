@@ -1163,9 +1163,9 @@ func (p *OrderRefund) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 2:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField2(buf[offset:])
+		case 3:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField3(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -1177,9 +1177,9 @@ func (p *OrderRefund) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 3:
-			if fieldTypeId == thrift.I64 {
-				l, err = p.FastReadField3(buf[offset:])
+		case 2:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField2(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -1237,20 +1237,6 @@ func (p *OrderRefund) FastReadField1(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *OrderRefund) FastReadField2(buf []byte) (int, error) {
-	offset := 0
-
-	var _field string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = v
-	}
-	p.RefundReason = _field
-	return offset, nil
-}
-
 func (p *OrderRefund) FastReadField3(buf []byte) (int, error) {
 	offset := 0
 
@@ -1265,6 +1251,20 @@ func (p *OrderRefund) FastReadField3(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *OrderRefund) FastReadField2(buf []byte) (int, error) {
+	offset := 0
+
+	var _field string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Reason = _field
+	return offset, nil
+}
+
 func (p *OrderRefund) FastReadField4(buf []byte) (int, error) {
 	offset := 0
 
@@ -1275,7 +1275,7 @@ func (p *OrderRefund) FastReadField4(buf []byte) (int, error) {
 		offset += l
 		_field = v
 	}
-	p.RefundAmount = _field
+	p.Amount = _field
 	return offset, nil
 }
 
@@ -1299,8 +1299,8 @@ func (p *OrderRefund) BLength() int {
 	l := 0
 	if p != nil {
 		l += p.field1Length()
-		l += p.field2Length()
 		l += p.field3Length()
+		l += p.field2Length()
 		l += p.field4Length()
 	}
 	l += thrift.Binary.FieldStopLength()
@@ -1316,15 +1316,6 @@ func (p *OrderRefund) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
-func (p *OrderRefund) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetRefundReason() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.RefundReason)
-	}
-	return offset
-}
-
 func (p *OrderRefund) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	if p.IsSetCreatedId() {
@@ -1334,11 +1325,20 @@ func (p *OrderRefund) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *OrderRefund) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetReason() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 2)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.Reason)
+	}
+	return offset
+}
+
 func (p *OrderRefund) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetRefundAmount() {
+	if p.IsSetAmount() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 4)
-		offset += thrift.Binary.WriteI64(buf[offset:], p.RefundAmount)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Amount)
 	}
 	return offset
 }
@@ -1352,15 +1352,6 @@ func (p *OrderRefund) field1Length() int {
 	return l
 }
 
-func (p *OrderRefund) field2Length() int {
-	l := 0
-	if p.IsSetRefundReason() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(p.RefundReason)
-	}
-	return l
-}
-
 func (p *OrderRefund) field3Length() int {
 	l := 0
 	if p.IsSetCreatedId() {
@@ -1370,9 +1361,18 @@ func (p *OrderRefund) field3Length() int {
 	return l
 }
 
+func (p *OrderRefund) field2Length() int {
+	l := 0
+	if p.IsSetReason() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.StringLengthNocopy(p.Reason)
+	}
+	return l
+}
+
 func (p *OrderRefund) field4Length() int {
 	l := 0
-	if p.IsSetRefundAmount() {
+	if p.IsSetAmount() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.I64Length()
 	}

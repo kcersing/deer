@@ -104,30 +104,30 @@ func (_c *OrderRefundCreate) SetNillableRefundAt(v *time.Time) *OrderRefundCreat
 	return _c
 }
 
-// SetRefund sets the "refund" field.
-func (_c *OrderRefundCreate) SetRefund(v int64) *OrderRefundCreate {
-	_c.mutation.SetRefund(v)
+// SetAmount sets the "amount" field.
+func (_c *OrderRefundCreate) SetAmount(v int64) *OrderRefundCreate {
+	_c.mutation.SetAmount(v)
 	return _c
 }
 
-// SetNillableRefund sets the "refund" field if the given value is not nil.
-func (_c *OrderRefundCreate) SetNillableRefund(v *int64) *OrderRefundCreate {
+// SetNillableAmount sets the "amount" field if the given value is not nil.
+func (_c *OrderRefundCreate) SetNillableAmount(v *int64) *OrderRefundCreate {
 	if v != nil {
-		_c.SetRefund(*v)
+		_c.SetAmount(*v)
 	}
 	return _c
 }
 
-// SetRefundNature sets the "refund_nature" field.
-func (_c *OrderRefundCreate) SetRefundNature(v string) *OrderRefundCreate {
-	_c.mutation.SetRefundNature(v)
+// SetNature sets the "nature" field.
+func (_c *OrderRefundCreate) SetNature(v string) *OrderRefundCreate {
+	_c.mutation.SetNature(v)
 	return _c
 }
 
-// SetNillableRefundNature sets the "refund_nature" field if the given value is not nil.
-func (_c *OrderRefundCreate) SetNillableRefundNature(v *string) *OrderRefundCreate {
+// SetNillableNature sets the "nature" field if the given value is not nil.
+func (_c *OrderRefundCreate) SetNillableNature(v *string) *OrderRefundCreate {
 	if v != nil {
-		_c.SetRefundNature(*v)
+		_c.SetNature(*v)
 	}
 	return _c
 }
@@ -194,9 +194,9 @@ func (_c *OrderRefundCreate) defaults() {
 		v := orderrefund.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
-	if _, ok := _c.mutation.Refund(); !ok {
-		v := orderrefund.DefaultRefund
-		_c.mutation.SetRefund(v)
+	if _, ok := _c.mutation.Amount(); !ok {
+		v := orderrefund.DefaultAmount
+		_c.mutation.SetAmount(v)
 	}
 }
 
@@ -254,13 +254,13 @@ func (_c *OrderRefundCreate) createSpec() (*OrderRefund, *sqlgraph.CreateSpec) {
 		_spec.SetField(orderrefund.FieldRefundAt, field.TypeTime, value)
 		_node.RefundAt = value
 	}
-	if value, ok := _c.mutation.Refund(); ok {
-		_spec.SetField(orderrefund.FieldRefund, field.TypeInt64, value)
-		_node.Refund = value
+	if value, ok := _c.mutation.Amount(); ok {
+		_spec.SetField(orderrefund.FieldAmount, field.TypeInt64, value)
+		_node.Amount = value
 	}
-	if value, ok := _c.mutation.RefundNature(); ok {
-		_spec.SetField(orderrefund.FieldRefundNature, field.TypeString, value)
-		_node.RefundNature = value
+	if value, ok := _c.mutation.Nature(); ok {
+		_spec.SetField(orderrefund.FieldNature, field.TypeString, value)
+		_node.Nature = value
 	}
 	if nodes := _c.mutation.OrderIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

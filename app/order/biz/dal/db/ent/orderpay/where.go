@@ -115,6 +115,11 @@ func PrepayID(v string) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldPrepayID, v))
 }
 
+// PayExtra applies equality check predicate on the "pay_extra" field. It's identical to PayExtraEQ.
+func PayExtra(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldEQ(FieldPayExtra, v))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldEQ(FieldCreatedAt, v))
@@ -795,6 +800,61 @@ func PrepayIDContainsFold(v string) predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldContainsFold(FieldPrepayID, v))
 }
 
+// PayExtraEQ applies the EQ predicate on the "pay_extra" field.
+func PayExtraEQ(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldEQ(FieldPayExtra, v))
+}
+
+// PayExtraNEQ applies the NEQ predicate on the "pay_extra" field.
+func PayExtraNEQ(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldNEQ(FieldPayExtra, v))
+}
+
+// PayExtraIn applies the In predicate on the "pay_extra" field.
+func PayExtraIn(vs ...string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldIn(FieldPayExtra, vs...))
+}
+
+// PayExtraNotIn applies the NotIn predicate on the "pay_extra" field.
+func PayExtraNotIn(vs ...string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldNotIn(FieldPayExtra, vs...))
+}
+
+// PayExtraGT applies the GT predicate on the "pay_extra" field.
+func PayExtraGT(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldGT(FieldPayExtra, v))
+}
+
+// PayExtraGTE applies the GTE predicate on the "pay_extra" field.
+func PayExtraGTE(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldGTE(FieldPayExtra, v))
+}
+
+// PayExtraLT applies the LT predicate on the "pay_extra" field.
+func PayExtraLT(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldLT(FieldPayExtra, v))
+}
+
+// PayExtraLTE applies the LTE predicate on the "pay_extra" field.
+func PayExtraLTE(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldLTE(FieldPayExtra, v))
+}
+
+// PayExtraContains applies the Contains predicate on the "pay_extra" field.
+func PayExtraContains(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldContains(FieldPayExtra, v))
+}
+
+// PayExtraHasPrefix applies the HasPrefix predicate on the "pay_extra" field.
+func PayExtraHasPrefix(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldHasPrefix(FieldPayExtra, v))
+}
+
+// PayExtraHasSuffix applies the HasSuffix predicate on the "pay_extra" field.
+func PayExtraHasSuffix(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldHasSuffix(FieldPayExtra, v))
+}
+
 // PayExtraIsNil applies the IsNil predicate on the "pay_extra" field.
 func PayExtraIsNil() predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldIsNull(FieldPayExtra))
@@ -803,6 +863,16 @@ func PayExtraIsNil() predicate.OrderPay {
 // PayExtraNotNil applies the NotNil predicate on the "pay_extra" field.
 func PayExtraNotNil() predicate.OrderPay {
 	return predicate.OrderPay(sql.FieldNotNull(FieldPayExtra))
+}
+
+// PayExtraEqualFold applies the EqualFold predicate on the "pay_extra" field.
+func PayExtraEqualFold(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldEqualFold(FieldPayExtra, v))
+}
+
+// PayExtraContainsFold applies the ContainsFold predicate on the "pay_extra" field.
+func PayExtraContainsFold(v string) predicate.OrderPay {
+	return predicate.OrderPay(sql.FieldContainsFold(FieldPayExtra, v))
 }
 
 // HasOrder applies the HasEdge predicate on the "order" edge.

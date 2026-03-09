@@ -53,53 +53,73 @@ func (o *Order) When(evt common.Event) error {
 	}
 }
 
-func (o *Order) onCreated(eventData *events.CreatedOrderEvent) (err error) {
-	o.Sn = eventData.Sn
-	o.MemberId = eventData.MemberId
-	o.CreatedId = eventData.CreatedId
-	o.Items = eventData.Items
-	o.TotalAmount = eventData.TotalAmount
-	o.Status = eventData.GetType()
+func (o *Order) onCreated(e *events.CreatedOrderEvent) (err error) {
+	o.Sn = e.Sn
+	o.MemberId = e.MemberId
+	o.CreatedId = e.CreatedId
+	o.Items = e.Items
+	o.TotalAmount = e.TotalAmount
+	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onCancelled(eventData *events.CancelledOrderEvent) (err error) {
-	o.CancelledReason = eventData.Reason
-	o.CreatedId = eventData.CreatedId
-	o.CloseAt = eventData.Timestamp.Format(time.DateTime)
-	o.Status = eventData.GetType()
+func (o *Order) onCancelled(e *events.CancelledOrderEvent) (err error) {
+
+	o.CancelledReason = e.Reason
+	o.CreatedId = e.CreatedId
+	o.CloseAt = e.Timestamp.Format(time.DateTime)
+	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onCompleted(eventData *events.CompletedOrderEvent) (err error) {
-	o.CreatedId = eventData.CreatedId
-	o.CompletionAt = eventData.Timestamp.Format(time.DateTime)
-	o.Status = eventData.GetType()
+func (o *Order) onCompleted(e *events.CompletedOrderEvent) (err error) {
+	o.CreatedId = e.CreatedId
+	o.CompletionAt = e.Timestamp.Format(time.DateTime)
+	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onPaid(eventData *events.PaidOrderEvent) (err error) {
+func (o *Order) onPaid(e *events.PaidOrderEvent) (err error) {
+
+	// 可以在这里添加其他业务规则检查
+	// 例如：检查支付金额是否正确等
+	//if payedAmount <= 0 {
+	//	return errors.New("支付金额必须为正数")
+	//}
 	var orderPay base.OrderPay
-	orderPay.CreatedId = eventData.CreatedId
-	orderPay.Pay = eventData.PayedAmount
-	orderPay.PayWay = eventData.PayMethod
-	orderPay.PayAt = eventData.Timestamp.Format(time.DateTime)
-	orderPay.Remission = eventData.Remission
-	orderPay.Reason = eventData.Reason
-	orderPay.PaySn = eventData.PaySn
-	orderPay.PrepayId = eventData.PrepayId
-	orderPay.PayExtra = eventData.PayExtra
+	orderPay.CreatedId = e.CreatedId
+	orderPay.Pay = e.Amount
+	orderPay.PayWay = e.Method
+	orderPay.PayAt = e.Timestamp.Format(time.DateTime)
+	orderPay.Remission = e.Remission
+	orderPay.Reason = e.Reason
+	orderPay.PaySn = e.PaySn
+	orderPay.PrepayId = e.PrepayId
+	orderPay.PayExtra = e.PayExtra
 	o.OrderPays = append(o.OrderPays, &orderPay)
-	o.Status = eventData.GetType()
+	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onRefunded(eventData *events.RefundedOrderEvent) (err error) {
-	o.OrderRefund.CreatedId = eventData.CreatedId
-	o.OrderRefund.RefundAmount = eventData.RefundedAmount
-	o.OrderRefund.RefundReason = eventData.Reason
-	o.OrderRefund.RefundAt = eventData.Timestamp.Format(time.DateTime)
-	o.Status = eventData.GetType()
+func (o *Order) onRefunded(e *events.RefundedOrderEvent) (err error) {
+	o.OrderRefund.CreatedId = e.CreatedId
+	o.OrderRefund.Amount = e.Amount
+	o.OrderRefund.Reason = e.Reason
+	o.OrderRefund.RefundAt = e.Timestamp.Format(time.DateTime)
+	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onShipped(eventData *events.ShippedOrderEvent) (err error) {
-	o.CreatedId = eventData.CreatedId
-	o.Status = eventData.GetType()
+func (o *Order) onShipped(e *events.ShippedOrderEvent) (err error) {
+	o.CreatedId = e.CreatedId
+	o.Status = e.GetType()
 	return nil
+}
+
+func (o *Order) Cancel(userID int64, reason string) error {
+	// 1. 业务规则封装在内部
+	if err := o.stateMachine.ValidateTransition(common.Cancelled); err != nil {
+		return err
+	}
+
+	// if o.IsSpecialProduct() { return errors.New("特殊商品不可取消") }
+
+	cancelEvent := events.NewCancelledOrderEvent(o.GetAggregateID(), reason, userID)
+
+	return o.Apply(cancelEvent)
 }

@@ -53,7 +53,10 @@ struct CreateOrderReq {
 }
 
 struct PaymentReq {
-
+    1:optional i64 id=0 (api.raw = "id")
+    2:optional i64 amount=0 (api.raw = "amount")
+    3:optional string method ="" (api.raw = "method")
+    4:optional string third="" (api.raw = "third")
 }
 
 service OrderService  {

@@ -449,26 +449,26 @@ var fieldIDToName_Order = map[int16]string{
 }
 
 type OrderRefund struct {
-	RefundAt     string `thrift:"refundAt,1,optional" frugal:"1,optional,string" json:"refundAt,omitempty"`
-	RefundReason string `thrift:"refundReason,2,optional" frugal:"2,optional,string" json:"refundReason,omitempty"`
-	CreatedId    int64  `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
-	RefundAmount int64  `thrift:"refundAmount,4,optional" frugal:"4,optional,i64" json:"refundAmount,omitempty"`
+	RefundAt  string `thrift:"refundAt,1,optional" frugal:"1,optional,string" json:"refundAt,omitempty"`
+	CreatedId int64  `thrift:"createdId,3,optional" frugal:"3,optional,i64" json:"createdId,omitempty"`
+	Reason    string `thrift:"reason,2,optional" frugal:"2,optional,string" json:"reason,omitempty"`
+	Amount    int64  `thrift:"amount,4,optional" frugal:"4,optional,i64" json:"amount,omitempty"`
 }
 
 func NewOrderRefund() *OrderRefund {
 	return &OrderRefund{
-		RefundAt:     "",
-		RefundReason: "",
-		CreatedId:    0,
-		RefundAmount: 0,
+		RefundAt:  "",
+		CreatedId: 0,
+		Reason:    "",
+		Amount:    0,
 	}
 }
 
 func (p *OrderRefund) InitDefault() {
 	p.RefundAt = ""
-	p.RefundReason = ""
 	p.CreatedId = 0
-	p.RefundAmount = 0
+	p.Reason = ""
+	p.Amount = 0
 }
 
 var OrderRefund_RefundAt_DEFAULT string = ""
@@ -480,15 +480,6 @@ func (p *OrderRefund) GetRefundAt() (v string) {
 	return p.RefundAt
 }
 
-var OrderRefund_RefundReason_DEFAULT string = ""
-
-func (p *OrderRefund) GetRefundReason() (v string) {
-	if !p.IsSetRefundReason() {
-		return OrderRefund_RefundReason_DEFAULT
-	}
-	return p.RefundReason
-}
-
 var OrderRefund_CreatedId_DEFAULT int64 = 0
 
 func (p *OrderRefund) GetCreatedId() (v int64) {
@@ -498,41 +489,50 @@ func (p *OrderRefund) GetCreatedId() (v int64) {
 	return p.CreatedId
 }
 
-var OrderRefund_RefundAmount_DEFAULT int64 = 0
+var OrderRefund_Reason_DEFAULT string = ""
 
-func (p *OrderRefund) GetRefundAmount() (v int64) {
-	if !p.IsSetRefundAmount() {
-		return OrderRefund_RefundAmount_DEFAULT
+func (p *OrderRefund) GetReason() (v string) {
+	if !p.IsSetReason() {
+		return OrderRefund_Reason_DEFAULT
 	}
-	return p.RefundAmount
+	return p.Reason
+}
+
+var OrderRefund_Amount_DEFAULT int64 = 0
+
+func (p *OrderRefund) GetAmount() (v int64) {
+	if !p.IsSetAmount() {
+		return OrderRefund_Amount_DEFAULT
+	}
+	return p.Amount
 }
 func (p *OrderRefund) SetRefundAt(val string) {
 	p.RefundAt = val
 }
-func (p *OrderRefund) SetRefundReason(val string) {
-	p.RefundReason = val
-}
 func (p *OrderRefund) SetCreatedId(val int64) {
 	p.CreatedId = val
 }
-func (p *OrderRefund) SetRefundAmount(val int64) {
-	p.RefundAmount = val
+func (p *OrderRefund) SetReason(val string) {
+	p.Reason = val
+}
+func (p *OrderRefund) SetAmount(val int64) {
+	p.Amount = val
 }
 
 func (p *OrderRefund) IsSetRefundAt() bool {
 	return p.RefundAt != OrderRefund_RefundAt_DEFAULT
 }
 
-func (p *OrderRefund) IsSetRefundReason() bool {
-	return p.RefundReason != OrderRefund_RefundReason_DEFAULT
-}
-
 func (p *OrderRefund) IsSetCreatedId() bool {
 	return p.CreatedId != OrderRefund_CreatedId_DEFAULT
 }
 
-func (p *OrderRefund) IsSetRefundAmount() bool {
-	return p.RefundAmount != OrderRefund_RefundAmount_DEFAULT
+func (p *OrderRefund) IsSetReason() bool {
+	return p.Reason != OrderRefund_Reason_DEFAULT
+}
+
+func (p *OrderRefund) IsSetAmount() bool {
+	return p.Amount != OrderRefund_Amount_DEFAULT
 }
 
 func (p *OrderRefund) String() string {
@@ -544,9 +544,9 @@ func (p *OrderRefund) String() string {
 
 var fieldIDToName_OrderRefund = map[int16]string{
 	1: "refundAt",
-	2: "refundReason",
 	3: "createdId",
-	4: "refundAmount",
+	2: "reason",
+	4: "amount",
 }
 
 type OrderPay struct {

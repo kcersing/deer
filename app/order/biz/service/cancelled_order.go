@@ -4,6 +4,9 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
+	"order/biz/infras/repo"
+
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type CancelledOrderService struct {
@@ -15,9 +18,21 @@ func NewCancelledOrderService(ctx context.Context) *CancelledOrderService {
 	return &CancelledOrderService{ctx: ctx}
 }
 
-// Run create note info
+// Run create note info 取消订单
 func (s *CancelledOrderService) Run(req *order.CancelledOrderReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
-
+	node, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
+	if err != nil {
+		return nil, err
+	}
+	klog.Info(node)
+	err = node.Cancel(req.GetCreatedId(), req.GetReason())
+	if err != nil {
+		return nil, err
+	}
+	err = repo.NewOrderRepo().Save(s.ctx, node)
+	if err != nil {
+		return nil, err
+	}
 	return
 }

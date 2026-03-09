@@ -85,14 +85,14 @@ func RefundAt(v time.Time) predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldEQ(FieldRefundAt, v))
 }
 
-// Refund applies equality check predicate on the "refund" field. It's identical to RefundEQ.
-func Refund(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldEQ(FieldRefund, v))
+// Amount applies equality check predicate on the "amount" field. It's identical to AmountEQ.
+func Amount(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldEQ(FieldAmount, v))
 }
 
-// RefundNature applies equality check predicate on the "refund_nature" field. It's identical to RefundNatureEQ.
-func RefundNature(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldEQ(FieldRefundNature, v))
+// Nature applies equality check predicate on the "nature" field. It's identical to NatureEQ.
+func Nature(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldEQ(FieldNature, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -375,129 +375,129 @@ func RefundAtNotNil() predicate.OrderRefund {
 	return predicate.OrderRefund(sql.FieldNotNull(FieldRefundAt))
 }
 
-// RefundEQ applies the EQ predicate on the "refund" field.
-func RefundEQ(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldEQ(FieldRefund, v))
+// AmountEQ applies the EQ predicate on the "amount" field.
+func AmountEQ(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldEQ(FieldAmount, v))
 }
 
-// RefundNEQ applies the NEQ predicate on the "refund" field.
-func RefundNEQ(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNEQ(FieldRefund, v))
+// AmountNEQ applies the NEQ predicate on the "amount" field.
+func AmountNEQ(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNEQ(FieldAmount, v))
 }
 
-// RefundIn applies the In predicate on the "refund" field.
-func RefundIn(vs ...int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldIn(FieldRefund, vs...))
+// AmountIn applies the In predicate on the "amount" field.
+func AmountIn(vs ...int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldIn(FieldAmount, vs...))
 }
 
-// RefundNotIn applies the NotIn predicate on the "refund" field.
-func RefundNotIn(vs ...int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNotIn(FieldRefund, vs...))
+// AmountNotIn applies the NotIn predicate on the "amount" field.
+func AmountNotIn(vs ...int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNotIn(FieldAmount, vs...))
 }
 
-// RefundGT applies the GT predicate on the "refund" field.
-func RefundGT(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldGT(FieldRefund, v))
+// AmountGT applies the GT predicate on the "amount" field.
+func AmountGT(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldGT(FieldAmount, v))
 }
 
-// RefundGTE applies the GTE predicate on the "refund" field.
-func RefundGTE(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldGTE(FieldRefund, v))
+// AmountGTE applies the GTE predicate on the "amount" field.
+func AmountGTE(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldGTE(FieldAmount, v))
 }
 
-// RefundLT applies the LT predicate on the "refund" field.
-func RefundLT(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldLT(FieldRefund, v))
+// AmountLT applies the LT predicate on the "amount" field.
+func AmountLT(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldLT(FieldAmount, v))
 }
 
-// RefundLTE applies the LTE predicate on the "refund" field.
-func RefundLTE(v int64) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldLTE(FieldRefund, v))
+// AmountLTE applies the LTE predicate on the "amount" field.
+func AmountLTE(v int64) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldLTE(FieldAmount, v))
 }
 
-// RefundIsNil applies the IsNil predicate on the "refund" field.
-func RefundIsNil() predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldIsNull(FieldRefund))
+// AmountIsNil applies the IsNil predicate on the "amount" field.
+func AmountIsNil() predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldIsNull(FieldAmount))
 }
 
-// RefundNotNil applies the NotNil predicate on the "refund" field.
-func RefundNotNil() predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNotNull(FieldRefund))
+// AmountNotNil applies the NotNil predicate on the "amount" field.
+func AmountNotNil() predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNotNull(FieldAmount))
 }
 
-// RefundNatureEQ applies the EQ predicate on the "refund_nature" field.
-func RefundNatureEQ(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldEQ(FieldRefundNature, v))
+// NatureEQ applies the EQ predicate on the "nature" field.
+func NatureEQ(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldEQ(FieldNature, v))
 }
 
-// RefundNatureNEQ applies the NEQ predicate on the "refund_nature" field.
-func RefundNatureNEQ(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNEQ(FieldRefundNature, v))
+// NatureNEQ applies the NEQ predicate on the "nature" field.
+func NatureNEQ(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNEQ(FieldNature, v))
 }
 
-// RefundNatureIn applies the In predicate on the "refund_nature" field.
-func RefundNatureIn(vs ...string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldIn(FieldRefundNature, vs...))
+// NatureIn applies the In predicate on the "nature" field.
+func NatureIn(vs ...string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldIn(FieldNature, vs...))
 }
 
-// RefundNatureNotIn applies the NotIn predicate on the "refund_nature" field.
-func RefundNatureNotIn(vs ...string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNotIn(FieldRefundNature, vs...))
+// NatureNotIn applies the NotIn predicate on the "nature" field.
+func NatureNotIn(vs ...string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNotIn(FieldNature, vs...))
 }
 
-// RefundNatureGT applies the GT predicate on the "refund_nature" field.
-func RefundNatureGT(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldGT(FieldRefundNature, v))
+// NatureGT applies the GT predicate on the "nature" field.
+func NatureGT(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldGT(FieldNature, v))
 }
 
-// RefundNatureGTE applies the GTE predicate on the "refund_nature" field.
-func RefundNatureGTE(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldGTE(FieldRefundNature, v))
+// NatureGTE applies the GTE predicate on the "nature" field.
+func NatureGTE(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldGTE(FieldNature, v))
 }
 
-// RefundNatureLT applies the LT predicate on the "refund_nature" field.
-func RefundNatureLT(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldLT(FieldRefundNature, v))
+// NatureLT applies the LT predicate on the "nature" field.
+func NatureLT(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldLT(FieldNature, v))
 }
 
-// RefundNatureLTE applies the LTE predicate on the "refund_nature" field.
-func RefundNatureLTE(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldLTE(FieldRefundNature, v))
+// NatureLTE applies the LTE predicate on the "nature" field.
+func NatureLTE(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldLTE(FieldNature, v))
 }
 
-// RefundNatureContains applies the Contains predicate on the "refund_nature" field.
-func RefundNatureContains(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldContains(FieldRefundNature, v))
+// NatureContains applies the Contains predicate on the "nature" field.
+func NatureContains(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldContains(FieldNature, v))
 }
 
-// RefundNatureHasPrefix applies the HasPrefix predicate on the "refund_nature" field.
-func RefundNatureHasPrefix(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldHasPrefix(FieldRefundNature, v))
+// NatureHasPrefix applies the HasPrefix predicate on the "nature" field.
+func NatureHasPrefix(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldHasPrefix(FieldNature, v))
 }
 
-// RefundNatureHasSuffix applies the HasSuffix predicate on the "refund_nature" field.
-func RefundNatureHasSuffix(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldHasSuffix(FieldRefundNature, v))
+// NatureHasSuffix applies the HasSuffix predicate on the "nature" field.
+func NatureHasSuffix(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldHasSuffix(FieldNature, v))
 }
 
-// RefundNatureIsNil applies the IsNil predicate on the "refund_nature" field.
-func RefundNatureIsNil() predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldIsNull(FieldRefundNature))
+// NatureIsNil applies the IsNil predicate on the "nature" field.
+func NatureIsNil() predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldIsNull(FieldNature))
 }
 
-// RefundNatureNotNil applies the NotNil predicate on the "refund_nature" field.
-func RefundNatureNotNil() predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldNotNull(FieldRefundNature))
+// NatureNotNil applies the NotNil predicate on the "nature" field.
+func NatureNotNil() predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldNotNull(FieldNature))
 }
 
-// RefundNatureEqualFold applies the EqualFold predicate on the "refund_nature" field.
-func RefundNatureEqualFold(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldEqualFold(FieldRefundNature, v))
+// NatureEqualFold applies the EqualFold predicate on the "nature" field.
+func NatureEqualFold(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldEqualFold(FieldNature, v))
 }
 
-// RefundNatureContainsFold applies the ContainsFold predicate on the "refund_nature" field.
-func RefundNatureContainsFold(v string) predicate.OrderRefund {
-	return predicate.OrderRefund(sql.FieldContainsFold(FieldRefundNature, v))
+// NatureContainsFold applies the ContainsFold predicate on the "nature" field.
+func NatureContainsFold(v string) predicate.OrderRefund {
+	return predicate.OrderRefund(sql.FieldContainsFold(FieldNature, v))
 }
 
 // HasOrder applies the HasEdge predicate on the "order" edge.
