@@ -117,13 +117,13 @@ func (_c *OrderCreate) SetNillableStatus(v *order.Status) *OrderCreate {
 }
 
 // SetNature sets the "nature" field.
-func (_c *OrderCreate) SetNature(v int64) *OrderCreate {
+func (_c *OrderCreate) SetNature(v string) *OrderCreate {
 	_c.mutation.SetNature(v)
 	return _c
 }
 
 // SetNillableNature sets the "nature" field if the given value is not nil.
-func (_c *OrderCreate) SetNillableNature(v *int64) *OrderCreate {
+func (_c *OrderCreate) SetNillableNature(v *string) *OrderCreate {
 	if v != nil {
 		_c.SetNature(*v)
 	}
@@ -468,7 +468,7 @@ func (_c *OrderCreate) createSpec() (*Order, *sqlgraph.CreateSpec) {
 		_node.Status = value
 	}
 	if value, ok := _c.mutation.Nature(); ok {
-		_spec.SetField(order.FieldNature, field.TypeInt64, value)
+		_spec.SetField(order.FieldNature, field.TypeString, value)
 		_node.Nature = value
 	}
 	if value, ok := _c.mutation.CompletionAt(); ok {

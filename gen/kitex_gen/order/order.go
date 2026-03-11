@@ -717,18 +717,26 @@ var fieldIDToName_CreateOrderReq = map[int16]string{
 }
 
 type PaymentReq struct {
-	Id     int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Amount int64  `thrift:"amount,2,optional" frugal:"2,optional,i64" json:"amount,omitempty"`
-	Method string `thrift:"method,3,optional" frugal:"3,optional,string" json:"method,omitempty"`
-	Third  string `thrift:"third,4,optional" frugal:"4,optional,string" json:"third,omitempty"`
+	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Amount    int64  `thrift:"amount,2,optional" frugal:"2,optional,i64" json:"amount,omitempty"`
+	Method    string `thrift:"method,3,optional" frugal:"3,optional,string" json:"method,omitempty"`
+	Remission int64  `thrift:"remission,4,optional" frugal:"4,optional,i64" json:"remission,omitempty"`
+	UserId    int64  `thrift:"userId,5,optional" frugal:"5,optional,i64" json:"userId,omitempty"`
+	Reason    string `thrift:"reason,6,optional" frugal:"6,optional,string" json:"reason,omitempty"`
+	PrepayId  string `thrift:"prepayId,7,optional" frugal:"7,optional,string" json:"prepayId,omitempty"`
+	PayExtra  string `thrift:"payExtra,8,optional" frugal:"8,optional,string" json:"payExtra,omitempty"`
 }
 
 func NewPaymentReq() *PaymentReq {
 	return &PaymentReq{
-		Id:     0,
-		Amount: 0,
-		Method: "",
-		Third:  "",
+		Id:        0,
+		Amount:    0,
+		Method:    "",
+		Remission: 0,
+		UserId:    0,
+		Reason:    "",
+		PrepayId:  "",
+		PayExtra:  "",
 	}
 }
 
@@ -736,7 +744,11 @@ func (p *PaymentReq) InitDefault() {
 	p.Id = 0
 	p.Amount = 0
 	p.Method = ""
-	p.Third = ""
+	p.Remission = 0
+	p.UserId = 0
+	p.Reason = ""
+	p.PrepayId = ""
+	p.PayExtra = ""
 }
 
 var PaymentReq_Id_DEFAULT int64 = 0
@@ -766,13 +778,49 @@ func (p *PaymentReq) GetMethod() (v string) {
 	return p.Method
 }
 
-var PaymentReq_Third_DEFAULT string = ""
+var PaymentReq_Remission_DEFAULT int64 = 0
 
-func (p *PaymentReq) GetThird() (v string) {
-	if !p.IsSetThird() {
-		return PaymentReq_Third_DEFAULT
+func (p *PaymentReq) GetRemission() (v int64) {
+	if !p.IsSetRemission() {
+		return PaymentReq_Remission_DEFAULT
 	}
-	return p.Third
+	return p.Remission
+}
+
+var PaymentReq_UserId_DEFAULT int64 = 0
+
+func (p *PaymentReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return PaymentReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
+
+var PaymentReq_Reason_DEFAULT string = ""
+
+func (p *PaymentReq) GetReason() (v string) {
+	if !p.IsSetReason() {
+		return PaymentReq_Reason_DEFAULT
+	}
+	return p.Reason
+}
+
+var PaymentReq_PrepayId_DEFAULT string = ""
+
+func (p *PaymentReq) GetPrepayId() (v string) {
+	if !p.IsSetPrepayId() {
+		return PaymentReq_PrepayId_DEFAULT
+	}
+	return p.PrepayId
+}
+
+var PaymentReq_PayExtra_DEFAULT string = ""
+
+func (p *PaymentReq) GetPayExtra() (v string) {
+	if !p.IsSetPayExtra() {
+		return PaymentReq_PayExtra_DEFAULT
+	}
+	return p.PayExtra
 }
 func (p *PaymentReq) SetId(val int64) {
 	p.Id = val
@@ -783,8 +831,20 @@ func (p *PaymentReq) SetAmount(val int64) {
 func (p *PaymentReq) SetMethod(val string) {
 	p.Method = val
 }
-func (p *PaymentReq) SetThird(val string) {
-	p.Third = val
+func (p *PaymentReq) SetRemission(val int64) {
+	p.Remission = val
+}
+func (p *PaymentReq) SetUserId(val int64) {
+	p.UserId = val
+}
+func (p *PaymentReq) SetReason(val string) {
+	p.Reason = val
+}
+func (p *PaymentReq) SetPrepayId(val string) {
+	p.PrepayId = val
+}
+func (p *PaymentReq) SetPayExtra(val string) {
+	p.PayExtra = val
 }
 
 func (p *PaymentReq) IsSetId() bool {
@@ -799,8 +859,24 @@ func (p *PaymentReq) IsSetMethod() bool {
 	return p.Method != PaymentReq_Method_DEFAULT
 }
 
-func (p *PaymentReq) IsSetThird() bool {
-	return p.Third != PaymentReq_Third_DEFAULT
+func (p *PaymentReq) IsSetRemission() bool {
+	return p.Remission != PaymentReq_Remission_DEFAULT
+}
+
+func (p *PaymentReq) IsSetUserId() bool {
+	return p.UserId != PaymentReq_UserId_DEFAULT
+}
+
+func (p *PaymentReq) IsSetReason() bool {
+	return p.Reason != PaymentReq_Reason_DEFAULT
+}
+
+func (p *PaymentReq) IsSetPrepayId() bool {
+	return p.PrepayId != PaymentReq_PrepayId_DEFAULT
+}
+
+func (p *PaymentReq) IsSetPayExtra() bool {
+	return p.PayExtra != PaymentReq_PayExtra_DEFAULT
 }
 
 func (p *PaymentReq) String() string {
@@ -814,7 +890,11 @@ var fieldIDToName_PaymentReq = map[int16]string{
 	1: "id",
 	2: "amount",
 	3: "method",
-	4: "third",
+	4: "remission",
+	5: "userId",
+	6: "reason",
+	7: "prepayId",
+	8: "payExtra",
 }
 
 type OrderService interface {

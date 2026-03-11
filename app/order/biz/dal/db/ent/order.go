@@ -33,7 +33,7 @@ type Order struct {
 	// 状态
 	Status order.Status `json:"status,omitempty"`
 	// 业务类型
-	Nature int64 `json:"nature,omitempty"`
+	Nature string `json:"nature,omitempty"`
 	// 订单完成时间
 	CompletionAt time.Time `json:"completion_at,omitempty"`
 	// 订单关闭时间
@@ -132,9 +132,9 @@ func (*Order) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldNature, order.FieldVersion, order.FieldTotalAmount, order.FieldActual, order.FieldRemission:
+		case order.FieldID, order.FieldDelete, order.FieldCreatedID, order.FieldMemberID, order.FieldVersion, order.FieldTotalAmount, order.FieldActual, order.FieldRemission:
 			values[i] = new(sql.NullInt64)
-		case order.FieldSn, order.FieldStatus, order.FieldCloseNature:
+		case order.FieldSn, order.FieldStatus, order.FieldNature, order.FieldCloseNature:
 			values[i] = new(sql.NullString)
 		case order.FieldCreatedAt, order.FieldUpdatedAt, order.FieldCompletionAt, order.FieldCloseAt:
 			values[i] = new(sql.NullTime)
@@ -202,10 +202,10 @@ func (_m *Order) assignValues(columns []string, values []any) error {
 				_m.Status = order.Status(value.String)
 			}
 		case order.FieldNature:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field nature", values[i])
 			} else if value.Valid {
-				_m.Nature = value.Int64
+				_m.Nature = value.String
 			}
 		case order.FieldCompletionAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -337,7 +337,7 @@ func (_m *Order) String() string {
 	builder.WriteString(fmt.Sprintf("%v", _m.Status))
 	builder.WriteString(", ")
 	builder.WriteString("nature=")
-	builder.WriteString(fmt.Sprintf("%v", _m.Nature))
+	builder.WriteString(_m.Nature)
 	builder.WriteString(", ")
 	builder.WriteString("completion_at=")
 	builder.WriteString(_m.CompletionAt.Format(time.ANSIC))

@@ -16,8 +16,8 @@ import (
 const (
 
 	// 处理器名称
-	handleOrderPay = "pay_order_handler"
-
+	handleOrderPaying   = "paying_order_handler"
+	handleOrderPaid     = "paid_order_handler"
 	handleOrderRefunded = "refunded_order_handler"
 )
 
@@ -63,25 +63,27 @@ func Bootstrap() (err error) {
 		// 4. 注册所有消费者
 		// 4.1. 注册处理器
 
-		//err := globalManager.Registry.RegisterHandler(
-		//	EventSendOrder,
-		//	eventbus.WrapTyped(eventbus.TypedHandler[*events.PaidOrderEvent](events.HandleOrderPay)),
-		//)
-		//if err != nil {
-		//	klog.Errorf("Failed to register handler '%s': %v", handlerSendOrder, err)
-		//
-		//}
-
+		// 订单支付
 		err := globalManager.Registry.RegisterHandler(
-			string(common.Paid),
-			eventbus.WrapTyped(eventbus.TypedHandler[*events.PaidOrderEvent](events.HandleOrderPay)),
+			handleOrderPaying,
+			eventbus.WrapTyped(eventbus.TypedHandler[*events.PayingOrderEvent](events.HandleOrderPaying)),
 		)
 		if err != nil {
-			klog.Errorf("Failed to register handler '%s': %v", handleOrderPay, err)
+			klog.Errorf("Failed to register handler '%s': %v", handleOrderPaying, err)
 
 		}
+		// 订单支付完成
 		err = globalManager.Registry.RegisterHandler(
-			string(common.Refunded),
+			handleOrderPaid,
+			eventbus.WrapTyped(eventbus.TypedHandler[*events.PaidOrderEvent](events.HandleOrderPaid)),
+		)
+		if err != nil {
+			klog.Errorf("Failed to register handler '%s': %v", handleOrderPaid, err)
+
+		}
+		// 订单退款
+		err = globalManager.Registry.RegisterHandler(
+			handleOrderRefunded,
 			eventbus.WrapTyped(eventbus.TypedHandler[*events.RefundedOrderEvent](events.HandleOrderRefunded)),
 		)
 		if err != nil {
@@ -91,9 +93,14 @@ func Bootstrap() (err error) {
 
 		// 4.2. 注册消费者 (将主题与处理器绑定)
 
-		err = globalManager.Registry.RegisterConsumer(string(common.Paid), handleOrderPay, 10)
+		err = globalManager.Registry.RegisterConsumer(string(common.Paying), handleOrderPaying, 10)
 		if err != nil {
-			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderPay, err)
+			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderPaying, err)
+		}
+
+		err = globalManager.Registry.RegisterConsumer(string(common.Paid), handleOrderPaid, 10)
+		if err != nil {
+			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderPaid, err)
 		}
 
 		err = globalManager.Registry.RegisterConsumer(string(common.Refunded), handleOrderRefunded, 10)

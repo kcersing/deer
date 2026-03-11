@@ -30,7 +30,7 @@ func (Order) Fields() []ent.Field {
 			).
 			Default("created").Comment("状态").Optional(),
 
-		field.Int64("nature").Comment("业务类型").Optional(),
+		field.String("nature").Comment("业务类型").Optional(),
 		field.Time("completion_at").Comment("订单完成时间").Optional(),
 		field.Time("close_at").Comment("订单关闭时间").Optional(),
 

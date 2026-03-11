@@ -3,6 +3,7 @@ package events
 import (
 	"common/eventbus"
 	"context"
+	"gen/kitex_gen/order"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/google/uuid"
@@ -21,18 +22,20 @@ type RefundedOrderEvent struct {
 }
 
 func (e *RefundedOrderEvent) GetType() string { return string(common.Refunded) }
-func NewRefundedOrderEvent(AggregateID int64, userID int64) *RefundedOrderEvent {
+func NewRefundedOrderEvent(req *order.RefundOrderReq) *RefundedOrderEvent {
 	return &RefundedOrderEvent{
 		EventBase: common.EventBase{
 			EventID:     uuid.New().String(),
-			AggregateID: AggregateID,
+			AggregateID: req.GetId(),
 			Timestamp:   time.Now(),
 
 			EventType:     string(common.Refunded),
 			AggregateType: "order",
 			Version:       1,
 		},
-		CreatedId: userID,
+		CreatedId: req.CreatedId,
+		Reason:    req.GetReason(),
+		Amount:    req.GetAmount() * 100,
 	}
 
 }
@@ -44,7 +47,7 @@ func HandleOrderRefunded(ctx context.Context, req *RefundedOrderEvent, event eve
 		SetCreatedID(req.CreatedId).
 		SetRefundAt(time.Now()).
 		SetNature(req.Reason).
-		SetAmount(req.Amount).
+		SetAmount(req.Amount * 100).
 		Save(ctx)
 
 	if err != nil {

@@ -3,6 +3,7 @@
 package order
 
 import (
+	"admin/biz/infras/utils"
 	"admin/rpc/client"
 	"common/pkg/errno"
 	utils2 "common/pkg/utils"
@@ -13,6 +14,7 @@ import (
 	order2 "gen/kitex_gen/order"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 // GetOrder .
@@ -97,8 +99,8 @@ func CreateOrder(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-	items := make([]*base2.OrderItem, len(req.GetItems()))
-
+	items := make([]*base2.OrderItem, 0, len(req.GetItems()))
+	hlog.Info(len(req.GetItems()), req.GetItems())
 	for _, item := range req.GetItems() {
 		items = append(items, &base2.OrderItem{
 			ProductId: item.GetProductId(),
@@ -113,7 +115,7 @@ func CreateOrder(ctx context.Context, c *app.RequestContext) {
 		CreatedId:   req.GetCreatedId(),
 		Items:       items,
 		TotalAmount: req.GetTotalAmount(),
-		UserId:      req.GetUserId(),
+		UserId:      utils.GetTokenId(ctx, c),
 	})
 
 	if err != nil {
@@ -135,7 +137,16 @@ func Payment(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.OrderClient.Payment(ctx, &order2.PaymentReq{})
+	resp, err := client.OrderClient.Payment(ctx, &order2.PaymentReq{
+		Id:        req.GetID(),
+		Amount:    req.GetAmount(),
+		Method:    req.GetMethod(),
+		UserId:    utils.GetTokenId(ctx, c),
+		Remission: req.GetRemission(),
+		Reason:    req.GetReason(),
+		PrepayId:  req.GetPrepayId(),
+		PayExtra:  req.GetPayExtra(),
+	})
 
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")

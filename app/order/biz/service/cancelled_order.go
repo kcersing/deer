@@ -5,8 +5,6 @@ import (
 	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
 	"order/biz/infras/repo"
-
-	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type CancelledOrderService struct {
@@ -25,8 +23,7 @@ func (s *CancelledOrderService) Run(req *order.CancelledOrderReq) (resp *base.Ni
 	if err != nil {
 		return nil, err
 	}
-	klog.Info(node)
-	err = node.Cancel(req.GetCreatedId(), req.GetReason())
+	err = node.Cancel(req)
 	if err != nil {
 		return nil, err
 	}

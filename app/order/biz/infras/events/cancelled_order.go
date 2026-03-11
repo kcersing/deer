@@ -1,6 +1,7 @@
 package events
 
 import (
+	"gen/kitex_gen/order"
 	"order/biz/infras/common"
 	"time"
 
@@ -16,18 +17,18 @@ type CancelledOrderEvent struct {
 
 func (e *CancelledOrderEvent) GetType() string { return string(common.Cancelled) }
 
-func NewCancelledOrderEvent(AggregateID int64, reason string, userID int64) *CancelledOrderEvent {
+func NewCancelledOrderEvent(req *order.CancelledOrderReq) *CancelledOrderEvent {
 	return &CancelledOrderEvent{
 		EventBase: common.EventBase{
 			EventID:     uuid.New().String(),
-			AggregateID: AggregateID,
+			AggregateID: req.GetId(),
 			Timestamp:   time.Now(),
 
 			EventType:     string(common.Cancelled),
 			AggregateType: "order",
 			Version:       1,
 		},
-		Reason:    reason,
-		CreatedId: userID,
+		Reason:    req.GetReason(),
+		CreatedId: req.GetCreatedId(),
 	}
 }

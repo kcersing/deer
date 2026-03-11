@@ -3,10 +3,12 @@ package service
 import (
 	"common/pkg/errno"
 	"context"
+	"gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
 	"order/biz/infras/repo"
 
 	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/jinzhu/copier"
 )
 
 type GetOrderService struct {
@@ -27,19 +29,21 @@ func (s *GetOrderService) Run(req *order.GetOrderReq) (resp *order.OrderResp, er
 	}
 
 	orderFromDB, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
-	klog.Info(orderFromDB)
 
-	//if err != nil {
-	//	if ent.IsNotFound(err) {
-	//		return nil, errno.NotFound
-	//	}
-	//	return nil, errno.QueryFailed
-	//}
+	if err != nil {
+		return nil, err
+	}
 
 	//klog.Info(orderFromDB)
-	//
+
+	var dto base.Order
+	if err = copier.CopyWithOption(&dto, orderFromDB, copier.Option{IgnoreEmpty: true, DeepCopy: true}); err != nil {
+		klog.Errorf("failed to copy entity to DTO: %w", err)
+		return nil, err
+	}
+
 	resp = &order.OrderResp{
-		Data: nil,
+		Data: &dto,
 	}
 
 	return

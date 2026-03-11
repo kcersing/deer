@@ -121,6 +121,9 @@ type Order struct {
 	CancelledReason string       `thrift:"cancelledReason,12,optional" frugal:"12,optional,string" json:"cancelledReason,omitempty"`
 	OrderPays       []*OrderPay  `thrift:"orderPays,13,optional" frugal:"13,optional,list<OrderPay>" json:"orderPays,omitempty"`
 	OrderRefund     *OrderRefund `thrift:"orderRefund,14,optional" frugal:"14,optional,OrderRefund" json:"orderRefund,omitempty"`
+	Actual          int64        `thrift:"actual,15,optional" frugal:"15,optional,i64" json:"actual,omitempty"`
+	Remission       int64        `thrift:"remission,16,optional" frugal:"16,optional,i64" json:"remission,omitempty"`
+	CloseNature     string       `thrift:"closeNature,17,optional" frugal:"17,optional,string" json:"closeNature,omitempty"`
 	Id              int64        `thrift:"id,254,optional" frugal:"254,optional,i64" json:"id,omitempty"`
 	CreatedId       int64        `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 	CreatedName     string       `thrift:"createdName,257,optional" frugal:"257,optional,string" json:"createdName,omitempty"`
@@ -141,6 +144,9 @@ func NewOrder() *Order {
 		CancelledReason: "",
 		OrderPays:       []*OrderPay{},
 		OrderRefund:     &OrderRefund{},
+		Actual:          0,
+		Remission:       0,
+		CloseNature:     "",
 		Id:              0,
 		CreatedId:       0,
 		CreatedName:     "",
@@ -161,6 +167,9 @@ func (p *Order) InitDefault() {
 	p.CancelledReason = ""
 	p.OrderPays = []*OrderPay{}
 	p.OrderRefund = &OrderRefund{}
+	p.Actual = 0
+	p.Remission = 0
+	p.CloseNature = ""
 	p.Id = 0
 	p.CreatedId = 0
 	p.CreatedName = ""
@@ -283,6 +292,33 @@ func (p *Order) GetOrderRefund() (v *OrderRefund) {
 	return p.OrderRefund
 }
 
+var Order_Actual_DEFAULT int64 = 0
+
+func (p *Order) GetActual() (v int64) {
+	if !p.IsSetActual() {
+		return Order_Actual_DEFAULT
+	}
+	return p.Actual
+}
+
+var Order_Remission_DEFAULT int64 = 0
+
+func (p *Order) GetRemission() (v int64) {
+	if !p.IsSetRemission() {
+		return Order_Remission_DEFAULT
+	}
+	return p.Remission
+}
+
+var Order_CloseNature_DEFAULT string = ""
+
+func (p *Order) GetCloseNature() (v string) {
+	if !p.IsSetCloseNature() {
+		return Order_CloseNature_DEFAULT
+	}
+	return p.CloseNature
+}
+
 var Order_Id_DEFAULT int64 = 0
 
 func (p *Order) GetId() (v int64) {
@@ -348,6 +384,15 @@ func (p *Order) SetOrderPays(val []*OrderPay) {
 func (p *Order) SetOrderRefund(val *OrderRefund) {
 	p.OrderRefund = val
 }
+func (p *Order) SetActual(val int64) {
+	p.Actual = val
+}
+func (p *Order) SetRemission(val int64) {
+	p.Remission = val
+}
+func (p *Order) SetCloseNature(val string) {
+	p.CloseNature = val
+}
 func (p *Order) SetId(val int64) {
 	p.Id = val
 }
@@ -410,6 +455,18 @@ func (p *Order) IsSetOrderRefund() bool {
 	return p.OrderRefund != nil
 }
 
+func (p *Order) IsSetActual() bool {
+	return p.Actual != Order_Actual_DEFAULT
+}
+
+func (p *Order) IsSetRemission() bool {
+	return p.Remission != Order_Remission_DEFAULT
+}
+
+func (p *Order) IsSetCloseNature() bool {
+	return p.CloseNature != Order_CloseNature_DEFAULT
+}
+
 func (p *Order) IsSetId() bool {
 	return p.Id != Order_Id_DEFAULT
 }
@@ -443,6 +500,9 @@ var fieldIDToName_Order = map[int16]string{
 	12:  "cancelledReason",
 	13:  "orderPays",
 	14:  "orderRefund",
+	15:  "actual",
+	16:  "remission",
+	17:  "closeNature",
 	254: "id",
 	256: "createdId",
 	257: "createdName",

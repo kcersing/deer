@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	order "gen/kitex_gen/order"
-	"order/biz/infras/events"
 	"order/biz/infras/repo"
 )
 
@@ -23,20 +22,13 @@ func (s *PaymentService) Run(req *order.PaymentReq) (resp *order.OrderResp, err 
 	if err != nil {
 		return nil, err
 	}
-	event := events.NewPaidOrderEvent(req.GetId())
-	event.Amount = req.GetAmount()
-	event.Method = req.GetMethod()
-	event.PrepayId = req.GetThird()
-	err = node.Apply(event)
+
+	err = node.Paying(req)
+
 	if err != nil {
 		return nil, err
 	}
 	err = repo.NewOrderRepo().Save(s.ctx, node)
-	if err != nil {
-		return nil, err
-	}
-
-	err = events.OrderPayEvent(s.ctx, event)
 	if err != nil {
 		return nil, err
 	}

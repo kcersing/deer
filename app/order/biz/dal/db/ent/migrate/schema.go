@@ -19,7 +19,7 @@ var (
 		{Name: "sn", Type: field.TypeString, Unique: true, Comment: "订单编号"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
 		{Name: "status", Type: field.TypeEnum, Nullable: true, Comment: "状态", Enums: []string{"created", "paid", "shipped", "cancelled", "completed", "refunded"}, Default: "created"},
-		{Name: "nature", Type: field.TypeInt64, Nullable: true, Comment: "业务类型"},
+		{Name: "nature", Type: field.TypeString, Nullable: true, Comment: "业务类型"},
 		{Name: "completion_at", Type: field.TypeTime, Nullable: true, Comment: "订单完成时间"},
 		{Name: "close_at", Type: field.TypeTime, Nullable: true, Comment: "订单关闭时间"},
 		{Name: "version", Type: field.TypeInt64, Nullable: true, Comment: "乐观锁版本号", Default: 1},

@@ -21,6 +21,11 @@ struct Order {
     13:optional list<OrderPay> orderPays={} (api.raw = "orderPays")
     14:optional OrderRefund orderRefund={} (api.raw = "orderRefund")
 
+    15:optional i64 actual=0 (api.raw = "actual")
+    16:optional i64 remission=0 (api.raw = "remission")
+    17:optional string closeNature="" (api.raw = "closeNature")
+
+
     254:optional i64 id=0 (api.raw = "id")
 
    256:optional i64 createdId=0 (api.raw = "createdId" )

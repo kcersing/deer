@@ -56,7 +56,11 @@ struct PaymentReq {
     1:optional i64 id=0 (api.raw = "id")
     2:optional i64 amount=0 (api.raw = "amount")
     3:optional string method ="" (api.raw = "method")
-    4:optional string third="" (api.raw = "third")
+    4:optional i64 remission=0 (api.raw = "remission")
+    5:optional i64 userId=0 (api.raw = "userId")
+       6:optional string reason ="" (api.raw = "reason")
+       7:optional string prepayId ="" (api.raw = "prepayId")
+       8:optional string payExtra ="" (api.raw = "payExtra")
 }
 
 service OrderService  {

@@ -2,8 +2,8 @@ package repo
 
 import (
 	"common/eventbus"
+	"common/pkg/utils"
 	"context"
-	"fmt"
 	"order/biz/dal/db"
 	"order/biz/dal/db/ent"
 	entOrder "order/biz/dal/db/ent/order"
@@ -53,7 +53,6 @@ func (o *OrderRepo) Save(ctx context.Context, order *aggregate.Order) (err error
 		return nil
 	}
 
-	klog.Info(order)
 	// 使用事务来保存聚合根
 	err = infras.WithTx(func(tx *ent.Tx) error {
 		return o.saveAggregateWithinTx(ctx, tx, order, es)
@@ -103,7 +102,10 @@ func (o *OrderRepo) saveOrderEntity(ctx context.Context, tx *ent.Tx, order *aggr
 			SetStatus(entOrder.Status(order.Status)).
 			SetCreatedID(order.CreatedId).
 			SetMemberID(order.MemberId).
+			SetTotalAmount(order.TotalAmount).
+			SetNature(order.Nature).
 			SetVersion(order.GetVersion()) // 直接使用新版本
+
 		orderEnt, err := orderCreate.Save(ctx)
 		if err != nil {
 			return errors.Wrap(err, "创建订单实体失败")
@@ -118,22 +120,39 @@ func (o *OrderRepo) saveOrderEntity(ctx context.Context, tx *ent.Tx, order *aggr
 	update := tx.Order.UpdateOneID(order.GetAggregateID()).
 		SetStatus(entOrder.Status(order.Status)).
 		SetVersion(order.GetVersion()).
-		// ... 在这里设置其他需要更新的字段 ...
+		SetActual(order.Actual).
+		SetRemission(order.Remission).
 		Where(entOrder.Version(originalVersion)) // 乐观锁检查
 
-	res, err := update.Save(ctx)
+	if order.CompletionAt != "" {
+		completionAt, err := utils.GetStringDateTime(order.CompletionAt)
+		if err == nil {
+			update.SetCompletionAt(completionAt)
+		}
+	}
+	if order.CloseAt != "" {
+		closeAt, err := utils.GetStringDateTime(order.CloseAt)
+		if err == nil {
+			update.SetCloseAt(closeAt)
+		}
+	}
+	if order.CloseNature != "" {
+		update.SetCloseNature(order.CloseNature)
+	}
+
+	_, err := update.Save(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return ErrConcurrency
 		}
 		return errors.Wrap(err, "更新订单实体失败")
 	}
-	
-	fmt.Println(res)
+
 	return nil
 }
 
 func (o *OrderRepo) saveOrderItems(ctx context.Context, tx *ent.Tx, order *aggregate.Order) error {
+
 	items := make([]*ent.OrderItemCreate, len(order.Items))
 	for i, item := range order.Items {
 		items[i] = tx.OrderItem.Create().
@@ -153,10 +172,8 @@ func (o *OrderRepo) saveOrderItems(ctx context.Context, tx *ent.Tx, order *aggre
 func (o *OrderRepo) saveEvents(ctx context.Context, tx *ent.Tx, order *aggregate.Order, es []common.Event) error {
 	ets := make([]*ent.OrderEventsCreate, len(es))
 
-	klog.Info(order)
-
 	for i, e := range es {
-		// 确保事件的聚合ID已设置
+
 		if e.GetAggregateID() == 0 {
 			e.SetAggregateID(order.GetAggregateID())
 		}

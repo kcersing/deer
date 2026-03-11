@@ -4,8 +4,6 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
-	"order/biz/infras/aggregate"
-	"order/biz/infras/events"
 	"order/biz/infras/repo"
 )
 
@@ -21,11 +19,12 @@ func NewRefundOrderService(ctx context.Context) *RefundOrderService {
 // Run create note info
 func (s *RefundOrderService) Run(req *order.RefundOrderReq) (resp *base.NilResponse, err error) {
 	// Finish your business logic.
-	node := aggregate.NewOrder()
-	event := events.NewRefundedOrderEvent(req.GetId(), req.GetCreatedId())
-	event.Reason = req.GetReason()
-	event.Amount = req.GetAmount()
-	err = node.Apply(event)
+
+	node, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
+	if err != nil {
+		return nil, err
+	}
+	err = node.Refund(req)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +32,5 @@ func (s *RefundOrderService) Run(req *order.RefundOrderReq) (resp *base.NilRespo
 	if err != nil {
 		return nil, err
 	}
-	
 	return
-
 }

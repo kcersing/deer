@@ -162,23 +162,16 @@ func (_u *OrderUpdate) ClearStatus() *OrderUpdate {
 }
 
 // SetNature sets the "nature" field.
-func (_u *OrderUpdate) SetNature(v int64) *OrderUpdate {
-	_u.mutation.ResetNature()
+func (_u *OrderUpdate) SetNature(v string) *OrderUpdate {
 	_u.mutation.SetNature(v)
 	return _u
 }
 
 // SetNillableNature sets the "nature" field if the given value is not nil.
-func (_u *OrderUpdate) SetNillableNature(v *int64) *OrderUpdate {
+func (_u *OrderUpdate) SetNillableNature(v *string) *OrderUpdate {
 	if v != nil {
 		_u.SetNature(*v)
 	}
-	return _u
-}
-
-// AddNature adds value to the "nature" field.
-func (_u *OrderUpdate) AddNature(v int64) *OrderUpdate {
-	_u.mutation.AddNature(v)
 	return _u
 }
 
@@ -681,13 +674,10 @@ func (_u *OrderUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.ClearField(order.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Nature(); ok {
-		_spec.SetField(order.FieldNature, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedNature(); ok {
-		_spec.AddField(order.FieldNature, field.TypeInt64, value)
+		_spec.SetField(order.FieldNature, field.TypeString, value)
 	}
 	if _u.mutation.NatureCleared() {
-		_spec.ClearField(order.FieldNature, field.TypeInt64)
+		_spec.ClearField(order.FieldNature, field.TypeString)
 	}
 	if value, ok := _u.mutation.CompletionAt(); ok {
 		_spec.SetField(order.FieldCompletionAt, field.TypeTime, value)
@@ -1161,23 +1151,16 @@ func (_u *OrderUpdateOne) ClearStatus() *OrderUpdateOne {
 }
 
 // SetNature sets the "nature" field.
-func (_u *OrderUpdateOne) SetNature(v int64) *OrderUpdateOne {
-	_u.mutation.ResetNature()
+func (_u *OrderUpdateOne) SetNature(v string) *OrderUpdateOne {
 	_u.mutation.SetNature(v)
 	return _u
 }
 
 // SetNillableNature sets the "nature" field if the given value is not nil.
-func (_u *OrderUpdateOne) SetNillableNature(v *int64) *OrderUpdateOne {
+func (_u *OrderUpdateOne) SetNillableNature(v *string) *OrderUpdateOne {
 	if v != nil {
 		_u.SetNature(*v)
 	}
-	return _u
-}
-
-// AddNature adds value to the "nature" field.
-func (_u *OrderUpdateOne) AddNature(v int64) *OrderUpdateOne {
-	_u.mutation.AddNature(v)
 	return _u
 }
 
@@ -1710,13 +1693,10 @@ func (_u *OrderUpdateOne) sqlSave(ctx context.Context) (_node *Order, err error)
 		_spec.ClearField(order.FieldStatus, field.TypeEnum)
 	}
 	if value, ok := _u.mutation.Nature(); ok {
-		_spec.SetField(order.FieldNature, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedNature(); ok {
-		_spec.AddField(order.FieldNature, field.TypeInt64, value)
+		_spec.SetField(order.FieldNature, field.TypeString, value)
 	}
 	if _u.mutation.NatureCleared() {
-		_spec.ClearField(order.FieldNature, field.TypeInt64)
+		_spec.ClearField(order.FieldNature, field.TypeString)
 	}
 	if value, ok := _u.mutation.CompletionAt(); ok {
 		_spec.SetField(order.FieldCompletionAt, field.TypeTime, value)

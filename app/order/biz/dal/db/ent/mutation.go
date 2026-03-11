@@ -57,8 +57,7 @@ type OrderMutation struct {
 	member_id             *int64
 	addmember_id          *int64
 	status                *order.Status
-	nature                *int64
-	addnature             *int64
+	nature                *string
 	completion_at         *time.Time
 	close_at              *time.Time
 	version               *int64
@@ -592,13 +591,12 @@ func (m *OrderMutation) ResetStatus() {
 }
 
 // SetNature sets the "nature" field.
-func (m *OrderMutation) SetNature(i int64) {
-	m.nature = &i
-	m.addnature = nil
+func (m *OrderMutation) SetNature(s string) {
+	m.nature = &s
 }
 
 // Nature returns the value of the "nature" field in the mutation.
-func (m *OrderMutation) Nature() (r int64, exists bool) {
+func (m *OrderMutation) Nature() (r string, exists bool) {
 	v := m.nature
 	if v == nil {
 		return
@@ -609,7 +607,7 @@ func (m *OrderMutation) Nature() (r int64, exists bool) {
 // OldNature returns the old "nature" field's value of the Order entity.
 // If the Order object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrderMutation) OldNature(ctx context.Context) (v int64, err error) {
+func (m *OrderMutation) OldNature(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldNature is only allowed on UpdateOne operations")
 	}
@@ -623,28 +621,9 @@ func (m *OrderMutation) OldNature(ctx context.Context) (v int64, err error) {
 	return oldValue.Nature, nil
 }
 
-// AddNature adds i to the "nature" field.
-func (m *OrderMutation) AddNature(i int64) {
-	if m.addnature != nil {
-		*m.addnature += i
-	} else {
-		m.addnature = &i
-	}
-}
-
-// AddedNature returns the value that was added to the "nature" field in this mutation.
-func (m *OrderMutation) AddedNature() (r int64, exists bool) {
-	v := m.addnature
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearNature clears the value of the "nature" field.
 func (m *OrderMutation) ClearNature() {
 	m.nature = nil
-	m.addnature = nil
 	m.clearedFields[order.FieldNature] = struct{}{}
 }
 
@@ -657,7 +636,6 @@ func (m *OrderMutation) NatureCleared() bool {
 // ResetNature resets all changes to the "nature" field.
 func (m *OrderMutation) ResetNature() {
 	m.nature = nil
-	m.addnature = nil
 	delete(m.clearedFields, order.FieldNature)
 }
 
@@ -1628,7 +1606,7 @@ func (m *OrderMutation) SetField(name string, value ent.Value) error {
 		m.SetStatus(v)
 		return nil
 	case order.FieldNature:
-		v, ok := value.(int64)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -1700,9 +1678,6 @@ func (m *OrderMutation) AddedFields() []string {
 	if m.addmember_id != nil {
 		fields = append(fields, order.FieldMemberID)
 	}
-	if m.addnature != nil {
-		fields = append(fields, order.FieldNature)
-	}
 	if m.addversion != nil {
 		fields = append(fields, order.FieldVersion)
 	}
@@ -1729,8 +1704,6 @@ func (m *OrderMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedCreatedID()
 	case order.FieldMemberID:
 		return m.AddedMemberID()
-	case order.FieldNature:
-		return m.AddedNature()
 	case order.FieldVersion:
 		return m.AddedVersion()
 	case order.FieldTotalAmount:
@@ -1768,13 +1741,6 @@ func (m *OrderMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddMemberID(v)
-		return nil
-	case order.FieldNature:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddNature(v)
 		return nil
 	case order.FieldVersion:
 		v, ok := value.(int64)

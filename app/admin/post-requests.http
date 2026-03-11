@@ -8,6 +8,7 @@ Content-Type: application/json
   "captcha": "123456"
 }
 
+
 ### GET request with a header
 GET https://examples.http-client.intellij.net/ip
 Authorization: Basic YWRtaW46MTIzNDU2
@@ -18,7 +19,6 @@ Accept: application/json
 POST http://127.0.0.1:9010/service/dict/list
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjgyMDYwNjIsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjgyMDI0NjJ9.DUBRMvDUVWO20OVXq5rtV3QnA_3DrlDXxczV3iwMwJE
-
 
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/logs/list
@@ -56,6 +56,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4O
 {
 
 }
+
+
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/order/create
 Content-Type: application/json
@@ -78,6 +80,7 @@ Content-Type: application/json
   "sn":""
 }
 
+
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/order/list
 Content-Type: application/json
@@ -85,6 +88,18 @@ Content-Type: application/json
 {
 
 }
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/order/payment
+Content-Type: application/json
+
+{
+  "id":     2,
+  "amount":10,
+  "method": "WECHAT_PAY",
+  "third":  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}
+
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/order/cancelled
 Content-Type: application/json

@@ -2,13 +2,10 @@ package service
 
 import (
 	"common/eventbus"
-	"common/pkg/utils"
 	"context"
-	base "gen/kitex_gen/base"
 	order "gen/kitex_gen/order"
 	"order/biz/infras"
 	"order/biz/infras/aggregate"
-	"order/biz/infras/events"
 	"order/biz/infras/repo"
 )
 
@@ -28,27 +25,10 @@ func NewCreateOrderService(ctx context.Context) *CreateOrderService {
 // Run create note info
 func (s *CreateOrderService) Run(req *order.CreateOrderReq) (resp *order.OrderResp, err error) {
 	node := aggregate.NewOrder()
-	items := make([]*base.OrderItem, 0, len(req.GetItems()))
-
-	for _, item := range req.GetItems() {
-		items = append(items, &base.OrderItem{
-			ProductId: item.GetProductId(),
-			Quantity:  item.GetQuantity(),
-		})
-	}
-	event := events.NewCreatedOrderEvent(
-		utils.CreateSn(),
-		items,
-		req.GetTotalAmount()*100,
-		req.GetMemberId(),
-		req.GetUserId(),
-	)
-
-	err = node.Apply(event)
+	err = node.Create(req)
 	if err != nil {
 		return nil, err
 	}
-
 	err = repo.NewOrderRepo().Save(s.ctx, node)
 	if err != nil {
 		return nil, err

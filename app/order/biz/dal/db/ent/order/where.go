@@ -86,7 +86,7 @@ func MemberID(v int64) predicate.Order {
 }
 
 // Nature applies equality check predicate on the "nature" field. It's identical to NatureEQ.
-func Nature(v int64) predicate.Order {
+func Nature(v string) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldNature, v))
 }
 
@@ -471,43 +471,58 @@ func StatusNotNil() predicate.Order {
 }
 
 // NatureEQ applies the EQ predicate on the "nature" field.
-func NatureEQ(v int64) predicate.Order {
+func NatureEQ(v string) predicate.Order {
 	return predicate.Order(sql.FieldEQ(FieldNature, v))
 }
 
 // NatureNEQ applies the NEQ predicate on the "nature" field.
-func NatureNEQ(v int64) predicate.Order {
+func NatureNEQ(v string) predicate.Order {
 	return predicate.Order(sql.FieldNEQ(FieldNature, v))
 }
 
 // NatureIn applies the In predicate on the "nature" field.
-func NatureIn(vs ...int64) predicate.Order {
+func NatureIn(vs ...string) predicate.Order {
 	return predicate.Order(sql.FieldIn(FieldNature, vs...))
 }
 
 // NatureNotIn applies the NotIn predicate on the "nature" field.
-func NatureNotIn(vs ...int64) predicate.Order {
+func NatureNotIn(vs ...string) predicate.Order {
 	return predicate.Order(sql.FieldNotIn(FieldNature, vs...))
 }
 
 // NatureGT applies the GT predicate on the "nature" field.
-func NatureGT(v int64) predicate.Order {
+func NatureGT(v string) predicate.Order {
 	return predicate.Order(sql.FieldGT(FieldNature, v))
 }
 
 // NatureGTE applies the GTE predicate on the "nature" field.
-func NatureGTE(v int64) predicate.Order {
+func NatureGTE(v string) predicate.Order {
 	return predicate.Order(sql.FieldGTE(FieldNature, v))
 }
 
 // NatureLT applies the LT predicate on the "nature" field.
-func NatureLT(v int64) predicate.Order {
+func NatureLT(v string) predicate.Order {
 	return predicate.Order(sql.FieldLT(FieldNature, v))
 }
 
 // NatureLTE applies the LTE predicate on the "nature" field.
-func NatureLTE(v int64) predicate.Order {
+func NatureLTE(v string) predicate.Order {
 	return predicate.Order(sql.FieldLTE(FieldNature, v))
+}
+
+// NatureContains applies the Contains predicate on the "nature" field.
+func NatureContains(v string) predicate.Order {
+	return predicate.Order(sql.FieldContains(FieldNature, v))
+}
+
+// NatureHasPrefix applies the HasPrefix predicate on the "nature" field.
+func NatureHasPrefix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasPrefix(FieldNature, v))
+}
+
+// NatureHasSuffix applies the HasSuffix predicate on the "nature" field.
+func NatureHasSuffix(v string) predicate.Order {
+	return predicate.Order(sql.FieldHasSuffix(FieldNature, v))
 }
 
 // NatureIsNil applies the IsNil predicate on the "nature" field.
@@ -518,6 +533,16 @@ func NatureIsNil() predicate.Order {
 // NatureNotNil applies the NotNil predicate on the "nature" field.
 func NatureNotNil() predicate.Order {
 	return predicate.Order(sql.FieldNotNull(FieldNature))
+}
+
+// NatureEqualFold applies the EqualFold predicate on the "nature" field.
+func NatureEqualFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldEqualFold(FieldNature, v))
+}
+
+// NatureContainsFold applies the ContainsFold predicate on the "nature" field.
+func NatureContainsFold(v string) predicate.Order {
+	return predicate.Order(sql.FieldContainsFold(FieldNature, v))
 }
 
 // CompletionAtEQ applies the EQ predicate on the "completion_at" field.

@@ -352,6 +352,9 @@ type Order struct {
 	CancelledReason string       `thrift:"cancelledReason,12,optional" form:"cancelledReason" json:"cancelledReason,omitempty" query:"cancelledReason"`
 	OrderPays       []*OrderPay  `thrift:"orderPays,13,optional,list<OrderPay>" form:"orderPays" json:"orderPays,omitempty" query:"orderPays"`
 	OrderRefund     *OrderRefund `thrift:"orderRefund,14,optional" form:"orderRefund" json:"orderRefund,omitempty" query:"orderRefund"`
+	Actual          int64        `thrift:"actual,15,optional" form:"actual" json:"actual,omitempty" query:"actual"`
+	Remission       int64        `thrift:"remission,16,optional" form:"remission" json:"remission,omitempty" query:"remission"`
+	CloseNature     string       `thrift:"closeNature,17,optional" form:"closeNature" json:"closeNature,omitempty" query:"closeNature"`
 	ID              int64        `thrift:"id,254,optional" form:"id" json:"id,omitempty" query:"id"`
 	CreatedId       int64        `thrift:"createdId,256,optional" form:"createdId" json:"createdId,omitempty" query:"createdId"`
 	CreatedName     string       `thrift:"createdName,257,optional" form:"createdName" json:"createdName,omitempty" query:"createdName"`
@@ -372,6 +375,9 @@ func NewOrder() *Order {
 		CancelledReason: "",
 		OrderPays:       []*OrderPay{},
 		OrderRefund:     &OrderRefund{},
+		Actual:          0,
+		Remission:       0,
+		CloseNature:     "",
 		ID:              0,
 		CreatedId:       0,
 		CreatedName:     "",
@@ -392,6 +398,9 @@ func (p *Order) InitDefault() {
 	p.CancelledReason = ""
 	p.OrderPays = []*OrderPay{}
 	p.OrderRefund = &OrderRefund{}
+	p.Actual = 0
+	p.Remission = 0
+	p.CloseNature = ""
 	p.ID = 0
 	p.CreatedId = 0
 	p.CreatedName = ""
@@ -514,6 +523,33 @@ func (p *Order) GetOrderRefund() (v *OrderRefund) {
 	return p.OrderRefund
 }
 
+var Order_Actual_DEFAULT int64 = 0
+
+func (p *Order) GetActual() (v int64) {
+	if !p.IsSetActual() {
+		return Order_Actual_DEFAULT
+	}
+	return p.Actual
+}
+
+var Order_Remission_DEFAULT int64 = 0
+
+func (p *Order) GetRemission() (v int64) {
+	if !p.IsSetRemission() {
+		return Order_Remission_DEFAULT
+	}
+	return p.Remission
+}
+
+var Order_CloseNature_DEFAULT string = ""
+
+func (p *Order) GetCloseNature() (v string) {
+	if !p.IsSetCloseNature() {
+		return Order_CloseNature_DEFAULT
+	}
+	return p.CloseNature
+}
+
 var Order_ID_DEFAULT int64 = 0
 
 func (p *Order) GetID() (v int64) {
@@ -555,6 +591,9 @@ var fieldIDToName_Order = map[int16]string{
 	12:  "cancelledReason",
 	13:  "orderPays",
 	14:  "orderRefund",
+	15:  "actual",
+	16:  "remission",
+	17:  "closeNature",
 	254: "id",
 	256: "createdId",
 	257: "createdName",
@@ -610,6 +649,18 @@ func (p *Order) IsSetOrderPays() bool {
 
 func (p *Order) IsSetOrderRefund() bool {
 	return p.OrderRefund != nil
+}
+
+func (p *Order) IsSetActual() bool {
+	return p.Actual != Order_Actual_DEFAULT
+}
+
+func (p *Order) IsSetRemission() bool {
+	return p.Remission != Order_Remission_DEFAULT
+}
+
+func (p *Order) IsSetCloseNature() bool {
+	return p.CloseNature != Order_CloseNature_DEFAULT
 }
 
 func (p *Order) IsSetID() bool {
@@ -742,6 +793,30 @@ func (p *Order) Read(iprot thrift.TProtocol) (err error) {
 		case 14:
 			if fieldTypeId == thrift.STRUCT {
 				if err = p.ReadField14(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 15:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField15(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 16:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField16(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 17:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField17(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -964,6 +1039,39 @@ func (p *Order) ReadField14(iprot thrift.TProtocol) error {
 	p.OrderRefund = _field
 	return nil
 }
+func (p *Order) ReadField15(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Actual = _field
+	return nil
+}
+func (p *Order) ReadField16(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Remission = _field
+	return nil
+}
+func (p *Order) ReadField17(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.CloseNature = _field
+	return nil
+}
 func (p *Order) ReadField254(iprot thrift.TProtocol) error {
 
 	var _field int64
@@ -1054,6 +1162,18 @@ func (p *Order) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField14(oprot); err != nil {
 			fieldId = 14
+			goto WriteFieldError
+		}
+		if err = p.writeField15(oprot); err != nil {
+			fieldId = 15
+			goto WriteFieldError
+		}
+		if err = p.writeField16(oprot); err != nil {
+			fieldId = 16
+			goto WriteFieldError
+		}
+		if err = p.writeField17(oprot); err != nil {
+			fieldId = 17
 			goto WriteFieldError
 		}
 		if err = p.writeField254(oprot); err != nil {
@@ -1347,6 +1467,63 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 14 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 14 end error: ", p), err)
+}
+
+func (p *Order) writeField15(oprot thrift.TProtocol) (err error) {
+	if p.IsSetActual() {
+		if err = oprot.WriteFieldBegin("actual", thrift.I64, 15); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Actual); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 15 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 15 end error: ", p), err)
+}
+
+func (p *Order) writeField16(oprot thrift.TProtocol) (err error) {
+	if p.IsSetRemission() {
+		if err = oprot.WriteFieldBegin("remission", thrift.I64, 16); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Remission); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 end error: ", p), err)
+}
+
+func (p *Order) writeField17(oprot thrift.TProtocol) (err error) {
+	if p.IsSetCloseNature() {
+		if err = oprot.WriteFieldBegin("closeNature", thrift.STRING, 17); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.CloseNature); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 17 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 17 end error: ", p), err)
 }
 
 func (p *Order) writeField254(oprot thrift.TProtocol) (err error) {

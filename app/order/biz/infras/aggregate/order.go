@@ -1,7 +1,10 @@
 package aggregate
 
 import (
+	"errors"
 	"gen/kitex_gen/base"
+	"gen/kitex_gen/order"
+
 	"order/biz/infras/common"
 	"order/biz/infras/events"
 	"time"
@@ -42,6 +45,8 @@ func (o *Order) When(evt common.Event) error {
 		return o.onCancelled(e)
 	case *events.CompletedOrderEvent:
 		return o.onCompleted(e)
+	case *events.PayingOrderEvent:
+		return o.onPaying(e)
 	case *events.PaidOrderEvent:
 		return o.onPaid(e)
 	case *events.RefundedOrderEvent:
@@ -63,7 +68,6 @@ func (o *Order) onCreated(e *events.CreatedOrderEvent) (err error) {
 	return nil
 }
 func (o *Order) onCancelled(e *events.CancelledOrderEvent) (err error) {
-
 	o.CancelledReason = e.Reason
 	o.CreatedId = e.CreatedId
 	o.CloseAt = e.Timestamp.Format(time.DateTime)
@@ -76,13 +80,7 @@ func (o *Order) onCompleted(e *events.CompletedOrderEvent) (err error) {
 	o.Status = e.GetType()
 	return nil
 }
-func (o *Order) onPaid(e *events.PaidOrderEvent) (err error) {
-
-	// 可以在这里添加其他业务规则检查
-	// 例如：检查支付金额是否正确等
-	//if payedAmount <= 0 {
-	//	return errors.New("支付金额必须为正数")
-	//}
+func (o *Order) onPaying(e *events.PayingOrderEvent) (err error) {
 	var orderPay base.OrderPay
 	orderPay.CreatedId = e.CreatedId
 	orderPay.Pay = e.Amount
@@ -94,6 +92,12 @@ func (o *Order) onPaid(e *events.PaidOrderEvent) (err error) {
 	orderPay.PrepayId = e.PrepayId
 	orderPay.PayExtra = e.PayExtra
 	o.OrderPays = append(o.OrderPays, &orderPay)
+	o.Status = e.GetType()
+	o.Actual += e.Amount
+	o.Remission += e.Remission
+	return nil
+}
+func (o *Order) onPaid(e *events.PaidOrderEvent) (err error) {
 	o.Status = e.GetType()
 	return nil
 }
@@ -111,15 +115,94 @@ func (o *Order) onShipped(e *events.ShippedOrderEvent) (err error) {
 	return nil
 }
 
-func (o *Order) Cancel(userID int64, reason string) error {
+func (o *Order) Create(req *order.CreateOrderReq) error {
+	event := events.NewCreatedOrderEvent(req)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func (o *Order) Paying(req *order.PaymentReq) error {
+	if err := o.stateMachine.ValidateTransition(common.Paying); err != nil {
+		return err
+	}
+	if req.GetAmount() <= 0 {
+		return errors.New("支付金额必须为正数")
+	}
+	if req.GetAmount() > o.TotalAmount-o.Actual-o.Remission {
+		return errors.New("支付金额超出订单待付金额")
+	}
+	event := events.NewPayingOrderEvent(req)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+	if o.TotalAmount-o.Actual-o.Remission == 0 {
+		err = o.Paid()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (o *Order) Paid() error {
+	if err := o.stateMachine.ValidateTransition(common.Paid); err != nil {
+		return err
+	}
+	event := events.NewPaidOrderEvent(o.AggregateID)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+	return err
+}
+func (o *Order) Shipped() error {
+	if err := o.stateMachine.ValidateTransition(common.Shipped); err != nil {
+		return err
+	}
+	event := events.NewShippedOrderEvent(o.AggregateID)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+
+	//completedEvent := events.NewCompletedOrderEvent(o.GetAggregateID(), req.GetUserId())
+	//if err := o.Apply(completedEvent); err != nil {
+	//
+	//	return err
+	//}
+
+	return err
+}
+func (o *Order) Cancel(req *order.CancelledOrderReq) error {
 	// 1. 业务规则封装在内部
 	if err := o.stateMachine.ValidateTransition(common.Cancelled); err != nil {
+
 		return err
 	}
 
 	// if o.IsSpecialProduct() { return errors.New("特殊商品不可取消") }
 
-	cancelEvent := events.NewCancelledOrderEvent(o.GetAggregateID(), reason, userID)
+	event := events.NewCancelledOrderEvent(req)
 
-	return o.Apply(cancelEvent)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (o *Order) Refund(req *order.RefundOrderReq) error {
+	if err := o.stateMachine.ValidateTransition(common.Refunded); err != nil {
+		return err
+	}
+	event := events.NewRefundedOrderEvent(req)
+	err := o.Apply(event)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

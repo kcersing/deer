@@ -466,6 +466,48 @@ func (p *Order) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 15:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField15(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 16:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField16(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 17:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField17(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		case 254:
 			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField254(buf[offset:])
@@ -728,6 +770,48 @@ func (p *Order) FastReadField14(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *Order) FastReadField15(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Actual = _field
+	return offset, nil
+}
+
+func (p *Order) FastReadField16(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Remission = _field
+	return offset, nil
+}
+
+func (p *Order) FastReadField17(buf []byte) (int, error) {
+	offset := 0
+
+	var _field string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.CloseNature = _field
+	return offset, nil
+}
+
 func (p *Order) FastReadField254(buf []byte) (int, error) {
 	offset := 0
 
@@ -779,6 +863,8 @@ func (p *Order) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 	if p != nil {
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
+		offset += p.fastWriteField15(buf[offset:], w)
+		offset += p.fastWriteField16(buf[offset:], w)
 		offset += p.fastWriteField254(buf[offset:], w)
 		offset += p.fastWriteField256(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
@@ -792,6 +878,7 @@ func (p *Order) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField12(buf[offset:], w)
 		offset += p.fastWriteField13(buf[offset:], w)
 		offset += p.fastWriteField14(buf[offset:], w)
+		offset += p.fastWriteField17(buf[offset:], w)
 		offset += p.fastWriteField257(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
@@ -814,6 +901,9 @@ func (p *Order) BLength() int {
 		l += p.field12Length()
 		l += p.field13Length()
 		l += p.field14Length()
+		l += p.field15Length()
+		l += p.field16Length()
+		l += p.field17Length()
 		l += p.field254Length()
 		l += p.field256Length()
 		l += p.field257Length()
@@ -949,6 +1039,33 @@ func (p *Order) fastWriteField14(buf []byte, w thrift.NocopyWriter) int {
 	if p.IsSetOrderRefund() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 14)
 		offset += p.OrderRefund.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *Order) fastWriteField15(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetActual() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 15)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Actual)
+	}
+	return offset
+}
+
+func (p *Order) fastWriteField16(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetRemission() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 16)
+		offset += thrift.Binary.WriteI64(buf[offset:], p.Remission)
+	}
+	return offset
+}
+
+func (p *Order) fastWriteField17(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetCloseNature() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 17)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.CloseNature)
 	}
 	return offset
 }
@@ -1101,6 +1218,33 @@ func (p *Order) field14Length() int {
 	if p.IsSetOrderRefund() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.OrderRefund.BLength()
+	}
+	return l
+}
+
+func (p *Order) field15Length() int {
+	l := 0
+	if p.IsSetActual() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I64Length()
+	}
+	return l
+}
+
+func (p *Order) field16Length() int {
+	l := 0
+	if p.IsSetRemission() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I64Length()
+	}
+	return l
+}
+
+func (p *Order) field17Length() int {
+	l := 0
+	if p.IsSetCloseNature() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.StringLengthNocopy(p.CloseNature)
 	}
 	return l
 }
