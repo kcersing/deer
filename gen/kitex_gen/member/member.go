@@ -735,6 +735,371 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 	2: "password",
 }
 
+type CreateProductReq struct {
+	MemberId  int64             `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	ProductId int64             `thrift:"productId,2,optional" frugal:"2,optional,i64" json:"productId,omitempty"`
+	Items     []*base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<base.OrderItem>" json:"items,omitempty"`
+	OrderId   int64             `thrift:"orderId,4,optional" frugal:"4,optional,i64" json:"orderId,omitempty"`
+	Price     int64             `thrift:"price,5,optional" frugal:"5,optional,i64" json:"price,omitempty"`
+	UserId    int64             `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
+}
+
+func NewCreateProductReq() *CreateProductReq {
+	return &CreateProductReq{
+		MemberId:  0,
+		ProductId: 0,
+		Items:     []*base.OrderItem{},
+		OrderId:   0,
+		Price:     0,
+		UserId:    0,
+	}
+}
+
+func (p *CreateProductReq) InitDefault() {
+	p.MemberId = 0
+	p.ProductId = 0
+	p.Items = []*base.OrderItem{}
+	p.OrderId = 0
+	p.Price = 0
+	p.UserId = 0
+}
+
+var CreateProductReq_MemberId_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetMemberId() (v int64) {
+	if !p.IsSetMemberId() {
+		return CreateProductReq_MemberId_DEFAULT
+	}
+	return p.MemberId
+}
+
+var CreateProductReq_ProductId_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetProductId() (v int64) {
+	if !p.IsSetProductId() {
+		return CreateProductReq_ProductId_DEFAULT
+	}
+	return p.ProductId
+}
+
+var CreateProductReq_Items_DEFAULT []*base.OrderItem = []*base.OrderItem{}
+
+func (p *CreateProductReq) GetItems() (v []*base.OrderItem) {
+	if !p.IsSetItems() {
+		return CreateProductReq_Items_DEFAULT
+	}
+	return p.Items
+}
+
+var CreateProductReq_OrderId_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetOrderId() (v int64) {
+	if !p.IsSetOrderId() {
+		return CreateProductReq_OrderId_DEFAULT
+	}
+	return p.OrderId
+}
+
+var CreateProductReq_Price_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return CreateProductReq_Price_DEFAULT
+	}
+	return p.Price
+}
+
+var CreateProductReq_UserId_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetUserId() (v int64) {
+	if !p.IsSetUserId() {
+		return CreateProductReq_UserId_DEFAULT
+	}
+	return p.UserId
+}
+func (p *CreateProductReq) SetMemberId(val int64) {
+	p.MemberId = val
+}
+func (p *CreateProductReq) SetProductId(val int64) {
+	p.ProductId = val
+}
+func (p *CreateProductReq) SetItems(val []*base.OrderItem) {
+	p.Items = val
+}
+func (p *CreateProductReq) SetOrderId(val int64) {
+	p.OrderId = val
+}
+func (p *CreateProductReq) SetPrice(val int64) {
+	p.Price = val
+}
+func (p *CreateProductReq) SetUserId(val int64) {
+	p.UserId = val
+}
+
+func (p *CreateProductReq) IsSetMemberId() bool {
+	return p.MemberId != CreateProductReq_MemberId_DEFAULT
+}
+
+func (p *CreateProductReq) IsSetProductId() bool {
+	return p.ProductId != CreateProductReq_ProductId_DEFAULT
+}
+
+func (p *CreateProductReq) IsSetItems() bool {
+	return p.Items != nil
+}
+
+func (p *CreateProductReq) IsSetOrderId() bool {
+	return p.OrderId != CreateProductReq_OrderId_DEFAULT
+}
+
+func (p *CreateProductReq) IsSetPrice() bool {
+	return p.Price != CreateProductReq_Price_DEFAULT
+}
+
+func (p *CreateProductReq) IsSetUserId() bool {
+	return p.UserId != CreateProductReq_UserId_DEFAULT
+}
+
+func (p *CreateProductReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CreateProductReq(%+v)", *p)
+}
+
+var fieldIDToName_CreateProductReq = map[int16]string{
+	1: "memberId",
+	2: "productId",
+	3: "items",
+	4: "orderId",
+	5: "price",
+	6: "userId",
+}
+
+type UpdateProductReq struct {
+}
+
+func NewUpdateProductReq() *UpdateProductReq {
+	return &UpdateProductReq{}
+}
+
+func (p *UpdateProductReq) InitDefault() {
+}
+
+func (p *UpdateProductReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("UpdateProductReq(%+v)", *p)
+}
+
+var fieldIDToName_UpdateProductReq = map[int16]string{}
+
+type ProductResp struct {
+	Data     *base.MemberProduct `thrift:"data,1,optional" frugal:"1,optional,base.MemberProduct" json:"data,omitempty"`
+	BaseResp *base.BaseResp      `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewProductResp() *ProductResp {
+	return &ProductResp{
+		Data:     &base.MemberProduct{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *ProductResp) InitDefault() {
+	p.Data = &base.MemberProduct{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var ProductResp_Data_DEFAULT *base.MemberProduct = &base.MemberProduct{}
+
+func (p *ProductResp) GetData() (v *base.MemberProduct) {
+	if !p.IsSetData() {
+		return ProductResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var ProductResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *ProductResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return ProductResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *ProductResp) SetData(val *base.MemberProduct) {
+	p.Data = val
+}
+func (p *ProductResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *ProductResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *ProductResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *ProductResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductResp(%+v)", *p)
+}
+
+var fieldIDToName_ProductResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type ProductListResp struct {
+	Data     []*base.MemberProduct `thrift:"data,1,optional" frugal:"1,optional,list<base.MemberProduct>" json:"data,omitempty"`
+	BaseResp *base.BaseResp        `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
+}
+
+func NewProductListResp() *ProductListResp {
+	return &ProductListResp{
+		Data:     []*base.MemberProduct{},
+		BaseResp: &base.BaseResp{},
+	}
+}
+
+func (p *ProductListResp) InitDefault() {
+	p.Data = []*base.MemberProduct{}
+	p.BaseResp = &base.BaseResp{}
+}
+
+var ProductListResp_Data_DEFAULT []*base.MemberProduct = []*base.MemberProduct{}
+
+func (p *ProductListResp) GetData() (v []*base.MemberProduct) {
+	if !p.IsSetData() {
+		return ProductListResp_Data_DEFAULT
+	}
+	return p.Data
+}
+
+var ProductListResp_BaseResp_DEFAULT *base.BaseResp = &base.BaseResp{}
+
+func (p *ProductListResp) GetBaseResp() (v *base.BaseResp) {
+	if !p.IsSetBaseResp() {
+		return ProductListResp_BaseResp_DEFAULT
+	}
+	return p.BaseResp
+}
+func (p *ProductListResp) SetData(val []*base.MemberProduct) {
+	p.Data = val
+}
+func (p *ProductListResp) SetBaseResp(val *base.BaseResp) {
+	p.BaseResp = val
+}
+
+func (p *ProductListResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *ProductListResp) IsSetBaseResp() bool {
+	return p.BaseResp != nil
+}
+
+func (p *ProductListResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductListResp(%+v)", *p)
+}
+
+var fieldIDToName_ProductListResp = map[int16]string{
+	1:   "data",
+	255: "baseResp",
+}
+
+type ProductListReq struct {
+	Page     int64   `thrift:"page,1" frugal:"1,default,i64" json:"page"`
+	PageSize int64   `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
+	Name     string  `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
+	Status   []int64 `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
+}
+
+func NewProductListReq() *ProductListReq {
+	return &ProductListReq{
+		Page:     0,
+		PageSize: 10,
+		Name:     "",
+		Status:   []int64{},
+	}
+}
+
+func (p *ProductListReq) InitDefault() {
+	p.Page = 0
+	p.PageSize = 10
+	p.Name = ""
+	p.Status = []int64{}
+}
+
+func (p *ProductListReq) GetPage() (v int64) {
+	return p.Page
+}
+
+func (p *ProductListReq) GetPageSize() (v int64) {
+	return p.PageSize
+}
+
+var ProductListReq_Name_DEFAULT string = ""
+
+func (p *ProductListReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return ProductListReq_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var ProductListReq_Status_DEFAULT []int64 = []int64{}
+
+func (p *ProductListReq) GetStatus() (v []int64) {
+	if !p.IsSetStatus() {
+		return ProductListReq_Status_DEFAULT
+	}
+	return p.Status
+}
+func (p *ProductListReq) SetPage(val int64) {
+	p.Page = val
+}
+func (p *ProductListReq) SetPageSize(val int64) {
+	p.PageSize = val
+}
+func (p *ProductListReq) SetName(val string) {
+	p.Name = val
+}
+func (p *ProductListReq) SetStatus(val []int64) {
+	p.Status = val
+}
+
+func (p *ProductListReq) IsSetName() bool {
+	return p.Name != ProductListReq_Name_DEFAULT
+}
+
+func (p *ProductListReq) IsSetStatus() bool {
+	return p.Status != nil
+}
+
+func (p *ProductListReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ProductListReq(%+v)", *p)
+}
+
+var fieldIDToName_ProductListReq = map[int16]string{
+	1: "page",
+	2: "pageSize",
+	3: "name",
+	4: "status",
+}
+
 type MemberService interface {
 	CreateMember(ctx context.Context, req *CreateMemberReq) (r *MemberResp, err error)
 
@@ -751,6 +1116,14 @@ type MemberService interface {
 	ChangePassword(ctx context.Context, req *ChangePasswordReq) (r *base.NilResponse, err error)
 
 	GetMemberIds(ctx context.Context, req *GetMemberListReq) (r *MemberIdsResp, err error)
+
+	CreateProduct(ctx context.Context, req *CreateProductReq) (r *ProductResp, err error)
+
+	UpdateProduct(ctx context.Context, req *UpdateProductReq) (r *ProductResp, err error)
+
+	GetProduct(ctx context.Context, req *base.IdReq) (r *ProductResp, err error)
+
+	ProductList(ctx context.Context, req *ProductListReq) (r *ProductListResp, err error)
 }
 
 type MemberServiceCreateMemberArgs struct {
@@ -1358,5 +1731,309 @@ func (p *MemberServiceGetMemberIdsResult) String() string {
 }
 
 var fieldIDToName_MemberServiceGetMemberIdsResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceCreateProductArgs struct {
+	Req *CreateProductReq `thrift:"req,1" frugal:"1,default,CreateProductReq" json:"req"`
+}
+
+func NewMemberServiceCreateProductArgs() *MemberServiceCreateProductArgs {
+	return &MemberServiceCreateProductArgs{}
+}
+
+func (p *MemberServiceCreateProductArgs) InitDefault() {
+}
+
+var MemberServiceCreateProductArgs_Req_DEFAULT *CreateProductReq
+
+func (p *MemberServiceCreateProductArgs) GetReq() (v *CreateProductReq) {
+	if !p.IsSetReq() {
+		return MemberServiceCreateProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceCreateProductArgs) SetReq(val *CreateProductReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceCreateProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceCreateProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceCreateProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceCreateProductArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceCreateProductResult struct {
+	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceCreateProductResult() *MemberServiceCreateProductResult {
+	return &MemberServiceCreateProductResult{}
+}
+
+func (p *MemberServiceCreateProductResult) InitDefault() {
+}
+
+var MemberServiceCreateProductResult_Success_DEFAULT *ProductResp
+
+func (p *MemberServiceCreateProductResult) GetSuccess() (v *ProductResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceCreateProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceCreateProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductResp)
+}
+
+func (p *MemberServiceCreateProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceCreateProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceCreateProductResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceCreateProductResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceUpdateProductArgs struct {
+	Req *UpdateProductReq `thrift:"req,1" frugal:"1,default,UpdateProductReq" json:"req"`
+}
+
+func NewMemberServiceUpdateProductArgs() *MemberServiceUpdateProductArgs {
+	return &MemberServiceUpdateProductArgs{}
+}
+
+func (p *MemberServiceUpdateProductArgs) InitDefault() {
+}
+
+var MemberServiceUpdateProductArgs_Req_DEFAULT *UpdateProductReq
+
+func (p *MemberServiceUpdateProductArgs) GetReq() (v *UpdateProductReq) {
+	if !p.IsSetReq() {
+		return MemberServiceUpdateProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceUpdateProductArgs) SetReq(val *UpdateProductReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceUpdateProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceUpdateProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceUpdateProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceUpdateProductArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceUpdateProductResult struct {
+	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceUpdateProductResult() *MemberServiceUpdateProductResult {
+	return &MemberServiceUpdateProductResult{}
+}
+
+func (p *MemberServiceUpdateProductResult) InitDefault() {
+}
+
+var MemberServiceUpdateProductResult_Success_DEFAULT *ProductResp
+
+func (p *MemberServiceUpdateProductResult) GetSuccess() (v *ProductResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceUpdateProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceUpdateProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductResp)
+}
+
+func (p *MemberServiceUpdateProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceUpdateProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceUpdateProductResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceUpdateProductResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceGetProductArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewMemberServiceGetProductArgs() *MemberServiceGetProductArgs {
+	return &MemberServiceGetProductArgs{}
+}
+
+func (p *MemberServiceGetProductArgs) InitDefault() {
+}
+
+var MemberServiceGetProductArgs_Req_DEFAULT *base.IdReq
+
+func (p *MemberServiceGetProductArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return MemberServiceGetProductArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceGetProductArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceGetProductArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceGetProductArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetProductArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetProductArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceGetProductResult struct {
+	Success *ProductResp `thrift:"success,0,optional" frugal:"0,optional,ProductResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceGetProductResult() *MemberServiceGetProductResult {
+	return &MemberServiceGetProductResult{}
+}
+
+func (p *MemberServiceGetProductResult) InitDefault() {
+}
+
+var MemberServiceGetProductResult_Success_DEFAULT *ProductResp
+
+func (p *MemberServiceGetProductResult) GetSuccess() (v *ProductResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceGetProductResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceGetProductResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductResp)
+}
+
+func (p *MemberServiceGetProductResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceGetProductResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceGetProductResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceGetProductResult = map[int16]string{
+	0: "success",
+}
+
+type MemberServiceProductListArgs struct {
+	Req *ProductListReq `thrift:"req,1" frugal:"1,default,ProductListReq" json:"req"`
+}
+
+func NewMemberServiceProductListArgs() *MemberServiceProductListArgs {
+	return &MemberServiceProductListArgs{}
+}
+
+func (p *MemberServiceProductListArgs) InitDefault() {
+}
+
+var MemberServiceProductListArgs_Req_DEFAULT *ProductListReq
+
+func (p *MemberServiceProductListArgs) GetReq() (v *ProductListReq) {
+	if !p.IsSetReq() {
+		return MemberServiceProductListArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *MemberServiceProductListArgs) SetReq(val *ProductListReq) {
+	p.Req = val
+}
+
+func (p *MemberServiceProductListArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *MemberServiceProductListArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceProductListArgs(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceProductListArgs = map[int16]string{
+	1: "req",
+}
+
+type MemberServiceProductListResult struct {
+	Success *ProductListResp `thrift:"success,0,optional" frugal:"0,optional,ProductListResp" json:"success,omitempty"`
+}
+
+func NewMemberServiceProductListResult() *MemberServiceProductListResult {
+	return &MemberServiceProductListResult{}
+}
+
+func (p *MemberServiceProductListResult) InitDefault() {
+}
+
+var MemberServiceProductListResult_Success_DEFAULT *ProductListResp
+
+func (p *MemberServiceProductListResult) GetSuccess() (v *ProductListResp) {
+	if !p.IsSetSuccess() {
+		return MemberServiceProductListResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *MemberServiceProductListResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ProductListResp)
+}
+
+func (p *MemberServiceProductListResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *MemberServiceProductListResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberServiceProductListResult(%+v)", *p)
+}
+
+var fieldIDToName_MemberServiceProductListResult = map[int16]string{
 	0: "success",
 }

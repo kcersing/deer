@@ -33,7 +33,7 @@ struct Tree  {
      2:optional	string value="" (api.raw = "value")
      3:optional	string key="" (api.raw = "key")
      4:optional	string method="" (api.raw = "method")
-     5:optional	list<Tree> children={} (api.raw = "children")
+     5:optional	list<Tree> children=[] (api.raw = "children")
 }
 struct Seat{
     /**编号*/

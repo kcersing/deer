@@ -13,11 +13,11 @@ struct Schedule{
     12:optional string name = ""
 
     14:optional i64 userId = 0
-    15:optional list<i64> memberIds = {}
+    15:optional list<i64> memberIds = []
     /**状态 是 0未发布 1发布 2取消*/
     18:optional i64 status = 0
     19:optional i64 productId = 0
-    25:optional list<list<base.Seat>> seats= {}
+    25:optional list<list<base.Seat>> seats= []
     31:optional i64 signNum = 0
 
     20:optional string venueName = ""
@@ -25,7 +25,7 @@ struct Schedule{
 
     32: string statusName = ""
     33:optional string userName = ""
-    34:optional list<string> memberNames = ""
+    34:optional list<string> memberNames = []
 
     253:optional string date = ""
 }

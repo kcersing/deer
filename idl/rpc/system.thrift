@@ -7,7 +7,7 @@ struct ApiResp{
    255:optional base.BaseResp baseResp={}
 }
 struct ApiListResp{
-   1:optional list<system.Api> data={}
+   1:optional list<system.Api> data=[]
    255:optional base.BaseResp baseResp={}
 }
 struct ApiListReq{
@@ -158,11 +158,11 @@ struct DicthtResp{
     255:optional base.BaseResp baseResp={}
 }
 struct DictListResp{
-    1:optional list<system.Dict> data={}
+    1:optional list<system.Dict> data=[]
     255:optional base.BaseResp baseResp={}
 }
 struct DicthtListResp{
-    1:optional list<system.Dictht> data={}
+    1:optional list<system.Dictht> data=[]
     255:optional base.BaseResp baseResp={}
 }
 struct LogListResp{

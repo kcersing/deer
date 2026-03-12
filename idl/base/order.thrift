@@ -8,7 +8,7 @@ struct OrderItem {
 }
 struct Order {
     1:optional i64 memberId=0 (api.raw = "memberId")
-    3:optional list<OrderItem> items={} (api.raw = "items")
+    3:optional list<OrderItem> items=[] (api.raw = "items")
     4:optional string sn="" (api.raw = "sn")
     5:optional i64 totalAmount=0 (api.raw = "totalAmount")
     6:optional string status="" (api.raw = "status")
@@ -18,7 +18,7 @@ struct Order {
     10:optional string closeAt="" (api.raw = "closeAt")
     11:optional string updatedAt="" (api.raw = "updatedAt")
     12:optional string cancelledReason="" (api.raw = "cancelledReason")
-    13:optional list<OrderPay> orderPays={} (api.raw = "orderPays")
+    13:optional list<OrderPay> orderPays=[] (api.raw = "orderPays")
     14:optional OrderRefund orderRefund={} (api.raw = "orderRefund")
 
     15:optional i64 actual=0 (api.raw = "actual")

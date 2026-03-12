@@ -22,12 +22,12 @@ struct Product {
     6:optional double price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
-    10: optional list<i64> isSales=0 (api.raw = "isSales")
+    10: optional list<i64> isSales=[] (api.raw = "isSales")
     13: optional string signSalesAt = "" (api.raw = "signSalesAt")
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
 
 
-    15: optional list<Item> items = "" (api.raw = "items")
+    15: optional list<Item> items = [] (api.raw = "items")
 }
 
 struct Item {
@@ -51,7 +51,7 @@ struct Item {
 //    9:optional string activeAt="" (api.raw = "activeAt")
 //    /**到期时间 */
 //    10:optional string expiredAt="" (api.raw = "expiredAt")
-    11: optional list<i64> tagId=0   (api.raw = "tagId")
+    11: optional list<i64> tagId=[]   (api.raw = "tagId")
     /**价格 */
     12:optional i64 price=0 (api.raw = "price")
     13:optional string code="" (api.raw = "code")

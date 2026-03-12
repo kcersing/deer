@@ -34,7 +34,7 @@ struct Place{
     9: optional string desc="" (api.raw = "desc")
 
     /**关联座位*/
-    10: optional list<list<base.Seat>> seat=0 (api.raw = "seat")
+    10: optional list<list<base.Seat>> seat=[] (api.raw = "seat")
 
     11:  optional string startTime="" (api.raw = "startTime")
     12:  optional string endTime="" (api.raw = "endTime")

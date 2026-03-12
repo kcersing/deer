@@ -62,3 +62,33 @@ func (p *UpdateMemberReq) IsValid() error {
 func (p *ChangePasswordReq) IsValid() error {
 	return nil
 }
+func (p *CreateProductReq) IsValid() error {
+	return nil
+}
+func (p *UpdateProductReq) IsValid() error {
+	return nil
+}
+func (p *ProductResp) IsValid() error {
+	if p.Data != nil {
+		if err := p.Data.IsValid(); err != nil {
+			return fmt.Errorf("field Data not valid, %w", err)
+		}
+	}
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *ProductListResp) IsValid() error {
+	if p.BaseResp != nil {
+		if err := p.BaseResp.IsValid(); err != nil {
+			return fmt.Errorf("field BaseResp not valid, %w", err)
+		}
+	}
+	return nil
+}
+func (p *ProductListReq) IsValid() error {
+	return nil
+}

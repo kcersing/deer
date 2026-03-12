@@ -1,7 +1,7 @@
 namespace go member
 include "../base/base.thrift"
 include "../base/member.thrift"
-
+include "../base/order.thrift"
 struct CreateMemberReq{
     1:optional string name="",
     2:optional string mobile="",
@@ -24,11 +24,11 @@ struct MemberResp {
 }
 
 struct MemberListResp {
-    1:optional list<member.Member> data={}
+    1:optional list<member.Member> data=[]
     255:optional base.BaseResp baseResp={}
 }
 struct MemberIdsResp {
-    1:optional list<i64> data={}
+    1:optional list<i64> data=[]
     255:optional base.BaseResp baseResp={}
 }
 
@@ -50,7 +50,32 @@ struct ChangePasswordReq {
     2:optional string password="",
 }
 
+struct CreateProductReq {
+    1:optional i64 memberId=0
+    2:optional i64 productId=0
+    3:optional list<order.OrderItem> items=[]
+    4:optional i64 orderId=0
+    5:optional i64 price=0
+    6:optional i64 userId=0
+}
+struct UpdateProductReq {
 
+}
+struct ProductResp {
+     1:optional member.MemberProduct data= {}
+     255:optional base.BaseResp baseResp={}
+}
+struct ProductListResp {
+     1:optional list<member.MemberProduct> data= []
+     255:optional base.BaseResp baseResp={}
+}
+struct ProductListReq {
+    1: i64 page=0
+    2: i64 pageSize =10
+    3: optional string name=""
+    4: optional list<i64> status = []
+
+}
 service MemberService  {
 
      MemberResp CreateMember(1: CreateMemberReq req)
@@ -62,4 +87,11 @@ service MemberService  {
      MemberResp LoginMember(1: base.CheckAccountReq req)
      base.NilResponse ChangePassword(1: ChangePasswordReq req)
      MemberIdsResp GetMemberIds(1: GetMemberListReq req)
+
+    ProductResp CreateProduct(1: CreateProductReq req) // 添加商品
+    ProductResp UpdateProduct(1: UpdateProductReq req) // 编辑商品
+    ProductResp GetProduct(1: base.IdReq req)
+    ProductListResp ProductList(1: ProductListReq req) // 商品列表
+
+
 }

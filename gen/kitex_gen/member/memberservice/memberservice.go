@@ -70,6 +70,34 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"CreateProduct": kitex.NewMethodInfo(
+		createProductHandler,
+		newMemberServiceCreateProductArgs,
+		newMemberServiceCreateProductResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"UpdateProduct": kitex.NewMethodInfo(
+		updateProductHandler,
+		newMemberServiceUpdateProductArgs,
+		newMemberServiceUpdateProductResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"GetProduct": kitex.NewMethodInfo(
+		getProductHandler,
+		newMemberServiceGetProductArgs,
+		newMemberServiceGetProductResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
+	"ProductList": kitex.NewMethodInfo(
+		productListHandler,
+		newMemberServiceProductListArgs,
+		newMemberServiceProductListResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -280,6 +308,78 @@ func newMemberServiceGetMemberIdsResult() interface{} {
 	return member.NewMemberServiceGetMemberIdsResult()
 }
 
+func createProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceCreateProductArgs)
+	realResult := result.(*member.MemberServiceCreateProductResult)
+	success, err := handler.(member.MemberService).CreateProduct(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceCreateProductArgs() interface{} {
+	return member.NewMemberServiceCreateProductArgs()
+}
+
+func newMemberServiceCreateProductResult() interface{} {
+	return member.NewMemberServiceCreateProductResult()
+}
+
+func updateProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceUpdateProductArgs)
+	realResult := result.(*member.MemberServiceUpdateProductResult)
+	success, err := handler.(member.MemberService).UpdateProduct(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceUpdateProductArgs() interface{} {
+	return member.NewMemberServiceUpdateProductArgs()
+}
+
+func newMemberServiceUpdateProductResult() interface{} {
+	return member.NewMemberServiceUpdateProductResult()
+}
+
+func getProductHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceGetProductArgs)
+	realResult := result.(*member.MemberServiceGetProductResult)
+	success, err := handler.(member.MemberService).GetProduct(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceGetProductArgs() interface{} {
+	return member.NewMemberServiceGetProductArgs()
+}
+
+func newMemberServiceGetProductResult() interface{} {
+	return member.NewMemberServiceGetProductResult()
+}
+
+func productListHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*member.MemberServiceProductListArgs)
+	realResult := result.(*member.MemberServiceProductListResult)
+	success, err := handler.(member.MemberService).ProductList(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newMemberServiceProductListArgs() interface{} {
+	return member.NewMemberServiceProductListArgs()
+}
+
+func newMemberServiceProductListResult() interface{} {
+	return member.NewMemberServiceProductListResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -365,6 +465,46 @@ func (p *kClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq
 	_args.Req = req
 	var _result member.MemberServiceGetMemberIdsResult
 	if err = p.c.Call(ctx, "GetMemberIds", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CreateProduct(ctx context.Context, req *member.CreateProductReq) (r *member.ProductResp, err error) {
+	var _args member.MemberServiceCreateProductArgs
+	_args.Req = req
+	var _result member.MemberServiceCreateProductResult
+	if err = p.c.Call(ctx, "CreateProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) UpdateProduct(ctx context.Context, req *member.UpdateProductReq) (r *member.ProductResp, err error) {
+	var _args member.MemberServiceUpdateProductArgs
+	_args.Req = req
+	var _result member.MemberServiceUpdateProductResult
+	if err = p.c.Call(ctx, "UpdateProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetProduct(ctx context.Context, req *base.IdReq) (r *member.ProductResp, err error) {
+	var _args member.MemberServiceGetProductArgs
+	_args.Req = req
+	var _result member.MemberServiceGetProductResult
+	if err = p.c.Call(ctx, "GetProduct", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) ProductList(ctx context.Context, req *member.ProductListReq) (r *member.ProductListResp, err error) {
+	var _args member.MemberServiceProductListArgs
+	_args.Req = req
+	var _result member.MemberServiceProductListResult
+	if err = p.c.Call(ctx, "ProductList", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

@@ -20,7 +20,7 @@ struct CreateItemReq {
     8:optional string type=""
     9:optional string code=""
     10:optional i64 price=0
-    11: optional list<i64> tagId=0
+    11: optional list<i64> tagId= []
     14: optional i64 createdId = 0
     15:optional i64 status=0
 
@@ -44,7 +44,7 @@ struct UpdateItemReq {
     8:optional string type=""
     9:optional string code=""
     10:optional i64 price=0
-    11: optional list<i64> tagId=0 
+    11: optional list<i64> tagId= []
     14: optional i64 createdId = 0
     15:optional i64 status=0
 }
@@ -66,8 +66,8 @@ struct CreateProductReq {
     6:optional i64 price=0 
     /**库存 */
     7:optional i64 stock=0
-    9: optional list<i64> items={}
-    10: optional list<i64> isSales={}
+    9: optional list<i64> items=[]
+    10: optional list<i64> isSales=[]
     13: optional string signSalesAt = "" 
     14: optional string endSalesAt = "" 
 
@@ -92,8 +92,8 @@ struct UpdateProductReq {
     6:optional i64 price=0 
     /**库存 */
     7:optional i64 stock=0
-    9: optional list<i64> items={}
-    10: optional list<i64> isSales={}
+    9: optional list<i64> items=[]
+    10: optional list<i64> isSales=[]
     13: optional string signSalesAt = "" 
     14: optional string endSalesAt = "" 
 
@@ -103,14 +103,14 @@ struct ListReq {
     1: i64 page=0 
     2: i64 pageSize =10
     3: optional string name="" 
-    4: optional list<i64> status =0 
+    4: optional list<i64> status = []
 
 }
 struct ItemListReq{
     1: i64 page=0 
     2: i64 pageSize=10 
     3: optional string name
-    4: optional list<i64> status =0
+    4: optional list<i64> status = []
     7: optional string type =""
 }
 

@@ -20,6 +20,10 @@ type Client interface {
 	LoginMember(ctx context.Context, req *base.CheckAccountReq, callOptions ...callopt.Option) (r *member.MemberResp, err error)
 	ChangePassword(ctx context.Context, req *member.ChangePasswordReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	GetMemberIds(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberIdsResp, err error)
+	CreateProduct(ctx context.Context, req *member.CreateProductReq, callOptions ...callopt.Option) (r *member.ProductResp, err error)
+	UpdateProduct(ctx context.Context, req *member.UpdateProductReq, callOptions ...callopt.Option) (r *member.ProductResp, err error)
+	GetProduct(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.ProductResp, err error)
+	ProductList(ctx context.Context, req *member.ProductListReq, callOptions ...callopt.Option) (r *member.ProductListResp, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -89,4 +93,24 @@ func (p *kMemberServiceClient) ChangePassword(ctx context.Context, req *member.C
 func (p *kMemberServiceClient) GetMemberIds(ctx context.Context, req *member.GetMemberListReq, callOptions ...callopt.Option) (r *member.MemberIdsResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetMemberIds(ctx, req)
+}
+
+func (p *kMemberServiceClient) CreateProduct(ctx context.Context, req *member.CreateProductReq, callOptions ...callopt.Option) (r *member.ProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CreateProduct(ctx, req)
+}
+
+func (p *kMemberServiceClient) UpdateProduct(ctx context.Context, req *member.UpdateProductReq, callOptions ...callopt.Option) (r *member.ProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.UpdateProduct(ctx, req)
+}
+
+func (p *kMemberServiceClient) GetProduct(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *member.ProductResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetProduct(ctx, req)
+}
+
+func (p *kMemberServiceClient) ProductList(ctx context.Context, req *member.ProductListReq, callOptions ...callopt.Option) (r *member.ProductListResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.ProductList(ctx, req)
 }

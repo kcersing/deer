@@ -24,3 +24,9 @@ var (
 func (p *Member) IsValid() error {
 	return nil
 }
+func (p *MemberProduct) IsValid() error {
+	return nil
+}
+func (p *MemberProductItem) IsValid() error {
+	return nil
+}

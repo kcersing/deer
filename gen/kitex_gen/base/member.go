@@ -366,3 +366,705 @@ var fieldIDToName_Member = map[int16]string{
 	256: "createdId",
 	257: "createdName",
 }
+
+type MemberProduct struct {
+	Id          int64                `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string               `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Sn          string               `thrift:"sn,3,optional" frugal:"3,optional,string" json:"sn,omitempty"`
+	Status      int64                `thrift:"status,8,optional" frugal:"8,optional,i64" json:"status,omitempty"`
+	StatusName  string               `thrift:"statusName,18,optional" frugal:"18,optional,string" json:"statusName,omitempty"`
+	Code        string               `thrift:"code,19,optional" frugal:"19,optional,string" json:"code,omitempty"`
+	CreatedId   int64                `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
+	CreatedName string               `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
+	CreatedAt   string               `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string               `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
+	Price       float64              `thrift:"price,6,optional" frugal:"6,optional,double" json:"price,omitempty"`
+	Items       []*MemberProductItem `thrift:"items,15,optional" frugal:"15,optional,list<MemberProductItem>" json:"items,omitempty"`
+	OrderId     int64                `thrift:"orderId,22,optional" frugal:"22,optional,i64" json:"orderId,omitempty"`
+	VenueId     int64                `thrift:"venueId,23,optional" frugal:"23,optional,i64" json:"venueId,omitempty"`
+	ProductId   int64                `thrift:"productId,24,optional" frugal:"24,optional,i64" json:"productId,omitempty"`
+	MemberId    int64                `thrift:"memberId,25,optional" frugal:"25,optional,i64" json:"memberId,omitempty"`
+}
+
+func NewMemberProduct() *MemberProduct {
+	return &MemberProduct{
+		Id:          0,
+		Name:        "",
+		Sn:          "",
+		Status:      0,
+		StatusName:  "",
+		Code:        "",
+		CreatedId:   0,
+		CreatedName: "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+		Price:       0.0,
+		Items:       []*MemberProductItem{},
+		OrderId:     0,
+		VenueId:     0,
+		ProductId:   0,
+		MemberId:    0,
+	}
+}
+
+func (p *MemberProduct) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.Sn = ""
+	p.Status = 0
+	p.StatusName = ""
+	p.Code = ""
+	p.CreatedId = 0
+	p.CreatedName = ""
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+	p.Price = 0.0
+	p.Items = []*MemberProductItem{}
+	p.OrderId = 0
+	p.VenueId = 0
+	p.ProductId = 0
+	p.MemberId = 0
+}
+
+var MemberProduct_Id_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetId() (v int64) {
+	if !p.IsSetId() {
+		return MemberProduct_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var MemberProduct_Name_DEFAULT string = ""
+
+func (p *MemberProduct) GetName() (v string) {
+	if !p.IsSetName() {
+		return MemberProduct_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var MemberProduct_Sn_DEFAULT string = ""
+
+func (p *MemberProduct) GetSn() (v string) {
+	if !p.IsSetSn() {
+		return MemberProduct_Sn_DEFAULT
+	}
+	return p.Sn
+}
+
+var MemberProduct_Status_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return MemberProduct_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var MemberProduct_StatusName_DEFAULT string = ""
+
+func (p *MemberProduct) GetStatusName() (v string) {
+	if !p.IsSetStatusName() {
+		return MemberProduct_StatusName_DEFAULT
+	}
+	return p.StatusName
+}
+
+var MemberProduct_Code_DEFAULT string = ""
+
+func (p *MemberProduct) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return MemberProduct_Code_DEFAULT
+	}
+	return p.Code
+}
+
+var MemberProduct_CreatedId_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return MemberProduct_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var MemberProduct_CreatedName_DEFAULT string = ""
+
+func (p *MemberProduct) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return MemberProduct_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
+var MemberProduct_CreatedAt_DEFAULT string = ""
+
+func (p *MemberProduct) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return MemberProduct_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var MemberProduct_UpdatedAt_DEFAULT string = ""
+
+func (p *MemberProduct) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return MemberProduct_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+
+var MemberProduct_Price_DEFAULT float64 = 0.0
+
+func (p *MemberProduct) GetPrice() (v float64) {
+	if !p.IsSetPrice() {
+		return MemberProduct_Price_DEFAULT
+	}
+	return p.Price
+}
+
+var MemberProduct_Items_DEFAULT []*MemberProductItem = []*MemberProductItem{}
+
+func (p *MemberProduct) GetItems() (v []*MemberProductItem) {
+	if !p.IsSetItems() {
+		return MemberProduct_Items_DEFAULT
+	}
+	return p.Items
+}
+
+var MemberProduct_OrderId_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetOrderId() (v int64) {
+	if !p.IsSetOrderId() {
+		return MemberProduct_OrderId_DEFAULT
+	}
+	return p.OrderId
+}
+
+var MemberProduct_VenueId_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetVenueId() (v int64) {
+	if !p.IsSetVenueId() {
+		return MemberProduct_VenueId_DEFAULT
+	}
+	return p.VenueId
+}
+
+var MemberProduct_ProductId_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetProductId() (v int64) {
+	if !p.IsSetProductId() {
+		return MemberProduct_ProductId_DEFAULT
+	}
+	return p.ProductId
+}
+
+var MemberProduct_MemberId_DEFAULT int64 = 0
+
+func (p *MemberProduct) GetMemberId() (v int64) {
+	if !p.IsSetMemberId() {
+		return MemberProduct_MemberId_DEFAULT
+	}
+	return p.MemberId
+}
+func (p *MemberProduct) SetId(val int64) {
+	p.Id = val
+}
+func (p *MemberProduct) SetName(val string) {
+	p.Name = val
+}
+func (p *MemberProduct) SetSn(val string) {
+	p.Sn = val
+}
+func (p *MemberProduct) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *MemberProduct) SetStatusName(val string) {
+	p.StatusName = val
+}
+func (p *MemberProduct) SetCode(val string) {
+	p.Code = val
+}
+func (p *MemberProduct) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *MemberProduct) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+func (p *MemberProduct) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *MemberProduct) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+func (p *MemberProduct) SetPrice(val float64) {
+	p.Price = val
+}
+func (p *MemberProduct) SetItems(val []*MemberProductItem) {
+	p.Items = val
+}
+func (p *MemberProduct) SetOrderId(val int64) {
+	p.OrderId = val
+}
+func (p *MemberProduct) SetVenueId(val int64) {
+	p.VenueId = val
+}
+func (p *MemberProduct) SetProductId(val int64) {
+	p.ProductId = val
+}
+func (p *MemberProduct) SetMemberId(val int64) {
+	p.MemberId = val
+}
+
+func (p *MemberProduct) IsSetId() bool {
+	return p.Id != MemberProduct_Id_DEFAULT
+}
+
+func (p *MemberProduct) IsSetName() bool {
+	return p.Name != MemberProduct_Name_DEFAULT
+}
+
+func (p *MemberProduct) IsSetSn() bool {
+	return p.Sn != MemberProduct_Sn_DEFAULT
+}
+
+func (p *MemberProduct) IsSetStatus() bool {
+	return p.Status != MemberProduct_Status_DEFAULT
+}
+
+func (p *MemberProduct) IsSetStatusName() bool {
+	return p.StatusName != MemberProduct_StatusName_DEFAULT
+}
+
+func (p *MemberProduct) IsSetCode() bool {
+	return p.Code != MemberProduct_Code_DEFAULT
+}
+
+func (p *MemberProduct) IsSetCreatedId() bool {
+	return p.CreatedId != MemberProduct_CreatedId_DEFAULT
+}
+
+func (p *MemberProduct) IsSetCreatedName() bool {
+	return p.CreatedName != MemberProduct_CreatedName_DEFAULT
+}
+
+func (p *MemberProduct) IsSetCreatedAt() bool {
+	return p.CreatedAt != MemberProduct_CreatedAt_DEFAULT
+}
+
+func (p *MemberProduct) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != MemberProduct_UpdatedAt_DEFAULT
+}
+
+func (p *MemberProduct) IsSetPrice() bool {
+	return p.Price != MemberProduct_Price_DEFAULT
+}
+
+func (p *MemberProduct) IsSetItems() bool {
+	return p.Items != nil
+}
+
+func (p *MemberProduct) IsSetOrderId() bool {
+	return p.OrderId != MemberProduct_OrderId_DEFAULT
+}
+
+func (p *MemberProduct) IsSetVenueId() bool {
+	return p.VenueId != MemberProduct_VenueId_DEFAULT
+}
+
+func (p *MemberProduct) IsSetProductId() bool {
+	return p.ProductId != MemberProduct_ProductId_DEFAULT
+}
+
+func (p *MemberProduct) IsSetMemberId() bool {
+	return p.MemberId != MemberProduct_MemberId_DEFAULT
+}
+
+func (p *MemberProduct) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberProduct(%+v)", *p)
+}
+
+var fieldIDToName_MemberProduct = map[int16]string{
+	1:  "id",
+	2:  "name",
+	3:  "sn",
+	8:  "status",
+	18: "statusName",
+	19: "code",
+	20: "createdId",
+	21: "createdName",
+	16: "createdAt",
+	17: "updatedAt",
+	6:  "price",
+	15: "items",
+	22: "orderId",
+	23: "venueId",
+	24: "productId",
+	25: "memberId",
+}
+
+type MemberProductItem struct {
+	Id          int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Name        string  `thrift:"name,2,optional" frugal:"2,optional,string" json:"name,omitempty"`
+	Duration    int64   `thrift:"duration,5,optional" frugal:"5,optional,i64" json:"duration,omitempty"`
+	Length      int64   `thrift:"length,6,optional" frugal:"6,optional,i64" json:"length,omitempty"`
+	Count       int64   `thrift:"count,7,optional" frugal:"7,optional,i64" json:"count,omitempty"`
+	CountUsed   int64   `thrift:"countUsed,18,optional" frugal:"18,optional,i64" json:"countUsed,omitempty"`
+	Type        string  `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
+	ActiveAt    string  `thrift:"activeAt,9,optional" frugal:"9,optional,string" json:"activeAt,omitempty"`
+	ExpiredAt   string  `thrift:"expiredAt,10,optional" frugal:"10,optional,string" json:"expiredAt,omitempty"`
+	Tags        []*List `thrift:"tags,11,optional" frugal:"11,optional,list<List>" json:"tags,omitempty"`
+	Price       int64   `thrift:"price,12,optional" frugal:"12,optional,i64" json:"price,omitempty"`
+	Code        string  `thrift:"code,13,optional" frugal:"13,optional,string" json:"code,omitempty"`
+	Status      int64   `thrift:"status,14,optional" frugal:"14,optional,i64" json:"status,omitempty"`
+	CreatedId   int64   `thrift:"createdId,20,optional" frugal:"20,optional,i64" json:"createdId,omitempty"`
+	CreatedName string  `thrift:"createdName,21,optional" frugal:"21,optional,string" json:"createdName,omitempty"`
+	CreatedAt   string  `thrift:"createdAt,16,optional" frugal:"16,optional,string" json:"createdAt,omitempty"`
+	UpdatedAt   string  `thrift:"updatedAt,17,optional" frugal:"17,optional,string" json:"updatedAt,omitempty"`
+}
+
+func NewMemberProductItem() *MemberProductItem {
+	return &MemberProductItem{
+		Id:          0,
+		Name:        "",
+		Duration:    0,
+		Length:      0,
+		Count:       0,
+		CountUsed:   0,
+		Type:        "",
+		ActiveAt:    "",
+		ExpiredAt:   "",
+		Tags:        []*List{},
+		Price:       0,
+		Code:        "",
+		Status:      0,
+		CreatedId:   0,
+		CreatedName: "",
+		CreatedAt:   "",
+		UpdatedAt:   "",
+	}
+}
+
+func (p *MemberProductItem) InitDefault() {
+	p.Id = 0
+	p.Name = ""
+	p.Duration = 0
+	p.Length = 0
+	p.Count = 0
+	p.CountUsed = 0
+	p.Type = ""
+	p.ActiveAt = ""
+	p.ExpiredAt = ""
+	p.Tags = []*List{}
+	p.Price = 0
+	p.Code = ""
+	p.Status = 0
+	p.CreatedId = 0
+	p.CreatedName = ""
+	p.CreatedAt = ""
+	p.UpdatedAt = ""
+}
+
+var MemberProductItem_Id_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetId() (v int64) {
+	if !p.IsSetId() {
+		return MemberProductItem_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var MemberProductItem_Name_DEFAULT string = ""
+
+func (p *MemberProductItem) GetName() (v string) {
+	if !p.IsSetName() {
+		return MemberProductItem_Name_DEFAULT
+	}
+	return p.Name
+}
+
+var MemberProductItem_Duration_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetDuration() (v int64) {
+	if !p.IsSetDuration() {
+		return MemberProductItem_Duration_DEFAULT
+	}
+	return p.Duration
+}
+
+var MemberProductItem_Length_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetLength() (v int64) {
+	if !p.IsSetLength() {
+		return MemberProductItem_Length_DEFAULT
+	}
+	return p.Length
+}
+
+var MemberProductItem_Count_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetCount() (v int64) {
+	if !p.IsSetCount() {
+		return MemberProductItem_Count_DEFAULT
+	}
+	return p.Count
+}
+
+var MemberProductItem_CountUsed_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetCountUsed() (v int64) {
+	if !p.IsSetCountUsed() {
+		return MemberProductItem_CountUsed_DEFAULT
+	}
+	return p.CountUsed
+}
+
+var MemberProductItem_Type_DEFAULT string = ""
+
+func (p *MemberProductItem) GetType() (v string) {
+	if !p.IsSetType() {
+		return MemberProductItem_Type_DEFAULT
+	}
+	return p.Type
+}
+
+var MemberProductItem_ActiveAt_DEFAULT string = ""
+
+func (p *MemberProductItem) GetActiveAt() (v string) {
+	if !p.IsSetActiveAt() {
+		return MemberProductItem_ActiveAt_DEFAULT
+	}
+	return p.ActiveAt
+}
+
+var MemberProductItem_ExpiredAt_DEFAULT string = ""
+
+func (p *MemberProductItem) GetExpiredAt() (v string) {
+	if !p.IsSetExpiredAt() {
+		return MemberProductItem_ExpiredAt_DEFAULT
+	}
+	return p.ExpiredAt
+}
+
+var MemberProductItem_Tags_DEFAULT []*List = []*List{}
+
+func (p *MemberProductItem) GetTags() (v []*List) {
+	if !p.IsSetTags() {
+		return MemberProductItem_Tags_DEFAULT
+	}
+	return p.Tags
+}
+
+var MemberProductItem_Price_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetPrice() (v int64) {
+	if !p.IsSetPrice() {
+		return MemberProductItem_Price_DEFAULT
+	}
+	return p.Price
+}
+
+var MemberProductItem_Code_DEFAULT string = ""
+
+func (p *MemberProductItem) GetCode() (v string) {
+	if !p.IsSetCode() {
+		return MemberProductItem_Code_DEFAULT
+	}
+	return p.Code
+}
+
+var MemberProductItem_Status_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return MemberProductItem_Status_DEFAULT
+	}
+	return p.Status
+}
+
+var MemberProductItem_CreatedId_DEFAULT int64 = 0
+
+func (p *MemberProductItem) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return MemberProductItem_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+
+var MemberProductItem_CreatedName_DEFAULT string = ""
+
+func (p *MemberProductItem) GetCreatedName() (v string) {
+	if !p.IsSetCreatedName() {
+		return MemberProductItem_CreatedName_DEFAULT
+	}
+	return p.CreatedName
+}
+
+var MemberProductItem_CreatedAt_DEFAULT string = ""
+
+func (p *MemberProductItem) GetCreatedAt() (v string) {
+	if !p.IsSetCreatedAt() {
+		return MemberProductItem_CreatedAt_DEFAULT
+	}
+	return p.CreatedAt
+}
+
+var MemberProductItem_UpdatedAt_DEFAULT string = ""
+
+func (p *MemberProductItem) GetUpdatedAt() (v string) {
+	if !p.IsSetUpdatedAt() {
+		return MemberProductItem_UpdatedAt_DEFAULT
+	}
+	return p.UpdatedAt
+}
+func (p *MemberProductItem) SetId(val int64) {
+	p.Id = val
+}
+func (p *MemberProductItem) SetName(val string) {
+	p.Name = val
+}
+func (p *MemberProductItem) SetDuration(val int64) {
+	p.Duration = val
+}
+func (p *MemberProductItem) SetLength(val int64) {
+	p.Length = val
+}
+func (p *MemberProductItem) SetCount(val int64) {
+	p.Count = val
+}
+func (p *MemberProductItem) SetCountUsed(val int64) {
+	p.CountUsed = val
+}
+func (p *MemberProductItem) SetType(val string) {
+	p.Type = val
+}
+func (p *MemberProductItem) SetActiveAt(val string) {
+	p.ActiveAt = val
+}
+func (p *MemberProductItem) SetExpiredAt(val string) {
+	p.ExpiredAt = val
+}
+func (p *MemberProductItem) SetTags(val []*List) {
+	p.Tags = val
+}
+func (p *MemberProductItem) SetPrice(val int64) {
+	p.Price = val
+}
+func (p *MemberProductItem) SetCode(val string) {
+	p.Code = val
+}
+func (p *MemberProductItem) SetStatus(val int64) {
+	p.Status = val
+}
+func (p *MemberProductItem) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+func (p *MemberProductItem) SetCreatedName(val string) {
+	p.CreatedName = val
+}
+func (p *MemberProductItem) SetCreatedAt(val string) {
+	p.CreatedAt = val
+}
+func (p *MemberProductItem) SetUpdatedAt(val string) {
+	p.UpdatedAt = val
+}
+
+func (p *MemberProductItem) IsSetId() bool {
+	return p.Id != MemberProductItem_Id_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetName() bool {
+	return p.Name != MemberProductItem_Name_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetDuration() bool {
+	return p.Duration != MemberProductItem_Duration_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetLength() bool {
+	return p.Length != MemberProductItem_Length_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCount() bool {
+	return p.Count != MemberProductItem_Count_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCountUsed() bool {
+	return p.CountUsed != MemberProductItem_CountUsed_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetType() bool {
+	return p.Type != MemberProductItem_Type_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetActiveAt() bool {
+	return p.ActiveAt != MemberProductItem_ActiveAt_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetExpiredAt() bool {
+	return p.ExpiredAt != MemberProductItem_ExpiredAt_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetTags() bool {
+	return p.Tags != nil
+}
+
+func (p *MemberProductItem) IsSetPrice() bool {
+	return p.Price != MemberProductItem_Price_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCode() bool {
+	return p.Code != MemberProductItem_Code_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetStatus() bool {
+	return p.Status != MemberProductItem_Status_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCreatedId() bool {
+	return p.CreatedId != MemberProductItem_CreatedId_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCreatedName() bool {
+	return p.CreatedName != MemberProductItem_CreatedName_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetCreatedAt() bool {
+	return p.CreatedAt != MemberProductItem_CreatedAt_DEFAULT
+}
+
+func (p *MemberProductItem) IsSetUpdatedAt() bool {
+	return p.UpdatedAt != MemberProductItem_UpdatedAt_DEFAULT
+}
+
+func (p *MemberProductItem) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MemberProductItem(%+v)", *p)
+}
+
+var fieldIDToName_MemberProductItem = map[int16]string{
+	1:  "id",
+	2:  "name",
+	5:  "duration",
+	6:  "length",
+	7:  "count",
+	18: "countUsed",
+	8:  "type",
+	9:  "activeAt",
+	10: "expiredAt",
+	11: "tags",
+	12: "price",
+	13: "code",
+	14: "status",
+	20: "createdId",
+	21: "createdName",
+	16: "createdAt",
+	17: "updatedAt",
+}

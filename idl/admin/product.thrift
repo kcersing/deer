@@ -17,8 +17,8 @@ struct CreateProductReq{
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
 
-    9: optional list<i64> items={} (api.raw = "items")
-    10: optional list<i64> isSales={} (api.raw = "isSales")
+    9: optional list<i64> items=[] (api.raw = "items")
+    10: optional list<i64> isSales=[] (api.raw = "isSales")
     13: optional list<string> salesAt = [] (api.raw = "salesAt")
 
 }
@@ -41,8 +41,8 @@ struct UpdateProductReq{
     6:optional i64 price=0 (api.raw = "price")
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
-    9: optional list<i64> items={} (api.raw = "items")
-    10: optional list<i64> isSales={} (api.raw = "isSales")
+    9: optional list<i64> items=[] (api.raw = "items")
+    10: optional list<i64> isSales=[] (api.raw = "isSales")
     13: optional list<string> salesAt = [] (api.raw = "salesAt")
 }
 struct GetProductListReq{

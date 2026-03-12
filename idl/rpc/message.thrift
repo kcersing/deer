@@ -12,7 +12,7 @@ include "../base/message.thrift"
         3: optional string content = ""
     }
     struct SmsSendListResp{
-        1:optional list<message.SmsSend> data={}
+        1:optional list<message.SmsSend> data=[]
         255:optional base.BaseResp baseResp={}
     }
     struct SmsSendListReq {
@@ -36,11 +36,11 @@ include "../base/message.thrift"
     }
 
     struct MessagesListResp{
-        1:optional list<message.Messages> data={}
+        1:optional list<message.Messages> data=[]
         255:optional base.BaseResp baseResp={}
     }
     struct MessagesSendListResp{
-        1:optional list<message.MessagesSend> data={}
+        1:optional list<message.MessagesSend> data=[]
         255:optional base.BaseResp baseResp={}
     }
 

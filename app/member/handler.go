@@ -65,3 +65,27 @@ func (s *MemberServiceImpl) GetMemberIds(ctx context.Context, req *member.GetMem
 
 	return
 }
+
+// CreateProduct implements the MemberServiceImpl interface.
+func (s *MemberServiceImpl) CreateProduct(ctx context.Context, req *member.CreateProductReq) (resp *member.ProductResp, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// UpdateProduct implements the MemberServiceImpl interface.
+func (s *MemberServiceImpl) UpdateProduct(ctx context.Context, req *member.UpdateProductReq) (resp *member.ProductResp, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// GetProduct implements the MemberServiceImpl interface.
+func (s *MemberServiceImpl) GetProduct(ctx context.Context, req *base.IdReq) (resp *member.ProductResp, err error) {
+	// TODO: Your code here...
+	return
+}
+
+// ProductList implements the MemberServiceImpl interface.
+func (s *MemberServiceImpl) ProductList(ctx context.Context, req *member.ProductListReq) (resp *member.ProductListResp, err error) {
+	// TODO: Your code here...
+	return
+}
