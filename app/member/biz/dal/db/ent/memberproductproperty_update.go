@@ -337,42 +337,42 @@ func (_u *MemberProductPropertyUpdate) ClearCount() *MemberProductPropertyUpdate
 	return _u
 }
 
-// SetCountSurplus sets the "count_surplus" field.
-func (_u *MemberProductPropertyUpdate) SetCountSurplus(v int64) *MemberProductPropertyUpdate {
-	_u.mutation.ResetCountSurplus()
-	_u.mutation.SetCountSurplus(v)
+// SetCountUsed sets the "count_used" field.
+func (_u *MemberProductPropertyUpdate) SetCountUsed(v int64) *MemberProductPropertyUpdate {
+	_u.mutation.ResetCountUsed()
+	_u.mutation.SetCountUsed(v)
 	return _u
 }
 
-// SetNillableCountSurplus sets the "count_surplus" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdate) SetNillableCountSurplus(v *int64) *MemberProductPropertyUpdate {
+// SetNillableCountUsed sets the "count_used" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdate) SetNillableCountUsed(v *int64) *MemberProductPropertyUpdate {
 	if v != nil {
-		_u.SetCountSurplus(*v)
+		_u.SetCountUsed(*v)
 	}
 	return _u
 }
 
-// AddCountSurplus adds value to the "count_surplus" field.
-func (_u *MemberProductPropertyUpdate) AddCountSurplus(v int64) *MemberProductPropertyUpdate {
-	_u.mutation.AddCountSurplus(v)
+// AddCountUsed adds value to the "count_used" field.
+func (_u *MemberProductPropertyUpdate) AddCountUsed(v int64) *MemberProductPropertyUpdate {
+	_u.mutation.AddCountUsed(v)
 	return _u
 }
 
-// ClearCountSurplus clears the value of the "count_surplus" field.
-func (_u *MemberProductPropertyUpdate) ClearCountSurplus() *MemberProductPropertyUpdate {
-	_u.mutation.ClearCountSurplus()
+// ClearCountUsed clears the value of the "count_used" field.
+func (_u *MemberProductPropertyUpdate) ClearCountUsed() *MemberProductPropertyUpdate {
+	_u.mutation.ClearCountUsed()
 	return _u
 }
 
 // SetPrice sets the "price" field.
-func (_u *MemberProductPropertyUpdate) SetPrice(v float64) *MemberProductPropertyUpdate {
+func (_u *MemberProductPropertyUpdate) SetPrice(v int64) *MemberProductPropertyUpdate {
 	_u.mutation.ResetPrice()
 	_u.mutation.SetPrice(v)
 	return _u
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdate) SetNillablePrice(v *float64) *MemberProductPropertyUpdate {
+func (_u *MemberProductPropertyUpdate) SetNillablePrice(v *int64) *MemberProductPropertyUpdate {
 	if v != nil {
 		_u.SetPrice(*v)
 	}
@@ -380,7 +380,7 @@ func (_u *MemberProductPropertyUpdate) SetNillablePrice(v *float64) *MemberProdu
 }
 
 // AddPrice adds value to the "price" field.
-func (_u *MemberProductPropertyUpdate) AddPrice(v float64) *MemberProductPropertyUpdate {
+func (_u *MemberProductPropertyUpdate) AddPrice(v int64) *MemberProductPropertyUpdate {
 	_u.mutation.AddPrice(v)
 	return _u
 }
@@ -391,43 +391,63 @@ func (_u *MemberProductPropertyUpdate) ClearPrice() *MemberProductPropertyUpdate
 	return _u
 }
 
-// SetValidityAt sets the "validity_at" field.
-func (_u *MemberProductPropertyUpdate) SetValidityAt(v time.Time) *MemberProductPropertyUpdate {
-	_u.mutation.SetValidityAt(v)
+// SetActiveAt sets the "active_at" field.
+func (_u *MemberProductPropertyUpdate) SetActiveAt(v time.Time) *MemberProductPropertyUpdate {
+	_u.mutation.SetActiveAt(v)
 	return _u
 }
 
-// SetNillableValidityAt sets the "validity_at" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdate) SetNillableValidityAt(v *time.Time) *MemberProductPropertyUpdate {
+// SetNillableActiveAt sets the "active_at" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdate) SetNillableActiveAt(v *time.Time) *MemberProductPropertyUpdate {
 	if v != nil {
-		_u.SetValidityAt(*v)
+		_u.SetActiveAt(*v)
 	}
 	return _u
 }
 
-// ClearValidityAt clears the value of the "validity_at" field.
-func (_u *MemberProductPropertyUpdate) ClearValidityAt() *MemberProductPropertyUpdate {
-	_u.mutation.ClearValidityAt()
+// ClearActiveAt clears the value of the "active_at" field.
+func (_u *MemberProductPropertyUpdate) ClearActiveAt() *MemberProductPropertyUpdate {
+	_u.mutation.ClearActiveAt()
 	return _u
 }
 
-// SetCancelAt sets the "cancel_at" field.
-func (_u *MemberProductPropertyUpdate) SetCancelAt(v time.Time) *MemberProductPropertyUpdate {
-	_u.mutation.SetCancelAt(v)
+// SetExpiredAt sets the "expired_at" field.
+func (_u *MemberProductPropertyUpdate) SetExpiredAt(v time.Time) *MemberProductPropertyUpdate {
+	_u.mutation.SetExpiredAt(v)
 	return _u
 }
 
-// SetNillableCancelAt sets the "cancel_at" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdate) SetNillableCancelAt(v *time.Time) *MemberProductPropertyUpdate {
+// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdate) SetNillableExpiredAt(v *time.Time) *MemberProductPropertyUpdate {
 	if v != nil {
-		_u.SetCancelAt(*v)
+		_u.SetExpiredAt(*v)
 	}
 	return _u
 }
 
-// ClearCancelAt clears the value of the "cancel_at" field.
-func (_u *MemberProductPropertyUpdate) ClearCancelAt() *MemberProductPropertyUpdate {
-	_u.mutation.ClearCancelAt()
+// ClearExpiredAt clears the value of the "expired_at" field.
+func (_u *MemberProductPropertyUpdate) ClearExpiredAt() *MemberProductPropertyUpdate {
+	_u.mutation.ClearExpiredAt()
+	return _u
+}
+
+// SetCode sets the "code" field.
+func (_u *MemberProductPropertyUpdate) SetCode(v string) *MemberProductPropertyUpdate {
+	_u.mutation.SetCode(v)
+	return _u
+}
+
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdate) SetNillableCode(v *string) *MemberProductPropertyUpdate {
+	if v != nil {
+		_u.SetCode(*v)
+	}
+	return _u
+}
+
+// ClearCode clears the value of the "code" field.
+func (_u *MemberProductPropertyUpdate) ClearCode() *MemberProductPropertyUpdate {
+	_u.mutation.ClearCode()
 	return _u
 }
 
@@ -605,35 +625,41 @@ func (_u *MemberProductPropertyUpdate) sqlSave(ctx context.Context) (_node int, 
 	if _u.mutation.CountCleared() {
 		_spec.ClearField(memberproductproperty.FieldCount, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.CountSurplus(); ok {
-		_spec.SetField(memberproductproperty.FieldCountSurplus, field.TypeInt64, value)
+	if value, ok := _u.mutation.CountUsed(); ok {
+		_spec.SetField(memberproductproperty.FieldCountUsed, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedCountSurplus(); ok {
-		_spec.AddField(memberproductproperty.FieldCountSurplus, field.TypeInt64, value)
+	if value, ok := _u.mutation.AddedCountUsed(); ok {
+		_spec.AddField(memberproductproperty.FieldCountUsed, field.TypeInt64, value)
 	}
-	if _u.mutation.CountSurplusCleared() {
-		_spec.ClearField(memberproductproperty.FieldCountSurplus, field.TypeInt64)
+	if _u.mutation.CountUsedCleared() {
+		_spec.ClearField(memberproductproperty.FieldCountUsed, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Price(); ok {
-		_spec.SetField(memberproductproperty.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproductproperty.FieldPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPrice(); ok {
-		_spec.AddField(memberproductproperty.FieldPrice, field.TypeFloat64, value)
+		_spec.AddField(memberproductproperty.FieldPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.PriceCleared() {
-		_spec.ClearField(memberproductproperty.FieldPrice, field.TypeFloat64)
+		_spec.ClearField(memberproductproperty.FieldPrice, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.ValidityAt(); ok {
-		_spec.SetField(memberproductproperty.FieldValidityAt, field.TypeTime, value)
+	if value, ok := _u.mutation.ActiveAt(); ok {
+		_spec.SetField(memberproductproperty.FieldActiveAt, field.TypeTime, value)
 	}
-	if _u.mutation.ValidityAtCleared() {
-		_spec.ClearField(memberproductproperty.FieldValidityAt, field.TypeTime)
+	if _u.mutation.ActiveAtCleared() {
+		_spec.ClearField(memberproductproperty.FieldActiveAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.CancelAt(); ok {
-		_spec.SetField(memberproductproperty.FieldCancelAt, field.TypeTime, value)
+	if value, ok := _u.mutation.ExpiredAt(); ok {
+		_spec.SetField(memberproductproperty.FieldExpiredAt, field.TypeTime, value)
 	}
-	if _u.mutation.CancelAtCleared() {
-		_spec.ClearField(memberproductproperty.FieldCancelAt, field.TypeTime)
+	if _u.mutation.ExpiredAtCleared() {
+		_spec.ClearField(memberproductproperty.FieldExpiredAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
+	}
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(memberproductproperty.FieldCode, field.TypeString)
 	}
 	if _u.mutation.OwnerCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -992,42 +1018,42 @@ func (_u *MemberProductPropertyUpdateOne) ClearCount() *MemberProductPropertyUpd
 	return _u
 }
 
-// SetCountSurplus sets the "count_surplus" field.
-func (_u *MemberProductPropertyUpdateOne) SetCountSurplus(v int64) *MemberProductPropertyUpdateOne {
-	_u.mutation.ResetCountSurplus()
-	_u.mutation.SetCountSurplus(v)
+// SetCountUsed sets the "count_used" field.
+func (_u *MemberProductPropertyUpdateOne) SetCountUsed(v int64) *MemberProductPropertyUpdateOne {
+	_u.mutation.ResetCountUsed()
+	_u.mutation.SetCountUsed(v)
 	return _u
 }
 
-// SetNillableCountSurplus sets the "count_surplus" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdateOne) SetNillableCountSurplus(v *int64) *MemberProductPropertyUpdateOne {
+// SetNillableCountUsed sets the "count_used" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdateOne) SetNillableCountUsed(v *int64) *MemberProductPropertyUpdateOne {
 	if v != nil {
-		_u.SetCountSurplus(*v)
+		_u.SetCountUsed(*v)
 	}
 	return _u
 }
 
-// AddCountSurplus adds value to the "count_surplus" field.
-func (_u *MemberProductPropertyUpdateOne) AddCountSurplus(v int64) *MemberProductPropertyUpdateOne {
-	_u.mutation.AddCountSurplus(v)
+// AddCountUsed adds value to the "count_used" field.
+func (_u *MemberProductPropertyUpdateOne) AddCountUsed(v int64) *MemberProductPropertyUpdateOne {
+	_u.mutation.AddCountUsed(v)
 	return _u
 }
 
-// ClearCountSurplus clears the value of the "count_surplus" field.
-func (_u *MemberProductPropertyUpdateOne) ClearCountSurplus() *MemberProductPropertyUpdateOne {
-	_u.mutation.ClearCountSurplus()
+// ClearCountUsed clears the value of the "count_used" field.
+func (_u *MemberProductPropertyUpdateOne) ClearCountUsed() *MemberProductPropertyUpdateOne {
+	_u.mutation.ClearCountUsed()
 	return _u
 }
 
 // SetPrice sets the "price" field.
-func (_u *MemberProductPropertyUpdateOne) SetPrice(v float64) *MemberProductPropertyUpdateOne {
+func (_u *MemberProductPropertyUpdateOne) SetPrice(v int64) *MemberProductPropertyUpdateOne {
 	_u.mutation.ResetPrice()
 	_u.mutation.SetPrice(v)
 	return _u
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdateOne) SetNillablePrice(v *float64) *MemberProductPropertyUpdateOne {
+func (_u *MemberProductPropertyUpdateOne) SetNillablePrice(v *int64) *MemberProductPropertyUpdateOne {
 	if v != nil {
 		_u.SetPrice(*v)
 	}
@@ -1035,7 +1061,7 @@ func (_u *MemberProductPropertyUpdateOne) SetNillablePrice(v *float64) *MemberPr
 }
 
 // AddPrice adds value to the "price" field.
-func (_u *MemberProductPropertyUpdateOne) AddPrice(v float64) *MemberProductPropertyUpdateOne {
+func (_u *MemberProductPropertyUpdateOne) AddPrice(v int64) *MemberProductPropertyUpdateOne {
 	_u.mutation.AddPrice(v)
 	return _u
 }
@@ -1046,43 +1072,63 @@ func (_u *MemberProductPropertyUpdateOne) ClearPrice() *MemberProductPropertyUpd
 	return _u
 }
 
-// SetValidityAt sets the "validity_at" field.
-func (_u *MemberProductPropertyUpdateOne) SetValidityAt(v time.Time) *MemberProductPropertyUpdateOne {
-	_u.mutation.SetValidityAt(v)
+// SetActiveAt sets the "active_at" field.
+func (_u *MemberProductPropertyUpdateOne) SetActiveAt(v time.Time) *MemberProductPropertyUpdateOne {
+	_u.mutation.SetActiveAt(v)
 	return _u
 }
 
-// SetNillableValidityAt sets the "validity_at" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdateOne) SetNillableValidityAt(v *time.Time) *MemberProductPropertyUpdateOne {
+// SetNillableActiveAt sets the "active_at" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdateOne) SetNillableActiveAt(v *time.Time) *MemberProductPropertyUpdateOne {
 	if v != nil {
-		_u.SetValidityAt(*v)
+		_u.SetActiveAt(*v)
 	}
 	return _u
 }
 
-// ClearValidityAt clears the value of the "validity_at" field.
-func (_u *MemberProductPropertyUpdateOne) ClearValidityAt() *MemberProductPropertyUpdateOne {
-	_u.mutation.ClearValidityAt()
+// ClearActiveAt clears the value of the "active_at" field.
+func (_u *MemberProductPropertyUpdateOne) ClearActiveAt() *MemberProductPropertyUpdateOne {
+	_u.mutation.ClearActiveAt()
 	return _u
 }
 
-// SetCancelAt sets the "cancel_at" field.
-func (_u *MemberProductPropertyUpdateOne) SetCancelAt(v time.Time) *MemberProductPropertyUpdateOne {
-	_u.mutation.SetCancelAt(v)
+// SetExpiredAt sets the "expired_at" field.
+func (_u *MemberProductPropertyUpdateOne) SetExpiredAt(v time.Time) *MemberProductPropertyUpdateOne {
+	_u.mutation.SetExpiredAt(v)
 	return _u
 }
 
-// SetNillableCancelAt sets the "cancel_at" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdateOne) SetNillableCancelAt(v *time.Time) *MemberProductPropertyUpdateOne {
+// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdateOne) SetNillableExpiredAt(v *time.Time) *MemberProductPropertyUpdateOne {
 	if v != nil {
-		_u.SetCancelAt(*v)
+		_u.SetExpiredAt(*v)
 	}
 	return _u
 }
 
-// ClearCancelAt clears the value of the "cancel_at" field.
-func (_u *MemberProductPropertyUpdateOne) ClearCancelAt() *MemberProductPropertyUpdateOne {
-	_u.mutation.ClearCancelAt()
+// ClearExpiredAt clears the value of the "expired_at" field.
+func (_u *MemberProductPropertyUpdateOne) ClearExpiredAt() *MemberProductPropertyUpdateOne {
+	_u.mutation.ClearExpiredAt()
+	return _u
+}
+
+// SetCode sets the "code" field.
+func (_u *MemberProductPropertyUpdateOne) SetCode(v string) *MemberProductPropertyUpdateOne {
+	_u.mutation.SetCode(v)
+	return _u
+}
+
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_u *MemberProductPropertyUpdateOne) SetNillableCode(v *string) *MemberProductPropertyUpdateOne {
+	if v != nil {
+		_u.SetCode(*v)
+	}
+	return _u
+}
+
+// ClearCode clears the value of the "code" field.
+func (_u *MemberProductPropertyUpdateOne) ClearCode() *MemberProductPropertyUpdateOne {
+	_u.mutation.ClearCode()
 	return _u
 }
 
@@ -1290,35 +1336,41 @@ func (_u *MemberProductPropertyUpdateOne) sqlSave(ctx context.Context) (_node *M
 	if _u.mutation.CountCleared() {
 		_spec.ClearField(memberproductproperty.FieldCount, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.CountSurplus(); ok {
-		_spec.SetField(memberproductproperty.FieldCountSurplus, field.TypeInt64, value)
+	if value, ok := _u.mutation.CountUsed(); ok {
+		_spec.SetField(memberproductproperty.FieldCountUsed, field.TypeInt64, value)
 	}
-	if value, ok := _u.mutation.AddedCountSurplus(); ok {
-		_spec.AddField(memberproductproperty.FieldCountSurplus, field.TypeInt64, value)
+	if value, ok := _u.mutation.AddedCountUsed(); ok {
+		_spec.AddField(memberproductproperty.FieldCountUsed, field.TypeInt64, value)
 	}
-	if _u.mutation.CountSurplusCleared() {
-		_spec.ClearField(memberproductproperty.FieldCountSurplus, field.TypeInt64)
+	if _u.mutation.CountUsedCleared() {
+		_spec.ClearField(memberproductproperty.FieldCountUsed, field.TypeInt64)
 	}
 	if value, ok := _u.mutation.Price(); ok {
-		_spec.SetField(memberproductproperty.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproductproperty.FieldPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPrice(); ok {
-		_spec.AddField(memberproductproperty.FieldPrice, field.TypeFloat64, value)
+		_spec.AddField(memberproductproperty.FieldPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.PriceCleared() {
-		_spec.ClearField(memberproductproperty.FieldPrice, field.TypeFloat64)
+		_spec.ClearField(memberproductproperty.FieldPrice, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.ValidityAt(); ok {
-		_spec.SetField(memberproductproperty.FieldValidityAt, field.TypeTime, value)
+	if value, ok := _u.mutation.ActiveAt(); ok {
+		_spec.SetField(memberproductproperty.FieldActiveAt, field.TypeTime, value)
 	}
-	if _u.mutation.ValidityAtCleared() {
-		_spec.ClearField(memberproductproperty.FieldValidityAt, field.TypeTime)
+	if _u.mutation.ActiveAtCleared() {
+		_spec.ClearField(memberproductproperty.FieldActiveAt, field.TypeTime)
 	}
-	if value, ok := _u.mutation.CancelAt(); ok {
-		_spec.SetField(memberproductproperty.FieldCancelAt, field.TypeTime, value)
+	if value, ok := _u.mutation.ExpiredAt(); ok {
+		_spec.SetField(memberproductproperty.FieldExpiredAt, field.TypeTime, value)
 	}
-	if _u.mutation.CancelAtCleared() {
-		_spec.ClearField(memberproductproperty.FieldCancelAt, field.TypeTime)
+	if _u.mutation.ExpiredAtCleared() {
+		_spec.ClearField(memberproductproperty.FieldExpiredAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.Code(); ok {
+		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
+	}
+	if _u.mutation.CodeCleared() {
+		_spec.ClearField(memberproductproperty.FieldCode, field.TypeString)
 	}
 	if _u.mutation.OwnerCleared() {
 		edge := &sqlgraph.EdgeSpec{

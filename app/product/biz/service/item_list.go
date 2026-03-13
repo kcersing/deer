@@ -26,14 +26,15 @@ func NewItemListService(ctx context.Context) *ItemListService {
 // Run create note info
 func (s *ItemListService) Run(req *product.ItemListReq) (resp *product.ItemListResp, err error) {
 	// Finish your business logic.
-
 	var (
 		dataResp []*base.Item
 	)
-
 	var predicates []predicate.ProductItem
 	if req.GetName() != "" {
 		predicates = append(predicates, productitem.NameContains(req.GetName()))
+	}
+	if len(req.GetIds()) >= 0 {
+		predicates = append(predicates, productitem.IDIn(req.GetIds()...))
 	}
 	if len(req.GetStatus()) > 0 {
 		predicates = append(predicates, productitem.StatusIn(req.GetStatus()...))

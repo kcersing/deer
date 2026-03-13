@@ -35,14 +35,12 @@ type MemberProduct struct {
 	MemberID int64 `json:"member_id,omitempty"`
 	// 产品ID
 	ProductID int64 `json:"product_id,omitempty"`
-	// 场馆ID
-	VenueID int64 `json:"venue_id,omitempty"`
 	// 订单ID
 	OrderID int64 `json:"order_id,omitempty"`
 	// 产品名称
 	Name string `json:"name,omitempty"`
 	// 产品价格
-	Price float64 `json:"price,omitempty"`
+	Price int64 `json:"price,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MemberProductQuery when eager-loading is set.
 	Edges        MemberProductEdges `json:"edges"`
@@ -96,9 +94,7 @@ func (*MemberProduct) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case memberproduct.FieldPrice:
-			values[i] = new(sql.NullFloat64)
-		case memberproduct.FieldID, memberproduct.FieldDelete, memberproduct.FieldCreatedID, memberproduct.FieldStatus, memberproduct.FieldMemberID, memberproduct.FieldProductID, memberproduct.FieldVenueID, memberproduct.FieldOrderID:
+		case memberproduct.FieldID, memberproduct.FieldDelete, memberproduct.FieldCreatedID, memberproduct.FieldStatus, memberproduct.FieldMemberID, memberproduct.FieldProductID, memberproduct.FieldOrderID, memberproduct.FieldPrice:
 			values[i] = new(sql.NullInt64)
 		case memberproduct.FieldSn, memberproduct.FieldName:
 			values[i] = new(sql.NullString)
@@ -173,12 +169,6 @@ func (_m *MemberProduct) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.ProductID = value.Int64
 			}
-		case memberproduct.FieldVenueID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field venue_id", values[i])
-			} else if value.Valid {
-				_m.VenueID = value.Int64
-			}
 		case memberproduct.FieldOrderID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field order_id", values[i])
@@ -192,10 +182,10 @@ func (_m *MemberProduct) assignValues(columns []string, values []any) error {
 				_m.Name = value.String
 			}
 		case memberproduct.FieldPrice:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
-				_m.Price = value.Float64
+				_m.Price = value.Int64
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -271,9 +261,6 @@ func (_m *MemberProduct) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("product_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.ProductID))
-	builder.WriteString(", ")
-	builder.WriteString("venue_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.VenueID))
 	builder.WriteString(", ")
 	builder.WriteString("order_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.OrderID))

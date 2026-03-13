@@ -191,33 +191,6 @@ func (_u *MemberProductUpdate) ClearProductID() *MemberProductUpdate {
 	return _u
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_u *MemberProductUpdate) SetVenueID(v int64) *MemberProductUpdate {
-	_u.mutation.ResetVenueID()
-	_u.mutation.SetVenueID(v)
-	return _u
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_u *MemberProductUpdate) SetNillableVenueID(v *int64) *MemberProductUpdate {
-	if v != nil {
-		_u.SetVenueID(*v)
-	}
-	return _u
-}
-
-// AddVenueID adds value to the "venue_id" field.
-func (_u *MemberProductUpdate) AddVenueID(v int64) *MemberProductUpdate {
-	_u.mutation.AddVenueID(v)
-	return _u
-}
-
-// ClearVenueID clears the value of the "venue_id" field.
-func (_u *MemberProductUpdate) ClearVenueID() *MemberProductUpdate {
-	_u.mutation.ClearVenueID()
-	return _u
-}
-
 // SetOrderID sets the "order_id" field.
 func (_u *MemberProductUpdate) SetOrderID(v int64) *MemberProductUpdate {
 	_u.mutation.ResetOrderID()
@@ -266,14 +239,14 @@ func (_u *MemberProductUpdate) ClearName() *MemberProductUpdate {
 }
 
 // SetPrice sets the "price" field.
-func (_u *MemberProductUpdate) SetPrice(v float64) *MemberProductUpdate {
+func (_u *MemberProductUpdate) SetPrice(v int64) *MemberProductUpdate {
 	_u.mutation.ResetPrice()
 	_u.mutation.SetPrice(v)
 	return _u
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_u *MemberProductUpdate) SetNillablePrice(v *float64) *MemberProductUpdate {
+func (_u *MemberProductUpdate) SetNillablePrice(v *int64) *MemberProductUpdate {
 	if v != nil {
 		_u.SetPrice(*v)
 	}
@@ -281,7 +254,7 @@ func (_u *MemberProductUpdate) SetNillablePrice(v *float64) *MemberProductUpdate
 }
 
 // AddPrice adds value to the "price" field.
-func (_u *MemberProductUpdate) AddPrice(v float64) *MemberProductUpdate {
+func (_u *MemberProductUpdate) AddPrice(v int64) *MemberProductUpdate {
 	_u.mutation.AddPrice(v)
 	return _u
 }
@@ -490,15 +463,6 @@ func (_u *MemberProductUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.ProductIDCleared() {
 		_spec.ClearField(memberproduct.FieldProductID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.VenueID(); ok {
-		_spec.SetField(memberproduct.FieldVenueID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedVenueID(); ok {
-		_spec.AddField(memberproduct.FieldVenueID, field.TypeInt64, value)
-	}
-	if _u.mutation.VenueIDCleared() {
-		_spec.ClearField(memberproduct.FieldVenueID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.OrderID(); ok {
 		_spec.SetField(memberproduct.FieldOrderID, field.TypeInt64, value)
 	}
@@ -515,13 +479,13 @@ func (_u *MemberProductUpdate) sqlSave(ctx context.Context) (_node int, err erro
 		_spec.ClearField(memberproduct.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.Price(); ok {
-		_spec.SetField(memberproduct.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproduct.FieldPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPrice(); ok {
-		_spec.AddField(memberproduct.FieldPrice, field.TypeFloat64, value)
+		_spec.AddField(memberproduct.FieldPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.PriceCleared() {
-		_spec.ClearField(memberproduct.FieldPrice, field.TypeFloat64)
+		_spec.ClearField(memberproduct.FieldPrice, field.TypeInt64)
 	}
 	if _u.mutation.MembersCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -822,33 +786,6 @@ func (_u *MemberProductUpdateOne) ClearProductID() *MemberProductUpdateOne {
 	return _u
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_u *MemberProductUpdateOne) SetVenueID(v int64) *MemberProductUpdateOne {
-	_u.mutation.ResetVenueID()
-	_u.mutation.SetVenueID(v)
-	return _u
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_u *MemberProductUpdateOne) SetNillableVenueID(v *int64) *MemberProductUpdateOne {
-	if v != nil {
-		_u.SetVenueID(*v)
-	}
-	return _u
-}
-
-// AddVenueID adds value to the "venue_id" field.
-func (_u *MemberProductUpdateOne) AddVenueID(v int64) *MemberProductUpdateOne {
-	_u.mutation.AddVenueID(v)
-	return _u
-}
-
-// ClearVenueID clears the value of the "venue_id" field.
-func (_u *MemberProductUpdateOne) ClearVenueID() *MemberProductUpdateOne {
-	_u.mutation.ClearVenueID()
-	return _u
-}
-
 // SetOrderID sets the "order_id" field.
 func (_u *MemberProductUpdateOne) SetOrderID(v int64) *MemberProductUpdateOne {
 	_u.mutation.ResetOrderID()
@@ -897,14 +834,14 @@ func (_u *MemberProductUpdateOne) ClearName() *MemberProductUpdateOne {
 }
 
 // SetPrice sets the "price" field.
-func (_u *MemberProductUpdateOne) SetPrice(v float64) *MemberProductUpdateOne {
+func (_u *MemberProductUpdateOne) SetPrice(v int64) *MemberProductUpdateOne {
 	_u.mutation.ResetPrice()
 	_u.mutation.SetPrice(v)
 	return _u
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_u *MemberProductUpdateOne) SetNillablePrice(v *float64) *MemberProductUpdateOne {
+func (_u *MemberProductUpdateOne) SetNillablePrice(v *int64) *MemberProductUpdateOne {
 	if v != nil {
 		_u.SetPrice(*v)
 	}
@@ -912,7 +849,7 @@ func (_u *MemberProductUpdateOne) SetNillablePrice(v *float64) *MemberProductUpd
 }
 
 // AddPrice adds value to the "price" field.
-func (_u *MemberProductUpdateOne) AddPrice(v float64) *MemberProductUpdateOne {
+func (_u *MemberProductUpdateOne) AddPrice(v int64) *MemberProductUpdateOne {
 	_u.mutation.AddPrice(v)
 	return _u
 }
@@ -1151,15 +1088,6 @@ func (_u *MemberProductUpdateOne) sqlSave(ctx context.Context) (_node *MemberPro
 	if _u.mutation.ProductIDCleared() {
 		_spec.ClearField(memberproduct.FieldProductID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.VenueID(); ok {
-		_spec.SetField(memberproduct.FieldVenueID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedVenueID(); ok {
-		_spec.AddField(memberproduct.FieldVenueID, field.TypeInt64, value)
-	}
-	if _u.mutation.VenueIDCleared() {
-		_spec.ClearField(memberproduct.FieldVenueID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.OrderID(); ok {
 		_spec.SetField(memberproduct.FieldOrderID, field.TypeInt64, value)
 	}
@@ -1176,13 +1104,13 @@ func (_u *MemberProductUpdateOne) sqlSave(ctx context.Context) (_node *MemberPro
 		_spec.ClearField(memberproduct.FieldName, field.TypeString)
 	}
 	if value, ok := _u.mutation.Price(); ok {
-		_spec.SetField(memberproduct.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproduct.FieldPrice, field.TypeInt64, value)
 	}
 	if value, ok := _u.mutation.AddedPrice(); ok {
-		_spec.AddField(memberproduct.FieldPrice, field.TypeFloat64, value)
+		_spec.AddField(memberproduct.FieldPrice, field.TypeInt64, value)
 	}
 	if _u.mutation.PriceCleared() {
-		_spec.ClearField(memberproduct.FieldPrice, field.TypeFloat64)
+		_spec.ClearField(memberproduct.FieldPrice, field.TypeInt64)
 	}
 	if _u.mutation.MembersCleared() {
 		edge := &sqlgraph.EdgeSpec{

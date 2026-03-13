@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"member/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"member/biz/dal/db/ent/schema/mixins"
 )
 
 type MemberProduct struct {
@@ -20,10 +21,10 @@ func (MemberProduct) Fields() []ent.Field {
 		field.String("sn").Comment("编号").Optional(),
 		field.Int64("member_id").Comment("会员id").Optional(),
 		field.Int64("product_id").Comment("产品ID").Optional(),
-		field.Int64("venue_id").Comment("场馆ID").Optional(),
+		//field.Int64("venue_id").Comment("场馆ID").Optional(),
 		field.Int64("order_id").Comment("订单ID").Optional(),
 		field.String("name").Comment("产品名称").Optional(),
-		field.Float("price").Comment("产品价格").Optional(),
+		field.Int64("price").Comment("产品价格").Optional(),
 	}
 }
 
@@ -48,7 +49,7 @@ func (MemberProduct) Edges() []ent.Edge {
 func (MemberProduct) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id"),
-		index.Fields("venue_id"),
+		//index.Fields("venue_id"),
 		index.Fields("member_id"),
 		index.Fields("product_id"),
 		index.Fields("order_id"),

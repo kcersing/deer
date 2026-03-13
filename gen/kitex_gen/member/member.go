@@ -742,6 +742,8 @@ type CreateProductReq struct {
 	OrderId   int64             `thrift:"orderId,4,optional" frugal:"4,optional,i64" json:"orderId,omitempty"`
 	Price     int64             `thrift:"price,5,optional" frugal:"5,optional,i64" json:"price,omitempty"`
 	UserId    int64             `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
+	Quantity  int64             `thrift:"quantity,7,optional" frugal:"7,optional,i64" json:"quantity,omitempty"`
+	Name      string            `thrift:"name,8,optional" frugal:"8,optional,string" json:"name,omitempty"`
 }
 
 func NewCreateProductReq() *CreateProductReq {
@@ -752,6 +754,8 @@ func NewCreateProductReq() *CreateProductReq {
 		OrderId:   0,
 		Price:     0,
 		UserId:    0,
+		Quantity:  1,
+		Name:      "",
 	}
 }
 
@@ -762,6 +766,8 @@ func (p *CreateProductReq) InitDefault() {
 	p.OrderId = 0
 	p.Price = 0
 	p.UserId = 0
+	p.Quantity = 1
+	p.Name = ""
 }
 
 var CreateProductReq_MemberId_DEFAULT int64 = 0
@@ -817,6 +823,24 @@ func (p *CreateProductReq) GetUserId() (v int64) {
 	}
 	return p.UserId
 }
+
+var CreateProductReq_Quantity_DEFAULT int64 = 1
+
+func (p *CreateProductReq) GetQuantity() (v int64) {
+	if !p.IsSetQuantity() {
+		return CreateProductReq_Quantity_DEFAULT
+	}
+	return p.Quantity
+}
+
+var CreateProductReq_Name_DEFAULT string = ""
+
+func (p *CreateProductReq) GetName() (v string) {
+	if !p.IsSetName() {
+		return CreateProductReq_Name_DEFAULT
+	}
+	return p.Name
+}
 func (p *CreateProductReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -834,6 +858,12 @@ func (p *CreateProductReq) SetPrice(val int64) {
 }
 func (p *CreateProductReq) SetUserId(val int64) {
 	p.UserId = val
+}
+func (p *CreateProductReq) SetQuantity(val int64) {
+	p.Quantity = val
+}
+func (p *CreateProductReq) SetName(val string) {
+	p.Name = val
 }
 
 func (p *CreateProductReq) IsSetMemberId() bool {
@@ -860,6 +890,14 @@ func (p *CreateProductReq) IsSetUserId() bool {
 	return p.UserId != CreateProductReq_UserId_DEFAULT
 }
 
+func (p *CreateProductReq) IsSetQuantity() bool {
+	return p.Quantity != CreateProductReq_Quantity_DEFAULT
+}
+
+func (p *CreateProductReq) IsSetName() bool {
+	return p.Name != CreateProductReq_Name_DEFAULT
+}
+
 func (p *CreateProductReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -874,6 +912,8 @@ var fieldIDToName_CreateProductReq = map[int16]string{
 	4: "orderId",
 	5: "price",
 	6: "userId",
+	7: "quantity",
+	8: "name",
 }
 
 type UpdateProductReq struct {

@@ -125,24 +125,29 @@ func Count(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldEQ(FieldCount, v))
 }
 
-// CountSurplus applies equality check predicate on the "count_surplus" field. It's identical to CountSurplusEQ.
-func CountSurplus(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCountSurplus, v))
+// CountUsed applies equality check predicate on the "count_used" field. It's identical to CountUsedEQ.
+func CountUsed(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldCountUsed, v))
 }
 
 // Price applies equality check predicate on the "price" field. It's identical to PriceEQ.
-func Price(v float64) predicate.MemberProductProperty {
+func Price(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldEQ(FieldPrice, v))
 }
 
-// ValidityAt applies equality check predicate on the "validity_at" field. It's identical to ValidityAtEQ.
-func ValidityAt(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldValidityAt, v))
+// ActiveAt applies equality check predicate on the "active_at" field. It's identical to ActiveAtEQ.
+func ActiveAt(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldActiveAt, v))
 }
 
-// CancelAt applies equality check predicate on the "cancel_at" field. It's identical to CancelAtEQ.
-func CancelAt(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCancelAt, v))
+// ExpiredAt applies equality check predicate on the "expired_at" field. It's identical to ExpiredAtEQ.
+func ExpiredAt(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldExpiredAt, v))
+}
+
+// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
+func Code(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldCode, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -900,93 +905,93 @@ func CountNotNil() predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCount))
 }
 
-// CountSurplusEQ applies the EQ predicate on the "count_surplus" field.
-func CountSurplusEQ(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCountSurplus, v))
+// CountUsedEQ applies the EQ predicate on the "count_used" field.
+func CountUsedEQ(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldCountUsed, v))
 }
 
-// CountSurplusNEQ applies the NEQ predicate on the "count_surplus" field.
-func CountSurplusNEQ(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNEQ(FieldCountSurplus, v))
+// CountUsedNEQ applies the NEQ predicate on the "count_used" field.
+func CountUsedNEQ(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNEQ(FieldCountUsed, v))
 }
 
-// CountSurplusIn applies the In predicate on the "count_surplus" field.
-func CountSurplusIn(vs ...int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIn(FieldCountSurplus, vs...))
+// CountUsedIn applies the In predicate on the "count_used" field.
+func CountUsedIn(vs ...int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIn(FieldCountUsed, vs...))
 }
 
-// CountSurplusNotIn applies the NotIn predicate on the "count_surplus" field.
-func CountSurplusNotIn(vs ...int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotIn(FieldCountSurplus, vs...))
+// CountUsedNotIn applies the NotIn predicate on the "count_used" field.
+func CountUsedNotIn(vs ...int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotIn(FieldCountUsed, vs...))
 }
 
-// CountSurplusGT applies the GT predicate on the "count_surplus" field.
-func CountSurplusGT(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGT(FieldCountSurplus, v))
+// CountUsedGT applies the GT predicate on the "count_used" field.
+func CountUsedGT(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGT(FieldCountUsed, v))
 }
 
-// CountSurplusGTE applies the GTE predicate on the "count_surplus" field.
-func CountSurplusGTE(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGTE(FieldCountSurplus, v))
+// CountUsedGTE applies the GTE predicate on the "count_used" field.
+func CountUsedGTE(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGTE(FieldCountUsed, v))
 }
 
-// CountSurplusLT applies the LT predicate on the "count_surplus" field.
-func CountSurplusLT(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLT(FieldCountSurplus, v))
+// CountUsedLT applies the LT predicate on the "count_used" field.
+func CountUsedLT(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLT(FieldCountUsed, v))
 }
 
-// CountSurplusLTE applies the LTE predicate on the "count_surplus" field.
-func CountSurplusLTE(v int64) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLTE(FieldCountSurplus, v))
+// CountUsedLTE applies the LTE predicate on the "count_used" field.
+func CountUsedLTE(v int64) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLTE(FieldCountUsed, v))
 }
 
-// CountSurplusIsNil applies the IsNil predicate on the "count_surplus" field.
-func CountSurplusIsNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIsNull(FieldCountSurplus))
+// CountUsedIsNil applies the IsNil predicate on the "count_used" field.
+func CountUsedIsNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIsNull(FieldCountUsed))
 }
 
-// CountSurplusNotNil applies the NotNil predicate on the "count_surplus" field.
-func CountSurplusNotNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCountSurplus))
+// CountUsedNotNil applies the NotNil predicate on the "count_used" field.
+func CountUsedNotNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCountUsed))
 }
 
 // PriceEQ applies the EQ predicate on the "price" field.
-func PriceEQ(v float64) predicate.MemberProductProperty {
+func PriceEQ(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldEQ(FieldPrice, v))
 }
 
 // PriceNEQ applies the NEQ predicate on the "price" field.
-func PriceNEQ(v float64) predicate.MemberProductProperty {
+func PriceNEQ(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldNEQ(FieldPrice, v))
 }
 
 // PriceIn applies the In predicate on the "price" field.
-func PriceIn(vs ...float64) predicate.MemberProductProperty {
+func PriceIn(vs ...int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldIn(FieldPrice, vs...))
 }
 
 // PriceNotIn applies the NotIn predicate on the "price" field.
-func PriceNotIn(vs ...float64) predicate.MemberProductProperty {
+func PriceNotIn(vs ...int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldNotIn(FieldPrice, vs...))
 }
 
 // PriceGT applies the GT predicate on the "price" field.
-func PriceGT(v float64) predicate.MemberProductProperty {
+func PriceGT(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldGT(FieldPrice, v))
 }
 
 // PriceGTE applies the GTE predicate on the "price" field.
-func PriceGTE(v float64) predicate.MemberProductProperty {
+func PriceGTE(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldGTE(FieldPrice, v))
 }
 
 // PriceLT applies the LT predicate on the "price" field.
-func PriceLT(v float64) predicate.MemberProductProperty {
+func PriceLT(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldLT(FieldPrice, v))
 }
 
 // PriceLTE applies the LTE predicate on the "price" field.
-func PriceLTE(v float64) predicate.MemberProductProperty {
+func PriceLTE(v int64) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldLTE(FieldPrice, v))
 }
 
@@ -1000,104 +1005,179 @@ func PriceNotNil() predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldNotNull(FieldPrice))
 }
 
-// ValidityAtEQ applies the EQ predicate on the "validity_at" field.
-func ValidityAtEQ(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldValidityAt, v))
+// ActiveAtEQ applies the EQ predicate on the "active_at" field.
+func ActiveAtEQ(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldActiveAt, v))
 }
 
-// ValidityAtNEQ applies the NEQ predicate on the "validity_at" field.
-func ValidityAtNEQ(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNEQ(FieldValidityAt, v))
+// ActiveAtNEQ applies the NEQ predicate on the "active_at" field.
+func ActiveAtNEQ(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNEQ(FieldActiveAt, v))
 }
 
-// ValidityAtIn applies the In predicate on the "validity_at" field.
-func ValidityAtIn(vs ...time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIn(FieldValidityAt, vs...))
+// ActiveAtIn applies the In predicate on the "active_at" field.
+func ActiveAtIn(vs ...time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIn(FieldActiveAt, vs...))
 }
 
-// ValidityAtNotIn applies the NotIn predicate on the "validity_at" field.
-func ValidityAtNotIn(vs ...time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotIn(FieldValidityAt, vs...))
+// ActiveAtNotIn applies the NotIn predicate on the "active_at" field.
+func ActiveAtNotIn(vs ...time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotIn(FieldActiveAt, vs...))
 }
 
-// ValidityAtGT applies the GT predicate on the "validity_at" field.
-func ValidityAtGT(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGT(FieldValidityAt, v))
+// ActiveAtGT applies the GT predicate on the "active_at" field.
+func ActiveAtGT(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGT(FieldActiveAt, v))
 }
 
-// ValidityAtGTE applies the GTE predicate on the "validity_at" field.
-func ValidityAtGTE(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGTE(FieldValidityAt, v))
+// ActiveAtGTE applies the GTE predicate on the "active_at" field.
+func ActiveAtGTE(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGTE(FieldActiveAt, v))
 }
 
-// ValidityAtLT applies the LT predicate on the "validity_at" field.
-func ValidityAtLT(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLT(FieldValidityAt, v))
+// ActiveAtLT applies the LT predicate on the "active_at" field.
+func ActiveAtLT(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLT(FieldActiveAt, v))
 }
 
-// ValidityAtLTE applies the LTE predicate on the "validity_at" field.
-func ValidityAtLTE(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLTE(FieldValidityAt, v))
+// ActiveAtLTE applies the LTE predicate on the "active_at" field.
+func ActiveAtLTE(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLTE(FieldActiveAt, v))
 }
 
-// ValidityAtIsNil applies the IsNil predicate on the "validity_at" field.
-func ValidityAtIsNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIsNull(FieldValidityAt))
+// ActiveAtIsNil applies the IsNil predicate on the "active_at" field.
+func ActiveAtIsNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIsNull(FieldActiveAt))
 }
 
-// ValidityAtNotNil applies the NotNil predicate on the "validity_at" field.
-func ValidityAtNotNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotNull(FieldValidityAt))
+// ActiveAtNotNil applies the NotNil predicate on the "active_at" field.
+func ActiveAtNotNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotNull(FieldActiveAt))
 }
 
-// CancelAtEQ applies the EQ predicate on the "cancel_at" field.
-func CancelAtEQ(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCancelAt, v))
+// ExpiredAtEQ applies the EQ predicate on the "expired_at" field.
+func ExpiredAtEQ(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldExpiredAt, v))
 }
 
-// CancelAtNEQ applies the NEQ predicate on the "cancel_at" field.
-func CancelAtNEQ(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNEQ(FieldCancelAt, v))
+// ExpiredAtNEQ applies the NEQ predicate on the "expired_at" field.
+func ExpiredAtNEQ(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNEQ(FieldExpiredAt, v))
 }
 
-// CancelAtIn applies the In predicate on the "cancel_at" field.
-func CancelAtIn(vs ...time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIn(FieldCancelAt, vs...))
+// ExpiredAtIn applies the In predicate on the "expired_at" field.
+func ExpiredAtIn(vs ...time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIn(FieldExpiredAt, vs...))
 }
 
-// CancelAtNotIn applies the NotIn predicate on the "cancel_at" field.
-func CancelAtNotIn(vs ...time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotIn(FieldCancelAt, vs...))
+// ExpiredAtNotIn applies the NotIn predicate on the "expired_at" field.
+func ExpiredAtNotIn(vs ...time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotIn(FieldExpiredAt, vs...))
 }
 
-// CancelAtGT applies the GT predicate on the "cancel_at" field.
-func CancelAtGT(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGT(FieldCancelAt, v))
+// ExpiredAtGT applies the GT predicate on the "expired_at" field.
+func ExpiredAtGT(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGT(FieldExpiredAt, v))
 }
 
-// CancelAtGTE applies the GTE predicate on the "cancel_at" field.
-func CancelAtGTE(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGTE(FieldCancelAt, v))
+// ExpiredAtGTE applies the GTE predicate on the "expired_at" field.
+func ExpiredAtGTE(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGTE(FieldExpiredAt, v))
 }
 
-// CancelAtLT applies the LT predicate on the "cancel_at" field.
-func CancelAtLT(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLT(FieldCancelAt, v))
+// ExpiredAtLT applies the LT predicate on the "expired_at" field.
+func ExpiredAtLT(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLT(FieldExpiredAt, v))
 }
 
-// CancelAtLTE applies the LTE predicate on the "cancel_at" field.
-func CancelAtLTE(v time.Time) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLTE(FieldCancelAt, v))
+// ExpiredAtLTE applies the LTE predicate on the "expired_at" field.
+func ExpiredAtLTE(v time.Time) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLTE(FieldExpiredAt, v))
 }
 
-// CancelAtIsNil applies the IsNil predicate on the "cancel_at" field.
-func CancelAtIsNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIsNull(FieldCancelAt))
+// ExpiredAtIsNil applies the IsNil predicate on the "expired_at" field.
+func ExpiredAtIsNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIsNull(FieldExpiredAt))
 }
 
-// CancelAtNotNil applies the NotNil predicate on the "cancel_at" field.
-func CancelAtNotNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCancelAt))
+// ExpiredAtNotNil applies the NotNil predicate on the "expired_at" field.
+func ExpiredAtNotNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotNull(FieldExpiredAt))
+}
+
+// CodeEQ applies the EQ predicate on the "code" field.
+func CodeEQ(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEQ(FieldCode, v))
+}
+
+// CodeNEQ applies the NEQ predicate on the "code" field.
+func CodeNEQ(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNEQ(FieldCode, v))
+}
+
+// CodeIn applies the In predicate on the "code" field.
+func CodeIn(vs ...string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIn(FieldCode, vs...))
+}
+
+// CodeNotIn applies the NotIn predicate on the "code" field.
+func CodeNotIn(vs ...string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotIn(FieldCode, vs...))
+}
+
+// CodeGT applies the GT predicate on the "code" field.
+func CodeGT(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGT(FieldCode, v))
+}
+
+// CodeGTE applies the GTE predicate on the "code" field.
+func CodeGTE(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldGTE(FieldCode, v))
+}
+
+// CodeLT applies the LT predicate on the "code" field.
+func CodeLT(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLT(FieldCode, v))
+}
+
+// CodeLTE applies the LTE predicate on the "code" field.
+func CodeLTE(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldLTE(FieldCode, v))
+}
+
+// CodeContains applies the Contains predicate on the "code" field.
+func CodeContains(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldContains(FieldCode, v))
+}
+
+// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
+func CodeHasPrefix(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldHasPrefix(FieldCode, v))
+}
+
+// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
+func CodeHasSuffix(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldHasSuffix(FieldCode, v))
+}
+
+// CodeIsNil applies the IsNil predicate on the "code" field.
+func CodeIsNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldIsNull(FieldCode))
+}
+
+// CodeNotNil applies the NotNil predicate on the "code" field.
+func CodeNotNil() predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCode))
+}
+
+// CodeEqualFold applies the EqualFold predicate on the "code" field.
+func CodeEqualFold(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldEqualFold(FieldCode, v))
+}
+
+// CodeContainsFold applies the ContainsFold predicate on the "code" field.
+func CodeContainsFold(v string) predicate.MemberProductProperty {
+	return predicate.MemberProductProperty(sql.FieldContainsFold(FieldCode, v))
 }
 
 // HasOwner applies the HasEdge predicate on the "owner" edge.

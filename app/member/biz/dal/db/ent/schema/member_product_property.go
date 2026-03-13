@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"member/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"member/biz/dal/db/ent/schema/mixins"
 )
 
 type MemberProductProperty struct {
@@ -25,10 +26,11 @@ func (MemberProductProperty) Fields() []ent.Field {
 		field.Int64("duration").Comment("总时长").Optional(),
 		field.Int64("length").Comment("单次时长").Optional(),
 		field.Int64("count").Default(0).Comment("总次数").Optional(),
-		field.Int64("count_surplus").Default(0).Comment("剩余次数").Optional(),
-		field.Float("price").Comment("定价").Optional(),
-		field.Time("validity_at").Comment("生效时间").Optional(),
-		field.Time("cancel_at").Comment("作废时间").Optional(),
+		field.Int64("count_used").Default(0).Comment("已使用次数").Optional(),
+		field.Int64("price").Comment("定价").Optional(),
+		field.Time("active_at").Comment("生效时间").Optional(),
+		field.Time("expired_at").Comment("过期时间").Optional(),
+		field.String("code").Comment("code").Optional(),
 	}
 }
 
@@ -52,8 +54,8 @@ func (MemberProductProperty) Indexes() []ent.Index {
 		index.Fields("property_id"),
 		index.Fields("member_id"),
 		index.Fields("member_product_id"),
-		index.Fields("validity_at"),
-		index.Fields("cancel_at"),
+		index.Fields("active_at"),
+		index.Fields("expired_at"),
 	}
 }
 

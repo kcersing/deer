@@ -57,6 +57,10 @@ struct CreateProductReq {
     4:optional i64 orderId=0
     5:optional i64 price=0
     6:optional i64 userId=0
+    7:optional i64 quantity=1
+    8:optional string name=""
+
+
 }
 struct UpdateProductReq {
 
@@ -70,7 +74,7 @@ struct ProductListResp {
      255:optional base.BaseResp baseResp={}
 }
 struct ProductListReq {
-    1: i64 page=0
+    1: i64 page=1
     2: i64 pageSize =10
     3: optional string name=""
     4: optional list<i64> status = []

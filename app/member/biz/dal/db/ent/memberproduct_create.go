@@ -134,20 +134,6 @@ func (_c *MemberProductCreate) SetNillableProductID(v *int64) *MemberProductCrea
 	return _c
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_c *MemberProductCreate) SetVenueID(v int64) *MemberProductCreate {
-	_c.mutation.SetVenueID(v)
-	return _c
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_c *MemberProductCreate) SetNillableVenueID(v *int64) *MemberProductCreate {
-	if v != nil {
-		_c.SetVenueID(*v)
-	}
-	return _c
-}
-
 // SetOrderID sets the "order_id" field.
 func (_c *MemberProductCreate) SetOrderID(v int64) *MemberProductCreate {
 	_c.mutation.SetOrderID(v)
@@ -177,13 +163,13 @@ func (_c *MemberProductCreate) SetNillableName(v *string) *MemberProductCreate {
 }
 
 // SetPrice sets the "price" field.
-func (_c *MemberProductCreate) SetPrice(v float64) *MemberProductCreate {
+func (_c *MemberProductCreate) SetPrice(v int64) *MemberProductCreate {
 	_c.mutation.SetPrice(v)
 	return _c
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_c *MemberProductCreate) SetNillablePrice(v *float64) *MemberProductCreate {
+func (_c *MemberProductCreate) SetNillablePrice(v *int64) *MemberProductCreate {
 	if v != nil {
 		_c.SetPrice(*v)
 	}
@@ -364,10 +350,6 @@ func (_c *MemberProductCreate) createSpec() (*MemberProduct, *sqlgraph.CreateSpe
 		_spec.SetField(memberproduct.FieldProductID, field.TypeInt64, value)
 		_node.ProductID = value
 	}
-	if value, ok := _c.mutation.VenueID(); ok {
-		_spec.SetField(memberproduct.FieldVenueID, field.TypeInt64, value)
-		_node.VenueID = value
-	}
 	if value, ok := _c.mutation.OrderID(); ok {
 		_spec.SetField(memberproduct.FieldOrderID, field.TypeInt64, value)
 		_node.OrderID = value
@@ -377,7 +359,7 @@ func (_c *MemberProductCreate) createSpec() (*MemberProduct, *sqlgraph.CreateSpe
 		_node.Name = value
 	}
 	if value, ok := _c.mutation.Price(); ok {
-		_spec.SetField(memberproduct.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproduct.FieldPrice, field.TypeInt64, value)
 		_node.Price = value
 	}
 	if nodes := _c.mutation.MembersIDs(); len(nodes) > 0 {

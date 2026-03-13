@@ -1,6 +1,8 @@
 package rpc
 
-import "admin/rpc/client"
+import (
+	"admin/rpc/client"
+)
 
 func InitRpc() {
 

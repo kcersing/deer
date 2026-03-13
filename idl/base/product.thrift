@@ -27,7 +27,8 @@ struct Product {
     14: optional string endSalesAt = "" (api.raw = "endSalesAt")
 
 
-    15: optional list<Item> items = [] (api.raw = "items")
+    15: optional list<i64> items = [] (api.raw = "items")
+    22: optional list<Item> itemsData = [] (api.raw = "itemsData")
 }
 
 struct Item {

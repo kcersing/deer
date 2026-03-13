@@ -100,17 +100,18 @@ struct UpdateProductReq {
 }
 
 struct ListReq {
-    1: i64 page=0 
+    1: i64 page=1
     2: i64 pageSize =10
     3: optional string name="" 
     4: optional list<i64> status = []
 
 }
 struct ItemListReq{
-    1: i64 page=0 
+    1: i64 page=1
     2: i64 pageSize=10 
     3: optional string name
     4: optional list<i64> status = []
+    5: optional list<i64> ids = []
     7: optional string type =""
 }
 

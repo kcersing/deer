@@ -3,8 +3,8 @@ include "../base/base.thrift"
 
 //日志列表请求数据
 struct LogListReq {
-    1: optional i64 page=0 (api.raw = "page")
-    2: optional i64 pageSize=0 (api.raw = "pageSize")
+    1: optional i64 page=1 (api.raw = "page")
+    2: optional i64 pageSize=10 (api.raw = "pageSize")
     3: optional string type="" (api.raw = "type")
     4: optional string method="" (api.raw = "method")
     5: optional string api="" (api.raw = "api")

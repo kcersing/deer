@@ -1,7 +1,6 @@
 package client
 
 import (
-	"admin/conf"
 	"common/consts"
 	"common/rpc/client"
 	"sync"
@@ -13,8 +12,6 @@ import (
 
 var CrmClient crmservice.Client
 var CrmOnceClient sync.Once
-
-var serviceResolver = conf.GetConf().Hertz.Resolver
 
 func InitCrmRpc() {
 

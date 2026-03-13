@@ -52,33 +52,29 @@ struct MemberProduct {
 }
 struct MemberProductItem {
     1:optional i64 id =0
-
-    2:optional string name="" (api.raw = "name")
-
+    2:optional string name=""
     /**时长 */
     5:optional i64 duration =0
     /**单次时长 */
     6:optional i64 length =0
     /**次数 */
-    7:optional i64 count =0 (api.raw = "count")
-    18: optional i64 countUsed = 0 (api.raw = "countUsed")
+    7:optional i64 count =0
+    18: optional i64 countUsed = 0
     /**类型 */
     8:optional string type=""
     /**激活时间 */
-    9:optional string activeAt="" (api.raw = "activeAt")
+    9:optional string activeAt=""
     /**到期时间 */
-    10:optional string expiredAt="" (api.raw = "expiredAt")
-
-    11: optional list<base.List> tags=[]   (api.raw = "tags")
-
+    10:optional string expiredAt=""
+    11: optional list<base.List> tags=[]
     /**价格 */
-    12:optional i64 price=0 (api.raw = "price")
-    13:optional string code="" (api.raw = "code")
-    14:optional i64 status=0 (api.raw = "status")
-    20: optional i64 createdId = 0 (api.raw = "createdId")
-    21: optional string createdName = "" (api.raw = "createdName")
+    12:optional i64 price=0
+    13:optional string code=""
+    14:optional i64 status=0
+    20: optional i64 createdId = 0
+    21: optional string createdName = ""
 
-    16: optional string createdAt = ""  (api.raw = "createdAt")
-    17: optional string updatedAt = "" (api.raw = "updatedAt")
+    16: optional string createdAt = ""
+    17: optional string updatedAt = ""
 
 }

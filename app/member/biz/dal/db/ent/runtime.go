@@ -203,10 +203,10 @@ func init() {
 	memberproductpropertyDescCount := memberproductpropertyFields[8].Descriptor()
 	// memberproductproperty.DefaultCount holds the default value on creation for the count field.
 	memberproductproperty.DefaultCount = memberproductpropertyDescCount.Default.(int64)
-	// memberproductpropertyDescCountSurplus is the schema descriptor for count_surplus field.
-	memberproductpropertyDescCountSurplus := memberproductpropertyFields[9].Descriptor()
-	// memberproductproperty.DefaultCountSurplus holds the default value on creation for the count_surplus field.
-	memberproductproperty.DefaultCountSurplus = memberproductpropertyDescCountSurplus.Default.(int64)
+	// memberproductpropertyDescCountUsed is the schema descriptor for count_used field.
+	memberproductpropertyDescCountUsed := memberproductpropertyFields[9].Descriptor()
+	// memberproductproperty.DefaultCountUsed holds the default value on creation for the count_used field.
+	memberproductproperty.DefaultCountUsed = memberproductpropertyDescCountUsed.Default.(int64)
 	memberprofileMixin := schema.MemberProfile{}.Mixin()
 	memberprofileMixinFields0 := memberprofileMixin[0].Fields()
 	_ = memberprofileMixinFields0

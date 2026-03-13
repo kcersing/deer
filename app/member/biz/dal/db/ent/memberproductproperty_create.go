@@ -216,58 +216,72 @@ func (_c *MemberProductPropertyCreate) SetNillableCount(v *int64) *MemberProduct
 	return _c
 }
 
-// SetCountSurplus sets the "count_surplus" field.
-func (_c *MemberProductPropertyCreate) SetCountSurplus(v int64) *MemberProductPropertyCreate {
-	_c.mutation.SetCountSurplus(v)
+// SetCountUsed sets the "count_used" field.
+func (_c *MemberProductPropertyCreate) SetCountUsed(v int64) *MemberProductPropertyCreate {
+	_c.mutation.SetCountUsed(v)
 	return _c
 }
 
-// SetNillableCountSurplus sets the "count_surplus" field if the given value is not nil.
-func (_c *MemberProductPropertyCreate) SetNillableCountSurplus(v *int64) *MemberProductPropertyCreate {
+// SetNillableCountUsed sets the "count_used" field if the given value is not nil.
+func (_c *MemberProductPropertyCreate) SetNillableCountUsed(v *int64) *MemberProductPropertyCreate {
 	if v != nil {
-		_c.SetCountSurplus(*v)
+		_c.SetCountUsed(*v)
 	}
 	return _c
 }
 
 // SetPrice sets the "price" field.
-func (_c *MemberProductPropertyCreate) SetPrice(v float64) *MemberProductPropertyCreate {
+func (_c *MemberProductPropertyCreate) SetPrice(v int64) *MemberProductPropertyCreate {
 	_c.mutation.SetPrice(v)
 	return _c
 }
 
 // SetNillablePrice sets the "price" field if the given value is not nil.
-func (_c *MemberProductPropertyCreate) SetNillablePrice(v *float64) *MemberProductPropertyCreate {
+func (_c *MemberProductPropertyCreate) SetNillablePrice(v *int64) *MemberProductPropertyCreate {
 	if v != nil {
 		_c.SetPrice(*v)
 	}
 	return _c
 }
 
-// SetValidityAt sets the "validity_at" field.
-func (_c *MemberProductPropertyCreate) SetValidityAt(v time.Time) *MemberProductPropertyCreate {
-	_c.mutation.SetValidityAt(v)
+// SetActiveAt sets the "active_at" field.
+func (_c *MemberProductPropertyCreate) SetActiveAt(v time.Time) *MemberProductPropertyCreate {
+	_c.mutation.SetActiveAt(v)
 	return _c
 }
 
-// SetNillableValidityAt sets the "validity_at" field if the given value is not nil.
-func (_c *MemberProductPropertyCreate) SetNillableValidityAt(v *time.Time) *MemberProductPropertyCreate {
+// SetNillableActiveAt sets the "active_at" field if the given value is not nil.
+func (_c *MemberProductPropertyCreate) SetNillableActiveAt(v *time.Time) *MemberProductPropertyCreate {
 	if v != nil {
-		_c.SetValidityAt(*v)
+		_c.SetActiveAt(*v)
 	}
 	return _c
 }
 
-// SetCancelAt sets the "cancel_at" field.
-func (_c *MemberProductPropertyCreate) SetCancelAt(v time.Time) *MemberProductPropertyCreate {
-	_c.mutation.SetCancelAt(v)
+// SetExpiredAt sets the "expired_at" field.
+func (_c *MemberProductPropertyCreate) SetExpiredAt(v time.Time) *MemberProductPropertyCreate {
+	_c.mutation.SetExpiredAt(v)
 	return _c
 }
 
-// SetNillableCancelAt sets the "cancel_at" field if the given value is not nil.
-func (_c *MemberProductPropertyCreate) SetNillableCancelAt(v *time.Time) *MemberProductPropertyCreate {
+// SetNillableExpiredAt sets the "expired_at" field if the given value is not nil.
+func (_c *MemberProductPropertyCreate) SetNillableExpiredAt(v *time.Time) *MemberProductPropertyCreate {
 	if v != nil {
-		_c.SetCancelAt(*v)
+		_c.SetExpiredAt(*v)
+	}
+	return _c
+}
+
+// SetCode sets the "code" field.
+func (_c *MemberProductPropertyCreate) SetCode(v string) *MemberProductPropertyCreate {
+	_c.mutation.SetCode(v)
+	return _c
+}
+
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (_c *MemberProductPropertyCreate) SetNillableCode(v *string) *MemberProductPropertyCreate {
+	if v != nil {
+		_c.SetCode(*v)
 	}
 	return _c
 }
@@ -356,9 +370,9 @@ func (_c *MemberProductPropertyCreate) defaults() {
 		v := memberproductproperty.DefaultCount
 		_c.mutation.SetCount(v)
 	}
-	if _, ok := _c.mutation.CountSurplus(); !ok {
-		v := memberproductproperty.DefaultCountSurplus
-		_c.mutation.SetCountSurplus(v)
+	if _, ok := _c.mutation.CountUsed(); !ok {
+		v := memberproductproperty.DefaultCountUsed
+		_c.mutation.SetCountUsed(v)
 	}
 }
 
@@ -448,21 +462,25 @@ func (_c *MemberProductPropertyCreate) createSpec() (*MemberProductProperty, *sq
 		_spec.SetField(memberproductproperty.FieldCount, field.TypeInt64, value)
 		_node.Count = value
 	}
-	if value, ok := _c.mutation.CountSurplus(); ok {
-		_spec.SetField(memberproductproperty.FieldCountSurplus, field.TypeInt64, value)
-		_node.CountSurplus = value
+	if value, ok := _c.mutation.CountUsed(); ok {
+		_spec.SetField(memberproductproperty.FieldCountUsed, field.TypeInt64, value)
+		_node.CountUsed = value
 	}
 	if value, ok := _c.mutation.Price(); ok {
-		_spec.SetField(memberproductproperty.FieldPrice, field.TypeFloat64, value)
+		_spec.SetField(memberproductproperty.FieldPrice, field.TypeInt64, value)
 		_node.Price = value
 	}
-	if value, ok := _c.mutation.ValidityAt(); ok {
-		_spec.SetField(memberproductproperty.FieldValidityAt, field.TypeTime, value)
-		_node.ValidityAt = value
+	if value, ok := _c.mutation.ActiveAt(); ok {
+		_spec.SetField(memberproductproperty.FieldActiveAt, field.TypeTime, value)
+		_node.ActiveAt = value
 	}
-	if value, ok := _c.mutation.CancelAt(); ok {
-		_spec.SetField(memberproductproperty.FieldCancelAt, field.TypeTime, value)
-		_node.CancelAt = value
+	if value, ok := _c.mutation.ExpiredAt(); ok {
+		_spec.SetField(memberproductproperty.FieldExpiredAt, field.TypeTime, value)
+		_node.ExpiredAt = value
+	}
+	if value, ok := _c.mutation.Code(); ok {
+		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
+		_node.Code = value
 	}
 	if nodes := _c.mutation.OwnerIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

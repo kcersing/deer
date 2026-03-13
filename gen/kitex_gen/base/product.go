@@ -23,7 +23,8 @@ type Product struct {
 	IsSales     []int64 `thrift:"isSales,10,optional" frugal:"10,optional,list<i64>" json:"isSales,omitempty"`
 	SignSalesAt string  `thrift:"signSalesAt,13,optional" frugal:"13,optional,string" json:"signSalesAt,omitempty"`
 	EndSalesAt  string  `thrift:"endSalesAt,14,optional" frugal:"14,optional,string" json:"endSalesAt,omitempty"`
-	Items       []*Item `thrift:"items,15,optional" frugal:"15,optional,list<Item>" json:"items,omitempty"`
+	Items       []int64 `thrift:"items,15,optional" frugal:"15,optional,list<i64>" json:"items,omitempty"`
+	ItemsData   []*Item `thrift:"itemsData,22,optional" frugal:"22,optional,list<Item>" json:"itemsData,omitempty"`
 }
 
 func NewProduct() *Product {
@@ -44,7 +45,8 @@ func NewProduct() *Product {
 		IsSales:     []int64{},
 		SignSalesAt: "",
 		EndSalesAt:  "",
-		Items:       []*Item{},
+		Items:       []int64{},
+		ItemsData:   []*Item{},
 	}
 }
 
@@ -65,7 +67,8 @@ func (p *Product) InitDefault() {
 	p.IsSales = []int64{}
 	p.SignSalesAt = ""
 	p.EndSalesAt = ""
-	p.Items = []*Item{}
+	p.Items = []int64{}
+	p.ItemsData = []*Item{}
 }
 
 var Product_Id_DEFAULT int64 = 0
@@ -212,13 +215,22 @@ func (p *Product) GetEndSalesAt() (v string) {
 	return p.EndSalesAt
 }
 
-var Product_Items_DEFAULT []*Item = []*Item{}
+var Product_Items_DEFAULT []int64 = []int64{}
 
-func (p *Product) GetItems() (v []*Item) {
+func (p *Product) GetItems() (v []int64) {
 	if !p.IsSetItems() {
 		return Product_Items_DEFAULT
 	}
 	return p.Items
+}
+
+var Product_ItemsData_DEFAULT []*Item = []*Item{}
+
+func (p *Product) GetItemsData() (v []*Item) {
+	if !p.IsSetItemsData() {
+		return Product_ItemsData_DEFAULT
+	}
+	return p.ItemsData
 }
 func (p *Product) SetId(val int64) {
 	p.Id = val
@@ -268,8 +280,11 @@ func (p *Product) SetSignSalesAt(val string) {
 func (p *Product) SetEndSalesAt(val string) {
 	p.EndSalesAt = val
 }
-func (p *Product) SetItems(val []*Item) {
+func (p *Product) SetItems(val []int64) {
 	p.Items = val
+}
+func (p *Product) SetItemsData(val []*Item) {
+	p.ItemsData = val
 }
 
 func (p *Product) IsSetId() bool {
@@ -340,6 +355,10 @@ func (p *Product) IsSetItems() bool {
 	return p.Items != nil
 }
 
+func (p *Product) IsSetItemsData() bool {
+	return p.ItemsData != nil
+}
+
 func (p *Product) String() string {
 	if p == nil {
 		return "<nil>"
@@ -365,6 +384,7 @@ var fieldIDToName_Product = map[int16]string{
 	13: "signSalesAt",
 	14: "endSalesAt",
 	15: "items",
+	22: "itemsData",
 }
 
 type Item struct {

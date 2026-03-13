@@ -47,14 +47,16 @@ type MemberProductProperty struct {
 	Length int64 `json:"length,omitempty"`
 	// 总次数
 	Count int64 `json:"count,omitempty"`
-	// 剩余次数
-	CountSurplus int64 `json:"count_surplus,omitempty"`
+	// 已使用次数
+	CountUsed int64 `json:"count_used,omitempty"`
 	// 定价
-	Price float64 `json:"price,omitempty"`
+	Price int64 `json:"price,omitempty"`
 	// 生效时间
-	ValidityAt time.Time `json:"validity_at,omitempty"`
-	// 作废时间
-	CancelAt time.Time `json:"cancel_at,omitempty"`
+	ActiveAt time.Time `json:"active_at,omitempty"`
+	// 过期时间
+	ExpiredAt time.Time `json:"expired_at,omitempty"`
+	// code
+	Code string `json:"code,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MemberProductPropertyQuery when eager-loading is set.
 	Edges        MemberProductPropertyEdges `json:"edges"`
@@ -86,13 +88,11 @@ func (*MemberProductProperty) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case memberproductproperty.FieldPrice:
-			values[i] = new(sql.NullFloat64)
-		case memberproductproperty.FieldID, memberproductproperty.FieldDelete, memberproductproperty.FieldCreatedID, memberproductproperty.FieldStatus, memberproductproperty.FieldMemberID, memberproductproperty.FieldMemberProductID, memberproductproperty.FieldPropertyID, memberproductproperty.FieldDuration, memberproductproperty.FieldLength, memberproductproperty.FieldCount, memberproductproperty.FieldCountSurplus:
+		case memberproductproperty.FieldID, memberproductproperty.FieldDelete, memberproductproperty.FieldCreatedID, memberproductproperty.FieldStatus, memberproductproperty.FieldMemberID, memberproductproperty.FieldMemberProductID, memberproductproperty.FieldPropertyID, memberproductproperty.FieldDuration, memberproductproperty.FieldLength, memberproductproperty.FieldCount, memberproductproperty.FieldCountUsed, memberproductproperty.FieldPrice:
 			values[i] = new(sql.NullInt64)
-		case memberproductproperty.FieldSn, memberproductproperty.FieldType, memberproductproperty.FieldName:
+		case memberproductproperty.FieldSn, memberproductproperty.FieldType, memberproductproperty.FieldName, memberproductproperty.FieldCode:
 			values[i] = new(sql.NullString)
-		case memberproductproperty.FieldCreatedAt, memberproductproperty.FieldUpdatedAt, memberproductproperty.FieldValidityAt, memberproductproperty.FieldCancelAt:
+		case memberproductproperty.FieldCreatedAt, memberproductproperty.FieldUpdatedAt, memberproductproperty.FieldActiveAt, memberproductproperty.FieldExpiredAt:
 			values[i] = new(sql.NullTime)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -199,29 +199,35 @@ func (_m *MemberProductProperty) assignValues(columns []string, values []any) er
 			} else if value.Valid {
 				_m.Count = value.Int64
 			}
-		case memberproductproperty.FieldCountSurplus:
+		case memberproductproperty.FieldCountUsed:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field count_surplus", values[i])
+				return fmt.Errorf("unexpected type %T for field count_used", values[i])
 			} else if value.Valid {
-				_m.CountSurplus = value.Int64
+				_m.CountUsed = value.Int64
 			}
 		case memberproductproperty.FieldPrice:
-			if value, ok := values[i].(*sql.NullFloat64); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field price", values[i])
 			} else if value.Valid {
-				_m.Price = value.Float64
+				_m.Price = value.Int64
 			}
-		case memberproductproperty.FieldValidityAt:
+		case memberproductproperty.FieldActiveAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field validity_at", values[i])
+				return fmt.Errorf("unexpected type %T for field active_at", values[i])
 			} else if value.Valid {
-				_m.ValidityAt = value.Time
+				_m.ActiveAt = value.Time
 			}
-		case memberproductproperty.FieldCancelAt:
+		case memberproductproperty.FieldExpiredAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field cancel_at", values[i])
+				return fmt.Errorf("unexpected type %T for field expired_at", values[i])
 			} else if value.Valid {
-				_m.CancelAt = value.Time
+				_m.ExpiredAt = value.Time
+			}
+		case memberproductproperty.FieldCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field code", values[i])
+			} else if value.Valid {
+				_m.Code = value.String
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
@@ -306,17 +312,20 @@ func (_m *MemberProductProperty) String() string {
 	builder.WriteString("count=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Count))
 	builder.WriteString(", ")
-	builder.WriteString("count_surplus=")
-	builder.WriteString(fmt.Sprintf("%v", _m.CountSurplus))
+	builder.WriteString("count_used=")
+	builder.WriteString(fmt.Sprintf("%v", _m.CountUsed))
 	builder.WriteString(", ")
 	builder.WriteString("price=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Price))
 	builder.WriteString(", ")
-	builder.WriteString("validity_at=")
-	builder.WriteString(_m.ValidityAt.Format(time.ANSIC))
+	builder.WriteString("active_at=")
+	builder.WriteString(_m.ActiveAt.Format(time.ANSIC))
 	builder.WriteString(", ")
-	builder.WriteString("cancel_at=")
-	builder.WriteString(_m.CancelAt.Format(time.ANSIC))
+	builder.WriteString("expired_at=")
+	builder.WriteString(_m.ExpiredAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("code=")
+	builder.WriteString(_m.Code)
 	builder.WriteByte(')')
 	return builder.String()
 }

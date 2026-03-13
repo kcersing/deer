@@ -1101,7 +1101,7 @@ type ListReq struct {
 
 func NewListReq() *ListReq {
 	return &ListReq{
-		Page:     0,
+		Page:     1,
 		PageSize: 10,
 		Name:     "",
 		Status:   []int64{},
@@ -1109,7 +1109,7 @@ func NewListReq() *ListReq {
 }
 
 func (p *ListReq) InitDefault() {
-	p.Page = 0
+	p.Page = 1
 	p.PageSize = 10
 	p.Name = ""
 	p.Status = []int64{}
@@ -1180,22 +1180,25 @@ type ItemListReq struct {
 	PageSize int64   `thrift:"pageSize,2" frugal:"2,default,i64" json:"pageSize"`
 	Name     *string `thrift:"name,3,optional" frugal:"3,optional,string" json:"name,omitempty"`
 	Status   []int64 `thrift:"status,4,optional" frugal:"4,optional,list<i64>" json:"status,omitempty"`
+	Ids      []int64 `thrift:"ids,5,optional" frugal:"5,optional,list<i64>" json:"ids,omitempty"`
 	Type     string  `thrift:"type,7,optional" frugal:"7,optional,string" json:"type,omitempty"`
 }
 
 func NewItemListReq() *ItemListReq {
 	return &ItemListReq{
-		Page:     0,
+		Page:     1,
 		PageSize: 10,
 		Status:   []int64{},
+		Ids:      []int64{},
 		Type:     "",
 	}
 }
 
 func (p *ItemListReq) InitDefault() {
-	p.Page = 0
+	p.Page = 1
 	p.PageSize = 10
 	p.Status = []int64{}
+	p.Ids = []int64{}
 	p.Type = ""
 }
 
@@ -1225,6 +1228,15 @@ func (p *ItemListReq) GetStatus() (v []int64) {
 	return p.Status
 }
 
+var ItemListReq_Ids_DEFAULT []int64 = []int64{}
+
+func (p *ItemListReq) GetIds() (v []int64) {
+	if !p.IsSetIds() {
+		return ItemListReq_Ids_DEFAULT
+	}
+	return p.Ids
+}
+
 var ItemListReq_Type_DEFAULT string = ""
 
 func (p *ItemListReq) GetType() (v string) {
@@ -1245,6 +1257,9 @@ func (p *ItemListReq) SetName(val *string) {
 func (p *ItemListReq) SetStatus(val []int64) {
 	p.Status = val
 }
+func (p *ItemListReq) SetIds(val []int64) {
+	p.Ids = val
+}
 func (p *ItemListReq) SetType(val string) {
 	p.Type = val
 }
@@ -1255,6 +1270,10 @@ func (p *ItemListReq) IsSetName() bool {
 
 func (p *ItemListReq) IsSetStatus() bool {
 	return p.Status != nil
+}
+
+func (p *ItemListReq) IsSetIds() bool {
+	return p.Ids != nil
 }
 
 func (p *ItemListReq) IsSetType() bool {
@@ -1273,6 +1292,7 @@ var fieldIDToName_ItemListReq = map[int16]string{
 	2: "pageSize",
 	3: "name",
 	4: "status",
+	5: "ids",
 	7: "type",
 }
 

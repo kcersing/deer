@@ -194,10 +194,9 @@ var (
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "sn", Type: field.TypeString, Nullable: true, Comment: "编号"},
 		{Name: "product_id", Type: field.TypeInt64, Nullable: true, Comment: "产品ID"},
-		{Name: "venue_id", Type: field.TypeInt64, Nullable: true, Comment: "场馆ID"},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单ID"},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "产品名称"},
-		{Name: "price", Type: field.TypeFloat64, Nullable: true, Comment: "产品价格"},
+		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "产品价格"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
 	}
 	// MemberProductTable holds the schema information for the "member_product" table.
@@ -208,7 +207,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_product_member_member_products",
-				Columns:    []*schema.Column{MemberProductColumns[12]},
+				Columns:    []*schema.Column{MemberProductColumns[11]},
 				RefColumns: []*schema.Column{MemberColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -220,14 +219,9 @@ var (
 				Columns: []*schema.Column{MemberProductColumns[0]},
 			},
 			{
-				Name:    "memberproduct_venue_id",
-				Unique:  false,
-				Columns: []*schema.Column{MemberProductColumns[8]},
-			},
-			{
 				Name:    "memberproduct_member_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProductColumns[12]},
+				Columns: []*schema.Column{MemberProductColumns[11]},
 			},
 			{
 				Name:    "memberproduct_product_id",
@@ -237,7 +231,7 @@ var (
 			{
 				Name:    "memberproduct_order_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProductColumns[9]},
+				Columns: []*schema.Column{MemberProductColumns[8]},
 			},
 		},
 	}
@@ -257,10 +251,11 @@ var (
 		{Name: "duration", Type: field.TypeInt64, Nullable: true, Comment: "总时长"},
 		{Name: "length", Type: field.TypeInt64, Nullable: true, Comment: "单次时长"},
 		{Name: "count", Type: field.TypeInt64, Nullable: true, Comment: "总次数", Default: 0},
-		{Name: "count_surplus", Type: field.TypeInt64, Nullable: true, Comment: "剩余次数", Default: 0},
-		{Name: "price", Type: field.TypeFloat64, Nullable: true, Comment: "定价"},
-		{Name: "validity_at", Type: field.TypeTime, Nullable: true, Comment: "生效时间"},
-		{Name: "cancel_at", Type: field.TypeTime, Nullable: true, Comment: "作废时间"},
+		{Name: "count_used", Type: field.TypeInt64, Nullable: true, Comment: "已使用次数", Default: 0},
+		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "定价"},
+		{Name: "active_at", Type: field.TypeTime, Nullable: true, Comment: "生效时间"},
+		{Name: "expired_at", Type: field.TypeTime, Nullable: true, Comment: "过期时间"},
+		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "code"},
 		{Name: "member_product_id", Type: field.TypeInt64, Nullable: true, Comment: "会员产品ID"},
 	}
 	// MemberProductPropertyTable holds the schema information for the "member_product_property" table.
@@ -271,7 +266,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_product_property_member_product_member_product_propertys",
-				Columns:    []*schema.Column{MemberProductPropertyColumns[18]},
+				Columns:    []*schema.Column{MemberProductPropertyColumns[19]},
 				RefColumns: []*schema.Column{MemberProductColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -295,15 +290,15 @@ var (
 			{
 				Name:    "memberproductproperty_member_product_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProductPropertyColumns[18]},
+				Columns: []*schema.Column{MemberProductPropertyColumns[19]},
 			},
 			{
-				Name:    "memberproductproperty_validity_at",
+				Name:    "memberproductproperty_active_at",
 				Unique:  false,
 				Columns: []*schema.Column{MemberProductPropertyColumns[16]},
 			},
 			{
-				Name:    "memberproductproperty_cancel_at",
+				Name:    "memberproductproperty_expired_at",
 				Unique:  false,
 				Columns: []*schema.Column{MemberProductPropertyColumns[17]},
 			},

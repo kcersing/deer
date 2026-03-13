@@ -50,7 +50,6 @@ struct CreateOrderReq {
     3:optional list<order.OrderItem> items=[] (api.raw = "items")
     4:optional i64 totalAmount=0 (api.raw = "totalAmount")
     5:optional i64 userId=0 (api.raw = "userId")
-    6:optional i64 productId = 0 (api.raw = "productId")
 }
 
 struct PaymentReq {

@@ -42,14 +42,16 @@ const (
 	FieldLength = "length"
 	// FieldCount holds the string denoting the count field in the database.
 	FieldCount = "count"
-	// FieldCountSurplus holds the string denoting the count_surplus field in the database.
-	FieldCountSurplus = "count_surplus"
+	// FieldCountUsed holds the string denoting the count_used field in the database.
+	FieldCountUsed = "count_used"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
-	// FieldValidityAt holds the string denoting the validity_at field in the database.
-	FieldValidityAt = "validity_at"
-	// FieldCancelAt holds the string denoting the cancel_at field in the database.
-	FieldCancelAt = "cancel_at"
+	// FieldActiveAt holds the string denoting the active_at field in the database.
+	FieldActiveAt = "active_at"
+	// FieldExpiredAt holds the string denoting the expired_at field in the database.
+	FieldExpiredAt = "expired_at"
+	// FieldCode holds the string denoting the code field in the database.
+	FieldCode = "code"
 	// EdgeOwner holds the string denoting the owner edge name in mutations.
 	EdgeOwner = "owner"
 	// Table holds the table name of the memberproductproperty in the database.
@@ -80,10 +82,11 @@ var Columns = []string{
 	FieldDuration,
 	FieldLength,
 	FieldCount,
-	FieldCountSurplus,
+	FieldCountUsed,
 	FieldPrice,
-	FieldValidityAt,
-	FieldCancelAt,
+	FieldActiveAt,
+	FieldExpiredAt,
+	FieldCode,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -111,8 +114,8 @@ var (
 	DefaultStatus int64
 	// DefaultCount holds the default value on creation for the "count" field.
 	DefaultCount int64
-	// DefaultCountSurplus holds the default value on creation for the "count_surplus" field.
-	DefaultCountSurplus int64
+	// DefaultCountUsed holds the default value on creation for the "count_used" field.
+	DefaultCountUsed int64
 )
 
 // OrderOption defines the ordering options for the MemberProductProperty queries.
@@ -193,9 +196,9 @@ func ByCount(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCount, opts...).ToFunc()
 }
 
-// ByCountSurplus orders the results by the count_surplus field.
-func ByCountSurplus(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCountSurplus, opts...).ToFunc()
+// ByCountUsed orders the results by the count_used field.
+func ByCountUsed(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCountUsed, opts...).ToFunc()
 }
 
 // ByPrice orders the results by the price field.
@@ -203,14 +206,19 @@ func ByPrice(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPrice, opts...).ToFunc()
 }
 
-// ByValidityAt orders the results by the validity_at field.
-func ByValidityAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldValidityAt, opts...).ToFunc()
+// ByActiveAt orders the results by the active_at field.
+func ByActiveAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActiveAt, opts...).ToFunc()
 }
 
-// ByCancelAt orders the results by the cancel_at field.
-func ByCancelAt(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCancelAt, opts...).ToFunc()
+// ByExpiredAt orders the results by the expired_at field.
+func ByExpiredAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldExpiredAt, opts...).ToFunc()
+}
+
+// ByCode orders the results by the code field.
+func ByCode(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
 // ByOwnerField orders the results by owner field.

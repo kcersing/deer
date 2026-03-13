@@ -5149,13 +5149,11 @@ type MemberProductMutation struct {
 	sn                              *string
 	product_id                      *int64
 	addproduct_id                   *int64
-	venue_id                        *int64
-	addvenue_id                     *int64
 	order_id                        *int64
 	addorder_id                     *int64
 	name                            *string
-	price                           *float64
-	addprice                        *float64
+	price                           *int64
+	addprice                        *int64
 	clearedFields                   map[string]struct{}
 	members                         *int64
 	clearedmembers                  bool
@@ -5750,76 +5748,6 @@ func (m *MemberProductMutation) ResetProductID() {
 	delete(m.clearedFields, memberproduct.FieldProductID)
 }
 
-// SetVenueID sets the "venue_id" field.
-func (m *MemberProductMutation) SetVenueID(i int64) {
-	m.venue_id = &i
-	m.addvenue_id = nil
-}
-
-// VenueID returns the value of the "venue_id" field in the mutation.
-func (m *MemberProductMutation) VenueID() (r int64, exists bool) {
-	v := m.venue_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldVenueID returns the old "venue_id" field's value of the MemberProduct entity.
-// If the MemberProduct object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductMutation) OldVenueID(ctx context.Context) (v int64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldVenueID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldVenueID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldVenueID: %w", err)
-	}
-	return oldValue.VenueID, nil
-}
-
-// AddVenueID adds i to the "venue_id" field.
-func (m *MemberProductMutation) AddVenueID(i int64) {
-	if m.addvenue_id != nil {
-		*m.addvenue_id += i
-	} else {
-		m.addvenue_id = &i
-	}
-}
-
-// AddedVenueID returns the value that was added to the "venue_id" field in this mutation.
-func (m *MemberProductMutation) AddedVenueID() (r int64, exists bool) {
-	v := m.addvenue_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ClearVenueID clears the value of the "venue_id" field.
-func (m *MemberProductMutation) ClearVenueID() {
-	m.venue_id = nil
-	m.addvenue_id = nil
-	m.clearedFields[memberproduct.FieldVenueID] = struct{}{}
-}
-
-// VenueIDCleared returns if the "venue_id" field was cleared in this mutation.
-func (m *MemberProductMutation) VenueIDCleared() bool {
-	_, ok := m.clearedFields[memberproduct.FieldVenueID]
-	return ok
-}
-
-// ResetVenueID resets all changes to the "venue_id" field.
-func (m *MemberProductMutation) ResetVenueID() {
-	m.venue_id = nil
-	m.addvenue_id = nil
-	delete(m.clearedFields, memberproduct.FieldVenueID)
-}
-
 // SetOrderID sets the "order_id" field.
 func (m *MemberProductMutation) SetOrderID(i int64) {
 	m.order_id = &i
@@ -5940,13 +5868,13 @@ func (m *MemberProductMutation) ResetName() {
 }
 
 // SetPrice sets the "price" field.
-func (m *MemberProductMutation) SetPrice(f float64) {
-	m.price = &f
+func (m *MemberProductMutation) SetPrice(i int64) {
+	m.price = &i
 	m.addprice = nil
 }
 
 // Price returns the value of the "price" field in the mutation.
-func (m *MemberProductMutation) Price() (r float64, exists bool) {
+func (m *MemberProductMutation) Price() (r int64, exists bool) {
 	v := m.price
 	if v == nil {
 		return
@@ -5957,7 +5885,7 @@ func (m *MemberProductMutation) Price() (r float64, exists bool) {
 // OldPrice returns the old "price" field's value of the MemberProduct entity.
 // If the MemberProduct object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductMutation) OldPrice(ctx context.Context) (v float64, err error) {
+func (m *MemberProductMutation) OldPrice(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldPrice is only allowed on UpdateOne operations")
 	}
@@ -5971,17 +5899,17 @@ func (m *MemberProductMutation) OldPrice(ctx context.Context) (v float64, err er
 	return oldValue.Price, nil
 }
 
-// AddPrice adds f to the "price" field.
-func (m *MemberProductMutation) AddPrice(f float64) {
+// AddPrice adds i to the "price" field.
+func (m *MemberProductMutation) AddPrice(i int64) {
 	if m.addprice != nil {
-		*m.addprice += f
+		*m.addprice += i
 	} else {
-		m.addprice = &f
+		m.addprice = &i
 	}
 }
 
 // AddedPrice returns the value that was added to the "price" field in this mutation.
-func (m *MemberProductMutation) AddedPrice() (r float64, exists bool) {
+func (m *MemberProductMutation) AddedPrice() (r int64, exists bool) {
 	v := m.addprice
 	if v == nil {
 		return
@@ -6191,7 +6119,7 @@ func (m *MemberProductMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MemberProductMutation) Fields() []string {
-	fields := make([]string, 0, 12)
+	fields := make([]string, 0, 11)
 	if m.created_at != nil {
 		fields = append(fields, memberproduct.FieldCreatedAt)
 	}
@@ -6215,9 +6143,6 @@ func (m *MemberProductMutation) Fields() []string {
 	}
 	if m.product_id != nil {
 		fields = append(fields, memberproduct.FieldProductID)
-	}
-	if m.venue_id != nil {
-		fields = append(fields, memberproduct.FieldVenueID)
 	}
 	if m.order_id != nil {
 		fields = append(fields, memberproduct.FieldOrderID)
@@ -6252,8 +6177,6 @@ func (m *MemberProductMutation) Field(name string) (ent.Value, bool) {
 		return m.MemberID()
 	case memberproduct.FieldProductID:
 		return m.ProductID()
-	case memberproduct.FieldVenueID:
-		return m.VenueID()
 	case memberproduct.FieldOrderID:
 		return m.OrderID()
 	case memberproduct.FieldName:
@@ -6285,8 +6208,6 @@ func (m *MemberProductMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldMemberID(ctx)
 	case memberproduct.FieldProductID:
 		return m.OldProductID(ctx)
-	case memberproduct.FieldVenueID:
-		return m.OldVenueID(ctx)
 	case memberproduct.FieldOrderID:
 		return m.OldOrderID(ctx)
 	case memberproduct.FieldName:
@@ -6358,13 +6279,6 @@ func (m *MemberProductMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetProductID(v)
 		return nil
-	case memberproduct.FieldVenueID:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetVenueID(v)
-		return nil
 	case memberproduct.FieldOrderID:
 		v, ok := value.(int64)
 		if !ok {
@@ -6380,7 +6294,7 @@ func (m *MemberProductMutation) SetField(name string, value ent.Value) error {
 		m.SetName(v)
 		return nil
 	case memberproduct.FieldPrice:
-		v, ok := value.(float64)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -6406,9 +6320,6 @@ func (m *MemberProductMutation) AddedFields() []string {
 	if m.addproduct_id != nil {
 		fields = append(fields, memberproduct.FieldProductID)
 	}
-	if m.addvenue_id != nil {
-		fields = append(fields, memberproduct.FieldVenueID)
-	}
 	if m.addorder_id != nil {
 		fields = append(fields, memberproduct.FieldOrderID)
 	}
@@ -6431,8 +6342,6 @@ func (m *MemberProductMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedStatus()
 	case memberproduct.FieldProductID:
 		return m.AddedProductID()
-	case memberproduct.FieldVenueID:
-		return m.AddedVenueID()
 	case memberproduct.FieldOrderID:
 		return m.AddedOrderID()
 	case memberproduct.FieldPrice:
@@ -6474,13 +6383,6 @@ func (m *MemberProductMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddProductID(v)
 		return nil
-	case memberproduct.FieldVenueID:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddVenueID(v)
-		return nil
 	case memberproduct.FieldOrderID:
 		v, ok := value.(int64)
 		if !ok {
@@ -6489,7 +6391,7 @@ func (m *MemberProductMutation) AddField(name string, value ent.Value) error {
 		m.AddOrderID(v)
 		return nil
 	case memberproduct.FieldPrice:
-		v, ok := value.(float64)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -6526,9 +6428,6 @@ func (m *MemberProductMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(memberproduct.FieldProductID) {
 		fields = append(fields, memberproduct.FieldProductID)
-	}
-	if m.FieldCleared(memberproduct.FieldVenueID) {
-		fields = append(fields, memberproduct.FieldVenueID)
 	}
 	if m.FieldCleared(memberproduct.FieldOrderID) {
 		fields = append(fields, memberproduct.FieldOrderID)
@@ -6577,9 +6476,6 @@ func (m *MemberProductMutation) ClearField(name string) error {
 	case memberproduct.FieldProductID:
 		m.ClearProductID()
 		return nil
-	case memberproduct.FieldVenueID:
-		m.ClearVenueID()
-		return nil
 	case memberproduct.FieldOrderID:
 		m.ClearOrderID()
 		return nil
@@ -6620,9 +6516,6 @@ func (m *MemberProductMutation) ResetField(name string) error {
 		return nil
 	case memberproduct.FieldProductID:
 		m.ResetProductID()
-		return nil
-	case memberproduct.FieldVenueID:
-		m.ResetVenueID()
 		return nil
 	case memberproduct.FieldOrderID:
 		m.ResetOrderID()
@@ -6768,42 +6661,43 @@ func (m *MemberProductMutation) ResetEdge(name string) error {
 // MemberProductPropertyMutation represents an operation that mutates the MemberProductProperty nodes in the graph.
 type MemberProductPropertyMutation struct {
 	config
-	op               Op
-	typ              string
-	id               *int64
-	created_at       *time.Time
-	updated_at       *time.Time
-	delete           *int64
-	adddelete        *int64
-	created_id       *int64
-	addcreated_id    *int64
-	status           *int64
-	addstatus        *int64
-	member_id        *int64
-	addmember_id     *int64
-	sn               *string
-	property_id      *int64
-	addproperty_id   *int64
-	_type            *string
-	name             *string
-	duration         *int64
-	addduration      *int64
-	length           *int64
-	addlength        *int64
-	count            *int64
-	addcount         *int64
-	count_surplus    *int64
-	addcount_surplus *int64
-	price            *float64
-	addprice         *float64
-	validity_at      *time.Time
-	cancel_at        *time.Time
-	clearedFields    map[string]struct{}
-	owner            *int64
-	clearedowner     bool
-	done             bool
-	oldValue         func(context.Context) (*MemberProductProperty, error)
-	predicates       []predicate.MemberProductProperty
+	op             Op
+	typ            string
+	id             *int64
+	created_at     *time.Time
+	updated_at     *time.Time
+	delete         *int64
+	adddelete      *int64
+	created_id     *int64
+	addcreated_id  *int64
+	status         *int64
+	addstatus      *int64
+	member_id      *int64
+	addmember_id   *int64
+	sn             *string
+	property_id    *int64
+	addproperty_id *int64
+	_type          *string
+	name           *string
+	duration       *int64
+	addduration    *int64
+	length         *int64
+	addlength      *int64
+	count          *int64
+	addcount       *int64
+	count_used     *int64
+	addcount_used  *int64
+	price          *int64
+	addprice       *int64
+	active_at      *time.Time
+	expired_at     *time.Time
+	code           *string
+	clearedFields  map[string]struct{}
+	owner          *int64
+	clearedowner   bool
+	done           bool
+	oldValue       func(context.Context) (*MemberProductProperty, error)
+	predicates     []predicate.MemberProductProperty
 }
 
 var _ ent.Mutation = (*MemberProductPropertyMutation)(nil)
@@ -7764,84 +7658,84 @@ func (m *MemberProductPropertyMutation) ResetCount() {
 	delete(m.clearedFields, memberproductproperty.FieldCount)
 }
 
-// SetCountSurplus sets the "count_surplus" field.
-func (m *MemberProductPropertyMutation) SetCountSurplus(i int64) {
-	m.count_surplus = &i
-	m.addcount_surplus = nil
+// SetCountUsed sets the "count_used" field.
+func (m *MemberProductPropertyMutation) SetCountUsed(i int64) {
+	m.count_used = &i
+	m.addcount_used = nil
 }
 
-// CountSurplus returns the value of the "count_surplus" field in the mutation.
-func (m *MemberProductPropertyMutation) CountSurplus() (r int64, exists bool) {
-	v := m.count_surplus
+// CountUsed returns the value of the "count_used" field in the mutation.
+func (m *MemberProductPropertyMutation) CountUsed() (r int64, exists bool) {
+	v := m.count_used
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldCountSurplus returns the old "count_surplus" field's value of the MemberProductProperty entity.
+// OldCountUsed returns the old "count_used" field's value of the MemberProductProperty entity.
 // If the MemberProductProperty object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductPropertyMutation) OldCountSurplus(ctx context.Context) (v int64, err error) {
+func (m *MemberProductPropertyMutation) OldCountUsed(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldCountSurplus is only allowed on UpdateOne operations")
+		return v, errors.New("OldCountUsed is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldCountSurplus requires an ID field in the mutation")
+		return v, errors.New("OldCountUsed requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCountSurplus: %w", err)
+		return v, fmt.Errorf("querying old value for OldCountUsed: %w", err)
 	}
-	return oldValue.CountSurplus, nil
+	return oldValue.CountUsed, nil
 }
 
-// AddCountSurplus adds i to the "count_surplus" field.
-func (m *MemberProductPropertyMutation) AddCountSurplus(i int64) {
-	if m.addcount_surplus != nil {
-		*m.addcount_surplus += i
+// AddCountUsed adds i to the "count_used" field.
+func (m *MemberProductPropertyMutation) AddCountUsed(i int64) {
+	if m.addcount_used != nil {
+		*m.addcount_used += i
 	} else {
-		m.addcount_surplus = &i
+		m.addcount_used = &i
 	}
 }
 
-// AddedCountSurplus returns the value that was added to the "count_surplus" field in this mutation.
-func (m *MemberProductPropertyMutation) AddedCountSurplus() (r int64, exists bool) {
-	v := m.addcount_surplus
+// AddedCountUsed returns the value that was added to the "count_used" field in this mutation.
+func (m *MemberProductPropertyMutation) AddedCountUsed() (r int64, exists bool) {
+	v := m.addcount_used
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ClearCountSurplus clears the value of the "count_surplus" field.
-func (m *MemberProductPropertyMutation) ClearCountSurplus() {
-	m.count_surplus = nil
-	m.addcount_surplus = nil
-	m.clearedFields[memberproductproperty.FieldCountSurplus] = struct{}{}
+// ClearCountUsed clears the value of the "count_used" field.
+func (m *MemberProductPropertyMutation) ClearCountUsed() {
+	m.count_used = nil
+	m.addcount_used = nil
+	m.clearedFields[memberproductproperty.FieldCountUsed] = struct{}{}
 }
 
-// CountSurplusCleared returns if the "count_surplus" field was cleared in this mutation.
-func (m *MemberProductPropertyMutation) CountSurplusCleared() bool {
-	_, ok := m.clearedFields[memberproductproperty.FieldCountSurplus]
+// CountUsedCleared returns if the "count_used" field was cleared in this mutation.
+func (m *MemberProductPropertyMutation) CountUsedCleared() bool {
+	_, ok := m.clearedFields[memberproductproperty.FieldCountUsed]
 	return ok
 }
 
-// ResetCountSurplus resets all changes to the "count_surplus" field.
-func (m *MemberProductPropertyMutation) ResetCountSurplus() {
-	m.count_surplus = nil
-	m.addcount_surplus = nil
-	delete(m.clearedFields, memberproductproperty.FieldCountSurplus)
+// ResetCountUsed resets all changes to the "count_used" field.
+func (m *MemberProductPropertyMutation) ResetCountUsed() {
+	m.count_used = nil
+	m.addcount_used = nil
+	delete(m.clearedFields, memberproductproperty.FieldCountUsed)
 }
 
 // SetPrice sets the "price" field.
-func (m *MemberProductPropertyMutation) SetPrice(f float64) {
-	m.price = &f
+func (m *MemberProductPropertyMutation) SetPrice(i int64) {
+	m.price = &i
 	m.addprice = nil
 }
 
 // Price returns the value of the "price" field in the mutation.
-func (m *MemberProductPropertyMutation) Price() (r float64, exists bool) {
+func (m *MemberProductPropertyMutation) Price() (r int64, exists bool) {
 	v := m.price
 	if v == nil {
 		return
@@ -7852,7 +7746,7 @@ func (m *MemberProductPropertyMutation) Price() (r float64, exists bool) {
 // OldPrice returns the old "price" field's value of the MemberProductProperty entity.
 // If the MemberProductProperty object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductPropertyMutation) OldPrice(ctx context.Context) (v float64, err error) {
+func (m *MemberProductPropertyMutation) OldPrice(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldPrice is only allowed on UpdateOne operations")
 	}
@@ -7866,17 +7760,17 @@ func (m *MemberProductPropertyMutation) OldPrice(ctx context.Context) (v float64
 	return oldValue.Price, nil
 }
 
-// AddPrice adds f to the "price" field.
-func (m *MemberProductPropertyMutation) AddPrice(f float64) {
+// AddPrice adds i to the "price" field.
+func (m *MemberProductPropertyMutation) AddPrice(i int64) {
 	if m.addprice != nil {
-		*m.addprice += f
+		*m.addprice += i
 	} else {
-		m.addprice = &f
+		m.addprice = &i
 	}
 }
 
 // AddedPrice returns the value that was added to the "price" field in this mutation.
-func (m *MemberProductPropertyMutation) AddedPrice() (r float64, exists bool) {
+func (m *MemberProductPropertyMutation) AddedPrice() (r int64, exists bool) {
 	v := m.addprice
 	if v == nil {
 		return
@@ -7904,102 +7798,151 @@ func (m *MemberProductPropertyMutation) ResetPrice() {
 	delete(m.clearedFields, memberproductproperty.FieldPrice)
 }
 
-// SetValidityAt sets the "validity_at" field.
-func (m *MemberProductPropertyMutation) SetValidityAt(t time.Time) {
-	m.validity_at = &t
+// SetActiveAt sets the "active_at" field.
+func (m *MemberProductPropertyMutation) SetActiveAt(t time.Time) {
+	m.active_at = &t
 }
 
-// ValidityAt returns the value of the "validity_at" field in the mutation.
-func (m *MemberProductPropertyMutation) ValidityAt() (r time.Time, exists bool) {
-	v := m.validity_at
+// ActiveAt returns the value of the "active_at" field in the mutation.
+func (m *MemberProductPropertyMutation) ActiveAt() (r time.Time, exists bool) {
+	v := m.active_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldValidityAt returns the old "validity_at" field's value of the MemberProductProperty entity.
+// OldActiveAt returns the old "active_at" field's value of the MemberProductProperty entity.
 // If the MemberProductProperty object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductPropertyMutation) OldValidityAt(ctx context.Context) (v time.Time, err error) {
+func (m *MemberProductPropertyMutation) OldActiveAt(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldValidityAt is only allowed on UpdateOne operations")
+		return v, errors.New("OldActiveAt is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldValidityAt requires an ID field in the mutation")
+		return v, errors.New("OldActiveAt requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldValidityAt: %w", err)
+		return v, fmt.Errorf("querying old value for OldActiveAt: %w", err)
 	}
-	return oldValue.ValidityAt, nil
+	return oldValue.ActiveAt, nil
 }
 
-// ClearValidityAt clears the value of the "validity_at" field.
-func (m *MemberProductPropertyMutation) ClearValidityAt() {
-	m.validity_at = nil
-	m.clearedFields[memberproductproperty.FieldValidityAt] = struct{}{}
+// ClearActiveAt clears the value of the "active_at" field.
+func (m *MemberProductPropertyMutation) ClearActiveAt() {
+	m.active_at = nil
+	m.clearedFields[memberproductproperty.FieldActiveAt] = struct{}{}
 }
 
-// ValidityAtCleared returns if the "validity_at" field was cleared in this mutation.
-func (m *MemberProductPropertyMutation) ValidityAtCleared() bool {
-	_, ok := m.clearedFields[memberproductproperty.FieldValidityAt]
+// ActiveAtCleared returns if the "active_at" field was cleared in this mutation.
+func (m *MemberProductPropertyMutation) ActiveAtCleared() bool {
+	_, ok := m.clearedFields[memberproductproperty.FieldActiveAt]
 	return ok
 }
 
-// ResetValidityAt resets all changes to the "validity_at" field.
-func (m *MemberProductPropertyMutation) ResetValidityAt() {
-	m.validity_at = nil
-	delete(m.clearedFields, memberproductproperty.FieldValidityAt)
+// ResetActiveAt resets all changes to the "active_at" field.
+func (m *MemberProductPropertyMutation) ResetActiveAt() {
+	m.active_at = nil
+	delete(m.clearedFields, memberproductproperty.FieldActiveAt)
 }
 
-// SetCancelAt sets the "cancel_at" field.
-func (m *MemberProductPropertyMutation) SetCancelAt(t time.Time) {
-	m.cancel_at = &t
+// SetExpiredAt sets the "expired_at" field.
+func (m *MemberProductPropertyMutation) SetExpiredAt(t time.Time) {
+	m.expired_at = &t
 }
 
-// CancelAt returns the value of the "cancel_at" field in the mutation.
-func (m *MemberProductPropertyMutation) CancelAt() (r time.Time, exists bool) {
-	v := m.cancel_at
+// ExpiredAt returns the value of the "expired_at" field in the mutation.
+func (m *MemberProductPropertyMutation) ExpiredAt() (r time.Time, exists bool) {
+	v := m.expired_at
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldCancelAt returns the old "cancel_at" field's value of the MemberProductProperty entity.
+// OldExpiredAt returns the old "expired_at" field's value of the MemberProductProperty entity.
 // If the MemberProductProperty object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *MemberProductPropertyMutation) OldCancelAt(ctx context.Context) (v time.Time, err error) {
+func (m *MemberProductPropertyMutation) OldExpiredAt(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldCancelAt is only allowed on UpdateOne operations")
+		return v, errors.New("OldExpiredAt is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldCancelAt requires an ID field in the mutation")
+		return v, errors.New("OldExpiredAt requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCancelAt: %w", err)
+		return v, fmt.Errorf("querying old value for OldExpiredAt: %w", err)
 	}
-	return oldValue.CancelAt, nil
+	return oldValue.ExpiredAt, nil
 }
 
-// ClearCancelAt clears the value of the "cancel_at" field.
-func (m *MemberProductPropertyMutation) ClearCancelAt() {
-	m.cancel_at = nil
-	m.clearedFields[memberproductproperty.FieldCancelAt] = struct{}{}
+// ClearExpiredAt clears the value of the "expired_at" field.
+func (m *MemberProductPropertyMutation) ClearExpiredAt() {
+	m.expired_at = nil
+	m.clearedFields[memberproductproperty.FieldExpiredAt] = struct{}{}
 }
 
-// CancelAtCleared returns if the "cancel_at" field was cleared in this mutation.
-func (m *MemberProductPropertyMutation) CancelAtCleared() bool {
-	_, ok := m.clearedFields[memberproductproperty.FieldCancelAt]
+// ExpiredAtCleared returns if the "expired_at" field was cleared in this mutation.
+func (m *MemberProductPropertyMutation) ExpiredAtCleared() bool {
+	_, ok := m.clearedFields[memberproductproperty.FieldExpiredAt]
 	return ok
 }
 
-// ResetCancelAt resets all changes to the "cancel_at" field.
-func (m *MemberProductPropertyMutation) ResetCancelAt() {
-	m.cancel_at = nil
-	delete(m.clearedFields, memberproductproperty.FieldCancelAt)
+// ResetExpiredAt resets all changes to the "expired_at" field.
+func (m *MemberProductPropertyMutation) ResetExpiredAt() {
+	m.expired_at = nil
+	delete(m.clearedFields, memberproductproperty.FieldExpiredAt)
+}
+
+// SetCode sets the "code" field.
+func (m *MemberProductPropertyMutation) SetCode(s string) {
+	m.code = &s
+}
+
+// Code returns the value of the "code" field in the mutation.
+func (m *MemberProductPropertyMutation) Code() (r string, exists bool) {
+	v := m.code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCode returns the old "code" field's value of the MemberProductProperty entity.
+// If the MemberProductProperty object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberProductPropertyMutation) OldCode(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCode: %w", err)
+	}
+	return oldValue.Code, nil
+}
+
+// ClearCode clears the value of the "code" field.
+func (m *MemberProductPropertyMutation) ClearCode() {
+	m.code = nil
+	m.clearedFields[memberproductproperty.FieldCode] = struct{}{}
+}
+
+// CodeCleared returns if the "code" field was cleared in this mutation.
+func (m *MemberProductPropertyMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[memberproductproperty.FieldCode]
+	return ok
+}
+
+// ResetCode resets all changes to the "code" field.
+func (m *MemberProductPropertyMutation) ResetCode() {
+	m.code = nil
+	delete(m.clearedFields, memberproductproperty.FieldCode)
 }
 
 // SetOwnerID sets the "owner" edge to the MemberProduct entity by id.
@@ -8076,7 +8019,7 @@ func (m *MemberProductPropertyMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MemberProductPropertyMutation) Fields() []string {
-	fields := make([]string, 0, 18)
+	fields := make([]string, 0, 19)
 	if m.created_at != nil {
 		fields = append(fields, memberproductproperty.FieldCreatedAt)
 	}
@@ -8119,17 +8062,20 @@ func (m *MemberProductPropertyMutation) Fields() []string {
 	if m.count != nil {
 		fields = append(fields, memberproductproperty.FieldCount)
 	}
-	if m.count_surplus != nil {
-		fields = append(fields, memberproductproperty.FieldCountSurplus)
+	if m.count_used != nil {
+		fields = append(fields, memberproductproperty.FieldCountUsed)
 	}
 	if m.price != nil {
 		fields = append(fields, memberproductproperty.FieldPrice)
 	}
-	if m.validity_at != nil {
-		fields = append(fields, memberproductproperty.FieldValidityAt)
+	if m.active_at != nil {
+		fields = append(fields, memberproductproperty.FieldActiveAt)
 	}
-	if m.cancel_at != nil {
-		fields = append(fields, memberproductproperty.FieldCancelAt)
+	if m.expired_at != nil {
+		fields = append(fields, memberproductproperty.FieldExpiredAt)
+	}
+	if m.code != nil {
+		fields = append(fields, memberproductproperty.FieldCode)
 	}
 	return fields
 }
@@ -8167,14 +8113,16 @@ func (m *MemberProductPropertyMutation) Field(name string) (ent.Value, bool) {
 		return m.Length()
 	case memberproductproperty.FieldCount:
 		return m.Count()
-	case memberproductproperty.FieldCountSurplus:
-		return m.CountSurplus()
+	case memberproductproperty.FieldCountUsed:
+		return m.CountUsed()
 	case memberproductproperty.FieldPrice:
 		return m.Price()
-	case memberproductproperty.FieldValidityAt:
-		return m.ValidityAt()
-	case memberproductproperty.FieldCancelAt:
-		return m.CancelAt()
+	case memberproductproperty.FieldActiveAt:
+		return m.ActiveAt()
+	case memberproductproperty.FieldExpiredAt:
+		return m.ExpiredAt()
+	case memberproductproperty.FieldCode:
+		return m.Code()
 	}
 	return nil, false
 }
@@ -8212,14 +8160,16 @@ func (m *MemberProductPropertyMutation) OldField(ctx context.Context, name strin
 		return m.OldLength(ctx)
 	case memberproductproperty.FieldCount:
 		return m.OldCount(ctx)
-	case memberproductproperty.FieldCountSurplus:
-		return m.OldCountSurplus(ctx)
+	case memberproductproperty.FieldCountUsed:
+		return m.OldCountUsed(ctx)
 	case memberproductproperty.FieldPrice:
 		return m.OldPrice(ctx)
-	case memberproductproperty.FieldValidityAt:
-		return m.OldValidityAt(ctx)
-	case memberproductproperty.FieldCancelAt:
-		return m.OldCancelAt(ctx)
+	case memberproductproperty.FieldActiveAt:
+		return m.OldActiveAt(ctx)
+	case memberproductproperty.FieldExpiredAt:
+		return m.OldExpiredAt(ctx)
+	case memberproductproperty.FieldCode:
+		return m.OldCode(ctx)
 	}
 	return nil, fmt.Errorf("unknown MemberProductProperty field %s", name)
 }
@@ -8327,33 +8277,40 @@ func (m *MemberProductPropertyMutation) SetField(name string, value ent.Value) e
 		}
 		m.SetCount(v)
 		return nil
-	case memberproductproperty.FieldCountSurplus:
+	case memberproductproperty.FieldCountUsed:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetCountSurplus(v)
+		m.SetCountUsed(v)
 		return nil
 	case memberproductproperty.FieldPrice:
-		v, ok := value.(float64)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetPrice(v)
 		return nil
-	case memberproductproperty.FieldValidityAt:
+	case memberproductproperty.FieldActiveAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetValidityAt(v)
+		m.SetActiveAt(v)
 		return nil
-	case memberproductproperty.FieldCancelAt:
+	case memberproductproperty.FieldExpiredAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetCancelAt(v)
+		m.SetExpiredAt(v)
+		return nil
+	case memberproductproperty.FieldCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCode(v)
 		return nil
 	}
 	return fmt.Errorf("unknown MemberProductProperty field %s", name)
@@ -8387,8 +8344,8 @@ func (m *MemberProductPropertyMutation) AddedFields() []string {
 	if m.addcount != nil {
 		fields = append(fields, memberproductproperty.FieldCount)
 	}
-	if m.addcount_surplus != nil {
-		fields = append(fields, memberproductproperty.FieldCountSurplus)
+	if m.addcount_used != nil {
+		fields = append(fields, memberproductproperty.FieldCountUsed)
 	}
 	if m.addprice != nil {
 		fields = append(fields, memberproductproperty.FieldPrice)
@@ -8417,8 +8374,8 @@ func (m *MemberProductPropertyMutation) AddedField(name string) (ent.Value, bool
 		return m.AddedLength()
 	case memberproductproperty.FieldCount:
 		return m.AddedCount()
-	case memberproductproperty.FieldCountSurplus:
-		return m.AddedCountSurplus()
+	case memberproductproperty.FieldCountUsed:
+		return m.AddedCountUsed()
 	case memberproductproperty.FieldPrice:
 		return m.AddedPrice()
 	}
@@ -8486,15 +8443,15 @@ func (m *MemberProductPropertyMutation) AddField(name string, value ent.Value) e
 		}
 		m.AddCount(v)
 		return nil
-	case memberproductproperty.FieldCountSurplus:
+	case memberproductproperty.FieldCountUsed:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddCountSurplus(v)
+		m.AddCountUsed(v)
 		return nil
 	case memberproductproperty.FieldPrice:
-		v, ok := value.(float64)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -8550,17 +8507,20 @@ func (m *MemberProductPropertyMutation) ClearedFields() []string {
 	if m.FieldCleared(memberproductproperty.FieldCount) {
 		fields = append(fields, memberproductproperty.FieldCount)
 	}
-	if m.FieldCleared(memberproductproperty.FieldCountSurplus) {
-		fields = append(fields, memberproductproperty.FieldCountSurplus)
+	if m.FieldCleared(memberproductproperty.FieldCountUsed) {
+		fields = append(fields, memberproductproperty.FieldCountUsed)
 	}
 	if m.FieldCleared(memberproductproperty.FieldPrice) {
 		fields = append(fields, memberproductproperty.FieldPrice)
 	}
-	if m.FieldCleared(memberproductproperty.FieldValidityAt) {
-		fields = append(fields, memberproductproperty.FieldValidityAt)
+	if m.FieldCleared(memberproductproperty.FieldActiveAt) {
+		fields = append(fields, memberproductproperty.FieldActiveAt)
 	}
-	if m.FieldCleared(memberproductproperty.FieldCancelAt) {
-		fields = append(fields, memberproductproperty.FieldCancelAt)
+	if m.FieldCleared(memberproductproperty.FieldExpiredAt) {
+		fields = append(fields, memberproductproperty.FieldExpiredAt)
+	}
+	if m.FieldCleared(memberproductproperty.FieldCode) {
+		fields = append(fields, memberproductproperty.FieldCode)
 	}
 	return fields
 }
@@ -8618,17 +8578,20 @@ func (m *MemberProductPropertyMutation) ClearField(name string) error {
 	case memberproductproperty.FieldCount:
 		m.ClearCount()
 		return nil
-	case memberproductproperty.FieldCountSurplus:
-		m.ClearCountSurplus()
+	case memberproductproperty.FieldCountUsed:
+		m.ClearCountUsed()
 		return nil
 	case memberproductproperty.FieldPrice:
 		m.ClearPrice()
 		return nil
-	case memberproductproperty.FieldValidityAt:
-		m.ClearValidityAt()
+	case memberproductproperty.FieldActiveAt:
+		m.ClearActiveAt()
 		return nil
-	case memberproductproperty.FieldCancelAt:
-		m.ClearCancelAt()
+	case memberproductproperty.FieldExpiredAt:
+		m.ClearExpiredAt()
+		return nil
+	case memberproductproperty.FieldCode:
+		m.ClearCode()
 		return nil
 	}
 	return fmt.Errorf("unknown MemberProductProperty nullable field %s", name)
@@ -8680,17 +8643,20 @@ func (m *MemberProductPropertyMutation) ResetField(name string) error {
 	case memberproductproperty.FieldCount:
 		m.ResetCount()
 		return nil
-	case memberproductproperty.FieldCountSurplus:
-		m.ResetCountSurplus()
+	case memberproductproperty.FieldCountUsed:
+		m.ResetCountUsed()
 		return nil
 	case memberproductproperty.FieldPrice:
 		m.ResetPrice()
 		return nil
-	case memberproductproperty.FieldValidityAt:
-		m.ResetValidityAt()
+	case memberproductproperty.FieldActiveAt:
+		m.ResetActiveAt()
 		return nil
-	case memberproductproperty.FieldCancelAt:
-		m.ResetCancelAt()
+	case memberproductproperty.FieldExpiredAt:
+		m.ResetExpiredAt()
+		return nil
+	case memberproductproperty.FieldCode:
+		m.ResetCode()
 		return nil
 	}
 	return fmt.Errorf("unknown MemberProductProperty field %s", name)
