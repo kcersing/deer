@@ -40,9 +40,10 @@ type Redis struct {
 }
 
 type Kitex struct {
-	Service         string `yaml:"Service"`
-	Address         string `yaml:"Address"`
-	Node            int64  `yaml:"Node"`
+	Service string `yaml:"Service"`
+	Address string `yaml:"Address"`
+	Node    int64  `yaml:"Node"`
+	
 	MetricsPort     string `yaml:"MetricsPort"`
 	EnablePprof     bool   `yaml:"EnablePprof"`
 	EnableGzip      bool   `yaml:"EnableGzip"`
@@ -59,19 +60,19 @@ type Kitex struct {
 }
 
 type Aliyun struct {
-	Access Access `mapstructure:"Access" yaml:"Access"`
-	Sms    Sms    `mapstructure:"Sms" yaml:"Sms"`
+	Access Access `yaml:"Access"`
+	Sms    Sms    `yaml:"Sms"`
 }
 type Access struct {
-	AccessKeyId     string `mapstructure:"AccessKeyId" yaml:"AccessKeyId"`
-	AccessKeySecret string `mapstructure:"AccessKeySecret" yaml:"AccessKeySecret"`
+	AccessKeyId     string `yaml:"AccessKeyId"`
+	AccessKeySecret string `yaml:"AccessKeySecret"`
 }
 type Sms struct {
-	Captcha SmsTemplate `mapstructure:"Captcha" yaml:"Captcha"`
+	Captcha SmsTemplate `yaml:"Captcha"`
 }
 type SmsTemplate struct {
-	SignName     string `mapstructure:"SignName" yaml:"SignName"`
-	TemplateCode string `mapstructure:"TemplateCode" yaml:"TemplateCode"`
+	SignName     string `yaml:"SignName"`
+	TemplateCode string `yaml:"TemplateCode"`
 }
 
 type RabbitMq struct {
@@ -95,6 +96,7 @@ func initConf() {
 	if err != nil {
 		panic(err)
 	}
+
 	conf = new(Config)
 	err = yaml.Unmarshal(content, conf)
 	if err != nil {

@@ -16,7 +16,7 @@ type PublishScope int
 const (
 	// ScopeLocal 只发布到本地内存总线
 	ScopeLocal PublishScope = 1
-	// ScopeDistributed 发布到MQ和本地内存总线
+	// ScopeDistributed 发布到MQ和本地内存总线 注意事件重复执行
 	ScopeDistributed PublishScope = 2
 	// ScopeMQOnly 只发布到MQ
 	ScopeMQOnly PublishScope = 3
@@ -154,8 +154,8 @@ func (pub *EventPublisher) Close() error {
 // ============ 方便的简写方法 ============
 
 // Local 短方法：发布到本地内存
-func (pub *EventPublisher) Local(ctx context.Context, topic string, payload any) {
-	_ = pub.Publish(ctx, topic, payload, WithScope(ScopeLocal))
+func (pub *EventPublisher) Local(ctx context.Context, topic string, payload any) error {
+	return pub.Publish(ctx, topic, payload, WithScope(ScopeLocal))
 }
 
 // Distributed 短方法：发布到分布式

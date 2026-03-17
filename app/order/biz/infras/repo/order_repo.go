@@ -218,7 +218,7 @@ func (o *OrderRepo) saveSnapshot(ctx context.Context, tx *ent.Tx, order *aggrega
 func (o *OrderRepo) publishEvents(ctx context.Context, events []common.Event) {
 	if o.publisher != nil {
 		for _, e := range events {
-			if err := o.publisher.Distributed(ctx, e.GetType(), e); err != nil {
+			if err := o.publisher.Local(ctx, e.GetType(), e); err != nil {
 				klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), err)
 			}
 		}

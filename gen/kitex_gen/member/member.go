@@ -1066,7 +1066,7 @@ type ProductListReq struct {
 
 func NewProductListReq() *ProductListReq {
 	return &ProductListReq{
-		Page:     0,
+		Page:     1,
 		PageSize: 10,
 		Name:     "",
 		Status:   []int64{},
@@ -1074,7 +1074,7 @@ func NewProductListReq() *ProductListReq {
 }
 
 func (p *ProductListReq) InitDefault() {
-	p.Page = 0
+	p.Page = 1
 	p.PageSize = 10
 	p.Name = ""
 	p.Status = []int64{}

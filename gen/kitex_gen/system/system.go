@@ -2625,8 +2625,8 @@ type LogListReq struct {
 
 func NewLogListReq() *LogListReq {
 	return &LogListReq{
-		Page:       0,
-		PageSize:   0,
+		Page:       1,
+		PageSize:   10,
 		Type:       "",
 		Method:     "",
 		Api:        "",
@@ -2637,8 +2637,8 @@ func NewLogListReq() *LogListReq {
 }
 
 func (p *LogListReq) InitDefault() {
-	p.Page = 0
-	p.PageSize = 0
+	p.Page = 1
+	p.PageSize = 10
 	p.Type = ""
 	p.Method = ""
 	p.Api = ""
@@ -2647,7 +2647,7 @@ func (p *LogListReq) InitDefault() {
 	p.Identity = 0
 }
 
-var LogListReq_Page_DEFAULT int64 = 0
+var LogListReq_Page_DEFAULT int64 = 1
 
 func (p *LogListReq) GetPage() (v int64) {
 	if !p.IsSetPage() {
@@ -2656,7 +2656,7 @@ func (p *LogListReq) GetPage() (v int64) {
 	return p.Page
 }
 
-var LogListReq_PageSize_DEFAULT int64 = 0
+var LogListReq_PageSize_DEFAULT int64 = 10
 
 func (p *LogListReq) GetPageSize() (v int64) {
 	if !p.IsSetPageSize() {
