@@ -1,30 +1,66 @@
-# kcers-order
+# deer
 
-### DDD和事件溯源模式
+## 分支- master
+## Introduction
+An e-commerce demo built with `Kitex` and `Hertz`.
 
-#### RPC 调用的流程
-一次 rpc 调用包括以下基本流程，分为客户端和服务端两个部分：
+| Service Name     | Usage          | Framework    | protocol | Path        | IDL                    |
+|------------------|----------------|--------------|----------|-------------|------------------------|
+| facade           | HTTP interface | kitex/hertz  | http     | app/facade  | idl/api/               |
+| cwg.deer.user    | user service   | kitex/gorm   | thrift   | app/user    | idl/rpc/user.thrift       |
+| cwg.deer.member  | member service | kitex/gorm   | thrift   | app/member  | idl/rpc/member.thrift     |
+| cwg.deer.order   | order service  | kitex/gorm   | thrift   | app/order   | idl/rpc/order.thrift      |
+| cwg.deer.product | product service| kitex/gorm   | thrift   | app/product | idl/rpc/product.thrift |
+........
 
-（客户端）构造请求参数，发起调用
-（客户端）通过服务发现、负载均衡等得到服务端实例地址，并建立连接
-（客户端）请求参数序列化成二进制数据
-（客户端）通过网络将数据发送给服务端
-（服务端）服务端接收数据
-（服务端）反序列化出请求参数
-（服务端）handler 处理请求并返回响应结果
-（服务端）将响应结果序列化成二进制数据
-（服务端）通过网络将数据返回给客户端
-（客户端）接收数据
-（客户端）反序列化出结果
-（客户端）得到调用的结果
+* components used
+    * ElasticSearch
+    * Kibana
+    * MySQL
+    * Redis
+    * ETCD
+* Hertz middlewares used
+    * [swagger](http://github.com/hertz-contrib/swagger)
+    * [JWT](http://github.com/hertz-contrib/jwt)
+    * [pprof](https://github.com/hertz-contrib/pprof)
+    * [gzip](https://github.com/hertz-contrib/gzip)
+    * [casbin](https://github.com/casbin/casbin/v2)
+
+### 技术选型
+#### 后端
+- HTTP 框架使用 Hertz
+- RPC 框架使用 Kitex
+- 关系型数据库选用 Postgres
+- 非关系型数据库选用 Redis
+- 服务中心与配置中心均选用 Nacos
+- 对象存储服务使用 Minio
+- 消息队列使用 RabbitMQ
+- 使用 Jaeger 与 Prometheus 进行链路追踪以及监控
+- CI 使用 Github Actions
+
+## 分支- web
+### 技术选型
+#### 前端
+- Ant Design Pro
+- Pro Components
 
 
-
-
-
-cwgo server --type RPC --idl idl/order.thrift --server_name order --module kcers-order --hex 
-
-
-
-
-
+## 业务
+- [√] 字典
+- [√] 菜单
+- [√] 权限检查
+- [√] 消息管理
+- [√] 用户管理
+- [√] 注册
+- [√] 登录
+- [√] 退出
+- [√] 产品
+- [√] 下单
+- [x] 支付
+- [x] 订单中心
+- [x] 会员管理
+- [x] CRM
+- [x] 会员产品管理
+- [x] 排课约课上下课
+- [x] 统计
+- [x] ...........
