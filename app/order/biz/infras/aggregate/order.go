@@ -110,7 +110,6 @@ func (o *Order) onRefunded(e *events.RefundedOrderEvent) (err error) {
 	return nil
 }
 func (o *Order) onShipped(e *events.ShippedOrderEvent) (err error) {
-	o.CreatedId = e.CreatedId
 	o.Status = e.GetType()
 	return nil
 }
@@ -164,6 +163,10 @@ func (o *Order) Shipped() error {
 		return err
 	}
 	event := events.NewShippedOrderEvent(o.AggregateID)
+	event.MemberId = o.MemberId
+	event.OrderId = o.Id
+	event.UserId = o.CreatedId
+	event.Items = o.Items
 	err := o.Apply(event)
 	if err != nil {
 		return err

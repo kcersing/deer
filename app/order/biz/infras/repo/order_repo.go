@@ -39,9 +39,6 @@ type OrderRepo struct {
 
 // NewOrderRepo 创建带可选依赖的仓储（订阅服务、事件发布器）
 func NewOrderRepo() *OrderRepo {
-
-	klog.Info(infras.GetManager().Publisher)
-
 	return &OrderRepo{
 		db:        db.Client,
 		publisher: infras.GetManager().Publisher,

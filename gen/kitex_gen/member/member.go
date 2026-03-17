@@ -736,38 +736,26 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 }
 
 type CreateProductReq struct {
-	MemberId  int64             `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	ProductId int64             `thrift:"productId,2,optional" frugal:"2,optional,i64" json:"productId,omitempty"`
-	Items     []*base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<base.OrderItem>" json:"items,omitempty"`
-	OrderId   int64             `thrift:"orderId,4,optional" frugal:"4,optional,i64" json:"orderId,omitempty"`
-	Price     int64             `thrift:"price,5,optional" frugal:"5,optional,i64" json:"price,omitempty"`
-	UserId    int64             `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
-	Quantity  int64             `thrift:"quantity,7,optional" frugal:"7,optional,i64" json:"quantity,omitempty"`
-	Name      string            `thrift:"name,8,optional" frugal:"8,optional,string" json:"name,omitempty"`
+	MemberId int64             `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
+	Items    []*base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<base.OrderItem>" json:"items,omitempty"`
+	OrderId  int64             `thrift:"orderId,4,optional" frugal:"4,optional,i64" json:"orderId,omitempty"`
+	UserId   int64             `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
 }
 
 func NewCreateProductReq() *CreateProductReq {
 	return &CreateProductReq{
-		MemberId:  0,
-		ProductId: 0,
-		Items:     []*base.OrderItem{},
-		OrderId:   0,
-		Price:     0,
-		UserId:    0,
-		Quantity:  1,
-		Name:      "",
+		MemberId: 0,
+		Items:    []*base.OrderItem{},
+		OrderId:  0,
+		UserId:   0,
 	}
 }
 
 func (p *CreateProductReq) InitDefault() {
 	p.MemberId = 0
-	p.ProductId = 0
 	p.Items = []*base.OrderItem{}
 	p.OrderId = 0
-	p.Price = 0
 	p.UserId = 0
-	p.Quantity = 1
-	p.Name = ""
 }
 
 var CreateProductReq_MemberId_DEFAULT int64 = 0
@@ -777,15 +765,6 @@ func (p *CreateProductReq) GetMemberId() (v int64) {
 		return CreateProductReq_MemberId_DEFAULT
 	}
 	return p.MemberId
-}
-
-var CreateProductReq_ProductId_DEFAULT int64 = 0
-
-func (p *CreateProductReq) GetProductId() (v int64) {
-	if !p.IsSetProductId() {
-		return CreateProductReq_ProductId_DEFAULT
-	}
-	return p.ProductId
 }
 
 var CreateProductReq_Items_DEFAULT []*base.OrderItem = []*base.OrderItem{}
@@ -806,15 +785,6 @@ func (p *CreateProductReq) GetOrderId() (v int64) {
 	return p.OrderId
 }
 
-var CreateProductReq_Price_DEFAULT int64 = 0
-
-func (p *CreateProductReq) GetPrice() (v int64) {
-	if !p.IsSetPrice() {
-		return CreateProductReq_Price_DEFAULT
-	}
-	return p.Price
-}
-
 var CreateProductReq_UserId_DEFAULT int64 = 0
 
 func (p *CreateProductReq) GetUserId() (v int64) {
@@ -823,29 +793,8 @@ func (p *CreateProductReq) GetUserId() (v int64) {
 	}
 	return p.UserId
 }
-
-var CreateProductReq_Quantity_DEFAULT int64 = 1
-
-func (p *CreateProductReq) GetQuantity() (v int64) {
-	if !p.IsSetQuantity() {
-		return CreateProductReq_Quantity_DEFAULT
-	}
-	return p.Quantity
-}
-
-var CreateProductReq_Name_DEFAULT string = ""
-
-func (p *CreateProductReq) GetName() (v string) {
-	if !p.IsSetName() {
-		return CreateProductReq_Name_DEFAULT
-	}
-	return p.Name
-}
 func (p *CreateProductReq) SetMemberId(val int64) {
 	p.MemberId = val
-}
-func (p *CreateProductReq) SetProductId(val int64) {
-	p.ProductId = val
 }
 func (p *CreateProductReq) SetItems(val []*base.OrderItem) {
 	p.Items = val
@@ -853,25 +802,12 @@ func (p *CreateProductReq) SetItems(val []*base.OrderItem) {
 func (p *CreateProductReq) SetOrderId(val int64) {
 	p.OrderId = val
 }
-func (p *CreateProductReq) SetPrice(val int64) {
-	p.Price = val
-}
 func (p *CreateProductReq) SetUserId(val int64) {
 	p.UserId = val
-}
-func (p *CreateProductReq) SetQuantity(val int64) {
-	p.Quantity = val
-}
-func (p *CreateProductReq) SetName(val string) {
-	p.Name = val
 }
 
 func (p *CreateProductReq) IsSetMemberId() bool {
 	return p.MemberId != CreateProductReq_MemberId_DEFAULT
-}
-
-func (p *CreateProductReq) IsSetProductId() bool {
-	return p.ProductId != CreateProductReq_ProductId_DEFAULT
 }
 
 func (p *CreateProductReq) IsSetItems() bool {
@@ -882,20 +818,8 @@ func (p *CreateProductReq) IsSetOrderId() bool {
 	return p.OrderId != CreateProductReq_OrderId_DEFAULT
 }
 
-func (p *CreateProductReq) IsSetPrice() bool {
-	return p.Price != CreateProductReq_Price_DEFAULT
-}
-
 func (p *CreateProductReq) IsSetUserId() bool {
 	return p.UserId != CreateProductReq_UserId_DEFAULT
-}
-
-func (p *CreateProductReq) IsSetQuantity() bool {
-	return p.Quantity != CreateProductReq_Quantity_DEFAULT
-}
-
-func (p *CreateProductReq) IsSetName() bool {
-	return p.Name != CreateProductReq_Name_DEFAULT
 }
 
 func (p *CreateProductReq) String() string {
@@ -907,13 +831,9 @@ func (p *CreateProductReq) String() string {
 
 var fieldIDToName_CreateProductReq = map[int16]string{
 	1: "memberId",
-	2: "productId",
 	3: "items",
 	4: "orderId",
-	5: "price",
 	6: "userId",
-	7: "quantity",
-	8: "name",
 }
 
 type UpdateProductReq struct {

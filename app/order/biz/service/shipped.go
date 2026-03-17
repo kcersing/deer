@@ -4,8 +4,6 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	"order/biz/infras/repo"
-
-	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 type ShippedService struct {
@@ -24,9 +22,7 @@ func (s *ShippedService) Run(req *base.IdReq) (resp *base.NilResponse, err error
 	if err != nil {
 		return nil, err
 	}
-
 	err = node.Shipped()
-	klog.Info(node)
 	if err != nil {
 		return nil, err
 	}

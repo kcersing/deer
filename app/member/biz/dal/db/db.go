@@ -1,9 +1,9 @@
 package db
 
 import (
-	"sync"
 	"member/biz/dal/db/ent"
 	"member/conf"
+	"sync"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )
