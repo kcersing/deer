@@ -110,7 +110,8 @@ func (cp *ConsumerPool) worker() {
 					defer cancel()
 				}
 				if err := cp.handler.Handle(handlerCtx, event); err != nil {
-					klog.Errorf("[Pool Handler Error] pool=%s error: %v", cp.name, err)
+
+					klog.Errorf("[Pool Handler Error] pool=%s error: %v event:%s", cp.name, err, event)
 				}
 			}()
 		}
@@ -132,6 +133,6 @@ func (cp *ConsumerPool) Consume(event *Event) {
 
 // Stop 停止消费者池
 func (cp *ConsumerPool) Stop() {
-	cp.cancel() 
+	cp.cancel()
 	cp.wg.Wait()
 }

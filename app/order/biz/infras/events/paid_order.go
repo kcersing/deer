@@ -31,7 +31,7 @@ func NewPaidOrderEvent(aggregateID int64) *PaidOrderEvent {
 }
 
 func HandleOrderPaid(ctx context.Context, req *PaidOrderEvent, event eventbus.Event) error {
-	klog.Infof("[Handler] 处理支付事件: EventID=%s", event.Id)
+	klog.Infof("[Handler] 处理支付完成事件: EventID=%s", event.Id)
 
 	return nil
 }

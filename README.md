@@ -12,6 +12,7 @@ An e-commerce demo built with `Kitex` and `Hertz`.
 | cwg.deer.member  | member service | kitex/gorm   | thrift   | app/member  | idl/rpc/member.thrift     |
 | cwg.deer.order   | order service  | kitex/gorm   | thrift   | app/order   | idl/rpc/order.thrift      |
 | cwg.deer.product | product service| kitex/gorm   | thrift   | app/product | idl/rpc/product.thrift |
+........
 
 * components used
     * ElasticSearch
@@ -27,7 +28,7 @@ An e-commerce demo built with `Kitex` and `Hertz`.
     * [casbin](https://github.com/casbin/casbin/v2)
 
 ### 技术选型
-
+#### 后端
 - HTTP 框架使用 Hertz
 - RPC 框架使用 Kitex
 - 关系型数据库选用 Postgres
@@ -37,16 +38,38 @@ An e-commerce demo built with `Kitex` and `Hertz`.
 - 消息队列使用 RabbitMQ
 - 使用 Jaeger 与 Prometheus 进行链路追踪以及监控
 - CI 使用 Github Actions
+#### 前端
+- Ant Design Pro
+- Pro Components
+
+
+## 业务
+- [√] 字典
+- [√] 菜单
+- [√] 权限检查
+- [√] 消息管理
+- [√] 用户管理
+- [√] 注册
+- [√] 登录
+- [√] 退出
+- [√] 产品
+- [√] 下单
+- [x] 支付
+- [√] 订单中心
+- [x] 会员管理
+- [x] CRM
+- [x] 会员产品管理
+- [x] 排课约课上下课
+- [x] 统计
+- [x] ...........
 
 ### 架构设计
 
 ## 规划
 
 线索->跟进->转化用户->会员
-
 线索->跟进->退回
 线索->跟进->回收
-
 
 线索 添加，注册最少字段 ->姓名、联系方式、来源、需求
 来源：（官网、展会、抖音、微博、人工录入、互联网广告、生态伙伴、渠道展会、线上广告、线下沙龙、线下展会、直播等）
@@ -108,17 +131,6 @@ follow-up-plan 跟进计划
 报价单毛利率明细 所有审批通过的报价单毛利率明细
 
 
-
-## 业务逻辑
-- [x] 页面访问认证检查
-- [x] 注册
-- [x] 登录
-- [x] 退出
-- [x] 产品分类
-- [x] 产品
-- [x] 下单
-- [x] 支付
-- [x] 订单中心
 
 
 ## Quick Startcd

@@ -75,11 +75,11 @@ type SmsTemplate struct {
 }
 
 type RabbitMq struct {
-	Host     string `mapstructure:"host" yaml:"host"`
-	Port     int    `mapstructure:"port" yaml:"port"`
-	Exchange string `mapstructure:"exchange" yaml:"exchange"`
-	User     string `mapstructure:"user" yaml:"user"`
-	Password string `mapstructure:"password" yaml:"password"`
+	Host     string `yaml:"Host"`
+	Port     string `yaml:"Port"`
+	Exchange string `yaml:"Exchange"`
+	User     string `yaml:"User"`
+	Password string `yaml:"Password"`
 }
 
 // GetConf gets configuration instance

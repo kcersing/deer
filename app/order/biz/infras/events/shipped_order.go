@@ -18,12 +18,12 @@ type ShippedOrderEvent struct {
 
 func (e *ShippedOrderEvent) GetType() string { return string(common.Shipped) }
 
-func NewShippedOrderEvent(req any) *ShippedOrderEvent {
+func NewShippedOrderEvent(aggregateID int64) *ShippedOrderEvent {
 	return &ShippedOrderEvent{
 		EventBase: common.EventBase{
-			EventID: uuid.New().String(),
-			//AggregateID: req.AggregateID,
-			Timestamp: time.Now(),
+			EventID:     uuid.New().String(),
+			AggregateID: aggregateID,
+			Timestamp:   time.Now(),
 
 			EventType:     string(common.Shipped),
 			AggregateType: "order",
@@ -34,7 +34,7 @@ func NewShippedOrderEvent(req any) *ShippedOrderEvent {
 }
 
 func HandleOrderShipped(ctx context.Context, req *ShippedOrderEvent, event eventbus.Event) error {
-	klog.Infof("[Handler] 处理支付事件: Method=%s, EventID=%s", req.CreatedId, event.Id)
+	klog.Infof("[Handler] 处理发货事件: AggregateID=%s, EventID=%s", req.AggregateID, event.Id)
 	//通知生产会员产品
 
 	return nil

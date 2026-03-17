@@ -69,6 +69,7 @@ service OrderService  {
     base.NilResponse DeleteOrder(1:base.IdReq req)
     OrderResp CreateOrder(1:CreateOrderReq req)
     OrderResp Payment(1:PaymentReq req)
+    base.NilResponse Shipped(1:base.IdReq req)
     base.NilResponse CancelledOrder(1:CancelledOrderReq req)
     base.NilResponse RefundOrder(1:RefundOrderReq req)
 }

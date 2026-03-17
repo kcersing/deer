@@ -59,3 +59,10 @@ func (s *OrderServiceImpl) RefundOrder(ctx context.Context, req *order.RefundOrd
 
 	return resp, err
 }
+
+// Shipped implements the OrderServiceImpl interface.
+func (s *OrderServiceImpl) Shipped(ctx context.Context, req *base.IdReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewShippedService(ctx).Run(req)
+
+	return resp, err
+}

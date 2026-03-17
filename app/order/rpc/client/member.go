@@ -1,0 +1,31 @@
+package client
+
+import (
+	"common/consts"
+	"common/rpc/client"
+	"gen/kitex_gen/member/memberservice"
+	"sync"
+
+	"github.com/cloudwego/kitex/pkg/klog"
+)
+
+var MemberClient memberservice.Client
+var memberOnceClient sync.Once
+
+func InitMemberRpc() {
+
+	memberOnceClient.Do(func() {
+		r := client.NewResolver(serviceResolver, consts.MemberRpcServiceName, consts.OrderRpcServiceName, consts.OpenTelemetryAddress)
+
+		c, err := memberservice.NewClient(
+			r.ServiceName,
+			r.Options()...,
+		)
+		r.NewOpenTelemetryProvider()
+		if err != nil {
+			klog.Fatalf("ERROR: cannot init client: %v\n", err)
+		}
+		MemberClient = c
+
+	})
+}

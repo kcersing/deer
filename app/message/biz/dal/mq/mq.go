@@ -2,6 +2,7 @@ package mq
 
 import (
 	"fmt"
+	"message/conf"
 	"sync"
 	"time"
 
@@ -16,9 +17,8 @@ var (
 
 func InitMQ() {
 	onceClient.Do(func() {
-		//c := conf.GetConf().RabbitMq
-		// fmt.Sprintf(c.Host, c.User, c.Password, c.Host, c.Port)
-		url := fmt.Sprintf("amqp://%s:%s@%s:%d/", "kcersing", "kcer-913639", "127.0.0.1", 5672)
+		c := conf.GetConf().RabbitMq
+		url := fmt.Sprintf("amqp://%s:%s@%s:%d/", c.User, c.Password, c.Host, c.Port)
 		Client = initMQ(url)
 	})
 }

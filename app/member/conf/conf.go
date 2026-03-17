@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"sync"
@@ -53,7 +54,7 @@ type Kitex struct {
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 
 	Registry string `yaml:"Registry"`
-	
+
 	Resolver string `yaml:"Resolver"`
 	Tracer   string `yaml:"Tracer"`
 }
@@ -67,6 +68,7 @@ func GetConf() *Config {
 func initConf() {
 	prefix := "conf"
 	confFileRelPath := filepath.Join(prefix, "conf.yaml")
+	fmt.Print(confFileRelPath)
 	content, err := os.ReadFile(confFileRelPath)
 	if err != nil {
 		panic(err)

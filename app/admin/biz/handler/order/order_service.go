@@ -79,8 +79,8 @@ func DeleteOrder(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.OrderClient.DeleteOrder(ctx, &base2.IdReq{Id: req.GetID()})
-
+	resp, err := client.OrderClient.Shipped(ctx, &base2.IdReq{Id: req.GetID()})
+	//resp, err := client.OrderClient.DeleteOrder(ctx, &base2.IdReq{Id: req.GetID()})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), resp, 0, "")
 		return

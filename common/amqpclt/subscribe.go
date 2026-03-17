@@ -19,7 +19,6 @@ type Subscribe struct {
 
 // NewSubscribe creates an amqp subscribe.
 func NewSubscribe(conn *amqp.Connection, exchange string) (*Subscribe, error) {
-	// 不在此处创建和关闭 channel，实际的订阅会在 SubscribeRaw 中创建独立的 channel
 	return &Subscribe{
 		conn:     conn,
 		exchange: exchange,
@@ -41,45 +40,45 @@ func (s *Subscribe) SubscribeRaw(_ context.Context) (<-chan amqp.Delivery, func(
 		return nil, func() {}, fmt.Errorf("cannot declare exchange: %v", err)
 	}
 
-	// 声明临时队列：非持久、自动删除、排他队列（随连接关闭自动删除）
+	// 声明一个共享的、持久化的工作队列
+	// 这个队列由所有服务实例共享，用于接收分发到该服务的事件。
+	// RabbitMQ 会将消息以轮询（round-robin）的方式分发给监听此队列的多个消费者。
+	queueName := fmt.Sprintf("%s_events_queue", s.exchange)
 	q, err := ch.QueueDeclare(
-		"",    //队列名称（让服务器生成随机名）
-		false, // durable: 非持久
-		true,  // autoDelete: 当所有消费者断开后自动删除
-		true,  // exclusive: 排他队列，仅限当前连接使用
-		false, // noWait: 阻塞等待服务器响应
-		nil,   // 额外参数
+		queueName, // 使用基于交换机名的固定队列名
+		true,      // durable: 持久化，RabbitMQ重启后队列依然存在
+		false,     // autoDelete: 当没有消费者时，不自动删除
+		false,     // exclusive: 非排他，允许其他消费者连接
+		false,     // noWait: 阻塞等待服务器响应
+		nil,       // 额外参数
 	)
 	if err != nil {
 		return nil, func() {}, fmt.Errorf("cannot declare queue: %v", err)
 	}
 
-	// 清理函数：删除队列并关闭通道
+	// 清理函数：只关闭通道，不再删除队列
 	cleanUp := func() {
-		_, err := ch.QueueDelete(q.Name, false, false, false)
-		if err != nil {
-			klog.Errorf("cannot delete queue %s : %s", q.Name, err.Error())
-		}
 		if err := ch.Close(); err != nil {
 			klog.Errorf("cannot close channel %s", err.Error())
 		}
 	}
 
-	// 将队列绑定到交换机
+	// 将队列绑定到交换机。对于 fanout 交换机，routing key 通常被忽略。
 	err = ch.QueueBind(q.Name, "", s.exchange, false, nil)
 	if err != nil {
 		return nil, cleanUp, fmt.Errorf("cannot bind: %v", err)
 	}
 
 	// 消费队列消息
+	// autoAck 设置为 false，启用手动确认模式
 	msgs, err := ch.Consume(
 		q.Name,
-		"",
-		false,
-		false,
-		false,
-		false,
-		nil,
+		"",    // consumer tag
+		false, // autoAck: false
+		false, // exclusive
+		false, // noLocal
+		false, // noWait
+		nil,   // args
 	)
 	if err != nil {
 		return nil, cleanUp, fmt.Errorf("cannot consume queue: %v", err)

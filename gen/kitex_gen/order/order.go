@@ -908,6 +908,8 @@ type OrderService interface {
 
 	Payment(ctx context.Context, req *PaymentReq) (r *OrderResp, err error)
 
+	Shipped(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error)
+
 	CancelledOrder(ctx context.Context, req *CancelledOrderReq) (r *base.NilResponse, err error)
 
 	RefundOrder(ctx context.Context, req *RefundOrderReq) (r *base.NilResponse, err error)
@@ -1290,6 +1292,82 @@ func (p *OrderServicePaymentResult) String() string {
 }
 
 var fieldIDToName_OrderServicePaymentResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceShippedArgs struct {
+	Req *base.IdReq `thrift:"req,1" frugal:"1,default,base.IdReq" json:"req"`
+}
+
+func NewOrderServiceShippedArgs() *OrderServiceShippedArgs {
+	return &OrderServiceShippedArgs{}
+}
+
+func (p *OrderServiceShippedArgs) InitDefault() {
+}
+
+var OrderServiceShippedArgs_Req_DEFAULT *base.IdReq
+
+func (p *OrderServiceShippedArgs) GetReq() (v *base.IdReq) {
+	if !p.IsSetReq() {
+		return OrderServiceShippedArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceShippedArgs) SetReq(val *base.IdReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceShippedArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceShippedArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceShippedArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceShippedArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceShippedResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewOrderServiceShippedResult() *OrderServiceShippedResult {
+	return &OrderServiceShippedResult{}
+}
+
+func (p *OrderServiceShippedResult) InitDefault() {
+}
+
+var OrderServiceShippedResult_Success_DEFAULT *base.NilResponse
+
+func (p *OrderServiceShippedResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return OrderServiceShippedResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceShippedResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *OrderServiceShippedResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceShippedResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceShippedResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceShippedResult = map[int16]string{
 	0: "success",
 }
 

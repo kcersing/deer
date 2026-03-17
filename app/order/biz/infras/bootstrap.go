@@ -19,6 +19,10 @@ const (
 	handleOrderPaying   = "paying_order_handler"
 	handleOrderPaid     = "paid_order_handler"
 	handleOrderRefunded = "refunded_order_handler"
+
+	handleOrderShipped = "shipped_order_handler"
+
+	HandleOrderShipped
 )
 
 var (
@@ -72,6 +76,7 @@ func Bootstrap() (err error) {
 			klog.Errorf("Failed to register handler '%s': %v", handleOrderPaying, err)
 
 		}
+
 		// 订单支付完成
 		err = globalManager.Registry.RegisterHandler(
 			handleOrderPaid,
@@ -81,6 +86,17 @@ func Bootstrap() (err error) {
 			klog.Errorf("Failed to register handler '%s': %v", handleOrderPaid, err)
 
 		}
+
+		// 订单发货
+		err = globalManager.Registry.RegisterHandler(
+			handleOrderShipped,
+			eventbus.WrapTyped(eventbus.TypedHandler[*events.ShippedOrderEvent](events.HandleOrderShipped)),
+		)
+		if err != nil {
+			klog.Errorf("Failed to register handler '%s': %v", handleOrderShipped, err)
+
+		}
+
 		// 订单退款
 		err = globalManager.Registry.RegisterHandler(
 			handleOrderRefunded,
@@ -101,6 +117,11 @@ func Bootstrap() (err error) {
 		err = globalManager.Registry.RegisterConsumer(string(common.Paid), handleOrderPaid, 10)
 		if err != nil {
 			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderPaid, err)
+		}
+
+		err = globalManager.Registry.RegisterConsumer(string(common.Shipped), handleOrderShipped, 10)
+		if err != nil {
+			klog.Errorf("Failed to register consumer for event '%s': %v", handleOrderShipped, err)
 		}
 
 		err = globalManager.Registry.RegisterConsumer(string(common.Refunded), handleOrderRefunded, 10)

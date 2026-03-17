@@ -94,8 +94,8 @@ POST http://127.0.0.1:9010/service/order/payment
 Content-Type: application/json
 
 {
-  "id":     2,
-  "amount":10,
+  "id":     1,
+  "amount":100,
   "method": "WECHAT_PAY",
   "third":  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }
@@ -108,5 +108,13 @@ Content-Type: application/json
   "id":1,
   "reason":    "不想要了",
   "createdId": 2
+}
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/order/delete
+Content-Type: application/json
+
+{
+  "id":1
 }
 

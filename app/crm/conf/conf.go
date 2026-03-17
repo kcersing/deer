@@ -53,6 +53,9 @@ type Kitex struct {
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 
 	Registry string `yaml:"Registry"`
+
+	Resolver string `yaml:"Resolver"`
+	Tracer   string `yaml:"Tracer"`
 }
 
 // GetConf gets configuration instance

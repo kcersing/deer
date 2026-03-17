@@ -19,6 +19,7 @@ func init() {
 	// 当有新事件时，只需在此处添加一行即可。
 	registerEvent(common.Created, func() common.Event { return &events.CreatedOrderEvent{} })
 	registerEvent(common.Paid, func() common.Event { return &events.PaidOrderEvent{} })
+	registerEvent(common.Paying, func() common.Event { return &events.PayingOrderEvent{} })
 	registerEvent(common.Shipped, func() common.Event { return &events.ShippedOrderEvent{} })
 	registerEvent(common.Cancelled, func() common.Event { return &events.CancelledOrderEvent{} })
 	registerEvent(common.Refunded, func() common.Event { return &events.RefundedOrderEvent{} })

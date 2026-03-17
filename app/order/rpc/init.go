@@ -1,13 +1,9 @@
 package rpc
 
-import (
-	"order/biz/dal/db"
-	"order/biz/dal/mq"
-	"order/biz/dal/redis"
-)
+import "order/rpc/client"
 
 func Init() {
-	redis.Init()
-	db.InitDB()
-	mq.InitMQ()
+
+	client.InitMemberRpc()
+
 }

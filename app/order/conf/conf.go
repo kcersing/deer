@@ -22,6 +22,7 @@ type Config struct {
 	MySQL      MySQL      `yaml:"MySQL"`
 	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
 	Redis      Redis      `yaml:"Redis"`
+	RabbitMq   RabbitMq   `yaml:"RabbitMq"`
 }
 
 type MySQL struct {
@@ -52,6 +53,16 @@ type Kitex struct {
 	LogMaxBackups int    `yaml:"LogMaxBackups"`
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 	Registry      string `yaml:"Registry"`
+
+	Resolver string `yaml:"Resolver"`
+	Tracer   string `yaml:"Tracer"`
+}
+type RabbitMq struct {
+	Host     string `yaml:"Host"`
+	Port     string `yaml:"Port"`
+	Exchange string `yaml:"Exchange"`
+	User     string `yaml:"User"`
+	Password string `yaml:"Password"`
 }
 
 // GetConf gets configuration instance

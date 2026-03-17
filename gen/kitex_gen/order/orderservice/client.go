@@ -17,6 +17,7 @@ type Client interface {
 	DeleteOrder(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	CreateOrder(ctx context.Context, req *order.CreateOrderReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
 	Payment(ctx context.Context, req *order.PaymentReq, callOptions ...callopt.Option) (r *order.OrderResp, err error)
+	Shipped(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	CancelledOrder(ctx context.Context, req *order.CancelledOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	RefundOrder(ctx context.Context, req *order.RefundOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
@@ -73,6 +74,11 @@ func (p *kOrderServiceClient) CreateOrder(ctx context.Context, req *order.Create
 func (p *kOrderServiceClient) Payment(ctx context.Context, req *order.PaymentReq, callOptions ...callopt.Option) (r *order.OrderResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.Payment(ctx, req)
+}
+
+func (p *kOrderServiceClient) Shipped(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.Shipped(ctx, req)
 }
 
 func (p *kOrderServiceClient) CancelledOrder(ctx context.Context, req *order.CancelledOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {

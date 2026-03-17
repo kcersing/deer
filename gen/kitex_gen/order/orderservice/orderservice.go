@@ -49,6 +49,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"Shipped": kitex.NewMethodInfo(
+		shippedHandler,
+		newOrderServiceShippedArgs,
+		newOrderServiceShippedResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"CancelledOrder": kitex.NewMethodInfo(
 		cancelledOrderHandler,
 		newOrderServiceCancelledOrderArgs,
@@ -219,6 +226,24 @@ func newOrderServicePaymentResult() interface{} {
 	return order.NewOrderServicePaymentResult()
 }
 
+func shippedHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceShippedArgs)
+	realResult := result.(*order.OrderServiceShippedResult)
+	success, err := handler.(order.OrderService).Shipped(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceShippedArgs() interface{} {
+	return order.NewOrderServiceShippedArgs()
+}
+
+func newOrderServiceShippedResult() interface{} {
+	return order.NewOrderServiceShippedResult()
+}
+
 func cancelledOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*order.OrderServiceCancelledOrderArgs)
 	realResult := result.(*order.OrderServiceCancelledOrderResult)
@@ -310,6 +335,16 @@ func (p *kClient) Payment(ctx context.Context, req *order.PaymentReq) (r *order.
 	_args.Req = req
 	var _result order.OrderServicePaymentResult
 	if err = p.c.Call(ctx, "Payment", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) Shipped(ctx context.Context, req *base.IdReq) (r *base.NilResponse, err error) {
+	var _args order.OrderServiceShippedArgs
+	_args.Req = req
+	var _result order.OrderServiceShippedResult
+	if err = p.c.Call(ctx, "Shipped", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

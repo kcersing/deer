@@ -168,13 +168,6 @@ func (o *Order) Shipped() error {
 	if err != nil {
 		return err
 	}
-
-	//completedEvent := events.NewCompletedOrderEvent(o.GetAggregateID(), req.GetUserId())
-	//if err := o.Apply(completedEvent); err != nil {
-	//
-	//	return err
-	//}
-
 	return err
 }
 func (o *Order) Cancel(req *order.CancelledOrderReq) error {
