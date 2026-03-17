@@ -3,7 +3,7 @@
 ### 系统将持续围绕场馆运营的深度需求迭代，后续计划接入智能硬件对接（如门禁、考勤设备）、AI智能排课、营销自动化等功能，逐步打造“技术+业务+数据”三位一体的场馆智能管理生态，成为场馆运营方数字化转型的核心工具。
 
 
-## 分支- master
+## 分支- [master](https://github.com/kcersing/deer/tree/master)
 ## Introduction
 An e-commerce demo built with `Kitex` and `Hertz`.
 
@@ -41,7 +41,7 @@ An e-commerce demo built with `Kitex` and `Hertz`.
 - 使用 Jaeger 与 Prometheus 进行链路追踪以及监控
 - CI 使用 Github Actions
 
-## 分支- web
+## 分支- [web](https://github.com/kcersing/deer/tree/web)
 ### 技术选型
 #### 前端
 - Ant Design Pro
