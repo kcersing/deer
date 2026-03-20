@@ -33,6 +33,16 @@ func CreateProduct(ctx context.Context, c *app.RequestContext) {
 		utils.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
+
+	//attributes := make([]*base1.Attribute, 0, len(req.GetAttributes()))
+	//
+	//for _, attribute := range req.GetAttributes() {
+	//	attributes = append(attributes, &base1.Attribute{
+	//		Itme:       attribute.Itme,
+	//		Attributes: attribute.Attributes,
+	//	})
+	//}
+
 	resp, err := client.ProductClient.CreateProduct(ctx, &product2.CreateProductReq{
 		Code:        req.GetCode(),
 		Name:        req.GetName(),
@@ -46,6 +56,7 @@ func CreateProduct(ctx context.Context, c *app.RequestContext) {
 		SignSalesAt: req.GetSalesAt()[0],
 		EndSalesAt:  req.GetSalesAt()[1],
 		Items:       req.GetItems(),
+		//Attributes:  attributes,
 	})
 
 	if err != nil {

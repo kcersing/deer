@@ -36,12 +36,12 @@ const (
 	FieldName = "name"
 	// FieldPrice holds the string denoting the price field in the database.
 	FieldPrice = "price"
+	// FieldActual holds the string denoting the actual field in the database.
+	FieldActual = "actual"
 	// EdgeMembers holds the string denoting the members edge name in mutations.
 	EdgeMembers = "members"
 	// EdgeMemberProductPropertys holds the string denoting the member_product_propertys edge name in mutations.
 	EdgeMemberProductPropertys = "member_product_propertys"
-	// EdgeMemberProductContents holds the string denoting the member_product_contents edge name in mutations.
-	EdgeMemberProductContents = "member_product_contents"
 	// Table holds the table name of the memberproduct in the database.
 	Table = "member_product"
 	// MembersTable is the table that holds the members relation/edge.
@@ -58,13 +58,6 @@ const (
 	MemberProductPropertysInverseTable = "member_product_property"
 	// MemberProductPropertysColumn is the table column denoting the member_product_propertys relation/edge.
 	MemberProductPropertysColumn = "member_product_id"
-	// MemberProductContentsTable is the table that holds the member_product_contents relation/edge.
-	MemberProductContentsTable = "member_contract"
-	// MemberProductContentsInverseTable is the table name for the MemberContract entity.
-	// It exists in this package in order to avoid circular dependency with the "membercontract" package.
-	MemberProductContentsInverseTable = "member_contract"
-	// MemberProductContentsColumn is the table column denoting the member_product_contents relation/edge.
-	MemberProductContentsColumn = "member_product_id"
 )
 
 // Columns holds all SQL columns for memberproduct fields.
@@ -81,6 +74,7 @@ var Columns = []string{
 	FieldOrderID,
 	FieldName,
 	FieldPrice,
+	FieldActual,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -171,6 +165,11 @@ func ByPrice(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPrice, opts...).ToFunc()
 }
 
+// ByActual orders the results by the actual field.
+func ByActual(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldActual, opts...).ToFunc()
+}
+
 // ByMembersField orders the results by members field.
 func ByMembersField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
@@ -191,20 +190,6 @@ func ByMemberProductPropertys(term sql.OrderTerm, terms ...sql.OrderTerm) OrderO
 		sqlgraph.OrderByNeighborTerms(s, newMemberProductPropertysStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}
 }
-
-// ByMemberProductContentsCount orders the results by member_product_contents count.
-func ByMemberProductContentsCount(opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborsCount(s, newMemberProductContentsStep(), opts...)
-	}
-}
-
-// ByMemberProductContents orders the results by member_product_contents terms.
-func ByMemberProductContents(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newMemberProductContentsStep(), append([]sql.OrderTerm{term}, terms...)...)
-	}
-}
 func newMembersStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
@@ -217,12 +202,5 @@ func newMemberProductPropertysStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(MemberProductPropertysInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.O2M, false, MemberProductPropertysTable, MemberProductPropertysColumn),
-	)
-}
-func newMemberProductContentsStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(MemberProductContentsInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.O2M, false, MemberProductContentsTable, MemberProductContentsColumn),
 	)
 }

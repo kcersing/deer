@@ -20,12 +20,12 @@ func NewUpdateProductService(ctx context.Context) *UpdateProductService {
 func (s *UpdateProductService) Run(req *product.UpdateProductReq) (resp *product.ProductResp, err error) {
 	// Finish your business logic.
 
-	signSalesAt, err := utils.GetStringDateTime(req.GetSignSalesAt())
+	signSalesAt, err := utils.GetStringDateOnlyZeroTime(req.GetSignSalesAt())
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
 
-	endSalesAt, err := utils.GetStringDateTime(req.GetEndSalesAt())
+	endSalesAt, err := utils.GetStringDateOnlyZeroTime(req.GetEndSalesAt())
 	if err != nil {
 		return nil, errno.TimeFormatErr
 	}
@@ -35,7 +35,7 @@ func (s *UpdateProductService) Run(req *product.UpdateProductReq) (resp *product
 		SetCode(req.GetCode()).
 		SetPic(req.GetPic()).
 		SetDesc(req.GetDesc()).
-		SetPrice(req.GetPrice()).
+		SetPrice(req.GetPrice() * 100).
 		SetStock(req.GetStock()).
 		SetIsSales(req.GetIsSales()).
 		SetSignSalesAt(signSalesAt).

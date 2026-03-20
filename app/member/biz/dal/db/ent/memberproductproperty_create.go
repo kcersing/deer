@@ -272,20 +272,6 @@ func (_c *MemberProductPropertyCreate) SetNillableExpiredAt(v *time.Time) *Membe
 	return _c
 }
 
-// SetCode sets the "code" field.
-func (_c *MemberProductPropertyCreate) SetCode(v string) *MemberProductPropertyCreate {
-	_c.mutation.SetCode(v)
-	return _c
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_c *MemberProductPropertyCreate) SetNillableCode(v *string) *MemberProductPropertyCreate {
-	if v != nil {
-		_c.SetCode(*v)
-	}
-	return _c
-}
-
 // SetID sets the "id" field.
 func (_c *MemberProductPropertyCreate) SetID(v int64) *MemberProductPropertyCreate {
 	_c.mutation.SetID(v)
@@ -477,10 +463,6 @@ func (_c *MemberProductPropertyCreate) createSpec() (*MemberProductProperty, *sq
 	if value, ok := _c.mutation.ExpiredAt(); ok {
 		_spec.SetField(memberproductproperty.FieldExpiredAt, field.TypeTime, value)
 		_node.ExpiredAt = value
-	}
-	if value, ok := _c.mutation.Code(); ok {
-		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
-		_node.Code = value
 	}
 	if nodes := _c.mutation.OwnerIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

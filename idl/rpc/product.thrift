@@ -69,7 +69,8 @@ struct CreateProductReq {
     9: optional list<i64> items=[]
     10: optional list<i64> isSales=[]
     13: optional string signSalesAt = "" 
-    14: optional string endSalesAt = "" 
+    14: optional string endSalesAt = ""
+//    15: optional list<product.Attribute> Attributes=[]
 
 }
 struct UpdateProductReq {

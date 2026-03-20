@@ -727,3 +727,64 @@ var fieldIDToName_Item = map[int16]string{
 	16: "createdAt",
 	17: "updatedAt",
 }
+
+type Attribute struct {
+	Itme       int64   `thrift:"itme,1,optional" frugal:"1,optional,i64" json:"itme,omitempty"`
+	Attributes float64 `thrift:"attributes,2,optional" frugal:"2,optional,double" json:"attributes,omitempty"`
+}
+
+func NewAttribute() *Attribute {
+	return &Attribute{
+		Itme:       0,
+		Attributes: 0.0,
+	}
+}
+
+func (p *Attribute) InitDefault() {
+	p.Itme = 0
+	p.Attributes = 0.0
+}
+
+var Attribute_Itme_DEFAULT int64 = 0
+
+func (p *Attribute) GetItme() (v int64) {
+	if !p.IsSetItme() {
+		return Attribute_Itme_DEFAULT
+	}
+	return p.Itme
+}
+
+var Attribute_Attributes_DEFAULT float64 = 0.0
+
+func (p *Attribute) GetAttributes() (v float64) {
+	if !p.IsSetAttributes() {
+		return Attribute_Attributes_DEFAULT
+	}
+	return p.Attributes
+}
+func (p *Attribute) SetItme(val int64) {
+	p.Itme = val
+}
+func (p *Attribute) SetAttributes(val float64) {
+	p.Attributes = val
+}
+
+func (p *Attribute) IsSetItme() bool {
+	return p.Itme != Attribute_Itme_DEFAULT
+}
+
+func (p *Attribute) IsSetAttributes() bool {
+	return p.Attributes != Attribute_Attributes_DEFAULT
+}
+
+func (p *Attribute) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("Attribute(%+v)", *p)
+}
+
+var fieldIDToName_Attribute = map[int16]string{
+	1: "itme",
+	2: "attributes",
+}

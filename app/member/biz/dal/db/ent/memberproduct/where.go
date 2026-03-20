@@ -110,6 +110,11 @@ func Price(v int64) predicate.MemberProduct {
 	return predicate.MemberProduct(sql.FieldEQ(FieldPrice, v))
 }
 
+// Actual applies equality check predicate on the "actual" field. It's identical to ActualEQ.
+func Actual(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldEQ(FieldActual, v))
+}
+
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.MemberProduct {
 	return predicate.MemberProduct(sql.FieldEQ(FieldCreatedAt, v))
@@ -690,6 +695,56 @@ func PriceNotNil() predicate.MemberProduct {
 	return predicate.MemberProduct(sql.FieldNotNull(FieldPrice))
 }
 
+// ActualEQ applies the EQ predicate on the "actual" field.
+func ActualEQ(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldEQ(FieldActual, v))
+}
+
+// ActualNEQ applies the NEQ predicate on the "actual" field.
+func ActualNEQ(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldNEQ(FieldActual, v))
+}
+
+// ActualIn applies the In predicate on the "actual" field.
+func ActualIn(vs ...int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldIn(FieldActual, vs...))
+}
+
+// ActualNotIn applies the NotIn predicate on the "actual" field.
+func ActualNotIn(vs ...int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldNotIn(FieldActual, vs...))
+}
+
+// ActualGT applies the GT predicate on the "actual" field.
+func ActualGT(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldGT(FieldActual, v))
+}
+
+// ActualGTE applies the GTE predicate on the "actual" field.
+func ActualGTE(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldGTE(FieldActual, v))
+}
+
+// ActualLT applies the LT predicate on the "actual" field.
+func ActualLT(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldLT(FieldActual, v))
+}
+
+// ActualLTE applies the LTE predicate on the "actual" field.
+func ActualLTE(v int64) predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldLTE(FieldActual, v))
+}
+
+// ActualIsNil applies the IsNil predicate on the "actual" field.
+func ActualIsNil() predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldIsNull(FieldActual))
+}
+
+// ActualNotNil applies the NotNil predicate on the "actual" field.
+func ActualNotNil() predicate.MemberProduct {
+	return predicate.MemberProduct(sql.FieldNotNull(FieldActual))
+}
+
 // HasMembers applies the HasEdge predicate on the "members" edge.
 func HasMembers() predicate.MemberProduct {
 	return predicate.MemberProduct(func(s *sql.Selector) {
@@ -728,29 +783,6 @@ func HasMemberProductPropertys() predicate.MemberProduct {
 func HasMemberProductPropertysWith(preds ...predicate.MemberProductProperty) predicate.MemberProduct {
 	return predicate.MemberProduct(func(s *sql.Selector) {
 		step := newMemberProductPropertysStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
-// HasMemberProductContents applies the HasEdge predicate on the "member_product_contents" edge.
-func HasMemberProductContents() predicate.MemberProduct {
-	return predicate.MemberProduct(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, MemberProductContentsTable, MemberProductContentsColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasMemberProductContentsWith applies the HasEdge predicate on the "member_product_contents" edge with a given conditions (other predicates).
-func HasMemberProductContentsWith(preds ...predicate.MemberContract) predicate.MemberProduct {
-	return predicate.MemberProduct(func(s *sql.Selector) {
-		step := newMemberProductContentsStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

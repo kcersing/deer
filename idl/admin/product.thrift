@@ -1,6 +1,6 @@
 namespace go product
 include "../base/base.thrift"
-
+include "../base/product.thrift"
 
 struct CreateProductReq{
     1:optional string code="" (api.raw = "code")
@@ -17,8 +17,9 @@ struct CreateProductReq{
     /**库存 */
     7:optional i64 stock=0 (api.raw = "stock")
 
-    9: optional list<i64> items=[] (api.raw = "items")
+    9: optional list<i64> items=[]
     10: optional list<i64> isSales=[] (api.raw = "isSales")
+//    11: optional list<product.Attribute> Attributes=[]
     13: optional list<string> salesAt = [] (api.raw = "salesAt")
 
 }

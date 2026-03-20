@@ -27,3 +27,6 @@ func (p *Product) IsValid() error {
 func (p *Item) IsValid() error {
 	return nil
 }
+func (p *Attribute) IsValid() error {
+	return nil
+}

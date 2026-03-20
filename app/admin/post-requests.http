@@ -118,3 +118,20 @@ Content-Type: application/json
   "id":1
 }
 
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/item/list
+Content-Type: application/json
+
+{
+  "page":1,
+  "pageSize":10
+}
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/product/list
+Content-Type: application/json
+
+{
+  "page":1,
+  "pageSize":10
+}

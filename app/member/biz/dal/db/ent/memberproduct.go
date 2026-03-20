@@ -41,6 +41,8 @@ type MemberProduct struct {
 	Name string `json:"name,omitempty"`
 	// 产品价格
 	Price int64 `json:"price,omitempty"`
+	// 实际支付金额
+	Actual int64 `json:"actual,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MemberProductQuery when eager-loading is set.
 	Edges        MemberProductEdges `json:"edges"`
@@ -53,11 +55,9 @@ type MemberProductEdges struct {
 	Members *Member `json:"members,omitempty"`
 	// MemberProductPropertys holds the value of the member_product_propertys edge.
 	MemberProductPropertys []*MemberProductProperty `json:"member_product_propertys,omitempty"`
-	// MemberProductContents holds the value of the member_product_contents edge.
-	MemberProductContents []*MemberContract `json:"member_product_contents,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [2]bool
 }
 
 // MembersOrErr returns the Members value or an error if the edge
@@ -80,21 +80,12 @@ func (e MemberProductEdges) MemberProductPropertysOrErr() ([]*MemberProductPrope
 	return nil, &NotLoadedError{edge: "member_product_propertys"}
 }
 
-// MemberProductContentsOrErr returns the MemberProductContents value or an error if the edge
-// was not loaded in eager-loading.
-func (e MemberProductEdges) MemberProductContentsOrErr() ([]*MemberContract, error) {
-	if e.loadedTypes[2] {
-		return e.MemberProductContents, nil
-	}
-	return nil, &NotLoadedError{edge: "member_product_contents"}
-}
-
 // scanValues returns the types for scanning values from sql.Rows.
 func (*MemberProduct) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case memberproduct.FieldID, memberproduct.FieldDelete, memberproduct.FieldCreatedID, memberproduct.FieldStatus, memberproduct.FieldMemberID, memberproduct.FieldProductID, memberproduct.FieldOrderID, memberproduct.FieldPrice:
+		case memberproduct.FieldID, memberproduct.FieldDelete, memberproduct.FieldCreatedID, memberproduct.FieldStatus, memberproduct.FieldMemberID, memberproduct.FieldProductID, memberproduct.FieldOrderID, memberproduct.FieldPrice, memberproduct.FieldActual:
 			values[i] = new(sql.NullInt64)
 		case memberproduct.FieldSn, memberproduct.FieldName:
 			values[i] = new(sql.NullString)
@@ -187,6 +178,12 @@ func (_m *MemberProduct) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Price = value.Int64
 			}
+		case memberproduct.FieldActual:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field actual", values[i])
+			} else if value.Valid {
+				_m.Actual = value.Int64
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -208,11 +205,6 @@ func (_m *MemberProduct) QueryMembers() *MemberQuery {
 // QueryMemberProductPropertys queries the "member_product_propertys" edge of the MemberProduct entity.
 func (_m *MemberProduct) QueryMemberProductPropertys() *MemberProductPropertyQuery {
 	return NewMemberProductClient(_m.config).QueryMemberProductPropertys(_m)
-}
-
-// QueryMemberProductContents queries the "member_product_contents" edge of the MemberProduct entity.
-func (_m *MemberProduct) QueryMemberProductContents() *MemberContractQuery {
-	return NewMemberProductClient(_m.config).QueryMemberProductContents(_m)
 }
 
 // Update returns a builder for updating this MemberProduct.
@@ -270,6 +262,9 @@ func (_m *MemberProduct) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("price=")
 	builder.WriteString(fmt.Sprintf("%v", _m.Price))
+	builder.WriteString(", ")
+	builder.WriteString("actual=")
+	builder.WriteString(fmt.Sprintf("%v", _m.Actual))
 	builder.WriteByte(')')
 	return builder.String()
 }

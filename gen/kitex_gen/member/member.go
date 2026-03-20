@@ -737,9 +737,10 @@ var fieldIDToName_ChangePasswordReq = map[int16]string{
 
 type CreateProductReq struct {
 	MemberId int64             `thrift:"memberId,1,optional" frugal:"1,optional,i64" json:"memberId,omitempty"`
-	Items    []*base.OrderItem `thrift:"items,3,optional" frugal:"3,optional,list<base.OrderItem>" json:"items,omitempty"`
-	OrderId  int64             `thrift:"orderId,4,optional" frugal:"4,optional,i64" json:"orderId,omitempty"`
-	UserId   int64             `thrift:"userId,6,optional" frugal:"6,optional,i64" json:"userId,omitempty"`
+	Items    []*base.OrderItem `thrift:"items,2,optional" frugal:"2,optional,list<base.OrderItem>" json:"items,omitempty"`
+	OrderId  int64             `thrift:"orderId,3,optional" frugal:"3,optional,i64" json:"orderId,omitempty"`
+	UserId   int64             `thrift:"userId,4,optional" frugal:"4,optional,i64" json:"userId,omitempty"`
+	Actual   int64             `thrift:"actual,5,optional" frugal:"5,optional,i64" json:"actual,omitempty"`
 }
 
 func NewCreateProductReq() *CreateProductReq {
@@ -748,6 +749,7 @@ func NewCreateProductReq() *CreateProductReq {
 		Items:    []*base.OrderItem{},
 		OrderId:  0,
 		UserId:   0,
+		Actual:   0,
 	}
 }
 
@@ -756,6 +758,7 @@ func (p *CreateProductReq) InitDefault() {
 	p.Items = []*base.OrderItem{}
 	p.OrderId = 0
 	p.UserId = 0
+	p.Actual = 0
 }
 
 var CreateProductReq_MemberId_DEFAULT int64 = 0
@@ -793,6 +796,15 @@ func (p *CreateProductReq) GetUserId() (v int64) {
 	}
 	return p.UserId
 }
+
+var CreateProductReq_Actual_DEFAULT int64 = 0
+
+func (p *CreateProductReq) GetActual() (v int64) {
+	if !p.IsSetActual() {
+		return CreateProductReq_Actual_DEFAULT
+	}
+	return p.Actual
+}
 func (p *CreateProductReq) SetMemberId(val int64) {
 	p.MemberId = val
 }
@@ -804,6 +816,9 @@ func (p *CreateProductReq) SetOrderId(val int64) {
 }
 func (p *CreateProductReq) SetUserId(val int64) {
 	p.UserId = val
+}
+func (p *CreateProductReq) SetActual(val int64) {
+	p.Actual = val
 }
 
 func (p *CreateProductReq) IsSetMemberId() bool {
@@ -822,6 +837,10 @@ func (p *CreateProductReq) IsSetUserId() bool {
 	return p.UserId != CreateProductReq_UserId_DEFAULT
 }
 
+func (p *CreateProductReq) IsSetActual() bool {
+	return p.Actual != CreateProductReq_Actual_DEFAULT
+}
+
 func (p *CreateProductReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -831,9 +850,10 @@ func (p *CreateProductReq) String() string {
 
 var fieldIDToName_CreateProductReq = map[int16]string{
 	1: "memberId",
-	3: "items",
-	4: "orderId",
-	6: "userId",
+	2: "items",
+	3: "orderId",
+	4: "userId",
+	5: "actual",
 }
 
 type UpdateProductReq struct {

@@ -6,7 +6,6 @@ import (
 	"context"
 	"fmt"
 	"member/biz/dal/db/ent/member"
-	"member/biz/dal/db/ent/membercontract"
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"time"
@@ -176,6 +175,20 @@ func (_c *MemberProductCreate) SetNillablePrice(v *int64) *MemberProductCreate {
 	return _c
 }
 
+// SetActual sets the "actual" field.
+func (_c *MemberProductCreate) SetActual(v int64) *MemberProductCreate {
+	_c.mutation.SetActual(v)
+	return _c
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_c *MemberProductCreate) SetNillableActual(v *int64) *MemberProductCreate {
+	if v != nil {
+		_c.SetActual(*v)
+	}
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *MemberProductCreate) SetID(v int64) *MemberProductCreate {
 	_c.mutation.SetID(v)
@@ -214,21 +227,6 @@ func (_c *MemberProductCreate) AddMemberProductPropertys(v ...*MemberProductProp
 		ids[i] = v[i].ID
 	}
 	return _c.AddMemberProductPropertyIDs(ids...)
-}
-
-// AddMemberProductContentIDs adds the "member_product_contents" edge to the MemberContract entity by IDs.
-func (_c *MemberProductCreate) AddMemberProductContentIDs(ids ...int64) *MemberProductCreate {
-	_c.mutation.AddMemberProductContentIDs(ids...)
-	return _c
-}
-
-// AddMemberProductContents adds the "member_product_contents" edges to the MemberContract entity.
-func (_c *MemberProductCreate) AddMemberProductContents(v ...*MemberContract) *MemberProductCreate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _c.AddMemberProductContentIDs(ids...)
 }
 
 // Mutation returns the MemberProductMutation object of the builder.
@@ -362,6 +360,10 @@ func (_c *MemberProductCreate) createSpec() (*MemberProduct, *sqlgraph.CreateSpe
 		_spec.SetField(memberproduct.FieldPrice, field.TypeInt64, value)
 		_node.Price = value
 	}
+	if value, ok := _c.mutation.Actual(); ok {
+		_spec.SetField(memberproduct.FieldActual, field.TypeInt64, value)
+		_node.Actual = value
+	}
 	if nodes := _c.mutation.MembersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -388,22 +390,6 @@ func (_c *MemberProductCreate) createSpec() (*MemberProduct, *sqlgraph.CreateSpe
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(memberproductproperty.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := _c.mutation.MemberProductContentsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

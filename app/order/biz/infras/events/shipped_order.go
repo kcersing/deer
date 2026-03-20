@@ -16,14 +16,11 @@ import (
 // ShippedOrderEvent 发货事件
 type ShippedOrderEvent struct {
 	common.EventBase
-
 	MemberId int64
-
-	OrderId int64
-
-	UserId int64
-
-	Items []*base.OrderItem
+	OrderId  int64
+	Actual   int64
+	UserId   int64
+	Items    []*base.OrderItem
 }
 
 func (e *ShippedOrderEvent) GetType() string { return string(common.Shipped) }
@@ -51,6 +48,7 @@ func HandleOrderShipped(ctx context.Context, req *ShippedOrderEvent, event event
 		OrderId:  req.OrderId,
 		UserId:   req.UserId,
 		Items:    req.Items,
+		Actual:   req.Actual,
 	})
 	if err != nil {
 		return err

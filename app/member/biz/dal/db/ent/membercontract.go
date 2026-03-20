@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/membercontract"
-	"member/biz/dal/db/ent/memberproduct"
 	"strings"
 	"time"
 
@@ -36,10 +35,6 @@ type MemberContract struct {
 	ContractID int64 `json:"contract_id,omitempty"`
 	// 订单id
 	OrderID int64 `json:"order_id,omitempty"`
-	// 场馆id
-	VenueID int64 `json:"venue_id,omitempty"`
-	// 会员产品id
-	MemberProductID int64 `json:"member_product_id,omitempty"`
 	// name | 名称
 	Name string `json:"name,omitempty"`
 	// sign | 签字
@@ -56,11 +51,9 @@ type MemberContractEdges struct {
 	Content []*MemberContractContent `json:"content,omitempty"`
 	// Member holds the value of the member edge.
 	Member *Member `json:"member,omitempty"`
-	// MemberProduct holds the value of the member_product edge.
-	MemberProduct *MemberProduct `json:"member_product,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [2]bool
 }
 
 // ContentOrErr returns the Content value or an error if the edge
@@ -83,23 +76,12 @@ func (e MemberContractEdges) MemberOrErr() (*Member, error) {
 	return nil, &NotLoadedError{edge: "member"}
 }
 
-// MemberProductOrErr returns the MemberProduct value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e MemberContractEdges) MemberProductOrErr() (*MemberProduct, error) {
-	if e.MemberProduct != nil {
-		return e.MemberProduct, nil
-	} else if e.loadedTypes[2] {
-		return nil, &NotFoundError{label: memberproduct.Label}
-	}
-	return nil, &NotLoadedError{edge: "member_product"}
-}
-
 // scanValues returns the types for scanning values from sql.Rows.
 func (*MemberContract) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case membercontract.FieldID, membercontract.FieldDelete, membercontract.FieldCreatedID, membercontract.FieldStatus, membercontract.FieldMemberID, membercontract.FieldContractID, membercontract.FieldOrderID, membercontract.FieldVenueID, membercontract.FieldMemberProductID:
+		case membercontract.FieldID, membercontract.FieldDelete, membercontract.FieldCreatedID, membercontract.FieldStatus, membercontract.FieldMemberID, membercontract.FieldContractID, membercontract.FieldOrderID:
 			values[i] = new(sql.NullInt64)
 		case membercontract.FieldName, membercontract.FieldSign:
 			values[i] = new(sql.NullString)
@@ -174,18 +156,6 @@ func (_m *MemberContract) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.OrderID = value.Int64
 			}
-		case membercontract.FieldVenueID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field venue_id", values[i])
-			} else if value.Valid {
-				_m.VenueID = value.Int64
-			}
-		case membercontract.FieldMemberProductID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field member_product_id", values[i])
-			} else if value.Valid {
-				_m.MemberProductID = value.Int64
-			}
 		case membercontract.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -219,11 +189,6 @@ func (_m *MemberContract) QueryContent() *MemberContractContentQuery {
 // QueryMember queries the "member" edge of the MemberContract entity.
 func (_m *MemberContract) QueryMember() *MemberQuery {
 	return NewMemberContractClient(_m.config).QueryMember(_m)
-}
-
-// QueryMemberProduct queries the "member_product" edge of the MemberContract entity.
-func (_m *MemberContract) QueryMemberProduct() *MemberProductQuery {
-	return NewMemberContractClient(_m.config).QueryMemberProduct(_m)
 }
 
 // Update returns a builder for updating this MemberContract.
@@ -272,12 +237,6 @@ func (_m *MemberContract) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("order_id=")
 	builder.WriteString(fmt.Sprintf("%v", _m.OrderID))
-	builder.WriteString(", ")
-	builder.WriteString("venue_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.VenueID))
-	builder.WriteString(", ")
-	builder.WriteString("member_product_id=")
-	builder.WriteString(fmt.Sprintf("%v", _m.MemberProductID))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(_m.Name)

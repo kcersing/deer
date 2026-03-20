@@ -64,3 +64,8 @@ struct Item {
     17: optional string updatedAt = "" (api.raw = "updatedAt")
 
 }
+
+struct Attribute {
+    1:optional i64 itme=0 (api.raw = "itme")
+    2:optional double attributes=0 (api.raw = "attributes")
+}

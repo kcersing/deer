@@ -19,7 +19,8 @@ func EntToItem(e *ent.ProductItem) *base.Item {
 func EntToProduct(e *ent.Product) *base.Product {
 	mapper := utils.NewCopierMapper[base.Product, ent.Product]()
 	var dto = mapper.ToDTO(e)
-
+	dto.SignSalesAt = e.SignSalesAt.Format(time.DateOnly)
+	dto.EndSalesAt = e.EndSalesAt.Format(time.DateOnly)
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
 	dto.UpdatedAt = e.UpdatedAt.Format(time.DateOnly)
 	return dto

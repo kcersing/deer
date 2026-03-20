@@ -52,9 +52,10 @@ struct ChangePasswordReq {
 
 struct CreateProductReq {
     1:optional i64 memberId=0
-    3:optional list<order.OrderItem> items=[]
-    4:optional i64 orderId=0
-    6:optional i64 userId=0
+    2:optional list<order.OrderItem> items=[]
+    3:optional i64 orderId=0
+    4:optional i64 userId=0
+    5:optional i64 actual=0
 }
 struct UpdateProductReq {
 

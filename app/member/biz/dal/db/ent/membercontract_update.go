@@ -9,7 +9,6 @@ import (
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/membercontract"
 	"member/biz/dal/db/ent/membercontractcontent"
-	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/predicate"
 	"time"
 
@@ -198,53 +197,6 @@ func (_u *MemberContractUpdate) ClearOrderID() *MemberContractUpdate {
 	return _u
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_u *MemberContractUpdate) SetVenueID(v int64) *MemberContractUpdate {
-	_u.mutation.ResetVenueID()
-	_u.mutation.SetVenueID(v)
-	return _u
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_u *MemberContractUpdate) SetNillableVenueID(v *int64) *MemberContractUpdate {
-	if v != nil {
-		_u.SetVenueID(*v)
-	}
-	return _u
-}
-
-// AddVenueID adds value to the "venue_id" field.
-func (_u *MemberContractUpdate) AddVenueID(v int64) *MemberContractUpdate {
-	_u.mutation.AddVenueID(v)
-	return _u
-}
-
-// ClearVenueID clears the value of the "venue_id" field.
-func (_u *MemberContractUpdate) ClearVenueID() *MemberContractUpdate {
-	_u.mutation.ClearVenueID()
-	return _u
-}
-
-// SetMemberProductID sets the "member_product_id" field.
-func (_u *MemberContractUpdate) SetMemberProductID(v int64) *MemberContractUpdate {
-	_u.mutation.SetMemberProductID(v)
-	return _u
-}
-
-// SetNillableMemberProductID sets the "member_product_id" field if the given value is not nil.
-func (_u *MemberContractUpdate) SetNillableMemberProductID(v *int64) *MemberContractUpdate {
-	if v != nil {
-		_u.SetMemberProductID(*v)
-	}
-	return _u
-}
-
-// ClearMemberProductID clears the value of the "member_product_id" field.
-func (_u *MemberContractUpdate) ClearMemberProductID() *MemberContractUpdate {
-	_u.mutation.ClearMemberProductID()
-	return _u
-}
-
 // SetName sets the "name" field.
 func (_u *MemberContractUpdate) SetName(v string) *MemberContractUpdate {
 	_u.mutation.SetName(v)
@@ -305,11 +257,6 @@ func (_u *MemberContractUpdate) SetMember(v *Member) *MemberContractUpdate {
 	return _u.SetMemberID(v.ID)
 }
 
-// SetMemberProduct sets the "member_product" edge to the MemberProduct entity.
-func (_u *MemberContractUpdate) SetMemberProduct(v *MemberProduct) *MemberContractUpdate {
-	return _u.SetMemberProductID(v.ID)
-}
-
 // Mutation returns the MemberContractMutation object of the builder.
 func (_u *MemberContractUpdate) Mutation() *MemberContractMutation {
 	return _u.mutation
@@ -339,12 +286,6 @@ func (_u *MemberContractUpdate) RemoveContent(v ...*MemberContractContent) *Memb
 // ClearMember clears the "member" edge to the Member entity.
 func (_u *MemberContractUpdate) ClearMember() *MemberContractUpdate {
 	_u.mutation.ClearMember()
-	return _u
-}
-
-// ClearMemberProduct clears the "member_product" edge to the MemberProduct entity.
-func (_u *MemberContractUpdate) ClearMemberProduct() *MemberContractUpdate {
-	_u.mutation.ClearMemberProduct()
 	return _u
 }
 
@@ -447,15 +388,6 @@ func (_u *MemberContractUpdate) sqlSave(ctx context.Context) (_node int, err err
 	if _u.mutation.OrderIDCleared() {
 		_spec.ClearField(membercontract.FieldOrderID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.VenueID(); ok {
-		_spec.SetField(membercontract.FieldVenueID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedVenueID(); ok {
-		_spec.AddField(membercontract.FieldVenueID, field.TypeInt64, value)
-	}
-	if _u.mutation.VenueIDCleared() {
-		_spec.ClearField(membercontract.FieldVenueID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(membercontract.FieldName, field.TypeString, value)
 	}
@@ -535,35 +467,6 @@ func (_u *MemberContractUpdate) sqlSave(ctx context.Context) (_node int, err err
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(member.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.MemberProductCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   membercontract.MemberProductTable,
-			Columns: []string{membercontract.MemberProductColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(memberproduct.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MemberProductIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   membercontract.MemberProductTable,
-			Columns: []string{membercontract.MemberProductColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(memberproduct.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -758,53 +661,6 @@ func (_u *MemberContractUpdateOne) ClearOrderID() *MemberContractUpdateOne {
 	return _u
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_u *MemberContractUpdateOne) SetVenueID(v int64) *MemberContractUpdateOne {
-	_u.mutation.ResetVenueID()
-	_u.mutation.SetVenueID(v)
-	return _u
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_u *MemberContractUpdateOne) SetNillableVenueID(v *int64) *MemberContractUpdateOne {
-	if v != nil {
-		_u.SetVenueID(*v)
-	}
-	return _u
-}
-
-// AddVenueID adds value to the "venue_id" field.
-func (_u *MemberContractUpdateOne) AddVenueID(v int64) *MemberContractUpdateOne {
-	_u.mutation.AddVenueID(v)
-	return _u
-}
-
-// ClearVenueID clears the value of the "venue_id" field.
-func (_u *MemberContractUpdateOne) ClearVenueID() *MemberContractUpdateOne {
-	_u.mutation.ClearVenueID()
-	return _u
-}
-
-// SetMemberProductID sets the "member_product_id" field.
-func (_u *MemberContractUpdateOne) SetMemberProductID(v int64) *MemberContractUpdateOne {
-	_u.mutation.SetMemberProductID(v)
-	return _u
-}
-
-// SetNillableMemberProductID sets the "member_product_id" field if the given value is not nil.
-func (_u *MemberContractUpdateOne) SetNillableMemberProductID(v *int64) *MemberContractUpdateOne {
-	if v != nil {
-		_u.SetMemberProductID(*v)
-	}
-	return _u
-}
-
-// ClearMemberProductID clears the value of the "member_product_id" field.
-func (_u *MemberContractUpdateOne) ClearMemberProductID() *MemberContractUpdateOne {
-	_u.mutation.ClearMemberProductID()
-	return _u
-}
-
 // SetName sets the "name" field.
 func (_u *MemberContractUpdateOne) SetName(v string) *MemberContractUpdateOne {
 	_u.mutation.SetName(v)
@@ -865,11 +721,6 @@ func (_u *MemberContractUpdateOne) SetMember(v *Member) *MemberContractUpdateOne
 	return _u.SetMemberID(v.ID)
 }
 
-// SetMemberProduct sets the "member_product" edge to the MemberProduct entity.
-func (_u *MemberContractUpdateOne) SetMemberProduct(v *MemberProduct) *MemberContractUpdateOne {
-	return _u.SetMemberProductID(v.ID)
-}
-
 // Mutation returns the MemberContractMutation object of the builder.
 func (_u *MemberContractUpdateOne) Mutation() *MemberContractMutation {
 	return _u.mutation
@@ -899,12 +750,6 @@ func (_u *MemberContractUpdateOne) RemoveContent(v ...*MemberContractContent) *M
 // ClearMember clears the "member" edge to the Member entity.
 func (_u *MemberContractUpdateOne) ClearMember() *MemberContractUpdateOne {
 	_u.mutation.ClearMember()
-	return _u
-}
-
-// ClearMemberProduct clears the "member_product" edge to the MemberProduct entity.
-func (_u *MemberContractUpdateOne) ClearMemberProduct() *MemberContractUpdateOne {
-	_u.mutation.ClearMemberProduct()
 	return _u
 }
 
@@ -1037,15 +882,6 @@ func (_u *MemberContractUpdateOne) sqlSave(ctx context.Context) (_node *MemberCo
 	if _u.mutation.OrderIDCleared() {
 		_spec.ClearField(membercontract.FieldOrderID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.VenueID(); ok {
-		_spec.SetField(membercontract.FieldVenueID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedVenueID(); ok {
-		_spec.AddField(membercontract.FieldVenueID, field.TypeInt64, value)
-	}
-	if _u.mutation.VenueIDCleared() {
-		_spec.ClearField(membercontract.FieldVenueID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(membercontract.FieldName, field.TypeString, value)
 	}
@@ -1125,35 +961,6 @@ func (_u *MemberContractUpdateOne) sqlSave(ctx context.Context) (_node *MemberCo
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(member.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.MemberProductCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   membercontract.MemberProductTable,
-			Columns: []string{membercontract.MemberProductColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(memberproduct.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MemberProductIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   membercontract.MemberProductTable,
-			Columns: []string{membercontract.MemberProductColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(memberproduct.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

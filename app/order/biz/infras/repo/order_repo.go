@@ -159,7 +159,7 @@ func (o *OrderRepo) saveOrderItems(ctx context.Context, tx *ent.Tx, order *aggre
 			SetName(item.Name).
 			SetProductID(item.ProductId).
 			SetQuantity(item.Quantity).
-			SetUnitPrice(item.Price).
+			SetUnitPrice(item.Price * 100).
 			SetOrderID(order.GetAggregateID()).
 			SetCreatedID(order.CreatedId)
 	}

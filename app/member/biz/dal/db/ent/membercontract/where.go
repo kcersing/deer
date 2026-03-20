@@ -95,16 +95,6 @@ func OrderID(v int64) predicate.MemberContract {
 	return predicate.MemberContract(sql.FieldEQ(FieldOrderID, v))
 }
 
-// VenueID applies equality check predicate on the "venue_id" field. It's identical to VenueIDEQ.
-func VenueID(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldEQ(FieldVenueID, v))
-}
-
-// MemberProductID applies equality check predicate on the "member_product_id" field. It's identical to MemberProductIDEQ.
-func MemberProductID(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldEQ(FieldMemberProductID, v))
-}
-
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.MemberContract {
 	return predicate.MemberContract(sql.FieldEQ(FieldName, v))
@@ -495,86 +485,6 @@ func OrderIDNotNil() predicate.MemberContract {
 	return predicate.MemberContract(sql.FieldNotNull(FieldOrderID))
 }
 
-// VenueIDEQ applies the EQ predicate on the "venue_id" field.
-func VenueIDEQ(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldEQ(FieldVenueID, v))
-}
-
-// VenueIDNEQ applies the NEQ predicate on the "venue_id" field.
-func VenueIDNEQ(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNEQ(FieldVenueID, v))
-}
-
-// VenueIDIn applies the In predicate on the "venue_id" field.
-func VenueIDIn(vs ...int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldIn(FieldVenueID, vs...))
-}
-
-// VenueIDNotIn applies the NotIn predicate on the "venue_id" field.
-func VenueIDNotIn(vs ...int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNotIn(FieldVenueID, vs...))
-}
-
-// VenueIDGT applies the GT predicate on the "venue_id" field.
-func VenueIDGT(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldGT(FieldVenueID, v))
-}
-
-// VenueIDGTE applies the GTE predicate on the "venue_id" field.
-func VenueIDGTE(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldGTE(FieldVenueID, v))
-}
-
-// VenueIDLT applies the LT predicate on the "venue_id" field.
-func VenueIDLT(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldLT(FieldVenueID, v))
-}
-
-// VenueIDLTE applies the LTE predicate on the "venue_id" field.
-func VenueIDLTE(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldLTE(FieldVenueID, v))
-}
-
-// VenueIDIsNil applies the IsNil predicate on the "venue_id" field.
-func VenueIDIsNil() predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldIsNull(FieldVenueID))
-}
-
-// VenueIDNotNil applies the NotNil predicate on the "venue_id" field.
-func VenueIDNotNil() predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNotNull(FieldVenueID))
-}
-
-// MemberProductIDEQ applies the EQ predicate on the "member_product_id" field.
-func MemberProductIDEQ(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldEQ(FieldMemberProductID, v))
-}
-
-// MemberProductIDNEQ applies the NEQ predicate on the "member_product_id" field.
-func MemberProductIDNEQ(v int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNEQ(FieldMemberProductID, v))
-}
-
-// MemberProductIDIn applies the In predicate on the "member_product_id" field.
-func MemberProductIDIn(vs ...int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldIn(FieldMemberProductID, vs...))
-}
-
-// MemberProductIDNotIn applies the NotIn predicate on the "member_product_id" field.
-func MemberProductIDNotIn(vs ...int64) predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNotIn(FieldMemberProductID, vs...))
-}
-
-// MemberProductIDIsNil applies the IsNil predicate on the "member_product_id" field.
-func MemberProductIDIsNil() predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldIsNull(FieldMemberProductID))
-}
-
-// MemberProductIDNotNil applies the NotNil predicate on the "member_product_id" field.
-func MemberProductIDNotNil() predicate.MemberContract {
-	return predicate.MemberContract(sql.FieldNotNull(FieldMemberProductID))
-}
-
 // NameEQ applies the EQ predicate on the "name" field.
 func NameEQ(v string) predicate.MemberContract {
 	return predicate.MemberContract(sql.FieldEQ(FieldName, v))
@@ -763,29 +673,6 @@ func HasMember() predicate.MemberContract {
 func HasMemberWith(preds ...predicate.Member) predicate.MemberContract {
 	return predicate.MemberContract(func(s *sql.Selector) {
 		step := newMemberStep()
-		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
-			for _, p := range preds {
-				p(s)
-			}
-		})
-	})
-}
-
-// HasMemberProduct applies the HasEdge predicate on the "member_product" edge.
-func HasMemberProduct() predicate.MemberContract {
-	return predicate.MemberContract(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, MemberProductTable, MemberProductColumn),
-		)
-		sqlgraph.HasNeighbors(s, step)
-	})
-}
-
-// HasMemberProductWith applies the HasEdge predicate on the "member_product" edge with a given conditions (other predicates).
-func HasMemberProductWith(preds ...predicate.MemberProduct) predicate.MemberContract {
-	return predicate.MemberContract(func(s *sql.Selector) {
-		step := newMemberProductStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

@@ -30,7 +30,6 @@ func (MemberProductProperty) Fields() []ent.Field {
 		field.Int64("price").Comment("定价").Optional(),
 		field.Time("active_at").Comment("生效时间").Optional(),
 		field.Time("expired_at").Comment("过期时间").Optional(),
-		field.String("code").Comment("code").Optional(),
 	}
 }
 

@@ -10,7 +10,6 @@ import (
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/membercontract"
 	"member/biz/dal/db/ent/membercontractcontent"
-	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/predicate"
 
 	"entgo.io/ent"
@@ -22,13 +21,12 @@ import (
 // MemberContractQuery is the builder for querying MemberContract entities.
 type MemberContractQuery struct {
 	config
-	ctx               *QueryContext
-	order             []membercontract.OrderOption
-	inters            []Interceptor
-	predicates        []predicate.MemberContract
-	withContent       *MemberContractContentQuery
-	withMember        *MemberQuery
-	withMemberProduct *MemberProductQuery
+	ctx         *QueryContext
+	order       []membercontract.OrderOption
+	inters      []Interceptor
+	predicates  []predicate.MemberContract
+	withContent *MemberContractContentQuery
+	withMember  *MemberQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -102,28 +100,6 @@ func (_q *MemberContractQuery) QueryMember() *MemberQuery {
 			sqlgraph.From(membercontract.Table, membercontract.FieldID, selector),
 			sqlgraph.To(member.Table, member.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, membercontract.MemberTable, membercontract.MemberColumn),
-		)
-		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
-		return fromU, nil
-	}
-	return query
-}
-
-// QueryMemberProduct chains the current query on the "member_product" edge.
-func (_q *MemberContractQuery) QueryMemberProduct() *MemberProductQuery {
-	query := (&MemberProductClient{config: _q.config}).Query()
-	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := _q.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		selector := _q.sqlQuery(ctx)
-		if err := selector.Err(); err != nil {
-			return nil, err
-		}
-		step := sqlgraph.NewStep(
-			sqlgraph.From(membercontract.Table, membercontract.FieldID, selector),
-			sqlgraph.To(memberproduct.Table, memberproduct.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, membercontract.MemberProductTable, membercontract.MemberProductColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
@@ -318,14 +294,13 @@ func (_q *MemberContractQuery) Clone() *MemberContractQuery {
 		return nil
 	}
 	return &MemberContractQuery{
-		config:            _q.config,
-		ctx:               _q.ctx.Clone(),
-		order:             append([]membercontract.OrderOption{}, _q.order...),
-		inters:            append([]Interceptor{}, _q.inters...),
-		predicates:        append([]predicate.MemberContract{}, _q.predicates...),
-		withContent:       _q.withContent.Clone(),
-		withMember:        _q.withMember.Clone(),
-		withMemberProduct: _q.withMemberProduct.Clone(),
+		config:      _q.config,
+		ctx:         _q.ctx.Clone(),
+		order:       append([]membercontract.OrderOption{}, _q.order...),
+		inters:      append([]Interceptor{}, _q.inters...),
+		predicates:  append([]predicate.MemberContract{}, _q.predicates...),
+		withContent: _q.withContent.Clone(),
+		withMember:  _q.withMember.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
@@ -351,17 +326,6 @@ func (_q *MemberContractQuery) WithMember(opts ...func(*MemberQuery)) *MemberCon
 		opt(query)
 	}
 	_q.withMember = query
-	return _q
-}
-
-// WithMemberProduct tells the query-builder to eager-load the nodes that are connected to
-// the "member_product" edge. The optional arguments are used to configure the query builder of the edge.
-func (_q *MemberContractQuery) WithMemberProduct(opts ...func(*MemberProductQuery)) *MemberContractQuery {
-	query := (&MemberProductClient{config: _q.config}).Query()
-	for _, opt := range opts {
-		opt(query)
-	}
-	_q.withMemberProduct = query
 	return _q
 }
 
@@ -443,10 +407,9 @@ func (_q *MemberContractQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	var (
 		nodes       = []*MemberContract{}
 		_spec       = _q.querySpec()
-		loadedTypes = [3]bool{
+		loadedTypes = [2]bool{
 			_q.withContent != nil,
 			_q.withMember != nil,
-			_q.withMemberProduct != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -477,12 +440,6 @@ func (_q *MemberContractQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	if query := _q.withMember; query != nil {
 		if err := _q.loadMember(ctx, query, nodes, nil,
 			func(n *MemberContract, e *Member) { n.Edges.Member = e }); err != nil {
-			return nil, err
-		}
-	}
-	if query := _q.withMemberProduct; query != nil {
-		if err := _q.loadMemberProduct(ctx, query, nodes, nil,
-			func(n *MemberContract, e *MemberProduct) { n.Edges.MemberProduct = e }); err != nil {
 			return nil, err
 		}
 	}
@@ -548,35 +505,6 @@ func (_q *MemberContractQuery) loadMember(ctx context.Context, query *MemberQuer
 	}
 	return nil
 }
-func (_q *MemberContractQuery) loadMemberProduct(ctx context.Context, query *MemberProductQuery, nodes []*MemberContract, init func(*MemberContract), assign func(*MemberContract, *MemberProduct)) error {
-	ids := make([]int64, 0, len(nodes))
-	nodeids := make(map[int64][]*MemberContract)
-	for i := range nodes {
-		fk := nodes[i].MemberProductID
-		if _, ok := nodeids[fk]; !ok {
-			ids = append(ids, fk)
-		}
-		nodeids[fk] = append(nodeids[fk], nodes[i])
-	}
-	if len(ids) == 0 {
-		return nil
-	}
-	query.Where(memberproduct.IDIn(ids...))
-	neighbors, err := query.All(ctx)
-	if err != nil {
-		return err
-	}
-	for _, n := range neighbors {
-		nodes, ok := nodeids[n.ID]
-		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "member_product_id" returned %v`, n.ID)
-		}
-		for i := range nodes {
-			assign(nodes[i], n)
-		}
-	}
-	return nil
-}
 
 func (_q *MemberContractQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := _q.querySpec()
@@ -605,9 +533,6 @@ func (_q *MemberContractQuery) querySpec() *sqlgraph.QuerySpec {
 		}
 		if _q.withMember != nil {
 			_spec.Node.AddColumnOnce(membercontract.FieldMemberID)
-		}
-		if _q.withMemberProduct != nil {
-			_spec.Node.AddColumnOnce(membercontract.FieldMemberProductID)
 		}
 	}
 	if ps := _q.predicates; len(ps) > 0 {

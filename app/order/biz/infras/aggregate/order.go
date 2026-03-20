@@ -167,6 +167,7 @@ func (o *Order) Shipped() error {
 	event.OrderId = o.Id
 	event.UserId = o.CreatedId
 	event.Items = o.Items
+	event.Actual = o.Actual
 	err := o.Apply(event)
 	if err != nil {
 		return err

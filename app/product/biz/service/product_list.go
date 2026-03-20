@@ -24,14 +24,13 @@ func (s *ProductListService) Run(req *product.ListReq) (resp *product.ProductLis
 	// Finish your business logic.
 
 	var (
-		dataResp []*base.Product
+		dataResp   []*base.Product
+		predicates []predicate.Product
 	)
-
-	var predicates []predicate.Product
 	if req.GetName() != "" {
 		predicates = append(predicates, product2.NameContains(req.GetName()))
 	}
-	if req.GetStatus() != nil {
+	if len(req.GetStatus()) > 0 {
 		predicates = append(predicates, product2.StatusIn(req.GetStatus()...))
 	}
 

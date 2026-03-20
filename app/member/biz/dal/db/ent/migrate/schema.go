@@ -57,11 +57,9 @@ var (
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "状态[0:禁用;1:正常]", Default: 1},
 		{Name: "contract_id", Type: field.TypeInt64, Nullable: true, Comment: "原始合同id"},
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单id"},
-		{Name: "venue_id", Type: field.TypeInt64, Nullable: true, Comment: "场馆id"},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "name | 名称"},
 		{Name: "sign", Type: field.TypeString, Nullable: true, Comment: "sign | 签字"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
-		{Name: "member_product_id", Type: field.TypeInt64, Nullable: true, Comment: "会员产品id"},
 	}
 	// MemberContractTable holds the schema information for the "member_contract" table.
 	MemberContractTable = &schema.Table{
@@ -71,14 +69,8 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_contract_member_member_contents",
-				Columns:    []*schema.Column{MemberContractColumns[11]},
+				Columns:    []*schema.Column{MemberContractColumns[10]},
 				RefColumns: []*schema.Column{MemberColumns[0]},
-				OnDelete:   schema.SetNull,
-			},
-			{
-				Symbol:     "member_contract_member_product_member_product_contents",
-				Columns:    []*schema.Column{MemberContractColumns[12]},
-				RefColumns: []*schema.Column{MemberProductColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -89,11 +81,6 @@ var (
 				Columns: []*schema.Column{MemberContractColumns[0]},
 			},
 			{
-				Name:    "membercontract_venue_id",
-				Unique:  false,
-				Columns: []*schema.Column{MemberContractColumns[8]},
-			},
-			{
 				Name:    "membercontract_order_id",
 				Unique:  false,
 				Columns: []*schema.Column{MemberContractColumns[7]},
@@ -101,12 +88,7 @@ var (
 			{
 				Name:    "membercontract_member_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberContractColumns[11]},
-			},
-			{
-				Name:    "membercontract_member_product_id",
-				Unique:  false,
-				Columns: []*schema.Column{MemberContractColumns[12]},
+				Columns: []*schema.Column{MemberContractColumns[10]},
 			},
 		},
 	}
@@ -197,6 +179,7 @@ var (
 		{Name: "order_id", Type: field.TypeInt64, Nullable: true, Comment: "订单ID"},
 		{Name: "name", Type: field.TypeString, Nullable: true, Comment: "产品名称"},
 		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "产品价格"},
+		{Name: "actual", Type: field.TypeInt64, Nullable: true, Comment: "实际支付金额"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
 	}
 	// MemberProductTable holds the schema information for the "member_product" table.
@@ -207,7 +190,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_product_member_member_products",
-				Columns:    []*schema.Column{MemberProductColumns[11]},
+				Columns:    []*schema.Column{MemberProductColumns[12]},
 				RefColumns: []*schema.Column{MemberColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -221,7 +204,7 @@ var (
 			{
 				Name:    "memberproduct_member_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProductColumns[11]},
+				Columns: []*schema.Column{MemberProductColumns[12]},
 			},
 			{
 				Name:    "memberproduct_product_id",
@@ -255,7 +238,6 @@ var (
 		{Name: "price", Type: field.TypeInt64, Nullable: true, Comment: "定价"},
 		{Name: "active_at", Type: field.TypeTime, Nullable: true, Comment: "生效时间"},
 		{Name: "expired_at", Type: field.TypeTime, Nullable: true, Comment: "过期时间"},
-		{Name: "code", Type: field.TypeString, Nullable: true, Comment: "code"},
 		{Name: "member_product_id", Type: field.TypeInt64, Nullable: true, Comment: "会员产品ID"},
 	}
 	// MemberProductPropertyTable holds the schema information for the "member_product_property" table.
@@ -266,7 +248,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_product_property_member_product_member_product_propertys",
-				Columns:    []*schema.Column{MemberProductPropertyColumns[19]},
+				Columns:    []*schema.Column{MemberProductPropertyColumns[18]},
 				RefColumns: []*schema.Column{MemberProductColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -290,7 +272,7 @@ var (
 			{
 				Name:    "memberproductproperty_member_product_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProductPropertyColumns[19]},
+				Columns: []*schema.Column{MemberProductPropertyColumns[18]},
 			},
 			{
 				Name:    "memberproductproperty_active_at",
@@ -410,7 +392,6 @@ func init() {
 		Collation: "utf8mb4_bin",
 	}
 	MemberContractTable.ForeignKeys[0].RefTable = MemberTable
-	MemberContractTable.ForeignKeys[1].RefTable = MemberProductTable
 	MemberContractTable.Annotation = &entsql.Annotation{
 		Table:     "member_contract",
 		Charset:   "utf8mb4",

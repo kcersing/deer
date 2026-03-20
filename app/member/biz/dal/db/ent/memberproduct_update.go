@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"member/biz/dal/db/ent/member"
-	"member/biz/dal/db/ent/membercontract"
 	"member/biz/dal/db/ent/memberproduct"
 	"member/biz/dal/db/ent/memberproductproperty"
 	"member/biz/dal/db/ent/predicate"
@@ -265,6 +264,33 @@ func (_u *MemberProductUpdate) ClearPrice() *MemberProductUpdate {
 	return _u
 }
 
+// SetActual sets the "actual" field.
+func (_u *MemberProductUpdate) SetActual(v int64) *MemberProductUpdate {
+	_u.mutation.ResetActual()
+	_u.mutation.SetActual(v)
+	return _u
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_u *MemberProductUpdate) SetNillableActual(v *int64) *MemberProductUpdate {
+	if v != nil {
+		_u.SetActual(*v)
+	}
+	return _u
+}
+
+// AddActual adds value to the "actual" field.
+func (_u *MemberProductUpdate) AddActual(v int64) *MemberProductUpdate {
+	_u.mutation.AddActual(v)
+	return _u
+}
+
+// ClearActual clears the value of the "actual" field.
+func (_u *MemberProductUpdate) ClearActual() *MemberProductUpdate {
+	_u.mutation.ClearActual()
+	return _u
+}
+
 // SetMembersID sets the "members" edge to the Member entity by ID.
 func (_u *MemberProductUpdate) SetMembersID(id int64) *MemberProductUpdate {
 	_u.mutation.SetMembersID(id)
@@ -299,21 +325,6 @@ func (_u *MemberProductUpdate) AddMemberProductPropertys(v ...*MemberProductProp
 	return _u.AddMemberProductPropertyIDs(ids...)
 }
 
-// AddMemberProductContentIDs adds the "member_product_contents" edge to the MemberContract entity by IDs.
-func (_u *MemberProductUpdate) AddMemberProductContentIDs(ids ...int64) *MemberProductUpdate {
-	_u.mutation.AddMemberProductContentIDs(ids...)
-	return _u
-}
-
-// AddMemberProductContents adds the "member_product_contents" edges to the MemberContract entity.
-func (_u *MemberProductUpdate) AddMemberProductContents(v ...*MemberContract) *MemberProductUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddMemberProductContentIDs(ids...)
-}
-
 // Mutation returns the MemberProductMutation object of the builder.
 func (_u *MemberProductUpdate) Mutation() *MemberProductMutation {
 	return _u.mutation
@@ -344,27 +355,6 @@ func (_u *MemberProductUpdate) RemoveMemberProductPropertys(v ...*MemberProductP
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMemberProductPropertyIDs(ids...)
-}
-
-// ClearMemberProductContents clears all "member_product_contents" edges to the MemberContract entity.
-func (_u *MemberProductUpdate) ClearMemberProductContents() *MemberProductUpdate {
-	_u.mutation.ClearMemberProductContents()
-	return _u
-}
-
-// RemoveMemberProductContentIDs removes the "member_product_contents" edge to MemberContract entities by IDs.
-func (_u *MemberProductUpdate) RemoveMemberProductContentIDs(ids ...int64) *MemberProductUpdate {
-	_u.mutation.RemoveMemberProductContentIDs(ids...)
-	return _u
-}
-
-// RemoveMemberProductContents removes "member_product_contents" edges to MemberContract entities.
-func (_u *MemberProductUpdate) RemoveMemberProductContents(v ...*MemberContract) *MemberProductUpdate {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveMemberProductContentIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -487,6 +477,15 @@ func (_u *MemberProductUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	if _u.mutation.PriceCleared() {
 		_spec.ClearField(memberproduct.FieldPrice, field.TypeInt64)
 	}
+	if value, ok := _u.mutation.Actual(); ok {
+		_spec.SetField(memberproduct.FieldActual, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedActual(); ok {
+		_spec.AddField(memberproduct.FieldActual, field.TypeInt64, value)
+	}
+	if _u.mutation.ActualCleared() {
+		_spec.ClearField(memberproduct.FieldActual, field.TypeInt64)
+	}
 	if _u.mutation.MembersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -554,51 +553,6 @@ func (_u *MemberProductUpdate) sqlSave(ctx context.Context) (_node int, err erro
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(memberproductproperty.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.MemberProductContentsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedMemberProductContentsIDs(); len(nodes) > 0 && !_u.mutation.MemberProductContentsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MemberProductContentsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {
@@ -860,6 +814,33 @@ func (_u *MemberProductUpdateOne) ClearPrice() *MemberProductUpdateOne {
 	return _u
 }
 
+// SetActual sets the "actual" field.
+func (_u *MemberProductUpdateOne) SetActual(v int64) *MemberProductUpdateOne {
+	_u.mutation.ResetActual()
+	_u.mutation.SetActual(v)
+	return _u
+}
+
+// SetNillableActual sets the "actual" field if the given value is not nil.
+func (_u *MemberProductUpdateOne) SetNillableActual(v *int64) *MemberProductUpdateOne {
+	if v != nil {
+		_u.SetActual(*v)
+	}
+	return _u
+}
+
+// AddActual adds value to the "actual" field.
+func (_u *MemberProductUpdateOne) AddActual(v int64) *MemberProductUpdateOne {
+	_u.mutation.AddActual(v)
+	return _u
+}
+
+// ClearActual clears the value of the "actual" field.
+func (_u *MemberProductUpdateOne) ClearActual() *MemberProductUpdateOne {
+	_u.mutation.ClearActual()
+	return _u
+}
+
 // SetMembersID sets the "members" edge to the Member entity by ID.
 func (_u *MemberProductUpdateOne) SetMembersID(id int64) *MemberProductUpdateOne {
 	_u.mutation.SetMembersID(id)
@@ -894,21 +875,6 @@ func (_u *MemberProductUpdateOne) AddMemberProductPropertys(v ...*MemberProductP
 	return _u.AddMemberProductPropertyIDs(ids...)
 }
 
-// AddMemberProductContentIDs adds the "member_product_contents" edge to the MemberContract entity by IDs.
-func (_u *MemberProductUpdateOne) AddMemberProductContentIDs(ids ...int64) *MemberProductUpdateOne {
-	_u.mutation.AddMemberProductContentIDs(ids...)
-	return _u
-}
-
-// AddMemberProductContents adds the "member_product_contents" edges to the MemberContract entity.
-func (_u *MemberProductUpdateOne) AddMemberProductContents(v ...*MemberContract) *MemberProductUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.AddMemberProductContentIDs(ids...)
-}
-
 // Mutation returns the MemberProductMutation object of the builder.
 func (_u *MemberProductUpdateOne) Mutation() *MemberProductMutation {
 	return _u.mutation
@@ -939,27 +905,6 @@ func (_u *MemberProductUpdateOne) RemoveMemberProductPropertys(v ...*MemberProdu
 		ids[i] = v[i].ID
 	}
 	return _u.RemoveMemberProductPropertyIDs(ids...)
-}
-
-// ClearMemberProductContents clears all "member_product_contents" edges to the MemberContract entity.
-func (_u *MemberProductUpdateOne) ClearMemberProductContents() *MemberProductUpdateOne {
-	_u.mutation.ClearMemberProductContents()
-	return _u
-}
-
-// RemoveMemberProductContentIDs removes the "member_product_contents" edge to MemberContract entities by IDs.
-func (_u *MemberProductUpdateOne) RemoveMemberProductContentIDs(ids ...int64) *MemberProductUpdateOne {
-	_u.mutation.RemoveMemberProductContentIDs(ids...)
-	return _u
-}
-
-// RemoveMemberProductContents removes "member_product_contents" edges to MemberContract entities.
-func (_u *MemberProductUpdateOne) RemoveMemberProductContents(v ...*MemberContract) *MemberProductUpdateOne {
-	ids := make([]int64, len(v))
-	for i := range v {
-		ids[i] = v[i].ID
-	}
-	return _u.RemoveMemberProductContentIDs(ids...)
 }
 
 // Where appends a list predicates to the MemberProductUpdate builder.
@@ -1112,6 +1057,15 @@ func (_u *MemberProductUpdateOne) sqlSave(ctx context.Context) (_node *MemberPro
 	if _u.mutation.PriceCleared() {
 		_spec.ClearField(memberproduct.FieldPrice, field.TypeInt64)
 	}
+	if value, ok := _u.mutation.Actual(); ok {
+		_spec.SetField(memberproduct.FieldActual, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedActual(); ok {
+		_spec.AddField(memberproduct.FieldActual, field.TypeInt64, value)
+	}
+	if _u.mutation.ActualCleared() {
+		_spec.ClearField(memberproduct.FieldActual, field.TypeInt64)
+	}
 	if _u.mutation.MembersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -1179,51 +1133,6 @@ func (_u *MemberProductUpdateOne) sqlSave(ctx context.Context) (_node *MemberPro
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(memberproductproperty.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if _u.mutation.MemberProductContentsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
-			},
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.RemovedMemberProductContentsIDs(); len(nodes) > 0 && !_u.mutation.MemberProductContentsCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := _u.mutation.MemberProductContentsIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2M,
-			Inverse: false,
-			Table:   memberproduct.MemberProductContentsTable,
-			Columns: []string{memberproduct.MemberProductContentsColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(membercontract.FieldID, field.TypeInt64),
 			},
 		}
 		for _, k := range nodes {

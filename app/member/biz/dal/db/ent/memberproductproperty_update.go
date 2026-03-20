@@ -431,26 +431,6 @@ func (_u *MemberProductPropertyUpdate) ClearExpiredAt() *MemberProductPropertyUp
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *MemberProductPropertyUpdate) SetCode(v string) *MemberProductPropertyUpdate {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdate) SetNillableCode(v *string) *MemberProductPropertyUpdate {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *MemberProductPropertyUpdate) ClearCode() *MemberProductPropertyUpdate {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetOwnerID sets the "owner" edge to the MemberProduct entity by ID.
 func (_u *MemberProductPropertyUpdate) SetOwnerID(id int64) *MemberProductPropertyUpdate {
 	_u.mutation.SetOwnerID(id)
@@ -654,12 +634,6 @@ func (_u *MemberProductPropertyUpdate) sqlSave(ctx context.Context) (_node int, 
 	}
 	if _u.mutation.ExpiredAtCleared() {
 		_spec.ClearField(memberproductproperty.FieldExpiredAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(memberproductproperty.FieldCode, field.TypeString)
 	}
 	if _u.mutation.OwnerCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1112,26 +1086,6 @@ func (_u *MemberProductPropertyUpdateOne) ClearExpiredAt() *MemberProductPropert
 	return _u
 }
 
-// SetCode sets the "code" field.
-func (_u *MemberProductPropertyUpdateOne) SetCode(v string) *MemberProductPropertyUpdateOne {
-	_u.mutation.SetCode(v)
-	return _u
-}
-
-// SetNillableCode sets the "code" field if the given value is not nil.
-func (_u *MemberProductPropertyUpdateOne) SetNillableCode(v *string) *MemberProductPropertyUpdateOne {
-	if v != nil {
-		_u.SetCode(*v)
-	}
-	return _u
-}
-
-// ClearCode clears the value of the "code" field.
-func (_u *MemberProductPropertyUpdateOne) ClearCode() *MemberProductPropertyUpdateOne {
-	_u.mutation.ClearCode()
-	return _u
-}
-
 // SetOwnerID sets the "owner" edge to the MemberProduct entity by ID.
 func (_u *MemberProductPropertyUpdateOne) SetOwnerID(id int64) *MemberProductPropertyUpdateOne {
 	_u.mutation.SetOwnerID(id)
@@ -1365,12 +1319,6 @@ func (_u *MemberProductPropertyUpdateOne) sqlSave(ctx context.Context) (_node *M
 	}
 	if _u.mutation.ExpiredAtCleared() {
 		_spec.ClearField(memberproductproperty.FieldExpiredAt, field.TypeTime)
-	}
-	if value, ok := _u.mutation.Code(); ok {
-		_spec.SetField(memberproductproperty.FieldCode, field.TypeString, value)
-	}
-	if _u.mutation.CodeCleared() {
-		_spec.ClearField(memberproductproperty.FieldCode, field.TypeString)
 	}
 	if _u.mutation.OwnerCleared() {
 		edge := &sqlgraph.EdgeSpec{

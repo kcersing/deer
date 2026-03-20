@@ -25,6 +25,7 @@ func (MemberProduct) Fields() []ent.Field {
 		field.Int64("order_id").Comment("订单ID").Optional(),
 		field.String("name").Comment("产品名称").Optional(),
 		field.Int64("price").Comment("产品价格").Optional(),
+		field.Int64("actual").Comment("实际支付金额").Optional(),
 	}
 }
 
@@ -42,7 +43,7 @@ func (MemberProduct) Edges() []ent.Edge {
 			Field("member_id").Unique(),
 		edge.To("member_product_propertys", MemberProductProperty.Type),
 
-		edge.To("member_product_contents", MemberContract.Type),
+		//edge.To("member_product_contents", MemberContract.Type),
 	}
 }
 

@@ -28,7 +28,7 @@ func (s *CreateItemService) Run(req *product.CreateItemReq) (resp *product.ItemR
 		SetDuration(req.GetDuration()).
 		SetLength(req.GetLength()).
 		SetCount(req.GetCount()).
-		SetPrice(req.GetPrice()).
+		SetPrice(req.GetPrice() * 100).
 		SetTagID(req.GetTagId()).
 		SetCreatedID(req.GetCreatedId()).
 		SetStatus(req.GetStatus()).

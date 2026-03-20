@@ -12,8 +12,6 @@ import (
 	"product/biz/dal/db/ent"
 
 	"product/biz/dal/db/ent/predicate"
-
-	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 type ItemListService struct {
@@ -25,15 +23,18 @@ func NewItemListService(ctx context.Context) *ItemListService {
 
 // Run create note info
 func (s *ItemListService) Run(req *product.ItemListReq) (resp *product.ItemListResp, err error) {
+
 	// Finish your business logic.
 	var (
-		dataResp []*base.Item
+		dataResp   []*base.Item
+		predicates []predicate.ProductItem
 	)
-	var predicates []predicate.ProductItem
+	predicates = append(predicates, productitem.DeleteEQ(0))
+
 	if req.GetName() != "" {
 		predicates = append(predicates, productitem.NameContains(req.GetName()))
 	}
-	if len(req.GetIds()) >= 0 {
+	if len(req.GetIds()) > 0 {
 		predicates = append(predicates, productitem.IDIn(req.GetIds()...))
 	}
 	if len(req.GetStatus()) > 0 {
@@ -42,13 +43,14 @@ func (s *ItemListService) Run(req *product.ItemListReq) (resp *product.ItemListR
 	if req.GetType() != "" {
 		predicates = append(predicates, productitem.TypeEQ(req.GetType()))
 	}
-	predicates = append(predicates, productitem.DeleteEQ(0))
 
-	all, err := db.Client.Debug().ProductItem.Query().Where(predicates...).
+	all, err := db.Client.ProductItem.Query().
+		Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(position.FieldID)).
-		Limit(int(req.PageSize)).All(s.ctx)
-	hlog.Info(all)
+		Limit(int(req.PageSize)).
+		All(s.ctx)
+
 	if err != nil {
 		return nil, err
 	}

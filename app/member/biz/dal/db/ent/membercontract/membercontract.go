@@ -30,10 +30,6 @@ const (
 	FieldContractID = "contract_id"
 	// FieldOrderID holds the string denoting the order_id field in the database.
 	FieldOrderID = "order_id"
-	// FieldVenueID holds the string denoting the venue_id field in the database.
-	FieldVenueID = "venue_id"
-	// FieldMemberProductID holds the string denoting the member_product_id field in the database.
-	FieldMemberProductID = "member_product_id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
 	// FieldSign holds the string denoting the sign field in the database.
@@ -42,8 +38,6 @@ const (
 	EdgeContent = "content"
 	// EdgeMember holds the string denoting the member edge name in mutations.
 	EdgeMember = "member"
-	// EdgeMemberProduct holds the string denoting the member_product edge name in mutations.
-	EdgeMemberProduct = "member_product"
 	// Table holds the table name of the membercontract in the database.
 	Table = "member_contract"
 	// ContentTable is the table that holds the content relation/edge.
@@ -60,13 +54,6 @@ const (
 	MemberInverseTable = "member"
 	// MemberColumn is the table column denoting the member relation/edge.
 	MemberColumn = "member_id"
-	// MemberProductTable is the table that holds the member_product relation/edge.
-	MemberProductTable = "member_contract"
-	// MemberProductInverseTable is the table name for the MemberProduct entity.
-	// It exists in this package in order to avoid circular dependency with the "memberproduct" package.
-	MemberProductInverseTable = "member_product"
-	// MemberProductColumn is the table column denoting the member_product relation/edge.
-	MemberProductColumn = "member_product_id"
 )
 
 // Columns holds all SQL columns for membercontract fields.
@@ -80,8 +67,6 @@ var Columns = []string{
 	FieldMemberID,
 	FieldContractID,
 	FieldOrderID,
-	FieldVenueID,
-	FieldMemberProductID,
 	FieldName,
 	FieldSign,
 }
@@ -159,16 +144,6 @@ func ByOrderID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrderID, opts...).ToFunc()
 }
 
-// ByVenueID orders the results by the venue_id field.
-func ByVenueID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldVenueID, opts...).ToFunc()
-}
-
-// ByMemberProductID orders the results by the member_product_id field.
-func ByMemberProductID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldMemberProductID, opts...).ToFunc()
-}
-
 // ByName orders the results by the name field.
 func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
@@ -199,13 +174,6 @@ func ByMemberField(field string, opts ...sql.OrderTermOption) OrderOption {
 		sqlgraph.OrderByNeighborTerms(s, newMemberStep(), sql.OrderByField(field, opts...))
 	}
 }
-
-// ByMemberProductField orders the results by member_product field.
-func ByMemberProductField(field string, opts ...sql.OrderTermOption) OrderOption {
-	return func(s *sql.Selector) {
-		sqlgraph.OrderByNeighborTerms(s, newMemberProductStep(), sql.OrderByField(field, opts...))
-	}
-}
 func newContentStep() *sqlgraph.Step {
 	return sqlgraph.NewStep(
 		sqlgraph.From(Table, FieldID),
@@ -218,12 +186,5 @@ func newMemberStep() *sqlgraph.Step {
 		sqlgraph.From(Table, FieldID),
 		sqlgraph.To(MemberInverseTable, FieldID),
 		sqlgraph.Edge(sqlgraph.M2O, true, MemberTable, MemberColumn),
-	)
-}
-func newMemberProductStep() *sqlgraph.Step {
-	return sqlgraph.NewStep(
-		sqlgraph.From(Table, FieldID),
-		sqlgraph.To(MemberProductInverseTable, FieldID),
-		sqlgraph.Edge(sqlgraph.M2O, true, MemberProductTable, MemberProductColumn),
 	)
 }

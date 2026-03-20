@@ -50,8 +50,6 @@ const (
 	FieldActiveAt = "active_at"
 	// FieldExpiredAt holds the string denoting the expired_at field in the database.
 	FieldExpiredAt = "expired_at"
-	// FieldCode holds the string denoting the code field in the database.
-	FieldCode = "code"
 	// EdgeOwner holds the string denoting the owner edge name in mutations.
 	EdgeOwner = "owner"
 	// Table holds the table name of the memberproductproperty in the database.
@@ -86,7 +84,6 @@ var Columns = []string{
 	FieldPrice,
 	FieldActiveAt,
 	FieldExpiredAt,
-	FieldCode,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -214,11 +211,6 @@ func ByActiveAt(opts ...sql.OrderTermOption) OrderOption {
 // ByExpiredAt orders the results by the expired_at field.
 func ByExpiredAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldExpiredAt, opts...).ToFunc()
-}
-
-// ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
 // ByOwnerField orders the results by owner field.

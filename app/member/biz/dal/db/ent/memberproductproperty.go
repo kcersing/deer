@@ -55,8 +55,6 @@ type MemberProductProperty struct {
 	ActiveAt time.Time `json:"active_at,omitempty"`
 	// 过期时间
 	ExpiredAt time.Time `json:"expired_at,omitempty"`
-	// code
-	Code string `json:"code,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the MemberProductPropertyQuery when eager-loading is set.
 	Edges        MemberProductPropertyEdges `json:"edges"`
@@ -90,7 +88,7 @@ func (*MemberProductProperty) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case memberproductproperty.FieldID, memberproductproperty.FieldDelete, memberproductproperty.FieldCreatedID, memberproductproperty.FieldStatus, memberproductproperty.FieldMemberID, memberproductproperty.FieldMemberProductID, memberproductproperty.FieldPropertyID, memberproductproperty.FieldDuration, memberproductproperty.FieldLength, memberproductproperty.FieldCount, memberproductproperty.FieldCountUsed, memberproductproperty.FieldPrice:
 			values[i] = new(sql.NullInt64)
-		case memberproductproperty.FieldSn, memberproductproperty.FieldType, memberproductproperty.FieldName, memberproductproperty.FieldCode:
+		case memberproductproperty.FieldSn, memberproductproperty.FieldType, memberproductproperty.FieldName:
 			values[i] = new(sql.NullString)
 		case memberproductproperty.FieldCreatedAt, memberproductproperty.FieldUpdatedAt, memberproductproperty.FieldActiveAt, memberproductproperty.FieldExpiredAt:
 			values[i] = new(sql.NullTime)
@@ -223,12 +221,6 @@ func (_m *MemberProductProperty) assignValues(columns []string, values []any) er
 			} else if value.Valid {
 				_m.ExpiredAt = value.Time
 			}
-		case memberproductproperty.FieldCode:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field code", values[i])
-			} else if value.Valid {
-				_m.Code = value.String
-			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -323,9 +315,6 @@ func (_m *MemberProductProperty) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("expired_at=")
 	builder.WriteString(_m.ExpiredAt.Format(time.ANSIC))
-	builder.WriteString(", ")
-	builder.WriteString("code=")
-	builder.WriteString(_m.Code)
 	builder.WriteByte(')')
 	return builder.String()
 }

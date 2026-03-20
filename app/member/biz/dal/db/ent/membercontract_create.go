@@ -8,7 +8,6 @@ import (
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/membercontract"
 	"member/biz/dal/db/ent/membercontractcontent"
-	"member/biz/dal/db/ent/memberproduct"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -134,34 +133,6 @@ func (_c *MemberContractCreate) SetNillableOrderID(v *int64) *MemberContractCrea
 	return _c
 }
 
-// SetVenueID sets the "venue_id" field.
-func (_c *MemberContractCreate) SetVenueID(v int64) *MemberContractCreate {
-	_c.mutation.SetVenueID(v)
-	return _c
-}
-
-// SetNillableVenueID sets the "venue_id" field if the given value is not nil.
-func (_c *MemberContractCreate) SetNillableVenueID(v *int64) *MemberContractCreate {
-	if v != nil {
-		_c.SetVenueID(*v)
-	}
-	return _c
-}
-
-// SetMemberProductID sets the "member_product_id" field.
-func (_c *MemberContractCreate) SetMemberProductID(v int64) *MemberContractCreate {
-	_c.mutation.SetMemberProductID(v)
-	return _c
-}
-
-// SetNillableMemberProductID sets the "member_product_id" field if the given value is not nil.
-func (_c *MemberContractCreate) SetNillableMemberProductID(v *int64) *MemberContractCreate {
-	if v != nil {
-		_c.SetMemberProductID(*v)
-	}
-	return _c
-}
-
 // SetName sets the "name" field.
 func (_c *MemberContractCreate) SetName(v string) *MemberContractCreate {
 	_c.mutation.SetName(v)
@@ -214,11 +185,6 @@ func (_c *MemberContractCreate) AddContent(v ...*MemberContractContent) *MemberC
 // SetMember sets the "member" edge to the Member entity.
 func (_c *MemberContractCreate) SetMember(v *Member) *MemberContractCreate {
 	return _c.SetMemberID(v.ID)
-}
-
-// SetMemberProduct sets the "member_product" edge to the MemberProduct entity.
-func (_c *MemberContractCreate) SetMemberProduct(v *MemberProduct) *MemberContractCreate {
-	return _c.SetMemberProductID(v.ID)
 }
 
 // Mutation returns the MemberContractMutation object of the builder.
@@ -340,10 +306,6 @@ func (_c *MemberContractCreate) createSpec() (*MemberContract, *sqlgraph.CreateS
 		_spec.SetField(membercontract.FieldOrderID, field.TypeInt64, value)
 		_node.OrderID = value
 	}
-	if value, ok := _c.mutation.VenueID(); ok {
-		_spec.SetField(membercontract.FieldVenueID, field.TypeInt64, value)
-		_node.VenueID = value
-	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(membercontract.FieldName, field.TypeString, value)
 		_node.Name = value
@@ -383,23 +345,6 @@ func (_c *MemberContractCreate) createSpec() (*MemberContract, *sqlgraph.CreateS
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.MemberID = nodes[0]
-		_spec.Edges = append(_spec.Edges, edge)
-	}
-	if nodes := _c.mutation.MemberProductIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: true,
-			Table:   membercontract.MemberProductTable,
-			Columns: []string{membercontract.MemberProductColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(memberproduct.FieldID, field.TypeInt64),
-			},
-		}
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_node.MemberProductID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

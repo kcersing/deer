@@ -617,22 +617,6 @@ func (c *MemberContractClient) QueryMember(_m *MemberContract) *MemberQuery {
 	return query
 }
 
-// QueryMemberProduct queries the member_product edge of a MemberContract.
-func (c *MemberContractClient) QueryMemberProduct(_m *MemberContract) *MemberProductQuery {
-	query := (&MemberProductClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := _m.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(membercontract.Table, membercontract.FieldID, id),
-			sqlgraph.To(memberproduct.Table, memberproduct.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, membercontract.MemberProductTable, membercontract.MemberProductColumn),
-		)
-		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
 // Hooks returns the client hooks.
 func (c *MemberContractClient) Hooks() []Hook {
 	return c.hooks.MemberContract
@@ -1089,22 +1073,6 @@ func (c *MemberProductClient) QueryMemberProductPropertys(_m *MemberProduct) *Me
 			sqlgraph.From(memberproduct.Table, memberproduct.FieldID, id),
 			sqlgraph.To(memberproductproperty.Table, memberproductproperty.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, memberproduct.MemberProductPropertysTable, memberproduct.MemberProductPropertysColumn),
-		)
-		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryMemberProductContents queries the member_product_contents edge of a MemberProduct.
-func (c *MemberProductClient) QueryMemberProductContents(_m *MemberProduct) *MemberContractQuery {
-	query := (&MemberContractClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := _m.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(memberproduct.Table, memberproduct.FieldID, id),
-			sqlgraph.To(membercontract.Table, membercontract.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, memberproduct.MemberProductContentsTable, memberproduct.MemberProductContentsColumn),
 		)
 		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil

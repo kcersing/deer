@@ -26,7 +26,7 @@ func (s *UpdateItemService) Run(req *product.UpdateItemReq) (resp *product.ItemR
 		SetDuration(req.GetDuration()).
 		SetLength(req.GetLength()).
 		SetCount(req.GetCount()).
-		SetPrice(req.GetPrice()).
+		SetPrice(req.GetPrice() * 100).
 		SetTagID(req.GetTagId()).
 		SetStatus(req.GetStatus()).
 		Save(s.ctx)

@@ -145,11 +145,6 @@ func ExpiredAt(v time.Time) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldEQ(FieldExpiredAt, v))
 }
 
-// Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
-func Code(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCode, v))
-}
-
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldEQ(FieldCreatedAt, v))
@@ -1103,81 +1098,6 @@ func ExpiredAtIsNil() predicate.MemberProductProperty {
 // ExpiredAtNotNil applies the NotNil predicate on the "expired_at" field.
 func ExpiredAtNotNil() predicate.MemberProductProperty {
 	return predicate.MemberProductProperty(sql.FieldNotNull(FieldExpiredAt))
-}
-
-// CodeEQ applies the EQ predicate on the "code" field.
-func CodeEQ(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEQ(FieldCode, v))
-}
-
-// CodeNEQ applies the NEQ predicate on the "code" field.
-func CodeNEQ(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNEQ(FieldCode, v))
-}
-
-// CodeIn applies the In predicate on the "code" field.
-func CodeIn(vs ...string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIn(FieldCode, vs...))
-}
-
-// CodeNotIn applies the NotIn predicate on the "code" field.
-func CodeNotIn(vs ...string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotIn(FieldCode, vs...))
-}
-
-// CodeGT applies the GT predicate on the "code" field.
-func CodeGT(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGT(FieldCode, v))
-}
-
-// CodeGTE applies the GTE predicate on the "code" field.
-func CodeGTE(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldGTE(FieldCode, v))
-}
-
-// CodeLT applies the LT predicate on the "code" field.
-func CodeLT(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLT(FieldCode, v))
-}
-
-// CodeLTE applies the LTE predicate on the "code" field.
-func CodeLTE(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldLTE(FieldCode, v))
-}
-
-// CodeContains applies the Contains predicate on the "code" field.
-func CodeContains(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldContains(FieldCode, v))
-}
-
-// CodeHasPrefix applies the HasPrefix predicate on the "code" field.
-func CodeHasPrefix(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldHasPrefix(FieldCode, v))
-}
-
-// CodeHasSuffix applies the HasSuffix predicate on the "code" field.
-func CodeHasSuffix(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldHasSuffix(FieldCode, v))
-}
-
-// CodeIsNil applies the IsNil predicate on the "code" field.
-func CodeIsNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldIsNull(FieldCode))
-}
-
-// CodeNotNil applies the NotNil predicate on the "code" field.
-func CodeNotNil() predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldNotNull(FieldCode))
-}
-
-// CodeEqualFold applies the EqualFold predicate on the "code" field.
-func CodeEqualFold(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldEqualFold(FieldCode, v))
-}
-
-// CodeContainsFold applies the ContainsFold predicate on the "code" field.
-func CodeContainsFold(v string) predicate.MemberProductProperty {
-	return predicate.MemberProductProperty(sql.FieldContainsFold(FieldCode, v))
 }
 
 // HasOwner applies the HasEdge predicate on the "owner" edge.
