@@ -11,7 +11,7 @@ import {
   ProFormList,
   ProCard,
   ProFormDependency,
-  ProFormSwitch,
+  ProFormSwitch,ProFormDigit
 } from '@ant-design/pro-components';
 import {  useRequest } from '@umijs/max';
 import { Button, message,Descriptions, } from 'antd';
@@ -30,7 +30,7 @@ interface CreateFormProps {
   reload?: ActionType['reload'];
 }
 
-const AttributesItme = (props) => {
+const AttributesItem = (props) => {
   const { id } = props;
   if (!(id >= 0)) {
     return null;
@@ -58,12 +58,10 @@ const AttributesItme = (props) => {
         <Descriptions.Item label="Code">{itemData.code}</Descriptions.Item>
         <Descriptions.Item label="类别">{itemData.type}</Descriptions.Item>
         <Descriptions.Item label="金额">{itemData.price}</Descriptions.Item>
-
         <Descriptions.Item label="期限">{itemData.duration}</Descriptions.Item>
         <Descriptions.Item label="次数">{itemData.count}</Descriptions.Item>
         <Descriptions.Item label="时长">{itemData.length}</Descriptions.Item>
         <Descriptions.Item label="标签">{itemData.tagName}</Descriptions.Item>
-
         <Descriptions.Item label="备注">
         {itemData.desc}
         </Descriptions.Item>
@@ -95,15 +93,10 @@ const Attributes  = (props) => {
       )}
     >
 
-      <ProCard
-
-        split="vertical"
-
-
-      >
+      <ProCard split="vertical">
         <ProCard bodyStyle={{ width: 240,flexShrink: 0 }}>
           <ProFormSelect
-            name="itme"
+            name="item"
             label="选择属性"
             width="md"
             params={{current: 999, pageSize: 1}}
@@ -120,17 +113,28 @@ const Attributes  = (props) => {
             placeholder="请选择"
             rules={[{ required: true, message: '请选择!' }]}
           />
+
+
+          {/*<ProFormDigit*/}
+          {/*  name="itemPrice"*/}
+          {/*  label="价值"*/}
+          {/*  width="md"*/}
+          {/*  fieldProps={{ suffix:"元"}}*/}
+          {/*  style={{ width: '100%' }}*/}
+          {/*/>*/}
         </ProCard>
 
         <ProCard  bodyStyle={{ width: 500,flexShrink: 0,padding: "unset",paddingLeft: 24 }}>
-          <ProFormDependency name={["itme"]} ignoreFormListField={false} >
+          <ProFormDependency name={["item"]} ignoreFormListField={false} >
             {(depValues) => (
 
-              <AttributesItme id={depValues["itme"]} />
+              <AttributesItem id={depValues["item"]} />
             )}
           </ProFormDependency>
         </ProCard>
       </ProCard>
+
+
     </ProFormList>
 
 

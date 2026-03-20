@@ -21,6 +21,7 @@ import React, { cloneElement, useCallback, useState } from 'react';
 
 import { updateProduct }from "@/pages/product/list/service/service";
 import { Product } from  "@/pages/product/list/service/data";
+import Attributes from "./Attributes";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
@@ -30,6 +31,11 @@ export type ModalForm = {
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
   const { onOk, values, trigger } = props;
+
+  values.attributes =[];
+  for ( let  v of values.items) {
+    values.attributes.push({item:v})
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -58,6 +64,17 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     async (values?: any) => {
       values.id = e.id;
       values.status = values.status?1:0;
+
+      values.status = values.status?1:0;
+      values.signSalesAt = values.salesAt[0]
+      values.endSalesAt = values.salesAt[1]
+
+      values.items=[];
+      for ( let  v in values.attributes) {
+        values.items.push(values.attributes[v]['item'])
+      }
+
+
       await run({ data: values });
       onCancel();
     },
@@ -184,9 +201,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
         <ProForm.Group>
 
-
-
-
+          <Attributes />
 
         </ProForm.Group>
 

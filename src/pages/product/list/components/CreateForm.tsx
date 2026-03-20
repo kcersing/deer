@@ -53,15 +53,16 @@ const CreateForm: FC<CreateFormProps> = (props) => {
         }
         width="800px"
         modalProps={{ okButtonProps: { loading } }}
-        onFinish={async (value) => {
-          value.status = value.status?1:0;
-          console.log(value.attributes)
-          value.itmes=[];
-          for ( let  v in value.attributes) {
+        onFinish={async (values) => {
+          values.status = values.status?1:0;
+          values.signSalesAt = values.salesAt[0]
+          values.endSalesAt = values.salesAt[1]
 
-            value.itmes.push(value.attributes[v]['itme'])
+          values.items=[];
+          for ( let  v in values.attributes) {
+            values.items.push(values.attributes[v]['item'])
           }
-          await run({ data: value as Product });
+          await run({ data: values as Product });
           return true;
         }}
       >
