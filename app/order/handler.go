@@ -66,3 +66,10 @@ func (s *OrderServiceImpl) Shipped(ctx context.Context, req *base.IdReq) (resp *
 
 	return resp, err
 }
+
+// CompletedOrder implements the OrderServiceImpl interface.
+func (s *OrderServiceImpl) CompletedOrder(ctx context.Context, req *order.CompletedOrderReq) (resp *base.NilResponse, err error) {
+	resp, err = service.NewCompletedOrderService(ctx).Run(req)
+
+	return resp, err
+}

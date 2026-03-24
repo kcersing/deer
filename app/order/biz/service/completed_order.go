@@ -7,29 +7,28 @@ import (
 	"order/biz/infras/repo"
 )
 
-type RefundOrderService struct {
+type CompletedOrderService struct {
 	ctx context.Context
 }
 
-// NewRefundOrderService new RefundOrderService
-func NewRefundOrderService(ctx context.Context) *RefundOrderService {
-	return &RefundOrderService{ctx: ctx}
+// NewCompletedOrderService new CompletedOrderService
+func NewCompletedOrderService(ctx context.Context) *CompletedOrderService {
+	return &CompletedOrderService{ctx: ctx}
 }
 
 // Run create note info
-func (s *RefundOrderService) Run(req *order.RefundOrderReq) (resp *base.NilResponse, err error) {
-	// Finish your business logic.
+func (s *CompletedOrderService) Run(req *order.CompletedOrderReq) (resp *base.NilResponse, err error) {
 
 	node, err := repo.NewOrderRepo().FindById(s.ctx, req.GetId())
 	if err != nil {
 		return nil, err
 	}
-	if err = node.Refund(req); err != nil {
-		return nil, err
-	}
-	if err = repo.NewOrderRepo().Save(s.ctx, node); err != nil {
+	if err = node.Completed(req); err != nil {
 		return nil, err
 	}
 
+	if err = repo.NewOrderRepo().Save(s.ctx, node); err != nil {
+		return nil, err
+	}
 	return
 }

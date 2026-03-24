@@ -34,6 +34,12 @@ struct CancelledOrderReq {
     2:optional string reason="" (api.raw = "reason")
     3:optional i64 createdId=0 (api.raw = "createdId")
 }
+struct CompletedOrderReq {
+    1:optional i64 id=0 (api.raw = "id")
+    2:optional i64 createdId=0 (api.raw = "createdId")
+}
+
+
 
 struct CreateOrderResp {
     1:optional order.Order data={}
@@ -63,6 +69,7 @@ struct PaymentReq {
        8:optional string payExtra ="" (api.raw = "payExtra")
 }
 
+
 service OrderService  {
     OrderResp GetOrder(1:GetOrderReq req)
     GetOrderListResp GetOrderList(1:GetOrderListReq req)
@@ -72,4 +79,7 @@ service OrderService  {
     base.NilResponse Shipped(1:base.IdReq req)
     base.NilResponse CancelledOrder(1:CancelledOrderReq req)
     base.NilResponse RefundOrder(1:RefundOrderReq req)
+    base.NilResponse CompletedOrder(1:CompletedOrderReq req)
+
+
 }

@@ -41,6 +41,9 @@ func (p *RefundOrderReq) IsValid() error {
 func (p *CancelledOrderReq) IsValid() error {
 	return nil
 }
+func (p *CompletedOrderReq) IsValid() error {
+	return nil
+}
 func (p *CreateOrderResp) IsValid() error {
 	if p.Data != nil {
 		if err := p.Data.IsValid(); err != nil {

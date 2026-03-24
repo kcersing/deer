@@ -23,13 +23,10 @@ func (s *PaymentService) Run(req *order.PaymentReq) (resp *order.OrderResp, err 
 		return nil, err
 	}
 
-	err = node.Paying(req)
-
-	if err != nil {
+	if err = node.Paying(req); err != nil {
 		return nil, err
 	}
-	err = repo.NewOrderRepo().Save(s.ctx, node)
-	if err != nil {
+	if err = repo.NewOrderRepo().Save(s.ctx, node); err != nil {
 		return nil, err
 	}
 

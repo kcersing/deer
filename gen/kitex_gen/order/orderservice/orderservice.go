@@ -70,6 +70,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"CompletedOrder": kitex.NewMethodInfo(
+		completedOrderHandler,
+		newOrderServiceCompletedOrderArgs,
+		newOrderServiceCompletedOrderResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 }
 
 var (
@@ -280,6 +287,24 @@ func newOrderServiceRefundOrderResult() interface{} {
 	return order.NewOrderServiceRefundOrderResult()
 }
 
+func completedOrderHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*order.OrderServiceCompletedOrderArgs)
+	realResult := result.(*order.OrderServiceCompletedOrderResult)
+	success, err := handler.(order.OrderService).CompletedOrder(ctx, realArg.Req)
+	if err != nil {
+		return err
+	}
+	realResult.Success = success
+	return nil
+}
+func newOrderServiceCompletedOrderArgs() interface{} {
+	return order.NewOrderServiceCompletedOrderArgs()
+}
+
+func newOrderServiceCompletedOrderResult() interface{} {
+	return order.NewOrderServiceCompletedOrderResult()
+}
+
 type kClient struct {
 	c client.Client
 }
@@ -365,6 +390,16 @@ func (p *kClient) RefundOrder(ctx context.Context, req *order.RefundOrderReq) (r
 	_args.Req = req
 	var _result order.OrderServiceRefundOrderResult
 	if err = p.c.Call(ctx, "RefundOrder", &_args, &_result); err != nil {
+		return
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) CompletedOrder(ctx context.Context, req *order.CompletedOrderReq) (r *base.NilResponse, err error) {
+	var _args order.OrderServiceCompletedOrderArgs
+	_args.Req = req
+	var _result order.OrderServiceCompletedOrderResult
+	if err = p.c.Call(ctx, "CompletedOrder", &_args, &_result); err != nil {
 		return
 	}
 	return _result.GetSuccess(), nil

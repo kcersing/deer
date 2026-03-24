@@ -1,6 +1,7 @@
 package events
 
 import (
+	"gen/kitex_gen/order"
 	"order/biz/infras/common"
 	"time"
 
@@ -15,17 +16,17 @@ type CompletedOrderEvent struct {
 
 func (e *CompletedOrderEvent) GetType() string { return string(common.Completed) }
 
-func NewCompletedOrderEvent(AggregateID int64, userID int64) *CompletedOrderEvent {
+func NewCompletedOrderEvent(req *order.CompletedOrderReq) *CompletedOrderEvent {
 	return &CompletedOrderEvent{
 		EventBase: common.EventBase{
 			EventID:     uuid.New().String(),
-			AggregateID: AggregateID,
+			AggregateID: req.GetId(),
 			Timestamp:   time.Now(),
 
 			EventType:     string(common.Completed),
 			AggregateType: "order",
 			Version:       1,
 		},
-		CreatedId: userID,
+		CreatedId: req.GetCreatedId(),
 	}
 }

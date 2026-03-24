@@ -122,7 +122,6 @@ func (o *Order) Create(req *order.CreateOrderReq) error {
 	}
 	return err
 }
-
 func (o *Order) Paying(req *order.PaymentReq) error {
 	if err := o.stateMachine.ValidateTransition(common.Paying); err != nil {
 		return err
@@ -146,7 +145,6 @@ func (o *Order) Paying(req *order.PaymentReq) error {
 	}
 	return nil
 }
-
 func (o *Order) Paid() error {
 	if err := o.stateMachine.ValidateTransition(common.Paid); err != nil {
 		return err
@@ -198,6 +196,37 @@ func (o *Order) Refund(req *order.RefundOrderReq) error {
 	event := events.NewRefundedOrderEvent(req)
 	err := o.Apply(event)
 	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *Order) Completed(req *order.CompletedOrderReq) error {
+
+	if err := o.stateMachine.ValidateTransition(common.Completed); err != nil {
+
+		return err
+	}
+
+	event := events.NewCompletedOrderEvent(req)
+
+	if err := o.Apply(event); err != nil {
+		return err
+	}
+
+	return nil
+}
+func (o *Order) Delete(id int64) error {
+
+	if err := o.stateMachine.ValidateTransition(common.Completed); err != nil {
+
+		return err
+	}
+
+	event := events.NewCompletedOrderEvent(req)
+
+	if err := o.Apply(event); err != nil {
 		return err
 	}
 

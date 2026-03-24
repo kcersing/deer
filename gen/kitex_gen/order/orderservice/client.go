@@ -20,6 +20,7 @@ type Client interface {
 	Shipped(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	CancelledOrder(ctx context.Context, req *order.CancelledOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	RefundOrder(ctx context.Context, req *order.RefundOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
+	CompletedOrder(ctx context.Context, req *order.CompletedOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
 
 // NewClient creates a client for the service defined in IDL.
@@ -89,4 +90,9 @@ func (p *kOrderServiceClient) CancelledOrder(ctx context.Context, req *order.Can
 func (p *kOrderServiceClient) RefundOrder(ctx context.Context, req *order.RefundOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.RefundOrder(ctx, req)
+}
+
+func (p *kOrderServiceClient) CompletedOrder(ctx context.Context, req *order.CompletedOrderReq, callOptions ...callopt.Option) (r *base.NilResponse, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.CompletedOrder(ctx, req)
 }

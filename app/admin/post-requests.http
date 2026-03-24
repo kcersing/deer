@@ -135,3 +135,12 @@ Content-Type: application/json
   "page":1,
   "pageSize":10
 }
+
+### Send POST request with json body
+POST http://common.service.com/config/get
+Content-Type: application/json
+
+{
+  "env":"product"
+}
+

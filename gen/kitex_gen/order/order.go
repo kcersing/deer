@@ -473,6 +473,67 @@ var fieldIDToName_CancelledOrderReq = map[int16]string{
 	3: "createdId",
 }
 
+type CompletedOrderReq struct {
+	Id        int64 `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	CreatedId int64 `thrift:"createdId,2,optional" frugal:"2,optional,i64" json:"createdId,omitempty"`
+}
+
+func NewCompletedOrderReq() *CompletedOrderReq {
+	return &CompletedOrderReq{
+		Id:        0,
+		CreatedId: 0,
+	}
+}
+
+func (p *CompletedOrderReq) InitDefault() {
+	p.Id = 0
+	p.CreatedId = 0
+}
+
+var CompletedOrderReq_Id_DEFAULT int64 = 0
+
+func (p *CompletedOrderReq) GetId() (v int64) {
+	if !p.IsSetId() {
+		return CompletedOrderReq_Id_DEFAULT
+	}
+	return p.Id
+}
+
+var CompletedOrderReq_CreatedId_DEFAULT int64 = 0
+
+func (p *CompletedOrderReq) GetCreatedId() (v int64) {
+	if !p.IsSetCreatedId() {
+		return CompletedOrderReq_CreatedId_DEFAULT
+	}
+	return p.CreatedId
+}
+func (p *CompletedOrderReq) SetId(val int64) {
+	p.Id = val
+}
+func (p *CompletedOrderReq) SetCreatedId(val int64) {
+	p.CreatedId = val
+}
+
+func (p *CompletedOrderReq) IsSetId() bool {
+	return p.Id != CompletedOrderReq_Id_DEFAULT
+}
+
+func (p *CompletedOrderReq) IsSetCreatedId() bool {
+	return p.CreatedId != CompletedOrderReq_CreatedId_DEFAULT
+}
+
+func (p *CompletedOrderReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CompletedOrderReq(%+v)", *p)
+}
+
+var fieldIDToName_CompletedOrderReq = map[int16]string{
+	1: "id",
+	2: "createdId",
+}
+
 type CreateOrderResp struct {
 	Data     *base.Order    `thrift:"data,1,optional" frugal:"1,optional,base.Order" json:"data,omitempty"`
 	BaseResp *base.BaseResp `thrift:"baseResp,255,optional" frugal:"255,optional,base.BaseResp" json:"baseResp,omitempty"`
@@ -913,6 +974,8 @@ type OrderService interface {
 	CancelledOrder(ctx context.Context, req *CancelledOrderReq) (r *base.NilResponse, err error)
 
 	RefundOrder(ctx context.Context, req *RefundOrderReq) (r *base.NilResponse, err error)
+
+	CompletedOrder(ctx context.Context, req *CompletedOrderReq) (r *base.NilResponse, err error)
 }
 
 type OrderServiceGetOrderArgs struct {
@@ -1520,5 +1583,81 @@ func (p *OrderServiceRefundOrderResult) String() string {
 }
 
 var fieldIDToName_OrderServiceRefundOrderResult = map[int16]string{
+	0: "success",
+}
+
+type OrderServiceCompletedOrderArgs struct {
+	Req *CompletedOrderReq `thrift:"req,1" frugal:"1,default,CompletedOrderReq" json:"req"`
+}
+
+func NewOrderServiceCompletedOrderArgs() *OrderServiceCompletedOrderArgs {
+	return &OrderServiceCompletedOrderArgs{}
+}
+
+func (p *OrderServiceCompletedOrderArgs) InitDefault() {
+}
+
+var OrderServiceCompletedOrderArgs_Req_DEFAULT *CompletedOrderReq
+
+func (p *OrderServiceCompletedOrderArgs) GetReq() (v *CompletedOrderReq) {
+	if !p.IsSetReq() {
+		return OrderServiceCompletedOrderArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *OrderServiceCompletedOrderArgs) SetReq(val *CompletedOrderReq) {
+	p.Req = val
+}
+
+func (p *OrderServiceCompletedOrderArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *OrderServiceCompletedOrderArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceCompletedOrderArgs(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceCompletedOrderArgs = map[int16]string{
+	1: "req",
+}
+
+type OrderServiceCompletedOrderResult struct {
+	Success *base.NilResponse `thrift:"success,0,optional" frugal:"0,optional,base.NilResponse" json:"success,omitempty"`
+}
+
+func NewOrderServiceCompletedOrderResult() *OrderServiceCompletedOrderResult {
+	return &OrderServiceCompletedOrderResult{}
+}
+
+func (p *OrderServiceCompletedOrderResult) InitDefault() {
+}
+
+var OrderServiceCompletedOrderResult_Success_DEFAULT *base.NilResponse
+
+func (p *OrderServiceCompletedOrderResult) GetSuccess() (v *base.NilResponse) {
+	if !p.IsSetSuccess() {
+		return OrderServiceCompletedOrderResult_Success_DEFAULT
+	}
+	return p.Success
+}
+func (p *OrderServiceCompletedOrderResult) SetSuccess(x interface{}) {
+	p.Success = x.(*base.NilResponse)
+}
+
+func (p *OrderServiceCompletedOrderResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *OrderServiceCompletedOrderResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OrderServiceCompletedOrderResult(%+v)", *p)
+}
+
+var fieldIDToName_OrderServiceCompletedOrderResult = map[int16]string{
 	0: "success",
 }

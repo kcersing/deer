@@ -23,12 +23,10 @@ func (s *CancelledOrderService) Run(req *order.CancelledOrderReq) (resp *base.Ni
 	if err != nil {
 		return nil, err
 	}
-	err = node.Cancel(req)
-	if err != nil {
+	if err = node.Cancel(req); err != nil {
 		return nil, err
 	}
-	err = repo.NewOrderRepo().Save(s.ctx, node)
-	if err != nil {
+	if err = repo.NewOrderRepo().Save(s.ctx, node); err != nil {
 		return nil, err
 	}
 	return
