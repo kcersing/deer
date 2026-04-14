@@ -50,7 +50,7 @@ func (s *ArticleListService) Run(req *contents.ArticleListReq) (resp *contents.A
 	}
 	predicates = append(predicates, article.Or(article.Delete(0)))
 
-	all, err := db.Client.Debug().Article.Query().Where(predicates...).
+	all, err := db.Client.Article.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).
 		Order(ent.Desc(article.FieldID)).
 		Limit(int(req.PageSize)).All(s.ctx)
