@@ -10,16 +10,28 @@ include "../base/message.thrift"
     struct MessagesListReq{
        1: optional i64 page=1
        2: optional i64 pageSize=100
-
+       3: optional i64 id=0
+       4: optional i64 type=1
+       5: optional string MessagesType=""
     }
+
+    struct MessagesSendListReq{
+        1: optional i64 page=1
+        2: optional i64 pageSize=100
+        3: optional i64 userId=0
+        4: optional string MessagesType=""
+        5: optional i64 type=1
+    }
+
     struct SendMessagesReq {
         1: optional i64 id=0
-        2: optional string type=""
+        2: optional string MessagesType=""
         3: optional string content = ""
         4: optional string title = ""
         5: optional i64 createdId=0
         6:optional list<i64> tagId=[]
         7:optional i64 status=0
+        8: optional i64 type=1
     }
 
 
@@ -33,7 +45,7 @@ include "../base/message.thrift"
         //发送信息
         base.NilResponse SendMessages(1: SendMessagesReq req)(api.post = "/service/message/send")
       //发送记录
-        base.NilResponse MessagesSendList(1: MessagesListReq req)(api.post = "/service/message/send/list")
+        base.NilResponse MessagesSendList(1: MessagesSendListReq req)(api.post = "/service/message/send/list")
 
         base.NilResponse MessagesTypes()(api.post = "/service/message/types")
 

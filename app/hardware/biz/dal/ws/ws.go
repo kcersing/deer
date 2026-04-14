@@ -2,14 +2,15 @@ package ws
 
 import (
 	"context"
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/common/json"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/hertz-contrib/websocket"
 	"hardware/biz/dal/mq"
 	"net/http"
 	"sync/atomic"
 	"time"
+
+	"github.com/bytedance/sonic"
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/hertz-contrib/websocket"
 )
 
 // 全局指标变量
@@ -87,7 +88,7 @@ func Handler(sub mq.Subscriber) app.HandlerFunc {
 					}
 
 					// 序列化为 JSON 以获取字节数
-					jsonData, err := json.Marshal(msg)
+					jsonData, err := sonic.Marshal(msg)
 					if err != nil {
 						klog.Warn("cannot marshal message: %s", err.Error())
 						continue

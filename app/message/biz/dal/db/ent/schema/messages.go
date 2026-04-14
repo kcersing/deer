@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -18,6 +19,7 @@ func (Messages) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("title").Comment("消息标题").Optional().Nillable(),
 		field.Int64("from_user_id").Comment("发送者").Optional().Nillable(),
+		field.String("from_user_name").Comment("发送者名称").Optional().Nillable(),
 		field.String("content").Comment("消息内容").Optional().Nillable(),
 		field.Int64("status").
 			Comment("消息状态").
@@ -39,7 +41,10 @@ func (Messages) Mixin() []ent.Mixin {
 }
 
 func (Messages) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+
+		edge.To("sent_records", MessagesSentRecords.Type),
+	}
 }
 
 func (Messages) Indexes() []ent.Index {

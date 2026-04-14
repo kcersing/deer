@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"message/biz/dal/db/ent/messages"
 	"message/biz/dal/db/ent/messagessentrecords"
 	"message/biz/dal/db/ent/predicate"
 	"time"
@@ -96,7 +97,6 @@ func (_u *MessagesSentRecordsUpdate) ClearCreatedID() *MessagesSentRecordsUpdate
 
 // SetMessageID sets the "message_id" field.
 func (_u *MessagesSentRecordsUpdate) SetMessageID(v int64) *MessagesSentRecordsUpdate {
-	_u.mutation.ResetMessageID()
 	_u.mutation.SetMessageID(v)
 	return _u
 }
@@ -106,12 +106,6 @@ func (_u *MessagesSentRecordsUpdate) SetNillableMessageID(v *int64) *MessagesSen
 	if v != nil {
 		_u.SetMessageID(*v)
 	}
-	return _u
-}
-
-// AddMessageID adds value to the "message_id" field.
-func (_u *MessagesSentRecordsUpdate) AddMessageID(v int64) *MessagesSentRecordsUpdate {
-	_u.mutation.AddMessageID(v)
 	return _u
 }
 
@@ -208,9 +202,61 @@ func (_u *MessagesSentRecordsUpdate) ClearReadAt() *MessagesSentRecordsUpdate {
 	return _u
 }
 
+// SetType sets the "type" field.
+func (_u *MessagesSentRecordsUpdate) SetType(v int64) *MessagesSentRecordsUpdate {
+	_u.mutation.ResetType()
+	_u.mutation.SetType(v)
+	return _u
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *MessagesSentRecordsUpdate) SetNillableType(v *int64) *MessagesSentRecordsUpdate {
+	if v != nil {
+		_u.SetType(*v)
+	}
+	return _u
+}
+
+// AddType adds value to the "type" field.
+func (_u *MessagesSentRecordsUpdate) AddType(v int64) *MessagesSentRecordsUpdate {
+	_u.mutation.AddType(v)
+	return _u
+}
+
+// ClearType clears the value of the "type" field.
+func (_u *MessagesSentRecordsUpdate) ClearType() *MessagesSentRecordsUpdate {
+	_u.mutation.ClearType()
+	return _u
+}
+
+// SetMessagesID sets the "messages" edge to the Messages entity by ID.
+func (_u *MessagesSentRecordsUpdate) SetMessagesID(id int64) *MessagesSentRecordsUpdate {
+	_u.mutation.SetMessagesID(id)
+	return _u
+}
+
+// SetNillableMessagesID sets the "messages" edge to the Messages entity by ID if the given value is not nil.
+func (_u *MessagesSentRecordsUpdate) SetNillableMessagesID(id *int64) *MessagesSentRecordsUpdate {
+	if id != nil {
+		_u = _u.SetMessagesID(*id)
+	}
+	return _u
+}
+
+// SetMessages sets the "messages" edge to the Messages entity.
+func (_u *MessagesSentRecordsUpdate) SetMessages(v *Messages) *MessagesSentRecordsUpdate {
+	return _u.SetMessagesID(v.ID)
+}
+
 // Mutation returns the MessagesSentRecordsMutation object of the builder.
 func (_u *MessagesSentRecordsUpdate) Mutation() *MessagesSentRecordsMutation {
 	return _u.mutation
+}
+
+// ClearMessages clears the "messages" edge to the Messages entity.
+func (_u *MessagesSentRecordsUpdate) ClearMessages() *MessagesSentRecordsUpdate {
+	_u.mutation.ClearMessages()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -263,7 +309,7 @@ func (_u *MessagesSentRecordsUpdate) sqlSave(ctx context.Context) (_node int, er
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt64))
+	_spec := sqlgraph.NewUpdateSpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt))
 	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -298,15 +344,6 @@ func (_u *MessagesSentRecordsUpdate) sqlSave(ctx context.Context) (_node int, er
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(messagessentrecords.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.MessageID(); ok {
-		_spec.SetField(messagessentrecords.FieldMessageID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedMessageID(); ok {
-		_spec.AddField(messagessentrecords.FieldMessageID, field.TypeInt64, value)
-	}
-	if _u.mutation.MessageIDCleared() {
-		_spec.ClearField(messagessentrecords.FieldMessageID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.ToUserID(); ok {
 		_spec.SetField(messagessentrecords.FieldToUserID, field.TypeInt64, value)
 	}
@@ -333,6 +370,44 @@ func (_u *MessagesSentRecordsUpdate) sqlSave(ctx context.Context) (_node int, er
 	}
 	if _u.mutation.ReadAtCleared() {
 		_spec.ClearField(messagessentrecords.FieldReadAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(messagessentrecords.FieldType, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedType(); ok {
+		_spec.AddField(messagessentrecords.FieldType, field.TypeInt64, value)
+	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(messagessentrecords.FieldType, field.TypeInt64)
+	}
+	if _u.mutation.MessagesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   messagessentrecords.MessagesTable,
+			Columns: []string{messagessentrecords.MessagesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.MessagesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   messagessentrecords.MessagesTable,
+			Columns: []string{messagessentrecords.MessagesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -422,7 +497,6 @@ func (_u *MessagesSentRecordsUpdateOne) ClearCreatedID() *MessagesSentRecordsUpd
 
 // SetMessageID sets the "message_id" field.
 func (_u *MessagesSentRecordsUpdateOne) SetMessageID(v int64) *MessagesSentRecordsUpdateOne {
-	_u.mutation.ResetMessageID()
 	_u.mutation.SetMessageID(v)
 	return _u
 }
@@ -432,12 +506,6 @@ func (_u *MessagesSentRecordsUpdateOne) SetNillableMessageID(v *int64) *Messages
 	if v != nil {
 		_u.SetMessageID(*v)
 	}
-	return _u
-}
-
-// AddMessageID adds value to the "message_id" field.
-func (_u *MessagesSentRecordsUpdateOne) AddMessageID(v int64) *MessagesSentRecordsUpdateOne {
-	_u.mutation.AddMessageID(v)
 	return _u
 }
 
@@ -534,9 +602,61 @@ func (_u *MessagesSentRecordsUpdateOne) ClearReadAt() *MessagesSentRecordsUpdate
 	return _u
 }
 
+// SetType sets the "type" field.
+func (_u *MessagesSentRecordsUpdateOne) SetType(v int64) *MessagesSentRecordsUpdateOne {
+	_u.mutation.ResetType()
+	_u.mutation.SetType(v)
+	return _u
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_u *MessagesSentRecordsUpdateOne) SetNillableType(v *int64) *MessagesSentRecordsUpdateOne {
+	if v != nil {
+		_u.SetType(*v)
+	}
+	return _u
+}
+
+// AddType adds value to the "type" field.
+func (_u *MessagesSentRecordsUpdateOne) AddType(v int64) *MessagesSentRecordsUpdateOne {
+	_u.mutation.AddType(v)
+	return _u
+}
+
+// ClearType clears the value of the "type" field.
+func (_u *MessagesSentRecordsUpdateOne) ClearType() *MessagesSentRecordsUpdateOne {
+	_u.mutation.ClearType()
+	return _u
+}
+
+// SetMessagesID sets the "messages" edge to the Messages entity by ID.
+func (_u *MessagesSentRecordsUpdateOne) SetMessagesID(id int64) *MessagesSentRecordsUpdateOne {
+	_u.mutation.SetMessagesID(id)
+	return _u
+}
+
+// SetNillableMessagesID sets the "messages" edge to the Messages entity by ID if the given value is not nil.
+func (_u *MessagesSentRecordsUpdateOne) SetNillableMessagesID(id *int64) *MessagesSentRecordsUpdateOne {
+	if id != nil {
+		_u = _u.SetMessagesID(*id)
+	}
+	return _u
+}
+
+// SetMessages sets the "messages" edge to the Messages entity.
+func (_u *MessagesSentRecordsUpdateOne) SetMessages(v *Messages) *MessagesSentRecordsUpdateOne {
+	return _u.SetMessagesID(v.ID)
+}
+
 // Mutation returns the MessagesSentRecordsMutation object of the builder.
 func (_u *MessagesSentRecordsUpdateOne) Mutation() *MessagesSentRecordsMutation {
 	return _u.mutation
+}
+
+// ClearMessages clears the "messages" edge to the Messages entity.
+func (_u *MessagesSentRecordsUpdateOne) ClearMessages() *MessagesSentRecordsUpdateOne {
+	_u.mutation.ClearMessages()
+	return _u
 }
 
 // Where appends a list predicates to the MessagesSentRecordsUpdate builder.
@@ -602,7 +722,7 @@ func (_u *MessagesSentRecordsUpdateOne) sqlSave(ctx context.Context) (_node *Mes
 	if err := _u.check(); err != nil {
 		return _node, err
 	}
-	_spec := sqlgraph.NewUpdateSpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt64))
+	_spec := sqlgraph.NewUpdateSpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt))
 	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "MessagesSentRecords.id" for update`)}
@@ -654,15 +774,6 @@ func (_u *MessagesSentRecordsUpdateOne) sqlSave(ctx context.Context) (_node *Mes
 	if _u.mutation.CreatedIDCleared() {
 		_spec.ClearField(messagessentrecords.FieldCreatedID, field.TypeInt64)
 	}
-	if value, ok := _u.mutation.MessageID(); ok {
-		_spec.SetField(messagessentrecords.FieldMessageID, field.TypeInt64, value)
-	}
-	if value, ok := _u.mutation.AddedMessageID(); ok {
-		_spec.AddField(messagessentrecords.FieldMessageID, field.TypeInt64, value)
-	}
-	if _u.mutation.MessageIDCleared() {
-		_spec.ClearField(messagessentrecords.FieldMessageID, field.TypeInt64)
-	}
 	if value, ok := _u.mutation.ToUserID(); ok {
 		_spec.SetField(messagessentrecords.FieldToUserID, field.TypeInt64, value)
 	}
@@ -689,6 +800,44 @@ func (_u *MessagesSentRecordsUpdateOne) sqlSave(ctx context.Context) (_node *Mes
 	}
 	if _u.mutation.ReadAtCleared() {
 		_spec.ClearField(messagessentrecords.FieldReadAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.GetType(); ok {
+		_spec.SetField(messagessentrecords.FieldType, field.TypeInt64, value)
+	}
+	if value, ok := _u.mutation.AddedType(); ok {
+		_spec.AddField(messagessentrecords.FieldType, field.TypeInt64, value)
+	}
+	if _u.mutation.TypeCleared() {
+		_spec.ClearField(messagessentrecords.FieldType, field.TypeInt64)
+	}
+	if _u.mutation.MessagesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   messagessentrecords.MessagesTable,
+			Columns: []string{messagessentrecords.MessagesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.MessagesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   messagessentrecords.MessagesTable,
+			Columns: []string{messagessentrecords.MessagesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &MessagesSentRecords{config: _u.config}
 	_spec.Assign = _node.assignValues

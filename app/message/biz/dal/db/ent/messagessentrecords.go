@@ -4,6 +4,7 @@ package ent
 
 import (
 	"fmt"
+	"message/biz/dal/db/ent/messages"
 	"message/biz/dal/db/ent/messagessentrecords"
 	"strings"
 	"time"
@@ -16,8 +17,7 @@ import (
 type MessagesSentRecords struct {
 	config `json:"-"`
 	// ID of the ent.
-	// primary key
-	ID int64 `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
 	// created time
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// last update time
@@ -35,8 +35,33 @@ type MessagesSentRecords struct {
 	// 消息到达用户收件箱的时间
 	ReceivedAt *time.Time `json:"received_at,omitempty"`
 	// 用户阅读消息的时间
-	ReadAt       *time.Time `json:"read_at,omitempty"`
+	ReadAt *time.Time `json:"read_at,omitempty"`
+	// 消息类型[1会员;2员工]
+	Type *int64 `json:"type,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the MessagesSentRecordsQuery when eager-loading is set.
+	Edges        MessagesSentRecordsEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// MessagesSentRecordsEdges holds the relations/edges for other nodes in the graph.
+type MessagesSentRecordsEdges struct {
+	// Messages holds the value of the messages edge.
+	Messages *Messages `json:"messages,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// MessagesOrErr returns the Messages value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e MessagesSentRecordsEdges) MessagesOrErr() (*Messages, error) {
+	if e.Messages != nil {
+		return e.Messages, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: messages.Label}
+	}
+	return nil, &NotLoadedError{edge: "messages"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -44,7 +69,7 @@ func (*MessagesSentRecords) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case messagessentrecords.FieldID, messagessentrecords.FieldDelete, messagessentrecords.FieldCreatedID, messagessentrecords.FieldMessageID, messagessentrecords.FieldToUserID:
+		case messagessentrecords.FieldID, messagessentrecords.FieldDelete, messagessentrecords.FieldCreatedID, messagessentrecords.FieldMessageID, messagessentrecords.FieldToUserID, messagessentrecords.FieldType:
 			values[i] = new(sql.NullInt64)
 		case messagessentrecords.FieldStatus:
 			values[i] = new(sql.NullString)
@@ -70,7 +95,7 @@ func (_m *MessagesSentRecords) assignValues(columns []string, values []any) erro
 			if !ok {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-			_m.ID = int64(value.Int64)
+			_m.ID = int(value.Int64)
 		case messagessentrecords.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
@@ -130,6 +155,13 @@ func (_m *MessagesSentRecords) assignValues(columns []string, values []any) erro
 				_m.ReadAt = new(time.Time)
 				*_m.ReadAt = value.Time
 			}
+		case messagessentrecords.FieldType:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field type", values[i])
+			} else if value.Valid {
+				_m.Type = new(int64)
+				*_m.Type = value.Int64
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -141,6 +173,11 @@ func (_m *MessagesSentRecords) assignValues(columns []string, values []any) erro
 // This includes values selected through modifiers, order, etc.
 func (_m *MessagesSentRecords) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QueryMessages queries the "messages" edge of the MessagesSentRecords entity.
+func (_m *MessagesSentRecords) QueryMessages() *MessagesQuery {
+	return NewMessagesSentRecordsClient(_m.config).QueryMessages(_m)
 }
 
 // Update returns a builder for updating this MessagesSentRecords.
@@ -201,6 +238,11 @@ func (_m *MessagesSentRecords) String() string {
 	if v := _m.ReadAt; v != nil {
 		builder.WriteString("read_at=")
 		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
+	if v := _m.Type; v != nil {
+		builder.WriteString("type=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

@@ -1588,20 +1588,23 @@ func (p *GetUserListReq) String() string {
 }
 
 type ChangePasswordReq struct {
-	ID       int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Password string `thrift:"password,2,optional" form:"password" json:"password,omitempty" query:"password"`
+	ID          int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Password    string `thrift:"password,2,optional" form:"password" json:"password,omitempty" query:"password"`
+	OldPassword string `thrift:"oldPassword,3,optional" form:"oldPassword" json:"oldPassword,omitempty" query:"oldPassword"`
 }
 
 func NewChangePasswordReq() *ChangePasswordReq {
 	return &ChangePasswordReq{
-		ID:       0,
-		Password: "",
+		ID:          0,
+		Password:    "",
+		OldPassword: "",
 	}
 }
 
 func (p *ChangePasswordReq) InitDefault() {
 	p.ID = 0
 	p.Password = ""
+	p.OldPassword = ""
 }
 
 var ChangePasswordReq_ID_DEFAULT int64 = 0
@@ -1622,9 +1625,19 @@ func (p *ChangePasswordReq) GetPassword() (v string) {
 	return p.Password
 }
 
+var ChangePasswordReq_OldPassword_DEFAULT string = ""
+
+func (p *ChangePasswordReq) GetOldPassword() (v string) {
+	if !p.IsSetOldPassword() {
+		return ChangePasswordReq_OldPassword_DEFAULT
+	}
+	return p.OldPassword
+}
+
 var fieldIDToName_ChangePasswordReq = map[int16]string{
 	1: "id",
 	2: "password",
+	3: "oldPassword",
 }
 
 func (p *ChangePasswordReq) IsSetID() bool {
@@ -1633,6 +1646,10 @@ func (p *ChangePasswordReq) IsSetID() bool {
 
 func (p *ChangePasswordReq) IsSetPassword() bool {
 	return p.Password != ChangePasswordReq_Password_DEFAULT
+}
+
+func (p *ChangePasswordReq) IsSetOldPassword() bool {
+	return p.OldPassword != ChangePasswordReq_OldPassword_DEFAULT
 }
 
 func (p *ChangePasswordReq) Read(iprot thrift.TProtocol) (err error) {
@@ -1665,6 +1682,14 @@ func (p *ChangePasswordReq) Read(iprot thrift.TProtocol) (err error) {
 		case 2:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField2(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 3:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField3(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1721,6 +1746,17 @@ func (p *ChangePasswordReq) ReadField2(iprot thrift.TProtocol) error {
 	p.Password = _field
 	return nil
 }
+func (p *ChangePasswordReq) ReadField3(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.OldPassword = _field
+	return nil
+}
 
 func (p *ChangePasswordReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1734,6 +1770,10 @@ func (p *ChangePasswordReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField2(oprot); err != nil {
 			fieldId = 2
+			goto WriteFieldError
+		}
+		if err = p.writeField3(oprot); err != nil {
+			fieldId = 3
 			goto WriteFieldError
 		}
 	}
@@ -1790,6 +1830,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 2 end error: ", p), err)
+}
+
+func (p *ChangePasswordReq) writeField3(oprot thrift.TProtocol) (err error) {
+	if p.IsSetOldPassword() {
+		if err = oprot.WriteFieldBegin("oldPassword", thrift.STRING, 3); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.OldPassword); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 3 end error: ", p), err)
 }
 
 func (p *ChangePasswordReq) String() string {

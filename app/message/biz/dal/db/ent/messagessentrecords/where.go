@@ -7,50 +7,51 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
-func ID(id int64) predicate.MessagesSentRecords {
+func ID(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id int64) predicate.MessagesSentRecords {
+func IDEQ(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id int64) predicate.MessagesSentRecords {
+func IDNEQ(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...int64) predicate.MessagesSentRecords {
+func IDIn(ids ...int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...int64) predicate.MessagesSentRecords {
+func IDNotIn(ids ...int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id int64) predicate.MessagesSentRecords {
+func IDGT(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id int64) predicate.MessagesSentRecords {
+func IDGTE(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id int64) predicate.MessagesSentRecords {
+func IDLT(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id int64) predicate.MessagesSentRecords {
+func IDLTE(id int) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldLTE(FieldID, id))
 }
 
@@ -92,6 +93,11 @@ func ReceivedAt(v time.Time) predicate.MessagesSentRecords {
 // ReadAt applies equality check predicate on the "read_at" field. It's identical to ReadAtEQ.
 func ReadAt(v time.Time) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldEQ(FieldReadAt, v))
+}
+
+// Type applies equality check predicate on the "type" field. It's identical to TypeEQ.
+func Type(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldEQ(FieldType, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -314,26 +320,6 @@ func MessageIDNotIn(vs ...int64) predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldNotIn(FieldMessageID, vs...))
 }
 
-// MessageIDGT applies the GT predicate on the "message_id" field.
-func MessageIDGT(v int64) predicate.MessagesSentRecords {
-	return predicate.MessagesSentRecords(sql.FieldGT(FieldMessageID, v))
-}
-
-// MessageIDGTE applies the GTE predicate on the "message_id" field.
-func MessageIDGTE(v int64) predicate.MessagesSentRecords {
-	return predicate.MessagesSentRecords(sql.FieldGTE(FieldMessageID, v))
-}
-
-// MessageIDLT applies the LT predicate on the "message_id" field.
-func MessageIDLT(v int64) predicate.MessagesSentRecords {
-	return predicate.MessagesSentRecords(sql.FieldLT(FieldMessageID, v))
-}
-
-// MessageIDLTE applies the LTE predicate on the "message_id" field.
-func MessageIDLTE(v int64) predicate.MessagesSentRecords {
-	return predicate.MessagesSentRecords(sql.FieldLTE(FieldMessageID, v))
-}
-
 // MessageIDIsNil applies the IsNil predicate on the "message_id" field.
 func MessageIDIsNil() predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldIsNull(FieldMessageID))
@@ -522,6 +508,79 @@ func ReadAtIsNil() predicate.MessagesSentRecords {
 // ReadAtNotNil applies the NotNil predicate on the "read_at" field.
 func ReadAtNotNil() predicate.MessagesSentRecords {
 	return predicate.MessagesSentRecords(sql.FieldNotNull(FieldReadAt))
+}
+
+// TypeEQ applies the EQ predicate on the "type" field.
+func TypeEQ(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldEQ(FieldType, v))
+}
+
+// TypeNEQ applies the NEQ predicate on the "type" field.
+func TypeNEQ(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldNEQ(FieldType, v))
+}
+
+// TypeIn applies the In predicate on the "type" field.
+func TypeIn(vs ...int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldIn(FieldType, vs...))
+}
+
+// TypeNotIn applies the NotIn predicate on the "type" field.
+func TypeNotIn(vs ...int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldNotIn(FieldType, vs...))
+}
+
+// TypeGT applies the GT predicate on the "type" field.
+func TypeGT(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldGT(FieldType, v))
+}
+
+// TypeGTE applies the GTE predicate on the "type" field.
+func TypeGTE(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldGTE(FieldType, v))
+}
+
+// TypeLT applies the LT predicate on the "type" field.
+func TypeLT(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldLT(FieldType, v))
+}
+
+// TypeLTE applies the LTE predicate on the "type" field.
+func TypeLTE(v int64) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldLTE(FieldType, v))
+}
+
+// TypeIsNil applies the IsNil predicate on the "type" field.
+func TypeIsNil() predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldIsNull(FieldType))
+}
+
+// TypeNotNil applies the NotNil predicate on the "type" field.
+func TypeNotNil() predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(sql.FieldNotNull(FieldType))
+}
+
+// HasMessages applies the HasEdge predicate on the "messages" edge.
+func HasMessages() predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, MessagesTable, MessagesColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasMessagesWith applies the HasEdge predicate on the "messages" edge with a given conditions (other predicates).
+func HasMessagesWith(preds ...predicate.Messages) predicate.MessagesSentRecords {
+	return predicate.MessagesSentRecords(func(s *sql.Selector) {
+		step := newMessagesStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

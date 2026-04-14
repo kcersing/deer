@@ -1,11 +1,12 @@
 package schema
 
 import (
-	"system/biz/dal/db/ent/schema/mixins"
+	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -16,6 +17,26 @@ type MessagesSentRecords struct {
 
 func (MessagesSentRecords) Fields() []ent.Field {
 	return []ent.Field{
+
+		field.Time("created_at").
+			Immutable().
+			Default(time.Now).
+			Comment("created time").
+			Optional(),
+		field.Time("updated_at").
+			Default(time.Now).
+			UpdateDefault(time.Now).
+			Comment("last update time").
+			Optional(),
+		field.Int64("delete").
+			Default(0).
+			Comment("last delete  1:已删除 0:未删除").
+			Optional(),
+		field.Int64("created_id").
+			Default(0).
+			Comment("created").
+			Optional(),
+
 		field.Int64("message_id").
 			Comment("").
 			Optional().
@@ -46,17 +67,23 @@ func (MessagesSentRecords) Fields() []ent.Field {
 			Comment("用户阅读消息的时间").
 			Optional().
 			Nillable(),
+
+		field.Int64("type").
+			Comment("消息类型[1会员;2员工]").
+			Default(1).
+			Optional().
+			Nillable(),
 	}
 }
 
 func (MessagesSentRecords) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixins.BaseMixin{},
-	}
+	return []ent.Mixin{}
 }
 
 func (MessagesSentRecords) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		edge.From("messages", Messages.Type).Ref("sent_records").Field("message_id").Unique(),
+	}
 }
 
 func (MessagesSentRecords) Indexes() []ent.Index {

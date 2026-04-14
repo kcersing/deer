@@ -17,7 +17,7 @@ type Client interface {
 	SendSms(ctx context.Context, req *message.SendSmsReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	MessagesList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesListResp, err error)
 	SendMessages(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
-	MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error)
+	MessagesSendList(ctx context.Context, req *message.MessagesSendListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error)
 	DeleteMessages(ctx context.Context, req *base.IdReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 	UpdateSend(ctx context.Context, req *message.SendMessagesReq, callOptions ...callopt.Option) (r *base.NilResponse, err error)
 }
@@ -76,7 +76,7 @@ func (p *kMessageServiceClient) SendMessages(ctx context.Context, req *message.S
 	return p.kClient.SendMessages(ctx, req)
 }
 
-func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error) {
+func (p *kMessageServiceClient) MessagesSendList(ctx context.Context, req *message.MessagesSendListReq, callOptions ...callopt.Option) (r *message.MessagesSendListResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.MessagesSendList(ctx, req)
 }

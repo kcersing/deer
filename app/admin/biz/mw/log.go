@@ -37,11 +37,11 @@ func LogMw() app.HandlerFunc {
 		log.Success = int64(c.Response.Header.StatusCode())
 
 		costTime := time.Since(start).Milliseconds()
-		log.Time = int64(int32(costTime))
+		log.Time = int64(uint32(costTime))
 
 		log.Identity = utils.GetTokenId(ctx, c)
 		_, err := client.SystemClient.CreateLog(ctx, &log)
-		hlog.Info(log)
+
 		if err != nil {
 			hlog.Error(err)
 		}

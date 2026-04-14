@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -25,14 +26,25 @@ const (
 	FieldTitle = "title"
 	// FieldFromUserID holds the string denoting the from_user_id field in the database.
 	FieldFromUserID = "from_user_id"
+	// FieldFromUserName holds the string denoting the from_user_name field in the database.
+	FieldFromUserName = "from_user_name"
 	// FieldContent holds the string denoting the content field in the database.
 	FieldContent = "content"
 	// FieldStatus holds the string denoting the status field in the database.
 	FieldStatus = "status"
 	// FieldType holds the string denoting the type field in the database.
 	FieldType = "type"
+	// EdgeSentRecords holds the string denoting the sent_records edge name in mutations.
+	EdgeSentRecords = "sent_records"
 	// Table holds the table name of the messages in the database.
 	Table = "msg_messages"
+	// SentRecordsTable is the table that holds the sent_records relation/edge.
+	SentRecordsTable = "msg_messages_sent_records"
+	// SentRecordsInverseTable is the table name for the MessagesSentRecords entity.
+	// It exists in this package in order to avoid circular dependency with the "messagessentrecords" package.
+	SentRecordsInverseTable = "msg_messages_sent_records"
+	// SentRecordsColumn is the table column denoting the sent_records relation/edge.
+	SentRecordsColumn = "message_id"
 )
 
 // Columns holds all SQL columns for messages fields.
@@ -44,6 +56,7 @@ var Columns = []string{
 	FieldCreatedID,
 	FieldTitle,
 	FieldFromUserID,
+	FieldFromUserName,
 	FieldContent,
 	FieldStatus,
 	FieldType,
@@ -114,6 +127,11 @@ func ByFromUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldFromUserID, opts...).ToFunc()
 }
 
+// ByFromUserName orders the results by the from_user_name field.
+func ByFromUserName(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldFromUserName, opts...).ToFunc()
+}
+
 // ByContent orders the results by the content field.
 func ByContent(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldContent, opts...).ToFunc()
@@ -127,4 +145,25 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 // ByType orders the results by the type field.
 func ByType(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldType, opts...).ToFunc()
+}
+
+// BySentRecordsCount orders the results by sent_records count.
+func BySentRecordsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newSentRecordsStep(), opts...)
+	}
+}
+
+// BySentRecords orders the results by sent_records terms.
+func BySentRecords(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newSentRecordsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newSentRecordsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(SentRecordsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, SentRecordsTable, SentRecordsColumn),
+	)
 }

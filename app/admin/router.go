@@ -4,8 +4,13 @@ package main
 
 import (
 	handler "admin/biz/handler"
+	"admin/biz/infras/service/payment"
 	"admin/biz/mw"
+	"context"
+
+	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 // customizeRegister registers customize routers.
@@ -15,4 +20,13 @@ func customizedRegister(r *server.Hertz) {
 	r.POST("/service/user/login", mw.JwtMiddleware.LoginHandler)
 	r.POST("/service/user/logout", mw.JwtMiddleware.LogoutHandler)
 	r.POST("/service/user/refresh_token", mw.JwtMiddleware.RefreshHandler)
+
+	r.POST("/service/payment/WXNotify", func(c context.Context, ctx *app.RequestContext) {
+		hlog.Info("载入WXNotify")
+		payment.Notify(c, ctx)
+	})
+	r.POST("/service/payment/WXRefundNotify", func(c context.Context, ctx *app.RequestContext) {
+		hlog.Info("WXRefundNotify")
+		payment.RefundNotify(c, ctx)
+	})
 }

@@ -64,9 +64,9 @@ struct PaymentReq {
     3:optional string method ="" (api.raw = "method")
     4:optional i64 remission=0 (api.raw = "remission")
     5:optional i64 userId=0 (api.raw = "userId")
-       6:optional string reason ="" (api.raw = "reason")
-       7:optional string prepayId ="" (api.raw = "prepayId")
-       8:optional string payExtra ="" (api.raw = "payExtra")
+    6:optional string reason ="" (api.raw = "reason")
+    7:optional string prepayId ="" (api.raw = "prepayId")
+    8:optional string payExtra ="" (api.raw = "payExtra")
 }
 
 

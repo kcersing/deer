@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -32,8 +33,19 @@ const (
 	FieldReceivedAt = "received_at"
 	// FieldReadAt holds the string denoting the read_at field in the database.
 	FieldReadAt = "read_at"
+	// FieldType holds the string denoting the type field in the database.
+	FieldType = "type"
+	// EdgeMessages holds the string denoting the messages edge name in mutations.
+	EdgeMessages = "messages"
 	// Table holds the table name of the messagessentrecords in the database.
 	Table = "msg_messages_sent_records"
+	// MessagesTable is the table that holds the messages relation/edge.
+	MessagesTable = "msg_messages_sent_records"
+	// MessagesInverseTable is the table name for the Messages entity.
+	// It exists in this package in order to avoid circular dependency with the "messages" package.
+	MessagesInverseTable = "msg_messages"
+	// MessagesColumn is the table column denoting the messages relation/edge.
+	MessagesColumn = "message_id"
 )
 
 // Columns holds all SQL columns for messagessentrecords fields.
@@ -48,6 +60,7 @@ var Columns = []string{
 	FieldStatus,
 	FieldReceivedAt,
 	FieldReadAt,
+	FieldType,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -71,6 +84,8 @@ var (
 	DefaultDelete int64
 	// DefaultCreatedID holds the default value on creation for the "created_id" field.
 	DefaultCreatedID int64
+	// DefaultType holds the default value on creation for the "type" field.
+	DefaultType int64
 )
 
 // Status defines the type for the "status" enum field.
@@ -150,4 +165,23 @@ func ByReceivedAt(opts ...sql.OrderTermOption) OrderOption {
 // ByReadAt orders the results by the read_at field.
 func ByReadAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldReadAt, opts...).ToFunc()
+}
+
+// ByType orders the results by the type field.
+func ByType(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldType, opts...).ToFunc()
+}
+
+// ByMessagesField orders the results by messages field.
+func ByMessagesField(field string, opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newMessagesStep(), sql.OrderByField(field, opts...))
+	}
+}
+func newMessagesStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(MessagesInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.M2O, true, MessagesTable, MessagesColumn),
+	)
 }

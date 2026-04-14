@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"message/biz/dal/db/ent/messages"
+	"message/biz/dal/db/ent/messagessentrecords"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -103,6 +104,20 @@ func (_c *MessagesCreate) SetNillableFromUserID(v *int64) *MessagesCreate {
 	return _c
 }
 
+// SetFromUserName sets the "from_user_name" field.
+func (_c *MessagesCreate) SetFromUserName(v string) *MessagesCreate {
+	_c.mutation.SetFromUserName(v)
+	return _c
+}
+
+// SetNillableFromUserName sets the "from_user_name" field if the given value is not nil.
+func (_c *MessagesCreate) SetNillableFromUserName(v *string) *MessagesCreate {
+	if v != nil {
+		_c.SetFromUserName(*v)
+	}
+	return _c
+}
+
 // SetContent sets the "content" field.
 func (_c *MessagesCreate) SetContent(v string) *MessagesCreate {
 	_c.mutation.SetContent(v)
@@ -149,6 +164,21 @@ func (_c *MessagesCreate) SetNillableType(v *string) *MessagesCreate {
 func (_c *MessagesCreate) SetID(v int64) *MessagesCreate {
 	_c.mutation.SetID(v)
 	return _c
+}
+
+// AddSentRecordIDs adds the "sent_records" edge to the MessagesSentRecords entity by IDs.
+func (_c *MessagesCreate) AddSentRecordIDs(ids ...int) *MessagesCreate {
+	_c.mutation.AddSentRecordIDs(ids...)
+	return _c
+}
+
+// AddSentRecords adds the "sent_records" edges to the MessagesSentRecords entity.
+func (_c *MessagesCreate) AddSentRecords(v ...*MessagesSentRecords) *MessagesCreate {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _c.AddSentRecordIDs(ids...)
 }
 
 // Mutation returns the MessagesMutation object of the builder.
@@ -270,6 +300,10 @@ func (_c *MessagesCreate) createSpec() (*Messages, *sqlgraph.CreateSpec) {
 		_spec.SetField(messages.FieldFromUserID, field.TypeInt64, value)
 		_node.FromUserID = &value
 	}
+	if value, ok := _c.mutation.FromUserName(); ok {
+		_spec.SetField(messages.FieldFromUserName, field.TypeString, value)
+		_node.FromUserName = &value
+	}
 	if value, ok := _c.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
 		_node.Content = &value
@@ -281,6 +315,22 @@ func (_c *MessagesCreate) createSpec() (*Messages, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(messages.FieldType, field.TypeString, value)
 		_node.Type = &value
+	}
+	if nodes := _c.mutation.SentRecordsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

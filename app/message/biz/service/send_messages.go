@@ -34,7 +34,7 @@ func (s *SendMessagesService) Run(req *message.SendMessagesReq) (resp *base.NilR
 		SetCreatedID(req.GetCreatedId()).
 		SetContent(req.GetContent()).
 		SetTitle(req.GetTitle()).
-		SetType(req.GetType()).
+		SetType(req.GetMessagesType()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, rollback(tx, errors.Wrap(err, "create Messages failed"))

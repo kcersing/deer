@@ -19,6 +19,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -335,6 +336,22 @@ func (c *MessagesClient) GetX(ctx context.Context, id int64) *Messages {
 	return obj
 }
 
+// QuerySentRecords queries the sent_records edge of a Messages.
+func (c *MessagesClient) QuerySentRecords(_m *Messages) *MessagesSentRecordsQuery {
+	query := (&MessagesSentRecordsClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(messages.Table, messages.FieldID, id),
+			sqlgraph.To(messagessentrecords.Table, messagessentrecords.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, messages.SentRecordsTable, messages.SentRecordsColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *MessagesClient) Hooks() []Hook {
 	return c.hooks.Messages
@@ -421,7 +438,7 @@ func (c *MessagesSentRecordsClient) UpdateOne(_m *MessagesSentRecords) *Messages
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *MessagesSentRecordsClient) UpdateOneID(id int64) *MessagesSentRecordsUpdateOne {
+func (c *MessagesSentRecordsClient) UpdateOneID(id int) *MessagesSentRecordsUpdateOne {
 	mutation := newMessagesSentRecordsMutation(c.config, OpUpdateOne, withMessagesSentRecordsID(id))
 	return &MessagesSentRecordsUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -438,7 +455,7 @@ func (c *MessagesSentRecordsClient) DeleteOne(_m *MessagesSentRecords) *Messages
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *MessagesSentRecordsClient) DeleteOneID(id int64) *MessagesSentRecordsDeleteOne {
+func (c *MessagesSentRecordsClient) DeleteOneID(id int) *MessagesSentRecordsDeleteOne {
 	builder := c.Delete().Where(messagessentrecords.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -455,17 +472,33 @@ func (c *MessagesSentRecordsClient) Query() *MessagesSentRecordsQuery {
 }
 
 // Get returns a MessagesSentRecords entity by its id.
-func (c *MessagesSentRecordsClient) Get(ctx context.Context, id int64) (*MessagesSentRecords, error) {
+func (c *MessagesSentRecordsClient) Get(ctx context.Context, id int) (*MessagesSentRecords, error) {
 	return c.Query().Where(messagessentrecords.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *MessagesSentRecordsClient) GetX(ctx context.Context, id int64) *MessagesSentRecords {
+func (c *MessagesSentRecordsClient) GetX(ctx context.Context, id int) *MessagesSentRecords {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryMessages queries the messages edge of a MessagesSentRecords.
+func (c *MessagesSentRecordsClient) QueryMessages(_m *MessagesSentRecords) *MessagesQuery {
+	query := (&MessagesClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := _m.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(messagessentrecords.Table, messagessentrecords.FieldID, id),
+			sqlgraph.To(messages.Table, messages.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, messagessentrecords.MessagesTable, messagessentrecords.MessagesColumn),
+		)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

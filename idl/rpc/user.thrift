@@ -59,6 +59,7 @@ struct UpdateUserReq {
 struct ChangePasswordReq {
     1:optional i64 id=0,
     2:optional string password="",
+    3:optional string oldPassword="",
 }
 struct SetUserRoleReq{
     1:optional i64 id=0,
@@ -66,7 +67,6 @@ struct SetUserRoleReq{
      256:optional i64 createdId=0,
 
 }
-
 
 struct DepartmentsResp {
     1:optional user.Departments data={}

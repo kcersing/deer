@@ -51,7 +51,7 @@ func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event
 		SetContent(req.GetContent()).
 		SetTitle(req.GetTitle()).
 		SetStatus(req.GetStatus()).
-		SetType(req.GetType()).
+		SetType(req.GetMessagesType()).
 		Save(ctx)
 
 	var createAll []*ent.MessagesSentRecordsCreate
@@ -60,6 +60,7 @@ func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event
 			db.Client.MessagesSentRecords.Create().
 				SetMessageID(req.GetId()).
 				SetToUserID(userID).
+				SetType(req.GetType()).
 				SetReceivedAt(time.Now()))
 	}
 

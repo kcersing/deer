@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	message "message/1/kitex_gen/message"
+	"gen/kitex_gen/message"
 	"testing"
 )
 
@@ -11,7 +11,7 @@ func TestMessagesSendList_Run(t *testing.T) {
 	s := NewMessagesSendListService(ctx)
 	// init req and assert value
 
-	req := &message.MessagesListReq{}
+	req := &message.MessagesSendListReq{}
 	resp, err := s.Run(req)
 	t.Logf("err: %v", err)
 	t.Logf("resp: %v", resp)

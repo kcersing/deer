@@ -26,21 +26,25 @@ const (
 	NacosCacheDir = "./file/nacos/cache"
 	NacosLogLevel = "debug"
 
-	AdminServiceName      = "admin"
-	SystemRpcServiceName  = "system"
-	UserRpcServiceName    = "user"
-	MessageRpcServiceName = "message"
-	ProductRpcServiceName = "product"
-	MemberRpcServiceName  = "member"
-	OrderRpcServiceName   = "order"
-	CrmRpcServiceName     = "crm"
+	AdminServiceName       = "admin"
+	SystemRpcServiceName   = "system"
+	UserRpcServiceName     = "user"
+	MessageRpcServiceName  = "message"
+	ProductRpcServiceName  = "product"
+	MemberRpcServiceName   = "member"
+	OrderRpcServiceName    = "order"
+	CrmRpcServiceName      = "crm"
+	PaymentRpcServiceName  = "payment"
+	ContentsRpcServiceName = "contents"
 
-	AdminSnowflakeNode   = 1
-	SystemSnowflakeNode  = 2
-	UserSnowflakeNode    = 3
-	MessageSnowflakeNode = 4
-	ProductSnowflakeNode = 5
-	MemberSnowflakeNode  = 6
-	OrderSnowflakeNode   = 7
-	CrmSnowflakeNode     = 8
+	AdminSnowflakeNode    = 1
+	SystemSnowflakeNode   = 2
+	UserSnowflakeNode     = 3
+	MessageSnowflakeNode  = 4
+	ProductSnowflakeNode  = 5
+	MemberSnowflakeNode   = 6
+	OrderSnowflakeNode    = 7
+	CrmSnowflakeNode      = 8
+	PaymentSnowflakeNode  = 8
+	ContentsSnowflakeNode = 9
 )

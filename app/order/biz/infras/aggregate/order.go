@@ -217,18 +217,3 @@ func (o *Order) Completed(req *order.CompletedOrderReq) error {
 
 	return nil
 }
-func (o *Order) Delete(id int64) error {
-
-	if err := o.stateMachine.ValidateTransition(common.Completed); err != nil {
-
-		return err
-	}
-
-	event := events.NewCompletedOrderEvent(req)
-
-	if err := o.Apply(event); err != nil {
-		return err
-	}
-
-	return nil
-}

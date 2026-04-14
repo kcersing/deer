@@ -340,7 +340,7 @@ func (p *kClient) SendMessages(ctx context.Context, req *message.SendMessagesReq
 	return _result.GetSuccess(), nil
 }
 
-func (p *kClient) MessagesSendList(ctx context.Context, req *message.MessagesListReq) (r *message.MessagesSendListResp, err error) {
+func (p *kClient) MessagesSendList(ctx context.Context, req *message.MessagesSendListReq) (r *message.MessagesSendListResp, err error) {
 	var _args message.MessageServiceMessagesSendListArgs
 	_args.Req = req
 	var _result message.MessageServiceMessagesSendListResult

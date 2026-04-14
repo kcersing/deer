@@ -4,13 +4,14 @@ import (
 	"context"
 	base "gen/kitex_gen/base"
 	system "gen/kitex_gen/system"
-	"github.com/cloudwego/hertz/pkg/common/json"
-	"github.com/pkg/errors"
 	"strconv"
 	"system/biz/dal/casbin"
 	"system/biz/dal/db"
 	"system/biz/dal/db/ent/api"
 	"system/biz/dal/db/ent/role"
+
+	"github.com/bytedance/sonic"
+	"github.com/pkg/errors"
 )
 
 type CreateRoleApiService struct {
@@ -49,9 +50,9 @@ func (s *CreateRoleApiService) Run(req *system.CreateMenuAuthReq) (resp *base.Ni
 		return nil, errors.New("casbin policies add failed")
 	}
 
-	jsonBytes, _ := json.Marshal(req.GetIds())
+	jsonBytes, _ := sonic.Marshal(req.GetIds())
 	var intSlice []int64
-	err = json.Unmarshal(jsonBytes, &intSlice)
+	err = sonic.Unmarshal(jsonBytes, &intSlice)
 	if err != nil {
 		return nil, err
 	}

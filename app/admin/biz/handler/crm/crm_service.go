@@ -4,17 +4,14 @@ package crm
 
 import (
 	utils2 "admin/biz/infras/utils"
-	crm2 "gen/kitex_gen/crm"
-
-	"gen/hertz_gen/crm"
-
 	"admin/rpc/client"
 	"common/pkg/errno"
 	"common/pkg/utils"
 	"context"
 	base "gen/hertz_gen/base"
+	"gen/hertz_gen/crm"
 	base1 "gen/kitex_gen/base"
-
+	crm2 "gen/kitex_gen/crm"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 

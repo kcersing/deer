@@ -39,36 +39,37 @@ func init() {
 	// messages.DefaultCreatedID holds the default value on creation for the created_id field.
 	messages.DefaultCreatedID = messagesDescCreatedID.Default.(int64)
 	// messagesDescStatus is the schema descriptor for status field.
-	messagesDescStatus := messagesFields[3].Descriptor()
+	messagesDescStatus := messagesFields[4].Descriptor()
 	// messages.DefaultStatus holds the default value on creation for the status field.
 	messages.DefaultStatus = messagesDescStatus.Default.(int64)
 	// messagesDescType is the schema descriptor for type field.
-	messagesDescType := messagesFields[4].Descriptor()
+	messagesDescType := messagesFields[5].Descriptor()
 	// messages.DefaultType holds the default value on creation for the type field.
 	messages.DefaultType = messagesDescType.Default.(string)
-	messagessentrecordsMixin := schema.MessagesSentRecords{}.Mixin()
-	messagessentrecordsMixinFields0 := messagessentrecordsMixin[0].Fields()
-	_ = messagessentrecordsMixinFields0
 	messagessentrecordsFields := schema.MessagesSentRecords{}.Fields()
 	_ = messagessentrecordsFields
 	// messagessentrecordsDescCreatedAt is the schema descriptor for created_at field.
-	messagessentrecordsDescCreatedAt := messagessentrecordsMixinFields0[1].Descriptor()
+	messagessentrecordsDescCreatedAt := messagessentrecordsFields[0].Descriptor()
 	// messagessentrecords.DefaultCreatedAt holds the default value on creation for the created_at field.
 	messagessentrecords.DefaultCreatedAt = messagessentrecordsDescCreatedAt.Default.(func() time.Time)
 	// messagessentrecordsDescUpdatedAt is the schema descriptor for updated_at field.
-	messagessentrecordsDescUpdatedAt := messagessentrecordsMixinFields0[2].Descriptor()
+	messagessentrecordsDescUpdatedAt := messagessentrecordsFields[1].Descriptor()
 	// messagessentrecords.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	messagessentrecords.DefaultUpdatedAt = messagessentrecordsDescUpdatedAt.Default.(func() time.Time)
 	// messagessentrecords.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	messagessentrecords.UpdateDefaultUpdatedAt = messagessentrecordsDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// messagessentrecordsDescDelete is the schema descriptor for delete field.
-	messagessentrecordsDescDelete := messagessentrecordsMixinFields0[3].Descriptor()
+	messagessentrecordsDescDelete := messagessentrecordsFields[2].Descriptor()
 	// messagessentrecords.DefaultDelete holds the default value on creation for the delete field.
 	messagessentrecords.DefaultDelete = messagessentrecordsDescDelete.Default.(int64)
 	// messagessentrecordsDescCreatedID is the schema descriptor for created_id field.
-	messagessentrecordsDescCreatedID := messagessentrecordsMixinFields0[4].Descriptor()
+	messagessentrecordsDescCreatedID := messagessentrecordsFields[3].Descriptor()
 	// messagessentrecords.DefaultCreatedID holds the default value on creation for the created_id field.
 	messagessentrecords.DefaultCreatedID = messagessentrecordsDescCreatedID.Default.(int64)
+	// messagessentrecordsDescType is the schema descriptor for type field.
+	messagessentrecordsDescType := messagessentrecordsFields[9].Descriptor()
+	// messagessentrecords.DefaultType holds the default value on creation for the type field.
+	messagessentrecords.DefaultType = messagessentrecordsDescType.Default.(int64)
 	smsMixin := schema.Sms{}.Mixin()
 	smsMixinFields0 := smsMixin[0].Fields()
 	_ = smsMixinFields0

@@ -13,4 +13,5 @@ func InitRpc() {
 	client.InitMessageRpc()
 	//client.InitCrmRpc()
 	client.InitOrderRpc()
+	client.InitContentsRpc()
 }

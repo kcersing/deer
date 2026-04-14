@@ -18,13 +18,12 @@ Accept: application/json
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/dict/list
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjgyMDYwNjIsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjgyMDI0NjJ9.DUBRMvDUVWO20OVXq5rtV3QnA_3DrlDXxczV3iwMwJE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzQ1MTMzMDQsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NzQ1MDk3MDR9.jgwCNURgFe8pq69iui5Vcmlht5KHRllA_iU1tW-zKSQ
 
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/logs/list
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjYwNDg4OTMsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NjYwNDUyOTN9.SF1C2cZNvmqHi7SZhw9M9jBzf0cUiDQrlMWPmaphtSI
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzQ1MTMzMDQsImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NzQ1MDk3MDR9.jgwCNURgFe8pq69iui5Vcmlht5KHRllA_iU1tW-zKSQ
 
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/item/list
@@ -143,4 +142,19 @@ Content-Type: application/json
 {
   "env":"product"
 }
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/message/send/list
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/article/list
+Content-Type: application/json
+
+{
+  "tagId":[1,2,4]
+}
+
+
 

@@ -18,7 +18,8 @@ var (
 func InitMQ() {
 	onceClient.Do(func() {
 		c := conf.GetConf().RabbitMq
-		url := fmt.Sprintf("amqp://%s:%s@%s:%d/", c.User, c.Password, c.Host, c.Port)
+		klog.Infof("mq config: %+v\n", c)
+		url := fmt.Sprintf("amqp://%s:%s@%s:%s/", c.User, c.Password, c.Host, c.Port)
 		Client = initMQ(url)
 	})
 }

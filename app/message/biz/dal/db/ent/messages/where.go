@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // ID filters vertices based on their ID field.
@@ -82,6 +83,11 @@ func Title(v string) predicate.Messages {
 // FromUserID applies equality check predicate on the "from_user_id" field. It's identical to FromUserIDEQ.
 func FromUserID(v int64) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldFromUserID, v))
+}
+
+// FromUserName applies equality check predicate on the "from_user_name" field. It's identical to FromUserNameEQ.
+func FromUserName(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldEQ(FieldFromUserName, v))
 }
 
 // Content applies equality check predicate on the "content" field. It's identical to ContentEQ.
@@ -424,6 +430,81 @@ func FromUserIDNotNil() predicate.Messages {
 	return predicate.Messages(sql.FieldNotNull(FieldFromUserID))
 }
 
+// FromUserNameEQ applies the EQ predicate on the "from_user_name" field.
+func FromUserNameEQ(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldEQ(FieldFromUserName, v))
+}
+
+// FromUserNameNEQ applies the NEQ predicate on the "from_user_name" field.
+func FromUserNameNEQ(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldNEQ(FieldFromUserName, v))
+}
+
+// FromUserNameIn applies the In predicate on the "from_user_name" field.
+func FromUserNameIn(vs ...string) predicate.Messages {
+	return predicate.Messages(sql.FieldIn(FieldFromUserName, vs...))
+}
+
+// FromUserNameNotIn applies the NotIn predicate on the "from_user_name" field.
+func FromUserNameNotIn(vs ...string) predicate.Messages {
+	return predicate.Messages(sql.FieldNotIn(FieldFromUserName, vs...))
+}
+
+// FromUserNameGT applies the GT predicate on the "from_user_name" field.
+func FromUserNameGT(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldGT(FieldFromUserName, v))
+}
+
+// FromUserNameGTE applies the GTE predicate on the "from_user_name" field.
+func FromUserNameGTE(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldGTE(FieldFromUserName, v))
+}
+
+// FromUserNameLT applies the LT predicate on the "from_user_name" field.
+func FromUserNameLT(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldLT(FieldFromUserName, v))
+}
+
+// FromUserNameLTE applies the LTE predicate on the "from_user_name" field.
+func FromUserNameLTE(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldLTE(FieldFromUserName, v))
+}
+
+// FromUserNameContains applies the Contains predicate on the "from_user_name" field.
+func FromUserNameContains(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldContains(FieldFromUserName, v))
+}
+
+// FromUserNameHasPrefix applies the HasPrefix predicate on the "from_user_name" field.
+func FromUserNameHasPrefix(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldHasPrefix(FieldFromUserName, v))
+}
+
+// FromUserNameHasSuffix applies the HasSuffix predicate on the "from_user_name" field.
+func FromUserNameHasSuffix(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldHasSuffix(FieldFromUserName, v))
+}
+
+// FromUserNameIsNil applies the IsNil predicate on the "from_user_name" field.
+func FromUserNameIsNil() predicate.Messages {
+	return predicate.Messages(sql.FieldIsNull(FieldFromUserName))
+}
+
+// FromUserNameNotNil applies the NotNil predicate on the "from_user_name" field.
+func FromUserNameNotNil() predicate.Messages {
+	return predicate.Messages(sql.FieldNotNull(FieldFromUserName))
+}
+
+// FromUserNameEqualFold applies the EqualFold predicate on the "from_user_name" field.
+func FromUserNameEqualFold(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldEqualFold(FieldFromUserName, v))
+}
+
+// FromUserNameContainsFold applies the ContainsFold predicate on the "from_user_name" field.
+func FromUserNameContainsFold(v string) predicate.Messages {
+	return predicate.Messages(sql.FieldContainsFold(FieldFromUserName, v))
+}
+
 // ContentEQ applies the EQ predicate on the "content" field.
 func ContentEQ(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldEQ(FieldContent, v))
@@ -622,6 +703,29 @@ func TypeEqualFold(v string) predicate.Messages {
 // TypeContainsFold applies the ContainsFold predicate on the "type" field.
 func TypeContainsFold(v string) predicate.Messages {
 	return predicate.Messages(sql.FieldContainsFold(FieldType, v))
+}
+
+// HasSentRecords applies the HasEdge predicate on the "sent_records" edge.
+func HasSentRecords() predicate.Messages {
+	return predicate.Messages(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, SentRecordsTable, SentRecordsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasSentRecordsWith applies the HasEdge predicate on the "sent_records" edge with a given conditions (other predicates).
+func HasSentRecordsWith(preds ...predicate.MessagesSentRecords) predicate.Messages {
+	return predicate.Messages(func(s *sql.Selector) {
+		step := newSentRecordsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

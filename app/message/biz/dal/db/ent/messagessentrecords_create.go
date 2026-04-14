@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
+	"message/biz/dal/db/ent/messages"
 	"message/biz/dal/db/ent/messagessentrecords"
 	"time"
 
@@ -145,10 +146,37 @@ func (_c *MessagesSentRecordsCreate) SetNillableReadAt(v *time.Time) *MessagesSe
 	return _c
 }
 
-// SetID sets the "id" field.
-func (_c *MessagesSentRecordsCreate) SetID(v int64) *MessagesSentRecordsCreate {
-	_c.mutation.SetID(v)
+// SetType sets the "type" field.
+func (_c *MessagesSentRecordsCreate) SetType(v int64) *MessagesSentRecordsCreate {
+	_c.mutation.SetType(v)
 	return _c
+}
+
+// SetNillableType sets the "type" field if the given value is not nil.
+func (_c *MessagesSentRecordsCreate) SetNillableType(v *int64) *MessagesSentRecordsCreate {
+	if v != nil {
+		_c.SetType(*v)
+	}
+	return _c
+}
+
+// SetMessagesID sets the "messages" edge to the Messages entity by ID.
+func (_c *MessagesSentRecordsCreate) SetMessagesID(id int64) *MessagesSentRecordsCreate {
+	_c.mutation.SetMessagesID(id)
+	return _c
+}
+
+// SetNillableMessagesID sets the "messages" edge to the Messages entity by ID if the given value is not nil.
+func (_c *MessagesSentRecordsCreate) SetNillableMessagesID(id *int64) *MessagesSentRecordsCreate {
+	if id != nil {
+		_c = _c.SetMessagesID(*id)
+	}
+	return _c
+}
+
+// SetMessages sets the "messages" edge to the Messages entity.
+func (_c *MessagesSentRecordsCreate) SetMessages(v *Messages) *MessagesSentRecordsCreate {
+	return _c.SetMessagesID(v.ID)
 }
 
 // Mutation returns the MessagesSentRecordsMutation object of the builder.
@@ -202,6 +230,10 @@ func (_c *MessagesSentRecordsCreate) defaults() {
 		v := messagessentrecords.DefaultCreatedID
 		_c.mutation.SetCreatedID(v)
 	}
+	if _, ok := _c.mutation.GetType(); !ok {
+		v := messagessentrecords.DefaultType
+		_c.mutation.SetType(v)
+	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -225,10 +257,8 @@ func (_c *MessagesSentRecordsCreate) sqlSave(ctx context.Context) (*MessagesSent
 		}
 		return nil, err
 	}
-	if _spec.ID.Value != _node.ID {
-		id := _spec.ID.Value.(int64)
-		_node.ID = int64(id)
-	}
+	id := _spec.ID.Value.(int64)
+	_node.ID = int(id)
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
 	return _node, nil
@@ -237,12 +267,8 @@ func (_c *MessagesSentRecordsCreate) sqlSave(ctx context.Context) (*MessagesSent
 func (_c *MessagesSentRecordsCreate) createSpec() (*MessagesSentRecords, *sqlgraph.CreateSpec) {
 	var (
 		_node = &MessagesSentRecords{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(messagessentrecords.Table, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt64))
+		_spec = sqlgraph.NewCreateSpec(messagessentrecords.Table, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt))
 	)
-	if id, ok := _c.mutation.ID(); ok {
-		_node.ID = id
-		_spec.ID.Value = id
-	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(messagessentrecords.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
@@ -259,10 +285,6 @@ func (_c *MessagesSentRecordsCreate) createSpec() (*MessagesSentRecords, *sqlgra
 		_spec.SetField(messagessentrecords.FieldCreatedID, field.TypeInt64, value)
 		_node.CreatedID = value
 	}
-	if value, ok := _c.mutation.MessageID(); ok {
-		_spec.SetField(messagessentrecords.FieldMessageID, field.TypeInt64, value)
-		_node.MessageID = &value
-	}
 	if value, ok := _c.mutation.ToUserID(); ok {
 		_spec.SetField(messagessentrecords.FieldToUserID, field.TypeInt64, value)
 		_node.ToUserID = &value
@@ -278,6 +300,27 @@ func (_c *MessagesSentRecordsCreate) createSpec() (*MessagesSentRecords, *sqlgra
 	if value, ok := _c.mutation.ReadAt(); ok {
 		_spec.SetField(messagessentrecords.FieldReadAt, field.TypeTime, value)
 		_node.ReadAt = &value
+	}
+	if value, ok := _c.mutation.GetType(); ok {
+		_spec.SetField(messagessentrecords.FieldType, field.TypeInt64, value)
+		_node.Type = &value
+	}
+	if nodes := _c.mutation.MessagesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   messagessentrecords.MessagesTable,
+			Columns: []string{messagessentrecords.MessagesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messages.FieldID, field.TypeInt64),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.MessageID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -327,9 +370,9 @@ func (_c *MessagesSentRecordsCreateBulk) Save(ctx context.Context) ([]*MessagesS
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
-				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
+				if specs[i].ID.Value != nil {
 					id := specs[i].ID.Value.(int64)
-					nodes[i].ID = int64(id)
+					nodes[i].ID = int(id)
 				}
 				mutation.done = true
 				return nodes[i], nil

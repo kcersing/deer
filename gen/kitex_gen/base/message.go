@@ -316,9 +316,8 @@ type MessagesSend struct {
 	Id           int64  `thrift:"id,6,optional" frugal:"6,optional,i64" json:"id,omitempty"`
 	Type         string `thrift:"type,8,optional" frugal:"8,optional,string" json:"type,omitempty"`
 	Content      string `thrift:"content,9,optional" frugal:"9,optional,string" json:"content,omitempty"`
-	MessagesId   int64  `thrift:"messagesId,10,optional" frugal:"10,optional,i64" json:"messagesId,omitempty"`
-	FromUserId   int64  `thrift:"fromUserId,11,optional" frugal:"11,optional,i64" json:"fromUserId,omitempty"`
 	FromUserName string `thrift:"fromUserName,12,optional" frugal:"12,optional,string" json:"fromUserName,omitempty"`
+	Title        string `thrift:"title,13,optional" frugal:"13,optional,string" json:"title,omitempty"`
 }
 
 func NewMessagesSend() *MessagesSend {
@@ -330,9 +329,8 @@ func NewMessagesSend() *MessagesSend {
 		Id:           0,
 		Type:         "",
 		Content:      "",
-		MessagesId:   0,
-		FromUserId:   0,
 		FromUserName: "",
+		Title:        "",
 	}
 }
 
@@ -344,9 +342,8 @@ func (p *MessagesSend) InitDefault() {
 	p.Id = 0
 	p.Type = ""
 	p.Content = ""
-	p.MessagesId = 0
-	p.FromUserId = 0
 	p.FromUserName = ""
+	p.Title = ""
 }
 
 var MessagesSend_CreatedAt_DEFAULT string = ""
@@ -412,24 +409,6 @@ func (p *MessagesSend) GetContent() (v string) {
 	return p.Content
 }
 
-var MessagesSend_MessagesId_DEFAULT int64 = 0
-
-func (p *MessagesSend) GetMessagesId() (v int64) {
-	if !p.IsSetMessagesId() {
-		return MessagesSend_MessagesId_DEFAULT
-	}
-	return p.MessagesId
-}
-
-var MessagesSend_FromUserId_DEFAULT int64 = 0
-
-func (p *MessagesSend) GetFromUserId() (v int64) {
-	if !p.IsSetFromUserId() {
-		return MessagesSend_FromUserId_DEFAULT
-	}
-	return p.FromUserId
-}
-
 var MessagesSend_FromUserName_DEFAULT string = ""
 
 func (p *MessagesSend) GetFromUserName() (v string) {
@@ -437,6 +416,15 @@ func (p *MessagesSend) GetFromUserName() (v string) {
 		return MessagesSend_FromUserName_DEFAULT
 	}
 	return p.FromUserName
+}
+
+var MessagesSend_Title_DEFAULT string = ""
+
+func (p *MessagesSend) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return MessagesSend_Title_DEFAULT
+	}
+	return p.Title
 }
 func (p *MessagesSend) SetCreatedAt(val string) {
 	p.CreatedAt = val
@@ -459,14 +447,11 @@ func (p *MessagesSend) SetType(val string) {
 func (p *MessagesSend) SetContent(val string) {
 	p.Content = val
 }
-func (p *MessagesSend) SetMessagesId(val int64) {
-	p.MessagesId = val
-}
-func (p *MessagesSend) SetFromUserId(val int64) {
-	p.FromUserId = val
-}
 func (p *MessagesSend) SetFromUserName(val string) {
 	p.FromUserName = val
+}
+func (p *MessagesSend) SetTitle(val string) {
+	p.Title = val
 }
 
 func (p *MessagesSend) IsSetCreatedAt() bool {
@@ -497,16 +482,12 @@ func (p *MessagesSend) IsSetContent() bool {
 	return p.Content != MessagesSend_Content_DEFAULT
 }
 
-func (p *MessagesSend) IsSetMessagesId() bool {
-	return p.MessagesId != MessagesSend_MessagesId_DEFAULT
-}
-
-func (p *MessagesSend) IsSetFromUserId() bool {
-	return p.FromUserId != MessagesSend_FromUserId_DEFAULT
-}
-
 func (p *MessagesSend) IsSetFromUserName() bool {
 	return p.FromUserName != MessagesSend_FromUserName_DEFAULT
+}
+
+func (p *MessagesSend) IsSetTitle() bool {
+	return p.Title != MessagesSend_Title_DEFAULT
 }
 
 func (p *MessagesSend) String() string {
@@ -524,9 +505,8 @@ var fieldIDToName_MessagesSend = map[int16]string{
 	6:  "id",
 	8:  "type",
 	9:  "content",
-	10: "messagesId",
-	11: "fromUserId",
 	12: "fromUserName",
+	13: "title",
 }
 
 type Messages struct {

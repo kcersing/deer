@@ -14,8 +14,8 @@ kitex_gen_order:
 	kitex --thrift-plugin validator -module gen ../idl/rpc/product.thrift
 	kitex --thrift-plugin validator -module gen ../idl/rpc/order.thrift
 	kitex --thrift-plugin validator -module gen ../idl/rpc/message.thrift
-
-
+	kitex --thrift-plugin validator -module gen ../idl/rpc/contents.thrift
+	kitex --thrift-plugin validator -module gen ../idl/rpc/payment.thrift
 
 .PHONY: hertz_gen_facade
 hertz_gen_facade:
@@ -32,7 +32,7 @@ hertz_gen_facade:
 	hz model --idl=../idl/admin/positions.thrift --mod=gen --model_dir=hertz_gen
 	hz model --idl=../idl/admin/crm.thrift --mod=gen --model_dir=hertz_gen
 
-	hz model --idl=../idl/admin/pub.thrift --mod=gen --model_dir=hertz_gen
-
+	hz model --idl=../idl/admin/payment.thrift --mod=gen --model_dir=hertz_gen
 
 	hz model --idl=../idl/admin/message.thrift --mod=gen --model_dir=hertz_gen
+	hz model --idl=../idl/admin/contents.thrift --mod=gen --model_dir=hertz_gen

@@ -30,11 +30,12 @@ func (s *MessagesListService) Run(req *message.MessagesListReq) (resp *message.M
 		dataResp []*Base.Messages
 	)
 	var predicates []predicate.Messages
-	//if req.GetKeyword() != "" {
-	//	predicates = append(predicates, messages.Or(
-	//		messages.ContentContains(req.GetKeyword()),
-	//	))
-	//}
+
+	if req.GetMessagesType() != "" {
+		predicates = append(predicates, messages.Or(
+			messages.TypeContains(req.GetMessagesType()),
+		))
+	}
 
 	all, err := db.Client.Messages.Query().Where(predicates...).
 		Offset(int(req.Page-1) * int(req.PageSize)).

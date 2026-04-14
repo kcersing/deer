@@ -28,7 +28,7 @@ func (s *UpdateSendService) Run(req *message.SendMessagesReq) (resp *base.NilRes
 		SetContent(req.GetContent()).
 		SetStatus(req.GetStatus()).
 		SetTitle(req.GetTitle()).
-		SetType(req.GetType()).
+		SetType(req.GetMessagesType()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "update message failed")

@@ -30,13 +30,36 @@ type Messages struct {
 	Title *string `json:"title,omitempty"`
 	// 发送者
 	FromUserID *int64 `json:"from_user_id,omitempty"`
+	// 发送者名称
+	FromUserName *string `json:"from_user_name,omitempty"`
 	// 消息内容
 	Content *string `json:"content,omitempty"`
 	// 消息状态
 	Status *int64 `json:"status,omitempty"`
 	// 消息类型
-	Type         *string `json:"type,omitempty"`
+	Type *string `json:"type,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the MessagesQuery when eager-loading is set.
+	Edges        MessagesEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// MessagesEdges holds the relations/edges for other nodes in the graph.
+type MessagesEdges struct {
+	// SentRecords holds the value of the sent_records edge.
+	SentRecords []*MessagesSentRecords `json:"sent_records,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// SentRecordsOrErr returns the SentRecords value or an error if the edge
+// was not loaded in eager-loading.
+func (e MessagesEdges) SentRecordsOrErr() ([]*MessagesSentRecords, error) {
+	if e.loadedTypes[0] {
+		return e.SentRecords, nil
+	}
+	return nil, &NotLoadedError{edge: "sent_records"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -46,7 +69,7 @@ func (*Messages) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case messages.FieldID, messages.FieldDelete, messages.FieldCreatedID, messages.FieldFromUserID, messages.FieldStatus:
 			values[i] = new(sql.NullInt64)
-		case messages.FieldTitle, messages.FieldContent, messages.FieldType:
+		case messages.FieldTitle, messages.FieldFromUserName, messages.FieldContent, messages.FieldType:
 			values[i] = new(sql.NullString)
 		case messages.FieldCreatedAt, messages.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -109,6 +132,13 @@ func (_m *Messages) assignValues(columns []string, values []any) error {
 				_m.FromUserID = new(int64)
 				*_m.FromUserID = value.Int64
 			}
+		case messages.FieldFromUserName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field from_user_name", values[i])
+			} else if value.Valid {
+				_m.FromUserName = new(string)
+				*_m.FromUserName = value.String
+			}
 		case messages.FieldContent:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field content", values[i])
@@ -141,6 +171,11 @@ func (_m *Messages) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (_m *Messages) Value(name string) (ent.Value, error) {
 	return _m.selectValues.Get(name)
+}
+
+// QuerySentRecords queries the "sent_records" edge of the Messages entity.
+func (_m *Messages) QuerySentRecords() *MessagesSentRecordsQuery {
+	return NewMessagesClient(_m.config).QuerySentRecords(_m)
 }
 
 // Update returns a builder for updating this Messages.
@@ -186,6 +221,11 @@ func (_m *Messages) String() string {
 	if v := _m.FromUserID; v != nil {
 		builder.WriteString("from_user_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := _m.FromUserName; v != nil {
+		builder.WriteString("from_user_name=")
+		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	if v := _m.Content; v != nil {

@@ -77,8 +77,9 @@ func MessagesList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 	resp, err := client.MessageClient.MessagesList(ctx, &message2.MessagesListReq{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
+		MessagesType: req.GetMessagesType(),
+		Page:         req.GetPage(),
+		PageSize:     req.GetPageSize(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
@@ -127,9 +128,12 @@ func MessagesSendList(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	resp, err := client.MessageClient.MessagesSendList(ctx, &message2.MessagesListReq{
-		Page:     req.GetPage(),
-		PageSize: req.GetPageSize(),
+	resp, err := client.MessageClient.MessagesSendList(ctx, &message2.MessagesSendListReq{
+		Page:         req.GetPage(),
+		PageSize:     req.GetPageSize(),
+		UserId:       req.GetID(),
+		Type:         req.GetType(),
+		MessagesType: req.GetMessagesType(),
 	})
 	if err != nil {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")

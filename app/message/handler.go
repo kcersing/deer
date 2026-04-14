@@ -47,7 +47,7 @@ func (s *MessageServiceImpl) SendMessages(ctx context.Context, req *message.Send
 }
 
 // MessagesSendList implements the MessageServiceImpl interface.
-func (s *MessageServiceImpl) MessagesSendList(ctx context.Context, req *message.MessagesListReq) (resp *message.MessagesSendListResp, err error) {
+func (s *MessageServiceImpl) MessagesSendList(ctx context.Context, req *message.MessagesSendListReq) (resp *message.MessagesSendListResp, err error) {
 	resp, err = service.NewMessagesSendListService(ctx).Run(req)
 
 	return resp, err

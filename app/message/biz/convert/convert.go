@@ -13,7 +13,7 @@ func EntToMessages(e *ent.Messages) *base.Messages {
 	}
 
 	mapper := utils.NewCopierMapper[base.Messages, ent.Messages]()
-	var dto = mapper.ToDTO(e)
+	dto := mapper.ToDTO(e)
 
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
 
@@ -25,11 +25,27 @@ func EntToMessagesSentRecords(e *ent.MessagesSentRecords) *base.MessagesSend {
 	if e == nil {
 		return nil
 	}
+	if e.Edges.Messages == nil {
+		return nil
+	}
+	message := e.Edges.Messages
 
 	mapper := utils.NewCopierMapper[base.MessagesSend, ent.MessagesSentRecords]()
 	var dto = mapper.ToDTO(e)
 
 	dto.CreatedAt = e.CreatedAt.Format(time.DateOnly)
+
+	if e.ReceivedAt != nil {
+		dto.ReceivedAt = e.ReceivedAt.Format(time.DateOnly)
+	}
+	if e.ReadAt != nil {
+		dto.ReadAt = e.ReadAt.Format(time.DateOnly)
+	}
+
+	dto.Content = *message.Content
+	dto.Type = *message.Type
+	dto.Title = *message.Title
+	dto.FromUserName = *message.FromUserName
 
 	return dto
 }

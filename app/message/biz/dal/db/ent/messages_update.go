@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"message/biz/dal/db/ent/messages"
+	"message/biz/dal/db/ent/messagessentrecords"
 	"message/biz/dal/db/ent/predicate"
 	"time"
 
@@ -141,6 +142,26 @@ func (_u *MessagesUpdate) ClearFromUserID() *MessagesUpdate {
 	return _u
 }
 
+// SetFromUserName sets the "from_user_name" field.
+func (_u *MessagesUpdate) SetFromUserName(v string) *MessagesUpdate {
+	_u.mutation.SetFromUserName(v)
+	return _u
+}
+
+// SetNillableFromUserName sets the "from_user_name" field if the given value is not nil.
+func (_u *MessagesUpdate) SetNillableFromUserName(v *string) *MessagesUpdate {
+	if v != nil {
+		_u.SetFromUserName(*v)
+	}
+	return _u
+}
+
+// ClearFromUserName clears the value of the "from_user_name" field.
+func (_u *MessagesUpdate) ClearFromUserName() *MessagesUpdate {
+	_u.mutation.ClearFromUserName()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *MessagesUpdate) SetContent(v string) *MessagesUpdate {
 	_u.mutation.SetContent(v)
@@ -208,9 +229,45 @@ func (_u *MessagesUpdate) ClearType() *MessagesUpdate {
 	return _u
 }
 
+// AddSentRecordIDs adds the "sent_records" edge to the MessagesSentRecords entity by IDs.
+func (_u *MessagesUpdate) AddSentRecordIDs(ids ...int) *MessagesUpdate {
+	_u.mutation.AddSentRecordIDs(ids...)
+	return _u
+}
+
+// AddSentRecords adds the "sent_records" edges to the MessagesSentRecords entity.
+func (_u *MessagesUpdate) AddSentRecords(v ...*MessagesSentRecords) *MessagesUpdate {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddSentRecordIDs(ids...)
+}
+
 // Mutation returns the MessagesMutation object of the builder.
 func (_u *MessagesUpdate) Mutation() *MessagesMutation {
 	return _u.mutation
+}
+
+// ClearSentRecords clears all "sent_records" edges to the MessagesSentRecords entity.
+func (_u *MessagesUpdate) ClearSentRecords() *MessagesUpdate {
+	_u.mutation.ClearSentRecords()
+	return _u
+}
+
+// RemoveSentRecordIDs removes the "sent_records" edge to MessagesSentRecords entities by IDs.
+func (_u *MessagesUpdate) RemoveSentRecordIDs(ids ...int) *MessagesUpdate {
+	_u.mutation.RemoveSentRecordIDs(ids...)
+	return _u
+}
+
+// RemoveSentRecords removes "sent_records" edges to MessagesSentRecords entities.
+func (_u *MessagesUpdate) RemoveSentRecords(v ...*MessagesSentRecords) *MessagesUpdate {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveSentRecordIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -300,6 +357,12 @@ func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	if _u.mutation.FromUserIDCleared() {
 		_spec.ClearField(messages.FieldFromUserID, field.TypeInt64)
 	}
+	if value, ok := _u.mutation.FromUserName(); ok {
+		_spec.SetField(messages.FieldFromUserName, field.TypeString, value)
+	}
+	if _u.mutation.FromUserNameCleared() {
+		_spec.ClearField(messages.FieldFromUserName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
 	}
@@ -320,6 +383,51 @@ func (_u *MessagesUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.TypeCleared() {
 		_spec.ClearField(messages.FieldType, field.TypeString)
+	}
+	if _u.mutation.SentRecordsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedSentRecordsIDs(); len(nodes) > 0 && !_u.mutation.SentRecordsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.SentRecordsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -454,6 +562,26 @@ func (_u *MessagesUpdateOne) ClearFromUserID() *MessagesUpdateOne {
 	return _u
 }
 
+// SetFromUserName sets the "from_user_name" field.
+func (_u *MessagesUpdateOne) SetFromUserName(v string) *MessagesUpdateOne {
+	_u.mutation.SetFromUserName(v)
+	return _u
+}
+
+// SetNillableFromUserName sets the "from_user_name" field if the given value is not nil.
+func (_u *MessagesUpdateOne) SetNillableFromUserName(v *string) *MessagesUpdateOne {
+	if v != nil {
+		_u.SetFromUserName(*v)
+	}
+	return _u
+}
+
+// ClearFromUserName clears the value of the "from_user_name" field.
+func (_u *MessagesUpdateOne) ClearFromUserName() *MessagesUpdateOne {
+	_u.mutation.ClearFromUserName()
+	return _u
+}
+
 // SetContent sets the "content" field.
 func (_u *MessagesUpdateOne) SetContent(v string) *MessagesUpdateOne {
 	_u.mutation.SetContent(v)
@@ -521,9 +649,45 @@ func (_u *MessagesUpdateOne) ClearType() *MessagesUpdateOne {
 	return _u
 }
 
+// AddSentRecordIDs adds the "sent_records" edge to the MessagesSentRecords entity by IDs.
+func (_u *MessagesUpdateOne) AddSentRecordIDs(ids ...int) *MessagesUpdateOne {
+	_u.mutation.AddSentRecordIDs(ids...)
+	return _u
+}
+
+// AddSentRecords adds the "sent_records" edges to the MessagesSentRecords entity.
+func (_u *MessagesUpdateOne) AddSentRecords(v ...*MessagesSentRecords) *MessagesUpdateOne {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.AddSentRecordIDs(ids...)
+}
+
 // Mutation returns the MessagesMutation object of the builder.
 func (_u *MessagesUpdateOne) Mutation() *MessagesMutation {
 	return _u.mutation
+}
+
+// ClearSentRecords clears all "sent_records" edges to the MessagesSentRecords entity.
+func (_u *MessagesUpdateOne) ClearSentRecords() *MessagesUpdateOne {
+	_u.mutation.ClearSentRecords()
+	return _u
+}
+
+// RemoveSentRecordIDs removes the "sent_records" edge to MessagesSentRecords entities by IDs.
+func (_u *MessagesUpdateOne) RemoveSentRecordIDs(ids ...int) *MessagesUpdateOne {
+	_u.mutation.RemoveSentRecordIDs(ids...)
+	return _u
+}
+
+// RemoveSentRecords removes "sent_records" edges to MessagesSentRecords entities.
+func (_u *MessagesUpdateOne) RemoveSentRecords(v ...*MessagesSentRecords) *MessagesUpdateOne {
+	ids := make([]int, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
+	}
+	return _u.RemoveSentRecordIDs(ids...)
 }
 
 // Where appends a list predicates to the MessagesUpdate builder.
@@ -643,6 +807,12 @@ func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err 
 	if _u.mutation.FromUserIDCleared() {
 		_spec.ClearField(messages.FieldFromUserID, field.TypeInt64)
 	}
+	if value, ok := _u.mutation.FromUserName(); ok {
+		_spec.SetField(messages.FieldFromUserName, field.TypeString, value)
+	}
+	if _u.mutation.FromUserNameCleared() {
+		_spec.ClearField(messages.FieldFromUserName, field.TypeString)
+	}
 	if value, ok := _u.mutation.Content(); ok {
 		_spec.SetField(messages.FieldContent, field.TypeString, value)
 	}
@@ -663,6 +833,51 @@ func (_u *MessagesUpdateOne) sqlSave(ctx context.Context) (_node *Messages, err 
 	}
 	if _u.mutation.TypeCleared() {
 		_spec.ClearField(messages.FieldType, field.TypeString)
+	}
+	if _u.mutation.SentRecordsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.RemovedSentRecordsIDs(); len(nodes) > 0 && !_u.mutation.SentRecordsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := _u.mutation.SentRecordsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   messages.SentRecordsTable,
+			Columns: []string{messages.SentRecordsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &Messages{config: _u.config}
 	_spec.Assign = _node.assignValues

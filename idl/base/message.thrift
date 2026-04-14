@@ -55,12 +55,11 @@ namespace go base
         8: optional string type = ""  (api.raw = "type")
         /**内容*/
         9: optional string content = ""  (api.raw = "content")
-        /**消息ID*/
-        10: optional i64 messagesId = 0  (api.raw = "messagesId")
-        /**发送用户ID*/
-        11: optional i64 fromUserId=0  (api.raw = "fromUserId")
+
+
         /**发送用户名*/
         12: optional string fromUserName = ""  (api.raw = "fromUserName")
+        13: optional string title="" (api.raw = "title")
      }
 
      /**

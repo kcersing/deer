@@ -1000,12 +1000,9 @@ type MessagesSend struct {
 	Type string `thrift:"type,8,optional" form:"type" json:"type,omitempty" query:"type"`
 	/**内容*/
 	Content string `thrift:"content,9,optional" form:"content" json:"content,omitempty" query:"content"`
-	/**消息ID*/
-	MessagesId int64 `thrift:"messagesId,10,optional" form:"messagesId" json:"messagesId,omitempty" query:"messagesId"`
-	/**发送用户ID*/
-	FromUserId int64 `thrift:"fromUserId,11,optional" form:"fromUserId" json:"fromUserId,omitempty" query:"fromUserId"`
 	/**发送用户名*/
 	FromUserName string `thrift:"fromUserName,12,optional" form:"fromUserName" json:"fromUserName,omitempty" query:"fromUserName"`
+	Title        string `thrift:"title,13,optional" form:"title" json:"title,omitempty" query:"title"`
 }
 
 func NewMessagesSend() *MessagesSend {
@@ -1017,9 +1014,8 @@ func NewMessagesSend() *MessagesSend {
 		ID:           0,
 		Type:         "",
 		Content:      "",
-		MessagesId:   0,
-		FromUserId:   0,
 		FromUserName: "",
+		Title:        "",
 	}
 }
 
@@ -1031,9 +1027,8 @@ func (p *MessagesSend) InitDefault() {
 	p.ID = 0
 	p.Type = ""
 	p.Content = ""
-	p.MessagesId = 0
-	p.FromUserId = 0
 	p.FromUserName = ""
+	p.Title = ""
 }
 
 var MessagesSend_CreatedAt_DEFAULT string = ""
@@ -1099,24 +1094,6 @@ func (p *MessagesSend) GetContent() (v string) {
 	return p.Content
 }
 
-var MessagesSend_MessagesId_DEFAULT int64 = 0
-
-func (p *MessagesSend) GetMessagesId() (v int64) {
-	if !p.IsSetMessagesId() {
-		return MessagesSend_MessagesId_DEFAULT
-	}
-	return p.MessagesId
-}
-
-var MessagesSend_FromUserId_DEFAULT int64 = 0
-
-func (p *MessagesSend) GetFromUserId() (v int64) {
-	if !p.IsSetFromUserId() {
-		return MessagesSend_FromUserId_DEFAULT
-	}
-	return p.FromUserId
-}
-
 var MessagesSend_FromUserName_DEFAULT string = ""
 
 func (p *MessagesSend) GetFromUserName() (v string) {
@@ -1124,6 +1101,15 @@ func (p *MessagesSend) GetFromUserName() (v string) {
 		return MessagesSend_FromUserName_DEFAULT
 	}
 	return p.FromUserName
+}
+
+var MessagesSend_Title_DEFAULT string = ""
+
+func (p *MessagesSend) GetTitle() (v string) {
+	if !p.IsSetTitle() {
+		return MessagesSend_Title_DEFAULT
+	}
+	return p.Title
 }
 
 var fieldIDToName_MessagesSend = map[int16]string{
@@ -1134,9 +1120,8 @@ var fieldIDToName_MessagesSend = map[int16]string{
 	6:  "id",
 	8:  "type",
 	9:  "content",
-	10: "messagesId",
-	11: "fromUserId",
 	12: "fromUserName",
+	13: "title",
 }
 
 func (p *MessagesSend) IsSetCreatedAt() bool {
@@ -1167,16 +1152,12 @@ func (p *MessagesSend) IsSetContent() bool {
 	return p.Content != MessagesSend_Content_DEFAULT
 }
 
-func (p *MessagesSend) IsSetMessagesId() bool {
-	return p.MessagesId != MessagesSend_MessagesId_DEFAULT
-}
-
-func (p *MessagesSend) IsSetFromUserId() bool {
-	return p.FromUserId != MessagesSend_FromUserId_DEFAULT
-}
-
 func (p *MessagesSend) IsSetFromUserName() bool {
 	return p.FromUserName != MessagesSend_FromUserName_DEFAULT
+}
+
+func (p *MessagesSend) IsSetTitle() bool {
+	return p.Title != MessagesSend_Title_DEFAULT
 }
 
 func (p *MessagesSend) Read(iprot thrift.TProtocol) (err error) {
@@ -1254,25 +1235,17 @@ func (p *MessagesSend) Read(iprot thrift.TProtocol) (err error) {
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
 				goto SkipFieldError
 			}
-		case 10:
-			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField10(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
-		case 11:
-			if fieldTypeId == thrift.I64 {
-				if err = p.ReadField11(iprot); err != nil {
-					goto ReadFieldError
-				}
-			} else if err = iprot.Skip(fieldTypeId); err != nil {
-				goto SkipFieldError
-			}
 		case 12:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField12(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 13:
+			if fieldTypeId == thrift.STRING {
+				if err = p.ReadField13(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1384,28 +1357,6 @@ func (p *MessagesSend) ReadField9(iprot thrift.TProtocol) error {
 	p.Content = _field
 	return nil
 }
-func (p *MessagesSend) ReadField10(iprot thrift.TProtocol) error {
-
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.MessagesId = _field
-	return nil
-}
-func (p *MessagesSend) ReadField11(iprot thrift.TProtocol) error {
-
-	var _field int64
-	if v, err := iprot.ReadI64(); err != nil {
-		return err
-	} else {
-		_field = v
-	}
-	p.FromUserId = _field
-	return nil
-}
 func (p *MessagesSend) ReadField12(iprot thrift.TProtocol) error {
 
 	var _field string
@@ -1415,6 +1366,17 @@ func (p *MessagesSend) ReadField12(iprot thrift.TProtocol) error {
 		_field = v
 	}
 	p.FromUserName = _field
+	return nil
+}
+func (p *MessagesSend) ReadField13(iprot thrift.TProtocol) error {
+
+	var _field string
+	if v, err := iprot.ReadString(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Title = _field
 	return nil
 }
 
@@ -1452,16 +1414,12 @@ func (p *MessagesSend) Write(oprot thrift.TProtocol) (err error) {
 			fieldId = 9
 			goto WriteFieldError
 		}
-		if err = p.writeField10(oprot); err != nil {
-			fieldId = 10
-			goto WriteFieldError
-		}
-		if err = p.writeField11(oprot); err != nil {
-			fieldId = 11
-			goto WriteFieldError
-		}
 		if err = p.writeField12(oprot); err != nil {
 			fieldId = 12
+			goto WriteFieldError
+		}
+		if err = p.writeField13(oprot); err != nil {
+			fieldId = 13
 			goto WriteFieldError
 		}
 	}
@@ -1615,44 +1573,6 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
 }
 
-func (p *MessagesSend) writeField10(oprot thrift.TProtocol) (err error) {
-	if p.IsSetMessagesId() {
-		if err = oprot.WriteFieldBegin("messagesId", thrift.I64, 10); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteI64(p.MessagesId); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
-}
-
-func (p *MessagesSend) writeField11(oprot thrift.TProtocol) (err error) {
-	if p.IsSetFromUserId() {
-		if err = oprot.WriteFieldBegin("fromUserId", thrift.I64, 11); err != nil {
-			goto WriteFieldBeginError
-		}
-		if err := oprot.WriteI64(p.FromUserId); err != nil {
-			return err
-		}
-		if err = oprot.WriteFieldEnd(); err != nil {
-			goto WriteFieldEndError
-		}
-	}
-	return nil
-WriteFieldBeginError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
-WriteFieldEndError:
-	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
-}
-
 func (p *MessagesSend) writeField12(oprot thrift.TProtocol) (err error) {
 	if p.IsSetFromUserName() {
 		if err = oprot.WriteFieldBegin("fromUserName", thrift.STRING, 12); err != nil {
@@ -1670,6 +1590,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 12 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 12 end error: ", p), err)
+}
+
+func (p *MessagesSend) writeField13(oprot thrift.TProtocol) (err error) {
+	if p.IsSetTitle() {
+		if err = oprot.WriteFieldBegin("title", thrift.STRING, 13); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteString(p.Title); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 13 end error: ", p), err)
 }
 
 func (p *MessagesSend) String() string {

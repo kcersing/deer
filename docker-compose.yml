@@ -240,3 +240,25 @@ services:
       - GF_SECURITY_ADMIN_USER=kcersing  # 设置管理员用户名
       - GF_SECURITY_ADMIN_PASSWORD=kcer-5058  # 设置管理员密码
     restart: unless-stopped
+
+
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    volumes:
+      - ./clickhouse/log:/var/log/clickhouse-server
+      - ./clickhouse/data:/var/lib/clickhouse
+      - ./clickhouse/config.xml:/etc/clickhouse-server/config.d/custom.xml  # 可选自定义配置
+    ports:
+      - "8123:8123"   # HTTP 接口
+      - "9000:9000"   # Native TCP 接口
+      - "9009:9009"   # Internal replication port (可选)
+    environment:
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=your_strong_password  # 建议修改为强密码
+      - TZ=Asia/Shanghai
+# <!-- config.xml -->
+#<yandex>
+#    <listen_host>::</listen_host> <!-- 允许 IPv6 和 IPv4 -->
+#    <max_connections>4096</max_connections>
+#    <keep_alive_timeout>300</keep_alive_timeout>
+#</yandex>

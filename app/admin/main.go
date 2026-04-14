@@ -67,6 +67,7 @@ func main() {
 			),
 		),
 	)
+	//h.Use(gzip.Gzip(gzip.DefaultCompression))
 	//h.NoHijackConnPool = true
 	//文件导出
 	h.Static("/export", "./files/")

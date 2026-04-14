@@ -823,20 +823,23 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 }
 
 type ChangePasswordReq struct {
-	Id       int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Password string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	Id          int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Password    string `thrift:"password,2,optional" frugal:"2,optional,string" json:"password,omitempty"`
+	OldPassword string `thrift:"oldPassword,3,optional" frugal:"3,optional,string" json:"oldPassword,omitempty"`
 }
 
 func NewChangePasswordReq() *ChangePasswordReq {
 	return &ChangePasswordReq{
-		Id:       0,
-		Password: "",
+		Id:          0,
+		Password:    "",
+		OldPassword: "",
 	}
 }
 
 func (p *ChangePasswordReq) InitDefault() {
 	p.Id = 0
 	p.Password = ""
+	p.OldPassword = ""
 }
 
 var ChangePasswordReq_Id_DEFAULT int64 = 0
@@ -856,11 +859,23 @@ func (p *ChangePasswordReq) GetPassword() (v string) {
 	}
 	return p.Password
 }
+
+var ChangePasswordReq_OldPassword_DEFAULT string = ""
+
+func (p *ChangePasswordReq) GetOldPassword() (v string) {
+	if !p.IsSetOldPassword() {
+		return ChangePasswordReq_OldPassword_DEFAULT
+	}
+	return p.OldPassword
+}
 func (p *ChangePasswordReq) SetId(val int64) {
 	p.Id = val
 }
 func (p *ChangePasswordReq) SetPassword(val string) {
 	p.Password = val
+}
+func (p *ChangePasswordReq) SetOldPassword(val string) {
+	p.OldPassword = val
 }
 
 func (p *ChangePasswordReq) IsSetId() bool {
@@ -869,6 +884,10 @@ func (p *ChangePasswordReq) IsSetId() bool {
 
 func (p *ChangePasswordReq) IsSetPassword() bool {
 	return p.Password != ChangePasswordReq_Password_DEFAULT
+}
+
+func (p *ChangePasswordReq) IsSetOldPassword() bool {
+	return p.OldPassword != ChangePasswordReq_OldPassword_DEFAULT
 }
 
 func (p *ChangePasswordReq) String() string {
@@ -881,6 +900,7 @@ func (p *ChangePasswordReq) String() string {
 var fieldIDToName_ChangePasswordReq = map[int16]string{
 	1: "id",
 	2: "password",
+	3: "oldPassword",
 }
 
 type SetUserRoleReq struct {

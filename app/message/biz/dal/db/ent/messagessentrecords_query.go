@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"math"
+	"message/biz/dal/db/ent/messages"
 	"message/biz/dal/db/ent/messagessentrecords"
 	"message/biz/dal/db/ent/predicate"
 
@@ -18,10 +19,11 @@ import (
 // MessagesSentRecordsQuery is the builder for querying MessagesSentRecords entities.
 type MessagesSentRecordsQuery struct {
 	config
-	ctx        *QueryContext
-	order      []messagessentrecords.OrderOption
-	inters     []Interceptor
-	predicates []predicate.MessagesSentRecords
+	ctx          *QueryContext
+	order        []messagessentrecords.OrderOption
+	inters       []Interceptor
+	predicates   []predicate.MessagesSentRecords
+	withMessages *MessagesQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -58,6 +60,28 @@ func (_q *MessagesSentRecordsQuery) Order(o ...messagessentrecords.OrderOption) 
 	return _q
 }
 
+// QueryMessages chains the current query on the "messages" edge.
+func (_q *MessagesSentRecordsQuery) QueryMessages() *MessagesQuery {
+	query := (&MessagesClient{config: _q.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := _q.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := _q.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(messagessentrecords.Table, messagessentrecords.FieldID, selector),
+			sqlgraph.To(messages.Table, messages.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, messagessentrecords.MessagesTable, messagessentrecords.MessagesColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // First returns the first MessagesSentRecords entity from the query.
 // Returns a *NotFoundError when no MessagesSentRecords was found.
 func (_q *MessagesSentRecordsQuery) First(ctx context.Context) (*MessagesSentRecords, error) {
@@ -82,8 +106,8 @@ func (_q *MessagesSentRecordsQuery) FirstX(ctx context.Context) *MessagesSentRec
 
 // FirstID returns the first MessagesSentRecords ID from the query.
 // Returns a *NotFoundError when no MessagesSentRecords ID was found.
-func (_q *MessagesSentRecordsQuery) FirstID(ctx context.Context) (id int64, err error) {
-	var ids []int64
+func (_q *MessagesSentRecordsQuery) FirstID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
@@ -95,7 +119,7 @@ func (_q *MessagesSentRecordsQuery) FirstID(ctx context.Context) (id int64, err 
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (_q *MessagesSentRecordsQuery) FirstIDX(ctx context.Context) int64 {
+func (_q *MessagesSentRecordsQuery) FirstIDX(ctx context.Context) int {
 	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -133,8 +157,8 @@ func (_q *MessagesSentRecordsQuery) OnlyX(ctx context.Context) *MessagesSentReco
 // OnlyID is like Only, but returns the only MessagesSentRecords ID in the query.
 // Returns a *NotSingularError when more than one MessagesSentRecords ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (_q *MessagesSentRecordsQuery) OnlyID(ctx context.Context) (id int64, err error) {
-	var ids []int64
+func (_q *MessagesSentRecordsQuery) OnlyID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
@@ -150,7 +174,7 @@ func (_q *MessagesSentRecordsQuery) OnlyID(ctx context.Context) (id int64, err e
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (_q *MessagesSentRecordsQuery) OnlyIDX(ctx context.Context) int64 {
+func (_q *MessagesSentRecordsQuery) OnlyIDX(ctx context.Context) int {
 	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -178,7 +202,7 @@ func (_q *MessagesSentRecordsQuery) AllX(ctx context.Context) []*MessagesSentRec
 }
 
 // IDs executes the query and returns a list of MessagesSentRecords IDs.
-func (_q *MessagesSentRecordsQuery) IDs(ctx context.Context) (ids []int64, err error) {
+func (_q *MessagesSentRecordsQuery) IDs(ctx context.Context) (ids []int, err error) {
 	if _q.ctx.Unique == nil && _q.path != nil {
 		_q.Unique(true)
 	}
@@ -190,7 +214,7 @@ func (_q *MessagesSentRecordsQuery) IDs(ctx context.Context) (ids []int64, err e
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (_q *MessagesSentRecordsQuery) IDsX(ctx context.Context) []int64 {
+func (_q *MessagesSentRecordsQuery) IDsX(ctx context.Context) []int {
 	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -245,15 +269,27 @@ func (_q *MessagesSentRecordsQuery) Clone() *MessagesSentRecordsQuery {
 		return nil
 	}
 	return &MessagesSentRecordsQuery{
-		config:     _q.config,
-		ctx:        _q.ctx.Clone(),
-		order:      append([]messagessentrecords.OrderOption{}, _q.order...),
-		inters:     append([]Interceptor{}, _q.inters...),
-		predicates: append([]predicate.MessagesSentRecords{}, _q.predicates...),
+		config:       _q.config,
+		ctx:          _q.ctx.Clone(),
+		order:        append([]messagessentrecords.OrderOption{}, _q.order...),
+		inters:       append([]Interceptor{}, _q.inters...),
+		predicates:   append([]predicate.MessagesSentRecords{}, _q.predicates...),
+		withMessages: _q.withMessages.Clone(),
 		// clone intermediate query.
 		sql:  _q.sql.Clone(),
 		path: _q.path,
 	}
+}
+
+// WithMessages tells the query-builder to eager-load the nodes that are connected to
+// the "messages" edge. The optional arguments are used to configure the query builder of the edge.
+func (_q *MessagesSentRecordsQuery) WithMessages(opts ...func(*MessagesQuery)) *MessagesSentRecordsQuery {
+	query := (&MessagesClient{config: _q.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	_q.withMessages = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -332,8 +368,11 @@ func (_q *MessagesSentRecordsQuery) prepareQuery(ctx context.Context) error {
 
 func (_q *MessagesSentRecordsQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*MessagesSentRecords, error) {
 	var (
-		nodes = []*MessagesSentRecords{}
-		_spec = _q.querySpec()
+		nodes       = []*MessagesSentRecords{}
+		_spec       = _q.querySpec()
+		loadedTypes = [1]bool{
+			_q.withMessages != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*MessagesSentRecords).scanValues(nil, columns)
@@ -341,6 +380,7 @@ func (_q *MessagesSentRecordsQuery) sqlAll(ctx context.Context, hooks ...queryHo
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &MessagesSentRecords{config: _q.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -352,7 +392,46 @@ func (_q *MessagesSentRecordsQuery) sqlAll(ctx context.Context, hooks ...queryHo
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := _q.withMessages; query != nil {
+		if err := _q.loadMessages(ctx, query, nodes, nil,
+			func(n *MessagesSentRecords, e *Messages) { n.Edges.Messages = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (_q *MessagesSentRecordsQuery) loadMessages(ctx context.Context, query *MessagesQuery, nodes []*MessagesSentRecords, init func(*MessagesSentRecords), assign func(*MessagesSentRecords, *Messages)) error {
+	ids := make([]int64, 0, len(nodes))
+	nodeids := make(map[int64][]*MessagesSentRecords)
+	for i := range nodes {
+		if nodes[i].MessageID == nil {
+			continue
+		}
+		fk := *nodes[i].MessageID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(messages.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "message_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (_q *MessagesSentRecordsQuery) sqlCount(ctx context.Context) (int, error) {
@@ -365,7 +444,7 @@ func (_q *MessagesSentRecordsQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (_q *MessagesSentRecordsQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := sqlgraph.NewQuerySpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt64))
+	_spec := sqlgraph.NewQuerySpec(messagessentrecords.Table, messagessentrecords.Columns, sqlgraph.NewFieldSpec(messagessentrecords.FieldID, field.TypeInt))
 	_spec.From = _q.sql
 	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
@@ -379,6 +458,9 @@ func (_q *MessagesSentRecordsQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != messagessentrecords.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if _q.withMessages != nil {
+			_spec.Node.AddColumnOnce(messagessentrecords.FieldMessageID)
 		}
 	}
 	if ps := _q.predicates; len(ps) > 0 {

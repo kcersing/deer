@@ -51,6 +51,9 @@ func (p *SmsSendListReq) IsValid() error {
 func (p *MessagesListReq) IsValid() error {
 	return nil
 }
+func (p *MessagesSendListReq) IsValid() error {
+	return nil
+}
 func (p *SendMessagesReq) IsValid() error {
 	return nil
 }

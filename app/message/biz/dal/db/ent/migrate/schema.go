@@ -18,6 +18,7 @@ var (
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
 		{Name: "title", Type: field.TypeString, Nullable: true, Comment: "消息标题"},
 		{Name: "from_user_id", Type: field.TypeInt64, Nullable: true, Comment: "发送者"},
+		{Name: "from_user_name", Type: field.TypeString, Nullable: true, Comment: "发送者名称"},
 		{Name: "content", Type: field.TypeString, Nullable: true, Comment: "消息内容"},
 		{Name: "status", Type: field.TypeInt64, Nullable: true, Comment: "消息状态", Default: 0},
 		{Name: "type", Type: field.TypeString, Nullable: true, Comment: "消息类型", Default: ""},
@@ -37,27 +38,36 @@ var (
 	}
 	// MsgMessagesSentRecordsColumns holds the columns for the "msg_messages_sent_records" table.
 	MsgMessagesSentRecordsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
 		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
 		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
 		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
-		{Name: "message_id", Type: field.TypeInt64, Nullable: true},
 		{Name: "to_user_id", Type: field.TypeInt64, Nullable: true, Comment: "接收者用户ID"},
 		{Name: "status", Type: field.TypeEnum, Nullable: true, Comment: "消息状态", Enums: []string{"SENT", "RECEIVED", "READ", "REVOKED", "DELETED"}},
 		{Name: "received_at", Type: field.TypeTime, Nullable: true, Comment: "消息到达用户收件箱的时间"},
 		{Name: "read_at", Type: field.TypeTime, Nullable: true, Comment: "用户阅读消息的时间"},
+		{Name: "type", Type: field.TypeInt64, Nullable: true, Comment: "消息类型[1会员;2员工]", Default: 1},
+		{Name: "message_id", Type: field.TypeInt64, Nullable: true},
 	}
 	// MsgMessagesSentRecordsTable holds the schema information for the "msg_messages_sent_records" table.
 	MsgMessagesSentRecordsTable = &schema.Table{
 		Name:       "msg_messages_sent_records",
 		Columns:    MsgMessagesSentRecordsColumns,
 		PrimaryKey: []*schema.Column{MsgMessagesSentRecordsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "msg_messages_sent_records_msg_messages_sent_records",
+				Columns:    []*schema.Column{MsgMessagesSentRecordsColumns[10]},
+				RefColumns: []*schema.Column{MsgMessagesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "messagessentrecords_to_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{MsgMessagesSentRecordsColumns[6]},
+				Columns: []*schema.Column{MsgMessagesSentRecordsColumns[5]},
 			},
 		},
 	}
@@ -114,6 +124,7 @@ func init() {
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}
+	MsgMessagesSentRecordsTable.ForeignKeys[0].RefTable = MsgMessagesTable
 	MsgMessagesSentRecordsTable.Annotation = &entsql.Annotation{
 		Table:     "msg_messages_sent_records",
 		Charset:   "utf8mb4",

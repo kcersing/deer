@@ -14,6 +14,7 @@ import (
 	user2 "gen/kitex_gen/user"
 
 	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
 )
 
 // CreateUser .
@@ -146,10 +147,11 @@ func ChangePassword(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
-
+	hlog.Info(req)
 	resp, err := client.UserClient.ChangePassword(ctx, &user2.ChangePasswordReq{
-		Id:       req.GetID(),
-		Password: req.GetPassword(),
+		Id:          utils.GetTokenId(ctx, c),
+		OldPassword: req.GetOldPassword(),
+		Password:    req.GetPassword(),
 	})
 
 	if err != nil {

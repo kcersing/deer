@@ -36,26 +36,30 @@ const (
 // MessagesMutation represents an operation that mutates the Messages nodes in the graph.
 type MessagesMutation struct {
 	config
-	op              Op
-	typ             string
-	id              *int64
-	created_at      *time.Time
-	updated_at      *time.Time
-	delete          *int64
-	adddelete       *int64
-	created_id      *int64
-	addcreated_id   *int64
-	title           *string
-	from_user_id    *int64
-	addfrom_user_id *int64
-	content         *string
-	status          *int64
-	addstatus       *int64
-	_type           *string
-	clearedFields   map[string]struct{}
-	done            bool
-	oldValue        func(context.Context) (*Messages, error)
-	predicates      []predicate.Messages
+	op                  Op
+	typ                 string
+	id                  *int64
+	created_at          *time.Time
+	updated_at          *time.Time
+	delete              *int64
+	adddelete           *int64
+	created_id          *int64
+	addcreated_id       *int64
+	title               *string
+	from_user_id        *int64
+	addfrom_user_id     *int64
+	from_user_name      *string
+	content             *string
+	status              *int64
+	addstatus           *int64
+	_type               *string
+	clearedFields       map[string]struct{}
+	sent_records        map[int]struct{}
+	removedsent_records map[int]struct{}
+	clearedsent_records bool
+	done                bool
+	oldValue            func(context.Context) (*Messages, error)
+	predicates          []predicate.Messages
 }
 
 var _ ent.Mutation = (*MessagesMutation)(nil)
@@ -519,6 +523,55 @@ func (m *MessagesMutation) ResetFromUserID() {
 	delete(m.clearedFields, messages.FieldFromUserID)
 }
 
+// SetFromUserName sets the "from_user_name" field.
+func (m *MessagesMutation) SetFromUserName(s string) {
+	m.from_user_name = &s
+}
+
+// FromUserName returns the value of the "from_user_name" field in the mutation.
+func (m *MessagesMutation) FromUserName() (r string, exists bool) {
+	v := m.from_user_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFromUserName returns the old "from_user_name" field's value of the Messages entity.
+// If the Messages object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MessagesMutation) OldFromUserName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFromUserName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFromUserName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFromUserName: %w", err)
+	}
+	return oldValue.FromUserName, nil
+}
+
+// ClearFromUserName clears the value of the "from_user_name" field.
+func (m *MessagesMutation) ClearFromUserName() {
+	m.from_user_name = nil
+	m.clearedFields[messages.FieldFromUserName] = struct{}{}
+}
+
+// FromUserNameCleared returns if the "from_user_name" field was cleared in this mutation.
+func (m *MessagesMutation) FromUserNameCleared() bool {
+	_, ok := m.clearedFields[messages.FieldFromUserName]
+	return ok
+}
+
+// ResetFromUserName resets all changes to the "from_user_name" field.
+func (m *MessagesMutation) ResetFromUserName() {
+	m.from_user_name = nil
+	delete(m.clearedFields, messages.FieldFromUserName)
+}
+
 // SetContent sets the "content" field.
 func (m *MessagesMutation) SetContent(s string) {
 	m.content = &s
@@ -687,6 +740,60 @@ func (m *MessagesMutation) ResetType() {
 	delete(m.clearedFields, messages.FieldType)
 }
 
+// AddSentRecordIDs adds the "sent_records" edge to the MessagesSentRecords entity by ids.
+func (m *MessagesMutation) AddSentRecordIDs(ids ...int) {
+	if m.sent_records == nil {
+		m.sent_records = make(map[int]struct{})
+	}
+	for i := range ids {
+		m.sent_records[ids[i]] = struct{}{}
+	}
+}
+
+// ClearSentRecords clears the "sent_records" edge to the MessagesSentRecords entity.
+func (m *MessagesMutation) ClearSentRecords() {
+	m.clearedsent_records = true
+}
+
+// SentRecordsCleared reports if the "sent_records" edge to the MessagesSentRecords entity was cleared.
+func (m *MessagesMutation) SentRecordsCleared() bool {
+	return m.clearedsent_records
+}
+
+// RemoveSentRecordIDs removes the "sent_records" edge to the MessagesSentRecords entity by IDs.
+func (m *MessagesMutation) RemoveSentRecordIDs(ids ...int) {
+	if m.removedsent_records == nil {
+		m.removedsent_records = make(map[int]struct{})
+	}
+	for i := range ids {
+		delete(m.sent_records, ids[i])
+		m.removedsent_records[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedSentRecords returns the removed IDs of the "sent_records" edge to the MessagesSentRecords entity.
+func (m *MessagesMutation) RemovedSentRecordsIDs() (ids []int) {
+	for id := range m.removedsent_records {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// SentRecordsIDs returns the "sent_records" edge IDs in the mutation.
+func (m *MessagesMutation) SentRecordsIDs() (ids []int) {
+	for id := range m.sent_records {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetSentRecords resets all changes to the "sent_records" edge.
+func (m *MessagesMutation) ResetSentRecords() {
+	m.sent_records = nil
+	m.clearedsent_records = false
+	m.removedsent_records = nil
+}
+
 // Where appends a list predicates to the MessagesMutation builder.
 func (m *MessagesMutation) Where(ps ...predicate.Messages) {
 	m.predicates = append(m.predicates, ps...)
@@ -721,7 +828,7 @@ func (m *MessagesMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MessagesMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.created_at != nil {
 		fields = append(fields, messages.FieldCreatedAt)
 	}
@@ -739,6 +846,9 @@ func (m *MessagesMutation) Fields() []string {
 	}
 	if m.from_user_id != nil {
 		fields = append(fields, messages.FieldFromUserID)
+	}
+	if m.from_user_name != nil {
+		fields = append(fields, messages.FieldFromUserName)
 	}
 	if m.content != nil {
 		fields = append(fields, messages.FieldContent)
@@ -769,6 +879,8 @@ func (m *MessagesMutation) Field(name string) (ent.Value, bool) {
 		return m.Title()
 	case messages.FieldFromUserID:
 		return m.FromUserID()
+	case messages.FieldFromUserName:
+		return m.FromUserName()
 	case messages.FieldContent:
 		return m.Content()
 	case messages.FieldStatus:
@@ -796,6 +908,8 @@ func (m *MessagesMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldTitle(ctx)
 	case messages.FieldFromUserID:
 		return m.OldFromUserID(ctx)
+	case messages.FieldFromUserName:
+		return m.OldFromUserName(ctx)
 	case messages.FieldContent:
 		return m.OldContent(ctx)
 	case messages.FieldStatus:
@@ -852,6 +966,13 @@ func (m *MessagesMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetFromUserID(v)
+		return nil
+	case messages.FieldFromUserName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFromUserName(v)
 		return nil
 	case messages.FieldContent:
 		v, ok := value.(string)
@@ -973,6 +1094,9 @@ func (m *MessagesMutation) ClearedFields() []string {
 	if m.FieldCleared(messages.FieldFromUserID) {
 		fields = append(fields, messages.FieldFromUserID)
 	}
+	if m.FieldCleared(messages.FieldFromUserName) {
+		fields = append(fields, messages.FieldFromUserName)
+	}
 	if m.FieldCleared(messages.FieldContent) {
 		fields = append(fields, messages.FieldContent)
 	}
@@ -1014,6 +1138,9 @@ func (m *MessagesMutation) ClearField(name string) error {
 	case messages.FieldFromUserID:
 		m.ClearFromUserID()
 		return nil
+	case messages.FieldFromUserName:
+		m.ClearFromUserName()
+		return nil
 	case messages.FieldContent:
 		m.ClearContent()
 		return nil
@@ -1049,6 +1176,9 @@ func (m *MessagesMutation) ResetField(name string) error {
 	case messages.FieldFromUserID:
 		m.ResetFromUserID()
 		return nil
+	case messages.FieldFromUserName:
+		m.ResetFromUserName()
+		return nil
 	case messages.FieldContent:
 		m.ResetContent()
 		return nil
@@ -1064,75 +1194,113 @@ func (m *MessagesMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *MessagesMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.sent_records != nil {
+		edges = append(edges, messages.EdgeSentRecords)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *MessagesMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case messages.EdgeSentRecords:
+		ids := make([]ent.Value, 0, len(m.sent_records))
+		for id := range m.sent_records {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *MessagesMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.removedsent_records != nil {
+		edges = append(edges, messages.EdgeSentRecords)
+	}
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
 func (m *MessagesMutation) RemovedIDs(name string) []ent.Value {
+	switch name {
+	case messages.EdgeSentRecords:
+		ids := make([]ent.Value, 0, len(m.removedsent_records))
+		for id := range m.removedsent_records {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *MessagesMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.clearedsent_records {
+		edges = append(edges, messages.EdgeSentRecords)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *MessagesMutation) EdgeCleared(name string) bool {
+	switch name {
+	case messages.EdgeSentRecords:
+		return m.clearedsent_records
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *MessagesMutation) ClearEdge(name string) error {
+	switch name {
+	}
 	return fmt.Errorf("unknown Messages unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *MessagesMutation) ResetEdge(name string) error {
+	switch name {
+	case messages.EdgeSentRecords:
+		m.ResetSentRecords()
+		return nil
+	}
 	return fmt.Errorf("unknown Messages edge %s", name)
 }
 
 // MessagesSentRecordsMutation represents an operation that mutates the MessagesSentRecords nodes in the graph.
 type MessagesSentRecordsMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *int64
-	created_at    *time.Time
-	updated_at    *time.Time
-	delete        *int64
-	adddelete     *int64
-	created_id    *int64
-	addcreated_id *int64
-	message_id    *int64
-	addmessage_id *int64
-	to_user_id    *int64
-	addto_user_id *int64
-	status        *messagessentrecords.Status
-	received_at   *time.Time
-	read_at       *time.Time
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*MessagesSentRecords, error)
-	predicates    []predicate.MessagesSentRecords
+	op              Op
+	typ             string
+	id              *int
+	created_at      *time.Time
+	updated_at      *time.Time
+	delete          *int64
+	adddelete       *int64
+	created_id      *int64
+	addcreated_id   *int64
+	to_user_id      *int64
+	addto_user_id   *int64
+	status          *messagessentrecords.Status
+	received_at     *time.Time
+	read_at         *time.Time
+	_type           *int64
+	add_type        *int64
+	clearedFields   map[string]struct{}
+	messages        *int64
+	clearedmessages bool
+	done            bool
+	oldValue        func(context.Context) (*MessagesSentRecords, error)
+	predicates      []predicate.MessagesSentRecords
 }
 
 var _ ent.Mutation = (*MessagesSentRecordsMutation)(nil)
@@ -1155,7 +1323,7 @@ func newMessagesSentRecordsMutation(c config, op Op, opts ...messagessentrecords
 }
 
 // withMessagesSentRecordsID sets the ID field of the mutation.
-func withMessagesSentRecordsID(id int64) messagessentrecordsOption {
+func withMessagesSentRecordsID(id int) messagessentrecordsOption {
 	return func(m *MessagesSentRecordsMutation) {
 		var (
 			err   error
@@ -1205,15 +1373,9 @@ func (m MessagesSentRecordsMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
-// SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of MessagesSentRecords entities.
-func (m *MessagesSentRecordsMutation) SetID(id int64) {
-	m.id = &id
-}
-
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *MessagesSentRecordsMutation) ID() (id int64, exists bool) {
+func (m *MessagesSentRecordsMutation) ID() (id int, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -1224,12 +1386,12 @@ func (m *MessagesSentRecordsMutation) ID() (id int64, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *MessagesSentRecordsMutation) IDs(ctx context.Context) ([]int64, error) {
+func (m *MessagesSentRecordsMutation) IDs(ctx context.Context) ([]int, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []int64{id}, nil
+			return []int{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -1479,13 +1641,12 @@ func (m *MessagesSentRecordsMutation) ResetCreatedID() {
 
 // SetMessageID sets the "message_id" field.
 func (m *MessagesSentRecordsMutation) SetMessageID(i int64) {
-	m.message_id = &i
-	m.addmessage_id = nil
+	m.messages = &i
 }
 
 // MessageID returns the value of the "message_id" field in the mutation.
 func (m *MessagesSentRecordsMutation) MessageID() (r int64, exists bool) {
-	v := m.message_id
+	v := m.messages
 	if v == nil {
 		return
 	}
@@ -1509,28 +1670,9 @@ func (m *MessagesSentRecordsMutation) OldMessageID(ctx context.Context) (v *int6
 	return oldValue.MessageID, nil
 }
 
-// AddMessageID adds i to the "message_id" field.
-func (m *MessagesSentRecordsMutation) AddMessageID(i int64) {
-	if m.addmessage_id != nil {
-		*m.addmessage_id += i
-	} else {
-		m.addmessage_id = &i
-	}
-}
-
-// AddedMessageID returns the value that was added to the "message_id" field in this mutation.
-func (m *MessagesSentRecordsMutation) AddedMessageID() (r int64, exists bool) {
-	v := m.addmessage_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearMessageID clears the value of the "message_id" field.
 func (m *MessagesSentRecordsMutation) ClearMessageID() {
-	m.message_id = nil
-	m.addmessage_id = nil
+	m.messages = nil
 	m.clearedFields[messagessentrecords.FieldMessageID] = struct{}{}
 }
 
@@ -1542,8 +1684,7 @@ func (m *MessagesSentRecordsMutation) MessageIDCleared() bool {
 
 // ResetMessageID resets all changes to the "message_id" field.
 func (m *MessagesSentRecordsMutation) ResetMessageID() {
-	m.message_id = nil
-	m.addmessage_id = nil
+	m.messages = nil
 	delete(m.clearedFields, messagessentrecords.FieldMessageID)
 }
 
@@ -1764,6 +1905,116 @@ func (m *MessagesSentRecordsMutation) ResetReadAt() {
 	delete(m.clearedFields, messagessentrecords.FieldReadAt)
 }
 
+// SetType sets the "type" field.
+func (m *MessagesSentRecordsMutation) SetType(i int64) {
+	m._type = &i
+	m.add_type = nil
+}
+
+// GetType returns the value of the "type" field in the mutation.
+func (m *MessagesSentRecordsMutation) GetType() (r int64, exists bool) {
+	v := m._type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldType returns the old "type" field's value of the MessagesSentRecords entity.
+// If the MessagesSentRecords object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MessagesSentRecordsMutation) OldType(ctx context.Context) (v *int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldType: %w", err)
+	}
+	return oldValue.Type, nil
+}
+
+// AddType adds i to the "type" field.
+func (m *MessagesSentRecordsMutation) AddType(i int64) {
+	if m.add_type != nil {
+		*m.add_type += i
+	} else {
+		m.add_type = &i
+	}
+}
+
+// AddedType returns the value that was added to the "type" field in this mutation.
+func (m *MessagesSentRecordsMutation) AddedType() (r int64, exists bool) {
+	v := m.add_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearType clears the value of the "type" field.
+func (m *MessagesSentRecordsMutation) ClearType() {
+	m._type = nil
+	m.add_type = nil
+	m.clearedFields[messagessentrecords.FieldType] = struct{}{}
+}
+
+// TypeCleared returns if the "type" field was cleared in this mutation.
+func (m *MessagesSentRecordsMutation) TypeCleared() bool {
+	_, ok := m.clearedFields[messagessentrecords.FieldType]
+	return ok
+}
+
+// ResetType resets all changes to the "type" field.
+func (m *MessagesSentRecordsMutation) ResetType() {
+	m._type = nil
+	m.add_type = nil
+	delete(m.clearedFields, messagessentrecords.FieldType)
+}
+
+// SetMessagesID sets the "messages" edge to the Messages entity by id.
+func (m *MessagesSentRecordsMutation) SetMessagesID(id int64) {
+	m.messages = &id
+}
+
+// ClearMessages clears the "messages" edge to the Messages entity.
+func (m *MessagesSentRecordsMutation) ClearMessages() {
+	m.clearedmessages = true
+	m.clearedFields[messagessentrecords.FieldMessageID] = struct{}{}
+}
+
+// MessagesCleared reports if the "messages" edge to the Messages entity was cleared.
+func (m *MessagesSentRecordsMutation) MessagesCleared() bool {
+	return m.MessageIDCleared() || m.clearedmessages
+}
+
+// MessagesID returns the "messages" edge ID in the mutation.
+func (m *MessagesSentRecordsMutation) MessagesID() (id int64, exists bool) {
+	if m.messages != nil {
+		return *m.messages, true
+	}
+	return
+}
+
+// MessagesIDs returns the "messages" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// MessagesID instead. It exists only for internal usage by the builders.
+func (m *MessagesSentRecordsMutation) MessagesIDs() (ids []int64) {
+	if id := m.messages; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetMessages resets all changes to the "messages" edge.
+func (m *MessagesSentRecordsMutation) ResetMessages() {
+	m.messages = nil
+	m.clearedmessages = false
+}
+
 // Where appends a list predicates to the MessagesSentRecordsMutation builder.
 func (m *MessagesSentRecordsMutation) Where(ps ...predicate.MessagesSentRecords) {
 	m.predicates = append(m.predicates, ps...)
@@ -1798,7 +2049,7 @@ func (m *MessagesSentRecordsMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MessagesSentRecordsMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.created_at != nil {
 		fields = append(fields, messagessentrecords.FieldCreatedAt)
 	}
@@ -1811,7 +2062,7 @@ func (m *MessagesSentRecordsMutation) Fields() []string {
 	if m.created_id != nil {
 		fields = append(fields, messagessentrecords.FieldCreatedID)
 	}
-	if m.message_id != nil {
+	if m.messages != nil {
 		fields = append(fields, messagessentrecords.FieldMessageID)
 	}
 	if m.to_user_id != nil {
@@ -1825,6 +2076,9 @@ func (m *MessagesSentRecordsMutation) Fields() []string {
 	}
 	if m.read_at != nil {
 		fields = append(fields, messagessentrecords.FieldReadAt)
+	}
+	if m._type != nil {
+		fields = append(fields, messagessentrecords.FieldType)
 	}
 	return fields
 }
@@ -1852,6 +2106,8 @@ func (m *MessagesSentRecordsMutation) Field(name string) (ent.Value, bool) {
 		return m.ReceivedAt()
 	case messagessentrecords.FieldReadAt:
 		return m.ReadAt()
+	case messagessentrecords.FieldType:
+		return m.GetType()
 	}
 	return nil, false
 }
@@ -1879,6 +2135,8 @@ func (m *MessagesSentRecordsMutation) OldField(ctx context.Context, name string)
 		return m.OldReceivedAt(ctx)
 	case messagessentrecords.FieldReadAt:
 		return m.OldReadAt(ctx)
+	case messagessentrecords.FieldType:
+		return m.OldType(ctx)
 	}
 	return nil, fmt.Errorf("unknown MessagesSentRecords field %s", name)
 }
@@ -1951,6 +2209,13 @@ func (m *MessagesSentRecordsMutation) SetField(name string, value ent.Value) err
 		}
 		m.SetReadAt(v)
 		return nil
+	case messagessentrecords.FieldType:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetType(v)
+		return nil
 	}
 	return fmt.Errorf("unknown MessagesSentRecords field %s", name)
 }
@@ -1965,11 +2230,11 @@ func (m *MessagesSentRecordsMutation) AddedFields() []string {
 	if m.addcreated_id != nil {
 		fields = append(fields, messagessentrecords.FieldCreatedID)
 	}
-	if m.addmessage_id != nil {
-		fields = append(fields, messagessentrecords.FieldMessageID)
-	}
 	if m.addto_user_id != nil {
 		fields = append(fields, messagessentrecords.FieldToUserID)
+	}
+	if m.add_type != nil {
+		fields = append(fields, messagessentrecords.FieldType)
 	}
 	return fields
 }
@@ -1983,10 +2248,10 @@ func (m *MessagesSentRecordsMutation) AddedField(name string) (ent.Value, bool) 
 		return m.AddedDelete()
 	case messagessentrecords.FieldCreatedID:
 		return m.AddedCreatedID()
-	case messagessentrecords.FieldMessageID:
-		return m.AddedMessageID()
 	case messagessentrecords.FieldToUserID:
 		return m.AddedToUserID()
+	case messagessentrecords.FieldType:
+		return m.AddedType()
 	}
 	return nil, false
 }
@@ -2010,19 +2275,19 @@ func (m *MessagesSentRecordsMutation) AddField(name string, value ent.Value) err
 		}
 		m.AddCreatedID(v)
 		return nil
-	case messagessentrecords.FieldMessageID:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddMessageID(v)
-		return nil
 	case messagessentrecords.FieldToUserID:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddToUserID(v)
+		return nil
+	case messagessentrecords.FieldType:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddType(v)
 		return nil
 	}
 	return fmt.Errorf("unknown MessagesSentRecords numeric field %s", name)
@@ -2058,6 +2323,9 @@ func (m *MessagesSentRecordsMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(messagessentrecords.FieldReadAt) {
 		fields = append(fields, messagessentrecords.FieldReadAt)
+	}
+	if m.FieldCleared(messagessentrecords.FieldType) {
+		fields = append(fields, messagessentrecords.FieldType)
 	}
 	return fields
 }
@@ -2100,6 +2368,9 @@ func (m *MessagesSentRecordsMutation) ClearField(name string) error {
 	case messagessentrecords.FieldReadAt:
 		m.ClearReadAt()
 		return nil
+	case messagessentrecords.FieldType:
+		m.ClearType()
+		return nil
 	}
 	return fmt.Errorf("unknown MessagesSentRecords nullable field %s", name)
 }
@@ -2135,25 +2406,37 @@ func (m *MessagesSentRecordsMutation) ResetField(name string) error {
 	case messagessentrecords.FieldReadAt:
 		m.ResetReadAt()
 		return nil
+	case messagessentrecords.FieldType:
+		m.ResetType()
+		return nil
 	}
 	return fmt.Errorf("unknown MessagesSentRecords field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *MessagesSentRecordsMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.messages != nil {
+		edges = append(edges, messagessentrecords.EdgeMessages)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *MessagesSentRecordsMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case messagessentrecords.EdgeMessages:
+		if id := m.messages; id != nil {
+			return []ent.Value{*id}
+		}
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *MessagesSentRecordsMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
 	return edges
 }
 
@@ -2165,25 +2448,42 @@ func (m *MessagesSentRecordsMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *MessagesSentRecordsMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.clearedmessages {
+		edges = append(edges, messagessentrecords.EdgeMessages)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *MessagesSentRecordsMutation) EdgeCleared(name string) bool {
+	switch name {
+	case messagessentrecords.EdgeMessages:
+		return m.clearedmessages
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *MessagesSentRecordsMutation) ClearEdge(name string) error {
+	switch name {
+	case messagessentrecords.EdgeMessages:
+		m.ClearMessages()
+		return nil
+	}
 	return fmt.Errorf("unknown MessagesSentRecords unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *MessagesSentRecordsMutation) ResetEdge(name string) error {
+	switch name {
+	case messagessentrecords.EdgeMessages:
+		m.ResetMessages()
+		return nil
+	}
 	return fmt.Errorf("unknown MessagesSentRecords edge %s", name)
 }
 

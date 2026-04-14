@@ -34,8 +34,9 @@ struct GetUserListReq{
       5:optional string mobile=""(api.raw = "mobile"),
 }
 struct ChangePasswordReq{
-    1:optional i64 id=0(api.raw = "id"),
-    2:optional string password=""(api.raw = "password"),
+    1:optional i64 id=0,
+    2:optional string password="",
+    3:optional string oldPassword="",
 }
 struct SetUserRoleReq{
    1:optional i64 id=0(api.raw = "id"),
