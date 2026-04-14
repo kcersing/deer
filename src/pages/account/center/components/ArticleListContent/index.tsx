@@ -11,7 +11,7 @@ export type ApplicationsProps = {
     href?: string;
   };
 };
-const ArticleListContent: React.FC<ApplicationsProps> = ({
+const MessagesListContent: React.FC<ApplicationsProps> = ({
   data: { content, updatedAt, avatar, owner, href },
 }) => {
   const { styles } = useStyles();
@@ -26,4 +26,4 @@ const ArticleListContent: React.FC<ApplicationsProps> = ({
     </div>
   );
 };
-export default ArticleListContent;
+export default MessagesListContent;

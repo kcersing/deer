@@ -1,12 +1,12 @@
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
-import { ProCard, ProTable } from '@ant-design/pro-components';
+import {ProCard, ProTable} from '@ant-design/pro-components';
 import React, {useEffect, useRef, useState} from 'react';
 
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 
-import { Dictht,Dict } from  "@/pages/system/dict/service/data";
-import {getDicthtList, getDictList}  from "@/pages/system/dict/service/service";
+import {Dictht, Dict} from "@/pages/system/dict/service/data";
+import {getDicthtList, getDictList} from "@/pages/system/dict/service/service";
 
 import CreateDicthtForm from "@/pages/system/dict/components/CreateDicthtForm";
 import UpdateDicthtForm from "@/pages/system/dict/components/UpdateDicthtForm";
@@ -16,7 +16,7 @@ type DicthtListProps = {
 };
 
 const DicthtList: React.FC<DicthtListProps> = (props) => {
-  const { id  } = props;
+  const {id} = props;
 
   const [dicthtId, setDicthtId] = useState<number>(0);
 
@@ -30,11 +30,19 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
       dataIndex: 'id',
       sorter: true,
       hideInForm: true,
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 60,
       hideInTable: true,
     },
     {
       title: "标题",
       dataIndex: 'title',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 120,
       sorter: true,
       hideInForm: true,
     },
@@ -42,15 +50,23 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
     {
       title: "有效值",
       dataIndex: 'value',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 240,
       sorter: true,
       hideInForm: true,
     },
     {
       title: '状态',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 120,
       dataIndex: 'status',
       hideInForm: true,
       valueEnum: {
-        0:{
+        0: {
           text: '禁用',
           status: 'Error',
         },
@@ -63,6 +79,10 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
     },
     {
       title: '操作',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 160,
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => [
@@ -107,7 +127,7 @@ const DicthtList: React.FC<DicthtListProps> = (props) => {
           },
         },
         actions: [
-          <CreateDicthtForm key="create" reload={actionRef.current?.reload} dictId={id} />,
+          <CreateDicthtForm key="create" reload={actionRef.current?.reload} dictId={id}/>,
         ],
       }}
     />
@@ -122,7 +142,7 @@ type DictListProps = {
 
 
 const DictList: React.FC<DictListProps> = (props) => {
-  const { onChange } = props;
+  const {onChange} = props;
 
   const [searchDictName, setSearchDictName] = useState<string>('');
 
@@ -145,6 +165,10 @@ const DictList: React.FC<DictListProps> = (props) => {
     {
       title: '标识',
       dataIndex: 'code',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 120,
       render: (dom, entity) => {
         return (
           <a
@@ -161,17 +185,25 @@ const DictList: React.FC<DictListProps> = (props) => {
     {
       title: "标题",
       dataIndex: 'title',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 100,
     },
-    {
-      title: "概略",
-      dataIndex: 'desc',
-      valueType: 'textarea',
-    },
+    // {
+    //   title: "概略",
+    //   dataIndex: 'desc',
+    //   valueType: 'textarea',
+    // },
     {
       title: '状态',
       dataIndex: 'status',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 100,
       valueEnum: {
-        0:{
+        0: {
           text: '禁用',
           status: 'Error',
         },
@@ -186,6 +218,10 @@ const DictList: React.FC<DictListProps> = (props) => {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 100,
       render: (_, record) => [
         <UpdateForm
           trigger={
@@ -198,7 +234,6 @@ const DictList: React.FC<DictListProps> = (props) => {
       ],
     },
   ];
-
 
 
   return (
@@ -216,7 +251,7 @@ const DictList: React.FC<DictListProps> = (props) => {
         },
 
         actions: [
-          <CreateForm key="create" reload={actionRef.current?.reload} />,
+          <CreateForm key="create" reload={actionRef.current?.reload}/>,
         ],
       }}
       // options={false}
@@ -241,10 +276,10 @@ const Pro: React.FC = () => {
   return (
     <ProCard split="vertical">
       <ProCard colSpan="40%" ghost>
-        <DictList onChange={(cId) =>setId(cId) }  id={id} />
+        <DictList onChange={(cId) => setId(cId)} id={id}/>
       </ProCard>
       <ProCard>
-        <DicthtList id={id}  />
+        <DicthtList id={id}/>
       </ProCard>
     </ProCard>
   );
@@ -253,7 +288,7 @@ const Pro: React.FC = () => {
 const Pages = () => {
   return (
     <>
-      <Pro />
+      <Pro/>
     </>
   );
 };

@@ -1,48 +1,69 @@
 import { List, Switch } from 'antd';
 import React from 'react';
 
-type Unpacked<T> = T extends (infer U)[] ? U : T;
+import { message } from 'antd';
+import { BetaSchemaForm } from '@ant-design/pro-components';
+
+
+
+type DataItem = {
+  name: string;
+  state: string;
+  title: string;
+}
+const columns: ProFormColumnsType<DataItem>[] = [
+  {
+    title: '用户消息',
+    description: '其他用户的消息将以站内信的形式通知',
+    dataIndex: 'userMessage',
+    valueType: 'switch',
+    formItemProps: {
+      extra: '其他用户的消息将以站内信的形式通知',
+    },
+    fieldProps: {
+      initialValue: '开启',
+      checkedChildren: '开启',
+      unCheckedChildren: '关闭',
+    },
+  },
+  {
+    title: '系统消息',
+    description: '系统消息将以站内信的形式通知',
+    dataIndex: 'systemMessage',
+    valueType: 'switch',
+    formItemProps: {
+      extra: '系统消息将以站内信的形式通知',
+    },
+    fieldProps: {
+      initialValue: '开启',
+      checkedChildren: '开启',
+      unCheckedChildren: '关闭',
+    },
+    width: 'md',
+    colProps: {
+      xs: 12,
+      md: 20,
+    },
+  },
+
+];
+
 
 const NotificationView: React.FC = () => {
-  const getData = () => {
-    const Action = (
-      <Switch
-        checkedChildren="开"
-        unCheckedChildren="关"
-        initialValue="开"
-      />
-    );
-    return [
-      {
-        title: '用户消息',
-        description: '其他用户的消息将以站内信的形式通知',
-        actions: [Action],
-      },
-      {
-        title: '系统消息',
-        description: '系统消息将以站内信的形式通知',
-        actions: [Action],
-      },
-      {
-        title: '待办任务',
-        description: '待办任务将以站内信的形式通知',
-        actions: [Action],
-      },
-    ];
-  };
-
-  const data = getData();
   return (
-    <List<Unpacked<typeof data>>
-      itemLayout="horizontal"
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item actions={item.actions}>
-          <List.Item.Meta title={item.title} description={item.description} />
-        </List.Item>
-      )}
-    />
+    <div style={{padding: 24}}>
+      <BetaSchemaForm<DataItem>
+        layoutType="Form"
+        onFinish={async (values) => {
+
+          console.log(values);
+
+        }}
+        columns={columns}
+      />
+    </div>
   );
 };
+
 
 export default NotificationView;

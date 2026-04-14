@@ -4,6 +4,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import BaseView from './components/base';
 import NotificationView from './components/notification';
 import SecurityView from './components/security';
+import ChangePassword from './components/change_password';
 import useStyles from './style.style';
 
 type SettingsStateKeys = 'base' | 'security' | 'binding' | 'notification';
@@ -15,7 +16,8 @@ const Settings: React.FC = () => {
   const { styles } = useStyles();
   const menuMap: Record<string, React.ReactNode> = {
     base: '基本设置',
-    security: '安全设置',
+    change_password: '修改密码',
+    // security: '安全设置',
     notification: '新消息通知',
   };
   const [initConfig, setInitConfig] = useState<SettingsState>({
@@ -62,6 +64,8 @@ const Settings: React.FC = () => {
     switch (selectKey) {
       case 'base':
         return <BaseView />;
+      case 'change_password':
+        return <ChangePassword />;
       case 'security':
         return <SecurityView />;
       case 'notification':

@@ -21,6 +21,7 @@ import useStyles from './Center.style';
 import Applications from './components/Applications';
 import Articles from './components/Articles';
 import Projects from './components/Projects';
+import Messages from './components/Messages';
 import type { CurrentUser, TagType, tabKeyType } from './data.d';
 import { queryCurrent } from './service';
 
@@ -39,7 +40,7 @@ const operationTabList = [
             fontSize: 14,
           }}
         >
-          (8)
+          (1)
         </span>
       </span>
     ),
@@ -54,7 +55,7 @@ const operationTabList = [
             fontSize: 14,
           }}
         >
-          (8)
+          (2)
         </span>
       </span>
     ),
@@ -69,7 +70,22 @@ const operationTabList = [
             fontSize: 14,
           }}
         >
-          (8)
+          (3)
+        </span>
+      </span>
+    ),
+  },
+  {
+    key: 'messages',
+    tab: (
+      <span>
+        消息{' '}
+        <span
+          style={{
+            fontSize: 14,
+          }}
+        >
+          (4)
         </span>
       </span>
     ),
@@ -205,6 +221,10 @@ const Center: React.FC = () => {
     }
     if (tabValue === 'articles') {
       return <Articles />;
+    }
+
+    if (tabValue === 'messages') {
+      return <Messages />;
     }
     return null;
   };

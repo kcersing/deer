@@ -66,7 +66,31 @@ const TableList: React.FC = () => {
       },
 
     },
-
+    // {
+    //   title: '头像',
+    //   dataIndex: 'avatar',
+    //   key: 'avatar',
+    //   valueType: 'avatar',
+    //   width: 150,
+    //   render: (dom) => (
+    //     <Space>
+    //       <span>{dom}</span>
+    //       <a
+    //         href="https://github.com/chenshuai2144"
+    //         target="_blank"
+    //         rel="noopener noreferrer"
+    //       >
+    //         chenshuai2144
+    //       </a>
+    //     </Space>
+    //   ),
+    // },
+    // {
+    //   title: '图片',
+    //   dataIndex: 'image',
+    //   key: 'image',
+    //   valueType: 'image',
+    // },
     {
       title: '名称',
       dataIndex: 'name',
@@ -102,8 +126,14 @@ const TableList: React.FC = () => {
       dataIndex: 'gender',
       sorter: true,
       hideInForm: true,
+      valueEnum: {
+        1: { text: '男', status: 'Processing' },
+        2: { text: '女', status: 'Error' },
+        3: { text: '未知', status: 'Default' },
 
+      },
     },
+    
     {
       title: "出生日期",
       dataIndex: 'birthday',
@@ -133,13 +163,15 @@ const TableList: React.FC = () => {
       renderFormItem: (_, { defaultRender }) => {
         return defaultRender(_);
       },
+      columnEmptyText:"-",
       render: (_, record) => (
+
         <Space>
-          {record.labels.map(({ name, color }) => (
-            <Tag color={color} key={name}>
+          {record.tag? record.tag.map(({ name }) => (
+            <Tag key={name}>
               {name}
             </Tag>
-          ))}
+          )) :"-"}
         </Space>
       ),
     },
