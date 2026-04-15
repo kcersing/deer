@@ -3,19 +3,19 @@ include "../base/base.thrift"
 include "../base/contents.thrift"
 
 
-
 struct CreateArticleReq{
     2:optional string title="",
     3:optional string content="",
     5:optional list<i64> tagId=[],
     9:optional list<string> pic="",
-
+    6:optional i64 status=0,
 }
 struct UpdateArticleReq{
     1:optional i64 id=0,
     2:optional string title="",
     3:optional string content="",
     5:optional list<i64> tagId=[],
+    6:optional i64 status=0,
     9:optional list<string> pic="",
 }
 struct ArticleListReq{

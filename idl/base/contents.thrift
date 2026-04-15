@@ -9,4 +9,5 @@ struct Article {
     7:optional string createdAt="",
     8:optional string updatedAt=""
     9:optional list<string> pic="",
+    10:optional i64 status=0,
 }

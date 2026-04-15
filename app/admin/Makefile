@@ -22,3 +22,6 @@ update_facade:
 	hz update --idl=../../idl/admin/order.thrift -use=deer/hertz_gen/
 	hz update --idl=../../idl/admin/payment.thrift -use=deer/hertz_gen/
 	hz update --idl=../../idl/admin/contents.thrift -use=deer/hertz_gen/
+
+go_build:
+	go build -ldflags "-X main.Version=1.0.0 -X main.Commit=ad09a54 -X main.BuildDate=2026-04-15" .
