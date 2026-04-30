@@ -45,11 +45,16 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<Order>[] = [
     {
-      title: "ID",
+      title: "id",
       dataIndex: 'id',
       sorter: true,
       hideInForm: true,
-      copyable:true,
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 60,
+      hideInTable: true,
+      search: false,
     },
     {
       title: '订单编号',

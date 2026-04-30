@@ -21,6 +21,7 @@ interface CreateFormProps {
 
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import {getDicthtList} from "../../../system/dict/service/service";
 
 const CreateForm: FC<CreateFormProps> = (props) => {
   const { reload } = props;
@@ -28,7 +29,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const defaultBirthday = dayjs('1980-01-01');
-
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
   const { run, loading } = useRequest(createMember, {
     manual: true,
     onSuccess: () => {
@@ -74,8 +77,6 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           />
          </ProForm.Group>
         <ProForm.Group>
-
-
           <ProFormText
             width="md"
             name="name"
@@ -89,7 +90,8 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             ]}
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="mobile"
@@ -103,7 +105,6 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             ]}
           />
         </ProForm.Group>
-
 
         <ProForm.Group>
           <ProFormRadio.Group
@@ -132,14 +133,16 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             ]}
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormDatePicker
             width="md"
             name="birthday"
             label="出生日期"
             initialValue={defaultBirthday}
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSwitch
             name="status"
             width="md"
@@ -166,6 +169,22 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               80: '80%',
               100: '确定',
             }}
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
           />
         </ProForm.Group>
       </ModalForm>

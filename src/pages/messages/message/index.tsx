@@ -61,8 +61,13 @@ const TableList: React.FC = () => {
       title: "id",
       dataIndex: 'id',
       sorter: true,
-      hideInForm:false,
-
+      hideInForm: true,
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 60,
+      hideInTable: true,
+      search: false,
     },
     {
       title: '消息主题',

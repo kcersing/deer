@@ -11,17 +11,18 @@ import {
   ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,ProFormSwitch,
+  ProFormTextArea, ProFormSwitch,
   StepsForm,
   ModalForm,
   ProFormUploadButton,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import { Form, message } from 'antd';
-import React, { cloneElement, useCallback, useState } from 'react';
+import {useRequest} from '@umijs/max';
+import {Form, message} from 'antd';
+import React, {cloneElement, useCallback, useState} from 'react';
 
-import { Item } from  "@/pages/product/item/service/data";
+import {Item} from "@/pages/product/item/service/data";
 import {updateItem} from "@/pages/product/item/service/service";
+import {getDicthtList} from "../../../system/dict/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
@@ -30,15 +31,16 @@ export type ModalForm = {
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
-  const { onOk, values, trigger } = props;
-  values.status = (values.status==1?"有效":"无效")
+  const {onOk, values, trigger} = props;
+  values.status = (values.status == 1 ? "有效" : "无效")
 
-  console.log(values)
   const [open, setOpen] = useState(false);
-
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { run } = useRequest(updateItem, {
+  const {run} = useRequest(updateItem, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -57,11 +59,11 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish= (e) => useCallback(
+  const onFinish = (e) => useCallback(
     async (values?: any) => {
       values.id = e.id;
-      values.status = values.status?1:0;
-      await run({ data: values });
+      values.status = values.status ? 1 : 0;
+      await run({data: values});
       onCancel();
     },
     [onCancel, run],
@@ -72,8 +74,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
       {contextHolder}
       {trigger
         ? cloneElement(trigger, {
-            onClick: onOpen,
-          })
+          onClick: onOpen,
+        })
         : null}
 
       <ModalForm<{
@@ -86,10 +88,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         autoFocusFirstInput
         modalProps={{
           destroyOnClose: true,
-          onCancel: () =>{onCancel()},
+          onCancel: () => {
+            onCancel()
+          },
         }}
 
-        style={{ padding: '32px 40px 48px' }}
+        style={{padding: '32px 40px 48px'}}
         width="800px"
         open={open}
 
@@ -169,7 +173,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             width="md"
             min={1}
             max={10}
-            fieldProps={{ precision: 0 , suffix:type=="card"?"天":"节/天" }}
+            fieldProps={{precision: 0, suffix: type == "card" ? "天" : "节/天"}}
             name="duration"
             label="时长"
             placeholder="请输入"
@@ -183,10 +187,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           <ProFormDigit
             min={1}
             max={10}
-            fieldProps={{ precision: 0 , suffix:"分钟"}}
+            fieldProps={{precision: 0, suffix: "分钟"}}
             width="md"
             name="length"
-            hidden={ type=="card"}
+            hidden={type == "card"}
             label="单次时长"
             placeholder="请输入"
 
@@ -195,7 +199,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           <ProFormDigit
             min={1}
             max={10}
-            fieldProps={{ precision: 0 , suffix:"次"}}
+            fieldProps={{precision: 0, suffix: "次"}}
             width="md"
             name="count"
             label="次数"
@@ -205,7 +209,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
           <ProFormDigit
             width="md"
-            fieldProps={{ suffix:"元"}}
+            fieldProps={{suffix: "元"}}
             name="price"
             label="价格"
             placeholder="请输入"
@@ -218,20 +222,23 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
           />
         </ProForm.Group>
 
-        {/*<ProForm.Group>*/}
-        {/*  <ProFormText*/}
-        {/*    width="md"*/}
-        {/*    name="tagId"*/}
-        {/*    label="标签"*/}
-        {/*    placeholder="请输入"*/}
-        {/*    rules={[*/}
-        {/*      {*/}
-        {/*        required: true,*/}
-        {/*        message: '不能为空',*/}
-        {/*      },*/}
-        {/*    ]}*/}
-        {/*  />*/}
-        {/*</ProForm.Group>*/}
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
+          />
+        </ProForm.Group>
+
         <ProForm.Group>
           <ProFormTextArea
             width="md"

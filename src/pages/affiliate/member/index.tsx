@@ -45,11 +45,16 @@ const TableList: React.FC = () => {
 
   const columns: ProColumns<Member>[] = [
     {
-      title: "ID",
+      title: "id",
       dataIndex: 'id',
       sorter: true,
       hideInForm: true,
-      copyable:true,
+      filters: true,
+      onFilter: true,
+      ellipsis: true,
+      width: 60,
+      hideInTable: true,
+      search: false,
     },
     {
       title: "图片",
@@ -133,7 +138,7 @@ const TableList: React.FC = () => {
 
       },
     },
-    
+
     {
       title: "出生日期",
       dataIndex: 'birthday',

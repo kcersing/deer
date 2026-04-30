@@ -25,6 +25,7 @@ import {updateMember} from "@/pages/affiliate/member/service/service";
 
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import {getDicthtList} from "../../../system/dict/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
@@ -38,7 +39,9 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
   const [open, setOpen] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
-
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
   const { run } = useRequest(updateMember, {
     manual: true,
     onSuccess: () => {
@@ -124,7 +127,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             ]}
           />
-
+          </ProForm.Group>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="mobile"
@@ -165,13 +169,16 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             ]}
           />
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormDatePicker
             width="md"
             name="birthday"
             label="出生日期"
             initialValue={defaultBirthday}
           />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormSwitch
             name="status"
             width="md"
@@ -197,6 +204,22 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               80: '80%',
               100: '确定',
             }}
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
           />
         </ProForm.Group>
       </ModalForm>

@@ -1,17 +1,18 @@
 import {
   ProForm,
-  ProFormText,ProFormSwitch,
-  ModalForm,ProFormUploadButton,ProFormRadio,ProFormDatePicker,ProFormSelect
+  ProFormText, ProFormSwitch,
+  ModalForm, ProFormUploadButton, ProFormRadio, ProFormDatePicker, ProFormSelect
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import { Form, message } from 'antd';
-import React, { cloneElement, useCallback, useState } from 'react';
+import {useRequest} from '@umijs/max';
+import {Form, message} from 'antd';
+import React, {cloneElement, useCallback, useState} from 'react';
 import WangEditor from '@/pages/components/wangeditor'
-import { User } from  "@/pages/opm/user/service/data";
+import {User} from "@/pages/opm/user/service/data";
 import {updateUser} from "@/pages/opm/user/service/service";
 import {getMessagesTypes} from "../../../messages/message/service/service";
 import {getPositionsList} from "../../positions/service/service";
 import {getDepartmentsList} from "../../departments/service/service";
+import {getDicthtList} from "../../../system/dict/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
@@ -20,7 +21,7 @@ export type ModalForm = {
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
-  const { onOk, values, trigger } = props;
+  const {onOk, values, trigger} = props;
   const [detailBody, setDetailBody] = useState(values.content);
   const optionDetail = (data: React.SetStateAction<string>) => {
     setDetailBody(data)
@@ -28,8 +29,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
   const [open, setOpen] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
-
-  const { run } = useRequest(updateUser, {
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
+  const {run} = useRequest(updateUser, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -48,11 +51,11 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish= (e) => useCallback(
+  const onFinish = (e) => useCallback(
     async (values?: any) => {
       values.id = e.id;
-      values.status = values.status?1:0;
-      await run({ data: values });
+      values.status = values.status ? 1 : 0;
+      await run({data: values});
       onCancel();
     },
     [onCancel, run],
@@ -63,8 +66,8 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
       {contextHolder}
       {trigger
         ? cloneElement(trigger, {
-            onClick: onOpen,
-          })
+          onClick: onOpen,
+        })
         : null}
 
       <ModalForm<{
@@ -77,10 +80,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
         autoFocusFirstInput
         modalProps={{
           destroyOnClose: true,
-          onCancel: () =>{onCancel()},
+          onCancel: () => {
+            onCancel()
+          },
         }}
 
-        style={{ padding: '32px 40px 48px' }}
+        style={{padding: '32px 40px 48px'}}
         width="800px"
         open={open}
 
@@ -149,9 +154,9 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             name="gender"
             label="性别"
             options={[
-              { value: 1, label: '男' },
-              { value: 2, label: '女' },
-              { value: 3, label: '保密 ' },
+              {value: 1, label: '男'},
+              {value: 2, label: '女'},
+              {value: 3, label: '保密 '},
             ]}
           />
 
@@ -180,8 +185,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="部门"
             width="sm"
             params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getDepartmentsList({params}).then((res) => {return res.data})
+            request={(params) => {
+              return getDepartmentsList({params}).then((res) => {
+                return res.data
+              })
             }}
 
             fieldProps={{
@@ -191,7 +198,7 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             }}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
 
           <ProFormSelect
@@ -199,8 +206,10 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="职位"
             width="sm"
             params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getPositionsList({params}).then((res) => {return res.data})
+            request={(params) => {
+              return getPositionsList({params}).then((res) => {
+                return res.data
+              })
             }}
 
             fieldProps={{
@@ -210,11 +219,25 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
               },
             }}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
         </ProForm.Group>
-
-
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>

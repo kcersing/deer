@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons';
+import {PlusOutlined} from '@ant-design/icons';
 import {
   type ActionType,
   ModalForm,
@@ -7,31 +7,36 @@ import {
   ProFormText,
   ProFormDateRangePicker,
   ProFormTextArea,
-  ProFormUploadButton,ProFormDigit,
+  ProFormUploadButton, ProFormDigit,
   ProFormSwitch,
 } from '@ant-design/pro-components';
-import {  useRequest } from '@umijs/max';
-import { Button, message } from 'antd';
-import React, { FC,useState } from 'react';
+import {useRequest} from '@umijs/max';
+import {Button, message} from 'antd';
+import React, {FC, useState} from 'react';
 
-import { Messages } from  "./../service/data";
-import {getMessagesTypes,SendMessages} from "./../service/service";
+import {Messages} from "./../service/data";
+import {getMessagesTypes, SendMessages} from "./../service/service";
+
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
+
 import WangEditor from '@/pages/components/wangeditor'
+import {getDicthtList} from "../../../system/dict/service/service";
 
 
 const CreateForm: FC<CreateFormProps> = (props) => {
-  const { reload } = props;
+  const {reload} = props;
 
   const [messageApi, contextHolder] = message.useMessage();
-
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
 
   const [type, setType] = useState("card");
 
 
-  const { run, loading } = useRequest(SendMessages, {
+  const {run, loading} = useRequest(SendMessages, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -50,17 +55,17 @@ const CreateForm: FC<CreateFormProps> = (props) => {
     <>
       {contextHolder}
       <ModalForm
-       title='发送消息'
+        title='发送消息'
         trigger={
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" icon={<PlusOutlined/>}>
             新建
           </Button>
         }
-       width="800px"
-        modalProps={{ okButtonProps: { loading } }}
+        width="800px"
+        modalProps={{okButtonProps: {loading}}}
         onFinish={async (value) => {
-          value.content=detail
-          await run({ data: value as Messages });
+          value.content = detail
+          await run({data: value as Messages});
           return true;
         }}
       >
@@ -71,8 +76,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             label="消息分类"
             width="md"
             params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getMessagesTypes({params}).then((res) => {return res.data})
+            request={(params) => {
+              return getMessagesTypes({params}).then((res) => {
+                return res.data
+              })
             }}
 
             fieldProps={{
@@ -82,7 +89,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             }}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
         </ProForm.Group>
 
@@ -101,7 +108,22 @@ const CreateForm: FC<CreateFormProps> = (props) => {
           />
 
         </ProForm.Group>
-
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>

@@ -1,42 +1,44 @@
-import { PlusOutlined } from '@ant-design/icons';
+import {PlusOutlined} from '@ant-design/icons';
 import {
   type ActionType,
   ModalForm, ProForm,
   ProFormText,
   ProFormSwitch,
   ProFormDatePicker,
-  ProFormUploadButton,ProFormRadio,ProFormSelect,
+  ProFormUploadButton, ProFormRadio, ProFormSelect,
 } from '@ant-design/pro-components';
-import {  useRequest } from '@umijs/max';
-import { Button, message } from 'antd';
-import React, { FC,useState } from 'react';
+import {useRequest} from '@umijs/max';
+import {Button, message} from 'antd';
+import React, {FC, useState} from 'react';
 
-import { User } from  "@/pages/opm/user/service/data";
+import {User} from "@/pages/opm/user/service/data";
 import {createUser} from "@/pages/opm/user/service/service";
 
 import WangEditor from '@/pages/components/wangeditor'
 import {getDepartmentsList} from "../../departments/service/service";
 import {getPositionsList} from "../../positions/service/service";
+import {getDicthtList} from "../../../system/dict/service/service";
 
 interface CreateFormProps {
   reload?: ActionType['reload'];
 }
 
 const CreateForm: FC<CreateFormProps> = (props) => {
-  const { reload } = props;
+  const {reload} = props;
 
   const [messageApi, contextHolder] = message.useMessage();
 
   const [detail, setDetail] = useState('');
   const [detailBody, setDetailBody] = useState('');
-
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
 
   const optionDetail = (data: React.SetStateAction<string>) => {
     setDetail(data)
   };
 
-
-  const { run, loading } = useRequest(createUser, {
+  const {run, loading} = useRequest(createUser, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -52,18 +54,18 @@ const CreateForm: FC<CreateFormProps> = (props) => {
     <>
       {contextHolder}
       <ModalForm
-       title='新建'
+        title='新建'
         trigger={
-          <Button type="primary" icon={<PlusOutlined />}>
+          <Button type="primary" icon={<PlusOutlined/>}>
             新建
           </Button>
         }
         width="800px"
-        modalProps={{ okButtonProps: { loading } }}
+        modalProps={{okButtonProps: {loading}}}
         onFinish={async (value) => {
-          value.status = value.status?1:0;
-          value.detail=detail
-          await run({ data: value as User });
+          value.status = value.status ? 1 : 0;
+          value.detail = detail
+          await run({data: value as User});
           return true;
         }}
       >
@@ -132,9 +134,9 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             name="gender"
             label="性别"
             options={[
-              { value: 1, label: '男' },
-              { value: 2, label: '女' },
-              { value: 3, label: '保密 ' },
+              {value: 1, label: '男'},
+              {value: 2, label: '女'},
+              {value: 3, label: '保密 '},
             ]}
           />
 
@@ -162,8 +164,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             label="部门"
             width="sm"
             params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getDepartmentsList({params}).then((res) => {return res.data})
+            request={(params) => {
+              return getDepartmentsList({params}).then((res) => {
+                return res.data
+              })
             }}
 
             fieldProps={{
@@ -173,7 +177,7 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             }}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
 
           <ProFormSelect
@@ -181,8 +185,10 @@ const CreateForm: FC<CreateFormProps> = (props) => {
             label="职位"
             width="sm"
             params={{current: 999, pageSize: 1}}
-            request={(params)=>{
-              return getPositionsList({params}).then((res) => {return res.data})
+            request={(params) => {
+              return getPositionsList({params}).then((res) => {
+                return res.data
+              })
             }}
 
             fieldProps={{
@@ -192,10 +198,25 @@ const CreateForm: FC<CreateFormProps> = (props) => {
               },
             }}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
         </ProForm.Group>
-
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>

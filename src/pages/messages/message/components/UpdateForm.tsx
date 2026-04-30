@@ -11,19 +11,20 @@ import {
   ProFormRadio,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,ProFormSwitch,
+  ProFormTextArea, ProFormSwitch,
   StepsForm,
   ModalForm,
   ProFormUploadButton,
 } from '@ant-design/pro-components';
-import { useRequest } from '@umijs/max';
-import { Form, message } from 'antd';
-import React, { cloneElement, useCallback, useState } from 'react';
+import {useRequest} from '@umijs/max';
+import {Form, message} from 'antd';
+import React, {cloneElement, useCallback, useState} from 'react';
 
 
-import { Messages } from  "./../service/data";
+import {Messages} from "./../service/data";
 import {updateSend} from "./../service/service";
 import WangEditor from '@/pages/components/wangeditor'
+import {getDicthtList} from "../../../system/dict/service/service";
 
 export type ModalForm = {
   trigger?: React.ReactElement<any>;
@@ -32,20 +33,21 @@ export type ModalForm = {
 };
 
 const UpdateForm: React.FC<ModalForm> = (props) => {
-  const { onOk, values, trigger } = props;
+  const {onOk, values, trigger} = props;
 
   // const [detail, setDetail] = useState(values.content);
   const [detailBody, setDetailBody] = useState(values.content);
   const optionDetail = (data: React.SetStateAction<string>) => {
-
     setDetailBody(data)
   };
 
   const [open, setOpen] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
-
-  const { run } = useRequest(updateSend, {
+  const {data: tagEnum} = useRequest(() => {
+    return getDicthtList({'dictId': 2})
+  });
+  const {run} = useRequest(updateSend, {
     manual: true,
     onSuccess: () => {
       messageApi.success('提交成功');
@@ -65,12 +67,12 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
     setOpen(true);
   }, []);
 
-  const onFinish= (e) => (
+  const onFinish = (e) => (
     async (v?: any) => {
 
-      var data={...e,...v}
+      var data = {...e, ...v}
       data.content = detailBody
-      await run({ data: data });
+      await run({data: data});
 
       onCancel();
     }
@@ -81,22 +83,24 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
       {contextHolder}
       {trigger
         ? cloneElement(trigger, {
-            onClick: onOpen,
-          })
+          onClick: onOpen,
+        })
         : null}
 
       <ModalForm
 
-       initialValues={{...values}}
+        initialValues={{...values}}
         title="更新"
         form={form}
         autoFocusFirstInput
         modalProps={{
           destroyOnClose: true,
-          onCancel: () =>{onCancel()},
+          onCancel: () => {
+            onCancel()
+          },
         }}
 
-        style={{ padding: '32px 40px 48px' }}
+        style={{padding: '32px 40px 48px'}}
         width="800px"
         open={open}
 
@@ -119,7 +123,22 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
 
         </ProForm.Group>
 
-
+        <ProForm.Group>
+          <ProFormSelect
+            width="md"
+            name="tagId"
+            label="标签"
+            options={tagEnum}
+            fieldProps={
+              {
+                showSearch: true,
+                multiple: true,
+                mode: "multiple",
+                fieldNames: {label: 'title', value: 'id'}
+              }
+            }
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <WangEditor optionDetail={optionDetail} detailBody={detailBody}/>
         </ProForm.Group>
@@ -130,15 +149,15 @@ const UpdateForm: React.FC<ModalForm> = (props) => {
             label="状态"
             width="md"
             options={[
-              { label: '草稿', value: 0 },
-              { label: '已发布/发送完成', value:1 },
-              { label: '定时发布中', value: 2 },
-              { label: '已撤销', value: 3 },
-              { label: '已归档', value: 4 },
-              { label: '已删除', value: 5 },
+              {label: '草稿', value: 0},
+              {label: '已发布/发送完成', value: 1},
+              {label: '定时发布中', value: 2},
+              {label: '已撤销', value: 3},
+              {label: '已归档', value: 4},
+              {label: '已删除', value: 5},
             ]}
             placeholder="请选择"
-            rules={[{ required: true, message: '请选择!' }]}
+            rules={[{required: true, message: '请选择!'}]}
           />
         </ProForm.Group>
 
