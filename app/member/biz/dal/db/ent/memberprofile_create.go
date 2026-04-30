@@ -174,6 +174,12 @@ func (_c *MemberProfileCreate) SetNillableWecom(v *string) *MemberProfileCreate 
 	return _c
 }
 
+// SetTagID sets the "tag_id" field.
+func (_c *MemberProfileCreate) SetTagID(v []int64) *MemberProfileCreate {
+	_c.mutation.SetTagID(v)
+	return _c
+}
+
 // SetRelationMid sets the "relation_mid" field.
 func (_c *MemberProfileCreate) SetRelationMid(v int64) *MemberProfileCreate {
 	_c.mutation.SetRelationMid(v)
@@ -351,6 +357,10 @@ func (_c *MemberProfileCreate) createSpec() (*MemberProfile, *sqlgraph.CreateSpe
 	if value, ok := _c.mutation.Wecom(); ok {
 		_spec.SetField(memberprofile.FieldWecom, field.TypeString, value)
 		_node.Wecom = value
+	}
+	if value, ok := _c.mutation.TagID(); ok {
+		_spec.SetField(memberprofile.FieldTagID, field.TypeJSON, value)
+		_node.TagID = value
 	}
 	if value, ok := _c.mutation.RelationMid(); ok {
 		_spec.SetField(memberprofile.FieldRelationMid, field.TypeInt64, value)

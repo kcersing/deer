@@ -94,6 +94,7 @@ var (
 		{Name: "city", Type: field.TypeInt64, Nullable: true, Comment: "市", Default: 0},
 		{Name: "province", Type: field.TypeInt64, Nullable: true, Comment: "省", Default: 0},
 		{Name: "address", Type: field.TypeString, Nullable: true, Comment: "address"},
+		{Name: "tag_id", Type: field.TypeJSON, Nullable: true, Comment: "标签"},
 	}
 	// UsersTable holds the schema information for the "users" table.
 	UsersTable = &schema.Table{

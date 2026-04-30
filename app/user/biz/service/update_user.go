@@ -46,7 +46,8 @@ func (s *UpdateUserService) Run(req *User.UpdateUserReq) (resp *User.UserResp, e
 		SetProvince(req.GetProvince()).
 		SetAddress(req.GetAddress()).
 		SetEmail(req.GetEmail()).
-		//SetRoleID(req.GetRoleId()).
+		//SetRoleId(req.GetRoleId()).
+		SetTagID(req.GetTagId()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

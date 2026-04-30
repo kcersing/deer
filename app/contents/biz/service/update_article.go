@@ -25,6 +25,7 @@ func (s *UpdateArticleService) Run(req *contents.UpdateArticleReq) (resp *conten
 		SetContent(req.Content).
 		SetPic(req.Pic).
 		SetTagID(req.TagId).
+		SetStatus(req.Status).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

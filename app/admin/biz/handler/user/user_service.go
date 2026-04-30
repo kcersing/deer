@@ -127,6 +127,7 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		Province:      req.GetProvince(),
 		Address:       req.GetAddress(),
 		Email:         req.GetEmail(),
+		TagId:         req.GetTagId(),
 	})
 
 	if err != nil {

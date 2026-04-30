@@ -700,6 +700,16 @@ func WecomContainsFold(v string) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldContainsFold(FieldWecom, v))
 }
 
+// TagIDIsNil applies the IsNil predicate on the "tag_id" field.
+func TagIDIsNil() predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldIsNull(FieldTagID))
+}
+
+// TagIDNotNil applies the NotNil predicate on the "tag_id" field.
+func TagIDNotNil() predicate.MemberProfile {
+	return predicate.MemberProfile(sql.FieldNotNull(FieldTagID))
+}
+
 // RelationMidEQ applies the EQ predicate on the "relation_mid" field.
 func RelationMidEQ(v int64) predicate.MemberProfile {
 	return predicate.MemberProfile(sql.FieldEQ(FieldRelationMid, v))

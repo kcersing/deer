@@ -24,6 +24,29 @@ struct Member {
 
 }
 
+struct Grade{
+    1:optional i64 id=0,
+    2:optional string name=""
+    3:optional string commission //分成比例
+    /**详情 */
+    4:optional string desc="" (api.raw = "desc")
+    5:optional string pic="",
+    6:optional i64 apply//是否可申请 是否可以由用户主动提交申请资料申请成为该级别
+    7:optional i64 applyOrderMoney //申请条件，订单金额 用户申请成为该级别需要满足的条件，不填写则不需要申请条件
+    8:optional i64  applyPayMoney//升级费用 提交申请时需要交升级费,0代表免费申请
+   9:optional string  applyDesc
+  10:optional i64 applyCheck//请资料是否需要后台审核
+11:optional i64 commission1//一级分销佣金比例
+12:optional i64 commission2//二级分销佣金比例
+13:optional i64 commission3//三级分销佣金比例 或 固定金额 提成方式
+
+   17:optional i64  date //等级有效期
+//到期等级过期后是否降级，0代表不降级，1代表降级到默认等级
+   18:optional i64 expiredDowngrade
+
+}
+
+
 
 
 struct MemberProduct {

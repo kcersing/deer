@@ -14,7 +14,6 @@ import (
 	payment "admin/biz/router/payment"
 	positions "admin/biz/router/positions"
 	product "admin/biz/router/product"
-	pub "admin/biz/router/pub"
 	role "admin/biz/router/role"
 	system "admin/biz/router/system"
 	user "admin/biz/router/user"
@@ -32,7 +31,6 @@ func GeneratedRegister(r *server.Hertz) {
 
 	message.Register(r)
 
-	pub.Register(r)
 
 	product.Register(r)
 

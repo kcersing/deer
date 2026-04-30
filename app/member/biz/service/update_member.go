@@ -5,10 +5,11 @@ import (
 	"context"
 	Member "gen/kitex_gen/member"
 
-	"github.com/pkg/errors"
 	"member/biz/convert"
 	"member/biz/dal/db"
 	"member/biz/dal/db/ent/member"
+
+	"github.com/pkg/errors"
 
 	"time"
 )
@@ -54,6 +55,7 @@ func (s *UpdateMemberService) Run(req *Member.UpdateMemberReq) (resp *Member.Mem
 		SetIntention(req.GetIntention()).
 		SetGender(req.GetGender()).
 		SetIntention(req.GetIntention()).
+		SetTagID(req.GetTagId()).
 		//SetSource(req.GetSource()).
 		//SetEmail(req.GetEmail()).
 		//SetWecom(req.GetWecom()).

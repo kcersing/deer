@@ -25,7 +25,7 @@ func (MemberProfile) Fields() []ent.Field {
 
 		field.String("email").Optional().Comment("email | 邮箱号"),
 		field.String("wecom").Optional().Comment("wecom | 微信号"),
-
+		field.JSON("tag_id", []int64{}).Comment("标签").Optional(),
 		field.Int64("relation_mid").Default(0).Comment("关联会员").Optional(),
 		field.String("relation_mame").Comment("关联会员").Optional(),
 	}

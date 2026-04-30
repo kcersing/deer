@@ -15,6 +15,7 @@ type Article struct {
 	CreatedAt string   `thrift:"createdAt,7,optional" frugal:"7,optional,string" json:"createdAt,omitempty"`
 	UpdatedAt string   `thrift:"updatedAt,8,optional" frugal:"8,optional,string" json:"updatedAt,omitempty"`
 	Pic       []string `thrift:"pic,9,optional" frugal:"9,optional,list<string>" json:"pic,omitempty"`
+	Status    int64    `thrift:"status,10,optional" frugal:"10,optional,i64" json:"status,omitempty"`
 }
 
 func NewArticle() *Article {
@@ -27,6 +28,7 @@ func NewArticle() *Article {
 		CreatedAt: "",
 		UpdatedAt: "",
 		Pic:       []string{},
+		Status:    0,
 	}
 }
 
@@ -39,6 +41,7 @@ func (p *Article) InitDefault() {
 	p.CreatedAt = ""
 	p.UpdatedAt = ""
 	p.Pic = []string{}
+	p.Status = 0
 }
 
 var Article_Id_DEFAULT int64 = 0
@@ -112,6 +115,15 @@ func (p *Article) GetPic() (v []string) {
 	}
 	return p.Pic
 }
+
+var Article_Status_DEFAULT int64 = 0
+
+func (p *Article) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return Article_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *Article) SetId(val int64) {
 	p.Id = val
 }
@@ -135,6 +147,9 @@ func (p *Article) SetUpdatedAt(val string) {
 }
 func (p *Article) SetPic(val []string) {
 	p.Pic = val
+}
+func (p *Article) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *Article) IsSetId() bool {
@@ -169,6 +184,10 @@ func (p *Article) IsSetPic() bool {
 	return p.Pic != nil
 }
 
+func (p *Article) IsSetStatus() bool {
+	return p.Status != Article_Status_DEFAULT
+}
+
 func (p *Article) String() string {
 	if p == nil {
 		return "<nil>"
@@ -177,12 +196,13 @@ func (p *Article) String() string {
 }
 
 var fieldIDToName_Article = map[int16]string{
-	1: "id",
-	2: "title",
-	3: "content",
-	5: "tagId",
-	6: "createdId",
-	7: "createdAt",
-	8: "updatedAt",
-	9: "pic",
+	1:  "id",
+	2:  "title",
+	3:  "content",
+	5:  "tagId",
+	6:  "createdId",
+	7:  "createdAt",
+	8:  "updatedAt",
+	9:  "pic",
+	10: "status",
 }

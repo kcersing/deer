@@ -1,4 +1,4 @@
-package mw
+package kitex
 
 import (
 	"context"
@@ -19,11 +19,13 @@ func ClientsMiddleware(next endpoint.Endpoint) endpoint.Endpoint {
 		klog.Infof("[mw client] server address: %v, rpc timeout: %v, readwrite timeout: %v\n", ri.To().Address(), ri.Config().RPCTimeout(), ri.Config().ConnectTimeout())
 		klog.Info(req)
 		klog.Info(resp)
-
+		//klog.Info("中间件：请求前")
 		if err = next(ctx, req, resp); err != nil {
 			klog.Error(err)
 			return err
 		}
+
+		//klog.Info("中间件：请求后")
 		return nil
 	}
 }

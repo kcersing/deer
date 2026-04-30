@@ -1,6 +1,6 @@
 module facade
 
-go 1.26.0
+go 1.26.2
 
 replace (
 	common => ../../common

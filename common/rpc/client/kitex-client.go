@@ -2,7 +2,7 @@ package client
 
 import (
 	"common/consts"
-	"common/mw"
+	"common/mw/kitex"
 
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/kitex/pkg/discovery"
@@ -96,8 +96,8 @@ func (r Resolver) Options() []client.Option {
 		client.WithConnectTimeout(50 * time.Millisecond),  // conn timeout
 		client.WithFailureRetry(retry.NewFailurePolicy()), // retry
 
-		client.WithMiddleware(mw.CommonMiddleware),
-		client.WithInstanceMW(mw.ClientsMiddleware),
+		client.WithMiddleware(kitex.CommonMiddleware),
+		client.WithInstanceMW(kitex.ClientsMiddleware),
 		client.WithSuite(tracing.NewClientSuite()),
 		client.WithClientBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: r.BasicServiceName}),
 	}

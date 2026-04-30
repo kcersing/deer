@@ -25,7 +25,7 @@ type CreateProductReq struct {
 	Stock   int64   `thrift:"stock,7,optional" form:"stock" json:"stock,omitempty" query:"stock"`
 	Items   []int64 `thrift:"items,9,optional,list<i64>" form:"items" json:"items,omitempty" query:"items"`
 	IsSales []int64 `thrift:"isSales,10,optional,list<i64>" form:"isSales" json:"isSales,omitempty" query:"isSales"`
-	//    11: optional list<product.Attribute> Attributes=[]
+	// 11: optional list<product.Attribute> Attributes=[]
 	SalesAt []string `thrift:"salesAt,13,optional,list<string>" form:"salesAt" json:"salesAt,omitempty" query:"salesAt"`
 }
 

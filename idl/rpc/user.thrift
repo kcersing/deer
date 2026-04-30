@@ -20,7 +20,7 @@ struct CreateUserReq{
      6:optional i64 gender=0,
      7:optional string birthday="",
      8:optional string  desc="",
-
+     16:optional list<i64> tagId=[],
      9:optional i64 departmentsId=0,
      10:optional i64 positionsId=0,
      256:optional i64 createdId=0,
@@ -43,7 +43,7 @@ struct UpdateUserReq {
     6:optional i64 gender=0,
     7:optional string birthday="",
     8:optional string   desc="",
-
+     16:optional list<i64> tagId=[],
     9:optional i64 departmentsId=0,
     10:optional i64 positionsId=0,
 

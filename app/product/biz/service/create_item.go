@@ -32,6 +32,7 @@ func (s *CreateItemService) Run(req *product.CreateItemReq) (resp *product.ItemR
 		SetTagID(req.GetTagId()).
 		SetCreatedID(req.GetCreatedId()).
 		SetStatus(req.GetStatus()).
+		SetTagID(req.GetTagId()).
 		Save(s.ctx)
 	if err != nil {
 		return nil, err

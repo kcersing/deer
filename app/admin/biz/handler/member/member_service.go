@@ -88,6 +88,7 @@ func UpdateMember(ctx context.Context, c *app.RequestContext) {
 		Gender:    req.GetGender(),
 		Status:    req.GetStatus(),
 		Avatar:    req.GetAvatar(),
+		TagId:     req.GetTagId(),
 	})
 
 	if err != nil {

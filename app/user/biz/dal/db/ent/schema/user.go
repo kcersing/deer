@@ -48,6 +48,8 @@ func (User) Fields() []ent.Field {
 		field.Int64("city").Default(0).Comment("市").Optional(),
 		field.Int64("province").Default(0).Comment("省").Optional(),
 		field.String("address").Comment("address").Optional(),
+
+		field.JSON("tag_id", []int64{}).Comment("标签").Optional(),
 	}
 }
 

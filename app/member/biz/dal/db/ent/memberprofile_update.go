@@ -13,6 +13,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -256,6 +257,24 @@ func (_u *MemberProfileUpdate) ClearWecom() *MemberProfileUpdate {
 	return _u
 }
 
+// SetTagID sets the "tag_id" field.
+func (_u *MemberProfileUpdate) SetTagID(v []int64) *MemberProfileUpdate {
+	_u.mutation.SetTagID(v)
+	return _u
+}
+
+// AppendTagID appends value to the "tag_id" field.
+func (_u *MemberProfileUpdate) AppendTagID(v []int64) *MemberProfileUpdate {
+	_u.mutation.AppendTagID(v)
+	return _u
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (_u *MemberProfileUpdate) ClearTagID() *MemberProfileUpdate {
+	_u.mutation.ClearTagID()
+	return _u
+}
+
 // SetRelationMid sets the "relation_mid" field.
 func (_u *MemberProfileUpdate) SetRelationMid(v int64) *MemberProfileUpdate {
 	_u.mutation.ResetRelationMid()
@@ -435,6 +454,17 @@ func (_u *MemberProfileUpdate) sqlSave(ctx context.Context) (_node int, err erro
 	}
 	if _u.mutation.WecomCleared() {
 		_spec.ClearField(memberprofile.FieldWecom, field.TypeString)
+	}
+	if value, ok := _u.mutation.TagID(); ok {
+		_spec.SetField(memberprofile.FieldTagID, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedTagID(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, memberprofile.FieldTagID, value)
+		})
+	}
+	if _u.mutation.TagIDCleared() {
+		_spec.ClearField(memberprofile.FieldTagID, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.RelationMid(); ok {
 		_spec.SetField(memberprofile.FieldRelationMid, field.TypeInt64, value)
@@ -727,6 +757,24 @@ func (_u *MemberProfileUpdateOne) ClearWecom() *MemberProfileUpdateOne {
 	return _u
 }
 
+// SetTagID sets the "tag_id" field.
+func (_u *MemberProfileUpdateOne) SetTagID(v []int64) *MemberProfileUpdateOne {
+	_u.mutation.SetTagID(v)
+	return _u
+}
+
+// AppendTagID appends value to the "tag_id" field.
+func (_u *MemberProfileUpdateOne) AppendTagID(v []int64) *MemberProfileUpdateOne {
+	_u.mutation.AppendTagID(v)
+	return _u
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (_u *MemberProfileUpdateOne) ClearTagID() *MemberProfileUpdateOne {
+	_u.mutation.ClearTagID()
+	return _u
+}
+
 // SetRelationMid sets the "relation_mid" field.
 func (_u *MemberProfileUpdateOne) SetRelationMid(v int64) *MemberProfileUpdateOne {
 	_u.mutation.ResetRelationMid()
@@ -936,6 +984,17 @@ func (_u *MemberProfileUpdateOne) sqlSave(ctx context.Context) (_node *MemberPro
 	}
 	if _u.mutation.WecomCleared() {
 		_spec.ClearField(memberprofile.FieldWecom, field.TypeString)
+	}
+	if value, ok := _u.mutation.TagID(); ok {
+		_spec.SetField(memberprofile.FieldTagID, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedTagID(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, memberprofile.FieldTagID, value)
+		})
+	}
+	if _u.mutation.TagIDCleared() {
+		_spec.ClearField(memberprofile.FieldTagID, field.TypeJSON)
 	}
 	if value, ok := _u.mutation.RelationMid(); ok {
 		_spec.SetField(memberprofile.FieldRelationMid, field.TypeInt64, value)

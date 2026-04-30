@@ -17,6 +17,7 @@ struct CreateScheduleReq{
     11:optional i64 memberId =0 (api.raw = "memberId")
     12:optional i64 memberProductId =0 (api.raw = "memberProductId")
     13:optional i64 memberProductItemId =0 (api.raw = "memberProductItemId")
+    16:optional list<i64> tagId=[],
 }
 struct UpdateScheduleReq{
 

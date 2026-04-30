@@ -58,11 +58,12 @@ func InitLog(env bool) {
 		output.Sync() //nolint:errcheck
 	})
 	_log := kitexzap.NewLogger(opts...)
+
 	klog.SetLogger(_log)
 	klog.SetLevel(klog.LevelTrace)
 	klog.SetOutput(output)
 	if runtime.GOOS == "linux" {
 		klog.SetOutput(output)
 	}
-	//klog.SetOutput(output)
+
 }

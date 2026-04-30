@@ -1405,6 +1405,16 @@ func AddressContainsFold(v string) predicate.User {
 	return predicate.User(sql.FieldContainsFold(FieldAddress, v))
 }
 
+// TagIDIsNil applies the IsNil predicate on the "tag_id" field.
+func TagIDIsNil() predicate.User {
+	return predicate.User(sql.FieldIsNull(FieldTagID))
+}
+
+// TagIDNotNil applies the NotNil predicate on the "tag_id" field.
+func TagIDNotNil() predicate.User {
+	return predicate.User(sql.FieldNotNull(FieldTagID))
+}
+
 // HasUserRole applies the HasEdge predicate on the "user_role" edge.
 func HasUserRole() predicate.User {
 	return predicate.User(func(s *sql.Selector) {

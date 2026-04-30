@@ -56,6 +56,8 @@ const (
 	FieldProvince = "province"
 	// FieldAddress holds the string denoting the address field in the database.
 	FieldAddress = "address"
+	// FieldTagID holds the string denoting the tag_id field in the database.
+	FieldTagID = "tag_id"
 	// EdgeUserRole holds the string denoting the user_role edge name in mutations.
 	EdgeUserRole = "user_role"
 	// Table holds the table name of the user in the database.
@@ -93,6 +95,7 @@ var Columns = []string{
 	FieldCity,
 	FieldProvince,
 	FieldAddress,
+	FieldTagID,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).

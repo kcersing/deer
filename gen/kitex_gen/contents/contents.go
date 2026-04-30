@@ -14,6 +14,7 @@ type CreateArticleReq struct {
 	TagId     []int64  `thrift:"tagId,5,optional" frugal:"5,optional,list<i64>" json:"tagId,omitempty"`
 	Pic       []string `thrift:"pic,9,optional" frugal:"9,optional,list<string>" json:"pic,omitempty"`
 	CreatedId int64    `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Status    int64    `thrift:"status,6,optional" frugal:"6,optional,i64" json:"status,omitempty"`
 }
 
 func NewCreateArticleReq() *CreateArticleReq {
@@ -23,6 +24,7 @@ func NewCreateArticleReq() *CreateArticleReq {
 		TagId:     []int64{},
 		Pic:       []string{},
 		CreatedId: 0,
+		Status:    0,
 	}
 }
 
@@ -32,6 +34,7 @@ func (p *CreateArticleReq) InitDefault() {
 	p.TagId = []int64{}
 	p.Pic = []string{}
 	p.CreatedId = 0
+	p.Status = 0
 }
 
 var CreateArticleReq_Title_DEFAULT string = ""
@@ -78,6 +81,15 @@ func (p *CreateArticleReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+
+var CreateArticleReq_Status_DEFAULT int64 = 0
+
+func (p *CreateArticleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateArticleReq_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *CreateArticleReq) SetTitle(val string) {
 	p.Title = val
 }
@@ -92,6 +104,9 @@ func (p *CreateArticleReq) SetPic(val []string) {
 }
 func (p *CreateArticleReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+func (p *CreateArticleReq) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *CreateArticleReq) IsSetTitle() bool {
@@ -114,6 +129,10 @@ func (p *CreateArticleReq) IsSetCreatedId() bool {
 	return p.CreatedId != CreateArticleReq_CreatedId_DEFAULT
 }
 
+func (p *CreateArticleReq) IsSetStatus() bool {
+	return p.Status != CreateArticleReq_Status_DEFAULT
+}
+
 func (p *CreateArticleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -127,6 +146,7 @@ var fieldIDToName_CreateArticleReq = map[int16]string{
 	5:   "tagId",
 	9:   "pic",
 	256: "createdId",
+	6:   "status",
 }
 
 type UpdateArticleReq struct {
@@ -135,6 +155,7 @@ type UpdateArticleReq struct {
 	Content string   `thrift:"content,3,optional" frugal:"3,optional,string" json:"content,omitempty"`
 	TagId   []int64  `thrift:"tagId,5,optional" frugal:"5,optional,list<i64>" json:"tagId,omitempty"`
 	Pic     []string `thrift:"pic,9,optional" frugal:"9,optional,list<string>" json:"pic,omitempty"`
+	Status  int64    `thrift:"status,6,optional" frugal:"6,optional,i64" json:"status,omitempty"`
 }
 
 func NewUpdateArticleReq() *UpdateArticleReq {
@@ -144,6 +165,7 @@ func NewUpdateArticleReq() *UpdateArticleReq {
 		Content: "",
 		TagId:   []int64{},
 		Pic:     []string{},
+		Status:  0,
 	}
 }
 
@@ -153,6 +175,7 @@ func (p *UpdateArticleReq) InitDefault() {
 	p.Content = ""
 	p.TagId = []int64{}
 	p.Pic = []string{}
+	p.Status = 0
 }
 
 var UpdateArticleReq_Id_DEFAULT int64 = 0
@@ -199,6 +222,15 @@ func (p *UpdateArticleReq) GetPic() (v []string) {
 	}
 	return p.Pic
 }
+
+var UpdateArticleReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateArticleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateArticleReq_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *UpdateArticleReq) SetId(val int64) {
 	p.Id = val
 }
@@ -213,6 +245,9 @@ func (p *UpdateArticleReq) SetTagId(val []int64) {
 }
 func (p *UpdateArticleReq) SetPic(val []string) {
 	p.Pic = val
+}
+func (p *UpdateArticleReq) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *UpdateArticleReq) IsSetId() bool {
@@ -235,6 +270,10 @@ func (p *UpdateArticleReq) IsSetPic() bool {
 	return p.Pic != nil
 }
 
+func (p *UpdateArticleReq) IsSetStatus() bool {
+	return p.Status != UpdateArticleReq_Status_DEFAULT
+}
+
 func (p *UpdateArticleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -248,6 +287,7 @@ var fieldIDToName_UpdateArticleReq = map[int16]string{
 	3: "content",
 	5: "tagId",
 	9: "pic",
+	6: "status",
 }
 
 type ArticleListReq struct {
@@ -255,6 +295,7 @@ type ArticleListReq struct {
 	PageSize int64   `thrift:"pageSize,2,optional" frugal:"2,optional,i64" json:"pageSize,omitempty"`
 	Keyword  string  `thrift:"keyword,3,optional" frugal:"3,optional,string" json:"keyword,omitempty"`
 	TagId    []int64 `thrift:"tagId,5,optional" frugal:"5,optional,list<i64>" json:"tagId,omitempty"`
+	Status   int64   `thrift:"status,6,optional" frugal:"6,optional,i64" json:"status,omitempty"`
 }
 
 func NewArticleListReq() *ArticleListReq {
@@ -263,6 +304,7 @@ func NewArticleListReq() *ArticleListReq {
 		PageSize: 10,
 		Keyword:  "",
 		TagId:    []int64{},
+		Status:   0,
 	}
 }
 
@@ -271,6 +313,7 @@ func (p *ArticleListReq) InitDefault() {
 	p.PageSize = 10
 	p.Keyword = ""
 	p.TagId = []int64{}
+	p.Status = 0
 }
 
 var ArticleListReq_Page_DEFAULT int64 = 1
@@ -308,6 +351,15 @@ func (p *ArticleListReq) GetTagId() (v []int64) {
 	}
 	return p.TagId
 }
+
+var ArticleListReq_Status_DEFAULT int64 = 0
+
+func (p *ArticleListReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return ArticleListReq_Status_DEFAULT
+	}
+	return p.Status
+}
 func (p *ArticleListReq) SetPage(val int64) {
 	p.Page = val
 }
@@ -319,6 +371,9 @@ func (p *ArticleListReq) SetKeyword(val string) {
 }
 func (p *ArticleListReq) SetTagId(val []int64) {
 	p.TagId = val
+}
+func (p *ArticleListReq) SetStatus(val int64) {
+	p.Status = val
 }
 
 func (p *ArticleListReq) IsSetPage() bool {
@@ -337,6 +392,10 @@ func (p *ArticleListReq) IsSetTagId() bool {
 	return p.TagId != nil
 }
 
+func (p *ArticleListReq) IsSetStatus() bool {
+	return p.Status != ArticleListReq_Status_DEFAULT
+}
+
 func (p *ArticleListReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -349,6 +408,7 @@ var fieldIDToName_ArticleListReq = map[int16]string{
 	2: "pageSize",
 	3: "keyword",
 	5: "tagId",
+	6: "status",
 }
 
 type ArticleListResp struct {

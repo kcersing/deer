@@ -146,7 +146,7 @@ func Handler(sub mq.Subscriber) app.HandlerFunc {
 //// 然后在 Handler 中更新这些指标
 //func Handler(sub mq.Subscriber) app.HandlerFunc {
 //    return func(c context.Context, ctx *app.RequestContext) {
-//        err := upgrader.Upgrade(ctx, func(conn *websocket.Conn) {
+//        err := upgrader.Upgrade(ctx, func(conn *ws.Conn) {
 //            // 更新 Prometheus 指标
 //            wsActiveConnections.Inc()
 //            wsTotalConnections.Inc()

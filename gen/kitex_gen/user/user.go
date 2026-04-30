@@ -131,17 +131,18 @@ var fieldIDToName_UserListResp = map[int16]string{
 }
 
 type CreateUserReq struct {
-	Username      string `thrift:"username,1" frugal:"1,default,string" json:"username"`
-	Avatar        string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
-	Mobile        string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Name          string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	Status        int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
-	Gender        int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
-	Birthday      string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
-	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
-	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
-	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
-	CreatedId     int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Username      string  `thrift:"username,1" frugal:"1,default,string" json:"username"`
+	Avatar        string  `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile        string  `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name          string  `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status        int64   `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender        int64   `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday      string  `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Desc          string  `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
+	TagId         []int64 `thrift:"tagId,16,optional" frugal:"16,optional,list<i64>" json:"tagId,omitempty"`
+	DepartmentsId int64   `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId   int64   `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
+	CreatedId     int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewCreateUserReq() *CreateUserReq {
@@ -153,6 +154,7 @@ func NewCreateUserReq() *CreateUserReq {
 		Gender:        0,
 		Birthday:      "",
 		Desc:          "",
+		TagId:         []int64{},
 		DepartmentsId: 0,
 		PositionsId:   0,
 		CreatedId:     0,
@@ -167,6 +169,7 @@ func (p *CreateUserReq) InitDefault() {
 	p.Gender = 0
 	p.Birthday = ""
 	p.Desc = ""
+	p.TagId = []int64{}
 	p.DepartmentsId = 0
 	p.PositionsId = 0
 	p.CreatedId = 0
@@ -239,6 +242,15 @@ func (p *CreateUserReq) GetDesc() (v string) {
 	return p.Desc
 }
 
+var CreateUserReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *CreateUserReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return CreateUserReq_TagId_DEFAULT
+	}
+	return p.TagId
+}
+
 var CreateUserReq_DepartmentsId_DEFAULT int64 = 0
 
 func (p *CreateUserReq) GetDepartmentsId() (v int64) {
@@ -289,6 +301,9 @@ func (p *CreateUserReq) SetBirthday(val string) {
 func (p *CreateUserReq) SetDesc(val string) {
 	p.Desc = val
 }
+func (p *CreateUserReq) SetTagId(val []int64) {
+	p.TagId = val
+}
 func (p *CreateUserReq) SetDepartmentsId(val int64) {
 	p.DepartmentsId = val
 }
@@ -327,6 +342,10 @@ func (p *CreateUserReq) IsSetDesc() bool {
 	return p.Desc != CreateUserReq_Desc_DEFAULT
 }
 
+func (p *CreateUserReq) IsSetTagId() bool {
+	return p.TagId != nil
+}
+
 func (p *CreateUserReq) IsSetDepartmentsId() bool {
 	return p.DepartmentsId != CreateUserReq_DepartmentsId_DEFAULT
 }
@@ -355,6 +374,7 @@ var fieldIDToName_CreateUserReq = map[int16]string{
 	6:   "gender",
 	7:   "birthday",
 	8:   "desc",
+	16:  "tagId",
 	9:   "departmentsId",
 	10:  "positionsId",
 	256: "createdId",
@@ -502,21 +522,22 @@ var fieldIDToName_GetUserListReq = map[int16]string{
 }
 
 type UpdateUserReq struct {
-	Id            int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Avatar        string `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
-	Mobile        string `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
-	Name          string `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
-	Status        int64  `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
-	Gender        int64  `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
-	Birthday      string `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
-	Desc          string `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
-	DepartmentsId int64  `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
-	PositionsId   int64  `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
-	CreatedId     int64  `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
-	Address       string `thrift:"address,15,optional" frugal:"15,optional,string" json:"address,omitempty"`
-	City          int64  `thrift:"city,12,optional" frugal:"12,optional,i64" json:"city,omitempty"`
-	Province      int64  `thrift:"province,13,optional" frugal:"13,optional,i64" json:"province,omitempty"`
-	Email         string `thrift:"email,14,optional" frugal:"14,optional,string" json:"email,omitempty"`
+	Id            int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar        string  `thrift:"avatar,2,optional" frugal:"2,optional,string" json:"avatar,omitempty"`
+	Mobile        string  `thrift:"mobile,3,optional" frugal:"3,optional,string" json:"mobile,omitempty"`
+	Name          string  `thrift:"name,4,optional" frugal:"4,optional,string" json:"name,omitempty"`
+	Status        int64   `thrift:"status,5,optional" frugal:"5,optional,i64" json:"status,omitempty"`
+	Gender        int64   `thrift:"gender,6,optional" frugal:"6,optional,i64" json:"gender,omitempty"`
+	Birthday      string  `thrift:"birthday,7,optional" frugal:"7,optional,string" json:"birthday,omitempty"`
+	Desc          string  `thrift:"desc,8,optional" frugal:"8,optional,string" json:"desc,omitempty"`
+	TagId         []int64 `thrift:"tagId,16,optional" frugal:"16,optional,list<i64>" json:"tagId,omitempty"`
+	DepartmentsId int64   `thrift:"departmentsId,9,optional" frugal:"9,optional,i64" json:"departmentsId,omitempty"`
+	PositionsId   int64   `thrift:"positionsId,10,optional" frugal:"10,optional,i64" json:"positionsId,omitempty"`
+	CreatedId     int64   `thrift:"createdId,256,optional" frugal:"256,optional,i64" json:"createdId,omitempty"`
+	Address       string  `thrift:"address,15,optional" frugal:"15,optional,string" json:"address,omitempty"`
+	City          int64   `thrift:"city,12,optional" frugal:"12,optional,i64" json:"city,omitempty"`
+	Province      int64   `thrift:"province,13,optional" frugal:"13,optional,i64" json:"province,omitempty"`
+	Email         string  `thrift:"email,14,optional" frugal:"14,optional,string" json:"email,omitempty"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
@@ -529,6 +550,7 @@ func NewUpdateUserReq() *UpdateUserReq {
 		Gender:        0,
 		Birthday:      "",
 		Desc:          "",
+		TagId:         []int64{},
 		DepartmentsId: 0,
 		PositionsId:   0,
 		CreatedId:     0,
@@ -548,6 +570,7 @@ func (p *UpdateUserReq) InitDefault() {
 	p.Gender = 0
 	p.Birthday = ""
 	p.Desc = ""
+	p.TagId = []int64{}
 	p.DepartmentsId = 0
 	p.PositionsId = 0
 	p.CreatedId = 0
@@ -627,6 +650,15 @@ func (p *UpdateUserReq) GetDesc() (v string) {
 		return UpdateUserReq_Desc_DEFAULT
 	}
 	return p.Desc
+}
+
+var UpdateUserReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *UpdateUserReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return UpdateUserReq_TagId_DEFAULT
+	}
+	return p.TagId
 }
 
 var UpdateUserReq_DepartmentsId_DEFAULT int64 = 0
@@ -715,6 +747,9 @@ func (p *UpdateUserReq) SetBirthday(val string) {
 func (p *UpdateUserReq) SetDesc(val string) {
 	p.Desc = val
 }
+func (p *UpdateUserReq) SetTagId(val []int64) {
+	p.TagId = val
+}
 func (p *UpdateUserReq) SetDepartmentsId(val int64) {
 	p.DepartmentsId = val
 }
@@ -769,6 +804,10 @@ func (p *UpdateUserReq) IsSetDesc() bool {
 	return p.Desc != UpdateUserReq_Desc_DEFAULT
 }
 
+func (p *UpdateUserReq) IsSetTagId() bool {
+	return p.TagId != nil
+}
+
 func (p *UpdateUserReq) IsSetDepartmentsId() bool {
 	return p.DepartmentsId != UpdateUserReq_DepartmentsId_DEFAULT
 }
@@ -813,6 +852,7 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 	6:   "gender",
 	7:   "birthday",
 	8:   "desc",
+	16:  "tagId",
 	9:   "departmentsId",
 	10:  "positionsId",
 	256: "createdId",

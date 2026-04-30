@@ -8482,6 +8482,8 @@ type MemberProfileMutation struct {
 	birthday        *time.Time
 	email           *string
 	wecom           *string
+	tag_id          *[]int64
+	appendtag_id    []int64
 	relation_mid    *int64
 	addrelation_mid *int64
 	relation_mame   *string
@@ -9241,6 +9243,71 @@ func (m *MemberProfileMutation) ResetWecom() {
 	delete(m.clearedFields, memberprofile.FieldWecom)
 }
 
+// SetTagID sets the "tag_id" field.
+func (m *MemberProfileMutation) SetTagID(i []int64) {
+	m.tag_id = &i
+	m.appendtag_id = nil
+}
+
+// TagID returns the value of the "tag_id" field in the mutation.
+func (m *MemberProfileMutation) TagID() (r []int64, exists bool) {
+	v := m.tag_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTagID returns the old "tag_id" field's value of the MemberProfile entity.
+// If the MemberProfile object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *MemberProfileMutation) OldTagID(ctx context.Context) (v []int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTagID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTagID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTagID: %w", err)
+	}
+	return oldValue.TagID, nil
+}
+
+// AppendTagID adds i to the "tag_id" field.
+func (m *MemberProfileMutation) AppendTagID(i []int64) {
+	m.appendtag_id = append(m.appendtag_id, i...)
+}
+
+// AppendedTagID returns the list of values that were appended to the "tag_id" field in this mutation.
+func (m *MemberProfileMutation) AppendedTagID() ([]int64, bool) {
+	if len(m.appendtag_id) == 0 {
+		return nil, false
+	}
+	return m.appendtag_id, true
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (m *MemberProfileMutation) ClearTagID() {
+	m.tag_id = nil
+	m.appendtag_id = nil
+	m.clearedFields[memberprofile.FieldTagID] = struct{}{}
+}
+
+// TagIDCleared returns if the "tag_id" field was cleared in this mutation.
+func (m *MemberProfileMutation) TagIDCleared() bool {
+	_, ok := m.clearedFields[memberprofile.FieldTagID]
+	return ok
+}
+
+// ResetTagID resets all changes to the "tag_id" field.
+func (m *MemberProfileMutation) ResetTagID() {
+	m.tag_id = nil
+	m.appendtag_id = nil
+	delete(m.clearedFields, memberprofile.FieldTagID)
+}
+
 // SetRelationMid sets the "relation_mid" field.
 func (m *MemberProfileMutation) SetRelationMid(i int64) {
 	m.relation_mid = &i
@@ -9421,7 +9488,7 @@ func (m *MemberProfileMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *MemberProfileMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 14)
 	if m.created_at != nil {
 		fields = append(fields, memberprofile.FieldCreatedAt)
 	}
@@ -9454,6 +9521,9 @@ func (m *MemberProfileMutation) Fields() []string {
 	}
 	if m.wecom != nil {
 		fields = append(fields, memberprofile.FieldWecom)
+	}
+	if m.tag_id != nil {
+		fields = append(fields, memberprofile.FieldTagID)
 	}
 	if m.relation_mid != nil {
 		fields = append(fields, memberprofile.FieldRelationMid)
@@ -9491,6 +9561,8 @@ func (m *MemberProfileMutation) Field(name string) (ent.Value, bool) {
 		return m.Email()
 	case memberprofile.FieldWecom:
 		return m.Wecom()
+	case memberprofile.FieldTagID:
+		return m.TagID()
 	case memberprofile.FieldRelationMid:
 		return m.RelationMid()
 	case memberprofile.FieldRelationMame:
@@ -9526,6 +9598,8 @@ func (m *MemberProfileMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldEmail(ctx)
 	case memberprofile.FieldWecom:
 		return m.OldWecom(ctx)
+	case memberprofile.FieldTagID:
+		return m.OldTagID(ctx)
 	case memberprofile.FieldRelationMid:
 		return m.OldRelationMid(ctx)
 	case memberprofile.FieldRelationMame:
@@ -9615,6 +9689,13 @@ func (m *MemberProfileMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetWecom(v)
+		return nil
+	case memberprofile.FieldTagID:
+		v, ok := value.([]int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTagID(v)
 		return nil
 	case memberprofile.FieldRelationMid:
 		v, ok := value.(int64)
@@ -9768,6 +9849,9 @@ func (m *MemberProfileMutation) ClearedFields() []string {
 	if m.FieldCleared(memberprofile.FieldWecom) {
 		fields = append(fields, memberprofile.FieldWecom)
 	}
+	if m.FieldCleared(memberprofile.FieldTagID) {
+		fields = append(fields, memberprofile.FieldTagID)
+	}
 	if m.FieldCleared(memberprofile.FieldRelationMid) {
 		fields = append(fields, memberprofile.FieldRelationMid)
 	}
@@ -9821,6 +9905,9 @@ func (m *MemberProfileMutation) ClearField(name string) error {
 	case memberprofile.FieldWecom:
 		m.ClearWecom()
 		return nil
+	case memberprofile.FieldTagID:
+		m.ClearTagID()
+		return nil
 	case memberprofile.FieldRelationMid:
 		m.ClearRelationMid()
 		return nil
@@ -9867,6 +9954,9 @@ func (m *MemberProfileMutation) ResetField(name string) error {
 		return nil
 	case memberprofile.FieldWecom:
 		m.ResetWecom()
+		return nil
+	case memberprofile.FieldTagID:
+		m.ResetTagID()
 		return nil
 	case memberprofile.FieldRelationMid:
 		m.ResetRelationMid()

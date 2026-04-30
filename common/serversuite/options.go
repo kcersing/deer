@@ -2,11 +2,12 @@ package serversuite
 
 import (
 	"common/consts"
-	"common/mw"
+	"common/mw/kitex"
 	"common/pkg/utils"
 	"common/rpc/registry"
 	"net"
 	"strings"
+	"time"
 
 	"github.com/cloudwego/kitex/pkg/limit"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -42,11 +43,11 @@ func Option(rr, serviceName, address string, flakeNode int64) (opts []server.Opt
 		server.WithMetaHandler(transmeta.ServerTTHeaderHandler),
 		server.WithLimit(&limit.Option{MaxConnections: 1000, MaxQPS: 100}),
 		//server.WithMuxTransport(),
-		server.WithMiddleware(mw.CommonMiddleware),
-		server.WithMiddleware(mw.ServerMiddleware),
+		server.WithExitWaitTime(5*time.Second),
+		server.WithMiddleware(kitex.CommonMiddleware),
+		server.WithMiddleware(kitex.ServerMiddleware),
 		server.WithSuite(tracing.NewServerSuite()),
 		server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: serviceName}),
-
 		server.WithRegistryInfo(info),
 	)
 

@@ -19,11 +19,11 @@ struct UpdateUserReq {
     9:optional i64 roleId=0(api.raw = "roleId"),
     10:optional i64 departmentsId=0(api.raw = "departmentsId"),
     11:optional i64 positionsId=0(api.raw = "positionsId"),
-
+    16:optional list<i64> tagId=[],
     15:optional string address=""(api.raw = "address"),
-     12:optional i64 city=0(api.raw = "city"),
-     13:optional i64 province=0(api.raw = "province"),
-     14:optional string email=""(api.raw = "email"),
+    12:optional i64 city=0(api.raw = "city"),
+    13:optional i64 province=0(api.raw = "province"),
+    14:optional string email=""(api.raw = "email"),
 
 }
 struct GetUserListReq{

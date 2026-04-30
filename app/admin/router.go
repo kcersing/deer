@@ -6,11 +6,13 @@ import (
 	handler "admin/biz/handler"
 	"admin/biz/infras/service/payment"
 	"admin/biz/mw"
+	"common/ws"
 	"context"
+	"net/http"
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/cloudwego/hertz/pkg/common/adaptor"
 )
 
 // customizeRegister registers customize routers.
@@ -22,11 +24,36 @@ func customizedRegister(r *server.Hertz) {
 	r.POST("/service/user/refresh_token", mw.JwtMiddleware.RefreshHandler)
 
 	r.POST("/service/payment/WXNotify", func(c context.Context, ctx *app.RequestContext) {
-		hlog.Info("载入WXNotify")
 		payment.Notify(c, ctx)
 	})
 	r.POST("/service/payment/WXRefundNotify", func(c context.Context, ctx *app.RequestContext) {
-		hlog.Info("WXRefundNotify")
 		payment.RefundNotify(c, ctx)
 	})
+	r.POST("/service/pub/upload/", func(c context.Context, ctx *app.RequestContext) {
+
+	})
+
+	hub := ws.NewHub(r.Name)
+
+	r.GET("/service/ws", adaptor.HertzHandler(http.HandlerFunc(hub.ServeWs)))
+
+	//srv, _ := statsviz.NewServer()
+	//
+	//r.GET("/statsviz/", func(ctx context.Context, c *app.RequestContext) {
+	//
+	//	req, err := adaptor.GetCompatRequest(&c.Request)
+	//	if err != nil {
+	//		hlog.Error(err)
+	//		return
+	//	}
+	//	rw := adaptor.GetCompatResponseWriter(&c.Response)
+	//
+	//	if c.Param("filepath") == "/ws" {
+	//		srv.Ws()(rw, req)
+	//		return
+	//	}
+	//	 srv.Index().ServeHTTP(rw, req)
+	//
+	//})
+
 }

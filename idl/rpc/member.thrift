@@ -33,7 +33,7 @@ struct MemberIdsResp {
 }
 
 struct UpdateMemberReq {
-
+      16:optional list<i64> tagId=[],
       1:optional i64 id=0,
       4:optional string avatar="",
       5:optional string mobile="",
@@ -75,6 +75,8 @@ struct ProductListReq {
     4: optional list<i64> status = []
 
 }
+
+
 service MemberService  {
 
      MemberResp CreateMember(1: CreateMemberReq req)

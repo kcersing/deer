@@ -156,5 +156,12 @@ Content-Type: application/json
   "tagId":[1,2,4]
 }
 
-
-
+### Send POST request with json body
+WEBSOCKET ws://127.0.0.1:9010/service/ws?id=11110
+Content-Type: application/json // We use it for highlighting
+### Send POST request with json body
+WEBSOCKET ws://127.0.0.1:9010/service/ws?id=11111
+Content-Type: application/json // We use it for highlighting
+### Send POST request with json body
+WEBSOCKET ws://127.0.0.1:9010/service/ws?id=11112
+Content-Type: application/json // We use it for highlighting

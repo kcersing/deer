@@ -55,7 +55,7 @@ func InitLog(env bool) {
 	_log := kitexzap.NewLogger(opts...)
 	hlog.SetLogger(_log)
 	hlog.SetLevel(hlog.LevelTrace)
-	hlog.SetOutput(output)
+	//hlog.SetOutput(output)
 	if runtime.GOOS == "linux" {
 		hlog.SetOutput(output)
 	}

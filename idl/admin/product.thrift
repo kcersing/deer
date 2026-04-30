@@ -19,7 +19,7 @@ struct CreateProductReq{
 
     9: optional list<i64> items=[]
     10: optional list<i64> isSales=[] (api.raw = "isSales")
-//    11: optional list<product.Attribute> Attributes=[]
+    // 11: optional list<product.Attribute> Attributes=[]
     13: optional list<string> salesAt = [] (api.raw = "salesAt")
 
 }
@@ -36,7 +36,6 @@ struct UpdateProductReq{
     8:optional i64 status=0 (api.raw = "status")
 
     5:optional string code="" (api.raw = "code")
-
 
     /**价格 */
     6:optional i64 price=0 (api.raw = "price")

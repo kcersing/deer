@@ -262,3 +262,12 @@ services:
 #    <max_connections>4096</max_connections>
 #    <keep_alive_timeout>300</keep_alive_timeout>
 #</yandex>
+
+  fastdfs:
+    image: sjqzhang/go-fastdfs
+    environment:
+      - GO_FASTDFS_DIR=/data
+    volumes:
+      - ./data/fastdfs_data:/data
+    ports:
+      - "9109:8080"

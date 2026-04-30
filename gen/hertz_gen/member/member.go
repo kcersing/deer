@@ -869,14 +869,15 @@ func (p *GetMemberListReq) String() string {
 }
 
 type UpdateMemberReq struct {
-	ID        int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Avatar    string `thrift:"avatar,4,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
-	Mobile    string `thrift:"mobile,5,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
-	Name      string `thrift:"name,6,optional" form:"name" json:"name,omitempty" query:"name"`
-	Status    int64  `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
-	Intention int64  `thrift:"intention,8,optional" form:"intention" json:"intention,omitempty" query:"intention"`
-	Gender    int64  `thrift:"gender,9,optional" form:"gender" json:"gender,omitempty" query:"gender"`
-	Birthday  string `thrift:"birthday,10,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	ID        int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Avatar    string  `thrift:"avatar,4,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
+	Mobile    string  `thrift:"mobile,5,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
+	Name      string  `thrift:"name,6,optional" form:"name" json:"name,omitempty" query:"name"`
+	Status    int64   `thrift:"status,7,optional" form:"status" json:"status,omitempty" query:"status"`
+	Intention int64   `thrift:"intention,8,optional" form:"intention" json:"intention,omitempty" query:"intention"`
+	Gender    int64   `thrift:"gender,9,optional" form:"gender" json:"gender,omitempty" query:"gender"`
+	Birthday  string  `thrift:"birthday,10,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	TagId     []int64 `thrift:"tagId,16,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
 }
 
 func NewUpdateMemberReq() *UpdateMemberReq {
@@ -889,6 +890,7 @@ func NewUpdateMemberReq() *UpdateMemberReq {
 		Intention: 0,
 		Gender:    0,
 		Birthday:  "",
+		TagId:     []int64{},
 	}
 }
 
@@ -901,6 +903,7 @@ func (p *UpdateMemberReq) InitDefault() {
 	p.Intention = 0
 	p.Gender = 0
 	p.Birthday = ""
+	p.TagId = []int64{}
 }
 
 var UpdateMemberReq_ID_DEFAULT int64 = 0
@@ -975,6 +978,15 @@ func (p *UpdateMemberReq) GetBirthday() (v string) {
 	return p.Birthday
 }
 
+var UpdateMemberReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *UpdateMemberReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return UpdateMemberReq_TagId_DEFAULT
+	}
+	return p.TagId
+}
+
 var fieldIDToName_UpdateMemberReq = map[int16]string{
 	1:  "id",
 	4:  "avatar",
@@ -984,6 +996,7 @@ var fieldIDToName_UpdateMemberReq = map[int16]string{
 	8:  "intention",
 	9:  "gender",
 	10: "birthday",
+	16: "tagId",
 }
 
 func (p *UpdateMemberReq) IsSetID() bool {
@@ -1016,6 +1029,10 @@ func (p *UpdateMemberReq) IsSetGender() bool {
 
 func (p *UpdateMemberReq) IsSetBirthday() bool {
 	return p.Birthday != UpdateMemberReq_Birthday_DEFAULT
+}
+
+func (p *UpdateMemberReq) IsSetTagId() bool {
+	return p.TagId != nil
 }
 
 func (p *UpdateMemberReq) Read(iprot thrift.TProtocol) (err error) {
@@ -1096,6 +1113,14 @@ func (p *UpdateMemberReq) Read(iprot thrift.TProtocol) (err error) {
 		case 10:
 			if fieldTypeId == thrift.STRING {
 				if err = p.ReadField10(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 16:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField16(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -1218,6 +1243,29 @@ func (p *UpdateMemberReq) ReadField10(iprot thrift.TProtocol) error {
 	p.Birthday = _field
 	return nil
 }
+func (p *UpdateMemberReq) ReadField16(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.TagId = _field
+	return nil
+}
 
 func (p *UpdateMemberReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -1255,6 +1303,10 @@ func (p *UpdateMemberReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField10(oprot); err != nil {
 			fieldId = 10
+			goto WriteFieldError
+		}
+		if err = p.writeField16(oprot); err != nil {
+			fieldId = 16
 			goto WriteFieldError
 		}
 	}
@@ -1425,6 +1477,33 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 10 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 10 end error: ", p), err)
+}
+
+func (p *UpdateMemberReq) writeField16(oprot thrift.TProtocol) (err error) {
+	if p.IsSetTagId() {
+		if err = oprot.WriteFieldBegin("tagId", thrift.LIST, 16); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.TagId)); err != nil {
+			return err
+		}
+		for _, v := range p.TagId {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 end error: ", p), err)
 }
 
 func (p *UpdateMemberReq) String() string {

@@ -14,6 +14,7 @@ type CreateArticleReq struct {
 	Content string   `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
 	TagId   []int64  `thrift:"tagId,5,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
 	Pic     []string `thrift:"pic,9,optional,list<string>" form:"pic" json:"pic,omitempty" query:"pic"`
+	Status  int64    `thrift:"status,6,optional" form:"status" json:"status,omitempty" query:"status"`
 }
 
 func NewCreateArticleReq() *CreateArticleReq {
@@ -22,6 +23,7 @@ func NewCreateArticleReq() *CreateArticleReq {
 		Content: "",
 		TagId:   []int64{},
 		Pic:     []string{},
+		Status:  0,
 	}
 }
 
@@ -30,6 +32,7 @@ func (p *CreateArticleReq) InitDefault() {
 	p.Content = ""
 	p.TagId = []int64{}
 	p.Pic = []string{}
+	p.Status = 0
 }
 
 var CreateArticleReq_Title_DEFAULT string = ""
@@ -68,11 +71,21 @@ func (p *CreateArticleReq) GetPic() (v []string) {
 	return p.Pic
 }
 
+var CreateArticleReq_Status_DEFAULT int64 = 0
+
+func (p *CreateArticleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return CreateArticleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var fieldIDToName_CreateArticleReq = map[int16]string{
 	2: "title",
 	3: "content",
 	5: "tagId",
 	9: "pic",
+	6: "status",
 }
 
 func (p *CreateArticleReq) IsSetTitle() bool {
@@ -89,6 +102,10 @@ func (p *CreateArticleReq) IsSetTagId() bool {
 
 func (p *CreateArticleReq) IsSetPic() bool {
 	return p.Pic != nil
+}
+
+func (p *CreateArticleReq) IsSetStatus() bool {
+	return p.Status != CreateArticleReq_Status_DEFAULT
 }
 
 func (p *CreateArticleReq) Read(iprot thrift.TProtocol) (err error) {
@@ -137,6 +154,14 @@ func (p *CreateArticleReq) Read(iprot thrift.TProtocol) (err error) {
 		case 9:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField9(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField6(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -239,6 +264,17 @@ func (p *CreateArticleReq) ReadField9(iprot thrift.TProtocol) error {
 	p.Pic = _field
 	return nil
 }
+func (p *CreateArticleReq) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
 
 func (p *CreateArticleReq) Write(oprot thrift.TProtocol) (err error) {
 	var fieldId int16
@@ -260,6 +296,10 @@ func (p *CreateArticleReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField9(oprot); err != nil {
 			fieldId = 9
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
 			goto WriteFieldError
 		}
 	}
@@ -372,6 +412,25 @@ WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 9 end error: ", p), err)
 }
 
+func (p *CreateArticleReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 6); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
+}
+
 func (p *CreateArticleReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -385,6 +444,7 @@ type UpdateArticleReq struct {
 	Title   string   `thrift:"title,2,optional" form:"title" json:"title,omitempty" query:"title"`
 	Content string   `thrift:"content,3,optional" form:"content" json:"content,omitempty" query:"content"`
 	TagId   []int64  `thrift:"tagId,5,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Status  int64    `thrift:"status,6,optional" form:"status" json:"status,omitempty" query:"status"`
 	Pic     []string `thrift:"pic,9,optional,list<string>" form:"pic" json:"pic,omitempty" query:"pic"`
 }
 
@@ -394,6 +454,7 @@ func NewUpdateArticleReq() *UpdateArticleReq {
 		Title:   "",
 		Content: "",
 		TagId:   []int64{},
+		Status:  0,
 		Pic:     []string{},
 	}
 }
@@ -403,6 +464,7 @@ func (p *UpdateArticleReq) InitDefault() {
 	p.Title = ""
 	p.Content = ""
 	p.TagId = []int64{}
+	p.Status = 0
 	p.Pic = []string{}
 }
 
@@ -442,6 +504,15 @@ func (p *UpdateArticleReq) GetTagId() (v []int64) {
 	return p.TagId
 }
 
+var UpdateArticleReq_Status_DEFAULT int64 = 0
+
+func (p *UpdateArticleReq) GetStatus() (v int64) {
+	if !p.IsSetStatus() {
+		return UpdateArticleReq_Status_DEFAULT
+	}
+	return p.Status
+}
+
 var UpdateArticleReq_Pic_DEFAULT []string = []string{}
 
 func (p *UpdateArticleReq) GetPic() (v []string) {
@@ -456,6 +527,7 @@ var fieldIDToName_UpdateArticleReq = map[int16]string{
 	2: "title",
 	3: "content",
 	5: "tagId",
+	6: "status",
 	9: "pic",
 }
 
@@ -473,6 +545,10 @@ func (p *UpdateArticleReq) IsSetContent() bool {
 
 func (p *UpdateArticleReq) IsSetTagId() bool {
 	return p.TagId != nil
+}
+
+func (p *UpdateArticleReq) IsSetStatus() bool {
+	return p.Status != UpdateArticleReq_Status_DEFAULT
 }
 
 func (p *UpdateArticleReq) IsSetPic() bool {
@@ -525,6 +601,14 @@ func (p *UpdateArticleReq) Read(iprot thrift.TProtocol) (err error) {
 		case 5:
 			if fieldTypeId == thrift.LIST {
 				if err = p.ReadField5(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 6:
+			if fieldTypeId == thrift.I64 {
+				if err = p.ReadField6(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -623,6 +707,17 @@ func (p *UpdateArticleReq) ReadField5(iprot thrift.TProtocol) error {
 	p.TagId = _field
 	return nil
 }
+func (p *UpdateArticleReq) ReadField6(iprot thrift.TProtocol) error {
+
+	var _field int64
+	if v, err := iprot.ReadI64(); err != nil {
+		return err
+	} else {
+		_field = v
+	}
+	p.Status = _field
+	return nil
+}
 func (p *UpdateArticleReq) ReadField9(iprot thrift.TProtocol) error {
 	_, size, err := iprot.ReadListBegin()
 	if err != nil {
@@ -667,6 +762,10 @@ func (p *UpdateArticleReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField5(oprot); err != nil {
 			fieldId = 5
+			goto WriteFieldError
+		}
+		if err = p.writeField6(oprot); err != nil {
+			fieldId = 6
 			goto WriteFieldError
 		}
 		if err = p.writeField9(oprot); err != nil {
@@ -773,6 +872,25 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 5 end error: ", p), err)
+}
+
+func (p *UpdateArticleReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if p.IsSetStatus() {
+		if err = oprot.WriteFieldBegin("status", thrift.I64, 6); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteI64(p.Status); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 6 end error: ", p), err)
 }
 
 func (p *UpdateArticleReq) writeField9(oprot thrift.TProtocol) (err error) {

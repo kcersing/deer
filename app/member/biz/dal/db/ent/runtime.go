@@ -239,7 +239,7 @@ func init() {
 	// memberprofile.DefaultGender holds the default value on creation for the gender field.
 	memberprofile.DefaultGender = memberprofileDescGender.Default.(int64)
 	// memberprofileDescRelationMid is the schema descriptor for relation_mid field.
-	memberprofileDescRelationMid := memberprofileFields[7].Descriptor()
+	memberprofileDescRelationMid := memberprofileFields[8].Descriptor()
 	// memberprofile.DefaultRelationMid holds the default value on creation for the relation_mid field.
 	memberprofile.DefaultRelationMid = memberprofileDescRelationMid.Default.(int64)
 	membertagMixin := schema.MemberTag{}.Mixin()

@@ -36,6 +36,8 @@ const (
 	FieldEmail = "email"
 	// FieldWecom holds the string denoting the wecom field in the database.
 	FieldWecom = "wecom"
+	// FieldTagID holds the string denoting the tag_id field in the database.
+	FieldTagID = "tag_id"
 	// FieldRelationMid holds the string denoting the relation_mid field in the database.
 	FieldRelationMid = "relation_mid"
 	// FieldRelationMame holds the string denoting the relation_mame field in the database.
@@ -67,6 +69,7 @@ var Columns = []string{
 	FieldBirthday,
 	FieldEmail,
 	FieldWecom,
+	FieldTagID,
 	FieldRelationMid,
 	FieldRelationMame,
 }

@@ -291,6 +291,12 @@ func (_c *UserCreate) SetNillableAddress(v *string) *UserCreate {
 	return _c
 }
 
+// SetTagID sets the "tag_id" field.
+func (_c *UserCreate) SetTagID(v []int64) *UserCreate {
+	_c.mutation.SetTagID(v)
+	return _c
+}
+
 // SetID sets the "id" field.
 func (_c *UserCreate) SetID(v int64) *UserCreate {
 	_c.mutation.SetID(v)
@@ -507,6 +513,10 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Address(); ok {
 		_spec.SetField(user.FieldAddress, field.TypeString, value)
 		_node.Address = value
+	}
+	if value, ok := _c.mutation.TagID(); ok {
+		_spec.SetField(user.FieldTagID, field.TypeJSON, value)
+		_node.TagID = value
 	}
 	if nodes := _c.mutation.UserRoleIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

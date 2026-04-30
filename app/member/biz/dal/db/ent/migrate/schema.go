@@ -299,6 +299,7 @@ var (
 		{Name: "birthday", Type: field.TypeTime, Nullable: true, Comment: "出生日期"},
 		{Name: "email", Type: field.TypeString, Nullable: true, Comment: "email | 邮箱号"},
 		{Name: "wecom", Type: field.TypeString, Nullable: true, Comment: "wecom | 微信号"},
+		{Name: "tag_id", Type: field.TypeJSON, Nullable: true, Comment: "标签"},
 		{Name: "relation_mid", Type: field.TypeInt64, Nullable: true, Comment: "关联会员", Default: 0},
 		{Name: "relation_mame", Type: field.TypeString, Nullable: true, Comment: "关联会员"},
 		{Name: "member_id", Type: field.TypeInt64, Nullable: true, Comment: "会员id"},
@@ -311,7 +312,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "member_profile_member_member_profile",
-				Columns:    []*schema.Column{MemberProfileColumns[13]},
+				Columns:    []*schema.Column{MemberProfileColumns[14]},
 				RefColumns: []*schema.Column{MemberColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -325,7 +326,7 @@ var (
 			{
 				Name:    "memberprofile_member_id",
 				Unique:  false,
-				Columns: []*schema.Column{MemberProfileColumns[13]},
+				Columns: []*schema.Column{MemberProfileColumns[14]},
 			},
 		},
 	}

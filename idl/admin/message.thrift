@@ -21,6 +21,7 @@ include "../base/message.thrift"
         3: optional i64 userId=0
         4: optional string MessagesType=""
         5: optional i64 type=1
+
     }
 
     struct SendMessagesReq {
@@ -44,7 +45,7 @@ include "../base/message.thrift"
         base.NilResponse MessagesList(1: MessagesListReq req)(api.post = "/service/message/list")
         //发送信息
         base.NilResponse SendMessages(1: SendMessagesReq req)(api.post = "/service/message/send")
-      //发送记录
+        //发送记录
         base.NilResponse MessagesSendList(1: MessagesSendListReq req)(api.post = "/service/message/send/list")
 
         base.NilResponse MessagesTypes()(api.post = "/service/message/types")

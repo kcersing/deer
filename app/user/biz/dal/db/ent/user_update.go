@@ -13,6 +13,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -459,6 +460,24 @@ func (_u *UserUpdate) ClearAddress() *UserUpdate {
 	return _u
 }
 
+// SetTagID sets the "tag_id" field.
+func (_u *UserUpdate) SetTagID(v []int64) *UserUpdate {
+	_u.mutation.SetTagID(v)
+	return _u
+}
+
+// AppendTagID appends value to the "tag_id" field.
+func (_u *UserUpdate) AppendTagID(v []int64) *UserUpdate {
+	_u.mutation.AppendTagID(v)
+	return _u
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (_u *UserUpdate) ClearTagID() *UserUpdate {
+	_u.mutation.ClearTagID()
+	return _u
+}
+
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by IDs.
 func (_u *UserUpdate) AddUserRoleIDs(ids ...int) *UserUpdate {
 	_u.mutation.AddUserRoleIDs(ids...)
@@ -682,6 +701,17 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.AddressCleared() {
 		_spec.ClearField(user.FieldAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.TagID(); ok {
+		_spec.SetField(user.FieldTagID, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedTagID(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, user.FieldTagID, value)
+		})
+	}
+	if _u.mutation.TagIDCleared() {
+		_spec.ClearField(user.FieldTagID, field.TypeJSON)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1178,6 +1208,24 @@ func (_u *UserUpdateOne) ClearAddress() *UserUpdateOne {
 	return _u
 }
 
+// SetTagID sets the "tag_id" field.
+func (_u *UserUpdateOne) SetTagID(v []int64) *UserUpdateOne {
+	_u.mutation.SetTagID(v)
+	return _u
+}
+
+// AppendTagID appends value to the "tag_id" field.
+func (_u *UserUpdateOne) AppendTagID(v []int64) *UserUpdateOne {
+	_u.mutation.AppendTagID(v)
+	return _u
+}
+
+// ClearTagID clears the value of the "tag_id" field.
+func (_u *UserUpdateOne) ClearTagID() *UserUpdateOne {
+	_u.mutation.ClearTagID()
+	return _u
+}
+
 // AddUserRoleIDs adds the "user_role" edge to the UserRole entity by IDs.
 func (_u *UserUpdateOne) AddUserRoleIDs(ids ...int) *UserUpdateOne {
 	_u.mutation.AddUserRoleIDs(ids...)
@@ -1431,6 +1479,17 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 	}
 	if _u.mutation.AddressCleared() {
 		_spec.ClearField(user.FieldAddress, field.TypeString)
+	}
+	if value, ok := _u.mutation.TagID(); ok {
+		_spec.SetField(user.FieldTagID, field.TypeJSON, value)
+	}
+	if value, ok := _u.mutation.AppendedTagID(); ok {
+		_spec.AddModifier(func(u *sql.UpdateBuilder) {
+			sqljson.Append(u, user.FieldTagID, value)
+		})
+	}
+	if _u.mutation.TagIDCleared() {
+		_spec.ClearField(user.FieldTagID, field.TypeJSON)
 	}
 	if _u.mutation.UserRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -474,19 +474,21 @@ var fieldIDToName_MemberIdsResp = map[int16]string{
 }
 
 type UpdateMemberReq struct {
-	Id        int64  `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
-	Avatar    string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	Mobile    string `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
-	Name      string `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
-	Status    int64  `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
-	Intention int64  `thrift:"intention,8,optional" frugal:"8,optional,i64" json:"intention,omitempty"`
-	Gender    int64  `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
-	Birthday  string `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
-	CreatedId int64  `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
+	TagId     []int64 `thrift:"tagId,16,optional" frugal:"16,optional,list<i64>" json:"tagId,omitempty"`
+	Id        int64   `thrift:"id,1,optional" frugal:"1,optional,i64" json:"id,omitempty"`
+	Avatar    string  `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	Mobile    string  `thrift:"mobile,5,optional" frugal:"5,optional,string" json:"mobile,omitempty"`
+	Name      string  `thrift:"name,6,optional" frugal:"6,optional,string" json:"name,omitempty"`
+	Status    int64   `thrift:"status,7,optional" frugal:"7,optional,i64" json:"status,omitempty"`
+	Intention int64   `thrift:"intention,8,optional" frugal:"8,optional,i64" json:"intention,omitempty"`
+	Gender    int64   `thrift:"gender,9,optional" frugal:"9,optional,i64" json:"gender,omitempty"`
+	Birthday  string  `thrift:"birthday,10,optional" frugal:"10,optional,string" json:"birthday,omitempty"`
+	CreatedId int64   `thrift:"createdId,253,optional" frugal:"253,optional,i64" json:"createdId,omitempty"`
 }
 
 func NewUpdateMemberReq() *UpdateMemberReq {
 	return &UpdateMemberReq{
+		TagId:     []int64{},
 		Id:        0,
 		Avatar:    "",
 		Mobile:    "",
@@ -500,6 +502,7 @@ func NewUpdateMemberReq() *UpdateMemberReq {
 }
 
 func (p *UpdateMemberReq) InitDefault() {
+	p.TagId = []int64{}
 	p.Id = 0
 	p.Avatar = ""
 	p.Mobile = ""
@@ -509,6 +512,15 @@ func (p *UpdateMemberReq) InitDefault() {
 	p.Gender = 0
 	p.Birthday = ""
 	p.CreatedId = 0
+}
+
+var UpdateMemberReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *UpdateMemberReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return UpdateMemberReq_TagId_DEFAULT
+	}
+	return p.TagId
 }
 
 var UpdateMemberReq_Id_DEFAULT int64 = 0
@@ -591,6 +603,9 @@ func (p *UpdateMemberReq) GetCreatedId() (v int64) {
 	}
 	return p.CreatedId
 }
+func (p *UpdateMemberReq) SetTagId(val []int64) {
+	p.TagId = val
+}
 func (p *UpdateMemberReq) SetId(val int64) {
 	p.Id = val
 }
@@ -617,6 +632,10 @@ func (p *UpdateMemberReq) SetBirthday(val string) {
 }
 func (p *UpdateMemberReq) SetCreatedId(val int64) {
 	p.CreatedId = val
+}
+
+func (p *UpdateMemberReq) IsSetTagId() bool {
+	return p.TagId != nil
 }
 
 func (p *UpdateMemberReq) IsSetId() bool {
@@ -663,6 +682,7 @@ func (p *UpdateMemberReq) String() string {
 }
 
 var fieldIDToName_UpdateMemberReq = map[int16]string{
+	16:  "tagId",
 	1:   "id",
 	4:   "avatar",
 	5:   "mobile",

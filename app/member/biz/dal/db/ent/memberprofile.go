@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"member/biz/dal/db/ent/member"
 	"member/biz/dal/db/ent/memberprofile"
@@ -41,6 +42,8 @@ type MemberProfile struct {
 	Email string `json:"email,omitempty"`
 	// wecom | 微信号
 	Wecom string `json:"wecom,omitempty"`
+	// 标签
+	TagID []int64 `json:"tag_id,omitempty"`
 	// 关联会员
 	RelationMid int64 `json:"relation_mid,omitempty"`
 	// 关联会员
@@ -76,6 +79,8 @@ func (*MemberProfile) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case memberprofile.FieldTagID:
+			values[i] = new([]byte)
 		case memberprofile.FieldID, memberprofile.FieldDelete, memberprofile.FieldCreatedID, memberprofile.FieldMemberID, memberprofile.FieldIntention, memberprofile.FieldSource, memberprofile.FieldGender, memberprofile.FieldRelationMid:
 			values[i] = new(sql.NullInt64)
 		case memberprofile.FieldEmail, memberprofile.FieldWecom, memberprofile.FieldRelationMame:
@@ -169,6 +174,14 @@ func (_m *MemberProfile) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Wecom = value.String
 			}
+		case memberprofile.FieldTagID:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field tag_id", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.TagID); err != nil {
+					return fmt.Errorf("unmarshal field tag_id: %w", err)
+				}
+			}
 		case memberprofile.FieldRelationMid:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field relation_mid", values[i])
@@ -254,6 +267,9 @@ func (_m *MemberProfile) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("wecom=")
 	builder.WriteString(_m.Wecom)
+	builder.WriteString(", ")
+	builder.WriteString("tag_id=")
+	builder.WriteString(fmt.Sprintf("%v", _m.TagID))
 	builder.WriteString(", ")
 	builder.WriteString("relation_mid=")
 	builder.WriteString(fmt.Sprintf("%v", _m.RelationMid))

@@ -218,21 +218,22 @@ func (p *CreateUserReq) String() string {
 }
 
 type UpdateUserReq struct {
-	ID            int64  `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
-	Avatar        string `thrift:"avatar,2,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
-	Mobile        string `thrift:"mobile,3,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
-	Name          string `thrift:"name,4,optional" form:"name" json:"name,omitempty" query:"name"`
-	Status        int64  `thrift:"status,5,optional" form:"status" json:"status,omitempty" query:"status"`
-	Gender        int64  `thrift:"gender,6,optional" form:"gender" json:"gender,omitempty" query:"gender"`
-	Birthday      string `thrift:"birthday,7,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
-	Desc          string `thrift:"desc,8,optional" form:"desc" json:"desc,omitempty" query:"desc"`
-	RoleId        int64  `thrift:"roleId,9,optional" form:"roleId" json:"roleId,omitempty" query:"roleId"`
-	DepartmentsId int64  `thrift:"departmentsId,10,optional" form:"departmentsId" json:"departmentsId,omitempty" query:"departmentsId"`
-	PositionsId   int64  `thrift:"positionsId,11,optional" form:"positionsId" json:"positionsId,omitempty" query:"positionsId"`
-	Address       string `thrift:"address,15,optional" form:"address" json:"address,omitempty" query:"address"`
-	City          int64  `thrift:"city,12,optional" form:"city" json:"city,omitempty" query:"city"`
-	Province      int64  `thrift:"province,13,optional" form:"province" json:"province,omitempty" query:"province"`
-	Email         string `thrift:"email,14,optional" form:"email" json:"email,omitempty" query:"email"`
+	ID            int64   `thrift:"id,1,optional" form:"id" json:"id,omitempty" query:"id"`
+	Avatar        string  `thrift:"avatar,2,optional" form:"avatar" json:"avatar,omitempty" query:"avatar"`
+	Mobile        string  `thrift:"mobile,3,optional" form:"mobile" json:"mobile,omitempty" query:"mobile"`
+	Name          string  `thrift:"name,4,optional" form:"name" json:"name,omitempty" query:"name"`
+	Status        int64   `thrift:"status,5,optional" form:"status" json:"status,omitempty" query:"status"`
+	Gender        int64   `thrift:"gender,6,optional" form:"gender" json:"gender,omitempty" query:"gender"`
+	Birthday      string  `thrift:"birthday,7,optional" form:"birthday" json:"birthday,omitempty" query:"birthday"`
+	Desc          string  `thrift:"desc,8,optional" form:"desc" json:"desc,omitempty" query:"desc"`
+	RoleId        int64   `thrift:"roleId,9,optional" form:"roleId" json:"roleId,omitempty" query:"roleId"`
+	DepartmentsId int64   `thrift:"departmentsId,10,optional" form:"departmentsId" json:"departmentsId,omitempty" query:"departmentsId"`
+	PositionsId   int64   `thrift:"positionsId,11,optional" form:"positionsId" json:"positionsId,omitempty" query:"positionsId"`
+	TagId         []int64 `thrift:"tagId,16,optional,list<i64>" form:"tagId" json:"tagId,omitempty" query:"tagId"`
+	Address       string  `thrift:"address,15,optional" form:"address" json:"address,omitempty" query:"address"`
+	City          int64   `thrift:"city,12,optional" form:"city" json:"city,omitempty" query:"city"`
+	Province      int64   `thrift:"province,13,optional" form:"province" json:"province,omitempty" query:"province"`
+	Email         string  `thrift:"email,14,optional" form:"email" json:"email,omitempty" query:"email"`
 }
 
 func NewUpdateUserReq() *UpdateUserReq {
@@ -248,6 +249,7 @@ func NewUpdateUserReq() *UpdateUserReq {
 		RoleId:        0,
 		DepartmentsId: 0,
 		PositionsId:   0,
+		TagId:         []int64{},
 		Address:       "",
 		City:          0,
 		Province:      0,
@@ -267,6 +269,7 @@ func (p *UpdateUserReq) InitDefault() {
 	p.RoleId = 0
 	p.DepartmentsId = 0
 	p.PositionsId = 0
+	p.TagId = []int64{}
 	p.Address = ""
 	p.City = 0
 	p.Province = 0
@@ -372,6 +375,15 @@ func (p *UpdateUserReq) GetPositionsId() (v int64) {
 	return p.PositionsId
 }
 
+var UpdateUserReq_TagId_DEFAULT []int64 = []int64{}
+
+func (p *UpdateUserReq) GetTagId() (v []int64) {
+	if !p.IsSetTagId() {
+		return UpdateUserReq_TagId_DEFAULT
+	}
+	return p.TagId
+}
+
 var UpdateUserReq_Address_DEFAULT string = ""
 
 func (p *UpdateUserReq) GetAddress() (v string) {
@@ -420,6 +432,7 @@ var fieldIDToName_UpdateUserReq = map[int16]string{
 	9:  "roleId",
 	10: "departmentsId",
 	11: "positionsId",
+	16: "tagId",
 	15: "address",
 	12: "city",
 	13: "province",
@@ -468,6 +481,10 @@ func (p *UpdateUserReq) IsSetDepartmentsId() bool {
 
 func (p *UpdateUserReq) IsSetPositionsId() bool {
 	return p.PositionsId != UpdateUserReq_PositionsId_DEFAULT
+}
+
+func (p *UpdateUserReq) IsSetTagId() bool {
+	return p.TagId != nil
 }
 
 func (p *UpdateUserReq) IsSetAddress() bool {
@@ -588,6 +605,14 @@ func (p *UpdateUserReq) Read(iprot thrift.TProtocol) (err error) {
 		case 11:
 			if fieldTypeId == thrift.I64 {
 				if err = p.ReadField11(iprot); err != nil {
+					goto ReadFieldError
+				}
+			} else if err = iprot.Skip(fieldTypeId); err != nil {
+				goto SkipFieldError
+			}
+		case 16:
+			if fieldTypeId == thrift.LIST {
+				if err = p.ReadField16(iprot); err != nil {
 					goto ReadFieldError
 				}
 			} else if err = iprot.Skip(fieldTypeId); err != nil {
@@ -775,6 +800,29 @@ func (p *UpdateUserReq) ReadField11(iprot thrift.TProtocol) error {
 	p.PositionsId = _field
 	return nil
 }
+func (p *UpdateUserReq) ReadField16(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+
+		var _elem int64
+		if v, err := iprot.ReadI64(); err != nil {
+			return err
+		} else {
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return err
+	}
+	p.TagId = _field
+	return nil
+}
 func (p *UpdateUserReq) ReadField15(iprot thrift.TProtocol) error {
 
 	var _field string
@@ -868,6 +916,10 @@ func (p *UpdateUserReq) Write(oprot thrift.TProtocol) (err error) {
 		}
 		if err = p.writeField11(oprot); err != nil {
 			fieldId = 11
+			goto WriteFieldError
+		}
+		if err = p.writeField16(oprot); err != nil {
+			fieldId = 16
 			goto WriteFieldError
 		}
 		if err = p.writeField15(oprot); err != nil {
@@ -1111,6 +1163,33 @@ WriteFieldBeginError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 begin error: ", p), err)
 WriteFieldEndError:
 	return thrift.PrependError(fmt.Sprintf("%T write field 11 end error: ", p), err)
+}
+
+func (p *UpdateUserReq) writeField16(oprot thrift.TProtocol) (err error) {
+	if p.IsSetTagId() {
+		if err = oprot.WriteFieldBegin("tagId", thrift.LIST, 16); err != nil {
+			goto WriteFieldBeginError
+		}
+		if err := oprot.WriteListBegin(thrift.I64, len(p.TagId)); err != nil {
+			return err
+		}
+		for _, v := range p.TagId {
+			if err := oprot.WriteI64(v); err != nil {
+				return err
+			}
+		}
+		if err := oprot.WriteListEnd(); err != nil {
+			return err
+		}
+		if err = oprot.WriteFieldEnd(); err != nil {
+			goto WriteFieldEndError
+		}
+	}
+	return nil
+WriteFieldBeginError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 begin error: ", p), err)
+WriteFieldEndError:
+	return thrift.PrependError(fmt.Sprintf("%T write field 16 end error: ", p), err)
 }
 
 func (p *UpdateUserReq) writeField15(oprot thrift.TProtocol) (err error) {

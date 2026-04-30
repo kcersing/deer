@@ -1234,6 +1234,20 @@ func (p *UpdateMemberReq) FastRead(buf []byte) (int, error) {
 			break
 		}
 		switch fieldId {
+		case 16:
+			if fieldTypeId == thrift.LIST {
+				l, err = p.FastReadField16(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		case 1:
 			if fieldTypeId == thrift.I64 {
 				l, err = p.FastReadField1(buf[offset:])
@@ -1378,6 +1392,30 @@ SkipFieldError:
 	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
 }
 
+func (p *UpdateMemberReq) FastReadField16(buf []byte) (int, error) {
+	offset := 0
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
+		return offset, err
+	}
+	_field := make([]int64, 0, size)
+	for i := 0; i < size; i++ {
+		var _elem int64
+		if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+			_elem = v
+		}
+
+		_field = append(_field, _elem)
+	}
+	p.TagId = _field
+	return offset, nil
+}
+
 func (p *UpdateMemberReq) FastReadField1(buf []byte) (int, error) {
 	offset := 0
 
@@ -1516,6 +1554,7 @@ func (p *UpdateMemberReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField253(buf[offset:], w)
+		offset += p.fastWriteField16(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
@@ -1528,6 +1567,7 @@ func (p *UpdateMemberReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 func (p *UpdateMemberReq) BLength() int {
 	l := 0
 	if p != nil {
+		l += p.field16Length()
 		l += p.field1Length()
 		l += p.field4Length()
 		l += p.field5Length()
@@ -1540,6 +1580,22 @@ func (p *UpdateMemberReq) BLength() int {
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
+}
+
+func (p *UpdateMemberReq) fastWriteField16(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetTagId() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 16)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.TagId {
+			length++
+			offset += thrift.Binary.WriteI64(buf[offset:], v)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.I64, length)
+	}
+	return offset
 }
 
 func (p *UpdateMemberReq) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
@@ -1621,6 +1677,17 @@ func (p *UpdateMemberReq) fastWriteField253(buf []byte, w thrift.NocopyWriter) i
 		offset += thrift.Binary.WriteI64(buf[offset:], p.CreatedId)
 	}
 	return offset
+}
+
+func (p *UpdateMemberReq) field16Length() int {
+	l := 0
+	if p.IsSetTagId() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.ListBeginLength()
+		l +=
+			thrift.Binary.I64Length() * len(p.TagId)
+	}
+	return l
 }
 
 func (p *UpdateMemberReq) field1Length() int {

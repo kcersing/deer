@@ -3,6 +3,7 @@
 package ent
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -60,6 +61,8 @@ type User struct {
 	Province int64 `json:"province,omitempty"`
 	// address
 	Address string `json:"address,omitempty"`
+	// 标签
+	TagID []int64 `json:"tag_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the UserQuery when eager-loading is set.
 	Edges        UserEdges `json:"edges"`
@@ -89,6 +92,8 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case user.FieldTagID:
+			values[i] = new([]byte)
 		case user.FieldID, user.FieldDelete, user.FieldCreatedID, user.FieldStatus, user.FieldGender, user.FieldDepartmentID, user.FieldPositionID, user.FieldCity, user.FieldProvince:
 			values[i] = new(sql.NullInt64)
 		case user.FieldUsername, user.FieldPassword, user.FieldAvatar, user.FieldMobile, user.FieldName, user.FieldLastIP, user.FieldDesc, user.FieldEmail, user.FieldAddress:
@@ -244,6 +249,14 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Address = value.String
 			}
+		case user.FieldTagID:
+			if value, ok := values[i].(*[]byte); !ok {
+				return fmt.Errorf("unexpected type %T for field tag_id", values[i])
+			} else if value != nil && len(*value) > 0 {
+				if err := json.Unmarshal(*value, &_m.TagID); err != nil {
+					return fmt.Errorf("unmarshal field tag_id: %w", err)
+				}
+			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])
 		}
@@ -351,6 +364,9 @@ func (_m *User) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("address=")
 	builder.WriteString(_m.Address)
+	builder.WriteString(", ")
+	builder.WriteString("tag_id=")
+	builder.WriteString(fmt.Sprintf("%v", _m.TagID))
 	builder.WriteByte(')')
 	return builder.String()
 }

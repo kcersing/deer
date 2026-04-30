@@ -11,6 +11,7 @@ import (
 	contents1 "gen/hertz_gen/contents"
 	base1 "gen/kitex_gen/base"
 	contents2 "gen/kitex_gen/contents"
+
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -53,6 +54,7 @@ func CreateArticle(ctx context.Context, c *app.RequestContext) {
 		Content: req.GetContent(),
 		TagId:   req.TagId,
 		Pic:     req.GetPic(),
+		Status:  req.GetStatus(),
 	})
 
 	if err != nil {
@@ -80,6 +82,7 @@ func UpdateArticle(ctx context.Context, c *app.RequestContext) {
 		Content: req.GetContent(),
 		TagId:   req.TagId,
 		Pic:     req.GetPic(),
+		Status:  req.GetStatus(),
 	})
 
 	if err != nil {
