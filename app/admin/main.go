@@ -8,92 +8,109 @@ import (
 	"common/consts"
 	"common/mtl"
 	"context"
-
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/app/server"
-	prometheus "github.com/hertz-contrib/monitor-prometheus"
-	"github.com/hertz-contrib/obs-opentelemetry/tracing"
-
 	"fmt"
 	"net/http"
 	"os"
 	"runtime"
 
+	"github.com/cloudwego/hertz/pkg/app"
+	"github.com/cloudwego/hertz/pkg/app/server"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"github.com/hertz-contrib/monitor-prometheus"
+	"github.com/hertz-contrib/obs-opentelemetry/tracing"
 	"github.com/hertz-contrib/opensergo/sentinel/adapter"
 	"github.com/hertz-contrib/pprof"
+	"github.com/spf13/cobra"
 )
-
-func Init() {
-	// 1. 初始化 OpenTelemetry（Tracing、Metrics、Logs）
-	mtl.InitProvider(consts.AdminServiceName)
-	// 2. 初始化日志（必须在 Provider 之后，以关联 TraceID）
-	logger.InitLog(true)
-	// 3. 初始化 Prometheus 指标并注册到 Etcd
-	metricsPort := ":9090"
-	mtl.InitMetric(consts.AdminServiceName+"-metrics", metricsPort, consts.EtcdAddress)
-	// 4. 初始化飞行记录器
-	mtl.InitFlightRecorder()
-
-	rpc.InitRpc()
-	mw.InitJwt()
-
-}
-
-var serviceAddress = conf.GetConf().Hertz.Address
-var serviceTracer = conf.GetConf().Hertz.Tracer
 
 var (
 	version   string // Git提交哈希值
 	buildTime string // 构建时间
 	commit    string
-	goVersion = fmt.Sprintf("%s %s/%s", runtime.Version(), runtime.GOOS, runtime.GOARCH) // Go编译器版本
+	goVersion = fmt.Sprintf("%s %s/%s", runtime.Version(), runtime.GOOS, runtime.GOARCH)
 )
 
-func main() {
-	args := os.Args
-	if len(args) == 2 && (args[1] == "--version" || args[1] == "-v") {
-		fmt.Printf("Git Commit Hash: %s\n", commit)
-		fmt.Printf("UTC Build Time : %s\n", buildTime)
-		fmt.Printf("Version : %s\n", version)
-		fmt.Printf("Golang Version : %s\n", goVersion)
-		return
-	}
+var rootCmd = &cobra.Command{
+	Use:   "admin",
+	Short: "Admin HTTP service for deer platform",
+	Run: func(cmd *cobra.Command, args []string) {
 
-	Init()
+		// 1. 初始化 OpenTelemetry（Tracing、Metrics、Logs）
+		mtl.InitProvider(consts.AdminServiceName)
+		// 2. 初始化日志（必须在 Provider 之后，以关联 TraceID）
+		logger.InitLog(true)
+		// 3. 初始化 Prometheus 指标并注册到 Etcd
+		// ⚠️ 建议：从 conf 读取端口，避免单机多服务冲突
+		metricsPort := fmt.Sprintf(":%d", 9090)
+		mtl.InitMetric(consts.AdminServiceName+"-metrics", metricsPort, consts.EtcdAddress)
+		// 4. 初始化飞行记录器
+		mtl.InitFlightRecorder()
 
-	//info := serversuite.GetInfo("admin", "9010", 1)
-	tracer, cfg := tracing.NewServerTracer()
-	h := server.New(
-		server.WithStreamBody(true),
-		server.WithHostPorts(serviceAddress),
-		server.WithHandleMethodNotAllowed(true),
-		//server.WithRegistry(r, info),
-		tracer,
-		server.WithTracer(
-			prometheus.NewServerTracer(serviceTracer, "/hertz",
-				prometheus.WithEnableGoCollector(true), // enable go runtime metric collector
+		rpc.InitRpc()
+		mw.InitJwt()
+
+		// 2. 读取 Hertz 配置
+		serviceAddress := conf.GetConf().Hertz.Address
+		serviceTracer := conf.GetConf().Hertz.Tracer
+
+		// 3. 初始化 Tracer
+		tracer, cfg := tracing.NewServerTracer()
+
+		// 4. 构建 Hertz 实例
+		h := server.New(
+			server.WithStreamBody(true),
+			server.WithHostPorts(serviceAddress),
+			server.WithHandleMethodNotAllowed(true),
+			//server.WithRegistry(r, info),
+			tracer,
+			server.WithTracer(
+				prometheus.NewServerTracer(serviceTracer, "/hertz",
+					prometheus.WithEnableGoCollector(true),
+				),
 			),
-		),
+		)
+		//h.Use(gzip.Gzip(gzip.DefaultCompression))
+
+		// 静态文件导出
+		h.Static("/export", "./files/")
+
+		// 注册 pprof 性能分析
+		pprof.Register(h)
+
+		// OTel 中间件
+		h.Use(tracing.ServerMiddleware(cfg))
+
+		// Sentinel 流控
+		h.Use(adapter.SentinelServerMiddleware(
+			adapter.WithServerBlockFallback(func(c context.Context, ctx *app.RequestContext) {
+				ctx.JSON(http.StatusTooManyRequests, nil)
+				ctx.Abort()
+			}),
+		))
+
+		register(h)
+		// 5. 启动 Hertz 服务
+		// 使用 h.Run() 替代 h.Spin()，底层会监听 SIGINT/SIGTERM 并优雅退出
+		if err := h.Run(); err != nil {
+			hlog.Fatalf("Hertz server stopped with error: %v", err)
+		}
+	},
+}
+
+func init() {
+	if version == "" {
+		version = "unknown"
+	}
+	rootCmd.Version = version
+	rootCmd.SetVersionTemplate(
+		fmt.Sprintf("Git Commit Hash: %s\nUTC Build Time : %s\nVersion : %s\nGolang Version : %s\n",
+			commit, buildTime, version, goVersion),
 	)
-	//h.Use(gzip.Gzip(gzip.DefaultCompression))
-	//h.NoHijackConnPool = true
-	//文件导出
-	h.Static("/export", "./files/")
+}
 
-	// use pprof mw
-	pprof.Register(h)
-	// use otel mw
-	h.Use(tracing.ServerMiddleware(cfg))
-
-	h.Use(adapter.SentinelServerMiddleware(
-		// abort with status 429 by default
-		adapter.WithServerBlockFallback(func(c context.Context, ctx *app.RequestContext) {
-			ctx.JSON(http.StatusTooManyRequests, nil)
-			ctx.Abort()
-		}),
-	))
-
-	register(h)
-
-	h.Spin()
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		hlog.Error(err)
+		os.Exit(1)
+	}
 }
