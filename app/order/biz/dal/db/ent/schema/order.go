@@ -78,10 +78,12 @@ func (Order) Indexes() []ent.Index {
 
 func (Order) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "order",
+		entsql.Annotation{
+			Table:     "order",
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+
 		entsql.WithComments(true),
 		schema.Comment(""),
 	}

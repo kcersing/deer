@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// Order is the client for interacting with the Order builders.
 	Order *OrderClient
+	// OrderCache is the client for interacting with the OrderCache builders.
+	OrderCache *OrderCacheClient
 	// OrderEventSubscriptions is the client for interacting with the OrderEventSubscriptions builders.
 	OrderEventSubscriptions *OrderEventSubscriptionsClient
 	// OrderEvents is the client for interacting with the OrderEvents builders.
@@ -160,6 +162,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Order = NewOrderClient(tx.config)
+	tx.OrderCache = NewOrderCacheClient(tx.config)
 	tx.OrderEventSubscriptions = NewOrderEventSubscriptionsClient(tx.config)
 	tx.OrderEvents = NewOrderEventsClient(tx.config)
 	tx.OrderItem = NewOrderItemClient(tx.config)

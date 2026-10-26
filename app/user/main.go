@@ -12,11 +12,8 @@ import (
 	"user/rpc"
 
 	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/spf13/cobra"
 )
-
-func init() {
-	dal.Init()
-}
 
 var serviceName = conf.GetConf().Kitex.Service
 var snowflakeNode = conf.GetConf().Kitex.Node
@@ -29,37 +26,49 @@ var (
 	goVersion = fmt.Sprintf("%s %s/%s", runtime.Version(), runtime.GOOS, runtime.GOARCH) // Go编译器版本
 )
 
-func main() {
-	args := os.Args
-	if len(args) == 2 && (args[1] == "--version" || args[1] == "-v") {
-		fmt.Printf("Git Commit Hash: %s\n", commit)
-		fmt.Printf("UTC Build Time : %s\n", buildTime)
-		fmt.Printf("Version : %s\n", version)
-		fmt.Printf("Golang Version : %s\n", goVersion)
-		return
+var rootCmd = &cobra.Command{
+	Use:   "user",
+	Short: "User service for deer platform",
+	Run: func(cmd *cobra.Command, args []string) {
+		// 1. 初始化链路追踪 (TracerProvider)
+		mtl.InitTracing(serviceName)
+		// 2. 初始化日志 (依赖前一步的 Tracer，用于注入 trace_id)
+		mtl.InitLog(conf.LogLevel())
+		// 3. 初始化指标
+		//metricsPort := fmt.Sprintf(":%d", conf.MetricsPort)
+		//mtl.InitMetric(serviceName+"-metrics", metricsPort, conf.EtcdAddress)
+		metricsPort := fmt.Sprintf(":%d", "9090")
+		mtl.InitMetric(serviceName+"-metrics", metricsPort, "127.0.0.1:2379")
+		// 4. 初始化飞行记录器
+		mtl.InitFlightRecorder()
+
+		dal.Init()
+		rpc.Init()
+
+		address := conf.GetConf().Kitex.Address
+		opts := serversuite.Option(registry, serviceName, address, snowflakeNode)
+		svr := user.NewServer(new(UserServiceImpl), opts...)
+
+		if err := svr.Run(); err != nil {
+			klog.Fatal(err)
+		}
+	},
+}
+
+func init() {
+	if version == "" {
+		version = "unknown"
 	}
+	rootCmd.Version = version
+	rootCmd.SetVersionTemplate(
+		fmt.Sprintf("Git Commit Hash: %s\nUTC Build Time : %s\nVersion : %s\nGolang Version : %s\n",
+			commit, buildTime, version, goVersion),
+	)
+}
 
-	mtl.InitFlightRecorder()
-
-	mtl.InitLog(false)
-
-	mtl.InitTracing(serviceName)
-
-	//mtl.InitMetric(serviceName, conf.GetConf().Kitex.MetricsPort, conf.GetConf().Registry.RegistryAddress[0])
-
-	mtl.InitProvider(serviceName)
-
-	rpc.Init()
-
-	address := conf.GetConf().Kitex.Address
-
-	opts := serversuite.Option(registry, serviceName, address, snowflakeNode)
-
-	svr := user.NewServer(new(UserServiceImpl), opts...)
-
-	err := svr.Run()
-
-	if err != nil {
-		klog.Fatal(err)
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		klog.Error(err)
+		os.Exit(1) // 如果是 cobra 本身解析失败（如参数错误），可以 Exit
 	}
 }

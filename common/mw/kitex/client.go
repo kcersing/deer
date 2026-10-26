@@ -16,9 +16,7 @@ func ClientsMiddleware(next endpoint.Endpoint) endpoint.Endpoint {
 	return func(ctx context.Context, req, resp interface{}) (err error) {
 		ri := rpcinfo.GetRPCInfo(ctx)
 		//  获取服务器信息打印
-		klog.Infof("[mw client] server address: %v, rpc timeout: %v, readwrite timeout: %v\n", ri.To().Address(), ri.Config().RPCTimeout(), ri.Config().ConnectTimeout())
-		klog.Info(req)
-		klog.Info(resp)
+		klog.Infof("[mw client] server address: %v, rpc timeout: %v, readwrite timeout: %v \n", ri.To().Address(), ri.Config().RPCTimeout(), ri.Config().ConnectTimeout())
 		//klog.Info("中间件：请求前")
 		if err = next(ctx, req, resp); err != nil {
 			klog.Error(err)

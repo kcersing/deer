@@ -4,6 +4,7 @@ package ent
 
 import (
 	"order/biz/dal/db/ent/order"
+	"order/biz/dal/db/ent/ordercache"
 	"order/biz/dal/db/ent/orderevents"
 	"order/biz/dal/db/ent/ordereventsubscriptions"
 	"order/biz/dal/db/ent/orderitem"
@@ -58,6 +59,29 @@ func init() {
 	orderDescRemission := orderFields[9].Descriptor()
 	// order.DefaultRemission holds the default value on creation for the remission field.
 	order.DefaultRemission = orderDescRemission.Default.(int64)
+	ordercacheMixin := schema.OrderCache{}.Mixin()
+	ordercacheMixinFields0 := ordercacheMixin[0].Fields()
+	_ = ordercacheMixinFields0
+	ordercacheFields := schema.OrderCache{}.Fields()
+	_ = ordercacheFields
+	// ordercacheDescCreatedAt is the schema descriptor for created_at field.
+	ordercacheDescCreatedAt := ordercacheMixinFields0[1].Descriptor()
+	// ordercache.DefaultCreatedAt holds the default value on creation for the created_at field.
+	ordercache.DefaultCreatedAt = ordercacheDescCreatedAt.Default.(func() time.Time)
+	// ordercacheDescUpdatedAt is the schema descriptor for updated_at field.
+	ordercacheDescUpdatedAt := ordercacheMixinFields0[2].Descriptor()
+	// ordercache.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	ordercache.DefaultUpdatedAt = ordercacheDescUpdatedAt.Default.(func() time.Time)
+	// ordercache.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	ordercache.UpdateDefaultUpdatedAt = ordercacheDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// ordercacheDescDelete is the schema descriptor for delete field.
+	ordercacheDescDelete := ordercacheMixinFields0[3].Descriptor()
+	// ordercache.DefaultDelete holds the default value on creation for the delete field.
+	ordercache.DefaultDelete = ordercacheDescDelete.Default.(int64)
+	// ordercacheDescCreatedID is the schema descriptor for created_id field.
+	ordercacheDescCreatedID := ordercacheMixinFields0[4].Descriptor()
+	// ordercache.DefaultCreatedID holds the default value on creation for the created_id field.
+	ordercache.DefaultCreatedID = ordercacheDescCreatedID.Default.(int64)
 	ordereventsubscriptionsMixin := schema.OrderEventSubscriptions{}.Mixin()
 	ordereventsubscriptionsMixinFields0 := ordereventsubscriptionsMixin[0].Fields()
 	_ = ordereventsubscriptionsMixinFields0

@@ -1,11 +1,12 @@
 package events
 
 import (
-	"common/eventbus"
 	"common/pkg/utils"
 	"context"
 	"gen/kitex_gen/order"
 	"order/biz/dal/db"
+
+	"github.com/kcersing/eventbus"
 
 	"order/biz/infras/common"
 	"time"

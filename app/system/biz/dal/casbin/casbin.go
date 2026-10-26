@@ -1,11 +1,12 @@
 package casbin
 
 import (
+	"system/conf"
+
 	"github.com/casbin/casbin/v3"
 	"github.com/casbin/casbin/v3/model"
 	entAdapter "github.com/casbin/ent-adapter"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
-	"system/conf"
 )
 
 var CasbinEnforcer *casbin.Enforcer
@@ -16,7 +17,6 @@ func InitCasbin() {
 	if err != nil {
 		hlog.Fatal(err)
 	}
-
 }
 
 func newCasbin() (enforcer *casbin.Enforcer, err error) {

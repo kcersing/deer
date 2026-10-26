@@ -1,7 +1,12 @@
 package mtl
 
 import (
+	"common/consts"
 	"context"
+	"fmt"
+	"log"
+	"time"
+
 	"github.com/cloudwego/kitex/server"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
@@ -18,18 +23,37 @@ var TracerProvider *tracesdk.TracerProvider
  */
 
 func InitTracing(serviceName string) {
-	exporter, err := otlptracegrpc.New(context.Background())
+
+	ctx := context.Background()
+	exporter, err := otlptracegrpc.New(
+		ctx,
+		otlptracegrpc.WithEndpoint(consts.OpenTelemetryAddress),
+		otlptracegrpc.WithInsecure(),
+	)
 	if err != nil {
 		panic(err)
 	}
-	server.RegisterShutdownHook(func() {
-		exporter.Shutdown(context.Background())
-	})
-	processor := tracesdk.NewBatchSpanProcessor(exporter)
-	res, err := resource.New(context.Background(), resource.WithAttributes(semconv.ServiceNameKey.String(serviceName)))
-	if err == nil {
-		res = resource.Default()
+	res, err := resource.Merge(
+		resource.Default(),
+		resource.NewWithAttributes(semconv.SchemaURL, semconv.ServiceNameKey.String(serviceName)),
+	)
+	if err != nil {
+		panic(fmt.Errorf("build resource: %w", err))
 	}
-	TracerProvider = tracesdk.NewTracerProvider(tracesdk.WithSpanProcessor(processor), tracesdk.WithResource(res))
+	processor := tracesdk.NewBatchSpanProcessor(exporter)
+
+	TracerProvider = tracesdk.NewTracerProvider(
+		tracesdk.WithSpanProcessor(processor),
+		tracesdk.WithResource(res),
+	)
+
 	otel.SetTracerProvider(TracerProvider)
+
+	server.RegisterShutdownHook(func() {
+		ctx, cancel := context.WithTimeout(ctx, time.Second*5)
+		defer cancel()
+		if err := exporter.Shutdown(ctx); err != nil {
+			log.Printf("exporter shutdown: %v", err)
+		}
+	})
 }

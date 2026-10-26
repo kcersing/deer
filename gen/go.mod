@@ -1,6 +1,6 @@
 module gen
 
-go 1.25.6
+go 1.27.2
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 

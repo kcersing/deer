@@ -1,12 +1,14 @@
 package events
 
 import (
-	"common/amqpclt"
-	"common/eventbus"
 	"context"
 	"gen/kitex_gen/message"
 	"message/biz/dal/mq"
 	"sync"
+
+	"github.com/kcersing/eventbus"
+
+	"github.com/kcersing/amqpclt"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )

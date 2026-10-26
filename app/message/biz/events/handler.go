@@ -2,13 +2,14 @@ package events
 
 import (
 	"admin/rpc/client"
-	"common/eventbus"
 	"context"
 	"gen/kitex_gen/message"
 	"gen/kitex_gen/user"
 	"message/biz/dal/db"
 	"message/biz/dal/db/ent"
 	"time"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )

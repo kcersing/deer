@@ -1,20 +1,24 @@
 module common
 
-go 1.26.2
+go 1.27.2
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0
 
 require (
+	entgo.io/ent v0.14.6
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/bytedance/sonic v1.15.0
 	github.com/cloudwego/biz-demo/gomall/common v0.0.0-20260211060507-0e3c794d6e40
 	github.com/cloudwego/hertz v0.10.4
 	github.com/cloudwego/kitex v0.16.1
 	github.com/cockroachdb/errors v1.12.0
+	github.com/go-sql-driver/mysql v1.10.0
 	github.com/google/uuid v1.6.0
+	github.com/gorilla/websocket v1.5.3
+	github.com/hertz-contrib/cors v0.1.0
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0
 	github.com/hertz-contrib/paseto v0.0.0-20230508023022-71af6635a26c
 	github.com/hertz-contrib/registry/nacos/v2 v2.0.0-20250319055937-8a220332e808
+	github.com/jackc/pgx/v5 v5.9.2
 	github.com/jinzhu/copier v0.4.0
 	github.com/kitex-contrib/config-consul v0.1.4
 	github.com/kitex-contrib/monitor-prometheus v0.2.0
@@ -23,10 +27,10 @@ require (
 	github.com/kitex-contrib/registry-consul v0.2.0
 	github.com/kitex-contrib/registry-etcd v0.3.0
 	github.com/kitex-contrib/registry-nacos/v2 v2.0.0
+	github.com/lib/pq v1.12.3
 	github.com/nacos-group/nacos-sdk-go/v2 v2.3.5
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/prometheus/client_golang v1.23.2
-	github.com/rabbitmq/amqp091-go v1.11.0
 	go.opentelemetry.io/otel v1.43.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.43.0
 	go.opentelemetry.io/otel/sdk v1.43.0
@@ -36,13 +40,9 @@ require (
 )
 
 require (
-	github.com/armon/go-metrics v0.4.1 // indirect
-	github.com/hashicorp/go-metrics v0.5.4 // indirect
-)
-
-require (
 	aidanwoods.dev/go-paseto v1.6.0 // indirect
 	aidanwoods.dev/go-result v0.3.1 // indirect
+	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/alibabacloud-go/alibabacloud-gateway-pop v0.1.3 // indirect
 	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5 // indirect
 	github.com/alibabacloud-go/darabonba-array v0.1.0 // indirect
@@ -63,9 +63,11 @@ require (
 	github.com/aliyun/alibabacloud-dkms-transfer-go-sdk v0.1.9 // indirect
 	github.com/aliyun/aliyun-secretsmanager-client-go v1.1.5 // indirect
 	github.com/aliyun/credentials-go v1.4.12 // indirect
+	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/buger/jsonparser v1.1.2 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
+	github.com/bytedance/sonic v1.15.0 // indirect
 	github.com/bytedance/sonic/loader v0.5.1 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -97,18 +99,21 @@ require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/pprof v0.0.0-20260402051712-545e8a4df936 // indirect
-	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 // indirect
 	github.com/hashicorp/consul/api v1.34.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
+	github.com/hashicorp/go-metrics v0.5.4 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-rootcerts v1.0.2 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/hashicorp/serf v0.10.2 // indirect
 	github.com/iancoleman/strcase v0.3.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jhump/protoreflect v1.18.0 // indirect
 	github.com/jhump/protoreflect/v2 v2.0.0-beta.2 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect

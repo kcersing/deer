@@ -1,37 +1,37 @@
 services:
 
-#  golang:
-#    hostname: golang
-#    image: golang:1.26.0
-#    volumes: # 挂载卷
-#      - d:/project:/go
-#    ports: # 端口映射
-#      - "9039:9039"
-#    stdin_open: true
-#    tty: true
-#    restart: always
-#    privileged: true
-#    environment:
-#      TimeZone: Asia/Shanghai
+  golang:
+    hostname: golang
+    image: golang:1.26.0
+    volumes: # 挂载卷
+      - d:/project:/go
+    ports: # 端口映射
+      - "9039:9039"
+    stdin_open: true
+    tty: true
+    restart: always
+    privileged: true
+    environment:
+      TimeZone: Asia/Shanghai
 
-#  postgres:
-#    image: postgres:latest
-#    restart: always
-#    environment:
-#      POSTGRES_DB: postgres
-#      POSTGRES_USER: root
-#      POSTGRES_PASSWORD: kcer913639
-#    volumes:
-#      - ./postgresql/latest:/var/lib/postgresql
-#      - ./postgresql/logs:/var/log/postgresql
-#      - ./postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
-#      - ./postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
-#    ports:
-#      - "5432:5432"
-#    command:
-#      - "postgres"
-#      - "-c"
-#      - "config_file=/etc/postgresql/postgresql.conf"
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: kcer913639
+    volumes:
+      - ./data/postgresql/latest:/var/lib/postgresql
+      - ./data/postgresql/logs:/var/log/postgresql
+      - ./data/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./data/postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    ports:
+      - "5432:5432"
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
 
 #  minio:
 #    image: docker.io/minio/minio:RELEASE.2025-03-12T18-04-18Z
@@ -91,17 +91,17 @@ services:
 #          memory: 512M
 #          cpus: '0.5'
 
-#  redis:
-#    image: redis:latest
-#    restart: always
-#    ports:
-#      - "6379:6379"
-#    environment:
-#      TZ: Asia/Shanghai
-#    volumes:
-#      - ./redis/data/redis:/data
-#      - ./redis/logs/redis:/logs
-#    command: redis-server --requirepass freecar
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/redis/data/redis:/data
+      - ./data/redis/logs/redis:/logs
+    command: redis-server --requirepass freecar
 
   Etcd:
     image: bitnami/etcd:latest
@@ -148,10 +148,18 @@ services:
       RABBITMQ_DEFAULT_PASS: kcer-913639
       TZ: Asia/Shanghai
       LANG: zh_CN.UTF-8
-#    volumes:
-#      - ./rabbitmq/data:/var/lib/rabbitmq
-#      - ./rabbitmq/conf:/etc/rabbitmq
-#
+    volumes:
+      - ./data/rabbitmq/data:/var/lib/rabbitmq
+      - ./data/rabbitmq/conf:/etc/rabbitmqq
+
+  FFmpeg:
+    image: jrottenberg/ffmpeg
+    container_name: ffmpeg
+    volumes:
+      - ./data/ffmpeg:/tmp/workdir
+    #tty: true
+    #stdin_open: true
+    entrypoint: ["tail", "-f", "/dev/null"]
 
 #  elasticsearch:
 #    image: elasticsearch:7.6.2
@@ -245,9 +253,9 @@ services:
   clickhouse:
     image: clickhouse/clickhouse-server
     volumes:
-      - ./clickhouse/log:/var/log/clickhouse-server
-      - ./clickhouse/data:/var/lib/clickhouse
-      - ./clickhouse/config.xml:/etc/clickhouse-server/config.d/custom.xml  # 可选自定义配置
+      - ./data/clickhouse/log:/var/log/clickhouse-server
+      - ./data/clickhouse/data:/var/lib/clickhouse
+      - ./data/clickhouse/config.xml:/etc/clickhouse-server/config.d/custom.xml  # 可选自定义配置
     ports:
       - "8123:8123"   # HTTP 接口
       - "9000:9000"   # Native TCP 接口

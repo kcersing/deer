@@ -1,5 +1,7 @@
 package consts
 
+import "time"
+
 const (
 	LogFilePath    = "./file/log/"
 	ExportFilePath = "./file/export"
@@ -47,4 +49,7 @@ const (
 	CrmSnowflakeNode      = 8
 	PaymentSnowflakeNode  = 8
 	ContentsSnowflakeNode = 9
+
+	// SlowQueryThreshold 定义慢查询阈值
+	SlowQueryThreshold = 200 * time.Millisecond
 )

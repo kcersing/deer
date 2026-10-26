@@ -5,11 +5,12 @@ import (
 	"context"
 	Base "gen/kitex_gen/base"
 	User "gen/kitex_gen/user"
-	"github.com/cloudwego/kitex/pkg/klog"
-	"golang.org/x/sync/errgroup"
 	"user/biz/convert"
 	"user/biz/dal/db"
 	"user/biz/dal/db/ent/user"
+
+	"github.com/cloudwego/kitex/pkg/klog"
+	"golang.org/x/sync/errgroup"
 )
 
 type GetUserService struct {
@@ -34,6 +35,7 @@ func (s *GetUserService) Run(req *Base.IdReq) (resp *User.UserResp, err error) {
 	eg.Go(func() error {
 
 		only, err := db.Client.User.Query().Where(user.IDEQ(req.GetId())).Only(ctx)
+		db.Client.User.Query().Where(user.IDEQ(req.GetId())).OnlyX(ctx)
 		if err != nil {
 			klog.CtxErrorf(ctx, "call details error: %s", err.Error())
 			return err

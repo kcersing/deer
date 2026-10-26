@@ -6,5 +6,5 @@ import (
 
 func Init() {
 	//redis.Init()
-	db.InitDB()
+	db.NewDBClient()
 }

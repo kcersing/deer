@@ -4,16 +4,18 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "123456",
-  "captcha": "123456"
+  "password": "admin",
+  "captcha": "admin"
 }
 
+### Send POST request with json body
+POST http://127.0.0.1:9010/service/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzgyMzIwMjksImlkIjp7ImlkIjoxfSwib3JpZ19pYXQiOjE3NzgyMjg0Mjl9.u-xA-p2cmbJSP7VqKCgJNNBOPYA-4mwbRJXFKTd5kXw
 
-### GET request with a header
-GET https://examples.http-client.intellij.net/ip
-Authorization: Basic YWRtaW46MTIzNDU2
-Accept: application/json
-
+{
+  "id": 0
+}
 
 ### Send POST request with json body
 POST http://127.0.0.1:9010/service/dict/list

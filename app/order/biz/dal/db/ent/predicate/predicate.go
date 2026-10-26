@@ -9,6 +9,9 @@ import (
 // Order is the predicate function for order builders.
 type Order func(*sql.Selector)
 
+// OrderCache is the predicate function for ordercache builders.
+type OrderCache func(*sql.Selector)
+
 // OrderEventSubscriptions is the predicate function for ordereventsubscriptions builders.
 type OrderEventSubscriptions func(*sql.Selector)
 

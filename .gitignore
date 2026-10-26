@@ -46,3 +46,6 @@ app/message/message
 app/product/product
 app/system/system
 app/user/user
+/data
+/redis
+/app/.idea

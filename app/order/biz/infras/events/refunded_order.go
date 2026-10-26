@@ -1,9 +1,10 @@
 package events
 
 import (
-	"common/eventbus"
 	"context"
 	"gen/kitex_gen/order"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/google/uuid"

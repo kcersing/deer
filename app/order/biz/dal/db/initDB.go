@@ -3,11 +3,12 @@ package db
 import (
 	"context"
 	"database/sql"
-	"entgo.io/ent/dialect"
-	entsql "entgo.io/ent/dialect/sql"
 	"fmt"
 	"order/biz/dal/db/ent"
 	"order/biz/dal/db/ent/migrate"
+
+	"entgo.io/ent/dialect"
+	entsql "entgo.io/ent/dialect/sql"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 

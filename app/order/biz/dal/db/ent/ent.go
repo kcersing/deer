@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"order/biz/dal/db/ent/order"
+	"order/biz/dal/db/ent/ordercache"
 	"order/biz/dal/db/ent/orderevents"
 	"order/biz/dal/db/ent/ordereventsubscriptions"
 	"order/biz/dal/db/ent/orderitem"
@@ -81,6 +82,7 @@ func checkColumn(t, c string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
 			order.Table:                   order.ValidColumn,
+			ordercache.Table:              ordercache.ValidColumn,
 			ordereventsubscriptions.Table: ordereventsubscriptions.ValidColumn,
 			orderevents.Table:             orderevents.ValidColumn,
 			orderitem.Table:               orderitem.ValidColumn,

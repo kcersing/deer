@@ -61,6 +61,29 @@ var (
 			},
 		},
 	}
+	// OrderCacheColumns holds the columns for the "order_cache" table.
+	OrderCacheColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
+		{Name: "created_at", Type: field.TypeTime, Nullable: true, Comment: "created time"},
+		{Name: "updated_at", Type: field.TypeTime, Nullable: true, Comment: "last update time"},
+		{Name: "delete", Type: field.TypeInt64, Nullable: true, Comment: "last delete  1:已删除 0:未删除", Default: 0},
+		{Name: "created_id", Type: field.TypeInt64, Nullable: true, Comment: "created", Default: 0},
+		{Name: "key", Type: field.TypeString, Nullable: true, Size: 2147483647, Comment: "key"},
+		{Name: "value", Type: field.TypeJSON, Nullable: true, Comment: "value"},
+	}
+	// OrderCacheTable holds the schema information for the "order_cache" table.
+	OrderCacheTable = &schema.Table{
+		Name:       "order_cache",
+		Columns:    OrderCacheColumns,
+		PrimaryKey: []*schema.Column{OrderCacheColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "ordercache_key",
+				Unique:  false,
+				Columns: []*schema.Column{OrderCacheColumns[5]},
+			},
+		},
+	}
 	// OrderEventSubscriptionsColumns holds the columns for the "order_event_subscriptions" table.
 	OrderEventSubscriptionsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true, Comment: "primary key"},
@@ -335,6 +358,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		OrderTable,
+		OrderCacheTable,
 		OrderEventSubscriptionsTable,
 		OrderEventsTable,
 		OrderItemTable,
@@ -348,6 +372,11 @@ var (
 func init() {
 	OrderTable.Annotation = &entsql.Annotation{
 		Table:     "order",
+		Charset:   "utf8mb4",
+		Collation: "utf8mb4_bin",
+	}
+	OrderCacheTable.Annotation = &entsql.Annotation{
+		Table:     "order_cache",
 		Charset:   "utf8mb4",
 		Collation: "utf8mb4_bin",
 	}

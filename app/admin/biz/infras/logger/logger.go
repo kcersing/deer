@@ -2,16 +2,16 @@ package logger
 
 import (
 	"common/consts"
+	"io"
 	"log"
 	"os"
 	"path"
-	"runtime"
 	"time"
 
 	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"go.uber.org/zap"
 
-	kitexzap "github.com/hertz-contrib/obs-opentelemetry/logging/zap"
-
+	hertzzap "github.com/hertz-contrib/logger/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -35,29 +35,29 @@ func InitLog(env bool) {
 
 	ioWriter := &lumberjack.Logger{
 		Filename:   fileName,
-		MaxSize:    consts.LogMaxSize,    // A file can be up to 20M.
-		MaxBackups: consts.LogMaxBackups, // Save up to 5 files at the same time.
-		MaxAge:     consts.LogMaxAge,     // A file can exist for a maximum of 10 days.
-		Compress:   true,                 // Compress with gzip.
+		MaxSize:    consts.LogMaxSize,
+		MaxBackups: consts.LogMaxBackups,
+		MaxAge:     consts.LogMaxAge,
+		Compress:   true,
 	}
 
-	var opts []kitexzap.Option
+	var opts []hertzzap.Option
 	var output zapcore.WriteSyncer
-	if env != true {
-		output = zapcore.AddSync(ioWriter)
-	} else {
-		output = &zapcore.BufferedWriteSyncer{
-			WS:            zapcore.AddSync(ioWriter),
-			FlushInterval: time.Minute,
-		}
+	zapCfg := zap.NewProductionEncoderConfig()
+	zapCfg.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000")
+	opts = append(opts, hertzzap.WithCoreEnc(zapcore.NewJSONEncoder(zapCfg)))
+	opts = append(opts, hertzzap.WithZapOptions(zap.AddCaller(), zap.AddCallerSkip(3)))
+
+	output = &zapcore.BufferedWriteSyncer{
+		WS:            zapcore.AddSync(ioWriter),
+		FlushInterval: time.Minute,
 	}
 
-	_log := kitexzap.NewLogger(opts...)
-	hlog.SetLogger(_log)
-	hlog.SetLevel(hlog.LevelTrace)
-	//hlog.SetOutput(output)
-	if runtime.GOOS == "linux" {
-		hlog.SetOutput(output)
-	}
-	//klog.SetOutput(output)
+	logger := hertzzap.NewLogger(opts...)
+
+	logger.SetLevel(hlog.LevelTrace)
+
+	fileWriter := io.MultiWriter(output, os.Stdout)
+	logger.SetOutput(fileWriter)
+	hlog.SetLogger(logger)
 }

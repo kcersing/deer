@@ -1,13 +1,14 @@
 package events
 
 import (
-	"common/eventbus"
 	"context"
 	"gen/kitex_gen/base"
 	"gen/kitex_gen/member"
 	"order/biz/infras/common"
 	"order/rpc/client"
 	"time"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/google/uuid"

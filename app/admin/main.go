@@ -24,11 +24,19 @@ import (
 )
 
 func Init() {
+	// 1. 初始化 OpenTelemetry（Tracing、Metrics、Logs）
+	mtl.InitProvider(consts.AdminServiceName)
+	// 2. 初始化日志（必须在 Provider 之后，以关联 TraceID）
+	logger.InitLog(true)
+	// 3. 初始化 Prometheus 指标并注册到 Etcd
+	metricsPort := ":9090"
+	mtl.InitMetric(consts.AdminServiceName+"-metrics", metricsPort, consts.EtcdAddress)
+	// 4. 初始化飞行记录器
 	mtl.InitFlightRecorder()
+
 	rpc.InitRpc()
 	mw.InitJwt()
-	logger.InitLog(true)
-	mtl.InitProvider(consts.AdminServiceName)
+
 }
 
 var serviceAddress = conf.GetConf().Hertz.Address

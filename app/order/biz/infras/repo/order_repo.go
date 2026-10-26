@@ -1,7 +1,6 @@
 package repo
 
 import (
-	"common/eventbus"
 	"common/pkg/utils"
 	"context"
 	"order/biz/dal/db"
@@ -12,6 +11,8 @@ import (
 	"order/biz/infras"
 	"order/biz/infras/aggregate"
 	"order/biz/infras/common"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/kitex/pkg/klog"

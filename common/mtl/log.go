@@ -2,10 +2,10 @@ package mtl
 
 import (
 	"common/consts"
+	"io"
 	"log"
 	"os"
 	"path"
-	"runtime"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -16,16 +16,18 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func InitLog(env bool) {
+// InitLog 配置 Kitex 全局日志。
+// ⚠️ 必须在 InitTracing / InitProvider 之后调用，
+// 否则日志无法自动关联 trace_id/span_id。
+func InitLog(level klog.Level) {
 
 	logFilePath := consts.LogFilePath
 	if err := os.MkdirAll(logFilePath, 0o777); err != nil {
 		panic(err)
 	}
 
-	// Set filename to date
-	logFileName := time.Now().Format(time.DateOnly) + ".log"
-	fileName := path.Join(logFilePath, logFileName)
+	fileName := path.Join(logFilePath, time.Now().Format(time.DateOnly)+".log")
+
 	if _, err := os.Stat(fileName); err != nil {
 		if _, err := os.Create(fileName); err != nil {
 			log.Println(err.Error())
@@ -35,35 +37,33 @@ func InitLog(env bool) {
 
 	ioWriter := &lumberjack.Logger{
 		Filename:   fileName,
-		MaxSize:    consts.LogMaxSize,    // A file can be up to 20M.
-		MaxBackups: consts.LogMaxBackups, // Save up to 5 files at the same time.
-		MaxAge:     consts.LogMaxAge,     // A file can exist for a maximum of 10 days.
-		Compress:   true,                 // Compress with gzip.
+		MaxSize:    consts.LogMaxSize,
+		MaxBackups: consts.LogMaxBackups,
+		MaxAge:     consts.LogMaxAge,
+		Compress:   true,
 	}
 
-	var opts []kitexzap.Option
-	var output zapcore.WriteSyncer
-	if env != true {
-		opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())))
-		output = zapcore.AddSync(ioWriter)
-	} else {
-		opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())))
-		// async log
-		output = &zapcore.BufferedWriteSyncer{
-			WS:            zapcore.AddSync(ioWriter),
-			FlushInterval: time.Minute,
-		}
+	buffered := &zapcore.BufferedWriteSyncer{
+		WS:            zapcore.AddSync(ioWriter),
+		FlushInterval: 5 * time.Second,
 	}
+
 	server.RegisterShutdownHook(func() {
-		output.Sync() //nolint:errcheck
+		_ = buffered.Stop() // Stop 会先 Sync 再停 goroutine
 	})
-	_log := kitexzap.NewLogger(opts...)
 
-	klog.SetLogger(_log)
-	klog.SetLevel(klog.LevelTrace)
-	klog.SetOutput(output)
-	if runtime.GOOS == "linux" {
-		klog.SetOutput(output)
+	//opts = append(opts, kitexzap.WithCoreEnc(zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())))
+	zapCfg := zap.NewProductionEncoderConfig()
+	zapCfg.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000")
+	opts := []kitexzap.Option{
+		kitexzap.WithCoreEnc(zapcore.NewJSONEncoder(zapCfg)),
+		kitexzap.WithZapOptions(zap.AddCallerSkip(3), zap.AddCaller()),
 	}
+
+	logger := kitexzap.NewLogger(opts...)
+	logger.SetLevel(level)
+
+	logger.SetOutput(io.MultiWriter(buffered, os.Stdout))
+	klog.SetLogger(logger)
 
 }

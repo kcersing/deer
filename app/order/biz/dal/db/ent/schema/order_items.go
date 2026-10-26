@@ -1,13 +1,14 @@
 package schema
 
 import (
+	"order/biz/dal/db/ent/schema/mixins"
+
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"order/biz/dal/db/ent/schema/mixins"
 )
 
 type OrderItem struct {
@@ -52,6 +53,7 @@ func (OrderItem) Annotations() []schema.Annotation {
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+
 		entsql.WithComments(true),
 		schema.Comment(""),
 	}

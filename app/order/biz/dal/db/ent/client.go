@@ -12,6 +12,7 @@ import (
 	"order/biz/dal/db/ent/migrate"
 
 	"order/biz/dal/db/ent/order"
+	"order/biz/dal/db/ent/ordercache"
 	"order/biz/dal/db/ent/orderevents"
 	"order/biz/dal/db/ent/ordereventsubscriptions"
 	"order/biz/dal/db/ent/orderitem"
@@ -33,6 +34,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// Order is the client for interacting with the Order builders.
 	Order *OrderClient
+	// OrderCache is the client for interacting with the OrderCache builders.
+	OrderCache *OrderCacheClient
 	// OrderEventSubscriptions is the client for interacting with the OrderEventSubscriptions builders.
 	OrderEventSubscriptions *OrderEventSubscriptionsClient
 	// OrderEvents is the client for interacting with the OrderEvents builders.
@@ -59,6 +62,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Order = NewOrderClient(c.config)
+	c.OrderCache = NewOrderCacheClient(c.config)
 	c.OrderEventSubscriptions = NewOrderEventSubscriptionsClient(c.config)
 	c.OrderEvents = NewOrderEventsClient(c.config)
 	c.OrderItem = NewOrderItemClient(c.config)
@@ -159,6 +163,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ctx:                     ctx,
 		config:                  cfg,
 		Order:                   NewOrderClient(cfg),
+		OrderCache:              NewOrderCacheClient(cfg),
 		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
@@ -186,6 +191,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		ctx:                     ctx,
 		config:                  cfg,
 		Order:                   NewOrderClient(cfg),
+		OrderCache:              NewOrderCacheClient(cfg),
 		OrderEventSubscriptions: NewOrderEventSubscriptionsClient(cfg),
 		OrderEvents:             NewOrderEventsClient(cfg),
 		OrderItem:               NewOrderItemClient(cfg),
@@ -222,8 +228,8 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
-		c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
+		c.Order, c.OrderCache, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.OrderPay, c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Use(hooks...)
 	}
@@ -233,8 +239,8 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.Order, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem, c.OrderPay,
-		c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
+		c.Order, c.OrderCache, c.OrderEventSubscriptions, c.OrderEvents, c.OrderItem,
+		c.OrderPay, c.OrderRefund, c.OrderSnapshots, c.OrderStatusHistory,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -245,6 +251,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
 	case *OrderMutation:
 		return c.Order.mutate(ctx, m)
+	case *OrderCacheMutation:
+		return c.OrderCache.mutate(ctx, m)
 	case *OrderEventSubscriptionsMutation:
 		return c.OrderEventSubscriptions.mutate(ctx, m)
 	case *OrderEventsMutation:
@@ -490,6 +498,139 @@ func (c *OrderClient) mutate(ctx context.Context, m *OrderMutation) (Value, erro
 		return (&OrderDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown Order mutation op: %q", m.Op())
+	}
+}
+
+// OrderCacheClient is a client for the OrderCache schema.
+type OrderCacheClient struct {
+	config
+}
+
+// NewOrderCacheClient returns a client for the OrderCache from the given config.
+func NewOrderCacheClient(c config) *OrderCacheClient {
+	return &OrderCacheClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `ordercache.Hooks(f(g(h())))`.
+func (c *OrderCacheClient) Use(hooks ...Hook) {
+	c.hooks.OrderCache = append(c.hooks.OrderCache, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `ordercache.Intercept(f(g(h())))`.
+func (c *OrderCacheClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrderCache = append(c.inters.OrderCache, interceptors...)
+}
+
+// Create returns a builder for creating a OrderCache entity.
+func (c *OrderCacheClient) Create() *OrderCacheCreate {
+	mutation := newOrderCacheMutation(c.config, OpCreate)
+	return &OrderCacheCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of OrderCache entities.
+func (c *OrderCacheClient) CreateBulk(builders ...*OrderCacheCreate) *OrderCacheCreateBulk {
+	return &OrderCacheCreateBulk{config: c.config, builders: builders}
+}
+
+// MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
+// a builder and applies setFunc on it.
+func (c *OrderCacheClient) MapCreateBulk(slice any, setFunc func(*OrderCacheCreate, int)) *OrderCacheCreateBulk {
+	rv := reflect.ValueOf(slice)
+	if rv.Kind() != reflect.Slice {
+		return &OrderCacheCreateBulk{err: fmt.Errorf("calling to OrderCacheClient.MapCreateBulk with wrong type %T, need slice", slice)}
+	}
+	builders := make([]*OrderCacheCreate, rv.Len())
+	for i := 0; i < rv.Len(); i++ {
+		builders[i] = c.Create()
+		setFunc(builders[i], i)
+	}
+	return &OrderCacheCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for OrderCache.
+func (c *OrderCacheClient) Update() *OrderCacheUpdate {
+	mutation := newOrderCacheMutation(c.config, OpUpdate)
+	return &OrderCacheUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *OrderCacheClient) UpdateOne(_m *OrderCache) *OrderCacheUpdateOne {
+	mutation := newOrderCacheMutation(c.config, OpUpdateOne, withOrderCache(_m))
+	return &OrderCacheUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *OrderCacheClient) UpdateOneID(id int64) *OrderCacheUpdateOne {
+	mutation := newOrderCacheMutation(c.config, OpUpdateOne, withOrderCacheID(id))
+	return &OrderCacheUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for OrderCache.
+func (c *OrderCacheClient) Delete() *OrderCacheDelete {
+	mutation := newOrderCacheMutation(c.config, OpDelete)
+	return &OrderCacheDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *OrderCacheClient) DeleteOne(_m *OrderCache) *OrderCacheDeleteOne {
+	return c.DeleteOneID(_m.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *OrderCacheClient) DeleteOneID(id int64) *OrderCacheDeleteOne {
+	builder := c.Delete().Where(ordercache.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &OrderCacheDeleteOne{builder}
+}
+
+// Query returns a query builder for OrderCache.
+func (c *OrderCacheClient) Query() *OrderCacheQuery {
+	return &OrderCacheQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeOrderCache},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a OrderCache entity by its id.
+func (c *OrderCacheClient) Get(ctx context.Context, id int64) (*OrderCache, error) {
+	return c.Query().Where(ordercache.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *OrderCacheClient) GetX(ctx context.Context, id int64) *OrderCache {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *OrderCacheClient) Hooks() []Hook {
+	return c.hooks.OrderCache
+}
+
+// Interceptors returns the client interceptors.
+func (c *OrderCacheClient) Interceptors() []Interceptor {
+	return c.inters.OrderCache
+}
+
+func (c *OrderCacheClient) mutate(ctx context.Context, m *OrderCacheMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&OrderCacheCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&OrderCacheUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&OrderCacheUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&OrderCacheDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown OrderCache mutation op: %q", m.Op())
 	}
 }
 
@@ -1523,11 +1664,11 @@ func (c *OrderStatusHistoryClient) mutate(ctx context.Context, m *OrderStatusHis
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay, OrderRefund,
-		OrderSnapshots, OrderStatusHistory []ent.Hook
+		Order, OrderCache, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		OrderRefund, OrderSnapshots, OrderStatusHistory []ent.Hook
 	}
 	inters struct {
-		Order, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay, OrderRefund,
-		OrderSnapshots, OrderStatusHistory []ent.Interceptor
+		Order, OrderCache, OrderEventSubscriptions, OrderEvents, OrderItem, OrderPay,
+		OrderRefund, OrderSnapshots, OrderStatusHistory []ent.Interceptor
 	}
 )

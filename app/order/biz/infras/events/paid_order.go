@@ -1,10 +1,11 @@
 package events
 
 import (
-	"common/eventbus"
 	"context"
 	"order/biz/infras/common"
 	"time"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/google/uuid"

@@ -1,9 +1,10 @@
 package events
 
 import (
-	"common/eventbus"
 	"context"
 	"time"
+
+	"github.com/kcersing/eventbus"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )

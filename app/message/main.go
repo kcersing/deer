@@ -43,10 +43,18 @@ func main() {
 		fmt.Printf("Golang Version : %s\n", goVersion)
 		return
 	}
-	mtl.InitFlightRecorder()
-	mtl.InitLog(false)
+	// 1. 初始化链路追踪 (TracerProvider)
 	mtl.InitTracing(serviceName)
-	mtl.InitProvider(serviceName)
+	// 2. 初始化日志 (依赖前一步的 Tracer，用于注入 trace_id)
+	mtl.InitLog(conf.LogLevel())
+	// 3. 初始化指标 (配置化 Etcd 地址和端口)
+	//metricsPort := fmt.Sprintf(":%d", conf.MetricsPort)
+	//mtl.InitMetric(serviceName+"-metrics", metricsPort, conf.EtcdAddress)
+	metricsPort := fmt.Sprintf(":%d", "9090")
+	mtl.InitMetric(serviceName+"-metrics", metricsPort, "127.0.0.1:2379")
+	// 4. 初始化飞行记录器 (排查突发性能问题)
+	mtl.InitFlightRecorder()
+
 	rpc.Init()
 
 	// 启动事件系统

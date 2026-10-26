@@ -51,6 +51,7 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 		utils2.SendResponse(c, errno.ConvertErr(err), nil, 0, "")
 		return
 	}
+
 	var id = req.GetID()
 	if req.GetID() == 0 {
 		// get token id
@@ -59,6 +60,7 @@ func GetUser(ctx context.Context, c *app.RequestContext) {
 			utils2.SendResponse(c, errno.NewErrNo(10002, "token is invalid"), nil, 0, "")
 			return
 		}
+
 	}
 
 	resp, err := client.UserClient.GetUser(ctx, &base1.IdReq{

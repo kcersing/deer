@@ -1,11 +1,13 @@
 package infras
 
 import (
-	"common/amqpclt"
-	"common/eventbus"
 	"context"
 	"order/biz/infras/common"
 	"order/biz/infras/events"
+
+	"github.com/kcersing/eventbus"
+
+	"github.com/kcersing/amqpclt"
 
 	"order/biz/dal/mq"
 	"sync"

@@ -1,22 +1,21 @@
-go 1.26.2
+go 1.27.2
 
 use (
-	./gen
-	./common
-	./app/facade
 	./app/admin
-	./app/user
-	./app/member
-	./app/crm
-	./app/order
-	./app/product
-	./app/test
-	./app/system
-	./app/hardware
-	./app/message
-	./app/payment
 	./app/contents
-
+	./app/crm
+	./app/facade
+	./app/hardware
+	./app/member
+	./app/message
+	./app/order
+	./app/payment
+	./app/product
+	./app/system
+	./app/test
+	./app/user
+	./common
+	./gen
 )
 
 replace github.com/apache/thrift => github.com/apache/thrift v0.13.0

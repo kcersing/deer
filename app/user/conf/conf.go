@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/cloudwego/kitex/pkg/klog"
-	"github.com/kr/pretty"
 	"gopkg.in/validator.v2"
 	"gopkg.in/yaml.v2"
 )
@@ -17,19 +16,17 @@ var (
 )
 
 type Config struct {
-	Env        string
-	Kitex      Kitex      `yaml:"Kitex"`
-	MySQL      MySQL      `yaml:"MySQL"`
-	PostgreSQL PostgreSQL `yaml:"PostgreSQL"`
-	Redis      Redis      `yaml:"Redis"`
+	Env      string
+	Kitex    Kitex    `yaml:"Kitex"`
+	Database Database `yaml:"Database"`
+	Redis    Redis    `yaml:"Redis"`
+}
+type Database struct {
+	LogLevel string `yaml:"LogLevel"` // Add this line
+	Type     string `yaml:"Type"`
+	DSN      string `yaml:"DSN"`
 }
 
-type MySQL struct {
-	DSN string `yaml:"DSN"`
-}
-type PostgreSQL struct {
-	DSN string `yaml:"DSN"`
-}
 type Redis struct {
 	Address  string `yaml:"Address"`
 	Username string `yaml:"Username"`
@@ -53,7 +50,7 @@ type Kitex struct {
 	LogMaxAge     int    `yaml:"LogMaxAge"`
 
 	Registry string `yaml:"Registry"`
-	
+
 	Resolver string `yaml:"Resolver"`
 	Tracer   string `yaml:"Tracer"`
 }
@@ -81,7 +78,25 @@ func initConf() {
 		klog.Error("validate config error - %v", err)
 		panic(err)
 	}
-	pretty.Printf("%+v\n", conf)
+
+	//conf2 := new(Config)
+	//v := viper.New()
+	//v.AddConfigPath(confFileRelPath)
+	//
+	//if err := v.ReadInConfig(); err != nil {
+	//	if err := v.Unmarshal(&conf2); err != nil {
+	//		hlog.Fatalf("unmarshal err failed: %s", err.Error())
+	//	}
+	//}
+	//v.WatchConfig()
+	//v.OnConfigChange(func(e fsnotify.Event) {
+	//	if err := v.Unmarshal(&conf2); err != nil {
+	//		hlog.Fatalf("unmarshal err failed: %s", err.Error())
+	//	}
+	//
+	//})
+	//
+	//pretty.Printf("%+v\n", conf2)
 }
 
 func LogLevel() klog.Level {

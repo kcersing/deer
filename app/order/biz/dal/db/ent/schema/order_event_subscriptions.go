@@ -50,6 +50,7 @@ func (OrderEventSubscriptions) Annotations() []schema.Annotation {
 			Charset:   "utf8mb4",
 			Collation: "utf8mb4_bin",
 		},
+
 		entsql.WithComments(true),
 		schema.Comment(""),
 	}

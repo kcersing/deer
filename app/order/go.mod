@@ -1,6 +1,6 @@
 module order
 
-go 1.26.2
+go 1.27.2
 
 replace (
 	common => ../../common
@@ -14,9 +14,11 @@ require (
 	gen v0.0.0-00010101000000-000000000000
 	github.com/bytedance/sonic v1.15.0
 	github.com/cloudwego/kitex v0.16.1
-	github.com/go-sql-driver/mysql v1.9.3
+	github.com/go-sql-driver/mysql v1.10.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.9.2
+	github.com/kcersing/amqpclt v0.0.0-20260509073628-dd1533adc8ed
+	github.com/kcersing/eventbus v0.0.0-20260509074321-3d8e4b835ad3
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.12.3
 	github.com/pkg/errors v0.9.1
@@ -27,7 +29,22 @@ require (
 
 require (
 	github.com/armon/go-metrics v0.4.1 // indirect
+	github.com/dtm-labs/client v1.18.7 // indirect
+	github.com/dtm-labs/dtmcli v1.15.0 // indirect
+	github.com/dtm-labs/dtmdriver v0.0.6 // indirect
+	github.com/dtm-labs/logger v0.0.1 // indirect
+	github.com/go-redis/redis/v8 v8.11.5 // indirect
+	github.com/go-resty/resty/v2 v2.7.0 // indirect
+	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/golang/snappy v0.0.1 // indirect
 	github.com/hashicorp/go-metrics v0.5.4 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/natefinch/lumberjack v2.0.0+incompatible // indirect
+	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
+	github.com/xdg-go/scram v1.0.2 // indirect
+	github.com/xdg-go/stringprep v1.0.2 // indirect
+	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
+	go.mongodb.org/mongo-driver v1.9.1 // indirect
 )
 
 require (
