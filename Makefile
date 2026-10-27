@@ -37,7 +37,7 @@ VERSION?=1.0.0
 BUILD_DATE=$(shell date +%FT%T%z)
 # 模块
 # MODULES=admin crm facade hardware member message order product system user
-MODULES=admin member message order product system user
+MODULES=admin member message order product system user contents facade hardware test
 # 构建参数
 LDFLAGS=-ldflags "-X main.version=${VERSION} -X main.commit=${COMMIT} -X main.buildTime=${BUILD_DATE}"
 # 设置目标平台

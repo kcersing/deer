@@ -8,8 +8,6 @@ import (
 
 	"github.com/kcersing/eventbus"
 
-	"github.com/kcersing/amqpclt"
-
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 

@@ -7,8 +7,6 @@ import (
 
 	"github.com/kcersing/eventbus"
 
-	"github.com/kcersing/amqpclt"
-
 	"order/biz/dal/mq"
 	"sync"
 
