@@ -472,8 +472,8 @@ github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/X
 github.com/jtolds/gls v4.20.0+incompatible/go.mod h1:QJZ7F/aHp+rZTRtaJ1ow/lLfFfVYBRgL+9YlvaHOwJU=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
 github.com/julienschmidt/httprouter v1.3.0/go.mod h1:JR6WtHb+2LUe8TCKY3cZOxFyyO8IZAc4RVcycCCAKdM=
-github.com/kcersing/eventbus v0.0.0-20261027102035-6d1fc6005278 h1:Bab0F0qD+192kXLeeL6Tgo+PQ1XTNQEdUE50CbA8/+E=
-github.com/kcersing/eventbus v0.0.0-20261027102035-6d1fc6005278/go.mod h1:Iq9bAPtdPXWP2nE0awGk/khszIoSVGf1uvHkH4sJvCM=
+github.com/kcersing/eventbus v0.0.0-20261027104646-b9f8b79bb7cd h1:ZV5la2cQNDh7txgvTg+iWSbXLXYTRjSEZ/yh0PrnK9s=
+github.com/kcersing/eventbus v0.0.0-20261027104646-b9f8b79bb7cd/go.mod h1:Iq9bAPtdPXWP2nE0awGk/khszIoSVGf1uvHkH4sJvCM=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/kitex-contrib/config-consul v0.1.4 h1:JH/++GFydAChkcGmol6iRSZgClJa/32kYmDkJq3H1jo=

@@ -5,12 +5,13 @@ import (
 	"order/biz/infras/common"
 	"order/biz/infras/events"
 
-	"github.com/kcersing/eventbus"
-
 	"order/biz/dal/mq"
 	"sync"
 
 	"github.com/cloudwego/kitex/pkg/klog"
+	"github.com/kcersing/eventbus"
+	extamqp "github.com/kcersing/eventbus/ext/amqp"
+	"github.com/kcersing/eventbus/ext/amqp/amqpclt"
 )
 
 const (
@@ -26,7 +27,7 @@ const (
 )
 
 var (
-	globalManager *eventbus.EventManager
+	globalManager *extamqp.EventManager
 	onceManager   sync.Once
 )
 
@@ -53,7 +54,7 @@ func Bootstrap() (err error) {
 		}
 
 		// 2. 创建核心组件
-		bus := eventbus.NewEventBus()
+		bus := eventbus.New()
 		bridge := eventbus.NewAMQPListener(bus, subscriber)
 		registry := eventbus.NewConsumerRegistry()
 		eventPublisher := eventbus.NewEventPublisher(bus, publisher)
@@ -63,7 +64,7 @@ func Bootstrap() (err error) {
 		//bus.Use(RecoverMiddleware(), AuditLogMiddleware(), TimingMiddleware())
 		klog.Info("[Events] Middlewares applied: Recover, Audit, Timing.")
 
-		globalManager = eventbus.NewEventManager(bus, bridge, registry, eventPublisher)
+		globalManager = extamqp.NewEventManager(bus, bridge, registry, eventPublisher)
 		// 4. 注册所有消费者
 		// 4.1. 注册处理器
 

@@ -17,7 +17,7 @@ import (
 // ============ 消息服务事件处理器 (类型安全 & 可审计版本) ============
 
 // HandleSendMessages 发送消息处理器
-func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event eventbus.Event) error {
+func HandleSendMessages(ctx context.Context, req *message.SendMessagesReq, event *eventbus.Event) error {
 	klog.Infof("[Handler] 处理发送用户消息事件: Title=%s, EventID=%s", req.GetTitle(), event.Id)
 
 	// 从 context 中获取审计条目并填充业务数据

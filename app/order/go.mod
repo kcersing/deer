@@ -19,7 +19,6 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.11.0
 	github.com/jinzhu/copier v0.4.0
-	github.com/kcersing/eventbus v0.0.0-20261027102035-6d1fc6005278
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.12.3
 	github.com/pkg/errors v0.9.1
@@ -121,6 +120,7 @@ require (
 	github.com/jhump/protoreflect v1.8.2 // indirect
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/kcersing/eventbus v0.0.0-20261027104646-b9f8b79bb7cd // indirect
 	github.com/kitex-contrib/config-consul v0.1.4 // indirect
 	github.com/kitex-contrib/monitor-prometheus v0.2.0 // indirect
 	github.com/kitex-contrib/obs-opentelemetry v0.3.0 // indirect

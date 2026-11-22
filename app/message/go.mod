@@ -23,7 +23,6 @@ require (
 	github.com/cockroachdb/errors v1.14.0
 	github.com/go-sql-driver/mysql v1.10.1
 	github.com/jackc/pgx/v5 v5.11.0
-	github.com/kcersing/eventbus v0.0.0-20261027102035-6d1fc6005278
 	github.com/kr/pretty v0.3.1
 	github.com/lib/pq v1.12.3
 	github.com/rabbitmq/amqp091-go v1.16.0

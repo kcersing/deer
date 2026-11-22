@@ -12,7 +12,7 @@ import (
 // AuditLogMiddleware 负责创建审计日志条目，并在事件处理后将其持久化
 func AuditLogMiddleware() eventbus.Middleware {
 	return func(next eventbus.Handler) eventbus.Handler {
-		return eventbus.EventHandlerFunc(func(ctx context.Context, event *eventbus.Event) error {
+		return eventbus.HandlerFunc(func(ctx context.Context, event *eventbus.Event) error {
 			// 1. 创建审计条目并注入 context
 			entry := NewAuditEntry()
 			ctxWithAudit := WithAuditEntry(ctx, entry)
@@ -40,7 +40,7 @@ func AuditLogMiddleware() eventbus.Middleware {
 // TimingMiddleware 记录每个事件处理的耗时
 func TimingMiddleware() eventbus.Middleware {
 	return func(next eventbus.Handler) eventbus.Handler {
-		return eventbus.EventHandlerFunc(func(ctx context.Context, event *eventbus.Event) error {
+		return eventbus.HandlerFunc(func(ctx context.Context, event *eventbus.Event) error {
 			start := time.Now()
 			err := next.Handle(ctx, event)
 			klog.Infof("[Middleware-耗时] Event handled: Topic=%s, EventID=%s, Cost=%v", event.Topic, event.Id, time.Since(start))
@@ -52,7 +52,7 @@ func TimingMiddleware() eventbus.Middleware {
 // RecoverMiddleware 从处理器发生的 panic 中恢复
 func RecoverMiddleware() eventbus.Middleware {
 	return func(next eventbus.Handler) eventbus.Handler {
-		return eventbus.EventHandlerFunc(func(ctx context.Context, event *eventbus.Event) (err error) {
+		return eventbus.HandlerFunc(func(ctx context.Context, event *eventbus.Event) (err error) {
 			defer func() {
 				if r := recover(); r != nil {
 					klog.Errorf("[Middleware-恢复] Panic recovered: Topic=%s, EventID=%s, Error: %v", event.Topic, event.Id, r)

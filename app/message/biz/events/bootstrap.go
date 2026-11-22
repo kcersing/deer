@@ -2,75 +2,75 @@ package events
 
 import (
 	"context"
+	"errors"
 	"gen/kitex_gen/message"
 	"message/biz/dal/mq"
 	"sync"
+	"time"
 
 	"github.com/kcersing/eventbus"
+	"github.com/kcersing/eventbus/ext/amqp"
+	"github.com/kcersing/eventbus/ext/amqp/amqpclt"
+	"github.com/kcersing/eventbus/ext/pool"
+	"github.com/kcersing/eventbus/manager"
 
 	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 var (
-	globalManager *eventbus.EventManager
+	globalManager *manager.Manager
 	once          sync.Once
+	initErr       error
 )
 
-// GetManager 获取全局的 EventManager 实例
-func GetManager() *eventbus.EventManager {
+// GetManager 获取全局的 Manager 实例
+func GetManager() *manager.Manager {
 	return globalManager
 }
 
 // Bootstrap 初始化并启动整个事件系统
-func Bootstrap() (err error) {
-	once.Do(func() {
-		klog.Info("[Events] Initializing EventManager...")
+func Bootstrap() error {
+	once.Do(func() { initErr = doBootstrap() })
+	return initErr
+}
 
-		// 1. 创建 AMQP 客户端
-		publisher, e := amqpclt.NewPublisher(mq.Client, "eventbus")
-		if e != nil {
-			err = e
-			return
-		}
-		subscriber, e := amqpclt.NewSubscribe(mq.Client, "eventbus")
-		if e != nil {
-			err = e
-			return
-		}
+func doBootstrap() (err error) {
 
-		// 2. 创建核心组件
-		bus := eventbus.NewEventBus()
-		bridge := eventbus.NewAMQPListener(bus, subscriber)
-		registry := eventbus.NewConsumerRegistry()
-		eventPublisher := eventbus.NewEventPublisher(bus, publisher)
+	klog.Info("[Events] Initializing EventManager...")
+	if mq.Client == nil || mq.Client.IsClosed() {
+		return errors.New("events: amqp connection not initialized")
+	}
+	// 1. 创建 AMQP 客户端
+	pub, err := amqpclt.NewPublisher(mq.Client, "eventbus")
+	if err != nil {
+		return err
+	}
+	sub, err := amqpclt.NewSubscribe(mq.Client, "eventbus")
+	if err != nil {
+		return err
+	}
+	// 2. 创建核心组件
+	bus := eventbus.New()
+	registry := manager.NewRegistry()
 
-		// 3. 应用中间件
-		// 顺序: Recover (最外层) -> Audit -> Timing -> 最终处理器
-		bus.Use(RecoverMiddleware(), AuditLogMiddleware(), TimingMiddleware())
-		klog.Info("[Events] Middlewares applied: Recover, Audit, Timing.")
+	// 3. 应用中间件
+	// 顺序: Recover (最外层) -> Audit -> Timing -> 最终处理器
+	// 仅发布链路
+	bus.Use(RecoverMiddleware(), AuditLogMiddleware(), TimingMiddleware())
+	klog.Info("[Events] Middlewares applied: Recover, Audit, Timing.")
 
-		globalManager = eventbus.NewEventManager(bus, bridge, registry, eventPublisher)
-		// 4. 注册所有消费者
-		// 4.1. 注册处理器
-		err := globalManager.Registry.RegisterHandler(
-			handlerSendMessages,
-			eventbus.WrapTyped(eventbus.TypedHandler[*message.SendMessagesReq](HandleSendMessages)),
-		)
-		if err != nil {
-			klog.Errorf("Failed to register handler '%s': %v", handlerSendMessages, err)
+	globalManager = manager.New(bus, amqp.NewListener(bus, sub), amqp.NewPublisher(bus, pub), registry)
+	h := eventbus.WrapTyped(eventbus.TypedHandler[*message.SendMessagesReq](HandleSendMessages))
+	registry.Register(
+		EventSendMessages,
+		h,
+		10,
+		pool.WithMaxRetries(3),
+		pool.WithHandlerTimeout(10*time.Second),
+		pool.WithDeadLetterFunc(func(e *eventbus.Event) {
+			klog.Errorf("[Events] dead letter: topic=%s id=%s", e.Topic, e.Id)
+		}),
+	)
+	return globalManager.Start(context.Background())
 
-		}
-		// 4.2. 注册消费者 (将主题与处理器绑定)
-		err = globalManager.Registry.RegisterConsumer(EventSendMessages, handlerSendMessages, 10)
-		if err != nil {
-			klog.Errorf("Failed to register consumer for event '%s': %v", EventSendMessages, err)
-		}
-
-		// 5. 启动所有组件
-		if err = globalManager.Start(context.Background()); err != nil {
-			return
-		}
-
-	})
-	return err
 }
