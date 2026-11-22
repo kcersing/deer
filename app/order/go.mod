@@ -120,7 +120,7 @@ require (
 	github.com/jhump/protoreflect v1.8.2 // indirect
 	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/kcersing/eventbus v0.0.0-20261027104646-b9f8b79bb7cd // indirect
+	github.com/kcersing/eventbus v0.0.0-20261122075006-0d1c8fdcdd4e // indirect
 	github.com/kitex-contrib/config-consul v0.1.4 // indirect
 	github.com/kitex-contrib/monitor-prometheus v0.2.0 // indirect
 	github.com/kitex-contrib/obs-opentelemetry v0.3.0 // indirect

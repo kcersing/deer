@@ -7,12 +7,12 @@ import (
 	"order/biz/infras"
 
 	"github.com/dtm-labs/client/dtmcli"
-	"github.com/kcersing/eventbus"
+	extamqp "github.com/kcersing/eventbus/ext/amqp"
 )
 
 type CreateOrderService struct {
 	ctx       context.Context
-	publisher *eventbus.EventPublisher
+	publisher *extamqp.Publisher
 }
 
 // NewCreateOrderService new CreateOrderService

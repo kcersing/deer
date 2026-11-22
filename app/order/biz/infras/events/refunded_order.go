@@ -41,7 +41,7 @@ func NewRefundedOrderEvent(req *order.RefundOrderReq) *RefundedOrderEvent {
 
 }
 
-func HandleOrderRefunded(ctx context.Context, req *RefundedOrderEvent, event eventbus.Event) error {
+func HandleOrderRefunded(ctx context.Context, req *RefundedOrderEvent, event *eventbus.Event) error {
 	klog.Infof("[Handler] 处理退费事件: Reason=%s, EventID=%s", req.Reason, event.Id)
 	_, err := db.Client.OrderRefund.Create().
 		SetOrderID(req.GetAggregateID()).

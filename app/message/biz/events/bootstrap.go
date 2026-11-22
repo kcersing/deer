@@ -36,7 +36,7 @@ func Bootstrap() error {
 
 func doBootstrap() (err error) {
 
-	klog.Info("[Events] Initializing EventManager...")
+	klog.Info("[Events] Initializing event system...")
 	if mq.Client == nil || mq.Client.IsClosed() {
 		return errors.New("events: amqp connection not initialized")
 	}

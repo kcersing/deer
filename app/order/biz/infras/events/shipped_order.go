@@ -40,7 +40,7 @@ func NewShippedOrderEvent(aggregateID int64) *ShippedOrderEvent {
 	}
 }
 
-func HandleOrderShipped(ctx context.Context, req *ShippedOrderEvent, event eventbus.Event) error {
+func HandleOrderShipped(ctx context.Context, req *ShippedOrderEvent, event *eventbus.Event) error {
 	klog.Infof("[Handler] 处理发货事件: AggregateID=%s, EventID=%s", req.AggregateID, event)
 	//通知生产会员产品
 	klog.Infof("[Handler] 处理发货事件: ShippedOrderEvent=%s", req)

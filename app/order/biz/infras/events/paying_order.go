@@ -53,7 +53,7 @@ func NewPayingOrderEvent(req *order.PaymentReq) *PayingOrderEvent {
 
 }
 
-func HandleOrderPaying(ctx context.Context, req *PayingOrderEvent, event eventbus.Event) error {
+func HandleOrderPaying(ctx context.Context, req *PayingOrderEvent, event *eventbus.Event) error {
 	klog.Infof("[Handler] 处理支付事件: Method=%s, EventID=%s", req.Method, event.Id)
 	_, err := db.Client.OrderPay.Create().
 		SetOrderID(req.OrderId).

@@ -12,7 +12,7 @@ import (
 	"order/biz/infras/aggregate"
 	"order/biz/infras/common"
 
-	"github.com/kcersing/eventbus"
+	extamqp "github.com/kcersing/eventbus/ext/amqp"
 
 	"github.com/bytedance/sonic"
 	"github.com/cloudwego/kitex/pkg/klog"
@@ -35,7 +35,7 @@ type OrderRepository interface {
 
 type OrderRepo struct {
 	db        *ent.Client
-	publisher *eventbus.EventPublisher
+	publisher *extamqp.Publisher
 }
 
 // NewOrderRepo 创建带可选依赖的仓储（订阅服务、事件发布器）
@@ -216,9 +216,7 @@ func (o *OrderRepo) saveSnapshot(ctx context.Context, tx *ent.Tx, order *aggrega
 func (o *OrderRepo) publishEvents(ctx context.Context, events []common.Event) {
 	if o.publisher != nil {
 		for _, e := range events {
-			if err := o.publisher.Local(ctx, e.GetType(), e); err != nil {
-				klog.Errorf("发布事件失败(event_id=%s): %v", e.GetId(), err)
-			}
+			o.publisher.Local(ctx, e.GetType(), e)
 		}
 	}
 }
